@@ -131,6 +131,8 @@ The app includes full mobile support via Capacitor:
 6.  **Type checking** - Run `npx tsc --noEmit` to check for TypeScript errors
 7.  **No migration files** - Don't create Drizzle migration files, use `db:push` instead
 8.  **Kein User verwenden** - Benutze stattdessen den Profile, User nur für Auth, Profile für alles andere
+9.  **Responsive Dialogs**: For dialogs requiring a distinct mobile experience, you **MUST** use the Controller Pattern. Create separate components for desktop (`[Feature]Dialog.tsx`) and mobile (`Mobile[Feature]Dialog.tsx`), and use a `[Feature]DialogController.tsx` to render the correct one based on screen size. Do not create a single, complex responsive component. For a detailed guide, see the [`Responsive Dialog Architecture`](shared-docs/design/responsive-dialog-architecture.md).
+
 
 ### Code Style Guidelines
 
