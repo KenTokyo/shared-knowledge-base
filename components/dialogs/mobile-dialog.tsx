@@ -7,18 +7,27 @@ import { X, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils/utils';
 import { Button } from '@/components/ui/button'; // Adjust path as needed for the target project
 
-const MobileDialog = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> & {
-    title?: React.ReactNode;
-    parentTitle?: string;
-    showBackButton?: boolean;
-    onBack?: () => void;
-    className?: string;
-    rightElement?: React.ReactNode;
-    header?: React.ReactNode;
-  }
->(({ title, parentTitle, showBackButton, onBack, children, className, rightElement, header, ...props }, ref) => (
+interface MobileDialogProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> {
+  title?: React.ReactNode;
+  parentTitle?: string;
+  showBackButton?: boolean;
+  onBack?: () => void;
+  className?: string;
+  rightElement?: React.ReactNode;
+  header?: React.ReactNode;
+}
+
+const MobileDialog: React.FC<MobileDialogProps> = ({
+  title,
+  parentTitle,
+  showBackButton,
+  onBack,
+  children,
+  className,
+  rightElement,
+  header,
+  ...props
+}) => (
   <DialogPrimitive.Root {...props}>
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
@@ -66,8 +75,7 @@ const MobileDialog = React.forwardRef<
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
   </DialogPrimitive.Root>
-));
-MobileDialog.displayName = 'MobileDialog';
+);
 
 const MobileDialogContent = React.forwardRef<
   HTMLDivElement,
