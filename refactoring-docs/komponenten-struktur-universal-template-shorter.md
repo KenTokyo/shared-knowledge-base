@@ -25,6 +25,40 @@
 - **Dialog-Title = File-Name:** "Einstellungen" → `EinstellungenDialog.tsx`  
 - **UI-Area = Section:** Comment area → `(commentSection)/`
 
+
+---
+
+### ❌ Anti-Pattern: Die "Komponenten-Schublade"
+
+**Vermeide** einen einzigen, flachen `components`-Ordner pro Feature. Das führt zu Chaos.
+
+**FALSCH:** Eine unorganisierte Liste von Komponenten.
+```
+app/chat/
+├── page.tsx
+└── components/             <- ❌ CHAOS!
+    ├── AiChatDialog.tsx
+    ├── AiChatHistoryList.tsx
+    ├── ChatHeader.tsx
+    ├── ChatInput.tsx
+    └── ... (20+ mehr)
+```
+**Problem:** Man hat keine Ahnung, was wozu gehört. Das ist nicht skalierbar.
+
+**RICHTIG:** Komponenten sind in logischen `(sections)` gruppiert.
+```
+app/chat/
+├── (historySection)/
+│   ├── ChatHistoryList.tsx
+│   └── HistoryToggleButton.tsx
+├── (inputSection)/
+│   ├── ChatInput.tsx
+│   └── SendenButton.tsx
+└── page.tsx
+```
+**Vorteil:** Sofortige Klarheit und einfache Navigation.
+
+---
 ## Component Naming System
 
 ```

@@ -87,6 +87,84 @@ This guide provides comprehensive coding rules for building robust, performant, 
 
 ---
 
+---
+
+## 🗂️ Component Architecture & File Structure
+
+### Core Philosophy: UI mirrors Folder Structure
+
+Our primary goal is **instant navigation**: A developer should be able to find any component's code file in **under 5 seconds** just by looking at the UI. This is achieved by mirroring the UI's visual hierarchy directly in the file system.
+
+---
+
+### The Blueprint: Section-Based Architecture
+
+We organize features into `(sections)` which are Next.js Route Groups. This allows for logical grouping without affecting the URL.
+
+#### ✅ **The Right Way: Clean, Section-Based Structure**
+
+A feature's components are organized into sub-folders that represent distinct UI areas.
+
+```
+app/feature/[param]/
+├── (mainSection)/
+│   ├── (subSection)/
+│   │   ├── AktionButton.tsx
+│   │   └── KonfigPanel.tsx
+│   ├── MainSection.tsx          ← Section orchestrator
+│   └── (otherSubSection)/
+│       └── DataCard.tsx
+└── page.tsx
+```
+*   **Clarity:** It's immediately clear that `AktionButton.tsx` belongs to `(subSection)`.
+*   **Scalability:** New related components are added to the correct section, preventing clutter.
+*   **Ownership:** Teams can work on different sections with minimal merge conflicts.
+
+#### ❌ **The Anti-Pattern: The "Junk Drawer" `components` Folder**
+
+Avoid creating a single, flat `components` folder within a feature route. This quickly becomes a chaotic "junk drawer" where no one can find anything.
+
+**Example of what NOT to do (based on a real-world messy `app/chat`):**
+```
+app/chat/
+├── page.tsx
+└── components/             <- ❌ ANTI-PATTERN
+    ├── AiChatDialog.tsx
+    ├── AiChatHistoryList.tsx
+    ├── ChatHeader.tsx
+    ├── ChatInput.tsx
+    ├── MessageActions.tsx
+    ├── SaveChatDialog.tsx
+    └── ... (20+ more files)
+```
+*   **No Context:** Which dialog belongs to which button? Is `ChatHeader` for the main page or a modal?
+*   **Unscalable:** With 20+ components, this folder is impossible to navigate.
+*   **High Friction:** Finding a specific component requires searching or guesswork, wasting valuable time.
+
+---
+
+### Component Naming Conventions
+
+#### 1. Component Types
+
+Use suffixes to identify a component's purpose at a glance.
+
+*   `...Button.tsx`: Interactive triggers (e.g., `SpeichernButton.tsx`).
+*   `...Dialog.tsx`: Modal overlays (e.g., `BestätigenDialog.tsx`).
+*   `...Panel.tsx`: Input or configuration interfaces (e.g., `EinstellungenPanel.tsx`).
+*   `...Section.tsx`: The main orchestrator for a `(section)` folder.
+
+#### 2. Language: German vs. English
+
+The language depends on who the component is for: the **user** or the **developer**.
+
+*   **🇩🇪 German (User-Facing):** If the user sees or interacts with it directly, name it in German.
+    *   `SpeichernButton.tsx` (User clicks "Speichern").
+    *   `EinstellungenDialog.tsx` (User sees "Einstellungen" title).
+*   **🇺🇸 English (Technical/Structural):** If it's a structural or technical container, name it in English.
+    *   `ReviewSection.tsx` (Organizes the review area).
+    *   `ProductCard.tsx` (A reusable data display block).
+
 ## 🎬 Design Pattern Rules: Animated Loading States
 
 ### Core Philosophy: Perceived Performance > Actual Performance
