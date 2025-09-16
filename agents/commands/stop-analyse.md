@@ -1,1 +1,1 @@
-lese shared-docs\agents\stop-analyse.md
+lese shared-docs\agents\stop-analyse-befehl.md
