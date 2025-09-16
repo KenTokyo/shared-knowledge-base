@@ -1,0 +1,1 @@
+lese shared-docs\agents\stop-analyse.md
