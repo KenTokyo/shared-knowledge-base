@@ -107,6 +107,9 @@ async function GoodComponent() {
 * Welche Subfeatures sind betroffen?
 * Gib Hinweise auf zukünftige Updates.
 
+### 5\. 📝 Dokumentationen aktualisieren
+Lese hierzu unbedingt, falls alle Phasen durch: shared-docs\agents\dokumentier-regeln.md
+
 ---
 
 ## 3\. Abschließende Schritte
