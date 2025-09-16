@@ -35,7 +35,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
 
 *   **Rule 3.1 (Use Server Actions):** Use Server Actions for all data mutations (e.g., form submissions, updates, deletions). They can be called from both Server and Client Components.
 *   **Rule 3.2 (UI Updates after Mutation):** After a mutation in a Server Action, use `revalidatePath('/')` or `revalidateTag('tag')` to invalidate the cache and trigger a UI update.
-*   **Rule 3.3 (Security):** **Always** validate user input (e.g., with Zod) and authenticate the user session within your Server Actions to prevent security vulnerabilities.
+*   **Rule 3.3 (Security):** **Always** validate user input and authenticate the profile session with profile-finder within your Server Actions to prevent security vulnerabilities.
 
 ---
 
