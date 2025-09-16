@@ -210,3 +210,5 @@ data?: T;
 error?: string;
 }
 ```
+
+**Lese unbedingt die doku zu: `shared-docs\refactoring-docs\global-coding-rules.md` und wenn du mit der Planung beginnst, nenne welche Regeln du aus der `shared-docs\refactoring-docs\global-coding-rules.md` benutzt!**
