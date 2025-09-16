@@ -116,17 +116,7 @@ Sekunde 0.4: Product Image lädt 🖼️ (delay-4)
   .delay-5 { animation-delay: 0.25s; }
 }
 
-/* ACCESSIBILITY */
-@media (prefers-reduced-motion: reduce) {
-  .animate-slide-fade,
-  .animate-slide-down,
-  .animate-fade-in,
-  .animate-fade-scale {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
+
 ```
 
 ## 🏗️ Next.js 14 Implementation Pattern
