@@ -204,7 +204,7 @@ The separation ensures that ElevateMe 4.0 can evolve its user experience while m
 
 **Aufgabe**
 
-lese refactoring\user-profile-separation-refactor.md und CLAUDE.md unbedingt
+lese refactoring\user-profile-separation-refactor.md und shared-docs\agents\global-rule-agent.md unbedingt
 also zusammenfassend vorkommende Fehler:
 
 const session = await auth();

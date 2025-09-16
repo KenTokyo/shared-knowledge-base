@@ -2,8 +2,8 @@
 
 ## 📌 Regeln & Einstieg
 
-*   **Lese unbedingt zuerst: CLAUDE.MD**
-*   Wenn du dieses Kommando erhältst: **Starte mit der Bearbeitung des übergebenen Plan/Tasks oder erstelle eine Plan/Tasks.md Datei nach /CLAUDE.md Richtlinien als Plan/Task.**
+*   **Lese unbedingt zuerst: shared-docs\agents\global-rule-agent.md**
+*   Wenn du dieses Kommando erhältst: **Starte mit der Bearbeitung des übergebenen Plan/Tasks oder erstelle eine Plan/Tasks.md Datei nach /shared-docs\agents\global-rule-agent.md Richtlinien als Plan/Task.**
 *   Lese auch das Overview der jeweiligen Komponente in: `docs/[feature]/[feature]-overview.md`
 *   Lege Tasks ab unter: `docs/[feature]/tasks/[datum]-[task].md`
 *   Versuche Edge-Cases rauszufinden
@@ -38,7 +38,7 @@
 
 *   Welche Optimierungen geplant sind
 *   Welche **Next.js Projektfeatures** genutzt werden, um Performance zu optimieren (z. B. useEffect, useCallback, useMemo, useCache …)
-*   Welche Regeln aus CLAUDE.md angewendet werden
+*   Welche Regeln aus shared-docs\agents\global-rule-agent.md angewendet werden
 *   Ladezeiten/Speicherdaten mit konkreten Werten: "25MB", "2 Sekunden", "99.9%"
 
 ### 5\. 🔄 Code-Reuse prüfen

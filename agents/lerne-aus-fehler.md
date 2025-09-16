@@ -2,7 +2,7 @@
 
 Du hast gerade einen Fehler behoben. Damit dieser Fehler in Zukunft nicht mehr auftritt, schreibst du eine kurze Regel in **einem Satz** auf, wie du zukünftig so programmierst, dass dieser Fehler nicht mehr auftritt.
 
-Du trägst diese Regel in die Datei `**CLAUDE.md**` ein, und zwar **unten in die Sektion „Critical Rules“**.
+Du trägst diese Regel in die Datei `**shared-docs\agents\global-rule-agent.md**` ein, und zwar **unten in die Sektion „Critical Rules“**.
 
 Wenn diese Regel dort bereits existiert, schreibst du sie stattdessen zusätzlich unten in die Sektion **„Critical Rules“** in `**agents\anfangen.md**` und `**agents\anfangen-all.md**`.
 
