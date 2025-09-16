@@ -1,8 +1,10 @@
-# Next.js App Router: Core Rules for High-Quality Code
+# Global Coding Rules
 
-This guide provides a condensed set of rules for building robust and performant Next.js applications with the App Router. Following these principles helps avoid common pitfalls related to Server/Client Components, data fetching, mutations, and rendering.
+This guide provides comprehensive coding rules for building robust, performant, and maintainable applications. It covers Next.js App Router, React best practices, and our custom design patterns.
 
 ---
+
+## 🚀 Next.js App Router Rules
 
 ### 1. Component Architecture & Boundaries
 
@@ -20,6 +22,7 @@ This guide provides a condensed set of rules for building robust and performant 
 *   **Rule 2.2 (Parallel Fetching):** Fetch independent data in parallel using `Promise.all` to prevent request waterfalls and improve load times.
 *   **Rule 2.3 (Automatic Caching):** Next.js automatically caches `fetch` requests. Embrace multiple, co-located `fetch` calls for the same data; they won't result in duplicate requests. For ORMs or other libraries, use `React.cache`.
 *   **Rule 2.4 (Dynamic Routes & Params):** Access dynamic route segments in page components via the `params` prop (e.g., `ProductPage({ params })`). To read URL search parameters without a server round-trip, use the `useSearchParams` hook in a Client Component.
+*   **Rule 2.5 (Cascading Data Pattern):** Follow our 3-level data fetching pattern (see Design Pattern Rules below): Page-level for critical data, Section-level for main queries, Component-level for specific data.
 
 *   **Rule 2.5.1 (`use()` Hook Pattern):** For interactive Client Components that need server-fetched data: Start the fetch on the server (without `await`) to get a promise. Pass this promise as a prop to the Client Component and consume it with `use(promise)`. This is the fastest way to load server data in interactive components.
 *   **Rule 2.5.2 (Suspense Integration):** Always wrap components using the `use()` hook pattern in a `<Suspense>` boundary on the server. This provides an instant loading fallback and prevents the UI from being blocked.
@@ -38,7 +41,7 @@ This guide provides a condensed set of rules for building robust and performant 
 
 ### 4. Rendering, Loading & Secrets
 
-*   **Rule 4.1 (Suspense Boundaries):** Use `loading.tsx` for route-level loading UI. For more granular control, wrap slow data-fetching components in `<Suspense>` boundaries. The boundary must be placed *above* the async component in the tree.
+*   **Rule 4.1 (Suspense Boundaries):** Use `loading.tsx` for route-level loading UI. For component-level loading with animations, see our Design Pattern Rules below for the complete animated loading system.
 *   **Rule 4.2 (Re-triggering Suspense):** To force a Suspense boundary to re-trigger when props change (e.g., a search query), pass a unique `key` prop to it (e.g., `<Suspense key={query}>`).
 *   **Rule 4.3 (Static vs. Dynamic Rendering):** Avoid using dynamic functions like `cookies()`, `headers()`, or the `searchParams` prop in Server Components, as this opts the entire route into dynamic rendering.
 *   **Rule 4.4 (Environment Variables):** Store secrets in `.env.local`. Only variables prefixed with `NEXT_PUBLIC_` are exposed to the browser. Keep API keys and database secrets server-only (no prefix).
@@ -46,11 +49,9 @@ This guide provides a condensed set of rules for building robust and performant 
 *   **Rule 4.6 (Hydration):** Ensure the initial UI rendered on the server is identical to the client. For intentional differences (e.g., timestamps), use `useEffect` to update the value on the client or add the `suppressHydrationWarning` prop.
 *   **Rule 4.7 (Redirects):** The `redirect()` function from `next/navigation` works by throwing an error. Do not place it inside a `try...catch` block, as the `catch` will prevent the redirect from working.
 
-# Global React: Core Rules for High-Quality Code
-
-This guide provides a condensed set of rules for building robust, performant, and maintainable React applications. Adhering to these principles helps avoid common pitfalls and ensures code quality.
-
 ---
+
+## ⚛️ React Best Practices
 
 ### 1. State & Props Management
 
@@ -84,23 +85,25 @@ This guide provides a condensed set of rules for building robust, performant, an
 
 *   **Rule 4.1 (Error Boundaries):** Wrap critical component trees in an Error Boundary component. This catches rendering errors in child components, displays a fallback UI, and prevents the entire application from crashing.
 
-# 🎬 Golden Rules for Animated Loading States
+---
 
-## 🧠 Core Philosophy: Perceived Performance > Actual Performance
+## 🎬 Design Pattern Rules: Animated Loading States
+
+### Core Philosophy: Perceived Performance > Actual Performance
 
 Our goal is to make the application *feel* instant, even when loading heavy data. We achieve this by showing critical content immediately and progressively revealing less important elements. This creates a smooth, high-quality user experience.
 
 ---
 
-## ✨ The 3 Golden Rules of Loading
+### The 3 Golden Rules of Loading
 
 1.  **🥇 Instant Critical Content First:** The most important information the user needs (e.g., page title, main heading) must appear instantly. This content should be rendered on the server and not be part of any animation sequence.
 2.  **🌊 Stagger Animations (Waterfall):** Never reveal all elements at once. Create a "waterfall" effect by staggering animations with small delays (`0.1s`, `0.2s`, etc.). This guides the user's eye and makes loading feel dynamic.
 ---
 
-## 🏗️ The Blueprint: Core Implementation
+### 🏗️ The Blueprint: Core Implementation
 
-### 1. CSS Foundation
+#### 1. CSS Foundation
 
 Use these minimal, standardized CSS classes for all staggered loading animations.
 
@@ -132,7 +135,7 @@ Use these minimal, standardized CSS classes for all staggered loading animations
 .delay-5 { animation-delay: 0.5s; }
 ```
 
-### 2. The `UniversalSection` Component (Best Practice)
+#### 2. The `UniversalSection` Component (Best Practice)
 
 To ensure consistency, use a wrapper component like this. It combines animation, delay, and `Suspense` for asynchronous content.
 
@@ -176,7 +179,7 @@ export default function UniversalSection({
 }
 ```
 
-### 3. Next.js Page Example (Blueprint)
+#### 3. Next.js Page Example (Blueprint)
 
 This demonstrates the perfect loading sequence.
 
@@ -216,9 +219,9 @@ export default async function Page() {
 
 ---
 
-## 📊 Data Fetching & Loading Hierarchy
+### 📊 Data Fetching & Loading Hierarchy
 
-### The Multi-Level Fetching Pattern
+#### The Multi-Level Fetching Pattern
 
 Our app follows a **cascading data fetching pattern** that mirrors the visual loading hierarchy:
 
@@ -303,14 +306,14 @@ async function Accords({ accordIds }) {
 }
 ```
 
-### 🎯 Fetching Strategy Rules
+#### 🎯 Fetching Strategy Rules
 
 1. **🥇 Critical First:** Page-level queries fetch only what's needed for immediate display (title, basic info)
 2. **🔄 Batch Related Data:** Section-level components fetch their core data + immediate relations in one query
 3. **🎯 Component-Specific:** Individual components fetch their specific requirements (e.g., Accords fetches accord details)
 4. **⚡ Progressive Loading:** Each level has its own Suspense boundary with appropriate fallbacks
 
-### 🎬 The Complete Flow Example
+#### 🎬 The Complete Flow Example
 
 ```tsx
 // 1. Page loads instantly with critical data
@@ -341,7 +344,7 @@ async function Accords({ accordIds }) {
 
 ---
 
-## 🚨 Safety Net: Key Edge Cases & Anti-Patterns
+### 🚨 Safety Net: Key Edge Cases & Anti-Patterns
 
 *   **SEO:** Ensure critical SEO content (like `h1`, `meta description`) is rendered on the server and is not dependent on client-side animation.
 *   **Layout Shift (CLS):** Reserve space for loading elements using skeletons or fixed-height containers to prevent content from jumping.
