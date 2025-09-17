@@ -48,6 +48,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
 *   **Rule 4.5 (Code Execution Guarantees):** Use the `server-only` package to guarantee that a module can only be imported by Server Components. Use `client-only` for modules with browser-only APIs.
 *   **Rule 4.6 (Hydration):** Ensure the initial UI rendered on the server is identical to the client. For intentional differences (e.g., timestamps), use `useEffect` to update the value on the client or add the `suppressHydrationWarning` prop.
 *   **Rule 4.7 (Redirects):** The `redirect()` function from `next/navigation` works by throwing an error. Do not place it inside a `try...catch` block, as the `catch` will prevent the redirect from working.
+*   **Rule 4.8 (Static-First Loading):** Always render static UI elements (headers, titles, descriptions, navigation) OUTSIDE of Suspense boundaries. Only wrap dynamic, data-dependent content in Suspense. This ensures critical UI appears instantly (0ms) while data loads progressively.
 
 ---
 
