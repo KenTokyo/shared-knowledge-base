@@ -211,4 +211,67 @@ error?: string;
 }
 ```
 
+## 🚨 KRITISCHE PERFORMANCE-REGEL: Tab Components
+
+**MANDATORY: Diese Regel MUSS bei allen Tab-Implementierungen beachtet werden!**
+
+### ❌ VERBOTENES ANTI-PATTERN in Tabs:
+```tsx
+// ❌ NIEMALS: Server Fetching in Tab Components!
+export function SomeTab({ profileId }: { profileId: string }) {
+  const dataPromise = getServerData(profileId);  // ❌ FEHLER!
+  
+  return (
+    <Suspense fallback={<Loading />}>           // ❌ Re-fetch bei Tab-Switch!
+      <DataContainer promise={dataPromise} />
+    </Suspense>
+  );
+}
+// RESULTAT: 1000ms+ Delay bei jedem Tab-Wechsel!
+```
+
+### ✅ KORREKTES PATTERN für Tabs:
+```tsx
+// ✅ RICHTIG: Props-Pattern für INSTANT Performance
+export function SomeTab({ data, isLoading, themeColors }: TabProps) {
+  return (
+    <div>
+      {isLoading ? <Spinner /> : <Content data={data} />}
+    </div>
+  );
+}
+// RESULTAT: < 50ms Tab-Switch (INSTANT)
+```
+
+### 🎯 TAB-PERFORMANCE REGEL:
+- **TABS = PURE UI RENDERING** (keine Server Calls!)
+- **DATA FETCHING = PARENT RESPONSIBILITY** (NavbarClient/EnhancedProfileMenu)
+- **Props-Pattern MANDATORY** für alle Tab-Daten
+- **Tab-Switch Ziel: < 100ms**
+
+### ✅ AUSNAHME: Navbar/Layout-Level Fetching
+
+**Erlaubt für Navbar-Komponenten (NavbarServer/NavbarClient):**
+```tsx
+// ✅ ERLAUBT: Promise.all im NavbarServer für gemeinsame Daten
+const [progressionResult, allProfileDataResult, themesResult] = await Promise.all([
+  getUserProgression(profile.userId),
+  getAllProfileData(profile.id),
+  getThemesForSwitcher(profile.userId),
+]);
+
+// ✅ ERLAUBT: useEffect im NavbarClient für zusätzliche Daten
+useEffect(() => {
+  if (profile?.id) {
+    getMissionData(profile.id).then(setMissionData);
+  }
+}, [profile?.id]);
+```
+
+**Grund:** Navbar-Level Fetching passiert EINMAL beim App-Start, nicht bei jedem Tab-Wechsel. Die Daten werden dann als Props an alle Tab-Komponenten weitergegeben.
+
+**Referenz**: `shared-docs/performance/tab-component-performance-antipattern.md`
+
+---
+
 **Lese unbedingt die doku zu: `shared-docs\refactoring-docs\global-coding-rules.md` und wenn du mit der Planung beginnst, nenne welche Regeln du aus der `shared-docs\refactoring-docs\global-coding-rules.md` benutzt!**

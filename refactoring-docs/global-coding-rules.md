@@ -534,3 +534,127 @@ async function Accords({ accordIds }) {
 *   **❌ DATA ANTI-PATTERN:** Never fetch all data at page level - this blocks the entire page render
 *   **❌ DATA ANTI-PATTERN:** Don't create separate queries for each small piece of data - batch related queries
 *   **❌ DATA ANTI-PATTERN:** Avoid waterfall loading where Component A waits for Component B's data
+*   **❌ TAB ANTI-PATTERN:** NEVER put server fetching/Suspense in Tab Components - causes 1000ms+ delays per tab switch
+
+---
+
+## 🚨 KRITISCHE TAB-PERFORMANCE REGELN
+
+### Rule 6: Tab Components Performance Pattern
+
+**MANDATORY für alle Tab-Implementierungen:**
+
+#### ❌ VERBOTENES ANTI-PATTERN:
+```tsx
+// ❌ NEVER: Server fetching in Tab Components
+function MissionTab({ profileId }: { profileId: string }) {
+  const dataPromise = getServerData(profileId);  // ❌ Re-fetch on every tab switch!
+  
+  return (
+    <Suspense fallback={<Loading />}>           // ❌ Causes 1000ms+ delays
+      <DataContainer promise={dataPromise} />
+    </Suspense>
+  );
+}
+```
+
+**Problem**: Each tab switch triggers new server requests = terrible UX
+
+#### ✅ CORRECT PATTERN:
+```tsx
+// ✅ CORRECT: Props-based Tab Components
+function MissionTab({ 
+  missionData,    // ✅ Data from parent
+  isLoading,      // ✅ Loading state from parent 
+  themeColors     // ✅ Style props
+}: TabProps) {
+  return (
+    <div className="space-y-3">
+      {/* 🥇 INSTANT STATIC CONTENT */}
+      <div className="static-header">
+        <h3>Missions</h3>
+        <p>Complete your daily goals</p>
+      </div>
+
+      {/* 🌊 PROGRESSIVE LOADING */}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <MissionContent data={missionData} />
+      )}
+    </div>
+  );
+}
+
+// Parent Component (NavbarClient/EnhancedProfileMenu):
+function Parent() {
+  const [missionData, setMissionData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // ✅ Data fetching in parent - happens ONCE
+  useEffect(() => {
+    if (profile?.id) {
+      setIsLoading(true);
+      getMissionData(profile.id)
+        .then(setMissionData)
+        .finally(() => setIsLoading(false));
+    }
+  }, [profile?.id]);
+
+  return (
+    <MissionTab 
+      missionData={missionData}
+      isLoading={isLoading}
+      themeColors={themeColors}
+    />
+  );
+}
+```
+
+#### 🎯 Tab Performance Rules:
+
+1. **TABS = PURE UI RENDERING** - No server calls in tab components
+2. **DATA FETCHING = PARENT RESPONSIBILITY** - Load data in NavbarClient/EnhancedProfileMenu  
+3. **Props-Pattern MANDATORY** - All tab data via props
+4. **Performance Target**: Tab switches < 100ms
+5. **Static-First Loading**: Show headers instantly, load dynamic content progressively
+
+#### ✅ ERLAUBTE AUSNAHME: Navbar/Layout-Level Fetching
+
+**Für NavbarServer/NavbarClient ist paralleles Fetching erlaubt:**
+```tsx
+// ✅ ERLAUBT: Promise.all im NavbarServer
+const [progressionResult, allProfileDataResult, themesResult] = await Promise.all([
+  getUserProgression(profile.userId),
+  getAllProfileData(profile.id), 
+  getThemesForSwitcher(profile.userId),
+]);
+
+// ✅ ERLAUBT: useEffect im NavbarClient für zusätzliche Daten
+useEffect(() => {
+  if (profile?.id) {
+    getMissionData(profile.id).then(setMissionData);
+  }
+}, [profile?.id]);
+```
+
+**Begründung:** Navbar-Level Fetching erfolgt nur EINMAL beim App-Start, nicht bei Tab-Wechseln. Diese Daten werden dann als Props an alle Tab-Komponenten verteilt, wodurch Tab-Switches instant bleiben.
+
+#### 📋 Tab Component Checklist:
+
+**Before implementing any tab, verify:**
+
+- [ ] ❌ Does the tab make server calls on render?
+- [ ] ❌ Does the tab use Suspense boundaries?
+- [ ] ❌ Does the tab fetch data directly?
+
+**If YES to any above → REFACTOR to Props-Pattern!**
+
+- [ ] ✅ Does the tab receive all data via props?
+- [ ] ✅ Are loading states handled by parent?
+- [ ] ✅ Is the tab pure UI rendering?
+- [ ] ✅ Tab switch measured < 100ms?
+
+**Reference**: `shared-docs/performance/tab-component-performance-antipattern.md`
+
+**This rule prevents 4+ hour debugging sessions for simple performance issues!**
