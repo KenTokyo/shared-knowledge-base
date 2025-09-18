@@ -39,7 +39,7 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
 
 5. **User möchte Frontend verbessern**  
    → Lies zusätzlich:  
-   - `shared-docs/agents/commands/frontend-master.md`  
+   - `shared-docs\agents\frontend-master-role-definition.md`  
 
 
 📝 Regel:  
