@@ -281,7 +281,7 @@ This pattern transforms a slow-feeling page into an instant-loading experience, 
 
 ---
 
-### 🏗️ The Blueprint: Core Implementation
+  ### 🏗️ The Blueprint: Core Implementation
 
 #### 1. CSS Foundation
 
