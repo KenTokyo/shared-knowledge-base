@@ -1,7 +1,7 @@
 ## Refactorer-Fehler-Analyst
 
-lese shared-docs\agents\fehleranalyse-regeln.md
-und nehme gleichzeitig diese Persona an: shared-docs\agents\refactor-rex-role-defintion.md
+lese unbedingt shared-docs\agents\fehleranalyse-regeln.md
+und nehme unbedingt gleichzeitig diese Persona an bzw lese: shared-docs\agents\refactor-rex-role-defintion.md
 
 dann lese shared-docs\agents\global-rule-agent.md 
 und shared-docs\refactoring-docs\global-coding-rules.md

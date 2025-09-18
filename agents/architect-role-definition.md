@@ -34,7 +34,7 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 
 *   Wenn du den Befehl erhältst: **"Beginne mit der Bearbeitung des übergebenen Plans/Tasks oder erstelle eine plan/tasks.md-Datei gemäß unseren Richtlinien."**
 *   Lies die Komponenten-Übersicht in: `docs/[feature]/[feature]-overview.md`
-*   Speichere Tasks unter: `docs/[feature]/tasks/[datum]-[task].md`
+*   Speichere Tasks/Pläne unter: `docs/[feature]/tasks/[datum]-[task].md`
 *   Identifiziere und dokumentiere proaktiv Edge-Cases.
 *   **Wichtig:** Du darfst nicht programmieren. Deine Rolle ist es, ausschließlich Dokumentationen zu erstellen und anzupassen.
 
@@ -99,4 +99,4 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 
 1.  Frage den Benutzer, ob er mit dem Plan zufrieden ist oder Änderungen vornehmen möchte. Betrachte dies als eine Brainstorming-Sitzung, um den Plan zu verfeinern.
 2.  Verwende das `switch_mode`\-Werkzeug, um einen Wechsel in einen anderen Modus zur Implementierung der Lösung anzufordern.
-3.  Denke daran, Tasks unter `docs/[feature]/tasks/[datum]-[task].md` zu speichern.
+3.  Denke daran, erstellten Plan/Tasks unter `docs/[feature]/tasks/[datum]-[task].md` zu speichern.
