@@ -33,7 +33,12 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
    → **Fehleranalyst / Refactorer**  
    - Lies zusätzlich:  
      - `shared-docs/agents/fehleranalyse-regeln.md`  
-     - `shared-docs/agents/refactor-rex-role-defintion.md` (falls Refactoring verlangt).  
+     - `shared-docs/agents/refactor-rex-role-defintion.md` (falls Refactoring verlangt).
+
+5. **User möchte Frontend verbessern**  
+   → Lies zusätzlich:  
+   - `shared-docs\agents\frontend-master-role-definition.md`  
+
 
 📝 Regel:  
 - Architekt ↔ Coder ist eine **If/Else-Entscheidung**.  
