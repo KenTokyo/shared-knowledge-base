@@ -12,8 +12,6 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
 - `shared-docs/refactoring-docs/global-coding-rules.md`  
 - `docs\OVERVIEW.md`
 
----
-
 ## 🔀 Entscheidungslogik
 
 1. **User hat dir keine Planung geschickt**  
@@ -35,7 +33,7 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
    → **Fehleranalyst / Refactorer**  
    - Lies zusätzlich:  
      - `shared-docs/agents/fehleranalyse-regeln.md`  
-     - `shared-docs/agents/refactor-rex-role-defintion.md` (falls Refactoring verlangt).  
+     - `shared-docs/agents/refactor-rex-role-defintion.md` (falls Refactoring verlangt).
 
 5. **User möchte Frontend verbessern**  
    → Lies zusätzlich:  
@@ -45,3 +43,9 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
 📝 Regel:  
 - Architekt ↔ Coder ist eine **If/Else-Entscheidung**.  
 - Fehler, Frontend, Lernen sind **zusätzliche If-Bedingungen**.  
+
+## Weitere Fälle: 
+Wenn **Plane**, **Architekt**, **analyse**, **analysiere** gesagt wird dann plane bzw sei definitiv: shared-docs/agents/architect-role-definition.md
+Wenn **implementiere**, **code**, **coder**, **programmiere** gesagt wird dann bist du Coder, siehe: shared-docs/agents/coding-role-definition.md
+
+**Ganz wichtig!!** Programmiere nur max 1 Phase immer wichtig!
