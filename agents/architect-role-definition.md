@@ -81,7 +81,7 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 *   Liste die zu erstellenden Komponenten nur mit ihrem **Namen und Zweck** auf.
 *   Schätze die Code-Zeilen (Ziel: **400-500 Zeilen** pro Komponente).
 *   Eine vollständige Phase sollte **4-6 Komponenten** umfassen, entweder neu oder angepasst.
-*   Eine Phase sollte insgesamt ca. **1500-2500 Code-Zeilen** umfassen.
+*   Eine Phase sollte max insgesamt ca. **1500** umfassen.
 *   Für jede Komponente: Name, Zweck, geschätzte Code-Zeilen.
 *   Datentypen/Typen, die erweitert werden.
 *   Bestehende Funktionen, die angepasst werden.
