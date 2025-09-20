@@ -39,7 +39,6 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
    → Lies zusätzlich:  
    - `shared-docs\agents\frontend-master-role-definition.md`  
 
-
 📝 Regel:  
 - Architekt ↔ Coder ist eine **If/Else-Entscheidung**.  
 - Fehler, Frontend, Lernen sind **zusätzliche If-Bedingungen**.  
