@@ -25,32 +25,22 @@ This guide provides comprehensive coding rules for building robust, performant, 
 *   **Rule 1.2.7 (Avoid `useEffect` for Initial Data):** Do not use `useEffect` to fetch initial data in Client Components. This pattern is slow, causes rendering waterfalls, and negates the benefits of server-side data fetching.
 *   **Rule 1.2.8 (Distribute Promises with Context):** When multiple Client Components need the same server-fetched data, distribute the promise via a React Context Provider. This prevents redundant data fetches and keeps the code clean (no prop-drilling).
 
-### 1.3. Caching Strategy & Performance
+### 1.3. Data Mutations & State Updates
 
-*   **Rule 1.3.1 (Request Memoization):** Next.js automatically deduplicates `fetch` requests with the same URL during rendering. Multiple components can call `fetch` for the same data without performance impact.
-*   **Rule 1.3.2 (Data Cache Control):** Use `fetch` cache options to control data caching: `{ cache: 'force-cache' }` (default), `{ cache: 'no-store' }` for uncached data, or `{ next: { revalidate: 3600 } }` for time-based revalidation.
-*   **Rule 1.3.3 (Cache Invalidation) Important!! :** Use `revalidatePath('/path')` or `revalidateTag('tag')` in Server Actions to invalidate cached data after mutations. This triggers UI updates across the app.
-*   **Rule 1.3.4 (Route-Level Caching):** Routes are cached by default (Full Route Cache). Use dynamic functions (`cookies()`, `headers()`) or `export const dynamic = 'force-dynamic'` to opt out.
-*   **Rule 1.3.5 (Client Router Cache):** The Router Cache stores visited routes client-side. Use `router.refresh()` to invalidate it or set `<Link prefetch={false}>` to opt out of prefetching.
-*   **For detailed caching mechanics, invalidation strategies, and API references, see:**
-*   **➡️ [`shared-docs/caching/nextjs-caching-guide.md`](shared-docs/caching/nextjs-caching-guide.md)**
+*   **Rule 1.3.1 (Use Server Actions):** Use Server Actions for all data mutations (e.g., form submissions, updates, deletions). They can be called from both Server and Client Components.
+*   **Rule 1.3.2 (UI Updates after Mutation):** After a mutation in a Server Action, use `revalidatePath('/')` or `revalidateTag('tag')` to invalidate the cache and trigger a UI update.
+*   **Rule 1.3.3 (Security):** **Always** validate user input and authenticate the profile session with profile-finder within your Server Actions to prevent security vulnerabilities.
 
-### 1.4. Data Mutations & State Updates
+### 1.4. Rendering, Loading & Secrets
 
-*   **Rule 1.4.1 (Use Server Actions):** Use Server Actions for all data mutations (e.g., form submissions, updates, deletions). They can be called from both Server and Client Components.
-*   **Rule 1.4.2 (UI Updates after Mutation):** After a mutation in a Server Action, use `revalidatePath('/')` or `revalidateTag('tag')` to invalidate the cache and trigger a UI update.
-*   **Rule 1.4.3 (Security):** **Always** validate user input and authenticate the profile session with profile-finder within your Server Actions to prevent security vulnerabilities.
-
-### 1.5. Rendering, Loading & Secrets
-
-*   **Rule 1.5.1 (Suspense Boundaries):** Use `loading.tsx` for route-level loading UI. For component-level loading with animations, refer to the dedicated design pattern guide.
-*   **Rule 1.5.2 (Re-triggering Suspense):** To force a Suspense boundary to re-trigger when props change (e.g., a search query), pass a unique `key` prop to it (e.g., `<Suspense key={query}>`).
-*   **Rule 1.5.3 (Static vs. Dynamic Rendering):** Avoid using dynamic functions like `cookies()`, `headers()`, or the `searchParams` prop in Server Components, as this opts the entire route into dynamic rendering.
-*   **Rule 1.5.4 (Environment Variables):** Store secrets in `.env.local`. Only variables prefixed with `NEXT_PUBLIC_` are exposed to the browser. Keep API keys and database secrets server-only (no prefix).
-*   **Rule 1.5.5 (Code Execution Guarantees):** Use the `server-only` package to guarantee that a module can only be imported by Server Components. Use `client-only` for modules with browser-only APIs.
-*   **Rule 1.5.6 (Hydration):** Ensure the initial UI rendered on the server is identical to the client. For intentional differences (e.g., timestamps), use `useEffect` to update the value on the client or add the `suppressHydrationWarning` prop.
-*   **Rule 1.5.7 (Redirects):** The `redirect()` function from `next/navigation` works by throwing an error. Do not place it inside a `try...catch` block, as the `catch` will prevent the redirect from working.
-*   **Rule 1.5.8 (Static-First Loading):** Always render static UI elements (headers, titles, descriptions, navigation) OUTSIDE of Suspense boundaries. Only wrap dynamic, data-dependent content in Suspense. This ensures critical UI appears instantly (0ms) while data loads progressively.
+*   **Rule 1.4.1 (Suspense Boundaries):** Use `loading.tsx` for route-level loading UI. For component-level loading with animations, refer to the dedicated design pattern guide.
+*   **Rule 1.4.2 (Re-triggering Suspense):** To force a Suspense boundary to re-trigger when props change (e.g., a search query), pass a unique `key` prop to it (e.g., `<Suspense key={query}>`).
+*   **Rule 1.4.3 (Static vs. Dynamic Rendering):** Avoid using dynamic functions like `cookies()`, `headers()`, or the `searchParams` prop in Server Components, as this opts the entire route into dynamic rendering.
+*   **Rule 1.4.4 (Environment Variables):** Store secrets in `.env.local`. Only variables prefixed with `NEXT_PUBLIC_` are exposed to the browser. Keep API keys and database secrets server-only (no prefix).
+*   **Rule 1.4.5 (Code Execution Guarantees):** Use the `server-only` package to guarantee that a module can only be imported by Server Components. Use `client-only` for modules with browser-only APIs.
+*   **Rule 1.4.6 (Hydration):** Ensure the initial UI rendered on the server is identical to the client. For intentional differences (e.g., timestamps), use `useEffect` to update the value on the client or add the `suppressHydrationWarning` prop.
+*   **Rule 1.4.7 (Redirects):** The `redirect()` function from `next/navigation` works by throwing an error. Do not place it inside a `try...catch` block, as the `catch` will prevent the redirect from working.
+*   **Rule 1.4.8 (Static-First Loading):** Always render static UI elements (headers, titles, descriptions, navigation) OUTSIDE of Suspense boundaries. Only wrap dynamic, data-dependent content in Suspense. This ensures critical UI appears instantly (0ms) while data loads progressively.
 
 ---
 
