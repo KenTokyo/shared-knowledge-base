@@ -32,7 +32,7 @@ In diesem Beispiel ist der Hash für den Commit mit der Nachricht "big" die `2ae
 Jetzt sag Git einfach, dass dieser Commit rückgängig gemacht werden soll:
 
 ```
-git revert <commit-hash>
+git revert d9a781d
 ```
 
 Ersetze `<commit-hash>` durch den Hash, den du gerade kopiert hast.
@@ -54,7 +54,7 @@ git revert <commit-hash> --no-edit
 Deine Korrektur ist nun lokal bereit. Der letzte Schritt ist, sie auf das Remote-Repository zu pushen, damit alle anderen sie sehen können.
 
 ```
-git push origin <branch-name>
+git push origin main
 ```
 
 Zum Beispiel, um auf den `main`\-Branch zu pushen:
