@@ -3,7 +3,7 @@
 This guide provides comprehensive coding rules for building robust, performant, and maintainable applications. It covers Next.js App Router, React best practices, and our custom design patterns.
 
 ---
-
+## 0. DONT RUN npm run dev or npm run build, use npx tsc instead!
 ## 1. 🚀 Next.js App Router Rules
 
 ### 1.1. Component Architecture & Boundaries
