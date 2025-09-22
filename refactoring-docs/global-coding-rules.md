@@ -168,6 +168,12 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Für eine vollständige Anleitung mit Code-Beispielen und Anti-Patterns, siehe:**
 *   **➡️ [`shared-docs/performance/tab-component-performance-antipattern.md`](shared-docs/performance/tab-component-performance-antipattern.md)**
 
+### 4.4. Shortcut Display & Toolbar Components
+
+*   **Rule 4.4.1 (Shortcut Display Testing):** Bei Shortcut-Komponenten müssen ALLE Token-Kombinationen getestet werden, nicht nur Modifier-Keys. Test-Cases müssen Single-Key (K), Modifier+Key (Ctrl+K), Multi-Modifier (Ctrl+Shift+A) und Multi-Key (Ctrl+Shift+Alt+Meta+K) abdecken.
+*   **Rule 4.4.2 (Toolbar Position Context):** Toolbar-Komponenten müssen Context über ihre Position (top/bottom/left/right) erhalten, um Tooltip-Direction automatisch anzupassen. Nie statische Tooltip-Richtungen verwenden.
+*   **Rule 4.4.3 (Gaming-Style Balance):** Gaming-Design-Elemente dürfen niemals Funktionalität beeinträchtigen. Priorität: Funktionalität > Performance > Ästhetik > Gaming-Effekte.
+
 ---
 
 ## 5. 🚨 General Anti-Patterns & Edge Cases
