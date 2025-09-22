@@ -176,6 +176,10 @@ This section provides high-level rules for our core design patterns. For detaile
 
 ---
 
+### 4.5. CSS & Positioning
+
+*   **Rule 4.5.1 (Scoped Positioning):** When implementing `position: absolute` or `position: fixed` for a component that should be contained within a specific parent layout (e.g., a toolbar for an editor), always ensure the parent container has `position: relative` to create a new stacking context. Avoid relying on viewport-based positioning for components that are logically part of a sub-layout.
+
 ## 5. 🚨 General Anti-Patterns & Edge Cases
 
 *   **Rule 5.1 (SEO):** Ensure critical SEO content (like `h1`, `meta description`) is rendered on the server and is not dependent on client-side animation.
