@@ -26,7 +26,28 @@ Verwende nicht `npm run dev` oder `npm run build`, sondern nur `npx tsc` und sag
 
 Willkommen zurück! Hier sind deine Anweisungen, um mit der nächsten Phase zu beginnen:
 
-**📖 Plan lesen**: Lies **zuerst** die übergebene Planung/Task aus `docs/[feature]/tasks/`, um die nächste anstehende Phase zu verstehen.
+## ⚠️ WICHTIGE VORAUSSETZUNG: Planungsüberprüfung
+
+**🔍 Planungsvalidierung**: **BEVOR** du mit dem Programmieren beginnst, musst du **zwingend** in dieser Reihenfolge überprüfen:
+
+1. **Hat der User eine Planung mitgegeben?** (zu 99% der Fall)
+   - Lies **zuerst** die vom User übertragene Planungsdatei
+   - Prüfe, ob die gewünschte Aufgabe/das Feature in der Planung enthalten ist
+
+2. **Aufgabe in Planung vorhanden?**
+   - ✅ **JA** → Beginne mit der Implementierung der nächsten Phase
+   - ❌ **NEIN** → Erweitere die bestehende Planung um die neue Aufgabe/den Fehler
+
+3. **Falls User KEINE Planung mitgegeben hat:** (seltener Fall)
+   - Suche nach existierenden Planungsdateien in `docs/[feature]/tasks/[datum]-[task].md`
+   - Falls **gar keine** Planung existiert, erstelle eine nach `shared-docs\agents\architect-role-definition.md`
+
+4. **Planungserweiterung bei neuen Anforderungen:**
+   - Bei Fehlern oder neuen Features: Erweitere die bestehende Planung nach Planungsregeln
+   - **Wichtig:** Alles muss dokumentiert sein - das Projekt ist zu groß für undokumentierte Änderungen
+   - Erst nach Planungserweiterung darf programmiert werden
+
+**📖 Plan lesen**: Lies **erst nach der Validierung** die übergebene Planung/Task aus `docs/[feature]/tasks/`, um die nächste anstehende Phase zu verstehen.
 
 **🔍 Kontext sammeln**: Versuche immer ähnliche Dateien wie Finder oder Actions zu finden, die ähnliche Logiken aufweisen um die Struktur bzw. Coding-Richtlinien besser zu verstehen.
 
