@@ -72,6 +72,10 @@ This guide provides comprehensive coding rules for building robust, performant, 
 
 *   **Rule 2.4.1 (Error Boundaries):** Wrap critical component trees in an Error Boundary component. This catches rendering errors in child components, displays a fallback UI, and prevents the entire application from crashing.
 
+### 2.5. Component Styling
+
+*   **Rule 2.5.1 (Responsive Child Components):** When resizing a parent container component, always verify that all child components, especially those with their own complex layout or fixed dimensions, scale or respond as expected. Apply flexible layout properties (e.g., `flex-grow`, `h-full`, `w-full`) to child components where necessary to ensure they utilize the newly available space.
+ 
 ---
 
 ## 3. 🗂️ Component & File Architecture
