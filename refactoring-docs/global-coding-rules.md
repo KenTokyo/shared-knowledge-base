@@ -195,3 +195,10 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Rule 5.7 (Data Batching):** Don't create separate queries for each small piece of data - batch related queries.
 *   **Rule 5.8 (Data Waterfall):** Avoid waterfall loading where Component A waits for Component B's data.
 *   **Rule 5.9 (Context Analysis Before Code Changes):** Vor jeder Code-Änderung die letzten 3-4 Tasks/Prompts analysieren, um den Kontext zu verstehen. Niemals Änderungen vornehmen, die bereits gelöste Probleme rückgängig machen. Besonders kritisch bei UI/Shortcut-Systemen, wo kompakte Darstellung vs. volle Texte bereits optimiert wurden.
+*   **Rule 5.10 (MANDATORY Legacy Code Removal):** 🚨 **KRITISCH** - Nach jeder Änderung MUSS ungenutzter Legacy-Code SOFORT entfernt werden! Das betrifft:
+    - Ungenutzte Funktionen/Components
+    - Ungenutzte Imports/Dependencies  
+    - Ungenutzte Variables/Constants
+    - Ungenutzte CSS-Klassen
+    - Ungenutzte Hook-Aufrufe (useState, useMemo, etc.)
+    **WARNUNG:** Legacy-Code führt zu Maintenance-Hell, Bundle-Bloat und verwirrt zukünftige Entwickler. NIEMALS ungenützten Code zurücklassen - das ist inakzeptabel!
