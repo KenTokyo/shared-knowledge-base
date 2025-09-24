@@ -203,3 +203,4 @@ This section provides high-level rules for our core design patterns. For detaile
     - Ungenutzte Hook-Aufrufe (useState, useMemo, etc.)
     **WARNUNG:** Legacy-Code führt zu Maintenance-Hell, Bundle-Bloat und verwirrt zukünftige Entwickler. NIEMALS ungenützten Code zurücklassen - das ist inakzeptabel!
 *   **Rule 5.11 (Plan for Empty States):** When designing a UI that displays a list of items (e.g., API keys, notes, files), always explicitly plan and implement a distinct "empty state" view. This view should guide the user on how to add their first item. Do not simply show an empty list or a form without context.
+*   **Rule 5.12 (Dialog-useEffect Anti-Pattern):** 🚨 **KRITISCH** - Beim Debuggen von "unsichtbaren" Loading-Indikatoren in Dialogs IMMER zuerst alle `useEffect`s prüfen, die Dialog-State (`onOpenChange`, `setIsOpen`, etc.) beeinflussen!
