@@ -210,3 +210,11 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Rule 5.16 (Debug System First):** 🔧 **DEBUG INFRASTRUCTURE** - Bei komplexen State-Features SOFORT umfassendes Debug-System implementieren: Console-Logs für alle State-Changes, Mount/Unmount Events, useEffect-Triggers. Debug-System vor Feature-Fixes!
 
 *   **Rule 5.17 (Dialog-EventListener-Pattern - LAYOUT-CRASH-PREVENTION):** 🚨 **KRITISCH** - Dialoge MÜSSEN über useEffect-EventListener-Pattern geöffnet werden wenn der Trigger in Layout-kritischen Komponenten (Navbar, Header, Sidebar) liegt. Niemals Dialoge direkt in diesen Komponenten rendern - selbst bei `open={false}` können sie Layout-Kollapse verursachen. Siehe Post-Mortem zu mehr: `shared-docs\postmortem\open-dialogs-right-way-useffect-windowEventListener.md`
+
+*   **Rule 5.18 (Universal Component Purity):** 🚨 **KRITISCH** - Universal-Components (Dialog, Modal, Input) bleiben feature-agnostic. Keine Feature-spezifische Logic oder conditional Rendering. Feature-Detection gehört in Wrapper-Components.
+
+*   **Rule 5.19 (Dialog Naming Convention):** 🚨 **KRITISCH** - Eindeutige Dialog-Namen: `[Feature]Dialog` (einfach), `[Feature]View` (vollständig), `[Feature]Modal` (overlay). Keine mehrdeutigen Namen.
+
+*   **Rule 5.20 (Scroll Height Dependency):** 🚨 **KRITISCH** - `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht. **Debug:** Height-Chain prüfen. **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent. **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching.
+
+*   **Rule 5.21 (will-change Font-Killer):** 🚨 **KRITISCH** - Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch. Font-Quality > Micro-Performance.
