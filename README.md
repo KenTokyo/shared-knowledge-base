@@ -23,7 +23,9 @@ ren refactoring-docs refactoring-docs_backup
 Add this repository as a submodule. The documentation will be placed in a `shared/docs` folder to keep it separate from project-specific code. Replace `<REPO_URL>` with the actual URL of this repository.
 
 ```bash
-git submodule add https://github.com/KenTokyo/shared-knowledge-base shared/docs
+git submodule add https://github.com/KenTokyo/shared-knowledge-base shared-docs
+
+git submodule remove https://github.com/KenTokyo/shared-knowledge-base shared/docs
 ```
 
 ### 3. Commit the Integration
