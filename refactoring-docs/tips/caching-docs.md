@@ -530,4 +530,4 @@ const getSomething = unstable_cache(
 
 ---
 
-Wenn du willst, baue ich dir das **als kleine util-Library** (`/lib/data-cache.ts`) aus, inkl. **helper** für `byId`, `list`, `taggedRevalidate` und ein **Beispiel-Workout-Modul** für ElevateMe 4.0.
+Wenn du willst, baue ich dir das **als kleine util-Library** (`/lib/data-cache.ts`) aus, inkl. **helper** für `byId`, `list`, `taggedRevalidate` und ein **Beispiel-Workout-Modul** für TrackMe AI 4.0.

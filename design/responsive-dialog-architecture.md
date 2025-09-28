@@ -1,6 +1,6 @@
 # 🚀 Responsive Dialog Architecture: The Controller Pattern
 
-This document outlines the official architecture for creating responsive dialogs in ElevateMe 4.0. By following this pattern, we ensure a pixel-perfect, stable, and maintainable user experience across all devices.
+This document outlines the official architecture for creating responsive dialogs in TrackMe AI 4.0. By following this pattern, we ensure a pixel-perfect, stable, and maintainable user experience across all devices.
 
 ## 📌 The Core Problem: One Size Doesn't Fit All
 

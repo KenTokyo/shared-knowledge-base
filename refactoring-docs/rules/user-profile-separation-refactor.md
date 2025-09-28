@@ -2,7 +2,7 @@
 
 ## 📋 Overview
 
-ElevateMe 4.0 implements a **two-tier architecture** that separates authentication concerns from application data by using distinct `users` and `profiles` tables. This architectural decision provides significant benefits for security, scalability, and maintainability.
+TrackMe AI 4.0 implements a **two-tier architecture** that separates authentication concerns from application data by using distinct `users` and `profiles` tables. This architectural decision provides significant benefits for security, scalability, and maintainability.
 
 ## 🎯 Core Concept
 
@@ -194,7 +194,7 @@ This architecture was established to support:
 - Advanced privacy controls
 - Clean separation of concerns
 
-The separation ensures that ElevateMe 4.0 can evolve its user experience while maintaining a stable, secure authentication foundation.
+The separation ensures that TrackMe AI 4.0 can evolve its user experience while maintaining a stable, secure authentication foundation.
 
 ---
 
