@@ -211,4 +211,10 @@ This section provides high-level rules for our core design patterns. For detaile
 
 *   **Rule 5.17 (Dialog-EventListener-Pattern - LAYOUT-CRASH-PREVENTION):** 🚨 **KRITISCH** - Dialoge MÜSSEN über useEffect-EventListener-Pattern geöffnet werden wenn der Trigger in Layout-kritischen Komponenten (Navbar, Header, Sidebar) liegt. Niemals Dialoge direkt in diesen Komponenten rendern - selbst bei `open={false}` können sie Layout-Kollapse verursachen. Siehe Post-Mortem zu mehr: `shared-docs\postmortem\open-dialogs-right-way-useffect-windowEventListener.md`
 
-*   **Rule 5.18 (Complete Data Mapping Verification - SILENT-DATA-LOSS-PREVENTION):** 🚨 **KRITISCH** - Bei DB-zu-TypeScript-Mappings MÜSSEN alle verfügbaren DB-Felder gegen die Target-Type-Definition geprüft werden. NIEMALS nur ein Subset der Daten mappen ohne explizite Begründung im Code-Kommentar. Unvollständiges Mapping führt zu "silent data loss" - Daten sind in der DB, kommen aber nicht im Frontend an. IMMER eine vollständige Field-Mapping-Matrix erstellen: DB-Schema → TypeScript-Type → UI-Component.
+*   **Rule 5.18 (Universal Component Purity):** 🚨 **KRITISCH** - Universal-Components (Dialog, Modal, Input) bleiben feature-agnostic. Keine Feature-spezifische Logic oder conditional Rendering. Feature-Detection gehört in Wrapper-Components.
+
+*   **Rule 5.19 (Dialog Naming Convention):** 🚨 **KRITISCH** - Eindeutige Dialog-Namen: `[Feature]Dialog` (einfach), `[Feature]View` (vollständig), `[Feature]Modal` (overlay). Keine mehrdeutigen Namen.
+
+*   **Rule 5.20 (Scroll Height Dependency):** 🚨 **KRITISCH** - `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht. **Debug:** Height-Chain prüfen. **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent. **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching.
+
+*   **Rule 5.21 (will-change Font-Killer):** 🚨 **KRITISCH** - Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch. Font-Quality > Micro-Performance.
