@@ -218,3 +218,7 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Rule 5.20 (Scroll Height Dependency):** 🚨 **KRITISCH** - `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht. **Debug:** Height-Chain prüfen. **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent. **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching.
 
 *   **Rule 5.21 (will-change Font-Killer):** 🚨 **KRITISCH** - Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch. Font-Quality > Micro-Performance.
+
+*   **Rule 5.22 (Single Loading Pipeline):** 🚨 **KRITISCH** - Für kritische Daten-Loading-Szenarien (Entry, User-Profile, Session-Data) MUSS eine zentrale Loading-Pipeline existieren. Verschiedene UI-Entry-Points dürfen NIEMALS unterschiedliche Loading-Logiken implementieren. Alle Navigation-Wege müssen durch dieselbe Daten-Validierungs- und Loading-Schicht gehen.
+
+*   **Rule 5.23 (Mobile-First Space Efficiency):** 📱 **MOBILE-FIRST** - Alle UI-Komponenten MÜSSEN Mobile-First designed werden mit maximaler Space-Efficiency. Der User darf NIEMALS exzessiv scrollen müssen. Kompakte Darstellung hat IMMER Priorität über "großzügige" Desktop-Layouts. Input-Felder, die nicht die volle Breite benötigen, MÜSSEN in FlexRow-Containern nebeneinander positioniert werden. Vertikaler Raum ist kostbar - jede Komponente muss ihn respektieren. Kleinere Schriftgrößen, geringere Abstände, aber weiterhin hochmodernes Design

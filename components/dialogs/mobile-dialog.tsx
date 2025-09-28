@@ -5,7 +5,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X, ChevronLeft } from 'lucide-react';
 
 import { cn } from '@/lib/utils/utils';
-import { Button } from '@/components/ui/button'; // Adjust path as needed for the target project
+import { Button } from '@/components/ui/button';
 
 interface MobileDialogProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> {
   title?: React.ReactNode;

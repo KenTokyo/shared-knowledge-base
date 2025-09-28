@@ -133,6 +133,7 @@ The app includes full mobile support via Capacitor:
 8. **Kein User verwenden** - Benutze stattdessen den Profile, User nur für Auth, Profile für alles andere
 9. **Responsive Dialogs**: For dialogs requiring a distinct mobile experience, you **MUST** use the Controller Pattern. Create separate components for desktop (`[Feature]Dialog.tsx`) and mobile (`Mobile[Feature]Dialog.tsx`), and use a `[Feature]DialogController.tsx` to render the correct one based on screen size. Do not create a single, complex responsive component. For a detailed guide, see the [`Responsive Dialog Architecture`](shared-docs/design/responsive-dialog-architecture.md).
 10. **Important!: AutoAnimate for Frontend Tasks**: For frontend tasks use the `auto-animate` library. It's a zero-config utility that automatically animates elements when they are added, removed, or moved in the DOM. For a quick start, read the [`auto-animate-documentation.md`]
+11. Alle UI-Komponenten MÜSSEN **Mobile-First** designed werden mit maximaler Space-Efficiency, kleine Schriftgrößen, geringe Abstände, aber weiterhin hochmodernes Design.
 
 ### Code Style Guidelines
 
