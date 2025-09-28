@@ -3,10 +3,10 @@
 ## 📋 Copy-Paste Ready Prompt Template
 
 ```
-🏗️ **[PromptPage]** FadeContent Waterfall Refactoring**
+🏗️ **[CHAT PAGE]** FadeContent Waterfall Refactoring**
 
 Ich möchte eine moderne Server/Client-Component-Architektur mit staggered FadeContent-Animationen 
-für die **[PromptPage]**, damit Titel direkt gelanden werden also html context, 
+für die **[CHAT PAGE]**, damit Titel direkt gelanden werden also html context, 
 Komponenten die Karten sind oder Sektionen einfach dann mit Suspense ausstatten, 
 FadeContent überall implementieren mit leichten Delays von oben nach unten, genauere infos unten**. 
 
@@ -17,7 +17,7 @@ FadeContent überall implementieren mit leichten Delays von oben nach unten, gen
 - FadeContent Waterfall-Animationen mit blur-Effekt implementieren
 - Suspense-Blöcke für jede Section mit optimalen Loading-States
 
-**📁 Aktuelle Struktur:** `[CURRENT_PATH]`
+**📁 Aktuelle Struktur:** `[app\chat\page.tsx]`
 **🎨 Gewünschte Sections (nur wenn vorhanden!):**
 - (headerSection) - Titel, Navigation, kritische UI-Elemente
 - (statsSection) - Nur wenn Statistics/Widgets bereits existieren! 
@@ -53,6 +53,7 @@ FadeContent überall implementieren mit leichten Delays von oben nach unten, gen
 4. Skeleton Loading-States für jede Section
 5. TypeScript-Check nach Refactoring
 6. Globale Loading.tsx rausnehmen, da HTML instant visible - keine Ladezeit
+7. vergiss nicht falls du neue Komponenten erzeugt, in der Planung auch legacy Code zu entfernen, bzw alte Komponenten zu löschen, falls sie nicht mehr nach deinem Refactoring verwendet werden!!
 
 **⚠️ WICHTIG:** Nur bestehende Features refactorieren - KEINE neuen Components hinzufügen!
 
