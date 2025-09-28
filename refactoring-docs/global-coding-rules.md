@@ -218,3 +218,5 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Rule 5.20 (Scroll Height Dependency):** 🚨 **KRITISCH** - `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht. **Debug:** Height-Chain prüfen. **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent. **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching.
 
 *   **Rule 5.21 (will-change Font-Killer):** 🚨 **KRITISCH** - Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch. Font-Quality > Micro-Performance.
+
+*   **Rule 5.22 (Single Loading Pipeline):** 🚨 **KRITISCH** - Für kritische Daten-Loading-Szenarien (Entry, User-Profile, Session-Data) MUSS eine zentrale Loading-Pipeline existieren. Verschiedene UI-Entry-Points dürfen NIEMALS unterschiedliche Loading-Logiken implementieren. Alle Navigation-Wege müssen durch dieselbe Daten-Validierungs- und Loading-Schicht gehen.
