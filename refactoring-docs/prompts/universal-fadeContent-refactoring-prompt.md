@@ -47,15 +47,22 @@ FadeContent überall implementieren mit leichten Delays von oben nach unten, gen
 - benutze FadeContent Komponente`components/FadeContent.tsx`
 
 **🔧 Technische Umsetzung:**
-1. HTML-Content aus Suspense-Blöcken rausziehen für sofortige Sichtbarkeit
-2. Section-basierte Ordnerstruktur: `app/[feature]/(sectionName)/` - NUR für vorhandenen Content!
-3. Server Components für Data-Fetching, Client nur für Interaktivität
-4. Skeleton Loading-States für jede Section
-5. TypeScript-Check nach Refactoring
-6. Globale Loading.tsx rausnehmen, da HTML instant visible - keine Ladezeit
-7. vergiss nicht falls du neue Komponenten erzeugt, in der Planung auch legacy Code zu entfernen, bzw alte Komponenten zu löschen, falls sie nicht mehr nach deinem Refactoring verwendet werden!!
+1. **ANALYZE FIRST:** Finde bestehende Header/Content-Komponenten im Code
+2. **WRAP EXISTING:** FadeContent um bestehende Components, keine neuen erstellen
+3. HTML-Content aus Suspense-Blöcken rausziehen für sofortige Sichtbarkeit  
+4. Server Components für Data-Fetching, Client nur für Interaktivität
+5. Skeleton Loading-States für jede Section
+6. TypeScript-Check nach Refactoring
+7. Globale Loading.tsx rausnehmen, da HTML instant visible - keine Ladezeit
+8. Legacy Code SOFORT entfernen falls wirklich ungenutzt
 
-**⚠️ WICHTIG:** Nur bestehende Features refactorieren - KEINE neuen Components hinzufügen!
+**⚠️ KRITISCH:** 
+- **NUR REFACTORING, KEINE NEUEN KOMPONENTEN!** 
+- Bestehende Header/Components identifizieren und mit FadeContent wrappen
+- **NIEMALS** parallel duplicate UI erstellen
+- Erst analysieren: Wo ist der Header/Content bereits implementiert?
+- Dann: FadeContent um BESTEHENDE Komponenten wrappen
+- **ANTI-PATTERN:** Neue HeaderSection neben bestehender erstellen
 
 Kriegst du das hin? 🚀
 ```
