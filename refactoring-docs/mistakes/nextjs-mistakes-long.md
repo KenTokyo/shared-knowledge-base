@@ -449,7 +449,7 @@ export default function FavoriteButton() {
 "use client";
 import { useEffect, useState } from "react";
 export default function FavoriteButton() {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);MN
   useEffect(() => {
     setIsFavorite(localStorage.getItem("isFavorite") === "true");
   }, []);
