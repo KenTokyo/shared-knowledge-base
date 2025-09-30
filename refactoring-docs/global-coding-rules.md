@@ -185,6 +185,13 @@ This section provides high-level rules for our core design patterns. For detaile
 
 *   **Rule 4.5.1 (Scoped Positioning):** When implementing `position: absolute` or `position: fixed` for a component that should be contained within a specific parent layout (e.g., a toolbar for an editor), always ensure the parent container has `position: relative` to create a new stacking context. Avoid relying on viewport-based positioning for components that are logically part of a sub-layout.
 
+### 4.6. Animation Components & useEffect Dependencies
+
+*   **Rule 4.6.1 (Animation useEffect Dependencies):** 🚨 **KRITISCH** - Animation-Components die auf Prop-Changes reagieren sollen MÜSSEN `useEffect` mit **Dependency auf relevante Props** nutzen, nicht mit leerem Array `[]`. Empty dependency array (`useEffect(() => {...}, [])`) läuft **NUR** beim ersten Mount, nicht bei Prop-Changes. Für zuverlässige Re-Mount-Animationen: Force-Remount-Pattern mit inkrementierendem `key` State nutzen.
+*   **Reasoning:** `key`-basiertes Remounting allein ist unzuverlässig - React's Reconciliation entscheidet, ob Re-Mount nötig ist. Explizites Force-Remount via inkrementierenden State garantiert Animation bei jedem Prop-Change.
+*   **Für vollständige Post-Mortem-Analyse, siehe:**
+*   **➡️ [`shared-docs/postmortem/animation-useeffect-dependency-array-postmortem.md`](shared-docs/postmortem/animation-useeffect-dependency-array-postmortem.md)**
+
 ## 5. 🚨 General Anti-Patterns & Edge Cases
 
 *   **Rule 5.1 (SEO):** Ensure critical SEO content (like `h1`, `meta description`) is rendered on the server and is not dependent on client-side animation.
