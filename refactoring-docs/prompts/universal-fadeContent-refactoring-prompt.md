@@ -3,10 +3,10 @@
 ## 📋 Copy-Paste Ready Prompt Template
 
 ```
-🏗️ **[/ Page]** FadeContent Waterfall Refactoring**
+🏗️ **[News Page]** FadeContent Waterfall Refactoring**
 
 Ich möchte eine moderne Server/Client-Component-Architektur mit staggered FadeContent-Animationen 
-für die **[/ PAGE]**, damit Titel direkt gelanden werden also html context, 
+für die **[News PAGE]**, damit Titel direkt gelanden werden also html context
 Komponenten die Karten sind oder Sektionen einfach dann mit Suspense ausstatten, 
 FadeContent überall implementieren mit leichten Delays von oben nach unten, genauere infos unten**. 
 
@@ -17,7 +17,7 @@ FadeContent überall implementieren mit leichten Delays von oben nach unten, gen
 - FadeContent Waterfall-Animationen mit blur-Effekt implementieren
 - Suspense-Blöcke für jede Section mit optimalen Loading-States
 
-**📁 Aktuelle Struktur:** `[app\page.tsx]`
+**📁 Aktuelle Struktur:** `[News\page.tsx]`
 **🎨 Gewünschte Sections (nur wenn vorhanden!):**
 - (headerSection) - Titel, Navigation, kritische UI-Elemente
 - (statsSection) - Nur wenn Statistics/Widgets bereits existieren! 
@@ -28,12 +28,64 @@ FadeContent überall implementieren mit leichten Delays von oben nach unten, gen
 - 0ms: Header & Navigation INSTANT (KEINE Data-Fetching-Logik in page.tsx!)
 - Page.tsx soll FAST LEER sein - nur HTML-Content ohne Finder/Actions!
 - Alle Data-Fetching-Logik in separate MainContent-Komponente auslagern!
+**⚡ Performance-Anforderungen (KRITISCH!):**
+- 0ms: Header & Navigation INSTANT (KEINE Data-Fetching-Logik in page.tsx!)
+- Page.tsx soll FAST LEER sein - nur HTML-Content ohne Finder/Actions!
+- Alle Data-Fetching-Logik in separate MainContent-Komponente auslagern!
 - 100ms: Stats/Widgets mit blur-to-sharp Animation (nur wenn vorhanden!)
+- 200ms: Hauptcontent-Section mit Data-Loading
 - 200ms: Hauptcontent-Section mit Data-Loading
 - 300ms+: Individual Items mit staggered loading (50ms zwischen Items)
 
 **🌊 CRITICAL Page-Separation Pattern:**
+**🌊 CRITICAL Page-Separation Pattern:**
 ```tsx
+// ❌ ANTI-PATTERN: Data-Fetching in page.tsx blockiert Header!
+function Dashboard() {
+  const profile = await getCurrentProfile(); // <- BLOCKIERT INSTANT HEADER!
+  const data = await loadDashboardData();   // <- BLOCKIERT INSTANT HEADER!
+  
+  return (
+    <HeaderSection />  // <- Wird erst nach Data-Loading gezeigt!
+  );
+}
+
+// ✅ CORRECT PATTERN: Page fast leer, nur HTML-Content
+function Dashboard() {
+  return (
+    <div>
+      {/* INSTANT HTML - Kein Data-Fetching! */}
+      <FadeContent delay={0}>
+        <HeaderSection />      {/* Pure HTML, kein await */}
+      </FadeContent>
+      
+      <FadeContent delay={100}>
+        <ControlsSection />    {/* Controls ohne Data-Dependency */}
+      </FadeContent>
+      
+      {/* ALLE Data-Fetching-Logik hier rein! */}
+      <FadeContent delay={200} blur>
+        <Suspense fallback={<MainContentSkeleton />}>
+          <DashboardMainContent />  {/* getAlleDatenHier + profile + auth logic */}
+        </Suspense>
+      </FadeContent>
+    </div>
+  );
+}
+```
+
+**🚨 PAGE-LEVEL RULE:**
+- **Page.tsx = 90% HTML, 10% Logic**
+- **MainContent.tsx = 90% Logic, 10% HTML**
+- Alles mit `await getCurrentProfile()`, Finder, Actions → MainContent!
+- Page nur für INSTANT-sichtbare UI-Elemente (Header, Navigation, Controls)
+
+**FadeContent Delays:**
+```tsx
+delay={0}   // Header, Navigation (INSTANT HTML)
+delay={100} // Controls, Static UI (kein Suspense nötig!)
+delay={200} // MainContent mit Data-Loading (Suspense!)
+delay={300+}// Individual Cards/Items in MainContent
 // ❌ ANTI-PATTERN: Data-Fetching in page.tsx blockiert Header!
 function Dashboard() {
   const profile = await getCurrentProfile(); // <- BLOCKIERT INSTANT HEADER!
