@@ -3,12 +3,10 @@
 ## 📋 Copy-Paste Ready Prompt Template
 
 ```
-🏗️ **[/ Page]** FadeContent Waterfall Refactoring**
-🏗️ **[Notes Page]** FadeContent Waterfall Refactoring**
+🏗️ **[News Page]** FadeContent Waterfall Refactoring**
 
 Ich möchte eine moderne Server/Client-Component-Architektur mit staggered FadeContent-Animationen 
-für die **[/ PAGE]**, damit Titel direkt gelanden werden also html context, 
-für die **[Notes Page]**, damit Titel direkt gelanden werden also html context, 
+für die **[News PAGE]**, damit Titel direkt gelanden werden also html context
 Komponenten die Karten sind oder Sektionen einfach dann mit Suspense ausstatten, 
 FadeContent überall implementieren mit leichten Delays von oben nach unten, genauere infos unten**. 
 
@@ -19,8 +17,7 @@ FadeContent überall implementieren mit leichten Delays von oben nach unten, gen
 - FadeContent Waterfall-Animationen mit blur-Effekt implementieren
 - Suspense-Blöcke für jede Section mit optimalen Loading-States
 
-**📁 Aktuelle Struktur:** `[app\page.tsx]`
-**📁 Aktuelle Struktur:** `[app\notes\page]`
+**📁 Aktuelle Struktur:** `[News\page.tsx]`
 **🎨 Gewünschte Sections (nur wenn vorhanden!):**
 - (headerSection) - Titel, Navigation, kritische UI-Elemente
 - (statsSection) - Nur wenn Statistics/Widgets bereits existieren! 
