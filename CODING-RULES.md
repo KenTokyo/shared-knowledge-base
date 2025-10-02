@@ -141,6 +141,43 @@ function ClientComponent({ dataPromise }) {
 ### Error Handling
 - **Error Boundaries:** Wrap critical trees, catch rendering errors, show fallback
 
+### Component Communication (Pattern-Auswahl)
+
+**🎯 Schnell-Entscheidung:** Welches Pattern für Component Communication?
+
+| Situation | Pattern | Warum? |
+|-----------|---------|--------|
+| **Parent → Child** (Daten weitergeben) | Props | Einfachste Lösung, Type-Safe |
+| **Child → Parent** (Event melden) | Callbacks | Standard für User-Interaktionen |
+| **2-3 Geschwister** synchronisieren | Lifting State Up | Single Source of Truth im Parent |
+| **3+ Levels** Prop-Drilling | Context API | Kein Prop-Drilling mehr |
+| **Globaler State** (Theme, User) | Context API | Selten geändert, überall verfügbar |
+| **Lokaler Form-State** | useState | Kein globales State-Management nötig |
+
+**🚨 Anti-Patterns vermeiden:**
+- ❌ **Props-Drilling > 3 Levels** → Context API nutzen
+- ❌ **Context für lokalen State** → useState + Callbacks reichen
+- ❌ **State in Kindern dupliziert** → Lifting State Up
+- ❌ **Inline-Functions in Props** → `useCallback` für Performance
+
+**📚 Ausführliche Dokumentation:** `shared-docs/react-core-communication-patterns.md`
+
+**🔄 Standard-Pattern: Callbacks + Lifting State Up**
+```tsx
+// Parent besitzt State
+function Parent() {
+  const [data, setData] = useState();
+  const handleUpdate = (newData) => setData(newData);
+
+  return (
+    <>
+      <ChildA data={data} />
+      <ChildB onUpdate={handleUpdate} />
+    </>
+  );
+}
+```
+
 ---
 
 ## 🎬 Design Patterns & Anti-Patterns
