@@ -239,9 +239,8 @@ export interface ApiResponse<T> {
 - Input validation inline (keine libraries)
 
 ### Frontend Animation
-- **auto-animate library:** Zero-config utility für DOM animations
-- **Referenz:** `auto-animate-documentation.md`
-
+- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` (expanded) / `grid-rows-[0fr]` (collapsed) mit `transition-all duration-300` + `overflow-hidden` für smooth height transitions
+- FadeContent-Komponente einbauen (siehe `shared-docs\refactoring-docs\prompts\universal-fadeContent-refactoring-prompt.md`)
 ---
 
 ## 🎨 Design System
