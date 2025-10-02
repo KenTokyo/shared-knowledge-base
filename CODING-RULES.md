@@ -111,7 +111,7 @@ function ClientComponent({ dataPromise }) {
 
 ### 3. Data Mutations
 - **Server Actions:** Alle Mutations (forms, updates, deletions)
-- **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nach Mutation
+- **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nur bei geeigneten Fällen
 - **Security:** ⚠️ IMMER User-Input validieren + Session mit `getCurrentProfile()` prüfen
 
 ### 4. Loading & Rendering
@@ -300,3 +300,10 @@ Vor jedem Commit:
 - `shared-docs/refactoring-docs/patterns/animated-loading-states.md`
 - `shared-docs/refactoring-docs/patterns/multi-level-data-fetching.md`
 - `shared-docs/postmortem/open-dialogs-right-way-useffect-windowEventListener.md`
+#### Revalidate-Sicherheitsregel (Remount-Loop Prävention)
+- Verwende `revalidatePath` NICHT bei Autosave- oder hochfrequenten Updates, wenn ein Editor/komplexe Client-UI gerade gemountet ist (z. B. `/notes`).
+- Stattdessen:
+  - Server-Action: Nur schreiben (kein Revalidate). Optional aktualisierte Entität zurückgeben.
+  - Client: Lokalen Zustand aktualisieren (`onSaved()`), Cache markieren (`invalidateCache(id, 'note' | 'diagram')`), optional gezieltes `refreshData()` aus dem Context aufrufen.
+- `revalidatePath` nur für: Create/Delete, explizite Nutzeraktionen, oder wenn ein Navigationswechsel unmittelbar folgt.
+- Hintergrund: `revalidatePath` invalidiert die Route und verursacht Remounts → bei Autosave führt das zu Endlosschleifen. Siehe: `shared-docs/postmortem/revalidatepath-autosave-remount-loop-postmortem.md`.
