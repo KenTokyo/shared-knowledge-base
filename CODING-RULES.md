@@ -245,6 +245,20 @@ Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline e
 - ❌ **Anti-Pattern:** `const profile = await getCurrentProfile()` in `page.tsx`
 - ✅ **Correct:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
 
+### 🔴 Rule 5.25: Direct Action Principle (Minimize Clicks)
+🚨 **KRITISCH:** Action-Buttons MÜSSEN ihre Funktion DIREKT ausführen - KEINE Zwischenschritte!
+- **Prinzip:** Button-Label = Direkte Funktion | 1 Klick = 1 Action
+- ❌ **Anti-Pattern:** `onClick={() => setOpen(true)}` → Öffnet Default-View → User muss weiter navigieren (2 Klicks)
+- ✅ **Correct:** `onClick={() => { setTargetView('specific'); setOpen(true); }}` → Direkt zum Ziel (1 Klick)
+- **Implementation:** Multi-Step Components MÜSSEN `initialView/initialStep` Prop haben
+
+### 🔴 Rule 5.26: Consistent Dialog Design
+🚨 **KRITISCH:** Dialoge MÜSSEN einheitliche Größe und Navigation haben!
+- **Size:** `max-h-[85vh]` für konsistente Höhe, `sm:max-w-[700px]` Desktop
+- **Multi-Step Navigation:** Sub-Dialogs über State-Switching (kein nested Dialog-in-Dialog)
+- **Back-Navigation:** Zurück-Button bei Sub-Views, History-basiert
+- **Pattern:** Main-Container bleibt, Content-Area wechselt per Step/View-State
+
 ---
 
 ## 🛠️ Implementation Guidelines
