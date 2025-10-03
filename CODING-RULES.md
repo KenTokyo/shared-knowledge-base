@@ -209,6 +209,41 @@ function Parent() {
 
 ## 🚨 Kritische Anti-Patterns (MUST AVOID)
 
+### 🔴 Rule 5.8: Proactive Implementation Analysis (BEFORE CODING)
+**VOR jeder Implementierung MUSS eine technische Machbarkeitsanalyse erfolgen:**
+
+**📋 Pflicht-Checkliste vor Code-Änderungen:**
+1. **Physics Check:** Ist das physikalisch/technisch möglich?
+   - Beispiel: Overlay mit variabler Schriftgröße über fixed-size Textarea → **UNMÖGLICH**
+   - Layout-Constraints: CSS Grid/Flexbox/Positioning kompatibel?
+   - Browser-Limitations: Kann Browser das rendern?
+
+2. **Side-Effects Analysis:** Was bricht durch diese Änderung?
+   - Welche existierenden Komponenten sind betroffen?
+   - Verändern sich Layouts/Paddings/Margins?
+   - Performance-Impact auf andere Features?
+
+3. **Edge-Case-Simulation:** Mental-Test durchführen
+   - Was passiert bei extremen Werten (sehr lang, sehr kurz, leer)?
+   - User-Interaktionen (schnelles Tippen, Copy-Paste, Resize)?
+   - Cross-Browser-Kompatibilität?
+
+4. **Alternative Solutions:** Gibt es bessere Ansätze?
+   - Kann das Problem anders gelöst werden?
+   - Gibt es etablierte Patterns für dieses Problem?
+   - Welche Bibliotheken/Frameworks lösen das bereits?
+
+**❌ Anti-Pattern:** "Implementieren → Testen → Fehler finden → Fixen"
+**✅ Correct Pattern:** "Analysieren → Machbarkeit prüfen → Design anpassen → Implementieren"
+
+**Regel-Trigger:** Wenn User sagt "Kannst du X implementieren":
+1. STOP - Mental-Analyse durchführen (30 Sekunden Denkzeit)
+2. Technische Limitationen identifizieren
+3. Alternative Lösungen vorschlagen BEVOR Code geschrieben wird
+4. User fragen: "Ich sehe Herausforderung Y - soll ich Lösung Z vorschlagen?"
+
+**Postmortem-Referenz:** Markdown-Preview-Overlay (2025-10-03) - Transparentes Overlay unmöglich wegen variabler Schriftgrößen vs. fixed Textarea.
+
 ### 🔴 Rule 5.9: Context Analysis Before Changes
 Vor jeder Änderung die letzten 3-4 Tasks analysieren! Niemals bereits gelöste Probleme rückgängig machen.
 
