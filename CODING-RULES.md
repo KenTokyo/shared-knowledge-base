@@ -280,6 +280,9 @@ Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline e
 - ❌ **Anti-Pattern:** `const profile = await getCurrentProfile()` in `page.tsx`
 - ✅ **Correct:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
 
+### 🔴 Rule 5.25: Custom List-Styles & Prose.css Interaktion
+**Problem:** TailwindCSS Prose-Plugin + Custom Styles können native HTML-Elemente überschreiben
+
 ---
 
 ## 🛠️ Implementation Guidelines
