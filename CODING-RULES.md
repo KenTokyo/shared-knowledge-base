@@ -1,20 +1,20 @@
-# 🎯 Coding Rules & Development Guidelines
+﻿# ðŸŽ¯ Coding Rules & Development Guidelines
 
-**Zweck:** Diese Datei enthält alle essentiellen Regeln für konsistente, performante und wartbare Code-Entwicklung. Sie vereint Architektur, Best Practices und kritische Anti-Patterns.
+**Zweck:** Diese Datei enthÃ¤lt alle essentiellen Regeln fÃ¼r konsistente, performante und wartbare Code-Entwicklung. Sie vereint Architektur, Best Practices und kritische Anti-Patterns.
 
 ---
 
-## 📋 Workflow & Arbeitsweise
+## ðŸ“‹ Workflow & Arbeitsweise
 
 ### Vor dem Start
-- Vorhaben formatiert mit Icons präsentieren
-- Größere Aufgaben → Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md`
-- **Code-Reuse prüfen:** Erst nach existierenden Funktionen/Components suchen
-- **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
+- Vorhaben formatiert mit Icons prÃ¤sentieren
+- GrÃ¶ÃŸere Aufgaben â†’ Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md`
+- **Code-Reuse prÃ¼fen:** Erst nach existierenden Funktionen/Components suchen
+- **Testing:** Nur `npx tsc --noEmit` verwenden (âŒ kein `npm run dev/build`)
 
 ### Kritisches Denken (Edge Cases)
-Proaktiv an Szenarien denken, die der User nicht erwähnt hat:
-- **Extrem-Fälle:** Große/kleine/leere Daten, Maximum erreicht?
+Proaktiv an Szenarien denken, die der User nicht erwÃ¤hnt hat:
+- **Extrem-FÃ¤lle:** GroÃŸe/kleine/leere Daten, Maximum erreicht?
 - **User-Verhalten:** Falsche Eingaben, Spam-Klicks, Browser-Refresh?
 - **Performance:** Langsame Queries, Memory leaks, DOM overload?
 - **Concurrent Access:** Mehrere Tabs, Race conditions, State conflicts?
@@ -23,76 +23,76 @@ Proaktiv an Szenarien denken, die der User nicht erwähnt hat:
 - **UX:** Verwirrende UI, fehlende Feedback, Accessibility issues?
 
 ### Nach Abschluss
-- **Plan aktualisieren:** Phase als ✅ markieren, kurz dokumentieren was/warum
-- **Dokumentation erweitern:** `docs/[feature]/[feature]-overview.md` bei großen Änderungen
+- **Plan aktualisieren:** Phase als âœ… markieren, kurz dokumentieren was/warum
+- **Dokumentation erweitern:** `docs/[feature]/[feature]-overview.md` bei groÃŸen Ã„nderungen
 - **Motivierende Zusammenfassung:** Icons, exakte Dateipfade, abgeschlossene Phase nennen
 
 ---
 
-## 🏗️ Architektur & Dateistruktur
+## ðŸ—ï¸ Architektur & Dateistruktur
 
 ### Component Organization (Section-Based)
 
-**Max 400 lines per file** - Split in helpers/services wenn größer
+**Max 400 lines per file** - Split in helpers/services wenn grÃ¶ÃŸer
 
-#### ✅ The Right Way: Section-Based Structure
+#### âœ… The Right Way: Section-Based Structure
 ```
 app/feature/[param]/
-├── (mainSection)/
-│   ├── (subSection)/
-│   │   ├── AktionButton.tsx
-│   │   └── KonfigPanel.tsx
-│   ├── MainSection.tsx          ← Section orchestrator
-│   └── (otherSubSection)/
-│       └── DataCard.tsx
-└── page.tsx
+â”œâ”€â”€ (mainSection)/
+â”‚   â”œâ”€â”€ (subSection)/
+â”‚   â”‚   â”œâ”€â”€ AktionButton.tsx
+â”‚   â”‚   â””â”€â”€ KonfigPanel.tsx
+â”‚   â”œâ”€â”€ MainSection.tsx          â† Section orchestrator
+â”‚   â””â”€â”€ (otherSubSection)/
+â”‚       â””â”€â”€ DataCard.tsx
+â””â”€â”€ page.tsx
 ```
 
-#### ❌ Anti-Pattern: Flat "components" Junk Drawer
+#### âŒ Anti-Pattern: Flat "components" Junk Drawer
 ```
 app/chat/
-├── page.tsx
-└── components/             ← ❌ VERMEIDEN
-    ├── AiChatDialog.tsx    ← Keine Struktur, nicht skalierbar
-    ├── ChatHeader.tsx
-    └── ... (20+ files chaos)
+â”œâ”€â”€ page.tsx
+â””â”€â”€ components/             â† âŒ VERMEIDEN
+    â”œâ”€â”€ AiChatDialog.tsx    â† Keine Struktur, nicht skalierbar
+    â”œâ”€â”€ ChatHeader.tsx
+    â””â”€â”€ ... (20+ files chaos)
 ```
 
 ### Component Naming Convention
 
-**Button-Text = File-Name:** "Speichern" button → `SpeichernButton.tsx`
+**Button-Text = File-Name:** "Speichern" button â†’ `SpeichernButton.tsx`
 
 **Component Types:**
 ```
 ComponentName[Type].tsx:
-- Section.tsx    → Orchestrates UI area (ReviewSection.tsx)
-- Panel.tsx      → Input/config interface (EinstellungenPanel.tsx)
-- Dialog.tsx     → Modal/overlay (BestätigenDialog.tsx)
-- Button.tsx     → Interactive trigger (SpeichernButton.tsx)
-- Card.tsx       → Reusable content block (ProductCard.tsx)
-- Item.tsx       → List/grid element (MenuItem.tsx)
+- Section.tsx    â†’ Orchestrates UI area (ReviewSection.tsx)
+- Panel.tsx      â†’ Input/config interface (EinstellungenPanel.tsx)
+- Dialog.tsx     â†’ Modal/overlay (BestÃ¤tigenDialog.tsx)
+- Button.tsx     â†’ Interactive trigger (SpeichernButton.tsx)
+- Card.tsx       â†’ Reusable content block (ProductCard.tsx)
+- Item.tsx       â†’ List/grid element (MenuItem.tsx)
 ```
 
 **Sprach-Konvention:**
-- 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
-- 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item, Layout → `ReviewSection.tsx`
+- ðŸ‡©ðŸ‡ª **DEUTSCH (User-facing):** Button, Panel, Dialog â†’ `SpeichernButton.tsx`
+- ðŸ‡ºðŸ‡¸ **ENGLISCH (Technical):** Section, Card, Item, Layout â†’ `ReviewSection.tsx`
 
 ---
 
-## 🚀 Next.js App Router Rules
+## ðŸš€ Next.js App Router Rules
 
 ### 1. Server vs Client Components
 - **Default:** Server Components (kein `"use client"`)
-- **"use client" nur für:** `useState`, `useEffect`, event listeners, browser APIs
+- **"use client" nur fÃ¼r:** `useState`, `useEffect`, event listeners, browser APIs
 - **Platzierung:** An der "leaf" des Component Tree, nicht in Root Layouts
-- **Pattern:** Server Components als `children` an Client Components übergeben
+- **Pattern:** Server Components als `children` an Client Components Ã¼bergeben
 
 ### 2. Data Fetching
-- ✅ **DO:** Direct fetching in Server Components mit `async/await`
-- ✅ **DO:** Parallel fetching mit `Promise.all` (verhindert waterfalls)
-- ✅ **DO:** `use()` Hook Pattern für Client Components + Suspense
-- ❌ **DON'T:** `useEffect` für initial data fetching (slow, waterfalls)
-- ❌ **DON'T:** Unnecessary API routes für simple data retrieval
+- âœ… **DO:** Direct fetching in Server Components mit `async/await`
+- âœ… **DO:** Parallel fetching mit `Promise.all` (verhindert waterfalls)
+- âœ… **DO:** `use()` Hook Pattern fÃ¼r Client Components + Suspense
+- âŒ **DON'T:** `useEffect` fÃ¼r initial data fetching (slow, waterfalls)
+- âŒ **DON'T:** Unnecessary API routes fÃ¼r simple data retrieval
 
 **Best Practice - `use()` Hook Pattern:**
 ```tsx
@@ -111,22 +111,22 @@ function ClientComponent({ dataPromise }) {
 
 ### 3. Data Mutations
 - **Server Actions:** Alle Mutations (forms, updates, deletions)
-- **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nur bei geeigneten Fällen
-- **Security:** ⚠️ IMMER User-Input validieren + Session mit `getCurrentProfile()` prüfen
+- **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nur bei geeigneten FÃ¤llen
+- **Security:** âš ï¸ IMMER User-Input validieren + Session mit `getCurrentProfile()` prÃ¼fen
 
 ### 4. Loading & Rendering
-- **Suspense:** `loading.tsx` für Route-Level, `<Suspense>` für Component-Level
+- **Suspense:** `loading.tsx` fÃ¼r Route-Level, `<Suspense>` fÃ¼r Component-Level
 - **Re-trigger Suspense:** Key prop nutzen: `<Suspense key={query}>`
 - **Static-First:** Statische UI (Header, Navigation) AUSSERHALB Suspense (0ms render)
-- **Hydration:** Server und Client initial UI müssen identisch sein
+- **Hydration:** Server und Client initial UI mÃ¼ssen identisch sein
 
 ---
 
-## ⚛️ React Best Practices
+## âš›ï¸ React Best Practices
 
 ### State & Props
 - **Immutable State:** Functional updates: `setState(prev => ...)`
-- **List Keys:** Stable, unique `key` prop für `.map()` items
+- **List Keys:** Stable, unique `key` prop fÃ¼r `.map()` items
 - **State vs Ref:** `useState` = re-render, `useRef` = no re-render (DOM, interval IDs)
 
 ### Performance
@@ -136,33 +136,33 @@ function ClientComponent({ dataPromise }) {
 ### Effects & Lifecycle
 - **Cleanup:** IMMER cleanup function bei subscriptions/timers/listeners
 - **Dependency Array:** Accurate dependencies, `[]` = mount only, none = every render
-- **Avoid Unnecessary Effects:** Derive from props/state during render wenn möglich
+- **Avoid Unnecessary Effects:** Derive from props/state during render wenn mÃ¶glich
 
 ### Error Handling
 - **Error Boundaries:** Wrap critical trees, catch rendering errors, show fallback
 
 ### Component Communication (Pattern-Auswahl)
 
-**🎯 Schnell-Entscheidung:** Welches Pattern für Component Communication?
+**ðŸŽ¯ Schnell-Entscheidung:** Welches Pattern fÃ¼r Component Communication?
 
 | Situation | Pattern | Warum? |
 |-----------|---------|--------|
-| **Parent → Child** (Daten weitergeben) | Props | Einfachste Lösung, Type-Safe |
-| **Child → Parent** (Event melden) | Callbacks | Standard für User-Interaktionen |
+| **Parent â†’ Child** (Daten weitergeben) | Props | Einfachste LÃ¶sung, Type-Safe |
+| **Child â†’ Parent** (Event melden) | Callbacks | Standard fÃ¼r User-Interaktionen |
 | **2-3 Geschwister** synchronisieren | Lifting State Up | Single Source of Truth im Parent |
 | **3+ Levels** Prop-Drilling | Context API | Kein Prop-Drilling mehr |
-| **Globaler State** (Theme, User) | Context API | Selten geändert, überall verfügbar |
-| **Lokaler Form-State** | useState | Kein globales State-Management nötig |
+| **Globaler State** (Theme, User) | Context API | Selten geÃ¤ndert, Ã¼berall verfÃ¼gbar |
+| **Lokaler Form-State** | useState | Kein globales State-Management nÃ¶tig |
 
-**🚨 Anti-Patterns vermeiden:**
-- ❌ **Props-Drilling > 3 Levels** → Context API nutzen
-- ❌ **Context für lokalen State** → useState + Callbacks reichen
-- ❌ **State in Kindern dupliziert** → Lifting State Up
-- ❌ **Inline-Functions in Props** → `useCallback` für Performance
+**ðŸš¨ Anti-Patterns vermeiden:**
+- âŒ **Props-Drilling > 3 Levels** â†’ Context API nutzen
+- âŒ **Context fÃ¼r lokalen State** â†’ useState + Callbacks reichen
+- âŒ **State in Kindern dupliziert** â†’ Lifting State Up
+- âŒ **Inline-Functions in Props** â†’ `useCallback` fÃ¼r Performance
 
-**📚 Ausführliche Dokumentation:** `shared-docs/react-core-communication-patterns.md`
+**ðŸ“š AusfÃ¼hrliche Dokumentation:** `shared-docs/react-core-communication-patterns.md`
 
-**🔄 Standard-Pattern: Callbacks + Lifting State Up**
+**ðŸ”„ Standard-Pattern: Callbacks + Lifting State Up**
 ```tsx
 // Parent besitzt State
 function Parent() {
@@ -180,24 +180,24 @@ function Parent() {
 
 ---
 
-## 🎬 Design Patterns & Anti-Patterns
+## ðŸŽ¬ Design Patterns & Anti-Patterns
 
 ### Tab Components Performance
-🚨 **KRITISCH:** Tab-Components dürfen **NIEMALS eigene Daten-Fetches** durchführen!
-- ✅ **Parent-Component fetcht alle Daten** (z.B. `NavbarClient`)
-- ✅ **Props an Tabs weitergeben** → instant Tab-Wechsel (<100ms)
-- ❌ **Anti-Pattern:** Jeder Tab fetcht eigene Daten → 1000ms+ Ladezeit
+ðŸš¨ **KRITISCH:** Tab-Components dÃ¼rfen **NIEMALS eigene Daten-Fetches** durchfÃ¼hren!
+- âœ… **Parent-Component fetcht alle Daten** (z.B. `NavbarClient`)
+- âœ… **Props an Tabs weitergeben** â†’ instant Tab-Wechsel (<100ms)
+- âŒ **Anti-Pattern:** Jeder Tab fetcht eigene Daten â†’ 1000ms+ Ladezeit
 
 **Referenz:** `shared-docs/performance/tab-component-performance-antipattern.md`
 
 ### Responsive Dialogs
-- **Controller Pattern:** Separate Components für Desktop/Mobile
+- **Controller Pattern:** Separate Components fÃ¼r Desktop/Mobile
 - `[Feature]Dialog.tsx` + `Mobile[Feature]Dialog.tsx` + `[Feature]DialogController.tsx`
 - **Referenz:** `shared-docs/design/responsive-dialog-architecture.md`
 
 ### Animated Loading States
 - **Static-First:** Kritische UI (Header) instant, dynamic content progressiv
-- **Staggered Animations:** Unterschiedliche delays für smooth reveal
+- **Staggered Animations:** Unterschiedliche delays fÃ¼r smooth reveal
 - **Referenz:** `shared-docs/refactoring-docs/patterns/animated-loading-states.md`
 
 ### Multi-Level Data Fetching
@@ -207,105 +207,105 @@ function Parent() {
 
 ---
 
-## 🚨 Kritische Anti-Patterns (MUST AVOID)
+## ðŸš¨ Kritische Anti-Patterns (MUST AVOID)
 
-### 🔴 Rule 5.8: Proactive Implementation Analysis (BEFORE CODING)
+### ðŸ”´ Rule 5.8: Proactive Implementation Analysis (BEFORE CODING)
 **VOR jeder Implementierung MUSS eine technische Machbarkeitsanalyse erfolgen:**
 
-**📋 Pflicht-Checkliste vor Code-Änderungen:**
-1. **Physics Check:** Ist das physikalisch/technisch möglich?
-   - Beispiel: Overlay mit variabler Schriftgröße über fixed-size Textarea → **UNMÖGLICH**
+**ðŸ“‹ Pflicht-Checkliste vor Code-Ã„nderungen:**
+1. **Physics Check:** Ist das physikalisch/technisch mÃ¶glich?
+   - Beispiel: Overlay mit variabler SchriftgrÃ¶ÃŸe Ã¼ber fixed-size Textarea â†’ **UNMÃ–GLICH**
    - Layout-Constraints: CSS Grid/Flexbox/Positioning kompatibel?
    - Browser-Limitations: Kann Browser das rendern?
 
-2. **Side-Effects Analysis:** Was bricht durch diese Änderung?
+2. **Side-Effects Analysis:** Was bricht durch diese Ã„nderung?
    - Welche existierenden Komponenten sind betroffen?
-   - Verändern sich Layouts/Paddings/Margins?
+   - VerÃ¤ndern sich Layouts/Paddings/Margins?
    - Performance-Impact auf andere Features?
 
-3. **Edge-Case-Simulation:** Mental-Test durchführen
+3. **Edge-Case-Simulation:** Mental-Test durchfÃ¼hren
    - Was passiert bei extremen Werten (sehr lang, sehr kurz, leer)?
    - User-Interaktionen (schnelles Tippen, Copy-Paste, Resize)?
-   - Cross-Browser-Kompatibilität?
+   - Cross-Browser-KompatibilitÃ¤t?
 
-4. **Alternative Solutions:** Gibt es bessere Ansätze?
-   - Kann das Problem anders gelöst werden?
-   - Gibt es etablierte Patterns für dieses Problem?
-   - Welche Bibliotheken/Frameworks lösen das bereits?
+4. **Alternative Solutions:** Gibt es bessere AnsÃ¤tze?
+   - Kann das Problem anders gelÃ¶st werden?
+   - Gibt es etablierte Patterns fÃ¼r dieses Problem?
+   - Welche Bibliotheken/Frameworks lÃ¶sen das bereits?
 
-**❌ Anti-Pattern:** "Implementieren → Testen → Fehler finden → Fixen"
-**✅ Correct Pattern:** "Analysieren → Machbarkeit prüfen → Design anpassen → Implementieren"
+**âŒ Anti-Pattern:** "Implementieren â†’ Testen â†’ Fehler finden â†’ Fixen"
+**âœ… Correct Pattern:** "Analysieren â†’ Machbarkeit prÃ¼fen â†’ Design anpassen â†’ Implementieren"
 
 **Regel-Trigger:** Wenn User sagt "Kannst du X implementieren":
-1. STOP - Mental-Analyse durchführen (30 Sekunden Denkzeit)
+1. STOP - Mental-Analyse durchfÃ¼hren (30 Sekunden Denkzeit)
 2. Technische Limitationen identifizieren
-3. Alternative Lösungen vorschlagen BEVOR Code geschrieben wird
-4. User fragen: "Ich sehe Herausforderung Y - soll ich Lösung Z vorschlagen?"
+3. Alternative LÃ¶sungen vorschlagen BEVOR Code geschrieben wird
+4. User fragen: "Ich sehe Herausforderung Y - soll ich LÃ¶sung Z vorschlagen?"
 
-**Postmortem-Referenz:** Markdown-Preview-Overlay (2025-10-03) - Transparentes Overlay unmöglich wegen variabler Schriftgrößen vs. fixed Textarea.
+**Postmortem-Referenz:** Markdown-Preview-Overlay (2025-10-03) - Transparentes Overlay unmÃ¶glich wegen variabler SchriftgrÃ¶ÃŸen vs. fixed Textarea.
 
-### 🔴 Rule 5.9: Context Analysis Before Changes
-Vor jeder Änderung die letzten 3-4 Tasks analysieren! Niemals bereits gelöste Probleme rückgängig machen.
+### ðŸ”´ Rule 5.9: Context Analysis Before Changes
+Vor jeder Ã„nderung die letzten 3-4 Tasks analysieren! Niemals bereits gelÃ¶ste Probleme rÃ¼ckgÃ¤ngig machen.
 
-### 🔴 Rule 5.10: MANDATORY Legacy Code Removal
-Nach jeder Änderung SOFORT ungenutzten Code entfernen:
+### ðŸ”´ Rule 5.10: MANDATORY Legacy Code Removal
+Nach jeder Ã„nderung SOFORT ungenutzten Code entfernen:
 - Ungenutzte Functions/Components/Imports
 - Ungenutzte Variables/Constants/CSS-Klassen
 - Ungenutzte Hook-Aufrufe (`useState`, `useMemo`, etc.)
 
-### 🔴 Rule 5.17: Dialog-EventListener-Pattern (LAYOUT-CRASH-PREVENTION)
-Dialoge in Layout-kritischen Komponenten (Navbar, Header) MÜSSEN über `useEffect + window.addEventListener` geöffnet werden. Niemals direkt rendern - selbst `open={false}` kann Layout-Collapse verursachen.
+### ðŸ”´ Rule 5.17: Dialog-EventListener-Pattern (LAYOUT-CRASH-PREVENTION)
+Dialoge in Layout-kritischen Komponenten (Navbar, Header) MÃœSSEN Ã¼ber `useEffect + window.addEventListener` geÃ¶ffnet werden. Niemals direkt rendern - selbst `open={false}` kann Layout-Collapse verursachen.
 
 **Referenz:** `shared-docs/postmortem/open-dialogs-right-way-useffect-windowEventListener.md`
 
-### 🔴 Rule 5.20: Scroll Height Dependency
-`overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht.
-- ❌ **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent
-- ✅ **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching
+### ðŸ”´ Rule 5.20: Scroll Height Dependency
+`overflow-auto` braucht definierte HÃ¶he! `flex-1` allein reicht nicht.
+- âŒ **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent
+- âœ… **Fix:** `h-[75vh]` oder `isDialog`-Props fÃ¼r Context-Switching
 
-### 🔴 Rule 5.21: will-change Font-Killer
-Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch.
+### ðŸ”´ Rule 5.21: will-change Font-Killer
+Niemals `will-change: transform, opacity`! ZerstÃ¶rt Font-Rendering (blurry text). Browser optimieren automatisch.
 
-### 🔴 Rule 5.22: Single Loading Pipeline
-Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline existieren. Verschiedene UI-Entry-Points dürfen NICHT unterschiedliche Loading-Logiken haben.
+### ðŸ”´ Rule 5.22: Single Loading Pipeline
+FÃ¼r kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline existieren. Verschiedene UI-Entry-Points dÃ¼rfen NICHT unterschiedliche Loading-Logiken haben.
 
-### 🔴 Rule 5.23: Mobile-First Space Efficiency
-📱 Alle UI-Komponenten MÜSSEN Mobile-First designed werden:
+### ðŸ”´ Rule 5.23: Mobile-First Space Efficiency
+ðŸ“± Alle UI-Komponenten MÃœSSEN Mobile-First designed werden:
 - Maximale Space-Efficiency (kein exzessives Scrollen)
-- Input-Felder nebeneinander in FlexRow wenn möglich
-- Kleinere Schriftgrößen, geringere Abstände, weiterhin modernes Design
+- Input-Felder nebeneinander in FlexRow wenn mÃ¶glich
+- Kleinere SchriftgrÃ¶ÃŸen, geringere AbstÃ¤nde, weiterhin modernes Design
 
-### 🔴 Rule 5.24: Page-Level Data-Separation (INSTANT-HEADER RULE)
-🚨 **KRITISCH:** Page-Components dürfen NIEMALS Data-Fetching enthalten, das Header/Navigation blockiert!
-- ❌ **Anti-Pattern:** `const profile = await getCurrentProfile()` in `page.tsx`
-- ✅ **Correct:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
+### ðŸ”´ Rule 5.24: Page-Level Data-Separation (INSTANT-HEADER RULE)
+ðŸš¨ **KRITISCH:** Page-Components dÃ¼rfen NIEMALS Data-Fetching enthalten, das Header/Navigation blockiert!
+- âŒ **Anti-Pattern:** `const profile = await getCurrentProfile()` in `page.tsx`
+- âœ… **Correct:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
 
-### 🔴 Rule 5.25: Custom List-Styles & Prose.css Interaktion
-**Problem:** TailwindCSS Prose-Plugin + Custom Styles können native HTML-Elemente überschreiben
+### ðŸ”´ Rule 5.25: Custom List-Styles & Prose.css Interaktion
+**Problem:** TailwindCSS Prose-Plugin + Custom Styles kÃ¶nnen native HTML-Elemente Ã¼berschreiben
 
-### 🔴 Rule 5.26: Direct Action Principle (Minimize Clicks)
-🚨 **KRITISCH:** Action-Buttons MÜSSEN ihre Funktion DIREKT ausführen - KEINE Zwischenschritte!
+### ðŸ”´ Rule 5.26: Direct Action Principle (Minimize Clicks)
+ðŸš¨ **KRITISCH:** Action-Buttons MÃœSSEN ihre Funktion DIREKT ausfÃ¼hren - KEINE Zwischenschritte!
 - **Prinzip:** Button-Label = Direkte Funktion | 1 Klick = 1 Action
-- ❌ **Anti-Pattern:** `onClick={() => setOpen(true)}` → Öffnet Default-View → User muss weiter navigieren (2 Klicks)
-- ✅ **Correct:** `onClick={() => { setTargetView('specific'); setOpen(true); }}` → Direkt zum Ziel (1 Klick)
-- **Implementation:** Multi-Step Components MÜSSEN `initialView/initialStep` Prop haben
+- âŒ **Anti-Pattern:** `onClick={() => setOpen(true)}` â†’ Ã–ffnet Default-View â†’ User muss weiter navigieren (2 Klicks)
+- âœ… **Correct:** `onClick={() => { setTargetView('specific'); setOpen(true); }}` â†’ Direkt zum Ziel (1 Klick)
+- **Implementation:** Multi-Step Components MÃœSSEN `initialView/initialStep` Prop haben
 
-### 🔴 Rule 5.27: Consistent Dialog Design
-🚨 **KRITISCH:** Dialoge MÜSSEN einheitliche Größe und Navigation haben!
-- **Size:** `max-h-[85vh]` für konsistente Höhe, `sm:max-w-[700px]` Desktop
-- **Multi-Step Navigation:** Sub-Dialogs über State-Switching (kein nested Dialog-in-Dialog)
-- **Back-Navigation:** Zurück-Button bei Sub-Views, History-basiert
+### ðŸ”´ Rule 5.27: Consistent Dialog Design
+ðŸš¨ **KRITISCH:** Dialoge MÃœSSEN einheitliche GrÃ¶ÃŸe und Navigation haben!
+- **Size:** `max-h-[85vh]` fÃ¼r konsistente HÃ¶he, `sm:max-w-[700px]` Desktop
+- **Multi-Step Navigation:** Sub-Dialogs Ã¼ber State-Switching (kein nested Dialog-in-Dialog)
+- **Back-Navigation:** ZurÃ¼ck-Button bei Sub-Views, History-basiert
 - **Pattern:** Main-Container bleibt, Content-Area wechselt per Step/View-State
 
 ---
 
-## 🛠️ Implementation Guidelines
+## ðŸ› ï¸ Implementation Guidelines
 
 ### Database (Actions & Finders)
 - **Actions** (`db/actions/`): Alle mutations, MUSS `"use server"` haben
 - **Finders** (`db/finders/`): Alle queries, MUSS `"use server"` haben
 - **Auth:** `getCurrentProfile()` aus `profile-finder` statt auth-Methoden
-- **User vs Profile:** User nur für Auth, Profile für alles andere
+- **User vs Profile:** User nur fÃ¼r Auth, Profile fÃ¼r alles andere
 
 ### API Response Format
 ```typescript
@@ -323,21 +323,21 @@ export interface ApiResponse<T> {
 - **Theme/Language:** React Context providers
 
 ### Error Handling
-- Toast notifications für User-facing errors
-- Error Boundaries für component crashes
+- Toast notifications fÃ¼r User-facing errors
+- Error Boundaries fÃ¼r component crashes
 - Input validation inline (keine libraries)
 
 ### Frontend Animation
-- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` (expanded) / `grid-rows-[0fr]` (collapsed) mit `transition-all duration-300` + `overflow-hidden` für smooth height transitions
+- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` (expanded) / `grid-rows-[0fr]` (collapsed) mit `transition-all duration-300` + `overflow-hidden` fÃ¼r smooth height transitions
 - FadeContent-Komponente einbauen (siehe `shared-docs\refactoring-docs\prompts\universal-fadeContent-refactoring-prompt.md`)
 ---
 
-## 🎨 Design System
+## ðŸŽ¨ Design System
 
 ### Theme System
 - **CSS Custom Properties:** Dynamic colors (`--primary`, `--accent`)
 - **Glassmorphism:** `glass-card`, `backdrop-blur-sm/md`
-- **Gradients:** Three-color gradients (primary-dark → primary → primary-light)
+- **Gradients:** Three-color gradients (primary-dark â†’ primary â†’ primary-light)
 
 ### Component Classes
 - **Cards:** `glass-card`, `bg-card/50 backdrop-blur-sm`
@@ -352,47 +352,50 @@ export interface ApiResponse<T> {
 
 ---
 
-## 📚 Documentation System
+## ðŸ“š Documentation System
 
 ### Structure
-- **Master-Navigation:** `docs/OVERVIEW.md` - Komplette App-Übersicht
+- **Master-Navigation:** `docs/OVERVIEW.md` - Komplette App-Ãœbersicht
 - **Feature-Docs:** `docs/[feature]/[feature]-overview.md`
 - **Sub-Features:** `docs/[feature]/features/[sub-feature].md`
 - **Task-History:** `docs/[feature]/tasks/[datum]-[task].md`
 
 ### Update-Rules
-- **Feature-Overview:** Bei großen Änderungen updaten
+- **Feature-Overview:** Bei groÃŸen Ã„nderungen updaten
 - **Sub-Features:** Komponenten-Details erweitern
 - **Task-History:** Auf "abgeschlossen" setzen
-- **Master-Navigation:** Nur bei sehr großen Änderungen
+- **Master-Navigation:** Nur bei sehr groÃŸen Ã„nderungen
 
 ---
 
-## ✅ Quick Checklist
+## âœ… Quick Checklist
 
 Vor jedem Commit:
-- [ ] `npx tsc --noEmit` läuft ohne Fehler
+- [ ] `npx tsc --noEmit` lÃ¤uft ohne Fehler
 - [ ] Ungenutzter Code entfernt (imports, functions, variables)
-- [ ] Mobile-First Design geprüft
-- [ ] Edge Cases berücksichtigt (empty states, errors, loading)
+- [ ] Mobile-First Design geprÃ¼ft
+- [ ] Edge Cases berÃ¼cksichtigt (empty states, errors, loading)
 - [ ] Server Actions haben `"use server"`
-- [ ] Suspense boundaries für async components
-- [ ] Static UI (Header) außerhalb Suspense
-- [ ] Descriptive comments für functions/components
+- [ ] Suspense boundaries fÃ¼r async components
+- [ ] Static UI (Header) auÃŸerhalb Suspense
+- [ ] Descriptive comments fÃ¼r functions/components
 - [ ] Max 400 lines per file eingehalten
 
 ---
 
-**🔗 Weiterführende Docs:**
+**ðŸ”— WeiterfÃ¼hrende Docs:**
 - `shared-docs/performance/tab-component-performance-antipattern.md`
 - `shared-docs/design/responsive-dialog-architecture.md`
 - `shared-docs/refactoring-docs/patterns/animated-loading-states.md`
 - `shared-docs/refactoring-docs/patterns/multi-level-data-fetching.md`
 - `shared-docs/postmortem/open-dialogs-right-way-useffect-windowEventListener.md`
-#### Revalidate-Sicherheitsregel (Remount-Loop Prävention)
+#### Revalidate-Sicherheitsregel (Remount-Loop PrÃ¤vention)
 - Verwende `revalidatePath` NICHT bei Autosave- oder hochfrequenten Updates, wenn ein Editor/komplexe Client-UI gerade gemountet ist (z. B. `/notes`).
 - Stattdessen:
-  - Server-Action: Nur schreiben (kein Revalidate). Optional aktualisierte Entität zurückgeben.
+  - Server-Action: Nur schreiben (kein Revalidate). Optional aktualisierte EntitÃ¤t zurÃ¼ckgeben.
   - Client: Lokalen Zustand aktualisieren (`onSaved()`), Cache markieren (`invalidateCache(id, 'note' | 'diagram')`), optional gezieltes `refreshData()` aus dem Context aufrufen.
-- `revalidatePath` nur für: Create/Delete, explizite Nutzeraktionen, oder wenn ein Navigationswechsel unmittelbar folgt.
-- Hintergrund: `revalidatePath` invalidiert die Route und verursacht Remounts → bei Autosave führt das zu Endlosschleifen. Siehe: `shared-docs/postmortem/revalidatepath-autosave-remount-loop-postmortem.md`.
+- `revalidatePath` nur fÃ¼r: Create/Delete, explizite Nutzeraktionen, oder wenn ein Navigationswechsel unmittelbar folgt.
+- Hintergrund: `revalidatePath` invalidiert die Route und verursacht Remounts â†’ bei Autosave fÃ¼hrt das zu Endlosschleifen. Siehe: `shared-docs/postmortem/revalidatepath-autosave-remount-loop-postmortem.md`.
+
+### Overlay Stability (TipTap/Tippy)
+- Global: Stabilisiere Bubble/Popper‑Props mit useCallback/useMemo und verhindere Blur auf pointerdown (Capture); setze hideOnClick: false und nutze ppendTo auf den Editor‑Container.
