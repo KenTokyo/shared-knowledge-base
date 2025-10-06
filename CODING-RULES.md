@@ -297,6 +297,59 @@ Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline e
 - **Back-Navigation:** Zurück-Button bei Sub-Views, History-basiert
 - **Pattern:** Main-Container bleibt, Content-Area wechselt per Step/View-State
 
+### 🔴 Rule 5.28: Vercel AI SDK Hook Compatibility
+Wenn Vercel AI SDK Hooks (`useChat`, `useCompletion`) verwendet werden:
+
+**Backend-Anforderungen:**
+- ✅ Response Format: `new Response(stream)` mit `Content-Type: text/plain`
+- ✅ Stream Protocol: ReadableStream mit TextEncoder
+- ❌ NICHT: `StreamingTextResponse` (entfernt in SDK 4.0+)
+
+**Frontend-Anforderungen:**
+- ✅ Hook Config: `streamProtocol: 'text'` bei Plain Text Responses
+- ✅ Version Check: SDK-Dokumentation für aktuelle Version prüfen
+- ⚠️ API Changes: Breaking Changes in Major Versions beachten
+
+**Vor Integration prüfen:**
+1. Package.json: Welche AI SDK Version wird genutzt?
+2. Docs: API-Referenz für DIESE Version lesen
+3. Migration Guides: Breaking Changes seit letzter Version?
+
+**Referenz:** Postmortem 2025-10-06 - StreamingTextResponse in AI SDK 4.0 entfernt
+
+### 🔴 Rule 5.29: FadeContent Dialog Conditional Rendering (RENDER-LOOP PREVENTION)
+🚨 **KRITISCH:** FadeContent Components MÜSSEN conditional gerendert werden bei Dialog/Modal-Wrapping!
+
+**Problem:** FadeContent rendert permanent → Dialog rendert mit `open={false}` → Re-Render-Loop
+
+**❌ Anti-Pattern:** Permanent Rendering
+```tsx
+// ❌ FALSCH - Rendert permanent, auch wenn Dialog geschlossen
+<FadeContent delay={200}>
+  <MyDialog isOpen={isOpen} onOpenChange={setIsOpen} />
+</FadeContent>
+```
+
+**✅ Correct Pattern:** Conditional Rendering
+```tsx
+// ✅ RICHTIG - Rendert nur wenn Dialog tatsächlich offen
+{isOpen && (
+  <FadeContent delay={200}>
+    <MyDialog isOpen={isOpen} onOpenChange={setIsOpen} />
+  </FadeContent>
+)}
+```
+
+**Regel-Trigger:** Wenn FadeContent Dialoge/Modals wrapped → IMMER conditional rendering
+
+**Symptoms:**
+- Excessive Re-Rendering in Console Logs
+- Components rendern endlos (Loop)
+- State-Updates triggern unnötige Renders
+- Performance-Degradation
+
+**Postmortem-Referenz:** 2025-10-06 - Chat Section Render Loop durch permanent FadeContent Rendering
+
 ---
 
 ## 🛠️ Implementation Guidelines
