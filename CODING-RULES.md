@@ -181,6 +181,47 @@ Tabs KEINE eigenen Fetches. Parent fetcht, Props weitergeben. Anti-Pattern: Tab-
 
 ---
 
+## 🚀 Network Performance Rules (CRITICAL)
+
+### 🔴 Rule 5.30: Client-Side Fetch Anti-Pattern
+🚨 **KRITISCH:** Client-Components dürfen NICHT initial Data-Fetching via `useEffect` durchführen!
+- **Problem:** `useEffect` triggert bei jedem Re-Render → Request-Spam (20-100+ Requests beim Init)
+- **Lösung:** Server-Side Pre-Fetch + Props-Pattern ODER `use()` Hook + Suspense
+- **Trigger:** Wenn `useEffect(() => { fetch(...) }, [deps])` in Client-Component → STOP → Server-Side refactoren
+- **Referenz:** `shared-docs/performance/network-performance-analysis-guide.md` (Problem 1)
+
+### 🔴 Rule 5.31: Waterfall-Fetching Prevention
+🚨 **KRITISCH:** Unabhängige Fetches MÜSSEN parallel laufen!
+- **Problem:** Sequential `await` → 3x länger (450ms statt 150ms)
+- **Lösung:** `Promise.all([fetch1(), fetch2(), fetch3()])` für unabhängige Daten
+- **Trigger:** Wenn mehrere `await` ohne Dependency → `Promise.all()` nutzen
+- **Referenz:** `shared-docs/performance/network-performance-analysis-guide.md` (Problem 3)
+
+### 🔴 Rule 5.32: Mandatory Request-Deduplizierung
+🚨 **KRITISCH:** Identische Fetches MÜSSEN dedupliziert werden!
+- **Problem:** 2+ Components fetchen gleiche Daten → Doppelte DB-Queries
+- **Lösung Server-Side:** React `cache()` wrapper für alle Finders/Actions
+- **Lösung Client-Side:** Singleton-Pattern für Polling/Subscriptions (nur 1 Instance total)
+- **Trigger:** Wenn gleiche Fetch-Logic in mehreren Components → Deduplizierung implementieren
+- **Referenz:** `shared-docs/performance/network-performance-analysis-guide.md` (Problem 5)
+
+### 🔴 Rule 5.33: Polling Cleanup Enforcement
+🚨 **KRITISCH:** Jeder `useEffect` mit Timers/Subscriptions MUSS Cleanup-Function haben!
+- **Problem:** `setInterval`/`setTimeout` läuft nach Unmount weiter → Memory-Leak + Ghost-Requests
+- **Lösung:** `return () => clearInterval(id)` in useEffect
+- **Trigger:** Wenn `setInterval`/`setTimeout`/`addEventListener` in `useEffect` → IMMER Cleanup
+- **Referenz:** `shared-docs/performance/network-performance-analysis-guide.md` (Problem 6)
+
+### 🔴 Rule 5.34: Multiple Component Instance Prevention
+🚨 **KRITISCH:** Responsive-UI darf NICHT 2 identische Components mit eigenem Fetching parallel rendern!
+- **Problem:** Desktop+Mobile Components → Doppeltes Fetching (2x DB-Queries, 2x Polling)
+- **Lösung 1:** Conditional Rendering (nur 1 Component rendert)
+- **Lösung 2:** Singleton-Service (beide Components teilen sich 1 Fetch-Instance)
+- **Trigger:** Wenn `<MobileComponent />` + `<DesktopComponent />` beide fetchen → Refactoren
+- **Referenz:** `shared-docs/performance/network-performance-analysis-guide.md` (Problem 2)
+
+---
+
 ## 🚨 Kritische Anti-Patterns (MUST AVOID)
 
 ### 🔴 Rule 5.8: Proactive Implementation Analysis
