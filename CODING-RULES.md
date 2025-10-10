@@ -141,54 +141,15 @@ function ClientComponent({ dataPromise }) {
 ### Error Handling
 - **Error Boundaries:** Wrap critical trees, catch rendering errors, show fallback
 
-### Component Communication (Pattern-Auswahl)
-
-**🎯 Schnell-Entscheidung:** Welches Pattern für Component Communication?
-
-| Situation | Pattern | Warum? |
-|-----------|---------|--------|
-| **Parent → Child** (Daten weitergeben) | Props | Einfachste Lösung, Type-Safe |
-| **Child → Parent** (Event melden) | Callbacks | Standard für User-Interaktionen |
-| **2-3 Geschwister** synchronisieren | Lifting State Up | Single Source of Truth im Parent |
-| **3+ Levels** Prop-Drilling | Context API | Kein Prop-Drilling mehr |
-| **Globaler State** (Theme, User) | Context API | Selten geändert, überall verfügbar |
-| **Lokaler Form-State** | useState | Kein globales State-Management nötig |
-
-**🚨 Anti-Patterns vermeiden:**
-- ❌ **Props-Drilling > 3 Levels** → Context API nutzen
-- ❌ **Context für lokalen State** → useState + Callbacks reichen
-- ❌ **State in Kindern dupliziert** → Lifting State Up
-- ❌ **Inline-Functions in Props** → `useCallback` für Performance
-
-**📚 Ausführliche Dokumentation:** `shared-docs/react-core-communication-patterns.md`
-
-**🔄 Standard-Pattern: Callbacks + Lifting State Up**
-```tsx
-// Parent besitzt State
-function Parent() {
-  const [data, setData] = useState();
-  const handleUpdate = (newData) => setData(newData);
-
-  return (
-    <>
-      <ChildA data={data} />
-      <ChildB onUpdate={handleUpdate} />
-    </>
-  );
-}
-```
+### Component Communication
+Parent↔Child: Props/Callbacks. 2-3 Levels: Lifting State Up. 3+ Levels: Context API. Anti-Patterns: Props-Drilling >3 Levels, Context für lokalen State, duplizierter State in Kindern. Details: `shared-docs/react-core-communication-patterns.md`
 
 ---
 
 ## 🎬 Design Patterns & Anti-Patterns
 
 ### Tab Components Performance
-🚨 **KRITISCH:** Tab-Components dürfen **NIEMALS eigene Daten-Fetches** durchführen!
-- ✅ **Parent-Component fetcht alle Daten** (z.B. `NavbarClient`)
-- ✅ **Props an Tabs weitergeben** → instant Tab-Wechsel (<100ms)
-- ❌ **Anti-Pattern:** Jeder Tab fetcht eigene Daten → 1000ms+ Ladezeit
-
-**Referenz:** `shared-docs/performance/tab-component-performance-antipattern.md`
+Tabs KEINE eigenen Fetches. Parent fetcht, Props weitergeben. Anti-Pattern: Tab-Fetches (1000ms+ Ladezeit). Referenz: `shared-docs/performance/tab-component-performance-antipattern.md`
 
 ### Responsive Dialogs
 - **Controller Pattern:** Separate Components für Desktop/Mobile
@@ -250,40 +211,8 @@ function Parent() {
 
 ## 🚨 Kritische Anti-Patterns (MUST AVOID)
 
-### 🔴 Rule 5.8: Proactive Implementation Analysis (BEFORE CODING)
-**VOR jeder Implementierung MUSS eine technische Machbarkeitsanalyse erfolgen:**
-
-**📋 Pflicht-Checkliste vor Code-Änderungen:**
-1. **Physics Check:** Ist das physikalisch/technisch möglich?
-   - Beispiel: Overlay mit variabler Schriftgröße über fixed-size Textarea → **UNMÖGLICH**
-   - Layout-Constraints: CSS Grid/Flexbox/Positioning kompatibel?
-   - Browser-Limitations: Kann Browser das rendern?
-
-2. **Side-Effects Analysis:** Was bricht durch diese Änderung?
-   - Welche existierenden Komponenten sind betroffen?
-   - Verändern sich Layouts/Paddings/Margins?
-   - Performance-Impact auf andere Features?
-
-3. **Edge-Case-Simulation:** Mental-Test durchführen
-   - Was passiert bei extremen Werten (sehr lang, sehr kurz, leer)?
-   - User-Interaktionen (schnelles Tippen, Copy-Paste, Resize)?
-   - Cross-Browser-Kompatibilität?
-
-4. **Alternative Solutions:** Gibt es bessere Ansätze?
-   - Kann das Problem anders gelöst werden?
-   - Gibt es etablierte Patterns für dieses Problem?
-   - Welche Bibliotheken/Frameworks lösen das bereits?
-
-**❌ Anti-Pattern:** "Implementieren → Testen → Fehler finden → Fixen"
-**✅ Correct Pattern:** "Analysieren → Machbarkeit prüfen → Design anpassen → Implementieren"
-
-**Regel-Trigger:** Wenn User sagt "Kannst du X implementieren":
-1. STOP - Mental-Analyse durchführen (30 Sekunden Denkzeit)
-2. Technische Limitationen identifizieren
-3. Alternative Lösungen vorschlagen BEVOR Code geschrieben wird
-4. User fragen: "Ich sehe Herausforderung Y - soll ich Lösung Z vorschlagen?"
-
-**Postmortem-Referenz:** Markdown-Preview-Overlay (2025-10-03) - Transparentes Overlay unmöglich wegen variabler Schriftgrößen vs. fixed Textarea.
+### 🔴 Rule 5.8: Proactive Implementation Analysis
+Vor Code: Mental-Analyse (Physics Check, Side-Effects, Edge-Cases, Alternativen). Machbarkeit prüfen, bevor implementiert wird. Bei Limitationen: Alternative Lösungen vorschlagen, nicht blind implementieren.
 
 ### 🔴 Rule 5.9: Context Analysis Before Changes
 Vor jeder Änderung die letzten 3-4 Tasks analysieren! Niemals bereits gelöste Probleme rückgängig machen.
@@ -316,27 +245,17 @@ Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline e
 - Input-Felder nebeneinander in FlexRow wenn möglich
 - Kleinere Schriftgrößen, geringere Abstände, weiterhin modernes Design
 
-### 🔴 Rule 5.24: Page-Level Data-Separation (INSTANT-HEADER RULE)
-🚨 **KRITISCH:** Page-Components dürfen NIEMALS Data-Fetching enthalten, das Header/Navigation blockiert!
-- ❌ **Anti-Pattern:** `const profile = await getCurrentProfile()` in `page.tsx`
-- ✅ **Correct:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
+### 🔴 Rule 5.24: Page-Level Data-Separation
+Page-Components ohne Data-Fetching für Header/Navigation. Header als pure HTML, Data-Logic in `MainContent` mit Suspense.
 
 ### 🔴 Rule 5.25: Custom List-Styles & Prose.css Interaktion
 **Problem:** TailwindCSS Prose-Plugin + Custom Styles können native HTML-Elemente überschreiben
 
-### 🔴 Rule 5.26: Direct Action Principle (Minimize Clicks)
-🚨 **KRITISCH:** Action-Buttons MÜSSEN ihre Funktion DIREKT ausführen - KEINE Zwischenschritte!
-- **Prinzip:** Button-Label = Direkte Funktion | 1 Klick = 1 Action
-- ❌ **Anti-Pattern:** `onClick={() => setOpen(true)}` → Öffnet Default-View → User muss weiter navigieren (2 Klicks)
-- ✅ **Correct:** `onClick={() => { setTargetView('specific'); setOpen(true); }}` → Direkt zum Ziel (1 Klick)
-- **Implementation:** Multi-Step Components MÜSSEN `initialView/initialStep` Prop haben
+### 🔴 Rule 5.26: Direct Action Principle
+Action-Buttons führen ihre Funktion DIREKT aus (1 Klick = 1 Action). Multi-Step Components brauchen `initialView/initialStep` Prop. Keine Zwischenschritte.
 
 ### 🔴 Rule 5.27: Consistent Dialog Design
-🚨 **KRITISCH:** Dialoge MÜSSEN einheitliche Größe und Navigation haben!
-- **Size:** `max-h-[85vh]` für konsistente Höhe, `sm:max-w-[700px]` Desktop
-- **Multi-Step Navigation:** Sub-Dialogs über State-Switching (kein nested Dialog-in-Dialog)
-- **Back-Navigation:** Zurück-Button bei Sub-Views, History-basiert
-- **Pattern:** Main-Container bleibt, Content-Area wechselt per Step/View-State
+Dialoge: `max-h-[85vh]`, `sm:max-w-[700px]`. Multi-Step über State-Switching (kein nested Dialog). Zurück-Button bei Sub-Views. Main-Container bleibt, Content wechselt.
 
 ### 🔴 Rule 5.29: FadeContent Dialog Conditional Rendering (RENDER-LOOP PREVENTION)
 🚨 **KRITISCH:** FadeContent Components MÜSSEN conditional gerendert werden bei Dialog/Modal-Wrapping!
@@ -370,6 +289,12 @@ Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline e
 - Performance-Degradation
 
 **Postmortem-Referenz:** 2025-10-06 - Chat Section Render Loop durch permanent FadeContent Rendering
+
+### 🔴 Rule 5.35: State-Changes During Active UI
+State-Updates, die Component-Remount triggern, NICHT während aktiver UI-Interaktion. Defer bis User navigiert. Mental-Check: "Triggert setState einen Key-Prop oder wichtigen Dependency?"
+
+### 🔴 Rule 5.37: Component Usage Chain Verification
+Vor Implementierung: Grep nach Verwendung der Ziel-Komponente im Feature-Path. Call-Chain tracken (UI → Wrapper → Proxy → Target). Richtige Komponente identifizieren, bevor Code geschrieben wird.
 
 ---
 
