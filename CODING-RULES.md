@@ -330,6 +330,47 @@ Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline e
 
 **Postmortem-Referenz:** 2025-10-06 - Chat Section Render Loop durch permanent FadeContent Rendering
 
+### 🔴 Rule 5.35: State-Changes During Active UI (UX-Consistency)
+🚨 **KRITISCH:** State-Änderungen während aktiver UI-Interaktion können zu unerwartetem Re-Rendering führen!
+
+**Problem:** State-Updates, die Component-Remount triggern, führen zu UI-Inkonsistenzen und Daten-Verlust.
+
+**Chat-Kontext:**
+- `setCurrentSessionId(42)` ändert `chatId` → `useChat` re-initialisiert → Messages verschwinden
+- User-Perspektive: "Ich habe gespeichert → Mein Chat ist weg!" ❌
+
+**Regel:**
+- ❌ **NEVER** State ändern, der zu Component-Remount führt, während User aktiv mit UI interagiert
+- ✅ **DEFER** State-Updates bis User navigiert oder explizit neu lädt
+- ✅ **TEST** State-Changes mental: "Was triggert diese Änderung? Welche Components remounten?"
+
+**Pattern:**
+```typescript
+// ❌ WRONG: State-Change während aktiver UI
+const handleSave = async () => {
+  const id = await saveToDb();
+  setItemId(id);  // ← Kann Remount triggern!
+};
+
+// ✅ CORRECT: State-Change erst bei Navigation
+const handleSave = async () => {
+  await saveToDb();
+  // State bleibt unverändert bis User navigiert
+};
+```
+
+**Regel-Trigger:**
+- Immer wenn `setState` in `async` Functions aufgerufen wird
+- Mental-Check: "Wird durch diese State-Änderung ein Key-Prop oder wichtiger Dependency geändert?"
+
+**Symptoms:**
+- UI verschwindet nach Save/Update
+- Daten-Verlust nach State-Update
+- Unerwartete Remounts während Interaktion
+- Inkonsistente UI-States
+
+**Postmortem-Referenz:** Chat-Save Bug (2025-10-10) - `setCurrentSessionId` während aktivem Chat führt zu Message-Loss
+
 ---
 
 ## 🛠️ Implementation Guidelines
