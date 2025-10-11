@@ -163,6 +163,7 @@ Parent↔Child: Props/Callbacks. 2-3 Levels: Lifting State Up. 3+ Levels: Contex
 
 ### Tab Components Performance
 Tabs KEINE eigenen Fetches. Parent fetcht, Props weitergeben. Anti-Pattern: Tab-Fetches (1000ms+ Ladezeit). Referenz: `shared-docs/performance/tab-component-performance-antipattern.md`
+- Formulare/Listen/Tabs niemals fluechtige Keys (z. B. Math.random() im Render) verwenden; stattdessen stabile, persistierte IDs im State/Modell nutzen, um Remounts und Fokusverlust zu verhindern.
 
 ### Responsive Dialogs
 - **Controller Pattern:** Separate Components für Desktop/Mobile
