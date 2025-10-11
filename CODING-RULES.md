@@ -31,6 +31,19 @@ Proaktiv an Szenarien denken, die der User nicht erwähnt hat:
 
 ## 🏗️ Architektur & Dateistruktur
 
+### 🚨 WICHTIGSTE REGEL: Component-Based Architecture (Rule 5.38)
+
+**NIEMALS Komponenten innerhalb anderer Komponenten definieren!**
+
+❌ **VERBOTEN:**
+```tsx
+const Parent = () => {
+  const NestedComponent = () => <div>Bad</div>; // ❌ NIEMALS!
+  return <NestedComponent />;
+};
+
+**Warum?** Nested Components = Performance-Killer + State-Verlust + Unmöglich zu testen
+
 ### Component Organization (Section-Based)
 
 **Max 400 lines per file** - Split in helpers/services wenn größer
@@ -295,6 +308,103 @@ State-Updates, die Component-Remount triggern, NICHT während aktiver UI-Interak
 
 ### 🔴 Rule 5.37: Component Usage Chain Verification
 Vor Implementierung: Grep nach Verwendung der Ziel-Komponente im Feature-Path. Call-Chain tracken (UI → Wrapper → Proxy → Target). Richtige Komponente identifizieren, bevor Code geschrieben wird.
+
+### 🔴 Rule 5.38: MANDATORY Component-Based Architecture (NO NESTED COMPONENT DEFINITIONS)
+🚨 **KRITISCH:** React-Komponenten NIEMALS innerhalb anderer Komponenten definieren!
+
+**Problem:** Nested Component Definitions verursachen:
+- ❌ Komplette Remounts bei jedem Parent-Render (Performance-Killer)
+- ❌ State-Verlust und unnötige Re-Initialisierung
+- ❌ Unmögliche Wiederverwendung und Testing
+- ❌ Unlesbare Code-Struktur und schlechte Wartbarkeit
+- ❌ React DevTools Chaos und schwieriges Debugging
+
+**❌ ANTI-PATTERN: Nested Component Definition**
+```tsx
+// ❌ FALSCH - Komponente INNERHALB einer anderen Komponente definiert
+const TiptapEditor = () => {
+  const [state, setState] = useState(false);
+
+  // ❌ Diese Komponente wird bei JEDEM Render neu erstellt!
+  const TipTapBubbleMenu = ({ editor }: { editor: Editor }) => {
+    return <BubbleMenu editor={editor}>...</BubbleMenu>;
+  };
+
+  return (
+    <div>
+      <EditorContent editor={editor} />
+      <TipTapBubbleMenu editor={editor} />
+    </div>
+  );
+};
+```
+
+**✅ CORRECT PATTERN: Separate Component Files**
+```tsx
+// ✅ RICHTIG - Komponente in separater Datei
+// File: TiptapBubbleMenu.tsx
+export const TiptapBubbleMenu = ({ editor }: { editor: Editor }) => {
+  return <BubbleMenu editor={editor}>...</BubbleMenu>;
+};
+
+// File: TiptapEditor.tsx
+import { TiptapBubbleMenu } from './TiptapBubbleMenu';
+
+const TiptapEditor = () => {
+  const [state, setState] = useState(false);
+
+  return (
+    <div>
+      <EditorContent editor={editor} />
+      <TiptapBubbleMenu editor={editor} />
+    </div>
+  );
+};
+```
+
+**📂 Dateistruktur-Regel:**
+Jede Komponente MUSS in einer eigenen Datei sein, außer:
+- Sehr kleine Helper-Komponenten (<10 Zeilen, keine State-Logik)
+- Komponenten, die AUSSERHALB der Parent-Component definiert sind (Top-Level)
+
+**⚡ REGEL-TRIGGER:**
+- Wenn du eine Komponente definierst → IMMER in separate Datei
+- Wenn du `const ComponentName = () => { ... }` INNERHALB einer anderen Komponente siehst → SOFORT refactoren
+- Vor Code-Review: Grep nach `= ({.*}) => {` innerhalb von Function Components
+
+**🎯 Ausnahmen (SEHR SELTEN):**
+Nur wenn:
+1. Komponente ist <5 Zeilen pure JSX
+2. Komponente hat keine eigene State-Logik
+3. Komponente wird NUR an EINER Stelle verwendet
+4. Komponente ist ein reiner Render-Helper (z.B. `renderIcon()`)
+
+**Beispiel für erlaubte Ausnahme:**
+```tsx
+// ✅ OK - Sehr kleine, pure Render-Helper
+const MyComponent = () => {
+  // Diese Mini-Komponente ist OK (aber besser wäre es trotzdem in eigener Datei)
+  const Icon = () => <svg>...</svg>;
+
+  return <div><Icon /></div>;
+};
+```
+
+**🔍 Code-Review Checklist:**
+- [ ] Alle Komponenten in separaten Dateien?
+- [ ] Keine `const Component = () => {}` innerhalb anderer Components?
+- [ ] Komponenten-Dateinamen folgen Naming Convention (siehe Section 3.2)?
+- [ ] Jede Komponente hat klare Props-Interface?
+
+**Warum ist das SO wichtig?**
+1. **Performance:** Jede Nested Component wird bei jedem Render neu erstellt → React kann nicht memoizen
+2. **State-Management:** Nested Components verlieren State bei Parent-Render
+3. **Testing:** Unmöglich, nested Components isoliert zu testen
+4. **Debugging:** React DevTools zeigen chaotische Component-Trees
+5. **Wiederverwendung:** Nested Components können nicht woanders verwendet werden
+6. **Code-Organisation:** Flat Structure ist leichter zu navigieren und verstehen
+
+**Postmortem-Referenz:** 2025-10-10 - TipTap BubbleMenu war nested in TiptapEditor → Ausgelagert in separate Komponente für Performance + Wartbarkeit
 
 ---
 
