@@ -408,6 +408,155 @@ const MyComponent = () => {
 
 ---
 
+### 🔴 Rule 5.41: State-Persistence Decision Pattern (UNIVERSAL PERFORMANCE RULE)
+🚨 **KRITISCH:** Vor jedem `useEffect` der State → Server synchronisiert, entscheide das richtige Pattern!
+
+**Core-Problem:** `useEffect(() => { saveToServer(state) }, [state])` kann zu Performance-Killer werden
+
+**Decision-Tree:**
+
+1️⃣ **Frage: Wie oft ändert sich der State?**
+   - **Kontinuierlich (>10x/Sekunde)?** → Pattern A: Explicit Save
+   - **Frequent (1-10x/Sekunde)?** → Pattern B: Debounced Save
+   - **Occasional (<1x/Sekunde)?** → Pattern C: Throttled Save
+   - **On-Demand (User-Click)?** → Pattern D: Immediate Save
+
+2️⃣ **Frage: Ist Data-Loss kritisch?**
+   - **JA** (Payment, Auth) → Pattern A: Explicit Save ONLY
+   - **NEIN** (Draft, UI-State) → Debounced/Throttled OK
+
+3️⃣ **Frage: Ist die User-Experience wichtiger als Persistence?**
+   - **JA** (Smooth-Dragging) → Optimistic-UI + Debounced-Background-Save
+   - **NEIN** (Forms) → Blocking-Save mit Loading-State
+
+**Pattern A: Explicit Save (Kontinuierliche Interaktionen)**
+
+**Use-Cases:** Drag & Drop, Pan/Zoom, Slider, Color-Picker, Canvas-Drawing
+**Frequency:** 60+ State-Updates/Sekunde
+**Problem:** Auto-Save würde 60+ Requests/Sekunde triggern
+
+```tsx
+// ❌ ANTI-PATTERN: Auto-Save bei jedem State-Change
+useEffect(() => {
+  saveToServer(position); // 60x pro Sekunde!
+}, [position]);
+
+// ✅ CORRECT: Explicit Save bei Action-Ende
+const handleDragEnd = () => {
+  saveToServer(position); // 1x bei Ende
+};
+
+const handleSliderChangeCommitted = (value) => {
+  saveToServer(value); // 1x bei Release
+};
+```
+
+**Trigger:** Wenn User **kontinuierlich** interagiert (Mouse-Move, Touch-Drag)
+
+**Pattern B: Debounced Save (Frequent-Typing)**
+
+**Use-Cases:** Text-Input, Search-Bar, Filter-Input, Rich-Text-Editor
+**Frequency:** 1-10 State-Updates/Sekunde
+**Problem:** Auto-Save bei jedem Keystroke → Unnecessary-Requests
+
+```tsx
+// ❌ ANTI-PATTERN: Save bei jedem Keystroke
+useEffect(() => {
+  saveToServer(text); // Bei jedem Buchstaben!
+}, [text]);
+
+// ✅ CORRECT: Debounced Save (nach Tipp-Pause)
+const debouncedSave = useMemo(
+  () => debounce((value) => saveToServer(value), 1000),
+  []
+);
+
+useEffect(() => {
+  debouncedSave(text); // Erst nach 1s Ruhe
+  return () => debouncedSave.cancel();
+}, [text, debouncedSave]);
+```
+
+**Trigger:** Wenn User **tippt/editiert** (Keyboard-Input)
+
+**Pattern C: Throttled Save (Occasional-Updates)**
+
+**Use-Cases:** Scroll-Position, Window-Resize, Live-Chart-Updates
+**Frequency:** <1 State-Update/Sekunde (aber viele Events)
+**Problem:** Zu viele Events, aber State ändert sich seltener
+
+```tsx
+// ❌ ANTI-PATTERN: Save bei jedem Scroll-Event
+useEffect(() => {
+  const handleScroll = () => {
+    saveToServer(scrollPosition); // 100x pro Sekunde!
+  };
+  window.addEventListener('scroll', handleScroll);
+}, []);
+
+// ✅ CORRECT: Throttled Save (max 1x pro Intervall)
+const throttledSave = useMemo(
+  () => throttle((pos) => saveToServer(pos), 300),
+  []
+);
+
+useEffect(() => {
+  const handleScroll = () => {
+    throttledSave(window.scrollY); // Max 3x pro Sekunde
+  };
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, [throttledSave]);
+```
+
+**Trigger:** Wenn Browser-Events häufig feuern (Scroll, Resize)
+
+**Pattern D: Immediate Save (On-Demand)**
+
+**Use-Cases:** Submit-Button, Delete-Action, Create-Action
+**Frequency:** Einzelne User-Clicks
+**Problem:** KEIN Problem - User erwartet sofortiges Feedback
+
+```tsx
+// ✅ CORRECT: Immediate Save bei Click
+const handleSubmit = async () => {
+  setLoading(true);
+  await saveToServer(formData);
+  setLoading(false);
+  toast.success("Saved!");
+};
+
+return <button onClick={handleSubmit}>Save</button>;
+```
+
+**Trigger:** Wenn User **explizit** eine Action ausführt
+
+**Mental-Checklist (CODE-REVIEW):**
+
+Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
+
+1. ✅ Wie oft ändert sich `state`? (1x/Click, 10x/s, 60x/s?)
+2. ✅ Ist das Pattern angemessen? (Immediate, Debounced, Throttled, Explicit?)
+3. ✅ Gibt es eine Cleanup-Function? (`debounce.cancel()`, `clearInterval()`)
+4. ✅ Ist Data-Loss akzeptabel? (Falls Device offline/Browser-Crash während Debounce)
+
+**Red-Flags:**
+- ⚠️ `useEffect` + `serverAction` ohne Debouncing/Throttling
+- ⚠️ State ändert sich >10x/Sekunde (Drag, Slider, Drawing)
+- ⚠️ Keine Cleanup-Function bei Debounce/Throttle
+- ⚠️ State enthält Viewport/Camera/UI-State (sollte nicht persistiert werden)
+
+**Verwandte Regeln:**
+- Rule 5.30: Client-Side Fetch Anti-Pattern (Fetching-Side)
+- Rule 5.33: Polling Cleanup Enforcement (Cleanup-Side)
+- Revalidate-Sicherheitsregel: Autosave-Remount-Loop Prevention
+
+**Postmortem-Referenzen:**
+- `docs/diagram-canvas/tasks/2025-10-13-diagram-performance-analysis.md` (Drag-Pattern)
+- `shared-docs/postmortem/revalidatepath-autosave-remount-loop-postmortem.md` (Autosave-Loop)
+
+---
+
 ## 🛠️ Implementation Guidelines
 
 ### Database (Actions & Finders)
