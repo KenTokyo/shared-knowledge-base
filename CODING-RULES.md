@@ -221,6 +221,27 @@ Tabs KEINE eigenen Fetches. Parent fetcht, Props weitergeben. Anti-Pattern: Tab-
 - **Trigger:** Wenn `<MobileComponent />` + `<DesktopComponent />` beide fetchen → Refactoren
 - **Referenz:** `shared-docs/performance/network-performance-analysis-guide.md` (Problem 2)
 
+### 🔴 Rule 5.39: N+1 Query Prevention (Batch-Loading Pattern)
+🚨 **KRITISCH:** Nested Queries in Loops MÜSSEN durch Batch-Loading ersetzt werden!
+- **Problem:** `for (const item of items) { await getDetails(item.id) }` → 20 Items = 41 Queries
+- **Lösung:** Batch-Loading mit JOINs oder `inArray(itemIds)` → 1-3 Queries statt 41 (-92% Reduktion)
+- **Trigger:** Wenn `for`/`map` Loop + `await` für Sub-Daten → STOP → Batch implementieren
+- **Anwendbar:** Notizen+Tags, Products+Reviews, Plans+Days, Messages+Users (90% aller Apps)
+
+### 🔴 Rule 5.40: Cache Invalidation Strategy (Stale Data Prevention)
+🚨 **KRITISCH:** Jede Caching-Implementierung MUSS eine klare Invalidation-Strategie haben!
+- **Problem:** Caching ohne Invalidation → User sieht stale Data nach Updates
+- **Lösung:** TTL basierend auf Volatilität (Static: 1h, Live: 30s) + Manual Invalidation bei Mutations (`revalidateTag`, `cacheManager.invalidate`)
+- **Trigger:** Bei `cache()` oder `unstable_cache()` → IMMER Invalidation-Strategie definieren
+- **Decision-Tree:** CREATE → Invalidate Lists | UPDATE → Invalidate Item+Lists | DELETE → Invalidate ALL
+
+### 🔴 Rule 5.42: Progressive Data Loading Pattern (Initial Load Optimization)
+🚨 **KRITISCH:** Alle Daten auf einmal laden = schlechte UX! Implementiere 3-Level Loading!
+- **Problem:** `Promise.all([allData])` → User wartet 7s auf ALLES, obwohl nur erste 10 Items sichtbar
+- **Lösung:** Level 1 (Critical 0-500ms, KEIN Suspense) → Level 2 (Important, MIT Suspense) → Level 3 (Lazy on-demand)
+- **Trigger:** Bei Initial Load >2s → Mental-Check: "Was braucht User WIRKLICH in ersten 500ms?"
+- **Pattern:** First-Page only (10-20 items) + Pagination/Infinite-Scroll + Images mit `loading="lazy"` (-85% perceived load)
+
 ---
 
 ## 🚨 Kritische Anti-Patterns (MUST AVOID)
