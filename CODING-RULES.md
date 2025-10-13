@@ -163,6 +163,7 @@ Parent↔Child: Props/Callbacks. 2-3 Levels: Lifting State Up. 3+ Levels: Contex
 
 ### Tab Components Performance
 Tabs KEINE eigenen Fetches. Parent fetcht, Props weitergeben. Anti-Pattern: Tab-Fetches (1000ms+ Ladezeit). Referenz: `shared-docs/performance/tab-component-performance-antipattern.md`
+- Formulare/Listen/Tabs niemals fluechtige Keys (z. B. Math.random() im Render) verwenden; stattdessen stabile, persistierte IDs im State/Modell nutzen, um Remounts und Fokusverlust zu verhindern.
 
 ### Responsive Dialogs
 - **Controller Pattern:** Separate Components für Desktop/Mobile
@@ -647,6 +648,7 @@ Vor jedem Commit:
 - `shared-docs/refactoring-docs/patterns/animated-loading-states.md`
 - `shared-docs/refactoring-docs/patterns/multi-level-data-fetching.md`
 - `shared-docs/postmortem/open-dialogs-right-way-useffect-windowEventListener.md`
+- `shared-docs/ux/loading-feedback-pattern.md`
 #### Revalidate-Sicherheitsregel (Remount-Loop Prävention)
 - Verwende `revalidatePath` NICHT bei Autosave- oder hochfrequenten Updates, wenn ein Editor/komplexe Client-UI gerade gemountet ist (z. B. `/notes`).
 - Stattdessen:
@@ -654,3 +656,15 @@ Vor jedem Commit:
   - Client: Lokalen Zustand aktualisieren (`onSaved()`), Cache markieren (`invalidateCache(id, 'note' | 'diagram')`), optional gezieltes `refreshData()` aus dem Context aufrufen.
 - `revalidatePath` nur für: Create/Delete, explizite Nutzeraktionen, oder wenn ein Navigationswechsel unmittelbar folgt.
 - Hintergrund: `revalidatePath` invalidiert die Route und verursacht Remounts → bei Autosave führt das zu Endlosschleifen. Siehe: `shared-docs/postmortem/revalidatepath-autosave-remount-loop-postmortem.md`.
+---
+
+## Loading-Feedback Kurzregeln (Skeleton + Fade)
+
+- Nicht gecached/unsicher: Sofort isLoading=true setzen (vor jedem await) und ein Skeleton nur für den betroffenen Bereich rendern. Rest der UI bleibt interaktiv.
+- Nach Erfolg: Skeleton durch Content ersetzen und mit FadeContent (200–400ms, ease-out, Standard: blur=true) weich einblenden.
+- Gecached/optimistisch: Kein Skeleton. UI direkt updaten; nur bei großen visuellen Übergängen optional ein kurzes Fade.
+- Scope klein halten: Nur die wechselnde Section wrappen (z. B. Übungen-Liste), Header/Nav nie blockieren. Stabile Keys verwenden.
+- Route-/Server-Layer: Suspense/loading.tsx. Intra-View Interaktionen: lokaler State + Skeleton + Fade.
+
+Details & Beispiele: shared-docs/ux/loading-feedback-pattern.md
+
