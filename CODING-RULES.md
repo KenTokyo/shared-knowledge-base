@@ -1,7 +1,6 @@
-﻿# 🎯 Coding Rules & Development Guidelines
+# 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Diese Datei enthält alle essentiellen Regeln für konsistente, performante und wartbare Code-Entwicklung. Sie vereint Architektur, Best Practices und kritische Anti-Patterns.
-
 ---
 
 ## 📋 Workflow & Arbeitsweise
