@@ -12,6 +12,13 @@
 - **Code-Reuse prüfen:** Erst nach existierenden Funktionen/Components suchen
 - **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
 
+### 🚨 PLANUNGS-REGEL: Kein Code in Planungsdokumenten!
+**KRITISCH:** Planungsdokumente (`docs/[feature]/tasks/*.md`) dürfen NIEMALS vollständigen Code enthalten!
+- ✅ **ERLAUBT:** Konzepte, Architektur-Beschreibungen, Dateipfade, Funktionsnamen, API-Signaturen (max 3-5 Zeilen Pseudo-Code)
+- ❌ **VERBOTEN:** Komplette Funktions-Implementierungen, vollständige Komponenten, Code-Blöcke >10 Zeilen
+- **Ziel:** Pläne sollten max. 500-800 Zeilen sein (aktueller Anti-Pattern: 1500+ Zeilen mit Code)
+- **Grund:** Planungen beschreiben WAS und WARUM, nicht WIE im Detail (das ist Coder-Aufgabe)
+
 ### Kritisches Denken (Edge Cases)
 Proaktiv an Szenarien denken, die der User nicht erwähnt hat:
 - **Extrem-Fälle:** Große/kleine/leere Daten, Maximum erreicht?
