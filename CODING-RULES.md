@@ -484,7 +484,7 @@ export interface ApiResponse<T> {
 ## 🎨 Design System
 
 ### 🌙 Dark Mode Glassmorphism Design Pattern Theme Oriented
-**Tiefschwarze Hintergründe:**, **Subtile Neon-Glows:**, **Glasmorphism-Ränder:**, **Inset-Highlights:**, **Light-Mode-Kompatibilität:**, **Gradient-Texte:** ,**Beispiel-Klassen-Kombination:**, **ThemeOriented-Klassen**
+**Tiefschwarze Hintergründe**, **Subtile Neon-Glows**, **Glasmorphism-Ränder**, **Inset-Highlights**, **Light-Mode-Kompatibilität**, **Gradient-Texte** ,**Beispiel-Klassen-Kombination**, **Theme-Oriented-Klassen**
 
 ### Theme System
 - **CSS Custom Properties:** Dynamic colors (`--primary`, `--accent`)
