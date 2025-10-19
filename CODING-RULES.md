@@ -446,13 +446,6 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 - ⚠️ Keine Cleanup-Function bei Debounce/Throttle
 - ⚠️ State enthält Viewport/Camera/UI-State (sollte nicht persistiert werden)
 
-### 🔴 Rule 5.43: useEffect Object-Property Dependencies (INFINITE LOOP)
-🚨 **KRITISCH:** NIEMALS Object-Properties (`obj?.id`, `obj?.name`) direkt als useEffect Dependencies!
-- **Problem:** Object-Refs ändern sich bei jedem Render → Infinite Re-Render Loop (besonders bei Radix Dialog/Presence)
-- **Symptom:** "Maximum update depth exceeded" in `Presence.tsx`
-- **Fix:** `useMemo(() => obj?.id, [obj?.id])` für stable Reference ODER separate useEffect
-- **Trigger:** Wenn `useEffect` + `setState` + Object-Property Dependency → useMemo wrap
-
 ---
 
 ## 🛠️ Implementation Guidelines
