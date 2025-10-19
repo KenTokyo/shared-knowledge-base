@@ -208,7 +208,9 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 *   Bevorzuge Wiederverwendung statt Redundanz.
 *   Ziel: Kein toter oder veralteter Code.
 
-### 6\. 🧩 Komponenten & Implementierung (Kein Code)
+### 6\. 🧩 Komponenten & Implementierung (⚠️ KEIN CODE!)
+
+**🚨 KRITISCHE REGEL: PLANUNGEN DÜRFEN KEINEN VOLLSTÄNDIGEN CODE ENTHALTEN!**
 
 *   Liste die zu erstellenden Komponenten nur mit ihrem **Namen und Zweck** auf.
 *   Schätze die Code-Zeilen (Ziel: **400-500 Zeilen** pro Komponente).
@@ -217,6 +219,55 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 *   Für jede Komponente: Name, Zweck, geschätzte Code-Zeilen.
 *   Datentypen/Typen, die erweitert werden.
 *   Bestehende Funktionen, die angepasst werden.
+
+**✅ ERLAUBT in Planungen:**
+- Konzeptuelle Beschreibungen ("nutzt Server-Action `createProvider`")
+- API-Signaturen (z.B. `async function createProvider(data: ProviderInsert): Promise<Response>`)
+- Kurze Pseudo-Code-Beispiele (max 3-5 Zeilen zur Illustration)
+- Dateistrukturen und Ordner-Hierarchien
+- Import/Export-Listen
+
+**❌ VERBOTEN in Planungen:**
+- Komplette Funktions-Implementierungen (>10 Zeilen Code)
+- Vollständige React-Komponenten mit JSX
+- Detaillierte Business-Logic-Implementierungen
+- Code-Blöcke, die copy-paste-ready sind
+- Jeglicher Code, der länger als 10 Zeilen ist
+
+**🎯 Ziel:**
+- Planungen sollten **500-800 Zeilen** sein (nicht 1500+ mit Code!)
+- Planungen beschreiben **WAS** und **WARUM**, nicht **WIE** im Detail
+- Das **WIE** ist die Aufgabe des Coders, nicht des Architekten
+
+**💡 Beispiel für GUTE Planung:**
+```markdown
+#### 2.1 Finders (`db/finders/local/api-keys-finder.local.ts`) **~200 Zeilen**
+- `getAiProvidersByProfileId(profileId)`: Cached Finder für alle Provider
+- `getActiveProvidersByProfileId(profileId)`: Nur aktive Provider mit auto-decryption
+- Nutzt `cache()` für Deduplizierung (Rule 5.32)
+- Error-Handling mit try-catch + ApiResponse-Pattern
+```
+
+**❌ Beispiel für SCHLECHTE Planung (zu viel Code):**
+```markdown
+#### 2.1 Finders (`db/finders/local/api-keys-finder.local.ts`) **~200 Zeilen**
+```typescript
+'use server';
+import { cache } from 'react';
+import { db } from '@/db/drizzle';
+import { aiProviders, aiSettings } from '@/db/schema/local';
+export const getAiProvidersByProfileId = cache(async (profileId: string) => {
+  return await db
+    .select()
+    .from(aiProviders)
+    .where(eq(aiProviders.profileId, profileId))
+    .orderBy(desc(aiProviders.priority));
+});
+// ... weitere 50+ Zeilen Code
+```
+❌ Dieser Code gehört NICHT in die Planung!
+```
+
 *   Hinweis: Der Fokus liegt auf Klarheit und Planung, nicht auf dem Schreiben von Code.
 
 ### 7\. 📚 Dokumentation & Subfeatures

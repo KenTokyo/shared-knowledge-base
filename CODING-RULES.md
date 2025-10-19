@@ -16,6 +16,13 @@
   - Schneller Check ohne Build-Overhead
   - Findet Type-Errors zuverlässig
 
+### 🚨 PLANUNGS-REGEL: Kein Code in Planungsdokumenten!
+**KRITISCH:** Planungsdokumente (`docs/[feature]/tasks/*.md`) dürfen NIEMALS vollständigen Code enthalten!
+- ✅ **ERLAUBT:** Konzepte, Architektur-Beschreibungen, Dateipfade, Funktionsnamen, API-Signaturen (max 3-5 Zeilen Pseudo-Code)
+- ❌ **VERBOTEN:** Komplette Funktions-Implementierungen, vollständige Komponenten, Code-Blöcke >10 Zeilen
+- **Ziel:** Pläne sollten max. 500-800 Zeilen sein (aktueller Anti-Pattern: 1500+ Zeilen mit Code)
+- **Grund:** Planungen beschreiben WAS und WARUM, nicht WIE im Detail (das ist Coder-Aufgabe)
+
 ### Kritisches Denken (Edge Cases)
 Proaktiv an Szenarien denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, Concurrent Access, Browser/Device-Unterschiede, Security, UX-Issues.
 
@@ -483,9 +490,12 @@ export interface ApiResponse<T> {
 
 ## 🎨 Design System
 
+### 🌙 Dark Mode Glassmorphism Design Pattern Theme Oriented
+**Tiefschwarze Hintergründe**, **Subtile Neon-Glows**, **Glasmorphism-Ränder**, **Inset-Highlights**, **Light-Mode-Kompatibilität**, **Gradient-Texte** ,**Beispiel-Klassen-Kombination**, **Theme-Oriented-Klassen**
+
 ### Theme System
 - **CSS Custom Properties:** Dynamic colors (`--primary`, `--accent`)
-- **Glassmorphism:** `glass-card`, `backdrop-blur-sm/md`
+- **Glassmorphism:** `glass-card`, `backdrop-blur-sm/md/2xl`
 - **Gradients:** Three-color gradients (primary-dark → primary → primary-light)
 
 ### Component Classes
