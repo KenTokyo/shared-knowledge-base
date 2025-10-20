@@ -156,6 +156,116 @@ function ClientComponent({ dataPromise }) {
 - **Static-First:** Statische UI (Header, Navigation) AUSSERHALB Suspense (0ms render)
 - **Hydration:** Server und Client initial UI müssen identisch sein
 
+### 🔴 Rule 5.43: Client Provider Wrapper Pattern (MANDATORY)
+🚨 **KRITISCH:** RootLayout (Server Component) darf NICHT direkt 5+ Client Components importieren!
+
+**Problem:** Server/Client Boundary unklar → Client Manifest Build-Fehler
+```
+⨯ Error: Could not find the module "..." in the React Client Manifest.
+This is probably a bug in the React Server Components bundler.
+```
+
+**Root-Cause:**
+- Next.js 14 App Router hat strikte Server/Client Boundary Rules
+- Server Components können Client Components nicht direkt importieren UND rendern
+- Das Client Manifest wird nur korrekt gebaut, wenn die Grenze explizit definiert ist
+- **Threshold:** Wenn RootLayout >3 "use client" Imports hat → Refactor erforderlich
+
+**Lösung:** Client Component Wrapper Pattern
+
+**✅ The Right Way:**
+```tsx
+// app/layout/components/ClientProviders.tsx
+"use client";
+
+import { ThemeProvider } from "@/components/theme-provider";
+import { SessionProvider } from "next-auth/react";
+import { AuthProvider } from "./AuthContext";
+// ... alle anderen Client-Provider
+
+export function ClientProviders({
+  children,
+  session,
+  profile
+}: {
+  children: React.ReactNode;
+  session: Session | null;
+  profile: Profile | null;
+}) {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <SessionProvider session={session ?? undefined}>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </SessionProvider>
+    </ThemeProvider>
+  );
+}
+
+// app/layout.tsx (Server Component)
+import { ClientProviders } from "./layout/components/ClientProviders";
+
+export default async function RootLayout({ children }) {
+  const session = await auth();
+  const profile = await getProfile();
+
+  return (
+    <html lang="de" suppressHydrationWarning>
+      <head>
+        <meta charSet="UTF-8" />
+      </head>
+      <body>
+        <ClientProviders session={session} profile={profile}>
+          {children}
+        </ClientProviders>
+      </body>
+    </html>
+  );
+}
+```
+
+**❌ Anti-Pattern (VERBOTEN):**
+```tsx
+// app/layout.tsx (Server Component)
+import { ThemeProvider } from "@/components/theme-provider"; // ❌ Client Component
+import { SessionProvider } from "next-auth/react";           // ❌ Client Component
+import { AuthProvider } from "./AuthContext";                // ❌ Client Component
+// ... 15+ weitere Client Components ❌
+
+export default async function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <ThemeProvider>          {/* ❌ Direct Client Component Rendering */}
+          <SessionProvider>      {/* ❌ Server Component rendert Client */}
+            <AuthProvider>       {/* ❌ Manifest Build Error! */}
+              {children}
+            </AuthProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+**⚡ REGEL-TRIGGER:**
+- ✅ **WENN:** RootLayout importiert >3 "use client" Komponenten
+- ✅ **WENN:** Error "Could not find module in React Client Manifest"
+- ✅ **WENN:** Provider-Stack >3 Ebenen tief (ThemeProvider → SessionProvider → AuthProvider)
+
+**📊 Vorteile:**
+- ✅ Klare Server/Client Grenze (Next.js 14 Best Practice)
+- ✅ Client Manifest wird korrekt gebaut
+- ✅ Bessere Code-Organisation (Separation of Concerns)
+- ✅ Einfacheres Debugging (Provider-Logic isoliert)
+- ✅ Wiederverwendbar (kann in anderen Layouts genutzt werden)
+
+**📚 Referenz:**
+- Next.js 14 Docs: [Composition Patterns](https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns)
+- Related Rule: 5.1 (Server Components dürfen Client Components nicht direkt importieren)
+
 ---
 
 ## ⚛️ React Best Practices
