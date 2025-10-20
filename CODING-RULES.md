@@ -641,3 +641,5 @@ Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Ca
 **Gecached:** Kein Skeleton, UI direkt updaten.
 **Scope:** Nur wechselnde Section, Header/Nav nie blockieren. Stabile Keys!
 
+### CSS-Debug-Regel (Sizing)
+Bei unerwarteten Button-/Tile-Größen zuerst die „Computed“-Werte in DevTools prüfen; wenn Varianten oder Flex-Layouts inflatieren, Größen mit Inline `width/height` (+ `min/max`) erzwingen und `flex-none` setzen, danach schrittweise zu Klassen/Varianten zurückführen.
