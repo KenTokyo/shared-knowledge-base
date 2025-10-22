@@ -1,129 +1,80 @@
 # 🎯 Coding Rules & Development Guidelines
 
-**Zweck:** Diese Datei enthält alle essentiellen Regeln für konsistente, performante und wartbare Code-Entwicklung. Sie vereint Architektur, Best Practices und kritische Anti-Patterns.
+**Zweck:** Essentielle Regeln für konsistente, performante und wartbare Code-Entwicklung.
+
 ---
 
-## 📋 Workflow & Arbeitsweise
+## Regel 1: Workflow & Arbeitsweise
 
-### Vor dem Start
+### 1.1 Vor dem Start
 - **Vorhaben präsentieren:** Formatiert mit Icons, klare Struktur
 - **Größere Aufgaben:** Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md` erstellen
-- **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components suchen
-  - `Grep` nach ähnlicher Funktionalität
-  - Bestehende Patterns wiederverwenden statt neu erfinden
-  - Unnötige Duplikation vermeiden
+- **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components mit `Grep` suchen
 - **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
-  - Schneller Check ohne Build-Overhead
-  - Findet Type-Errors zuverlässig
 
-### 🚨 PLANUNGS-REGEL: Kein Code in Planungsdokumenten!
-**KRITISCH:** Planungsdokumente (`docs/[feature]/tasks/*.md`) dürfen NIEMALS vollständigen Code enthalten!
-- ✅ **ERLAUBT:** Konzepte, Architektur-Beschreibungen, Dateipfade, Funktionsnamen, API-Signaturen (max 3-5 Zeilen Pseudo-Code)
-- ❌ **VERBOTEN:** Komplette Funktions-Implementierungen, vollständige Komponenten, Code-Blöcke >10 Zeilen
-- **Ziel:** Pläne sollten max. 500-800 Zeilen sein (aktueller Anti-Pattern: 1500+ Zeilen mit Code)
-- **Grund:** Planungen beschreiben WAS und WARUM, nicht WIE im Detail (das ist Coder-Aufgabe)
+### 1.2 🚨 Planungs-Regel: Kein Code in Planungsdokumenten
+**KRITISCH:** Planungsdokumente dürfen NIEMALS vollständigen Code enthalten!
+- ✅ **ERLAUBT:** Konzepte, Architektur, Dateipfade, API-Signaturen (max 3-5 Zeilen Pseudo-Code)
+- ❌ **VERBOTEN:** Vollständige Implementierungen, Code-Blöcke >10 Zeilen
+- **Ziel:** Max 500-800 Zeilen pro Plan (WAS und WARUM, nicht WIE im Detail)
 
-### Kritisches Denken (Edge Cases)
-Proaktiv an Szenarien denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, Concurrent Access, Browser/Device-Unterschiede, Security, UX-Issues.
+### 1.3 Kritisches Denken (Edge Cases)
+Proaktiv denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, Concurrent Access, Browser/Device-Unterschiede, Security, UX-Issues.
 
-### Nach Abschluss
-- **Plan aktualisieren:** Phase als ✅ markieren, kurz dokumentieren was/warum
-  - Was wurde implementiert?
-  - Warum diese Lösung gewählt?
-  - Welche Edge-Cases wurden berücksichtigt?
+### 1.4 Nach Abschluss
+- **Plan aktualisieren:** Phase als ✅ markieren, kurz dokumentieren (was/warum, Edge-Cases)
 - **Dokumentation erweitern:** `docs/[feature]/[feature]-overview.md` bei großen Änderungen
-  - Neue Components dokumentieren
-  - Architektur-Änderungen festhalten
-  - Breaking Changes highlighten
 - **Motivierende Zusammenfassung:** Icons, exakte Dateipfade, abgeschlossene Phase nennen
-  - User zeigen was erreicht wurde
-  - Nächste Schritte vorschlagen
 
 ---
 
-## 🏗️ Architektur & Dateistruktur
+## Regel 2: Architektur & Dateistruktur
 
-### 🚨 WICHTIGSTE REGEL: Component-Based Architecture (Rule 5.38)
-
+### 2.1 🚨 Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!**
 
-❌ **VERBOTEN:**
-```tsx
-const Parent = () => {
-  const NestedComponent = () => <div>Bad</div>; // ❌ NIEMALS!
-  return <NestedComponent />;
-};
-```
+❌ **VERBOTEN:** `const NestedComponent = () => <div>Bad</div>` innerhalb Parent-Component
 
 **Warum?** Performance-Killer (jedes Render neu erstellt) + State-Verlust + Unmöglich zu testen
 
 ✅ **RICHTIG:** Jede Komponente in separater Datei
-```tsx
-// File: NestedComponent.tsx
-export const NestedComponent = () => <div>Good</div>;
 
-// File: Parent.tsx
-import { NestedComponent } from './NestedComponent';
-const Parent = () => <NestedComponent />;
-```
-
-### Component Organization (Section-Based)
-
+### 2.2 Component Organization (Section-Based)
 **Max 400 lines per file** - Split in helpers/services wenn größer
 
-#### ✅ The Right Way: Section-Based Structure
+✅ **Section-Based Structure:**
 ```
 app/feature/[param]/
 ├── (mainSection)/
 │   ├── (subSection)/
 │   │   ├── AktionButton.tsx
 │   │   └── KonfigPanel.tsx
-│   ├── MainSection.tsx          ← Section orchestrator
-│   └── (otherSubSection)/
-│       └── DataCard.tsx
+│   └── MainSection.tsx          ← Section orchestrator
 └── page.tsx
 ```
 
-#### ❌ Anti-Pattern: Flat "components" Junk Drawer
-```
-app/chat/
-├── page.tsx
-└── components/             ← ❌ VERMEIDEN
-    ├── AiChatDialog.tsx    ← Keine Struktur, nicht skalierbar
-    ├── ChatHeader.tsx
-    └── ... (20+ files chaos)
-```
+❌ **Anti-Pattern:** Flat "components" Junk Drawer (keine Struktur, nicht skalierbar)
 
-### Component Naming Convention
-
+### 2.3 Component Naming Convention
 **Button-Text = File-Name:** "Speichern" button → `SpeichernButton.tsx`
 
-**Component Types:**
-```
-ComponentName[Type].tsx:
-- Section.tsx    → Orchestrates UI area (ReviewSection.tsx)
-- Panel.tsx      → Input/config interface (EinstellungenPanel.tsx)
-- Dialog.tsx     → Modal/overlay (BestätigenDialog.tsx)
-- Button.tsx     → Interactive trigger (SpeichernButton.tsx)
-- Card.tsx       → Reusable content block (ProductCard.tsx)
-- Item.tsx       → List/grid element (MenuItem.tsx)
-```
+**Component Types:** `Section.tsx` (orchestrates), `Panel.tsx` (input/config), `Dialog.tsx` (modal), `Button.tsx` (trigger), `Card.tsx` (reusable block), `Item.tsx` (list element)
 
 **Sprach-Konvention:**
 - 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
-- 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item, Layout → `ReviewSection.tsx`
+- 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
 ---
 
-## 🚀 Next.js App Router Rules
+## Regel 3: Next.js App Router
 
-### 1. Server vs Client Components
+### 3.1 Server vs Client Components
 - **Default:** Server Components (kein `"use client"`)
 - **"use client" nur für:** `useState`, `useEffect`, event listeners, browser APIs
 - **Platzierung:** An der "leaf" des Component Tree, nicht in Root Layouts
 - **Pattern:** Server Components als `children` an Client Components übergeben
 
-### 2. Data Fetching
+### 3.2 Data Fetching
 - ✅ **DO:** Direct fetching in Server Components mit `async/await`
 - ✅ **DO:** Parallel fetching mit `Promise.all` (verhindert waterfalls)
 - ✅ **DO:** `use()` Hook Pattern für Client Components + Suspense
@@ -131,392 +82,264 @@ ComponentName[Type].tsx:
 - ❌ **DON'T:** Unnecessary API routes für simple data retrieval
 
 **Best Practice - `use()` Hook Pattern:**
-```tsx
-// Server Component
-const dataPromise = fetchData() // Nicht awaiten!
-return <ClientComponent dataPromise={dataPromise} />
+Server Component fetcht Daten als Promise (nicht awaiten!), Client Component resolved mit `use(dataPromise)`.
 
-// Client Component
-"use client"
-import { use } from 'react'
-function ClientComponent({ dataPromise }) {
-  const data = use(dataPromise) // Resolve in Client
-  return <div>{data}</div>
-}
-```
-
-### 3. Data Mutations
+### 3.3 Data Mutations
 - **Server Actions:** Alle Mutations (forms, updates, deletions)
 - **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nur bei geeigneten Fällen
 - **Security:** ⚠️ IMMER User-Input validieren + Session mit `getCurrentProfile()` prüfen
 
-### 4. Loading & Rendering
+### 3.4 Loading & Rendering
 - **Suspense:** `loading.tsx` für Route-Level, `<Suspense>` für Component-Level
 - **Re-trigger Suspense:** Key prop nutzen: `<Suspense key={query}>`
 - **Static-First:** Statische UI (Header, Navigation) AUSSERHALB Suspense (0ms render)
 - **Hydration:** Server und Client initial UI müssen identisch sein
 
-### 🔴 Rule 5.43: Client Provider Wrapper Pattern (MANDATORY)
-🚨 **KRITISCH:** RootLayout (Server Component) darf NICHT direkt 5+ Client Components importieren!
+### 3.5 🔴 Client Provider Wrapper Pattern (MANDATORY)
+**Problem:** RootLayout (Server Component) darf NICHT direkt 5+ Client Components importieren → Client Manifest Build-Fehler
 
-**Problem:** Server/Client Boundary unklar → Client Manifest Build-Fehler
-```
-⨯ Error: Could not find the module "..." in the React Client Manifest.
-This is probably a bug in the React Server Components bundler.
-```
+**Lösung:** Alle Client-Provider in ONE Client-Component (`ClientProviders.tsx`) wrappen, diese dann in RootLayout importieren.
 
-**Root-Cause:**
-- Next.js 14 App Router hat strikte Server/Client Boundary Rules
-- Server Components können Client Components nicht direkt importieren UND rendern
-- Das Client Manifest wird nur korrekt gebaut, wenn die Grenze explizit definiert ist
-- **Threshold:** Wenn RootLayout >3 "use client" Imports hat → Refactor erforderlich
-
-**Lösung:** Client Component Wrapper Pattern
-
-**✅ The Right Way:**
-```tsx
-// app/layout/components/ClientProviders.tsx
-"use client";
-
-import { ThemeProvider } from "@/components/theme-provider";
-import { SessionProvider } from "next-auth/react";
-import { AuthProvider } from "./AuthContext";
-// ... alle anderen Client-Provider
-
-export function ClientProviders({
-  children,
-  session,
-  profile
-}: {
-  children: React.ReactNode;
-  session: Session | null;
-  profile: Profile | null;
-}) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <SessionProvider session={session ?? undefined}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </SessionProvider>
-    </ThemeProvider>
-  );
-}
-
-// app/layout.tsx (Server Component)
-import { ClientProviders } from "./layout/components/ClientProviders";
-
-export default async function RootLayout({ children }) {
-  const session = await auth();
-  const profile = await getProfile();
-
-  return (
-    <html lang="de" suppressHydrationWarning>
-      <head>
-        <meta charSet="UTF-8" />
-      </head>
-      <body>
-        <ClientProviders session={session} profile={profile}>
-          {children}
-        </ClientProviders>
-      </body>
-    </html>
-  );
-}
-```
-
-**❌ Anti-Pattern (VERBOTEN):**
-```tsx
-// app/layout.tsx (Server Component)
-import { ThemeProvider } from "@/components/theme-provider"; // ❌ Client Component
-import { SessionProvider } from "next-auth/react";           // ❌ Client Component
-import { AuthProvider } from "./AuthContext";                // ❌ Client Component
-// ... 15+ weitere Client Components ❌
-
-export default async function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        <ThemeProvider>          {/* ❌ Direct Client Component Rendering */}
-          <SessionProvider>      {/* ❌ Server Component rendert Client */}
-            <AuthProvider>       {/* ❌ Manifest Build Error! */}
-              {children}
-            </AuthProvider>
-          </SessionProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-**⚡ REGEL-TRIGGER:**
-- ✅ **WENN:** RootLayout importiert >3 "use client" Komponenten
-- ✅ **WENN:** Error "Could not find module in React Client Manifest"
-- ✅ **WENN:** Provider-Stack >3 Ebenen tief (ThemeProvider → SessionProvider → AuthProvider)
-
-**📊 Vorteile:**
-- ✅ Klare Server/Client Grenze (Next.js 14 Best Practice)
-- ✅ Client Manifest wird korrekt gebaut
-- ✅ Bessere Code-Organisation (Separation of Concerns)
-- ✅ Einfacheres Debugging (Provider-Logic isoliert)
-- ✅ Wiederverwendbar (kann in anderen Layouts genutzt werden)
-
-**📚 Referenz:**
-- Next.js 14 Docs: [Composition Patterns](https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns)
-- Related Rule: 5.1 (Server Components dürfen Client Components nicht direkt importieren)
+**Warum?** Next.js 14 braucht klare Server/Client Boundary für korrektes Manifest-Building.
 
 ---
 
-## ⚛️ React Best Practices
+## Regel 4: React Best Practices
 
-### State & Props
+### 4.1 State & Props
 - **Immutable State:** Functional updates: `setState(prev => ...)`
 - **List Keys:** Stable, unique `key` prop für `.map()` items
-- **State vs Ref:** `useState` = re-render, `useRef` = no re-render (DOM, interval IDs)
+- **State vs Ref:** `useState` = re-render, `useRef` = no re-render
 
-### Performance
+### 4.2 Performance
 - **Memoization:** `useMemo` (expensive calculations), `useCallback` (functions as props), `React.memo` (components)
 - **UI Blocking:** Expensive computations in `useMemo` oder web worker auslagern
 
-### Effects & Lifecycle
+### 4.3 Effects & Lifecycle
 - **Cleanup:** IMMER cleanup function bei subscriptions/timers/listeners
 - **Dependency Array:** Accurate dependencies, `[]` = mount only, none = every render
 - **Avoid Unnecessary Effects:** Derive from props/state during render wenn möglich
 
-### Error Handling
+### 4.4 Error Handling
 - **Error Boundaries:** Wrap critical trees, catch rendering errors, show fallback
 
-### Component Communication
+### 4.5 Component Communication
 **Pattern-Auswahl:**
 - **Parent↔Child:** Props down, Callbacks up (Standard)
 - **2-3 Levels:** Lifting State Up (State im gemeinsamen Parent)
 - **3+ Levels:** Context API (vermeidet Props-Drilling)
 
-**Anti-Patterns:**
-- ❌ Props-Drilling >3 Levels (unlesbar, schwer zu refactoren)
-- ❌ Context für lokalen State (Overkill, Performance-Impact)
-- ❌ Duplizierter State in Kindern (Single Source of Truth!)
+**Anti-Patterns:** ❌ Props-Drilling >3 Levels, ❌ Context für lokalen State, ❌ Duplizierter State
 
 **Referenz:** `shared-docs/react-core-communication-patterns.md`
 
 ---
 
-## 🎬 Design Patterns & Anti-Patterns
+## Regel 5: Design Patterns
 
-### Tab Components Performance
+### 5.1 Tab Components Performance
 **Problem:** Jeder Tab macht eigenen Fetch → 1000ms+ Ladezeit bei Tab-Wechsel
-**Lösung:** Parent fetcht alle Daten, Props an Tabs weitergeben
-- ❌ **Anti-Pattern:** `useEffect(() => { fetch() }, [])` in jedem Tab
-- ✅ **Pattern:** Parent fetcht, Tabs sind "dumb" Presenter
-- **Keys:** NIEMALS flüchtige Keys (`Math.random()` im Render) → Remounts + Fokusverlust
-- **Referenz:** `shared-docs/performance/tab-component-performance-antipattern.md`
 
-### Responsive Dialogs
+**Lösung:** Parent fetcht alle Daten, Props an Tabs weitergeben
+
+**Keys:** NIEMALS flüchtige Keys (`Math.random()` im Render) → Remounts + Fokusverlust
+
+**Referenz:** `shared-docs/performance/tab-component-performance-antipattern.md`
+
+### 5.2 Responsive Dialogs
 **Controller Pattern:** Separate Components für Desktop/Mobile
-- `[Feature]Dialog.tsx` - Desktop-Version
-- `Mobile[Feature]Dialog.tsx` - Mobile-Version
+- `[Feature]Dialog.tsx` - Desktop
+- `Mobile[Feature]Dialog.tsx` - Mobile
 - `[Feature]DialogController.tsx` - Logic + Device-Detection
+
 **Warum:** Bessere UX als `hidden md:block`, keine doppelten Renders
+
 **Referenz:** `shared-docs/design/responsive-dialog-architecture.md`
 
-### Animated Loading States
+### 5.3 Animated Loading States
 **Static-First:** Kritische UI (Header) instant (0ms), dynamic content progressiv
-**Staggered Animations:** Unterschiedliche delays für smooth reveal
-- Header: Sofort sichtbar (kein Suspense)
-- Main Content: `<Suspense>` mit Skeleton
-- Cards/Items: FadeContent mit `delay={i * 50}` für Stagger-Effect
+
+**Staggered Animations:** Unterschiedliche delays für smooth reveal (Header sofort, Main mit Suspense, Cards mit `delay={i * 50}`)
+
 **Referenz:** `shared-docs/refactoring-docs/patterns/animated-loading-states.md`
 
-### Multi-Level Data Fetching
-**3 Levels:** Page (critical), Section (important), Component (detailed)
+### 5.4 Multi-Level Data Fetching
+**3 Levels:** Page (critical 0-100ms), Section (important 100-500ms mit Suspense), Component (detailed, lazy on-demand)
+
 **Cascading Loading:** Critical data instant, heavy data progressiv
-- **Level 1 (Page):** User-Profile, Auth-State → 0-100ms
-- **Level 2 (Section):** Liste, erste 20 Items → 100-500ms mit Suspense
-- **Level 3 (Component):** Details on-demand → Lazy-Loading
+
 **Referenz:** `shared-docs/refactoring-docs/patterns/multi-level-data-fetching.md`
 
 ---
 
-## 🚀 Network Performance Rules (CRITICAL)
+## Regel 6: Network Performance (CRITICAL)
 
-### 🔴 Rule 5.30: Client-Side Fetch Anti-Pattern
+### 6.1 🔴 Client-Side Fetch Anti-Pattern
 🚨 **KRITISCH:** Client-Components dürfen NICHT initial Data-Fetching via `useEffect` durchführen!
-- **Problem:** `useEffect` triggert bei jedem Re-Render → Request-Spam (20-100+ Requests beim Init)
-- **Lösung:** Server-Side Pre-Fetch + Props-Pattern ODER `use()` Hook + Suspense
-- **Trigger:** Wenn `useEffect(() => { fetch(...) }, [deps])` in Client-Component → STOP
 
-### 🔴 Rule 5.31: Waterfall-Fetching Prevention
+**Problem:** `useEffect` triggert bei jedem Re-Render → Request-Spam (20-100+ Requests beim Init)
+
+**Lösung:** Server-Side Pre-Fetch + Props-Pattern ODER `use()` Hook + Suspense
+
+### 6.2 🔴 Waterfall-Fetching Prevention
 🚨 **KRITISCH:** Unabhängige Fetches MÜSSEN parallel laufen!
-- **Problem:** Sequential `await` → 3x länger (450ms statt 150ms)
-- **Lösung:** `Promise.all([fetch1(), fetch2(), fetch3()])` für unabhängige Daten
-- **Trigger:** Wenn mehrere `await` ohne Dependency → `Promise.all()` nutzen
 
-### 🔴 Rule 5.32: Mandatory Request-Deduplizierung
+**Problem:** Sequential `await` → 3x länger (450ms statt 150ms)
+
+**Lösung:** `Promise.all([fetch1(), fetch2(), fetch3()])` für unabhängige Daten
+
+### 6.3 🔴 Request-Deduplizierung
 🚨 **KRITISCH:** Identische Fetches MÜSSEN dedupliziert werden!
-- **Problem:** 2+ Components fetchen gleiche Daten → Doppelte DB-Queries
-- **Lösung Server-Side:** React `cache()` wrapper für alle Finders/Actions
-- **Lösung Client-Side:** Singleton-Pattern für Polling/Subscriptions
-- **Trigger:** Wenn gleiche Fetch-Logic in mehreren Components → Deduplizierung
 
-### 🔴 Rule 5.33: Polling Cleanup Enforcement
+**Problem:** 2+ Components fetchen gleiche Daten → Doppelte DB-Queries
+
+**Lösung:** React `cache()` wrapper für alle Finders/Actions (Server), Singleton-Pattern (Client)
+
+### 6.4 🔴 Polling Cleanup
 🚨 **KRITISCH:** Jeder `useEffect` mit Timers/Subscriptions MUSS Cleanup-Function haben!
-- **Problem:** `setInterval`/`setTimeout` läuft nach Unmount weiter → Memory-Leak + Ghost-Requests
-- **Lösung:** `return () => clearInterval(id)` in useEffect
-- **Trigger:** Wenn `setInterval`/`setTimeout`/`addEventListener` → IMMER Cleanup
 
-### 🔴 Rule 5.34: Multiple Component Instance Prevention
+**Problem:** `setInterval`/`setTimeout` läuft nach Unmount weiter → Memory-Leak + Ghost-Requests
+
+**Lösung:** `return () => clearInterval(id)` in useEffect
+
+### 6.5 🔴 Multiple Component Instance Prevention
 🚨 **KRITISCH:** Responsive-UI darf NICHT 2 identische Components mit eigenem Fetching parallel rendern!
-- **Problem:** Desktop+Mobile Components → Doppeltes Fetching (2x DB-Queries, 2x Polling)
-- **Lösung 1:** Conditional Rendering (nur 1 Component rendert)
-- **Lösung 2:** Singleton-Service (beide Components teilen sich 1 Fetch-Instance)
-- **Trigger:** Wenn `<MobileComponent />` + `<DesktopComponent />` beide fetchen
 
-### 🔴 Rule 5.39: N+1 Query Prevention (Batch-Loading Pattern)
+**Problem:** Desktop+Mobile Components → Doppeltes Fetching (2x DB-Queries, 2x Polling)
+
+**Lösung:** Conditional Rendering (nur 1 Component) ODER Singleton-Service (beide teilen 1 Fetch)
+
+### 6.6 🔴 N+1 Query Prevention (Batch-Loading)
 🚨 **KRITISCH:** Nested Queries in Loops MÜSSEN durch Batch-Loading ersetzt werden!
-- **Problem:** `for (const item of items) { await getDetails(item.id) }` → 20 Items = 41 Queries
-- **Lösung:** Batch-Loading mit JOINs oder `inArray(itemIds)` → 1-3 Queries statt 41 (-92% Reduktion)
-- **Trigger:** Wenn `for`/`map` Loop + `await` für Sub-Daten → STOP → Batch implementieren
-- **Anwendbar:** Notizen+Tags, Products+Reviews, Plans+Days, Messages+Users
 
-### 🔴 Rule 5.40: Cache Invalidation Strategy (Stale Data Prevention)
+**Problem:** `for (const item of items) { await getDetails(item.id) }` → 20 Items = 41 Queries
+
+**Lösung:** Batch-Loading mit JOINs oder `inArray(itemIds)` → 1-3 Queries statt 41 (-92% Reduktion)
+
+### 6.7 🔴 Cache Invalidation Strategy
 🚨 **KRITISCH:** Jede Caching-Implementierung MUSS eine klare Invalidation-Strategie haben!
-- **Problem:** Caching ohne Invalidation → User sieht stale Data nach Updates
-- **Lösung:** TTL basierend auf Volatilität (Static: 1h, Live: 30s) + Manual Invalidation
-- **Decision-Tree:** CREATE → Invalidate Lists | UPDATE → Invalidate Item+Lists | DELETE → Invalidate ALL
-- **Trigger:** Bei `cache()` oder `unstable_cache()` → IMMER Invalidation-Strategie definieren
 
-### 🔴 Rule 5.42: Progressive Data Loading Pattern (Initial Load Optimization)
+**Problem:** Caching ohne Invalidation → User sieht stale Data nach Updates
+
+**Lösung:** TTL basierend auf Volatilität (Static: 1h, Live: 30s) + Manual Invalidation
+
+**Decision-Tree:** CREATE → Invalidate Lists | UPDATE → Invalidate Item+Lists | DELETE → Invalidate ALL
+
+### 6.8 🔴 Progressive Data Loading Pattern
 🚨 **KRITISCH:** Alle Daten auf einmal laden = schlechte UX! Implementiere 3-Level Loading!
-- **Problem:** `Promise.all([allData])` → User wartet 7s auf ALLES, nur erste 10 Items sichtbar
-- **Lösung:** Level 1 (Critical 0-500ms, KEIN Suspense) → Level 2 (Important, MIT Suspense) → Level 3 (Lazy on-demand)
-- **Trigger:** Bei Initial Load >2s → Mental-Check: "Was braucht User in ersten 500ms?"
-- **Pattern:** First-Page only (10-20 items) + Pagination/Infinite-Scroll + Images `loading="lazy"` (-85% perceived load)
+
+**Problem:** `Promise.all([allData])` → User wartet 7s auf ALLES, nur erste 10 Items sichtbar
+
+**Lösung:** Level 1 (Critical 0-500ms, KEIN Suspense) → Level 2 (Important, MIT Suspense) → Level 3 (Lazy on-demand)
+
+**Pattern:** First-Page only (10-20 items) + Pagination/Infinite-Scroll + Images `loading="lazy"` (-85% perceived load)
 
 ---
 
-## 🚨 Kritische Anti-Patterns (MUST AVOID)
+## Regel 7: Kritische Anti-Patterns (MUST AVOID)
 
-### 🔴 Rule 5.8: Proactive Implementation Analysis
+### 7.1 🔴 Proactive Implementation Analysis
 Vor Code-Implementierung: Mental-Analyse durchführen!
 - **Physics Check:** Ist das überhaupt möglich? (z.B. CSS-Limitations, Browser-APIs)
 - **Side-Effects:** Was wird dadurch noch beeinflusst?
 - **Edge-Cases:** Extreme Inputs, leere Daten, Maximum-Werte
 - **Alternativen:** Gibt es bessere/einfachere Lösungen?
-- **Machbarkeit:** Wenn Limitationen → Alternative vorschlagen, nicht blind implementieren
 
-### 🔴 Rule 5.9: Context Analysis Before Changes
+### 7.2 🔴 Context Analysis Before Changes
 Vor jeder Änderung die letzten 3-4 Tasks analysieren!
-- **Warum:** Bereits gelöste Probleme NICHT rückgängig machen
-- **Checklist:**
-  - Was wurde in letzten Tasks geändert?
-  - Warum wurden diese Änderungen gemacht?
-  - Würde meine Änderung diese Lösungen brechen?
-  - Gibt es einen besseren Weg, der beide Requirements erfüllt?
+- Was wurde in letzten Tasks geändert?
+- Warum wurden diese Änderungen gemacht?
+- Würde meine Änderung diese Lösungen brechen?
 
-### 🔴 Rule 5.10: MANDATORY Legacy Code Removal
-Nach jeder Änderung SOFORT ungenutzten Code entfernen:
-- Ungenutzte Functions/Components/Imports
-- Ungenutzte Variables/Constants/CSS-Klassen
-- Ungenutzte Hook-Aufrufe (`useState`, `useMemo`, etc.)
+### 7.3 🔴 Legacy Code Removal
+Nach jeder Änderung SOFORT ungenutzten Code entfernen: Ungenutzte Functions/Components/Imports/Variables/Hook-Aufrufe.
 
-### 🔴 Rule 5.17: Dialog-EventListener-Pattern (LAYOUT-CRASH-PREVENTION)
+### 7.4 🔴 Dialog-EventListener-Pattern (Layout-Crash-Prevention)
 Dialoge in Layout-kritischen Komponenten (Navbar, Header) MÜSSEN über `useEffect + window.addEventListener` geöffnet werden.
-- **Problem:** Direkt rendern (auch mit `open={false}`) kann Layout-Collapse verursachen
-- **Lösung:** `useEffect(() => { window.addEventListener('openDialog', handler) }, [])`
 
-### 🔴 Rule 5.20: Scroll Height Dependency
+**Problem:** Direkt rendern (auch mit `open={false}`) kann Layout-Collapse verursachen
+
+**Lösung:** `useEffect(() => { window.addEventListener('openDialog', handler) }, [])`
+
+### 7.5 🔴 Scroll Height Dependency
 `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht.
-- ❌ **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent
-- ✅ **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching
 
-### 🔴 Rule 5.21: will-change Font-Killer
+❌ **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent
+
+✅ **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching
+
+### 7.6 🔴 will-change Font-Killer
 Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch.
 
-### 🔴 Rule 5.22: Single Loading Pipeline
+### 7.7 🔴 Single Loading Pipeline
 Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline existieren.
-- **Problem:** Verschiedene UI-Entry-Points mit unterschiedlichen Loading-Logiken
-- **Lösung:** Eine zentrale Fetch-Funktion, alle Components nutzen gleichen Data-Flow
 
-### 🔴 Rule 5.23: Mobile-First Space Efficiency
+**Problem:** Verschiedene UI-Entry-Points mit unterschiedlichen Loading-Logiken
+
+**Lösung:** Eine zentrale Fetch-Funktion, alle Components nutzen gleichen Data-Flow
+
+### 7.8 🔴 Mobile-First Space Efficiency
 📱 Alle UI-Komponenten MÜSSEN Mobile-First designed werden:
 - Maximale Space-Efficiency (kein exzessives Scrollen)
 - Input-Felder nebeneinander in FlexRow wenn möglich
 - Kleinere Schriftgrößen, geringere Abstände, weiterhin modernes Design
 
-### 🔴 Rule 5.24: Page-Level Data-Separation
+### 7.9 🔴 Page-Level Data-Separation
 Page-Components ohne Data-Fetching für Header/Navigation.
-- **Pattern:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
-- **Warum:** Header rendert instant (0ms), Data lädt progressiv
 
-### 🔴 Rule 5.25: Custom List-Styles & Prose.css Interaktion
+**Pattern:** Header als pure HTML, Data-Logic in `MainContent` mit Suspense
+
+**Warum:** Header rendert instant (0ms), Data lädt progressiv
+
+### 7.10 🔴 Custom List-Styles & Prose.css Interaktion
 **Problem:** TailwindCSS Prose-Plugin + Custom Styles können native HTML-Elemente überschreiben
-- **Lösung:** Spezifische Selektoren nutzen, Prose-Styles überschreiben wenn nötig
 
-### 🔴 Rule 5.26: Direct Action Principle
+**Lösung:** Spezifische Selektoren nutzen, Prose-Styles überschreiben wenn nötig
+
+### 7.11 🔴 Direct Action Principle
 Action-Buttons führen ihre Funktion DIREKT aus (1 Klick = 1 Action).
-- Multi-Step Components brauchen `initialView/initialStep` Prop
-- ❌ Keine Zwischenschritte für simple Actions
 
-### 🔴 Rule 5.27: Consistent Dialog Design
+Multi-Step Components brauchen `initialView/initialStep` Prop. ❌ Keine Zwischenschritte für simple Actions
+
+### 7.12 🔴 Consistent Dialog Design
 Dialoge: `max-h-[85vh]`, `sm:max-w-[700px]`.
 - Multi-Step über State-Switching (kein nested Dialog)
 - Zurück-Button bei Sub-Views
 - Main-Container bleibt, Content wechselt
 
-### 🔴 Rule 5.29: FadeContent Dialog Conditional Rendering (RENDER-LOOP PREVENTION)
+### 7.13 🔴 FadeContent Dialog Conditional Rendering
 🚨 **KRITISCH:** FadeContent Components MÜSSEN conditional gerendert werden bei Dialog/Modal-Wrapping!
-- **Problem:** FadeContent rendert permanent → Dialog rendert mit `open={false}` → Re-Render-Loop
-- ❌ **Anti-Pattern:** `<FadeContent><Dialog isOpen={isOpen} /></FadeContent>` (Permanent)
-- ✅ **Correct:** `{isOpen && <FadeContent><Dialog /></FadeContent>}` (Conditional)
-- **Symptoms:** Excessive Re-Rendering, Performance-Degradation
 
-### 🔴 Rule 5.35: State-Changes During Active UI
+**Problem:** FadeContent rendert permanent → Dialog rendert mit `open={false}` → Re-Render-Loop
+
+❌ **Anti-Pattern:** `<FadeContent><Dialog isOpen={isOpen} /></FadeContent>` (Permanent)
+
+✅ **Correct:** `{isOpen && <FadeContent><Dialog /></FadeContent>}` (Conditional)
+
+### 7.14 🔴 State-Changes During Active UI
 State-Updates, die Component-Remount triggern, NICHT während aktiver UI-Interaktion. Defer bis User navigiert. Mental-Check: "Triggert setState einen Key-Prop oder wichtigen Dependency?"
 
-### 🔴 Rule 5.37: Component Usage Chain Verification
+### 7.15 🔴 Component Usage Chain Verification
 Vor Implementierung: Grep nach Verwendung der Ziel-Komponente im Feature-Path. Call-Chain tracken (UI → Wrapper → Proxy → Target). Richtige Komponente identifizieren, bevor Code geschrieben wird.
 
-### 🔴 Rule 5.38: MANDATORY Component-Based Architecture
-🚨 React-Komponenten NIEMALS innerhalb anderer Komponenten definieren! (siehe Zeile 27-49 für Details)
-
-**Problem:** Nested Component Definitions verursachen:
-- ❌ Komplette Remounts bei jedem Parent-Render (Performance-Killer)
-- ❌ State-Verlust und unnötige Re-Initialisierung
-- ❌ Unmögliche Wiederverwendung und Testing
-- ❌ React DevTools Chaos und schwieriges Debugging
-
-**Lösung:** Jede Komponente in eigener Datei (siehe Beispiel oben)
-
-**📂 Dateistruktur-Regel:**
-Jede Komponente MUSS in einer eigenen Datei sein, außer:
-- Sehr kleine Helper-Komponenten (<5 Zeilen, keine State-Logik)
-- Komponenten, die AUSSERHALB der Parent-Component definiert sind (Top-Level)
-
-**⚡ REGEL-TRIGGER:**
-- Wenn du `const ComponentName = () => { ... }` INNERHALB einer anderen Komponente siehst → SOFORT refactoren
-- Vor Code-Review: Grep nach `= ({.*}) => {` innerhalb von Function Components
-
----
-
-### 🔴 Rule 5.41: State-Persistence Decision Pattern (UNIVERSAL PERFORMANCE RULE)
+### 7.16 🔴 State-Persistence Decision Pattern
 🚨 **KRITISCH:** Vor jedem `useEffect` der State → Server synchronisiert, entscheide das richtige Pattern!
 
 **Core-Problem:** `useEffect(() => { saveToServer(state) }, [state])` kann zu Performance-Killer werden
 
 **Decision-Tree:**
 
-1️⃣ **Frage: Wie oft ändert sich der State?**
+1️⃣ **Wie oft ändert sich der State?**
    - **Kontinuierlich (>10x/Sekunde)?** → Pattern A: Explicit Save
    - **Frequent (1-10x/Sekunde)?** → Pattern B: Debounced Save
    - **Occasional (<1x/Sekunde)?** → Pattern C: Throttled Save
    - **On-Demand (User-Click)?** → Pattern D: Immediate Save
 
-2️⃣ **Frage: Ist Data-Loss kritisch?**
+2️⃣ **Ist Data-Loss kritisch?**
    - **JA** (Payment, Auth) → Pattern A: Explicit Save ONLY
    - **NEIN** (Draft, UI-State) → Debounced/Throttled OK
 
-3️⃣ **Frage: Ist die User-Experience wichtiger als Persistence?**
+3️⃣ **Ist die User-Experience wichtiger als Persistence?**
    - **JA** (Smooth-Dragging) → Optimistic-UI + Debounced-Background-Save
    - **NEIN** (Forms) → Blocking-Save mit Loading-State
 
@@ -550,23 +373,17 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 3. ✅ Gibt es eine Cleanup-Function? (`debounce.cancel()`, `clearInterval()`)
 4. ✅ Ist Data-Loss akzeptabel? (Falls Device offline/Browser-Crash während Debounce)
 
-**Red-Flags:**
-- ⚠️ `useEffect` + `serverAction` ohne Debouncing/Throttling
-- ⚠️ State ändert sich >10x/Sekunde (Drag, Slider, Drawing)
-- ⚠️ Keine Cleanup-Function bei Debounce/Throttle
-- ⚠️ State enthält Viewport/Camera/UI-State (sollte nicht persistiert werden)
-
 ---
 
-## 🛠️ Implementation Guidelines
+## Regel 8: Implementation Guidelines
 
-### Database (Actions & Finders)
+### 8.1 Database (Actions & Finders)
 - **Actions** (`db/actions/`): Alle mutations, MUSS `"use server"` haben
 - **Finders** (`db/finders/`): Alle queries, MUSS `"use server"` haben
 - **Auth:** `getCurrentProfile()` aus `profile-finder` statt auth-Methoden
 - **User vs Profile:** User nur für Auth, Profile für alles andere
 
-### API Response Format
+### 8.2 API Response Format
 ```typescript
 export interface ApiResponse<T> {
   success: boolean;
@@ -575,50 +392,70 @@ export interface ApiResponse<T> {
 }
 ```
 
-### State Management
+### 8.3 State Management
 - **Server State:** Next.js caching + Server Components
 - **Form State:** React Hook Form
 - **Optimistic Updates:** `useState` (nicht `useOptimistic`)
 - **Theme/Language:** React Context providers
 
-### Error Handling
+### 8.4 Error Handling
 - Toast notifications für User-facing errors
 - Error Boundaries für component crashes
 - Input validation inline (keine libraries)
 
-### Frontend Animation
-- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` (expanded) / `grid-rows-[0fr]` (collapsed) mit `transition-all duration-300` + `overflow-hidden` für smooth height transitions
+### 8.5 Frontend Animation
+- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` (expanded) / `grid-rows-[0fr]` (collapsed) mit `transition-all duration-300` + `overflow-hidden`
 - FadeContent-Komponente einbauen (siehe `shared-docs\refactoring-docs\prompts\universal-fadeContent-refactoring-prompt.md`)
+
 ---
 
-## 🎨 Design System
+## Regel 9: Design System
 
-### 🌙 Dark Mode Glassmorphism Design Pattern Theme Oriented
-**Tiefschwarze Hintergründe**, **Subtile Neon-Glows**, **Glasmorphism-Ränder**, **Inset-Highlights**, **Light-Mode-Kompatibilität**, **Gradient-Texte** ,**Beispiel-Klassen-Kombination**, **Theme-Oriented-Klassen**
+### 9.1 Dark Mode Glassmorphism Design Pattern
+**Tiefschwarze Hintergründe**, **Subtile Neon-Glows**, **Glassmorphism-Ränder**, **Inset-Highlights**, **Light-Mode-Kompatibilität**, **Gradient-Texte**
 
-### Theme System
+### 9.2 Theme System
 - **CSS Custom Properties:** Dynamic colors (`--primary`, `--accent`)
 - **Glassmorphism:** `glass-card`, `backdrop-blur-sm/md/2xl`
 - **Gradients:** Three-color gradients (primary-dark → primary → primary-light)
 
-### Component Classes
+### 9.3 Component Classes
 - **Cards:** `glass-card`, `bg-card/50 backdrop-blur-sm`
 - **Buttons:** `bg-gradient-primary`, `hover:glow-primary`
 - **Borders:** `border-primary/10` to `border-primary/20`
 - **Text Gradients:** `text-gradient-primary`, `bg-clip-text text-transparent`
 
-### Style Files
+### 9.4 Style Files
 - `app/globals.css` - CSS variables, utilities
 - `styles/themes/*.css` - Theme-specific colors
 - `styles/themes/effects.css` - Glassmorphism, glows
 
 ---
 
-## 📚 Documentation System
+## Regel 10: Documentation System
 
 **Structure:** `docs/OVERVIEW.md` (Master) → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/features/[sub-feature].md` → `docs/[feature]/tasks/[datum]-[task].md`
 
 **Update-Rules:** Feature-Overview bei großen Änderungen, Task-History auf "abgeschlossen" setzen.
+
+---
+
+## Regel 11: Sonstige Kurzregeln
+
+### 11.1 Revalidate-Sicherheitsregel
+❌ `revalidatePath` bei Autosave/hochfrequent (→ Remount-Loop). ✅ Nur bei Create/Delete/expliziten Actions.
+
+**Autosave:** Server schreibt ohne Revalidate, Client updated lokalen State + Cache.
+
+### 11.2 Loading-Feedback
+**Nicht gecached:** `isLoading=true` + Skeleton für Bereich. **Nach Erfolg:** FadeContent (200-400ms).
+
+**Gecached:** Kein Skeleton, UI direkt updaten.
+
+**Scope:** Nur wechselnde Section, Header/Nav nie blockieren. Stabile Keys!
+
+### 11.3 CSS-Debug-Regel (Sizing)
+Bei unerwarteten Button-/Tile-Größen zuerst die „Computed"-Werte in DevTools prüfen; wenn Varianten oder Flex-Layouts inflatieren, Größen mit Inline `width/height` (+ `min/max`) erzwingen und `flex-none` setzen, danach schrittweise zu Klassen/Varianten zurückführen.
 
 ---
 
@@ -629,17 +466,3 @@ Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Ca
 ---
 
 **🔗 Weiterführende Docs:** `shared-docs/performance/`, `shared-docs/design/`, `shared-docs/postmortem/`, `shared-docs/ux/`
-
----
-
-### Revalidate-Sicherheitsregel
-❌ `revalidatePath` bei Autosave/hochfrequent (→ Remount-Loop). ✅ Nur bei Create/Delete/expliziten Actions.
-**Autosave:** Server schreibt ohne Revalidate, Client updated lokalen State + Cache.
-
-### Loading-Feedback Kurzregeln
-**Nicht gecached:** `isLoading=true` + Skeleton für Bereich. **Nach Erfolg:** FadeContent (200-400ms).
-**Gecached:** Kein Skeleton, UI direkt updaten.
-**Scope:** Nur wechselnde Section, Header/Nav nie blockieren. Stabile Keys!
-
-### CSS-Debug-Regel (Sizing)
-Bei unerwarteten Button-/Tile-Größen zuerst die „Computed“-Werte in DevTools prüfen; wenn Varianten oder Flex-Layouts inflatieren, Größen mit Inline `width/height` (+ `min/max`) erzwingen und `flex-none` setzen, danach schrittweise zu Klassen/Varianten zurückführen.
