@@ -322,7 +322,10 @@ State-Updates, die Component-Remount triggern, NICHT während aktiver UI-Interak
 ### 7.15 🔴 Component Usage Chain Verification
 Vor Implementierung: Grep nach Verwendung der Ziel-Komponente im Feature-Path. Call-Chain tracken (UI → Wrapper → Proxy → Target). Richtige Komponente identifizieren, bevor Code geschrieben wird.
 
-### 7.16 🔴 State-Persistence Decision Pattern
+### 7.16 🔴 CSS Transform Coordinate-Space Awareness
+🚨 **KRITISCH:** Bei Pointer-Events auf CSS-transformierten Elementen liefert `getBoundingClientRect()` die Position des **bereits transformierten** Elements (inkl. translate/scale). Koordinaten-Umrechnung muss daher nur die **Inverse-Transform** anwenden, **nicht** die Original-Transform nochmal kompensieren (sonst doppelte Offset-Subtraktion). Mental-Check: "Hat mein Element oder dessen Parent die CSS-Transform?" → Parent = rect ist bereits verschoben, nur noch skalieren!
+
+### 7.17 🔴 State-Persistence Decision Pattern
 🚨 **KRITISCH:** Vor jedem `useEffect` der State → Server synchronisiert, entscheide das richtige Pattern!
 
 **Core-Problem:** `useEffect(() => { saveToServer(state) }, [state])` kann zu Performance-Killer werden
