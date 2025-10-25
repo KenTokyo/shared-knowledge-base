@@ -457,6 +457,40 @@ export interface ApiResponse<T> {
 ### 11.3 CSS-Debug-Regel (Sizing)
 Bei unerwarteten Button-/Tile-Größen zuerst die „Computed"-Werte in DevTools prüfen; wenn Varianten oder Flex-Layouts inflatieren, Größen mit Inline `width/height` (+ `min/max`) erzwingen und `flex-none` setzen, danach schrittweise zu Klassen/Varianten zurückführen.
 
+### 11.4 🔴 Container-Child Size Verification
+🚨 **KRITISCH:** Bei Height-Reduktion von Containern MÜSSEN Child-Elemente geprüft werden!
+
+**Problem:** Container `h-8` (32px), aber Child-Button `py-1.5` + `text-xs` = 28-30px → Overflow
+
+**Mental-Checklist:**
+1. ✅ Container-Height reduziert? → Child-Padding prüfen!
+2. ✅ Child-Padding zu groß? → Padding reduzieren (inline → später Klassen)
+3. ✅ Touch-Targets Mobile? → Minimum 16px Height (iOS guideline)
+4. ✅ Text-Size lesbar? → `text-xs` = 12px (Minimum für UI-Elements)
+
+**Pattern:**
+- Container: `h-8` (32px Mobile) → Child: `py-0.5` (4px total)
+- Container: `h-10` (40px Desktop) → Child: `py-1` (8px total)
+
+**Anwendung:** Tabs, Dropdown-Items, List-Items, Navbar-Links
+
+**Beispiel (Follower-Tab Redesign):**
+```tsx
+// ❌ FEHLER: Container zu klein für Child-Padding
+<TabsList className="h-8">  {/* 32px Container */}
+  <TabsTrigger className="py-1.5">  {/* 28-30px Button → Overflow! */}
+    Button
+  </TabsTrigger>
+</TabsList>
+
+// ✅ RICHTIG: Child-Padding an Container angepasst
+<TabsList className="h-8 sm:h-9">  {/* 32px Mobile, 36px Desktop */}
+  <TabsTrigger className="py-0.5 sm:py-1">  {/* 20px Mobile, 24px Desktop → Passt! */}
+    Button
+  </TabsTrigger>
+</TabsList>
+```
+
 ---
 
 ## ✅ Quick Checklist
