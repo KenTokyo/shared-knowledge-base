@@ -494,6 +494,46 @@ Bei unerwarteten Button-/Tile-Größen zuerst die „Computed"-Werte in DevTools
 </TabsList>
 ```
 
+### 11.5 🔴 Number Input Empty-State Handling
+
+🚨 **KRITISCH:** HTML `<input type="number">` Felder dürfen NIEMALS `value={0}` haben, wenn `0` ein ungültiger Wert ist!
+
+**Problem:**
+- User löscht Input → `""` (String)
+- Code konvertiert: `Number("") = 0`
+- State: `value={0}`
+- Browser-Quirk: Zeigt "0" + neu eingegebenen Wert → "02" statt "2"
+
+**Lösung:**
+```tsx
+// ❌ FEHLER: Leerer String wird zu 0
+<Input
+  type="number"
+  value={exercise.sets}  // 0 nach Löschen
+  onChange={(e) => handleChange("sets", Number(e.target.value))}
+/>
+
+// ✅ RICHTIG: Leerer String bleibt leer
+<Input
+  type="number"
+  value={exercise.sets === 0 ? "" : exercise.sets}
+  onChange={(e) => {
+    const value = e.target.value;
+    const numValue = value === "" ? undefined : Number(value);
+    handleChange("sets", numValue);
+  }}
+/>
+```
+
+**Pattern:**
+1. **Value:** `value={field === 0 ? "" : field}` (zeigt leeres Input bei 0)
+2. **onChange:** `value === "" ? undefined : Number(value)` (verhindert 0-Conversion)
+3. **Validation:** Zod Schema validiert `undefined` → Error-Message
+
+**Anwendung:** Alle Number Inputs mit `.min(1, ...)` Validation (Required Fields)
+
+**Referenz:** `docs/dashboard/tasks/2025-10-26-training-input-validation-bugfix.md`
+
 ---
 
 ## ✅ Quick Checklist
