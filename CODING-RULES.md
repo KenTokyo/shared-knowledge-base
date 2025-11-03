@@ -325,7 +325,16 @@ Vor Implementierung: Grep nach Verwendung der Ziel-Komponente im Feature-Path. C
 ### 7.16 🔴 CSS Transform Coordinate-Space Awareness
 🚨 **KRITISCH:** Bei Pointer-Events auf CSS-transformierten Elementen liefert `getBoundingClientRect()` die Position des **bereits transformierten** Elements (inkl. translate/scale). Koordinaten-Umrechnung muss daher nur die **Inverse-Transform** anwenden, **nicht** die Original-Transform nochmal kompensieren (sonst doppelte Offset-Subtraktion). Mental-Check: "Hat mein Element oder dessen Parent die CSS-Transform?" → Parent = rect ist bereits verschoben, nur noch skalieren!
 
-### 7.17 🔴 State-Persistence Decision Pattern
+### 7.17 🔴 TabContent Height-Constraint Anti-Pattern
+🚨 **KRITISCH:** Tab-Content darf NICHT `h-full` oder `flex flex-col` im Root-Div verwenden - verursacht Layout-Collapse im Dialog!
+
+**Problem:** `<div className="h-full flex flex-col">` in TabContent → Parent Dialog Layout bricht zusammen (Buttons verschoben/vergrößert)
+
+**Lösung:** Simple Container-Klassen: `<div className="space-y-2 pt-3 pb-6 px-4">` - keine Height-Constraints
+
+**Warum:** Dialog/TabsContent hat eigenes Layout-System, Child-Components sollen natürlich flowen nicht Height erzwingen
+
+### 7.18 🔴 State-Persistence Decision Pattern
 🚨 **KRITISCH:** Vor jedem `useEffect` der State → Server synchronisiert, entscheide das richtige Pattern!
 
 **Core-Problem:** `useEffect(() => { saveToServer(state) }, [state])` kann zu Performance-Killer werden
@@ -377,6 +386,42 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 4. ✅ Ist Data-Loss akzeptabel? (Falls Device offline/Browser-Crash während Debounce)
 
 ---
+
+### 7.19 🔴 Single-Scroll-Container in Dialog-Tabs & Sections (SEHR WICHTIG)
+🚨 KRITISCH: In Dialogen darf es innerhalb des Content-Bereichs genau EINEN Scroll-Container geben. Child-Sections (z. B. Tab-Content-Komponenten wie ProgressPhotoSection) dürfen KEINE eigenen `h-full`/`flex`/`overflow` erzwingen.
+
+**Symptome:**
+- Dialog wirkt „aufgeblasen“ (zu groß), Buttons verschieben sich, Layout kollabiert bei Re-Renders (z. B. nach async `useEffect`).
+
+**Root-Cause:**
+- Mehrere konkurrierende Height-/Overflow-Constraints: Parent (Dialog/Tabs/TabsContent) und Child-Section erzwingen beide Höhe/Scroll → verschachtelte Scroll-Container widersprechen sich und brechen die Flex-Hierarchie.
+
+**Anti-Pattern (verboten in Tab-Sections):**
+```
+<div className="h-full flex flex-col">
+  <div className="flex-1 overflow-y-auto">…
+```
+
+**Korrektes Pattern:**
+- Genau ein Parent steuert Höhe/Scroll (DialogContent/Tabs/TabsContent)
+- Child-Sections sind „flow-only“ Container ohne Height/Overflow-Zwang
+```
+// In Section-Komponenten (z. B. ProgressPhotoSection)
+<div className="flex flex-col">
+  <div className="px-4">
+    … Inhalte …
+```
+
+**Checkliste vor Merge:**
+- Suche nach `h-full`, `overflow-auto|overflow-y-auto`, `flex-1` in Tab-Sections. Entferne diese, wenn Parent bereits Höhe/Scroll regelt.
+- Setze bei Zwischen-Containern im Parent-Stack `min-h-0`, wenn Flex-Child schrumpfen darf (verhindert versteckte Overflow-Probleme).
+- Keine zusätzlichen `flex flex-col`/`h-full` am Root von Tab-Content-Komponenten, wenn Tabs/Parent das schon liefern.
+
+**Debug-Tipps:**
+- Temporär `outline outline-1 outline-red-500` auf die Container legen, um Bounding-Boxes zu sehen.
+- Re-Render provozieren (z. B. async Effekt) und prüfen, ob sich die Containerhöhen stabil verhalten.
+
+—
 
 ## Regel 8: Implementation Guidelines
 
