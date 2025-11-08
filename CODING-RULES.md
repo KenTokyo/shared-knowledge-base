@@ -478,6 +478,44 @@ export interface ApiResponse<T> {
 - `styles/themes/*.css` - Theme-specific colors
 - `styles/themes/effects.css` - Glassmorphism, glows
 
+### 9.5 🔴 Vertical Space Efficiency (Notion-Style Compact Layout)
+
+🚨 **KRITISCH:** UI MUSS vertikales Spacing minimieren und horizontalen Platz ausnutzen!
+
+**Problem:** Items verteilen Informationen auf mehrere Zeilen → exzessives Scrollen nötig.
+
+**Anti-Pattern (Vertikal-Stack):**
+```tsx
+// ❌ FEHLER: 3 Zeilen für jedes Item (zu viel Scroll)
+<div className="flex flex-col gap-3 py-3">
+  <div className="text-sm">Titel</div>
+  <div className="text-xs text-gray-400">Beschreibung</div>
+  <div className="text-xs font-mono">LaTeX Code</div>
+</div>
+```
+
+**Korrektes Pattern (Horizontal-Compact):**
+```tsx
+// ✅ RICHTIG: Alles in EINER Zeile (Notion-ähnlich)
+<div className="flex items-center gap-2 py-1.5 min-h-[44px] sm:min-h-[36px]">
+  <span className="text-sm">Titel</span>
+  <span className="text-xs text-gray-500">·</span>
+  <span className="text-xs text-gray-500 truncate max-w-[200px]">Beschreibung</span>
+  <code className="flex-1 text-xs font-mono text-gray-300 text-right truncate">LaTeX Code</code>
+  <span className="px-1.5 py-0.5 text-[10px] rounded bg-blue-500/20">Badge</span>
+</div>
+```
+
+**Checkliste:**
+1. ✅ Alle Items in EINER Zeile? (nicht 2-3 Zeilen)
+2. ✅ Truncate für lange Texte? (`truncate max-w-[...]`)
+3. ✅ Touch-Target Mobile? (min-h-[44px])
+4. ✅ Kompakter Desktop? (sm:min-h-[36px])
+
+**Anwendung:** Dropdown-Items, List-Items, Suggestion-Items, Search-Results etc.
+
+**Referenz:** `docs/notes/tasks/2025-01-08-latex-slash-commands-ui-redesign.md`
+
 ---
 
 ## Regel 10: Documentation System
