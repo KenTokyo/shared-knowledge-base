@@ -423,6 +423,42 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 
 —
 
+### 7.20 🔴 Global `::selection` Side-Effects (Inputs in TipTap/Blur)
+
+🚨 KRITISCH: Ein globaler `::selection`-Selector kann in Kombination mit TipTap-Node-Selektion, Blur/Glass-Effekten und GPU-Compositing die Lesbarkeit von Input-Text unvorhersehbar beeinflussen.
+
+**Symptome:**
+- Inputs wirken im selektierten Node dunkel/transparent, obwohl DevTools `color: #fff` anzeigen
+- Beim Fokus wird der Text korrekt hell
+- Entfernst du `::selection` temporär, ist der Fehler weg
+
+**Typische Ursache:**
+- Globales `::selection { color: …; background-color: … }` + Compositing-Layer (Selection-Overlay, `backdrop-blur`) + evtl. `bg-clip-text`/`text-transparent`
+- Browser rendert Text mit falscher Opazität/Text-Fill
+
+**Detection-Checklist:**
+- `rg "::selection"` im Repo
+- Reproduzierbar nur bei Node-Selektion? → Compositing-Verdacht
+- Testweise `::selection` deaktivieren/scopen → ändert sich Verhalten sofort?
+- DevTools Layers prüfen (Selection-/Blur-Layer vorhanden?)
+
+**Fix (Best Practice):**
+- Niemals global: `::selection { … }`
+- Immer scoped, nur auf Fließtext anwenden:
+  - `/* RICHTIG */ .prose ::selection { background-color: …; color: … }`
+  - `/* Guard */ .not-prose ::selection { background-color: unset; color: unset }`
+- In NodeViews (`.not-prose`) keine Gradients/Glows erzwingen; ggf. neutralisieren
+
+**Beispiel:**
+```css
+/* FALSCH (global) */
+::selection { background-color: hsl(var(--primary)/0.3); color: hsl(var(--primary-foreground)); }
+
+/* RICHTIG (scoped) */
+.prose ::selection { background-color: hsl(var(--primary)/0.3); color: hsl(var(--primary-foreground)); }
+.not-prose ::selection { background-color: unset; color: unset; }
+```
+
 ## Regel 8: Implementation Guidelines
 
 ### 8.1 Database (Actions & Finders)
