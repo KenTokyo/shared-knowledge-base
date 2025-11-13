@@ -504,4 +504,4 @@ BasicExerciseInput (Kind) ← 6️⃣ Re-Render mit neuen Werten
 **Erstellt:** 2025-10-02
 **Autor:** Josh (Architect)
 **Version:** 1.0
-**Basis:** Real-World Beispiel aus elevate-me-4.0
+**Basis:** Real-World Beispiel aus trackmeai
