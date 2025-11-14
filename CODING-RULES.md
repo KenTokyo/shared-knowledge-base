@@ -427,37 +427,6 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 
 🚨 KRITISCH: Ein globaler `::selection`-Selector kann in Kombination mit TipTap-Node-Selektion, Blur/Glass-Effekten und GPU-Compositing die Lesbarkeit von Input-Text unvorhersehbar beeinflussen.
 
-**Symptome:**
-- Inputs wirken im selektierten Node dunkel/transparent, obwohl DevTools `color: #fff` anzeigen
-- Beim Fokus wird der Text korrekt hell
-- Entfernst du `::selection` temporär, ist der Fehler weg
-
-**Typische Ursache:**
-- Globales `::selection { color: …; background-color: … }` + Compositing-Layer (Selection-Overlay, `backdrop-blur`) + evtl. `bg-clip-text`/`text-transparent`
-- Browser rendert Text mit falscher Opazität/Text-Fill
-
-**Detection-Checklist:**
-- `rg "::selection"` im Repo
-- Reproduzierbar nur bei Node-Selektion? → Compositing-Verdacht
-- Testweise `::selection` deaktivieren/scopen → ändert sich Verhalten sofort?
-- DevTools Layers prüfen (Selection-/Blur-Layer vorhanden?)
-
-**Fix (Best Practice):**
-- Niemals global: `::selection { … }`
-- Immer scoped, nur auf Fließtext anwenden:
-  - `/* RICHTIG */ .prose ::selection { background-color: …; color: … }`
-  - `/* Guard */ .not-prose ::selection { background-color: unset; color: unset }`
-- In NodeViews (`.not-prose`) keine Gradients/Glows erzwingen; ggf. neutralisieren
-
-**Beispiel:**
-```css
-/* FALSCH (global) */
-::selection { background-color: hsl(var(--primary)/0.3); color: hsl(var(--primary-foreground)); }
-
-/* RICHTIG (scoped) */
-.prose ::selection { background-color: hsl(var(--primary)/0.3); color: hsl(var(--primary-foreground)); }
-.not-prose ::selection { background-color: unset; color: unset; }
-```
 
 ## Regel 8: Implementation Guidelines
 
@@ -466,6 +435,33 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 - **Finders** (`db/finders/`): Alle queries, MUSS `"use server"` haben
 - **Auth:** `getCurrentProfile()` aus `profile-finder` statt auth-Methoden
 - **User vs Profile:** User nur für Auth, Profile für alles andere
+
+### 8.1.1 🔴 Database Seeding & Migration Scripts
+🚨 **KRITISCH:** Seed-Skripte MÜSSEN `"dotenv/config"` importieren + via `npx tsx` ausgeführt werden!
+
+**Problem:** Seed-Skripte ohne dotenv versuchen lokale DB-Connection (User "PC1") statt Supabase/Remote.
+
+**Lösung:**
+```typescript
+// IMMER an Zeile 1 in Seed-Skripten
+import "dotenv/config";
+import db from "../db";
+```
+
+**Ausführung (via Bash-Tool):**
+```bash
+npx tsx scripts/seed-[name].ts
+```
+
+**Warum nicht psql?**
+- ❌ `psql` benötigt korrekte PowerShell-Syntax für `$env:DATABASE_URL` (fehleranfällig)
+- ❌ Mehrere Skript-Varianten (.sh, .ps1, .sql) → Maintenance-Overhead
+- ✅ `npx tsx` funktioniert überall (Windows/Mac/Linux), lädt `.env` automatisch via dotenv
+
+**Deployment (Production):**
+- SQL-Datei in `db/migrations/` erstellen
+- In Supabase Dashboard → SQL Editor ausführen
+- `ON CONFLICT (key) DO UPDATE` für Idempotenz
 
 ### 8.2 API Response Format
 ```typescript
