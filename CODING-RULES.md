@@ -40,7 +40,7 @@ Proaktiv denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, C
 ✅ **RICHTIG:** Jede Komponente in separater Datei
 
 ### 2.2 Component Organization (Section-Based)
-**Max 400 lines per file** - Split in helpers/services wenn größer
+**Maximal 700 Zeilen Code pro Datei** - Teile/Auslagern in unterkomponenten in (Ordnern)/in helpers/services/compontens wenn größer
 
 ✅ **Section-Based Structure:**
 ```
@@ -169,6 +169,9 @@ Server Component fetcht Daten als Promise (nicht awaiten!), Client Component res
 **Cascading Loading:** Critical data instant, heavy data progressiv
 
 **Referenz:** `shared-docs/refactoring-docs/patterns/multi-level-data-fetching.md`
+
+### 5.5 Theme-Stil: Neon-Glasmorphism (Gaming HUD)
+Alle neuen UI-Themes folgen einem neon-orientierten Glasmorphism-Stil: Gradients, Glows und Hintergründe werden konsequent aus den CSS-Variablen (`--primary`, `--primary-light`, `--primary-dark`, `--accent-*`) aufgebaut – **keine hardcodierten Hex-Farben**. Karten und Sections nutzen dunkle Glasflächen (`glass-card`, `glass-card-strong`, `neon-glass`) mit leichten Blur- und Glow-Layern im Hintergrund, klare Typografie und nur subtile Hover-Transitions (Scale + Glow), damit das Layout modern wirkt, aber performant und gut lesbar bleibt.
 
 ---
 
