@@ -40,7 +40,7 @@ Proaktiv denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, C
 ✅ **RICHTIG:** Jede Komponente in separater Datei
 
 ### 2.2 Component Organization (Section-Based)
-**Max 400 lines per file** - Split in helpers/services wenn größer
+**Maximal 700 Zeilen Code pro Datei** - Teile/Auslagern in unterkomponenten in (Ordnern)/in helpers/services/compontens wenn größer
 
 ✅ **Section-Based Structure:**
 ```
