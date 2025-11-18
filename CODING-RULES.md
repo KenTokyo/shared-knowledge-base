@@ -239,42 +239,110 @@ Alle neuen UI-Themes folgen einem neon-orientierten Glasmorphism-Stil: Gradients
 
 ---
 
-## Regel 7: Kritische Anti-Patterns (MUST AVOID)
+## Regel 7: Data Quality & AI-Matching (NEU)
 
-### 7.1 🔴 Proactive Implementation Analysis
+### 7.1 🔴 Fuzzy-Matching Validierung
+🚨 **KRITISCH:** NIEMALS automatisches Matching ohne Validierungs-Step!
+
+**Problem:** Automatisches Fuzzy-Matching akzeptiert semantisch falsche Matches (z.B. Leg Exercise ↔ Bicep Exercise)
+
+❌ **VERBOTEN:**
+- Batch-Matching mit <80% Threshold ohne Review
+- Semantisch inkonsistente Matches (Equipment: Barbell ↔ Dumbbell, Muskelgruppe: Leg ↔ Bicep)
+- Mehrfach-Zuordnungen (mehrere Übungen → 1 Dataset) ohne Duplicate-Check
+- Direkt in Production-DB schreiben ohne Quality-Score
+
+✅ **RICHTIG:**
+- **Match-Confidence-Score berechnen:** `Score = (Levenshtein * 0.4) + (Semantic * 0.6)`
+- **Semantic-Checks:** Equipment-Konsistenz (Barbell/Dumbbell), Muskelgruppe (Leg/Arm), Bewegungstyp (Press/Curl)
+- **Manuelle Review:** Matches <80% Confidence benötigen Manual-Approval
+- **Duplicate-Detection:** Score-basierte Auswahl bei Mehrfach-Zuordnungen
+- **CSV-Report generieren:** Alle Matches + Scores + Issues dokumentieren
+
+**Tools-Pattern:**
+```
+scripts/
+  analyze-match-quality.ts      # Quality-Score-Berechnung
+  detect-duplicates.ts          # Mehrfach-Zuordnungen finden
+  review-corrections.ts         # CLI Review-Tool (Inquirer)
+  apply-corrections.ts          # Batch-Apply mit Rollback
+
+public/data/
+  manual-corrections.json       # Manual-Overrides (status: pending/approved/rejected)
+```
+
+**Anwendungsfälle:**
+- Exercise-Image-Matching
+- Recipe-Ingredient-Matching
+- Location-Address-Matching
+- User-Profile-Deduplication
+- Product-Category-Assignment
+
+**Beispiel (Exercise-Matching):**
+```typescript
+// ❌ FALSCH: Direkt in DB schreiben
+const match = fuzzyMatch('Dips mit Zusatzgewicht', dataset);
+await db.update(exercises).set({ freeExerciseDbId: match.id });
+
+// ✅ RICHTIG: Quality-Check + Manual-Review
+const match = fuzzyMatch('Dips mit Zusatzgewicht', dataset);
+const score = calculateQualityScore(match, exercise); // Levenshtein + Semantic
+if (score < 80) {
+  await saveForManualReview(exercise, match, score);
+} else {
+  await db.update(exercises).set({ freeExerciseDbId: match.id, matchQualityScore: score });
+}
+```
+
+### 7.2 🔴 User-Reporting für Datenqualität
+Jede automatische Data-Matching-Implementierung MUSS User-Reporting-System haben!
+
+**Warum:** User sind die beste Quality-Assurance → Sie erkennen falsche Matches sofort im UI
+
+**Mindest-Features:**
+- "Falsches Bild/Match melden"-Button im UI
+- DB-Tabelle: `[feature]_corrections` (profileId, suggestedFix, reason, status)
+- Admin-Approval-Workflow (pending → approved/rejected)
+- Correction-Anwendungs-Script (Batch-Update nach Approval)
+
+---
+
+## Regel 8: Kritische Anti-Patterns (MUST AVOID)
+
+### 8.1 🔴 Proactive Implementation Analysis
 Vor Code-Implementierung: Mental-Analyse durchführen!
 - **Physics Check:** Ist das überhaupt möglich? (z.B. CSS-Limitations, Browser-APIs)
 - **Side-Effects:** Was wird dadurch noch beeinflusst?
 - **Edge-Cases:** Extreme Inputs, leere Daten, Maximum-Werte
 - **Alternativen:** Gibt es bessere/einfachere Lösungen?
 
-### 7.2 🔴 Context Analysis Before Changes
+### 8.2 🔴 Context Analysis Before Changes
 Vor jeder Änderung die letzten 3-4 Tasks analysieren!
 - Was wurde in letzten Tasks geändert?
 - Warum wurden diese Änderungen gemacht?
 - Würde meine Änderung diese Lösungen brechen?
 
-### 7.3 🔴 Legacy Code Removal
+### 8.3 🔴 Legacy Code Removal
 Nach jeder Änderung SOFORT ungenutzten Code entfernen: Ungenutzte Functions/Components/Imports/Variables/Hook-Aufrufe.
 
-### 7.4 🔴 Dialog-EventListener-Pattern (Layout-Crash-Prevention)
+### 8.4 🔴 Dialog-EventListener-Pattern (Layout-Crash-Prevention)
 Dialoge in Layout-kritischen Komponenten (Navbar, Header) MÜSSEN über `useEffect + window.addEventListener` geöffnet werden.
 
 **Problem:** Direkt rendern (auch mit `open={false}`) kann Layout-Collapse verursachen
 
 **Lösung:** `useEffect(() => { window.addEventListener('openDialog', handler) }, [])`
 
-### 7.5 🔴 Scroll Height Dependency
+### 8.5 🔴 Scroll Height Dependency
 `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht.
 
 ❌ **Anti-Pattern:** `flex-1 overflow-auto` ohne Height-Parent
 
 ✅ **Fix:** `h-[75vh]` oder `isDialog`-Props für Context-Switching
 
-### 7.6 🔴 will-change Font-Killer
+### 8.6 🔴 will-change Font-Killer
 Niemals `will-change: transform, opacity`! Zerstört Font-Rendering (blurry text). Browser optimieren automatisch.
 
-### 7.7 🔴 Single Loading Pipeline
+### 8.7 🔴 Single Loading Pipeline
 Für kritische Daten (Entry, User-Profile) MUSS eine zentrale Loading-Pipeline existieren.
 
 **Problem:** Verschiedene UI-Entry-Points mit unterschiedlichen Loading-Logiken
