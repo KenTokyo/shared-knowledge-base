@@ -192,6 +192,11 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Für vollständige Post-Mortem-Analyse, siehe:**
 *   **➡️ [`shared-docs/postmortem/animation-useeffect-dependency-array-postmortem.md`](shared-docs/postmortem/animation-useeffect-dependency-array-postmortem.md)**
 
+### 4.7. Design System: Liquid Glass
+
+*   **Rule 4.7.1 (Core Aesthetic):** Implement the "Liquid Glass" design language for all premium UI elements. This style is characterized by deep transparency, strong background blurs (`backdrop-blur-xl`), and "wet" specular highlights (inner white glows).
+*   **Rule 4.7.2 (Layering):** Use a dark, animated background (e.g., Aurora) as the base. Float UI elements above it using semi-transparent blacks
+
 ## 5. 🚨 General Anti-Patterns & Edge Cases
 
 *   **Rule 5.1 (SEO):** Ensure critical SEO content (like `h1`, `meta description`) is rendered on the server and is not dependent on client-side animation.
