@@ -38,3 +38,5 @@ No-Gos:
 
 Inspiration:
 Design soll aussehen wie das zweite Screenshot (shared-docs\liquid-glass.png - „Was sind die grundlegenden Bestandteile eines Marktes?“). Subtil, teuer, edel, futuristisch.
+
+Zudem Icons oder SVGs, schön mit glow effekten, etwas farbe, schöne Animationen, wie ein Spiel
