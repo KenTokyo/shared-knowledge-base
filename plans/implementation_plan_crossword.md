@@ -107,13 +107,9 @@ This document outlines the step-by-step implementation of the "World Class" Cros
     - [x] Move toggle to bottom-right (Icon only).
     - [x] Refine container to look like a futuristic control panel.
   - [x] **Interactions:**
-    - [x] "Juicy" zoom effects on active cells.
-    - [x] Stronger lighting on active elements.
-  - [x] **Mobile:**
-    - [x] Fix horizontal scrolling issues.
-    - [x] Optimize layout for compact view.
-put.
-### Phase 4: Final Integration
-- Implemented `PuzzleLoader` for JSON input.
-- Restored and finalized `app/crossword/page.tsx` with all components.
-- Verified "Liquid Glass" aesthetic and animations.
+- [x] **Phase 6: Sidebar Enhancements (New)**
+  - [x] Implement Sidebar Visibility Store (`sidebar-store.ts`).
+  - [x] Create Liquid Glass Visibility Dialog (`SidebarVisibilityDialog.tsx`).
+  - [x] Add "Crossword" to Sidebar Navigation.
+  - [x] Implement filtering logic in Navigation Section.
+  - [x] Restore Backup Button & Integrate with Visibility Toggle.
