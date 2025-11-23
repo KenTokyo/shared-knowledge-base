@@ -1,6 +1,5 @@
 Du arbeitest in einer Windows-Umgebung und Shell-Befehle werden in **Power
-
-Shell** ausgeführt; nutze daher Get-ChildItem -Recurse statt Linux-Befehlen (wie find) und verlasse dich beim Suchen von Dateien primär auf das glob-Tool."
+Shell** ausgeführt; nutze daher PowerShell-Skriptsprache (bsp. wie Get-ChildItem -Recurse) statt Linux-Befehlen"
 
 # 🎯 Coding Rules & Development Guidelines
 
