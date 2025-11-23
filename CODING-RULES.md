@@ -1,3 +1,7 @@
+Du arbeitest in einer Windows-Umgebung und Shell-Befehle werden in **Power
+
+Shell** ausgeführt; nutze daher Get-ChildItem -Recurse statt Linux-Befehlen (wie find) und verlasse dich beim Suchen von Dateien primär auf das glob-Tool."
+
 # 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Essentielle Regeln für konsistente, performante und wartbare Code-Entwicklung.
