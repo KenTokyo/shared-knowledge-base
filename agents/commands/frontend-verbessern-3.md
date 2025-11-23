@@ -1,6 +1,6 @@
 
 
-Also erstmal jetzt das erste Screenshot ist vom LoadingPill
+Also erstmal jetzt das erste Screenshot ist vom  Fotos-Tab
 
 Du siehst, das ist nicht schön. Der zweite Screenshot ist der Liquid Glass. Daran solltest du dich orientieren bzw. inspirieren. Ich möchte ein sehr schönes Liquid Glass haben. Genau, die Buttons schön so ein Glow versehen, wie im Screenshot sichtbar. Gerne auch mit Glow Rays arbeiten und evtl. Textur versehen also Hintergrund falls es passt (z.B Grid, aber kleiner bereich und Rest geblurred wie im Bild zu sehen) also sei da kreativ. Und schau dir auch gerne das 2. Liquid Glass-Screenshot an. Das ist auch ziemlich schön geworden. Genau, ich hab dir auch das Screenshot im 3.Screenshot angehängt. Bitte orientiere dich daran. Versuch auch das Ganze mit Animation und Interaktion zu versehen. Und sei auch bitte hierzu sehr modern, quasi wie Spiele, und sei kreativ.
 
