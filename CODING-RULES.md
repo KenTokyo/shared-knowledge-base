@@ -1,6 +1,3 @@
-Du arbeitest in einer Windows-Umgebung und Shell-Befehle werden in **Power
-Shell** ausgeführt; nutze daher PowerShell-Skriptsprache (bsp. wie Get-ChildItem -Recurse) statt Linux-Befehlen"
-
 # 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Essentielle Regeln für konsistente, performante und wartbare Code-Entwicklung.
