@@ -1,3 +1,5 @@
+shared-docs\liquid-glass-6.png
+shared-docs\liquid-glass-5.png
 
 shared-docs\liquid-glass-6.png
 shared-docs\liquid-glass-5.png

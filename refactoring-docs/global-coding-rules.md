@@ -184,6 +184,7 @@ This section provides high-level rules for our core design patterns. For detaile
 ### 4.5. CSS & Positioning
 
 *   **Rule 4.5.1 (Scoped Positioning):** When implementing `position: absolute` or `position: fixed` for a component that should be contained within a specific parent layout (e.g., a toolbar for an editor), always ensure the parent container has `position: relative` to create a new stacking context. Avoid relying on viewport-based positioning for components that are logically part of a sub-layout.
+*   **Rule 4.5.2 (Responsive Overlay Controls):** Overlay-Schalter (z. B. Dreh-Buttons auf Grids/Cells) müssen ihre Größe und Offsets an die Referenz-Größe des Parent-Elements koppeln (Clamp: min → ideal → max). Breakpoint-only Toggles (`w-8` → `sm:w-5`) führen zu inkonsistenten Hitboxes; verwende stattdessen `clamp()` für Button-Durchmesser und Offset, damit der Control auf allen Viewports proportional bleibt und keine Zellen überdeckt.
 
 ### 4.6. Animation Components & useEffect Dependencies
 
