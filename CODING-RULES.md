@@ -173,6 +173,111 @@ Server Component fetcht Daten als Promise (nicht awaiten!), Client Component res
 ### 5.5 Theme-Stil: Neon-Glasmorphism (Gaming HUD)
 Alle neuen UI-Themes folgen einem neon-orientierten Glasmorphism-Stil: Gradients, Glows und Hintergründe werden konsequent aus den CSS-Variablen (`--primary`, `--primary-light`, `--primary-dark`, `--accent-*`) aufgebaut – **keine hardcodierten Hex-Farben**. Karten und Sections nutzen dunkle Glasflächen (`glass-card`, `glass-card-strong`, `neon-glass`) mit leichten Blur- und Glow-Layern im Hintergrund, klare Typografie und nur subtile Hover-Transitions (Scale + Glow), damit das Layout modern wirkt, aber performant und gut lesbar bleibt.
 
+### 5.6 🔴 Liquid Glass Card Design (WICHTIGSTE FRONTEND-REGEL)
+
+🚨 **KRITISCH:** Cards mit Liquid Glass Design verwenden **Punkt-Glows** zur Strukturierung, KEINE breiten Beam-Glows!
+
+**Kernprinzip:** Strukturen werden durch subtile, zentrierte Punkt-Glows sichtbar gemacht - inspiriert von Apple's visionOS/Liquid Glass Ästhetik.
+
+#### 5.6.1 Aufbau einer Liquid Glass Card (3-Layer-System)
+
+```tsx
+<Card className="relative overflow-hidden bg-[#030303] border-white/5">
+  {/* Layer 1: Deep Black Base (z-0) */}
+  <div className="absolute inset-0 bg-black/60 z-0" />
+
+  {/* Layer 2: Texture (Grain ODER Grid - nie beides!) (z-0) */}
+  <div
+    className="absolute inset-0 z-0 pointer-events-none mix-blend-soft-light"
+    style={{
+      maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 100%)',
+      WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 100%)'
+    }}
+  >
+    <div className="absolute inset-0 liquid-grain-ultra opacity-30" />
+    {/* ODER: liquid-grid-fine opacity-40 */}
+  </div>
+
+  {/* Layer 3: Punkt-Glow (zentriert oben) - WICHTIG: z-[1] damit über Background! */}
+  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 z-[1] pointer-events-none">
+    <div className="absolute inset-0 bg-[FARBE]/60 blur-[50px] rounded-full" />
+  </div>
+
+  {/* Content (z-10) */}
+  <div className="relative z-10 p-4">...</div>
+</Card>
+```
+
+**Z-Index Hierarchie:**
+- `z-0`: Background + Texture (überlappen sich, Reihenfolge im DOM bestimmt Sichtbarkeit)
+- `z-[1]`: Punkt-Glow (muss ÜBER Background sein, sonst unsichtbar!)
+- `z-10`: Content (über allem)
+
+#### 5.6.2 Texture-Varianten
+
+| Texture | CSS-Klasse | Use-Case | Blend-Mode |
+|:--------|:-----------|:---------|:-----------|
+| **Ultra-Grain** | `liquid-grain-ultra opacity-30` | Allgemein, Training, Notizen | `mix-blend-soft-light` |
+| **Fine-Grid** | `liquid-grid-fine opacity-40` | Ernährung, Cardio | (none) |
+| **Dots** | `liquid-dots-bg opacity-25` | Alternative für minimale Textur | `mix-blend-overlay` |
+
+#### 5.6.3 Punkt-Glow Farben (pro Card-Typ)
+
+| Card | Farbe | Opacity | Größe | Blur | Z-Index |
+|:-----|:------|:--------|:------|:-----|:--------|
+| Allgemein | `bg-indigo-500` | `/60` | `w-40 h-40` | `blur-[50px]` | `z-[1]` |
+| Ernährung | `bg-orange-500` | `/60` | `w-44 h-44` | `blur-[55px]` | `z-[1]` |
+| Training | `bg-emerald-500` | `/60` | `w-40 h-40` | `blur-[50px]` | `z-[1]` |
+| Cardio | `bg-blue-500` | `/60` | `w-40 h-40` | `blur-[50px]` | `z-[1]` |
+| Notizen | `bg-purple-500` | `/60` | `w-40 h-40` | `blur-[50px]` | `z-[1]` |
+| Netzwerk | `bg-cyan-500` | `/60` | `w-40 h-40` | `blur-[50px]` | `z-[1]` |
+
+#### 5.6.4 Edge-Fading Masken
+
+Texturen faden zu den Rändern aus - NIEMALS harte Kanten!
+
+```css
+/* Elliptische Maske (Standard für Grain) */
+maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 100%)'
+
+/* Fokussierte Maske (für Grid) */
+maskImage: 'radial-gradient(ellipse 70% 40% at 50% 0%, black 0%, transparent 100%)'
+```
+
+#### 5.6.5 Anti-Patterns
+
+❌ **Breiter Beam-Glow** (horizontal über ganze Karte):
+```tsx
+// VERBOTEN - sieht billig aus
+<div className="absolute top-0 inset-x-0 h-[280px]">
+  <div className="bg-blue-500/25 blur-[70px] transform -translate-y-1/2 scale-x-125" />
+</div>
+```
+
+❌ **Pixelige Grain-Textur** (`liquid-grain-bg` mit `baseFrequency='0.7'`)
+
+❌ **Grain UND Grid gleichzeitig** in einer Card
+
+❌ **mix-blend-overlay** für Grain (zu stark, besser `soft-light`)
+
+❌ **Punkt-Glow mit `z-0`** (wird vom Background überdeckt!):
+```tsx
+// FEHLER - Glow nicht sichtbar!
+<div className="absolute ... z-0 pointer-events-none">
+  <div className="bg-blue-500/60 blur-[50px]" />
+</div>
+```
+
+✅ **Punkt-Glow** (klein, zentriert, subtil):
+```tsx
+// RICHTIG - elegant wie Apple visionOS
+<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36">
+  <div className="absolute inset-0 bg-blue-500/45 blur-[45px] rounded-full" />
+</div>
+```
+
+**Referenz:** `docs/dashboard/tasks/2025-11-25-liquid-glass-cards-refinement.md`
+
 ---
 
 ## Regel 6: Network Performance (CRITICAL)
