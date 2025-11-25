@@ -430,6 +430,42 @@ Wenn du `useEffect(() => { serverAction(state) }, [state])` siehst:
 
 🚨 KRITISCH: Ein globaler `::selection`-Selector kann in Kombination mit TipTap-Node-Selektion, Blur/Glass-Effekten und GPU-Compositing die Lesbarkeit von Input-Text unvorhersehbar beeinflussen.
 
+---
+
+### 7.21 🔴 tailwindcss-animate Reserved Class Names
+
+🚨 **KRITISCH:** Niemals eigene CSS-Klassen mit Namen erstellen, die vom `tailwindcss-animate` Plugin verwendet werden!
+
+**Reserved Classes (NICHT überschreiben):**
+- `animate-in` / `animate-out`
+- `fade-in-*` / `fade-out-*`
+- `zoom-in-*` / `zoom-out-*`
+- `slide-in-*` / `slide-out-*`
+- `spin-in-*` / `spin-out-*`
+
+**Warum:** Radix UI Komponenten (`Dialog`, `Sheet`, `Popover`, `DropdownMenu`, etc.) nutzen diese Klassen für Enter/Exit-Animationen. Radix' `Presence`-System wartet auf das `animationend`-Event - wenn die Klassen überschrieben werden, feuert das Event nicht korrekt und Dialoge können nicht mehr geschlossen werden.
+
+**Anti-Pattern:**
+```css
+/* ❌ FEHLER - überschreibt tailwindcss-animate! */
+.animate-in {
+  animation-name: myFadeIn;
+  animation-duration: 0.3s;
+}
+```
+
+**Pattern:** Für eigene Animationen eigene Prefix verwenden:
+```css
+/* ✅ RICHTIG - eigener Prefix */
+.fm-fade-in {
+  animation-name: myFadeIn;
+  animation-duration: 0.3s;
+}
+```
+
+**Referenz:** `docs/ui-system/tasks/2025-11-24-framer-motion-migration-plan.md` (Bugfix-Sektion)
+
+---
 
 ## Regel 8: Implementation Guidelines
 
