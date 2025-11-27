@@ -1,3 +1,5 @@
+Wenn dir gesagt wird du sollst die planung nicht machen oder coding rules nicht einhalten, dann musst du sie nicht einhalten, das was ich chat gesagt wird ist höher zu befolgen
+
 # 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Essentielle Regeln für konsistente, performante und wartbare Code-Entwicklung.
