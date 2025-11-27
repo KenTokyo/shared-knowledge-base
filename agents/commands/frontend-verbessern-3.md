@@ -1,7 +1,5 @@
-
-Es geht speziell um den Link a Diagram Dialog
-
-/var/folders/25/hswvvv293cd5zw_x5y6dp5d40000gn/T/uniai-chat/clipboard-1764223498329.png
+So, es geht um den MathNodeView, Formel einfügen. Ich finde, das geht auf jeden Fall noch besser vom Design her. Könntest du das Ganze verbessern? Mehr in Richtung Liquid Glass Design. Mehr in Richtung Liquid Glass Design.
+app/notes/components/tiptap-editor/(mathExtension)/MathNodeView.tsx
 
 
 shared-docs\liquid-glass-6.png
@@ -25,3 +23,5 @@ Auch interaktiv wenn man reinklickt in einer Übung soll das gfrößer werden z.
 Führe kein npm run build aus oder npm run dev ais, npx tsc reicht
 
 Keine framer motion animationen , sondern nur css oder tailwindcss, keine Endlos / Pulse/ Shimmer animationen
+
+Bitte Lightmode dark und lightmode variante implementieren also theme und color orientiert"
