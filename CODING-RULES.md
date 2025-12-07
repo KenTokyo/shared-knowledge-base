@@ -12,6 +12,7 @@
 - **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components mit `Grep` suchen
 - **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
 - Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten, wenn möglich sinnvolle Icons einbauen und antworte in Deutsch
+- Sollte dir gesagt werden, dass du mehr oder alle phasen programmieren sollst, dann mach das bitte auch direkt statt nach einer Phase aufzuhören
 
 ### 1.2 🚨 Planungs-Regel: Kein Code in Planungsdokumenten
 **KRITISCH:** Planungsdokumente dürfen NIEMALS vollständigen Code enthalten!
