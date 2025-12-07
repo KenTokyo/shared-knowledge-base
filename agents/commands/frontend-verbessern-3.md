@@ -1,12 +1,10 @@
-So, es geht um den MathNodeView, Formel einfügen. Ich finde, das geht auf jeden Fall noch besser vom Design her. Könntest du das Ganze verbessern? Mehr in Richtung Liquid Glass Design. Mehr in Richtung Liquid Glass Design.
-app/notes/components/tiptap-editor/(mathExtension)/MathNodeView.tsx
+C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1765018007213.png
 
 
-shared-docs\liquid-glass-6.png
-shared-docs\liquid-glass-5.png
 
-Also erstmal jetzt das erste Screenshot ist von dem Link a Diagram Dialog
-components/diagrams/linking/LinkDiagramDialog.tsx
+Also erstmal jetzt das erste Screenshot ist von dem:
+
+http://localhost:3001/learning-cards
 
 Du siehst, das ist nicht schön. Der zweite Screenshot ist der Liquid Glass. Daran solltest du dich orientieren bzw. inspirieren. Ich möchte ein sehr schönes Liquid Glass haben. Genau, die Buttons schön so ein Glow versehen, wie im Screenshot sichtbar. Gerne auch mit Glow Rays arbeiten und evtl. Textur versehen also Hintergrund falls es passt (z.B Grid, aber kleiner bereich und Rest geblurred wie im Bild zu sehen) also sei da kreativ. Und schau dir auch gerne das 2. Liquid Glass-Screenshot an. Das ist auch ziemlich schön geworden. Genau, ich hab dir auch das Screenshot im 3.Screenshot angehängt. Bitte orientiere dich daran. Versuch auch das Ganze mit Animation und Interaktion zu versehen. Und sei auch bitte hierzu sehr modern, quasi wie Spiele, und sei kreativ.
 
