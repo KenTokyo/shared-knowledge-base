@@ -11,6 +11,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
 - ✅ **ALWAYS** use `npx tsc --noEmit` to check for TypeScript errors
 - ✅ **ALWAYS** validate code logic through manual review and type safety
 - 🎯 **Reason:** This project prioritizes rapid development and type safety over test coverage
+- Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten, wenn möglich sinnvolle Icons einbauen und antworte in Deutsch
 
 ---
 ## 1. 🚀 Next.js App Router Rules
