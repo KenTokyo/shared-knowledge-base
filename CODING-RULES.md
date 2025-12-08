@@ -91,13 +91,61 @@ Server Component fetcht Daten als Promise (nicht awaiten!), Client Component res
 - **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nur bei geeigneten Fällen
 - **Security:** ⚠️ IMMER User-Input validieren + Session mit `getCurrentProfile()` prüfen
 
-### 3.4 Loading & Rendering
+### 3.4 🚨 Optimistic UI Pattern (MANDATORY für Dialog/Modal-Mutations)
+
+> **⚡ STANDARD-REGEL für alle CRUD-Operationen (Create, Update, Delete) in modalen Kontexten!**
+
+**Problem:** `revalidateTag()` triggert Next.js Router Cache Refresh → 3-10+ Sekunden Hard-Refresh, Dialog flasht/schließt!
+
+**Lösung - Optimistic UI ohne revalidateTag:**
+```
+✅ RICHTIG:
+1. Server Action speichert in DB → gibt erstellte Daten zurück
+2. KEIN revalidateTag() Aufruf
+3. Client setzt lokalen State SOFORT mit Response-Daten
+4. UI ist instant aktualisiert (< 100ms)
+
+❌ FALSCH:
+1. Server Action speichert + revalidateTag() → Hard Refresh!
+```
+
+**Implementation:**
+```typescript
+// Server Action (OPTIMISTIC)
+export async function createItemOptimistic(data) {
+  const [created] = await db.insert(items).values(data).returning();
+  // ⚡ KEIN revalidateTag()!
+  return { success: true, data: created };
+}
+
+// Client Handler
+const handleCreate = async (data) => {
+  const result = await createItemOptimistic(data);
+  if (result.success) {
+    setItems(prev => [...prev, result.data]); // ← INSTANT!
+    toast({ title: "Erstellt!" });
+  }
+};
+```
+
+**Cross-Component Updates via Events:**
+```typescript
+window.dispatchEvent(new CustomEvent('itemUpdated', {
+  detail: { item: result.data, action: 'create' | 'update' | 'delete' }
+}));
+```
+
+**Cache-Invalidierung:** LAZY bei Dialog-Close oder Page-Navigation, NIEMALS während aktiver UI!
+
+**Referenz:** `shared-docs/refactoring-docs/global-coding-rules.md` Rule 1.4
+
+### 3.5 Loading & Rendering
 - **Suspense:** `loading.tsx` für Route-Level, `<Suspense>` für Component-Level
 - **Re-trigger Suspense:** Key prop nutzen: `<Suspense key={query}>`
 - **Static-First:** Statische UI (Header, Navigation) AUSSERHALB Suspense (0ms render)
 - **Hydration:** Server und Client initial UI müssen identisch sein
 
-### 3.5 🔴 Client Provider Wrapper Pattern (MANDATORY)
+### 3.6 🔴 Client Provider Wrapper Pattern (MANDATORY)
 **Problem:** RootLayout (Server Component) darf NICHT direkt 5+ Client Components importieren → Client Manifest Build-Fehler
 
 **Lösung:** Alle Client-Provider in ONE Client-Component (`ClientProviders.tsx`) wrappen, diese dann in RootLayout importieren.
@@ -257,6 +305,25 @@ Vor `useEffect(() => { saveToServer(state) }, [state])` entscheide Pattern:
 - **Occasional (<1x/s):** Throttled Save (300ms)
 - **On-Demand (Click):** Immediate Save
 
+### 7.15 🔴🔴🔴 revalidateTag Hard-Refresh Killer (HÖCHSTE PRIORITÄT)
+**Problem:** `revalidateTag()` oder `revalidatePath()` in Server Actions triggert **FULL PAGE REFRESH** (3-10+ Sekunden!):
+- Next.js invalidiert Router Cache
+- Server Components werden komplett neu gefetcht
+- React Client-States werden zurückgesetzt
+- Dialoge schließen sich, Forms verlieren State
+
+**Lösung - Optimistic UI Pattern:**
+```typescript
+// ❌ VERBOTEN in Dialogs/Modals:
+revalidateTag(`items-${userId}`);
+
+// ✅ PFLICHT - Optimistic Update:
+return { success: true, data: createdItem }; // Daten zurückgeben
+// Client updated lokalen State INSTANT
+```
+
+**STANDARD für alle CRUD in modalen Kontexten!** Siehe Rule 3.4 und `global-coding-rules.md` Rule 1.4.
+
 ---
 
 ## Regel 8: Implementation Guidelines
@@ -366,6 +433,8 @@ HTML `<input type="number">` darf NIEMALS `value={0}` bei ungültigem 0:
 ## ✅ Quick Checklist
 
 Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, Suspense boundaries, Static UI außerhalb Suspense, max 700 lines/file.
+
+**⚡ Bei CRUD in Dialogen/Modals:** Optimistic UI Pattern! KEIN `revalidateTag()` → Daten zurückgeben → lokaler State Update → INSTANT UI.
 
 ---
 
