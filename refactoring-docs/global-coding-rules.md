@@ -279,10 +279,126 @@ This section provides high-level rules for our core design patterns. For detaile
 *   **Für vollständige Post-Mortem-Analyse, siehe:**
 *   **➡️ [`shared-docs/postmortem/animation-useeffect-dependency-array-postmortem.md`](shared-docs/postmortem/animation-useeffect-dependency-array-postmortem.md)**
 
-### 4.7. Design System: Liquid Glass
+### 4.7. Design-Ästhetik: Liquid Glass
 
-*   **Rule 4.7.1 (Core Aesthetic):** Implement the "Liquid Glass" design language for all premium UI elements. This style is characterized by deep transparency, strong background blurs (`backdrop-blur-xl`), and "wet" specular highlights (inner white glows).
-*   **Rule 4.7.2 (Layering):** Use a dark, animated background (e.g., Aurora) as the base. Float UI elements above it using semi-transparent blacks
+> 🎨 **WICHTIGE FRONTEND-RICHTUNG!** Dies beschreibt die visuelle Sprache der App - keine starren Regeln, sondern eine Ästhetik, eine Richtung.
+
+#### 4.7.1 Die Ästhetik in Worten
+
+**Liquid Glass** ist ein hochmodernes, dunkles Design mit folgenden Charakteristiken:
+
+**Tiefe & Räumlichkeit:**
+Die UI wirkt wie schwebende Glasflächen über einem tiefen, dunklen Raum. Elemente haben Tiefe durch subtile Schatten, Transparenz und Blur-Effekte.
+```css
+/* Beispiel */
+background: rgba(20, 20, 25, 0.4);
+backdrop-filter: blur(24px) saturate(180%);
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+```
+
+**Licht als Akzent:**
+Licht kommt von aktiven Elementen - Icons, Status-Badges, Buttons. Dieses Licht ist weich, diffus und farbig.
+```tsx
+/* Beispiel: Punkt-Glow */
+<div className="absolute inset-0 bg-orange-500/60 blur-[50px] rounded-full" />
+
+/* Status-Glows (Tailwind) */
+shadow-[0_0_20px_-5px_rgba(249,115,22,0.6)]  // Orange = Loading
+shadow-[0_0_20px_-5px_rgba(34,197,94,0.6)]   // Grün = Success
+```
+
+**Versteckte Struktur:**
+Im Hintergrund können subtile Texturen existieren - feine Grids, Grain, Dot-Patterns. Diese werden durch Licht sichtbar.
+```tsx
+/* Beispiel: Grid-Textur */
+<div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+  style={{
+    backgroundImage: `linear-gradient(to right, #808080 1px, transparent 1px),
+                      linear-gradient(to bottom, #808080 1px, transparent 1px)`,
+    backgroundSize: '24px 24px'
+  }}
+/>
+
+/* Mask begrenzt Textur auf beleuchteten Bereich */
+mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 100%);
+```
+
+**Glasmorphism:**
+Oberflächen wirken wie gefrostetes Glas - halbtransparent mit Blur-Effekt, dezente Borders.
+```css
+/* Beispiel */
+border: 1px solid rgba(255, 255, 255, 0.08);
+backdrop-filter: blur(16px) saturate(180%);
+```
+
+#### 4.7.2 Light/Dark Mode (PFLICHT)
+
+**Jedes UI-Element MUSS beide Modi unterstützen:**
+
+| Eigenschaft | Dark Mode | Light Mode |
+|-------------|-----------|------------|
+| Background | `bg-black/40` | `bg-white/75` |
+| Border | `border-white/8` | `border-black/6` |
+| Text | `text-white/90` | `text-slate-900` |
+| Glow Intensity | Stärker (`/60`) | Schwächer (`/30`) |
+| Textur Opacity | `dark:opacity-[0.08]` | `opacity-[0.04]` |
+
+```tsx
+/* Tailwind Pattern */
+className="bg-white/75 dark:bg-black/40 border-black/6 dark:border-white/8"
+```
+
+#### 4.7.3 Leitprinzipien
+
+- **Dunkelheit als Leinwand:** Tiefe Hintergründe (`#030305`, `bg-black/80`) geben Lichteffekten Raum
+- **Licht kommuniziert:** Farbiges Licht zeigt Status - `orange-500`=Aktion, `green-500`=Erfolg, `red-500`=Fehler, `blue-500`=Info
+- **Subtilität:** Texturen `opacity-[0.03]` bis `opacity-[0.08]`, Borders `border-white/5` bis `border-white/10`
+- **Glas-Effekte:** `backdrop-blur-xl`, `bg-black/40`, weiche `box-shadow` mit `inset` highlights
+- **Struktur durch Licht:** `mask-image: radial-gradient(...)` begrenzt Textur auf beleuchtete Bereiche
+
+#### 4.7.4 Gaming-Like Interaktionen
+
+**Hover/Click Effekte die sich "lebendig" anfühlen:**
+```tsx
+/* Scale on Hover */
+className="transition-transform hover:scale-[1.02] active:scale-[0.98]"
+
+/* Glow Intensivierung on Hover */
+className="shadow-[0_0_15px_...] hover:shadow-[0_0_25px_...]"
+```
+
+#### 4.7.5 Inspiration
+
+Screenshots: `shared-docs/liquid-glass-*.png`
+Detaillierter Command: `shared-docs/agents/commands/frontend-verbessern-3.md`
+
+### 4.8. Animation Rules
+
+*   **Rule 4.8.1 (No Framer Motion):** 🚨 **KRITISCH** - Keine Framer Motion Animationen! Nur CSS Transitions oder Tailwind Animations verwenden. Framer Motion erhöht Bundle-Size und ist für unsere Zwecke unnötig.
+
+*   **Rule 4.8.2 (No Endless Animations):** 🚨 **KRITISCH** - Keine Endlos-Animationen außer bei Loading-Indikatoren! Verboten sind:
+    - `animate-pulse` (außer bei Skeleton-Loadern)
+    - `animate-spin` (außer bei Loading-Spinnern)
+    - `animate-shimmer` / `animate-bounce` als Deko
+    - Jede Animation die ewig läuft ohne User-Interaktion
+
+*   **Rule 4.8.3 (CSS/Tailwind Only):** Erlaubte Animation-Methoden:
+    ```tsx
+    /* ✅ ERLAUBT: Tailwind Transitions */
+    className="transition-all duration-300 hover:scale-105"
+
+    /* ✅ ERLAUBT: CSS Keyframes (in globals.css) */
+    @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+
+    /* ❌ VERBOTEN: Framer Motion */
+    <motion.div animate={{ scale: 1.1 }} />
+    ```
+
+*   **Rule 4.8.4 (Interaction-Triggered Only):** Animationen sollen durch User-Interaktion ausgelöst werden:
+    - ✅ `hover:`, `focus:`, `active:` States
+    - ✅ `data-[state=open]:` für Dialoge/Dropdowns
+    - ✅ Einmalige Entry-Animationen beim Mount
+    - ❌ Permanente Aufmerksamkeits-Animationen
 
 ## 5. 🚨 General Anti-Patterns & Edge Cases
 

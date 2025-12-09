@@ -199,7 +199,20 @@ window.dispatchEvent(new CustomEvent('itemUpdated', {
 ### 5.3 Theme-Stil: Neon-Glasmorphism
 Neon-orientierter Glasmorphism-Stil: Gradients, Glows aus CSS-Variablen (`--primary`, `--accent-*`) – **keine hardcodierten Hex-Farben**. Karten nutzen `glass-card`, `neon-glass` mit Blur/Glow-Layern.
 
-### 5.4 🔴 Liquid Glass Card Design (3-Layer-System)
+### 5.4 🎨 Design-Ästhetik: Liquid Glass
+
+> **Vollständige Doku:** `shared-docs/refactoring-docs/global-coding-rules.md` → Section 4.7
+
+**Liquid Glass** beschreibt die visuelle Richtung der App - keine starren Regeln, sondern eine Ästhetik:
+
+- **Tiefe & Räumlichkeit:** `bg-black/40`, `backdrop-blur-xl`, `box-shadow` mit `inset`
+- **Licht als Akzent:** `blur-[50px]` Punkt-Glows, Status-Farben (`orange-500`, `green-500`, `red-500`)
+- **Versteckte Struktur:** Grid via `linear-gradient(#808080 1px...)`, `opacity-[0.05]`, `mask-image: radial-gradient(...)`
+- **Glasmorphism:** `border-white/8`, `backdrop-blur-xl saturate(180%)`
+
+**Inspiration:** `shared-docs/liquid-glass-*.png`
+
+### 5.5 🔴 Liquid Glass Card Design (3-Layer-System)
 
 ```tsx
 <Card className="relative overflow-hidden bg-[#030303] border-white/5">
