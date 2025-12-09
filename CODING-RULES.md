@@ -257,6 +257,12 @@ Vor `useEffect(() => { saveToServer(state) }, [state])` entscheide Pattern:
 - **Occasional (<1x/s):** Throttled Save (300ms)
 - **On-Demand (Click):** Immediate Save
 
+### 7.16 🔴 Wiederverwendbarkeit-First bei UI-Komponenten
+Dialoge und komplexe UI-Komponenten MÜSSEN für Wiederverwendung designed werden:
+- Props für verschiedene Modi (`mode: 'create' | 'edit' | 'view' | 'history'`)
+- Callback-Props statt hardcodierter Actions
+- Kein direkter Context-Zugriff in wiederverwendbaren Komponenten (stattdessen Props/Events)
+
 ---
 
 ## Regel 8: Implementation Guidelines
