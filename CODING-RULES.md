@@ -406,7 +406,9 @@ UI MUSS vertikales Spacing minimieren:
 ## Regel 11: Sonstige Kurzregeln
 
 ### 11.1 Revalidate-Sicherheitsregel
-❌ `revalidatePath` bei Autosave/hochfrequent. ✅ Nur bei Create/Delete/expliziten Actions.
+❌ `revalidatePath`/`revalidateTag` bei Autosave/hochfrequent
+❌ **NIEMALS** in Dialogen/Modals → Siehe Rule 3.4 (Optimistic UI)!
+✅ Nur auf Page-Ebene bei expliziten Actions (ohne offene Dialoge)
 
 ### 11.2 Loading-Feedback
 **Nicht gecached:** `isLoading=true` + Skeleton. **Gecached:** UI direkt updaten.

@@ -38,7 +38,9 @@ This guide provides comprehensive coding rules for building robust, performant, 
 ### 1.3. Data Mutations & State Updates
 
 *   **Rule 1.3.1 (Use Server Actions):** Use Server Actions for all data mutations (e.g., form submissions, updates, deletions). They can be called from both Server and Client Components.
-*   **Rule 1.3.2 (UI Updates after Mutation):** After a mutation in a Server Action, use `revalidatePath('/')` or `revalidateTag('tag')` to invalidate the cache and trigger a UI update.
+*   **Rule 1.3.2 (UI Updates after Mutation):** After a mutation in a Server Action:
+    - ⚠️ **In Dialogen/Modals:** KEIN `revalidateTag()` verwenden! → Siehe **Rule 1.4 (Optimistic UI)**
+    - ✅ **Auf Page-Ebene (ohne aktive Dialoge):** `revalidatePath('/')` oder `revalidateTag('tag')` ist OK
 *   **Rule 1.3.3 (Security):** **Always** validate user input and authenticate the profile session with profile-finder within your Server Actions to prevent security vulnerabilities.
 
 ### 1.4. 🚨 Optimistic UI Pattern (MANDATORY for All Mutations in Dialogs/Modals)
@@ -323,6 +325,12 @@ This section provides high-level rules for our core design patterns. For detaile
 
 *   **Rule 5.24 (CRITICAL Page-Level Data-Separation):** 🚨 **INSTANT-HEADER RULE** - Page-Components dürfen NIEMALS Data-Fetching-Logic enthalten, die das Rendering von Header/Navigation blockiert! Alle `await getCurrentProfile()`, Finder-Calls, Data-Loading-Logic MUSS in separate MainContent-Components ausgelagert werden. Page.tsx = 90% HTML (instant), MainContent = 90% Data-Logic (async). Anti-Pattern: `const profile = await getCurrentProfile()` in page.tsx blockiert instant Header-Rendering. Correct Pattern: Header als pure HTML, alle Data-Dependencies in MainContent mit Suspense-Boundary.
 
-*   **Rule 5.25 (Quick Inline Actions Dialog Persistence):** 🚨 **KRITISCH** - Quick Inline Actions (z.B. Quick-Pause-Button im Training-Tab) die Server Actions mit `revalidateTag()` aufrufen, MÜSSEN den Dialog-State persistieren! `revalidateTag()` löst einen Next.js Router Cache Refresh aus, der React-States zurücksetzt. **Anti-Pattern:** Dialog-Open-State nur in `useState` ohne Persistenz → Dialog schließt sich nach Server Action. **Lösung:** Dialog-relevanten State (isOpen, currentEntry, activeTab) in `sessionStorage` persistieren und bei Component-Mount wiederherstellen. Bei explizitem Dialog-Close sessionStorage leeren. Siehe `DashboardProvider.tsx` für Implementierungsreferenz.
+*   **Rule 5.25 (Quick Inline Actions Dialog Persistence):** ⚠️ **LEGACY-FALLBACK** - Diese Regel gilt NUR wenn Optimistic UI (Rule 1.4) aus technischen Gründen NICHT möglich ist!
+    - **Bevorzugte Lösung:** Optimistic UI Pattern (Rule 1.4) - KEIN `revalidateTag()` in Dialogen
+    - **Fallback (nur wenn nötig):** sessionStorage-Persistenz für Dialog-State
+    - Siehe `DashboardProvider.tsx` für Legacy-Implementierungsreferenz
 
-*   **Rule 5.26 (Server Action Cache Invalidation Side Effects):** 📱 **WICHTIG** - Server Actions die `revalidateTag()` oder `revalidatePath()` nutzen, können unerwartete UI-Side-Effects verursachen: React-State-Resets, Dialog-Closes, Form-State-Verlust. **Mitigation:** Kritische UI-States (modale Dialoge, Formulare in Bearbeitung, aktive Tab-Selections) MÜSSEN gegen Router-Refreshes geschützt werden durch: (1) sessionStorage-Persistenz, (2) useRef-basierte State-Guards, oder (3) Context mit `useCallback`-wrapped Setters.
+*   **Rule 5.26 (Server Action Cache Invalidation Side Effects):** ⚠️ **LEGACY-FALLBACK** - Diese Regel gilt NUR wenn Optimistic UI (Rule 1.4) aus technischen Gründen NICHT möglich ist!
+    - **Bevorzugte Lösung:** Optimistic UI Pattern (Rule 1.4) - Daten zurückgeben, lokalen State updaten
+    - **Fallback-Mitigationen:** (1) sessionStorage-Persistenz, (2) useRef-basierte State-Guards, (3) Context mit `useCallback`-wrapped Setters
+    - **STANDARD:** Implementiere IMMER zuerst Rule 1.4, bevor du auf diese Fallbacks zurückgreifst!
