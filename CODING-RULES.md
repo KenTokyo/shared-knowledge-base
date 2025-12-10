@@ -212,7 +212,29 @@ Neon-orientierter Glasmorphism-Stil: Gradients, Glows aus CSS-Variablen (`--prim
 
 **Inspiration:** `shared-docs/liquid-glass-*.png`
 
-### 5.5 🔴 Liquid Glass Card Design (3-Layer-System)
+### 5.5 🚨 Muted Glass Buttons (KRITISCH!)
+
+> **Vollständige Doku:** `shared-docs/refactoring-docs/global-coding-rules.md` → Section 4.7.0
+
+**Das Problem:** Solid-farbige Buttons (`bg-orange-500`, `bg-white`) zerstören die Liquid Glass Ästhetik!
+
+**Die Lösung - Muted Colors mit Glow:**
+
+| Button-Typ | Background | Border | Text | Glow |
+|------------|------------|--------|------|------|
+| Primary CTA | `orange-500/20` | `orange-500/30` | `orange-400` | `shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]` |
+| Selected | `orange-500/20` | `orange-500/40` | `orange-400` | Inset + Outer Glow |
+| Tab Selected | `white/10` | `white/20` | `white` | Inset-Shadow |
+| Tab Unselected | `transparent` | `transparent` | `white/50` | - |
+| Ghost | `transparent` | `orange-500/30` | `orange-400` | Dezenter Glow |
+
+**❌ Anti-Patterns:**
+- `bg-orange-500` (solid ohne Transparenz)
+- `bg-white` für Tab-Selection im Dark Mode
+- Buttons ohne Glow bei aktiven States
+- `text-white` auf saturierten Hintergründen
+
+### 5.6 🔴 Liquid Glass Card Design (3-Layer-System)
 
 ```tsx
 <Card className="relative overflow-hidden bg-[#030303] border-white/5">

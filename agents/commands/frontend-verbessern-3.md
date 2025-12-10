@@ -4,6 +4,9 @@
 
 ---
 
+Bereitgestellte Komponente:
+Ai Quest generator
+
 ## 📋 Anleitung
 
 **Schritt 1:** Analysiere die bereitgestellte Komponente und ihren aktuellen Screenshot
@@ -50,6 +53,97 @@ className="shadow-[0_0_20px_-5px_rgba(239,68,68,0.6)]"
 // Blau = Info
 className="shadow-[0_0_20px_-5px_rgba(59,130,246,0.6)]"
 ```
+
+---
+
+## 🚨 KRITISCH: Muted Glass Buttons (HÖCHSTE PRIORITÄT!)
+
+> **⚡ DAS HÄUFIGSTE PROBLEM:** Solid-farbige Buttons zerstören die Liquid Glass Ästhetik!
+
+### ❌ Was du NIEMALS machen darfst:
+```tsx
+/* VERBOTEN - Solid Colors */
+className="bg-orange-500 text-white"  // Flat, billig, übersättigt
+className="bg-white text-black"       // Zerstört Dark Mode Glasmorphism
+className="bg-primary"                // Solid ohne Transparenz
+```
+
+### ✅ Was du IMMER machen musst:
+
+#### Primary Action Buttons (CTA wie "Initialize Quest Generation")
+```tsx
+className="
+  relative overflow-hidden
+  bg-orange-500/20 dark:bg-orange-500/15
+  border border-orange-500/30
+  text-orange-400 dark:text-orange-300
+  shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]
+  hover:bg-orange-500/30 hover:shadow-[0_0_25px_-5px_rgba(249,115,22,0.5)]
+  transition-all duration-200
+"
+```
+
+#### Selected/Active State (z.B. "Auto (Recommended)" Toggle)
+```tsx
+/* Selected */
+className="
+  bg-orange-500/20 border border-orange-500/40
+  text-orange-400
+  shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_15px_-5px_rgba(249,115,22,0.4)]
+"
+
+/* Unselected */
+className="
+  bg-white/5 border border-white/10
+  text-white/60
+  hover:bg-white/10 hover:text-white/80
+"
+```
+
+#### Tab Selection (z.B. "Custom Input" / "Notes" Tabs)
+```tsx
+/* Selected Tab - NIEMALS solid weiß! */
+className="
+  bg-white/10 dark:bg-white/8
+  border border-white/20
+  text-white
+  shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
+"
+
+/* Unselected Tab */
+className="
+  bg-transparent border-transparent
+  text-white/50
+  hover:text-white/70 hover:bg-white/5
+"
+```
+
+#### Ghost/Secondary Buttons (z.B. "Initialize Connection")
+```tsx
+className="
+  bg-transparent
+  border border-orange-500/30
+  text-orange-400
+  shadow-[0_0_15px_-8px_rgba(249,115,22,0.3)]
+  hover:bg-orange-500/10 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]
+"
+```
+
+### Muted Color Palette:
+| Zweck | Background | Border | Text | Glow |
+|-------|------------|--------|------|------|
+| Primary/Action | `orange-500/20` | `orange-500/30` | `orange-400` | `rgba(249,115,22,0.4)` |
+| Success | `green-500/20` | `green-500/30` | `green-400` | `rgba(34,197,94,0.4)` |
+| Info | `blue-500/20` | `blue-500/30` | `blue-400` | `rgba(59,130,246,0.4)` |
+| Danger | `red-500/20` | `red-500/30` | `red-400` | `rgba(239,68,68,0.4)` |
+| Neutral | `white/5` | `white/10` | `white/60` | - |
+
+### 🎯 Checkliste für Buttons:
+- [ ] Kein solid `bg-[color]-500` ohne `/20` oder `/15` Transparenz?
+- [ ] Dezente Border mit `/30` Opacity?
+- [ ] Glow-Shadow bei aktiven/selected States?
+- [ ] Hover intensiviert Glow, nicht nur Opacity?
+- [ ] Text ist die "leuchtende" Farbe, nicht der Hintergrund?
 
 #### 3. Versteckte Struktur (Grid/Grain Textur)
 Subtile Texturen im Hintergrund, normalerweise fast unsichtbar. Durch Licht werden sie sichtbar - wie eine Taschenlampe die ein Muster enthüllt.

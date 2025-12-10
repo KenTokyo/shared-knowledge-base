@@ -283,6 +283,120 @@ This section provides high-level rules for our core design patterns. For detaile
 
 > 🎨 **WICHTIGE FRONTEND-RICHTUNG!** Dies beschreibt die visuelle Sprache der App - keine starren Regeln, sondern eine Ästhetik, eine Richtung.
 
+#### 🚨 4.7.0 KRITISCH: Muted Glass Buttons (HÖCHSTE PRIORITÄT)
+
+> **⚡ Diese Sektion adressiert das häufigste Design-Problem: Übersättigte, solid-farbige Buttons die NICHT zum Liquid Glass Look passen!**
+
+**Das Problem:**
+- ❌ Solid Orange Buttons (`bg-orange-500`) wirken billig und "flat"
+- ❌ Solid Weiße Tab-Selections (`bg-white`) zerstören die Glasmorphism-Ästhetik
+- ❌ Keine Glow-Effekte bei interaktiven Elementen
+- ❌ Farben sind übersättigt statt "muted"
+
+**Die Lösung - Muted Glass Button Patterns:**
+
+##### Primary Action Buttons (z.B. "Initialize Quest Generation")
+```tsx
+/* ❌ VERBOTEN - Solid Orange */
+className="bg-orange-500 text-white"
+
+/* ✅ RICHTIG - Muted Glass mit Glow */
+className="
+  relative overflow-hidden
+  bg-orange-500/20 dark:bg-orange-500/15
+  border border-orange-500/30 dark:border-orange-500/25
+  text-orange-400 dark:text-orange-300
+  shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]
+  hover:bg-orange-500/30 hover:shadow-[0_0_25px_-5px_rgba(249,115,22,0.5)]
+  transition-all duration-200
+"
+```
+
+##### Selected/Active State Buttons (z.B. "Auto (Recommended)")
+```tsx
+/* ❌ VERBOTEN - Solid Orange Selection */
+className="bg-orange-500 text-white"
+
+/* ✅ RICHTIG - Muted Glass Selection */
+className="
+  bg-orange-500/20 dark:bg-orange-500/15
+  border border-orange-500/40
+  text-orange-400 dark:text-orange-300
+  shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_15px_-5px_rgba(249,115,22,0.4)]
+"
+
+/* Unselected State - Dunkel/Transparent */
+className="
+  bg-white/5 dark:bg-white/5
+  border border-white/10
+  text-white/60
+  hover:bg-white/10 hover:text-white/80
+"
+```
+
+##### Tab Selection States (z.B. "Custom Input" / "Notes" / "Learning Cards")
+```tsx
+/* ❌ VERBOTEN - Solid Weiß Selection */
+className="bg-white text-black"
+
+/* ✅ RICHTIG - Muted Glass Tab */
+// Selected Tab
+className="
+  bg-white/10 dark:bg-white/8
+  border border-white/20
+  text-white
+  shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
+"
+
+// Unselected Tab
+className="
+  bg-transparent
+  border border-transparent
+  text-white/50
+  hover:text-white/70 hover:bg-white/5
+"
+```
+
+##### Secondary/Ghost Buttons (z.B. "Initialize Connection")
+```tsx
+/* ✅ Ghost Button mit Glow */
+className="
+  bg-transparent
+  border border-orange-500/30
+  text-orange-400
+  shadow-[0_0_15px_-8px_rgba(249,115,22,0.3)]
+  hover:bg-orange-500/10 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]
+"
+```
+
+**Farbpalette für Muted Buttons:**
+
+| Zweck | Background | Border | Text | Glow |
+|-------|------------|--------|------|------|
+| Primary | `orange-500/20` | `orange-500/30` | `orange-400` | `rgba(249,115,22,0.4)` |
+| Success | `green-500/20` | `green-500/30` | `green-400` | `rgba(34,197,94,0.4)` |
+| Info | `blue-500/20` | `blue-500/30` | `blue-400` | `rgba(59,130,246,0.4)` |
+| Danger | `red-500/20` | `red-500/30` | `red-400` | `rgba(239,68,68,0.4)` |
+| Neutral | `white/5` | `white/10` | `white/60` | none |
+
+**Light Mode Anpassungen:**
+```tsx
+/* Light Mode - weniger Transparenz, dunklere Texte */
+className="
+  bg-orange-500/10 dark:bg-orange-500/20
+  border-orange-500/20 dark:border-orange-500/30
+  text-orange-600 dark:text-orange-400
+  shadow-[0_0_15px_-5px_rgba(249,115,22,0.25)] dark:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]
+"
+```
+
+**🚫 Anti-Patterns (NIEMALS verwenden):**
+- ❌ `bg-orange-500` (solid color ohne Transparenz)
+- ❌ `bg-white` für Tab-Selection im Dark Mode
+- ❌ Buttons ohne Glow/Shadow bei aktiven States
+- ❌ `text-white` auf `bg-orange-500` (flat look)
+- ❌ Hover-States die nur Opacity ändern ohne Glow-Intensivierung
+
 #### 4.7.1 Die Ästhetik in Worten
 
 **Liquid Glass** ist ein hochmodernes, dunkles Design mit folgenden Charakteristiken:
