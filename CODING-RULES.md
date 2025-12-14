@@ -365,6 +365,29 @@ return { success: true, data: createdItem }; // Daten zurückgeben
 
 **STANDARD für alle CRUD in modalen Kontexten!** Siehe Rule 3.4 und `global-coding-rules.md` Rule 1.4.
 
+### 7.17 🔴 Optimistic UI State-Update mit Callbacks (Stale Closure)
+**Problem:** `setState(newValue)` gefolgt von `callback(state)` referenziert den **alten State** (Stale Closure).
+
+```typescript
+// ❌ FALSCH - Stale Closure: habits ist noch ALTER State!
+setHabits((prev) => prev.map((h) => ...));
+onHabitsUpdate?.(habits); // habits = ALTER Wert!
+
+// ✅ RICHTIG - Callback innerhalb setHabits mit neuem State
+setHabits((prev) => {
+  const updatedHabits = prev.map((h) => ...);
+  onHabitsUpdate?.(updatedHabits); // ← NEUE Daten!
+  return updatedHabits;
+});
+```
+
+**Race-Condition Guard:** Bei schnellem Klicken prüfen ob bereits ein Update läuft:
+```typescript
+if (loadingHabitId === habitId) return; // Guard
+setLoadingHabitId(habitId);
+// ... async operation
+```
+
 ---
 
 ## Regel 8: Implementation Guidelines
