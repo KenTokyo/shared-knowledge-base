@@ -11,7 +11,9 @@
 - **Größere Aufgaben:** Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md` erstellen
 - **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components mit `Grep` suchen
 - **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
+- **Neue Finder/Actions:** Vor Merge mit Live-DB testen! → **Siehe Regel 8.1.1** für `npx tsx` Test-Pattern
 - Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten, wenn möglich sinnvolle Icons einbauen und antworte in Deutsch
+- **Klartext statt Jargon:** Keine unklaren Kürzel wie „QA“, „Smoke-Test“ ohne Erklärung. Beschreibe immer konkret, was getan oder geprüft wird (z. B. „Ich klicke die Karten durch und prüfe, ob Anzeigen/Overlays funktionieren“). Menschenlesbar formulieren.
 - Sollte dir gesagt werden, dass du mehr oder alle phasen programmieren sollst, dann mach das bitte auch direkt statt nach einer Phase aufzuhören, oder auch wenn gesagt wird mach alles direkt, dann plane und implementiere alles in einem Zug!
 
 ### 1.2 🚨 Planungs-Regel: Kein Code in Planungsdokumenten
@@ -397,7 +399,51 @@ setLoadingHabitId(habitId);
 - **Finders** (`db/finders/`): Alle queries, MUSS `"use server"` haben
 - **Auth:** `getCurrentProfile()` aus `profile-finder` statt auth-Methoden
 
-### 8.1.1 🔴 Database Seeding Scripts
+### 8.1.1 🔴 Live-DB Testing für Actions & Finders (PFLICHT!)
+**Problem:** Bugs in Actions/Finders (z.B. Timezone-Drift, fehlerhafte JOINs, falsche WHERE-Bedingungen) werden oft erst in der UI entdeckt - zu spät!
+
+**Lösung - Isolierte Test-Skripte mit `npx tsx`:**
+```bash
+# Direkte Skript-Ausführung gegen Live-DB
+DATABASE_URL="postgres://..." npx tsx scripts/test-[feature].ts
+```
+
+**Wann testen:**
+- ✅ Neue Finder-Funktionen (queries)
+- ✅ Neue Actions (mutations) - mit Test-Daten
+- ✅ Komplexe Date/Timezone-Logik
+- ✅ JOINs über mehrere Tabellen
+- ✅ Geänderte WHERE-Bedingungen
+
+**Test-Skript Pattern:**
+```typescript
+// scripts/test-[feature].ts
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
+const client = postgres(process.env.DATABASE_URL!, { prepare: false });
+const db = drizzle(client);
+
+async function main() {
+  // 1. Test-Query ausführen
+  // 2. Ergebnis analysieren und loggen
+  // 3. Edge-Cases prüfen (leere Results, Timezone, etc.)
+  await client.end();
+}
+main();
+```
+
+**Nach erfolgreichem Test:** Skript löschen (nicht committen!)
+
+**Typische Bugs die damit gefunden werden:**
+- Timezone-Drift bei Date-Vergleichen
+- N+1 Queries in Loops
+- Falsche `toLocalDateKey()` vs `toISOString()` Verwendung
+- Fehlende Daten durch zu enge WHERE-Filter
+- schlechte Performance
+
+### 8.1.2 🔴 Database Seeding Scripts
 Seed-Skripte MÜSSEN `"dotenv/config"` importieren + via `npx tsx` ausgeführt werden:
 ```typescript
 import "dotenv/config"; // IMMER Zeile 1
