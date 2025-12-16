@@ -13,6 +13,7 @@
 - **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
 - **Neue Finder/Actions:** Vor Merge mit Live-DB testen! → **Siehe Regel 8.1.1** für `npx tsx` Test-Pattern
 - Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten, wenn möglich sinnvolle Icons einbauen und antworte in Deutsch
+- **Einfache Sprache:** Erkläre jeden Schritt wie einer guten Freundin – ohne Fachjargon, kurze Sätze, klare Beispiele
 - **Klartext statt Jargon:** Keine unklaren Kürzel wie „QA“, „Smoke-Test“ ohne Erklärung. Beschreibe immer konkret, was getan oder geprüft wird (z. B. „Ich klicke die Karten durch und prüfe, ob Anzeigen/Overlays funktionieren“). Menschenlesbar formulieren.
 - Sollte dir gesagt werden, dass du mehr oder alle phasen programmieren sollst, dann mach das bitte auch direkt statt nach einer Phase aufzuhören, oder auch wenn gesagt wird mach alles direkt, dann plane und implementiere alles in einem Zug!
 
