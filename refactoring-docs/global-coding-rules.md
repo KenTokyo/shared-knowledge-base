@@ -564,3 +564,5 @@ Detaillierter Command: `shared-docs/agents/commands/frontend-verbessern-3.md`
     - **Bevorzugte Lösung:** Optimistic UI Pattern (Rule 1.4) - Daten zurückgeben, lokalen State updaten
     - **Fallback-Mitigationen:** (1) sessionStorage-Persistenz, (2) useRef-basierte State-Guards, (3) Context mit `useCallback`-wrapped Setters
     - **STANDARD:** Implementiere IMMER zuerst Rule 1.4, bevor du auf diese Fallbacks zurückgreifst!
+
+*   **Rule 5.27 (Dashboard Entry Persistence):** Dashboards oder Cards, die als einziger Einstiegspunkt zu verlinkten Inhalten dienen (z. B. Hausaufgaben → Notiz), dürfen completed/archivierte Items nicht kommentarlos ausblenden. Finder müssen Status-Filter (open/completed/all) bereitstellen und die UI muss standardmäßig entweder ein separates Completed-Segment oder einen sofort sichtbaren Toggle anbieten, damit Nutzer erledigte Einträge weiterhin öffnen können. Statuswechsel darf niemals den letzten Link zur Ressource entfernen.

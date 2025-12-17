@@ -1,0 +1,50 @@
+## Ziel
+
+* Du bekommst von mir ein Prompt oder Screenshots einer Seite.
+* Du sollst das Layout **1:1 nachbauen** (inkl. Font-Styling und aller Details).
+
+## Was exakt kopiert werden soll
+
+* Fonts & Typografie (Größen, Gewicht, Letter-Spacing, Line-Height)
+* Farben & Gradients
+* Icons
+* Sektionen & Komponenten
+* Abstände (Padding/Margin), Grid/Layouts
+* Option-Grids, Flags, Badges etc.
+* Allgemeines Look & Feel der Seite
+
+## Vorgehen
+
+1. **Input erhalten**
+
+   * Ich sende dir Screenshots (oder ein Prompt) der bestehenden Seite.
+2. **Schema/Design analysieren**
+
+   * Welche Fonts werden genutzt?
+   * Welche Spacing-Systematik (z. B. 8px Grid)?
+   * Welche wiederverwendbaren Komponenten sind erkennbar?
+   * Welche Layout-Regeln (Breakpoints, Container, Grids)?
+3. **Komponenten-System ableiten**
+
+   * Einheitliche Bausteine erstellen, damit alles konsistent wirkt.
+4. **Thema übernehmen**
+
+   * Danach erkläre ich dir das inhaltliche Thema.
+   * Das Design bleibt gleich, **nur der Content/Theme variiert**.
+5. **Seite komplett aufbauen**
+
+   * Jede Sektion wird umgesetzt, vollständig.
+
+## Anforderungen an Umsetzung
+
+* **Mobile-first / responsive** (mobile-konform)
+* **Sehr moderne Interaktionen**
+* Möglichst **CSS-basiert** (performant), aber trotzdem “high-end” Feeling
+* Insgesamt: **hochmoderne Website** (Look + Motion + UI Details)
+* **Hochwertige Bilder mit Nano Banana generieren falls möglich, falls nicht dann mit nutze öffentliche Bilder von z.B. Unsplash**
+* Komponentenbasiert arbeiten mit React und Typescript, lagere in Komponentne aus so gut es seht!
+
+Wichtig: Die Sprache der Seite sollte komplett auf deutsch sein!
+
+
+So, ich erkläre dir jetzt, worum es in der Seite gehen soll. Und zwar soll es um einen Hundetrainer sein. Genau, für eine Hundetrainer-Seite. Also es sollte nur ausschließlich etwas zu tun haben mit Hundetrainer. Also nix mit Job. Aber das Design und das Layout einfach von der Zielseite übernehmen.
