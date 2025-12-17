@@ -400,6 +400,42 @@ setLoadingHabitId(habitId);
 - **Finders** (`db/finders/`): Alle queries, MUSS `"use server"` haben
 - **Auth:** `getCurrentProfile()` aus `profile-finder` statt auth-Methoden
 
+### 8.1.0 🔴 Database-First Logic (Performance-Kritisch!)
+**Problem:** Client-seitige Filter-/Sortier-/Aggregationslogik verursacht Performance-Probleme bei größeren Datenmengen.
+
+**Lösung - Logik in die Datenbank verlagern:**
+- ✅ **Filter:** `WHERE`-Bedingungen in Queries statt `.filter()` im Client
+- ✅ **Sortierung:** `ORDER BY` in Queries statt `.sort()` im Client
+- ✅ **Aggregation:** `GROUP BY`, `COUNT()`, `SUM()` statt JS-Loops
+- ✅ **Pagination:** `LIMIT/OFFSET` statt alles laden und slicen
+- ✅ **Komplexe JOINs:** Nutze Drizzle-JOINs für zusammenhängende Daten
+
+**Komplexe Queries erlaubt & erwünscht:**
+```typescript
+// ✅ RICHTIG - Komplexe Query mit JOINs, Filter, Sortierung
+const result = await db
+  .select({ ... })
+  .from(entries)
+  .leftJoin(categories, eq(entries.categoryId, categories.id))
+  .where(and(
+    eq(entries.profileId, profileId),
+    gte(entries.date, startDate),
+    isNotNull(entries.value)
+  ))
+  .orderBy(desc(entries.date), asc(entries.priority))
+  .limit(50);
+
+// ❌ FALSCH - Alles laden und im Client filtern
+const all = await db.select().from(entries);
+const filtered = all.filter(e => e.profileId === profileId && e.date >= startDate);
+const sorted = filtered.sort((a, b) => b.date - a.date);
+```
+
+**⚠️ PFLICHT: Live-DB Testing für komplexe Queries!**
+- Jede neue komplexe Query MUSS mit echten Daten getestet werden mit npx tsx
+- Prüfe: Korrekte Ergebnisse, Performance, Edge-Cases (leere Results)
+- Siehe Regel 8.1.1 für Test-Pattern mit `npx tsx`
+
 ### 8.1.1 🔴 Live-DB Testing für Actions & Finders (PFLICHT!)
 **Problem:** Bugs in Actions/Finders (z.B. Timezone-Drift, fehlerhafte JOINs, falsche WHERE-Bedingungen) werden oft erst in der UI entdeckt - zu spät!
 
