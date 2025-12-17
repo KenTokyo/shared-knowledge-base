@@ -42,6 +42,8 @@
 * Möglichst **CSS-basiert** (performant), aber trotzdem “high-end” Feeling
 * Insgesamt: **hochmoderne Website** (Look + Motion + UI Details)
 * **Hochwertige Bilder mit Nano Banana generieren falls möglich, falls nicht dann mit nutze öffentliche Bilder von z.B. Unsplash**
+* Komponentenbasiert arbeiten mit React und Typescript, lagere in Komponentne aus so gut es seht!
+
 Wichtig: Die Sprache der Seite sollte komplett auf deutsch sein!
 
 
