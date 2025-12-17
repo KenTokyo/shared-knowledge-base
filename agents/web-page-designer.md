@@ -44,3 +44,5 @@
 * **Hochwertige Bilder mit Nano Banana generieren falls möglich, falls nicht dann mit nutze öffentliche Bilder von z.B. Unsplash**
 Wichtig: Die Sprache der Seite sollte komplett auf deutsch sein!
 
+
+So, ich erkläre dir jetzt, worum es in der Seite gehen soll. Und zwar soll es um einen Hundetrainer sein. Genau, für eine Hundetrainer-Seite. Also es sollte nur ausschließlich etwas zu tun haben mit Hundetrainer. Also nix mit Job. Aber das Design und das Layout einfach von der Zielseite übernehmen.
