@@ -308,7 +308,8 @@ Dialoge in Layout-kritischen Komponenten (Navbar, Header) über `useEffect + win
 `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht. Fix: `h-[75vh]` oder `isDialog`-Props.
 
 ### 7.5 🔴 will-change Font-Killer
-Niemals `will-change: transform, opacity`! Zerstört Font-Rendering.
+Niemals `will-change: transform, opacity` permanent auf Containern mit Text, die gezoomt werden! Zerstört Font-Rendering (Blur). Nur während aktiver Interaktion (Drag/Pan) setzen.
+Siehe Postmortem: `docs\postmortems\2025-12-19-diagramm-blur-fix.md`
 
 ### 7.6 🔴 Mobile-First Space Efficiency
 UI MUSS Mobile-First designed werden: Maximale Space-Efficiency, Input-Felder nebeneinander in FlexRow wenn möglich, kleinere Abstände.
