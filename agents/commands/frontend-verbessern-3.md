@@ -98,25 +98,6 @@ className="
   text-white/60
   hover:bg-white/10 hover:text-white/80
 "
-```
-
-#### Tab Selection (z.B. "Custom Input" / "Notes" Tabs)
-```tsx
-/* Selected Tab - NIEMALS solid weiß! */
-className="
-  bg-white/10 dark:bg-white/8
-  border border-white/20
-  text-white
-  shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
-"
-
-/* Unselected Tab */
-className="
-  bg-transparent border-transparent
-  text-white/50
-  hover:text-white/70 hover:bg-white/5
-"
-```
 
 #### Ghost/Secondary Buttons (z.B. "Initialize Connection")
 ```tsx
@@ -278,3 +259,6 @@ Die folgenden Screenshots zeigen das Ziel-Design:
 - `shared-docs/liquid-glass-8.png` - Status-Pill mit grünem Glow
 
 **Workflow:** User packt seinen Komponenten-Screenshot + diese Liquid Glass Screenshots in den Chat. Du orientierst dich an den Beispielen und transformierst die Komponente.
+
+
+Nutze default shadcn tabs ohne styling

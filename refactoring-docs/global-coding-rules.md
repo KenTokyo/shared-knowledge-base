@@ -34,7 +34,6 @@ This guide provides comprehensive coding rules for building robust, performant, 
 *   **Rule 1.2.6 (Suspense Integration):** Always wrap components using the `use()` hook pattern in a `<Suspense>` boundary on the server. This provides an instant loading fallback and prevents the UI from being blocked.
 *   **Rule 1.2.7 (Avoid `useEffect` for Initial Data):** Do not use `useEffect` to fetch initial data in Client Components. This pattern is slow, causes rendering waterfalls, and negates the benefits of server-side data fetching.
 *   **Rule 1.2.8 (Distribute Promises with Context):** When multiple Client Components need the same server-fetched data, distribute the promise via a React Context Provider. This prevents redundant data fetches and keeps the code clean (no prop-drilling).
-
 ### 1.3. Data Mutations & State Updates
 
 *   **Rule 1.3.1 (Use Server Actions):** Use Server Actions for all data mutations (e.g., form submissions, updates, deletions). They can be called from both Server and Client Components.
@@ -166,6 +165,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
 ### 2.4. Error Handling
 
 *   **Rule 2.4.1 (Error Boundaries):** Wrap critical component trees in an Error Boundary component. This catches rendering errors in child components, displays a fallback UI, and prevents the entire application from crashing.
+*   **Rule 2.4.2 (Process Error Logging):** Fehler in manuellen KI‑Prozessen müssen immer als Log‑Eintrag mit Detail‑Text sichtbar sein (inkl. kurzer Hinweis wie „API‑Key prüfen“). Keine „stummen“ Fehler‑States ohne Log.
 
 ### 2.5. Component Styling
 
@@ -566,3 +566,5 @@ Detaillierter Command: `shared-docs/agents/commands/frontend-verbessern-3.md`
     - **STANDARD:** Implementiere IMMER zuerst Rule 1.4, bevor du auf diese Fallbacks zurückgreifst!
 
 *   **Rule 5.27 (Dashboard Entry Persistence):** Dashboards oder Cards, die als einziger Einstiegspunkt zu verlinkten Inhalten dienen (z. B. Hausaufgaben → Notiz), dürfen completed/archivierte Items nicht kommentarlos ausblenden. Finder müssen Status-Filter (open/completed/all) bereitstellen und die UI muss standardmäßig entweder ein separates Completed-Segment oder einen sofort sichtbaren Toggle anbieten, damit Nutzer erledigte Einträge weiterhin öffnen können. Statuswechsel darf niemals den letzten Link zur Ressource entfernen.
+
+*   **Rule 5.28 (Unique Default Names in UI):** Wenn ein Dialog einen auto‑generierten Standard‑Namen (z. B. `Notiz‑Diagramm`) anzeigt, muss der Client **vor dem Erstellen** den nächsten freien Namen berechnen und anzeigen. So sieht der User den finalen Titel und es entstehen keine doppelten Standard‑Namen.
