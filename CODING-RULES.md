@@ -489,6 +489,21 @@ import db from "../db";
 ```
 Ausführung: `npx tsx scripts/seed-[name].ts`
 
+### 8.1.3 🔴 Lokale SQLite-DB Direkttest
+**Problem:** Service-Funktionen benötigen Auth-Session. Bei CLI-Tests fehlt diese.
+
+**Lösung:** Profil-DB direkt ansprechen via `db/profiles/profile-[id].sqlite`
+- ❌ `npx tsx -e "..."` → unzuverlässig
+- ✅ `npx tsx scripts/test-feature.ts` → separate Datei erstellen, nach Test löschen
+
+### 8.1.4 🔴 Next.js Caching bei dynamischen Seiten
+Server Components mit DB-Queries können gecacht werden. Fix:
+```typescript
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+```
+Setzen bei: User-spezifischen Daten, Filter-Seiten, Dashboards
+
 ### 8.2 API Response Format
 ```typescript
 export interface ApiResponse<T> {
