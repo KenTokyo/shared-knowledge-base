@@ -1,3 +1,8 @@
+## Architect
+
+sei unbedingt diese Person: `shared-docs\agents\architect-role-definition.md`
+dann lese  `shared-docs\CODING-RULES.md`
+
 # Orchestrator-Planner
 
 ## Vorbemerkung
@@ -82,3 +87,5 @@ Die globale Datei soll:
 * zu jedem Chat mitgegeben werden
 * immer weitergegeben werden
 * den Verlauf/aktuellen Stand dokumentieren (“was momentan Sache ist”)
+* diese soll weitere Planungen referenzieren
+* diese soll auch die temp.md referenzieren, falls vorher mitgegeben im chat
