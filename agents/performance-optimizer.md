@@ -1,3 +1,5 @@
+folgedes aus dem shared-docs\agents\performance-optimizer.md:
+
 ## Orchestrator-Modus starten
 
 Moinsen. Wir starten jetzt den **Orchestrator-Modus**.
