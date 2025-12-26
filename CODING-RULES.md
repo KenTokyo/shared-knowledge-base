@@ -595,11 +595,53 @@ HTML `<input type="number">` darf NIEMALS `value={0}` bei ungültigem 0:
 
 ---
 
+## 12. 📱 Mobile/Capacitor Performance-Regeln
+
+### 12.1 🔴 KRITISCH: CSS-Effekte die Performance killen
+
+Diese CSS-Eigenschaften verursachen **massive Performance-Probleme** auf Android WebView und müssen in `capacitor.css` deaktiviert/optimiert werden:
+
+| Eigenschaft | Problem | Lösung |
+|-------------|---------|--------|
+| `backdrop-filter: blur()` | 🔴 GPU-Killer, 60fps→15fps | Deaktivieren auf Mobile |
+| `mix-blend-multiply` | 🔴 Compositing-Overhead | Verstecken mit `display: none` |
+| `filter: blur(90px+)` | 🟡 Akzeptabel wenn reduziert | Auf 40-50px reduzieren |
+| Große `box-shadow` | 🟡 Mehrere Shadows = Overhead | Vereinfachen |
+| `animate-in/out` | 🟡 Dialog-Animationen | Deaktivieren auf Mobile |
+
+### 12.2 🔴 Light-Mode Blobs MÜSSEN versteckt werden
+
+Elemente mit `dark:opacity-0` und `mix-blend-multiply` sind **nur für Light Mode** gedacht. Auf Mobile (Dark Mode) **MÜSSEN** sie versteckt werden:
+
+```tsx
+// ✅ RICHTIG: light-mode-blob Klasse hinzufügen
+<div className="... dark:opacity-0 mix-blend-multiply light-mode-blob" />
+
+// In capacitor.css wird diese Klasse dann versteckt:
+// body.capacitor .light-mode-blob { display: none !important; }
+```
+
+### 12.3 ✅ Glow-Effekte korrekt implementieren
+
+Punkt-Glows für Dark Mode mit Custom-Klassen:
+
+```tsx
+// Dark Mode Glow mit glow-blob-* Klasse für Mobile-Optimierung
+<div className="blur-[75px] rounded-full glow-blob-cardio" />
+
+// In capacitor.css: Blur auf Mobile reduzieren
+// body.capacitor .glow-blob-cardio { filter: blur(50px) !important; }
+```
+
+---
+
 ## ✅ Quick Checklist
 
 Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, Suspense boundaries, Static UI außerhalb Suspense, max 700 lines/file.
 
 **⚡ Bei CRUD in Dialogen/Modals:** Optimistic UI Pattern! KEIN `revalidateTag()` → Daten zurückgeben → lokaler State Update → INSTANT UI.
+
+**📱 Bei Glassmorphism/Glows:** Light-Mode Blobs mit `light-mode-blob` Klasse markieren! Keine großen `backdrop-blur` auf Mobile!
 
 ---
 
