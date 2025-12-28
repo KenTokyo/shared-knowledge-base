@@ -153,6 +153,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
     *   Wrap function definitions passed as props to memoized child components in `useCallback`.
     *   Wrap components in `React.memo` to prevent them from re-rendering if their props have not changed.
 *   **Rule 2.2.2 (UI Blocking):** Avoid running expensive, blocking computations directly in the render body. Offload them using `useMemo` or, for very heavy tasks, consider moving them to a web worker.
+*   **Rule 2.2.3 (Capacitor WebView Animation Guard):** In Capacitor/Android WebView, avoid reveal animations that combine `transform`, `opacity`, or `filter` on large card grids. Bypass `ScrollReveal`/page fade wrappers when `isCapacitorEnvironment()` or `body.capacitor` is present to prevent render artifacts (missing icons/ghosting).
 
 ### 2.3. Effects & Lifecycle
 
