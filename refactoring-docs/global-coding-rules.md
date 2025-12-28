@@ -163,6 +163,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
     *   Omitting the array causes the effect to run on *every single render*.
 *   **Rule 2.3.3 (Avoid Unnecessary Effects):** Do not use `useEffect` for logic that can be derived directly from props or state during rendering. Also, avoid it for actions that can be handled directly within event handlers.
 *   **Rule 2.3.4 (Stable Effect Callbacks):** Wenn ein `useEffect` einen Callback aus Props nutzt (z.B. `onSelectedTopicsChange`), muss der Callback stabil sein (`useCallback`) oder der Effekt braucht Guard-Checks. Sonst entstehen Render-Loops (z.B. Radix `setRef`).
+*   **Rule 2.3.5 (Autoprocess User-Gate):** Auto-Detektoren dürfen nur nach echter User-Interaktion feuern; Content-Hydration oder programmatic Updates müssen geblockt werden, damit keine KI-Calls ohne User-Aktion starten.
 
 ### 2.4. Error Handling
 
