@@ -90,3 +90,5 @@ Die globale Datei soll:
 * den Verlauf/aktuellen Stand dokumentieren (“was momentan Sache ist”)
 * diese soll weitere Planungen referenzieren
 * diese soll auch die temp.md referenzieren, falls vorher mitgegeben im chat
+
+Alle Planungen sollten das Keyword "ULTRATHINK" beinhalten, damit CLAUDE auf diesen modus umschaltet
