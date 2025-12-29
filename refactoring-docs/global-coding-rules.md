@@ -173,6 +173,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
 ### 2.5. Component Styling
 
 *   **Rule 2.5.1 (Responsive Child Components):** When resizing a parent container component, always verify that all child components, especially those with their own complex layout or fixed dimensions, scale or respond as expected. Apply flexible layout properties (e.g., `flex-grow`, `h-full`, `w-full`) to child components where necessary to ensure they utilize the newly available space.
+*   **Rule 2.5.2 (Empty-State Centering in Sidebar Layouts):** Empty-States in Views mit Sidebars müssen die gleiche Content-Breiten-Logik wie der Editor verwenden (z. B. `contentMaxWidth`, `--app-sidebar-width`, `--notes-sidebar-width`) und innerhalb dieser Breite zentriert werden. Nicht relativ zum gesamten Viewport zentrieren, wenn Sidebars sichtbar sind.
  
 ---
 
