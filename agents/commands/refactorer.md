@@ -1,8 +1,4 @@
-⚠️ **EXTREM WICHTIG**:  
-## 📖 Immer lesen
-shared-docs\agents\refactor-rex-role-defintion.md
-shared-docs\agents\global-rule-agent.md 
-shared-docs\refactoring-docs\global-coding-rules.md
 
-Falls keine Refactoring-Planung vorhanden: erzeuge dann planung nach shared-docs\agents\planungs-regeln.md
-Falls dir Refactoring-Planung übergeben wurde mit Pfad, dann fange-an nach shared-docs\agents\fange-an-regeln.md
+Du schaust in der app\notes\page.tsx dessen Komponenten alle durch
+einfach nur nach und schaust dir die Dateien an und schaust, ob es irgendwelche Dateien in der app\notes\page.tsx
+gibt, die quasi refaktorisiert werden müssen. Was meine ich mit refaktorisiert? Wir reden von unter 700 oder 800 Zeilen Code pro Datei. Wenn eine Datei über 1200 Zeilen hat, dann schreibst du mir das und du erzeugst mir aber auch einen Refaktorisierungsplan, wo du sagst, in welchen Komponenten du das aufteilen möchtest. Versuch das maximal in drei, vier, fünf Komponenten, je nachdem wie viel Code das beinhaltet, aufzuteilen. Und eine Planung erzeugen. Die Funktion muss natürlich gleich bleiben, also du musst dir das eventuell in der Temp-Datei aufschreiben, was du vorhast, oder in der Planung natürlich. Aber so direkt dann alles auf einmal umsetzen, weil sonst verlierst du den Kontext, wie die Datei vorher aussah. Das muss alles in einem Chat-Fenster gemacht werden.
