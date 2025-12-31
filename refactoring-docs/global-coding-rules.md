@@ -1,4 +1,4 @@
-# Global Coding Rules
+﻿# Global Coding Rules
 
 This guide provides comprehensive coding rules for building robust, performant, and maintainable applications. It covers Next.js App Router, React best practices, and our custom design patterns.
 
@@ -572,3 +572,4 @@ Detaillierter Command: `shared-docs/agents/commands/frontend-verbessern-3.md`
 *   **Rule 5.27 (Dashboard Entry Persistence):** Dashboards oder Cards, die als einziger Einstiegspunkt zu verlinkten Inhalten dienen (z. B. Hausaufgaben → Notiz), dürfen completed/archivierte Items nicht kommentarlos ausblenden. Finder müssen Status-Filter (open/completed/all) bereitstellen und die UI muss standardmäßig entweder ein separates Completed-Segment oder einen sofort sichtbaren Toggle anbieten, damit Nutzer erledigte Einträge weiterhin öffnen können. Statuswechsel darf niemals den letzten Link zur Ressource entfernen.
 
 *   **Rule 5.28 (Unique Default Names in UI):** Wenn ein Dialog einen auto‑generierten Standard‑Namen (z. B. `Notiz‑Diagramm`) anzeigt, muss der Client **vor dem Erstellen** den nächsten freien Namen berechnen und anzeigen. So sieht der User den finalen Titel und es entstehen keine doppelten Standard‑Namen.
+*   **Rule 5.29 (Single Source of Truth für Link‑Tabellen):** Wenn eine Link‑Tabelle existiert (z. B. `notesToInks`), müssen **alle Reads/Writes** darüber laufen. Legacy‑FK‑Felder (z. B. `noteId`) dürfen nur als **Fallback** gelesen werden und müssen anschließend **verlinkt/migriert** werden. **Keine parallelen Schreibpfade**.
