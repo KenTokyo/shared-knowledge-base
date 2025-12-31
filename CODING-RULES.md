@@ -597,29 +597,47 @@ HTML `<input type="number">` darf NIEMALS `value={0}` bei ungültigem 0:
 
 ## 12. 📱 Mobile/Capacitor Performance-Regeln
 
-### 12.1 🔴 KRITISCH: CSS-Effekte die Performance killen
+### 12.1 🔴 KRITISCH: backdrop-filter ist VERBOTEN!
 
-Diese CSS-Eigenschaften verursachen **massive Performance-Probleme** auf Android WebView und müssen in `capacitor.css` deaktiviert/optimiert werden:
+**`backdrop-filter: blur()` ist der #1 Performance-Killer auf Mobile UND kann Desktop verlangsamen!**
 
-| Eigenschaft | Problem | Lösung |
-|-------------|---------|--------|
-| `backdrop-filter: blur()` | 🔴 GPU-Killer, 60fps→15fps | Deaktivieren auf Mobile |
-| `mix-blend-multiply` | 🔴 Compositing-Overhead | Verstecken mit `display: none` |
-| `filter: blur(90px+)` | 🟡 Akzeptabel wenn reduziert | Auf 40-50px reduzieren |
-| Große `box-shadow` | 🟡 Mehrere Shadows = Overhead | Vereinfachen |
-| `animate-in/out` | 🟡 Dialog-Animationen | Deaktivieren auf Mobile |
+```
+❌ NIEMALS verwenden:
+- backdrop-blur-sm, backdrop-blur-md, backdrop-blur-xl, backdrop-blur-2xl, backdrop-blur-3xl
+- backdrop-filter: blur(Xpx)
 
-### 12.2 🔴 Light-Mode Blobs MÜSSEN versteckt werden
+✅ STATTDESSEN: Erhöhte Opacity für Glass-Effekte
+- bg-card/90 bis bg-card/95 (statt backdrop-blur)
+- bg-black/80 bis bg-black/90 (für dunkle Overlays)
+- bg-[#030303] (für tiefschwarze Karten)
+```
 
-Elemente mit `dark:opacity-0` und `mix-blend-multiply` sind **nur für Light Mode** gedacht. Auf Mobile (Dark Mode) **MÜSSEN** sie versteckt werden:
+**Wichtige Unterscheidung:**
+| Eigenschaft | Performance | Verwendung |
+|-------------|-------------|------------|
+| `backdrop-filter: blur()` | 🔴 **VERBOTEN** - GPU-Killer | Niemals verwenden! |
+| `filter: blur(50px)` | 🟢 **OK** | Für Punkt-Glows erlaubt |
+
+**Warum?** `backdrop-filter` muss jeden Frame ALLES dahinter neu berechnen. `filter: blur()` auf einem Element ist einmalig und gecacht.
+
+### 12.2 🔴 Light-Mode Blobs: dark:hidden statt dark:opacity-0
+
+**Problem:** `dark:opacity-0` funktioniert nicht zuverlässig auf Android WebView und kann "Ghost-Blobs" hinterlassen!
+
+**Lösung:** Elemente mit `mix-blend-multiply` (nur für Light Mode) MÜSSEN mit `dark:hidden` versteckt werden:
 
 ```tsx
-// ✅ RICHTIG: light-mode-blob Klasse hinzufügen
-<div className="... dark:opacity-0 mix-blend-multiply light-mode-blob" />
+// ❌ FALSCH - kann Ghost-Blobs auf Android hinterlassen:
+<div className="... dark:opacity-0 mix-blend-multiply ..." />
 
-// In capacitor.css wird diese Klasse dann versteckt:
-// body.capacitor .light-mode-blob { display: none !important; }
+// ✅ RICHTIG - Element wird komplett aus dem Rendering entfernt:
+<div className="... dark:hidden mix-blend-multiply ..." />
 ```
+
+**Warum `dark:hidden` statt `dark:opacity-0`?**
+- `opacity-0` → Element bleibt im DOM, kann visuell "durchscheinen"
+- `hidden` → Element wird komplett aus dem Rendering entfernt
+- Zuverlässiger auf allen Plattformen (besonders Android WebView)
 
 ### 12.3 ✅ Glow-Effekte korrekt implementieren
 
@@ -641,7 +659,10 @@ Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Ca
 
 **⚡ Bei CRUD in Dialogen/Modals:** Optimistic UI Pattern! KEIN `revalidateTag()` → Daten zurückgeben → lokaler State Update → INSTANT UI.
 
-**📱 Bei Glassmorphism/Glows:** Light-Mode Blobs mit `light-mode-blob` Klasse markieren! Keine großen `backdrop-blur` auf Mobile!
+**📱 Performance-Kritisch:**
+- ❌ Kein `backdrop-blur-*` verwenden (GPU-Killer!) → `bg-card/90` stattdessen
+- ❌ Kein `dark:opacity-0` für Light-Mode Blobs → `dark:hidden` verwenden
+- ✅ `filter: blur(50px)` für Punkt-Glows ist OK
 
 ---
 
