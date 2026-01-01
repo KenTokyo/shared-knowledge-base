@@ -652,6 +652,77 @@ Punkt-Glows für Dark Mode mit Custom-Klassen:
 // body.capacitor .glow-blob-cardio { filter: blur(50px) !important; }
 ```
 
+### 12.4 🚨 KRITISCH: Rendering-Artefakte auf Capacitor (Ghost-Blobs Fix)
+
+**Problem:** Wenn `backdrop-filter: none` global auf Capacitor angewendet wird, können bestimmte CSS-Eigenschaften **Rendering-Artefakte** ("Ghost-Blobs", "Light-Blobs") verursachen. Diese erscheinen als zufällige farbige Rechtecke/Kreise, die nicht verschwinden.
+
+**Ursache:** Android WebView hat Probleme mit komplexen Layer-Berechnungen, besonders wenn:
+- `mix-blend-mode` verwendet wird
+- Große `blur()` Werte auf Pseudo-Layern (`absolute` positioned divs) angewendet werden
+- Transparente Overlays mit Gradienten existieren
+- `opacity: 0` Layer im DOM bleiben (statt entfernt zu werden)
+
+#### ❌ VERBOTEN auf Cards/Sections (verursacht Ghost-Blobs):
+
+| CSS-Eigenschaft | Beispiel | Problem |
+|-----------------|----------|---------|
+| `mix-blend-multiply` | `mix-blend-multiply` auf Blur-Divs | WebView cached Layer falsch |
+| Große Blur-Blobs | `blur-[90px]`, `blur-[75px]` auf `absolute` Divs | Repaint-Artefakte |
+| Light-Mode Gradient Overlays | `bg-gradient-to-br from-white/40` als Overlay | Transparenz-Bugs |
+| Icon-Glows | `shadow-[0_0_12px_rgba(...)]` | Icon-Rendering-Fehler |
+| Hover-Glows | `hover:shadow-[0_0_20px_rgba(...)]` | Flackern bei Touch |
+| Dark-Mode Glow-Layer | Große `blur-[60px+]` Divs mit `dark:opacity-100` | Ghost-Layer bleiben sichtbar |
+
+#### ✅ ERLAUBT (performant und sicher):
+
+| CSS-Eigenschaft | Beispiel | Warum OK |
+|-----------------|----------|----------|
+| Solide Hintergründe | `bg-[#f8f8f8]`, `bg-[#030303]` | Keine Transparenz-Berechnung |
+| Texture-Patterns | `texture="grain"`, `texture="grid"` | Einfache CSS-Patterns |
+| Normale Shadows | `shadow-lg`, `shadow-xl` | Standard-Box-Shadows |
+| Farbige Borders | `border-amber-500/20` | Keine Blur-Berechnung |
+| Farbige Backgrounds | `bg-indigo-500/10` | Einfache Farb-Overlays |
+
+#### 🔧 FIX-Prompt bei Ghost-Blob-Problemen:
+
+Wenn Rendering-Artefakte auf Capacitor auftreten, entferne folgende Elemente aus der betroffenen Komponente:
+
+```tsx
+// ❌ ENTFERNEN - Diese Elemente verursachen Ghost-Blobs:
+
+// 1. Light-Mode Gradient Overlays
+<div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent ..." />
+
+// 2. Große Blur-Blobs (Light Mode)
+<div className="absolute ... blur-[90px] ... mix-blend-multiply light-mode-blob" />
+
+// 3. Dark-Mode Glow-Layer
+<div className="absolute ... blur-[75px] ... dark:opacity-100 glow-effect-layer">
+  <div className="blur-[80px] ..." />
+</div>
+
+// 4. Dark-Mode Overlay
+<div className="absolute inset-0 dark:bg-black/60 ..." />
+
+// ❌ ENTFERNEN bei Icons - Icon-Glows:
+shadow-[0_0_12px_rgba(...)]
+shadow-[0_0_15px_rgba(...)]
+hover:shadow-[0_0_20px_rgba(...)]
+```
+
+#### ✅ Ersetzen durch:
+
+```tsx
+// Verwende solide Hintergründe statt transparente:
+className="bg-[#f8f8f8] dark:bg-[#030303]"  // statt bg-white/95
+
+// Icons ohne Glow:
+className="bg-amber-500/10 text-amber-400 border border-amber-500/20"
+// statt: shadow-[0_0_12px_rgba(251,191,36,0.3)]
+```
+
+**Fazit:** Sobald `backdrop-filter: none` auf Capacitor aktiv ist, müssen ALLE dekorativen Blur-Layer und Glow-Effekte entfernt werden, um stabile Rendering zu gewährleisten.
+
 ---
 
 ## ✅ Quick Checklist
@@ -662,9 +733,10 @@ Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Ca
 
 **📱 Performance-Kritisch:**
 - ❌ `backdrop-blur-*` ist auf Mobile automatisch deaktiviert (capacitor.css)
-- ✅ `dark:opacity-0` für Light-Mode Blobs ist OK
-- ✅ `filter: blur(50px)` für Punkt-Glows ist OK
+- ❌ **Ghost-Blobs?** → Entferne: `blur-[90px]`, `mix-blend-multiply`, Icon-Glows `shadow-[0_0_Xpx]`, Gradient-Overlays (siehe Regel 12.4)
+- ✅ Solide Hintergründe: `bg-[#f8f8f8]` statt `bg-white/95`
+- ✅ `texture="grain"` und `texture="grid"` sind performant
 
 ---
 
-**🔗 Weiterführende Docs:** `shared-docs/performance/`, `shared-docs/design/`, `shared-docs/postmortem/`, `shared-docs/ux/`
+**🔗 Weiterführende Docs:** `shared-docs/performance/`, `shared-docs/design/`, `docs/mobile/postmortem/`
