@@ -620,24 +620,25 @@ HTML `<input type="number">` darf NIEMALS `value={0}` bei ungültigem 0:
 
 **Warum?** `backdrop-filter` muss jeden Frame ALLES dahinter neu berechnen. `filter: blur()` auf einem Element ist einmalig und gecacht.
 
-### 12.2 🔴 Light-Mode Blobs: dark:hidden statt dark:opacity-0
+### 12.2 🟢 Globale Capacitor-Lösung für backdrop-blur
 
-**Problem:** `dark:opacity-0` funktioniert nicht zuverlässig auf Android WebView und kann "Ghost-Blobs" hinterlassen!
+**backdrop-filter wird NUR auf Capacitor/Mobile global deaktiviert** via `capacitor.css`:
 
-**Lösung:** Elemente mit `mix-blend-multiply` (nur für Light Mode) MÜSSEN mit `dark:hidden` versteckt werden:
-
-```tsx
-// ❌ FALSCH - kann Ghost-Blobs auf Android hinterlassen:
-<div className="... dark:opacity-0 mix-blend-multiply ..." />
-
-// ✅ RICHTIG - Element wird komplett aus dem Rendering entfernt:
-<div className="... dark:hidden mix-blend-multiply ..." />
+```css
+/* In capacitor.css - deaktiviert ALLE backdrop-blur Klassen auf Mobile */
+body.capacitor [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
 ```
 
-**Warum `dark:hidden` statt `dark:opacity-0`?**
-- `opacity-0` → Element bleibt im DOM, kann visuell "durchscheinen"
-- `hidden` → Element wird komplett aus dem Rendering entfernt
-- Zuverlässiger auf allen Plattformen (besonders Android WebView)
+**Vorteile:**
+- ✅ Desktop behält weiche Blur-Effekte
+- ✅ Mobile hat keine Performance-Probleme
+- ✅ Keine Änderungen in einzelnen Komponenten nötig
+- ✅ Zentrale Stelle für Mobile-Performance-Optimierungen
+
+**Light-Mode Blobs:** `dark:opacity-0` ist OK - funktioniert jetzt korrekt, da backdrop-filter auf Mobile deaktiviert ist.
 
 ### 12.3 ✅ Glow-Effekte korrekt implementieren
 
@@ -660,8 +661,8 @@ Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Ca
 **⚡ Bei CRUD in Dialogen/Modals:** Optimistic UI Pattern! KEIN `revalidateTag()` → Daten zurückgeben → lokaler State Update → INSTANT UI.
 
 **📱 Performance-Kritisch:**
-- ❌ Kein `backdrop-blur-*` verwenden (GPU-Killer!) → `bg-card/90` stattdessen
-- ❌ Kein `dark:opacity-0` für Light-Mode Blobs → `dark:hidden` verwenden
+- ❌ `backdrop-blur-*` ist auf Mobile automatisch deaktiviert (capacitor.css)
+- ✅ `dark:opacity-0` für Light-Mode Blobs ist OK
 - ✅ `filter: blur(50px)` für Punkt-Glows ist OK
 
 ---
