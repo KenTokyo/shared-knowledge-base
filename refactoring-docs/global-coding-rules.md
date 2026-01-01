@@ -154,6 +154,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
     *   Wrap components in `React.memo` to prevent them from re-rendering if their props have not changed.
 *   **Rule 2.2.2 (UI Blocking):** Avoid running expensive, blocking computations directly in the render body. Offload them using `useMemo` or, for very heavy tasks, consider moving them to a web worker.
 *   **Rule 2.2.3 (Capacitor WebView Animation Guard):** In Capacitor/Android WebView, avoid reveal animations that combine `transform`, `opacity`, or `filter` on large card grids. Bypass `ScrollReveal`/page fade wrappers when `isCapacitorEnvironment()` or `body.capacitor` is present to prevent render artifacts (missing icons/ghosting).
+*   **Rule 2.2.4 (Shape Recognition Gating):** Polygon-Erkennung muss scharfe Ecken, Kanten-Geradheit und zusätzliche Ecken prüfen sowie hohe Zirkularität blocken, sonst entstehen Triangle-False-Positives bei Kreis/Quadrat.
 
 ### 2.3. Effects & Lifecycle
 
@@ -164,6 +165,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
 *   **Rule 2.3.3 (Avoid Unnecessary Effects):** Do not use `useEffect` for logic that can be derived directly from props or state during rendering. Also, avoid it for actions that can be handled directly within event handlers.
 *   **Rule 2.3.4 (Stable Effect Callbacks):** Wenn ein `useEffect` einen Callback aus Props nutzt (z.B. `onSelectedTopicsChange`), muss der Callback stabil sein (`useCallback`) oder der Effekt braucht Guard-Checks. Sonst entstehen Render-Loops (z.B. Radix `setRef`).
 *   **Rule 2.3.5 (Autoprocess User-Gate):** Auto-Detektoren dürfen nur nach echter User-Interaktion feuern; Content-Hydration oder programmatic Updates müssen geblockt werden, damit keine KI-Calls ohne User-Aktion starten.
+*   **Rule 2.3.6 (Hold/Long-Press Ticking):** Zeitbasierte Gesten (Hold/Long-Press) dürfen nicht nur von `pointermove` abhängen. Starte einen RAF/Timer-Tick während `pointerdown`, stoppe ihn bei `pointerup/cancel`, und flush batched Punkte vor der Erkennung.
 
 ### 2.4. Error Handling
 
