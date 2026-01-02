@@ -13,6 +13,11 @@ This guide provides comprehensive coding rules for building robust, performant, 
 - 🎯 **Reason:** This project prioritizes rapid development and type safety over test coverage
 - Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten, wenn möglich sinnvolle Icons einbauen und antworte in Deutsch
 
+**Rule 0.2 (Global-Only Rules):**
+- ✅ **NUR** universell gültige Regeln hier aufnehmen
+- ✅ Projekt-/Feature-spezifische Heuristiken und Bugs gehören in `docs/[feature]/...`
+- ❌ Keine Canvas-, Diagramm- oder Feature-Detailregeln in den Global Rules
+
 ---
 ## 1. 🚀 Next.js App Router Rules
 
@@ -154,7 +159,7 @@ This guide provides comprehensive coding rules for building robust, performant, 
     *   Wrap components in `React.memo` to prevent them from re-rendering if their props have not changed.
 *   **Rule 2.2.2 (UI Blocking):** Avoid running expensive, blocking computations directly in the render body. Offload them using `useMemo` or, for very heavy tasks, consider moving them to a web worker.
 *   **Rule 2.2.3 (Capacitor WebView Animation Guard):** In Capacitor/Android WebView, avoid reveal animations that combine `transform`, `opacity`, or `filter` on large card grids. Bypass `ScrollReveal`/page fade wrappers when `isCapacitorEnvironment()` or `body.capacitor` is present to prevent render artifacts (missing icons/ghosting).
-*   **Rule 2.2.4 (Shape Recognition Gating):** Polygon-Erkennung muss scharfe Ecken, Kanten-Geradheit und zusätzliche Ecken prüfen sowie hohe Zirkularität blocken, sonst entstehen Triangle-False-Positives bei Kreis/Quadrat.
+*   **Rule 2.2.4 (Triangle Confidence Floor):** Triangle-Erkennung darf eine eigene Mindest-Confidence nutzen und Angle/Edge-Score kombinieren, damit echte Dreiecke nicht am globalen Threshold scheitern.
 
 ### 2.3. Effects & Lifecycle
 
