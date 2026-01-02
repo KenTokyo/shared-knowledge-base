@@ -11,11 +11,10 @@
 - **Größere Aufgaben:** Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md` erstellen
 - **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components mit `Grep` suchen
 - **Testing:** Nur `npx tsc --noEmit` verwenden (❌ kein `npm run dev/build`)
-- **Neue Finder/Actions:** Vor Merge mit Live-DB testen! → **Siehe Regel 8.1.1** für `npx tsx` Test-Pattern
-- Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten, wenn möglich sinnvolle Icons einbauen und antworte in Deutsch
+- **Neue Finder/Actions:** Vor Merge mit Live-DB testen! → **Siehe `shared-docs/database-testing-guide.md`**
+- Sei immer hochmotiviert, liefere schön formatierte motivierende Antworten mit Icons in Deutsch
 - **Einfache Sprache:** Erkläre jeden Schritt wie einer guten Freundin – ohne Fachjargon, kurze Sätze, klare Beispiele
-- **Klartext statt Jargon:** Keine unklaren Kürzel wie „QA“, „Smoke-Test“ ohne Erklärung. Beschreibe immer konkret, was getan oder geprüft wird (z. B. „Ich klicke die Karten durch und prüfe, ob Anzeigen/Overlays funktionieren“). Menschenlesbar formulieren.
-- Sollte dir gesagt werden, dass du mehr oder alle phasen programmieren sollst, dann mach das bitte auch direkt statt nach einer Phase aufzuhören, oder auch wenn gesagt wird mach alles direkt, dann plane und implementiere alles in einem Zug!
+- Sollte dir gesagt werden, dass du mehr oder alle Phasen programmieren sollst, dann mach das bitte auch direkt!
 
 ### 1.2 🚨 Planungs-Regel: Kein Code in Planungsdokumenten
 **KRITISCH:** Planungsdokumente dürfen NIEMALS vollständigen Code enthalten!
@@ -24,10 +23,10 @@
 - **Ziel:** Max 500-800 Zeilen pro Plan (WAS und WARUM, nicht WIE im Detail)
 
 ### 1.3 Kritisches Denken (Edge Cases)
-Proaktiv denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, Concurrent Access, Browser/Device-Unterschiede, Security, UX-Issues.
+Proaktiv denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, Concurrent Access, Browser/Device-Unterschiede.
 
 ### 1.4 Nach Abschluss
-- **Plan aktualisieren:** Phase als ✅ markieren, kurz dokumentieren (was/warum, Edge-Cases)
+- **Plan aktualisieren:** Phase als ✅ markieren, kurz dokumentieren
 - **Dokumentation erweitern:** `docs/[feature]/[feature]-overview.md` bei großen Änderungen
 - **Motivierende Zusammenfassung:** Icons, exakte Dateipfade, abgeschlossene Phase nennen
 
@@ -37,35 +36,24 @@ Proaktiv denken: Extrem-Fälle, falsches User-Verhalten, Performance-Probleme, C
 
 ### 2.1 🚨 Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!**
+- ❌ `const NestedComponent = () => <div>Bad</div>` innerhalb Parent-Component
+- **Warum?** Performance-Killer (jedes Render neu erstellt) + State-Verlust
+- ✅ Jede Komponente in separater Datei
 
-❌ **VERBOTEN:** `const NestedComponent = () => <div>Bad</div>` innerhalb Parent-Component
+### 2.2 Component Organization
+**Maximal 700 Zeilen Code pro Datei** - Auslagern in Unterkomponenten/helpers/services wenn größer
 
-**Warum?** Performance-Killer (jedes Render neu erstellt) + State-Verlust + Unmöglich zu testen
-
-✅ **RICHTIG:** Jede Komponente in separater Datei
-
-### 2.2 Component Organization (Section-Based)
-**Maximal 700 Zeilen Code pro Datei** - Teile/Auslagern in unterkomponenten in (Ordnern)/in helpers/services/compontens wenn größer
-
-✅ **Section-Based Structure:**
 ```
 app/feature/[param]/
 ├── (mainSection)/
 │   ├── (subSection)/
-│   │   ├── AktionButton.tsx
-│   │   └── KonfigPanel.tsx
-│   └── MainSection.tsx          ← Section orchestrator
+│   │   └── AktionButton.tsx
+│   └── MainSection.tsx
 └── page.tsx
 ```
 
-❌ **Anti-Pattern:** Flat "components" Junk Drawer (keine Struktur, nicht skalierbar)
-
 ### 2.3 Component Naming Convention
-**Button-Text = File-Name:** "Speichern" button → `SpeichernButton.tsx`
-
-**Component Types:** `Section.tsx` (orchestrates), `Panel.tsx` (input/config), `Dialog.tsx` (modal), `Button.tsx` (trigger), `Card.tsx` (reusable block), `Item.tsx` (list element)
-
-**Sprach-Konvention:**
+- **Button-Text = File-Name:** "Speichern" button → `SpeichernButton.tsx`
 - 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
 - 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
@@ -77,81 +65,47 @@ app/feature/[param]/
 - **Default:** Server Components (kein `"use client"`)
 - **"use client" nur für:** `useState`, `useEffect`, event listeners, browser APIs
 - **Platzierung:** An der "leaf" des Component Tree, nicht in Root Layouts
-- **Pattern:** Server Components als `children` an Client Components übergeben
 
 ### 3.2 Data Fetching
-- ✅ **DO:** Direct fetching in Server Components mit `async/await`
-- ✅ **DO:** Parallel fetching mit `Promise.all` (verhindert waterfalls)
-- ✅ **DO:** `use()` Hook Pattern für Client Components + Suspense
-- ❌ **DON'T:** `useEffect` für initial data fetching (slow, waterfalls)
-- ❌ **DON'T:** Unnecessary API routes für simple data retrieval
-
-**Best Practice - `use()` Hook Pattern:**
-Server Component fetcht Daten als Promise (nicht awaiten!), Client Component resolved mit `use(dataPromise)`.
+- ✅ Direct fetching in Server Components mit `async/await`
+- ✅ Parallel fetching mit `Promise.all` (verhindert waterfalls)
+- ✅ `use()` Hook Pattern für Client Components + Suspense
+- ❌ `useEffect` für initial data fetching
 
 ### 3.3 Data Mutations
-- **Server Actions:** Alle Mutations (forms, updates, deletions)
-- **UI Updates:** `revalidatePath('/')` oder `revalidateTag('tag')` nur bei geeigneten Fällen
+- **Server Actions:** Alle Mutations, MUSS `"use server"` haben
 - **Security:** ⚠️ IMMER User-Input validieren + Session mit `getCurrentProfile()` prüfen
 
-### 3.4 🚨 Optimistic UI Pattern (MANDATORY für Dialog/Modal-Mutations)
+### 3.4 🚨 Optimistic UI Pattern (MANDATORY für Dialoge/Modals)
 
-> **⚡ STANDARD-REGEL für alle CRUD-Operationen (Create, Update, Delete) in modalen Kontexten!**
+> **⚡ STANDARD für alle CRUD-Operationen in modalen Kontexten!**
 
 **Problem:** `revalidateTag()` triggert Next.js Router Cache Refresh → 3-10+ Sekunden Hard-Refresh, Dialog flasht/schließt!
 
-**Lösung - Optimistic UI ohne revalidateTag:**
-```
-✅ RICHTIG:
-1. Server Action speichert in DB → gibt erstellte Daten zurück
-2. KEIN revalidateTag() Aufruf
-3. Client setzt lokalen State SOFORT mit Response-Daten
-4. UI ist instant aktualisiert (< 100ms)
-
-❌ FALSCH:
-1. Server Action speichert + revalidateTag() → Hard Refresh!
-```
-
-**Implementation:**
+**Lösung:**
 ```typescript
-// Server Action (OPTIMISTIC)
+// Server Action - KEIN revalidateTag()!
 export async function createItemOptimistic(data) {
   const [created] = await db.insert(items).values(data).returning();
-  // ⚡ KEIN revalidateTag()!
   return { success: true, data: created };
 }
 
-// Client Handler
-const handleCreate = async (data) => {
-  const result = await createItemOptimistic(data);
-  if (result.success) {
-    setItems(prev => [...prev, result.data]); // ← INSTANT!
-    toast({ title: "Erstellt!" });
-  }
-};
+// Client - Instant Update
+const result = await createItemOptimistic(data);
+if (result.success) setItems(prev => [...prev, result.data]);
 ```
 
-**Cross-Component Updates via Events:**
+**Cross-Component Updates:**
 ```typescript
-window.dispatchEvent(new CustomEvent('itemUpdated', {
-  detail: { item: result.data, action: 'create' | 'update' | 'delete' }
-}));
+window.dispatchEvent(new CustomEvent('itemUpdated', { detail: result.data }));
 ```
-
-**Cache-Invalidierung:** LAZY bei Dialog-Close oder Page-Navigation, NIEMALS während aktiver UI!
-
-**Referenz:** `shared-docs/refactoring-docs/global-coding-rules.md` Rule 1.4
 
 ### 3.5 Loading & Rendering
 - **Suspense:** `loading.tsx` für Route-Level, `<Suspense>` für Component-Level
-- **Re-trigger Suspense:** Key prop nutzen: `<Suspense key={query}>`
 - **Static-First:** Statische UI (Header, Navigation) AUSSERHALB Suspense (0ms render)
-- **Hydration:** Server und Client initial UI müssen identisch sein
 
-### 3.6 🔴 Client Provider Wrapper Pattern (MANDATORY)
-**Problem:** RootLayout (Server Component) darf NICHT direkt 5+ Client Components importieren → Client Manifest Build-Fehler
-
-**Lösung:** Alle Client-Provider in ONE Client-Component (`ClientProviders.tsx`) wrappen, diese dann in RootLayout importieren.
+### 3.6 🔴 Client Provider Wrapper Pattern
+Alle Client-Provider in ONE Client-Component (`ClientProviders.tsx`) wrappen, diese dann in RootLayout importieren.
 
 ---
 
@@ -164,233 +118,121 @@ window.dispatchEvent(new CustomEvent('itemUpdated', {
 
 ### 4.2 Performance
 - **Memoization:** `useMemo` (expensive calculations), `useCallback` (functions as props), `React.memo` (components)
-- **UI Blocking:** Expensive computations in `useMemo` oder web worker auslagern
 
 ### 4.3 Effects & Lifecycle
 - **Cleanup:** IMMER cleanup function bei subscriptions/timers/listeners
-- **Dependency Array:** Accurate dependencies, `[]` = mount only, none = every render
-- **Avoid Unnecessary Effects:** Derive from props/state during render wenn möglich
+- **Dependency Array:** Accurate dependencies, `[]` = mount only
 
-### 4.4 Error Handling
-- **Error Boundaries:** Wrap critical trees, catch rendering errors, show fallback
-
-### 4.5 Component Communication
-**Pattern-Auswahl:**
+### 4.4 Component Communication
 - **Parent↔Child:** Props down, Callbacks up (Standard)
-- **2-3 Levels:** Lifting State Up (State im gemeinsamen Parent)
+- **2-3 Levels:** Lifting State Up
 - **3+ Levels:** Context API (vermeidet Props-Drilling)
-
-**Anti-Patterns:** ❌ Props-Drilling >3 Levels, ❌ Context für lokalen State, ❌ Duplizierter State
-
-**Referenz:** `shared-docs/react-core-communication-patterns.md`
+- **Referenz:** `shared-docs/react-core-communication-patterns.md`
 
 ---
 
 ## Regel 5: Design Patterns
 
 ### 5.1 Tab Components Performance
-**Problem:** Jeder Tab macht eigenen Fetch → 1000ms+ Ladezeit bei Tab-Wechsel
+Parent fetcht alle Daten, Props an Tabs weitergeben. NIEMALS flüchtige Keys (`Math.random()` im Render).
 
-**Lösung:** Parent fetcht alle Daten, Props an Tabs weitergeben. NIEMALS flüchtige Keys (`Math.random()` im Render).
-
-### 5.2 Responsive Dialogs
-**Controller Pattern:** Separate Components für Desktop/Mobile
+### 5.2 Responsive Dialogs (Controller Pattern)
 - `[Feature]Dialog.tsx` - Desktop
 - `Mobile[Feature]Dialog.tsx` - Mobile
 - `[Feature]DialogController.tsx` - Logic + Device-Detection
 
 ### 5.3 Theme-Stil: Neon-Glasmorphism
-Neon-orientierter Glasmorphism-Stil: Gradients, Glows aus CSS-Variablen (`--primary`, `--accent-*`) – **keine hardcodierten Hex-Farben**. Karten nutzen `glass-card`, `neon-glass` mit Blur/Glow-Layern.
+Neon-orientierter Glasmorphism-Stil: Gradients, Glows aus CSS-Variablen (`--primary`, `--accent-*`) – **keine hardcodierten Hex-Farben**.
 
-### 5.4 🎨 Design-Ästhetik: Liquid Glass
+### 5.4 🎨 Liquid Glass Design
+> **Vollständige Doku:** `shared-docs/design/liquid-glass-guide.md`
 
-> **Vollständige Doku:** `shared-docs/refactoring-docs/global-coding-rules.md` → Section 4.7
+**Kern-Prinzipien:**
+- **Tiefe:** `bg-black/40`, `backdrop-blur-xl`, `box-shadow` mit `inset`
+- **Licht als Akzent:** `blur-[50px]` Punkt-Glows, Status-Farben
+- **Muted Buttons:** `orange-500/20` statt `bg-orange-500` (solid zerstört Glass-Effekt!)
 
-**Liquid Glass** beschreibt die visuelle Richtung der App - keine starren Regeln, sondern eine Ästhetik:
+### 5.5 🔴 Liquid Glass Card (3-Layer-System)
+1. Deep Black Base (`bg-black/60`, `z-0`)
+2. Texture - Grain ODER Grid (`z-0`)
+3. Punkt-Glow (`blur-[50px]`, `z-[1]` - ÜBER Background!)
+4. Content (`z-10`)
 
-- **Tiefe & Räumlichkeit:** `bg-black/40`, `backdrop-blur-xl`, `box-shadow` mit `inset`
-- **Licht als Akzent:** `blur-[50px]` Punkt-Glows, Status-Farben (`orange-500`, `green-500`, `red-500`)
-- **Versteckte Struktur:** Grid via `linear-gradient(#808080 1px...)`, `opacity-[0.05]`, `mask-image: radial-gradient(...)`
-- **Glasmorphism:** `border-white/8`, `backdrop-blur-xl saturate(180%)`
-
-**Inspiration:** `shared-docs/liquid-glass-*.png`
-
-### 5.5 🚨 Muted Glass Buttons (KRITISCH!)
-
-> **Vollständige Doku:** `shared-docs/refactoring-docs/global-coding-rules.md` → Section 4.7.0
-
-**Das Problem:** Solid-farbige Buttons (`bg-orange-500`, `bg-white`) zerstören die Liquid Glass Ästhetik!
-
-**Die Lösung - Muted Colors mit Glow:**
-
-| Button-Typ | Background | Border | Text | Glow |
-|------------|------------|--------|------|------|
-| Primary CTA | `orange-500/20` | `orange-500/30` | `orange-400` | `shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]` |
-| Selected | `orange-500/20` | `orange-500/40` | `orange-400` | Inset + Outer Glow |
-| Tab Selected | `white/10` | `white/20` | `white` | Inset-Shadow |
-| Tab Unselected | `transparent` | `transparent` | `white/50` | - |
-| Ghost | `transparent` | `orange-500/30` | `orange-400` | Dezenter Glow |
-
-**❌ Anti-Patterns:**
-- `bg-orange-500` (solid ohne Transparenz)
-- `bg-white` für Tab-Selection im Dark Mode
-- Buttons ohne Glow bei aktiven States
-- `text-white` auf saturierten Hintergründen
-
-### 5.6 🔴 Liquid Glass Card Design (3-Layer-System)
-
-```tsx
-<Card className="relative overflow-hidden bg-[#030303] border-white/5">
-  {/* Layer 1: Deep Black Base (z-0) */}
-  <div className="absolute inset-0 bg-black/60 z-0" />
-
-  {/* Layer 2: Texture - Grain ODER Grid (z-0) */}
-  <div className="absolute inset-0 z-0 pointer-events-none mix-blend-soft-light"
-    style={{maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 100%)'}}>
-    <div className="absolute inset-0 liquid-grain-ultra opacity-30" />
-  </div>
-
-  {/* Layer 3: Punkt-Glow - WICHTIG: z-[1] über Background! */}
-  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 z-[1] pointer-events-none">
-    <div className="absolute inset-0 bg-[FARBE]/60 blur-[50px] rounded-full" />
-  </div>
-
-  {/* Content (z-10) */}
-  <div className="relative z-10 p-4">...</div>
-</Card>
-```
-
-**Texture-Varianten:**
-- **Ultra-Grain:** `liquid-grain-ultra opacity-30` + `mix-blend-soft-light`
-- **Fine-Grid:** `liquid-grid-fine opacity-40`
-- **Dots:** `liquid-dots-bg opacity-25` + `mix-blend-overlay`
-
-**Punkt-Glow Farben:** Allgemein=indigo-500, Ernährung=orange-500, Training=emerald-500, Cardio=blue-500, Notizen=purple-500, Netzwerk=cyan-500 (alle `/60`, `blur-[50px]`, `z-[1]`)
-
-❌ **Anti-Pattern:** Breiter Beam-Glow horizontal, Punkt-Glow mit `z-0` (unsichtbar!), Grain UND Grid gleichzeitig
+**Farben:** indigo=Allgemein, orange=Ernährung, emerald=Training, blue=Cardio, purple=Notizen
 
 ---
 
 ## Regel 6: Network Performance (CRITICAL)
 
 ### 6.1 🔴 Client-Side Fetch Anti-Pattern
-Client-Components: KEIN initial Data-Fetching via `useEffect`! → Server-Side Pre-Fetch + Props ODER `use()` Hook + Suspense
+Client-Components: KEIN initial Data-Fetching via `useEffect`! → Server-Side Pre-Fetch + Props
 
 ### 6.2 🔴 Waterfall-Fetching Prevention
-Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])` statt sequential `await`
+Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 
-### 6.3 🔴 Request-Deduplizierung
-Identische Fetches deduplizieren: React `cache()` wrapper (Server), Singleton-Pattern (Client)
+### 6.3 🔴 Polling Cleanup
+Jeder `useEffect` mit Timers/Subscriptions MUSS Cleanup-Function haben
 
-### 6.4 🔴 Polling Cleanup
-Jeder `useEffect` mit Timers/Subscriptions MUSS Cleanup-Function haben: `return () => clearInterval(id)`
-
-### 6.5 🔴 N+1 Query Prevention
+### 6.4 🔴 N+1 Query Prevention
 Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray(itemIds)`
-
-### 6.6 🔴 Progressive Data Loading
-Level 1 (Critical 0-500ms, KEIN Suspense) → Level 2 (Important, MIT Suspense) → Level 3 (Lazy on-demand)
 
 ---
 
 ## Regel 7: Kritische Anti-Patterns (MUST AVOID)
 
 ### 7.1 🔴 Context Analysis Before Changes
-Vor Änderungen: Letzte 3-4 Tasks analysieren. Warum wurden diese Änderungen gemacht? Würde meine Änderung diese brechen?
+Vor Änderungen: Letzte 3-4 Tasks analysieren. Würde meine Änderung diese brechen?
 
 ### 7.2 🔴 Legacy Code Removal
 Nach jeder Änderung SOFORT ungenutzten Code entfernen.
 
 ### 7.3 🔴 Dialog-EventListener-Pattern
-Dialoge in Layout-kritischen Komponenten (Navbar, Header) über `useEffect + window.addEventListener` öffnen (verhindert Layout-Collapse).
+Dialoge in Layout-kritischen Komponenten über `useEffect + window.addEventListener` öffnen.
 
 ### 7.4 🔴 Scroll Height Dependency
 `overflow-auto` braucht definierte Höhe! `flex-1` allein reicht nicht. Fix: `h-[75vh]` oder `isDialog`-Props.
 
 ### 7.5 🔴 will-change Font-Killer
-Niemals `will-change: transform, opacity` permanent auf Containern mit Text, die gezoomt werden! Zerstört Font-Rendering (Blur). Nur während aktiver Interaktion (Drag/Pan) setzen.
-Siehe Postmortem: `docs\postmortems\2025-12-19-diagramm-blur-fix.md`
+Niemals `will-change: transform, opacity` permanent auf Containern mit Text! Nur während aktiver Interaktion.
 
 ### 7.6 🔴 Mobile-First Space Efficiency
-UI MUSS Mobile-First designed werden: Maximale Space-Efficiency, Input-Felder nebeneinander in FlexRow wenn möglich, kleinere Abstände.
+UI MUSS Mobile-First designed werden: Maximale Space-Efficiency, kleinere Abstände.
 
 ### 7.7 🔴 Page-Level Data-Separation
-Header als pure HTML, Data-Logic in `MainContent` mit Suspense (Header rendert instant 0ms).
+Header als pure HTML, Data-Logic in `MainContent` mit Suspense.
 
-### 7.8 🔴 Direct Action Principle
-Action-Buttons führen ihre Funktion DIREKT aus (1 Klick = 1 Action). Multi-Step Components brauchen `initialView` Prop.
-
-### 7.9 🔴 FadeContent Dialog Conditional Rendering
-FadeContent Components MÜSSEN conditional gerendert werden bei Dialog-Wrapping:
+### 7.8 🔴 FadeContent Dialog Conditional Rendering
 - ❌ `<FadeContent><Dialog isOpen={isOpen} /></FadeContent>`
 - ✅ `{isOpen && <FadeContent><Dialog /></FadeContent>}`
 
-### 7.10 🔴 State-Changes During Active UI
-State-Updates, die Component-Remount triggern, NICHT während aktiver UI-Interaktion.
+### 7.9 🔴 TabContent Height-Constraint Anti-Pattern
+Tab-Content darf NICHT `h-full` oder `flex flex-col` im Root-Div verwenden → Layout-Collapse!
 
-### 7.11 🔴 TabContent Height-Constraint Anti-Pattern
-Tab-Content darf NICHT `h-full` oder `flex flex-col` im Root-Div verwenden → Layout-Collapse! Simple Container: `<div className="space-y-2 pt-3 pb-6 px-4">`
+### 7.10 🔴 tailwindcss-animate Reserved Class Names
+NIEMALS eigene CSS-Klassen mit tailwindcss-animate Namen (`animate-in`, `fade-in-*`). Eigener Prefix: `fm-fade-in`
 
-### 7.12 🔴 Single-Scroll-Container in Dialog-Tabs
-In Dialogen genau EINEN Scroll-Container. Child-Sections KEINE eigenen `h-full`/`flex`/`overflow`. Suche nach `h-full`, `overflow-auto` in Tab-Sections und entferne diese.
+### 7.11 🔴 revalidateTag Hard-Refresh Killer
+❌ `revalidateTag()` in Dialogen/Modals → Full Page Refresh!
+✅ Optimistic UI Pattern (siehe Regel 3.4)
 
-### 7.13 🔴 tailwindcss-animate Reserved Class Names
-NIEMALS eigene CSS-Klassen mit Namen von `tailwindcss-animate` Plugin erstellen: `animate-in/out`, `fade-in/out-*`, `zoom-in/out-*`, `slide-in/out-*` sind reserviert! Eigener Prefix: `fm-fade-in`, etc.
-
-### 7.14 🔴 State-Persistence Decision Pattern
-Vor `useEffect(() => { saveToServer(state) }, [state])` entscheide Pattern:
-- **Kontinuierlich (>10x/s):** Explicit Save (bei `onDragEnd`)
-- **Frequent (1-10x/s):** Debounced Save (1000ms)
-- **Occasional (<1x/s):** Throttled Save (300ms)
-- **On-Demand (Click):** Immediate Save
-
-### 7.16 🔴 Wiederverwendbarkeit-First bei UI-Komponenten
-Dialoge und komplexe UI-Komponenten MÜSSEN für Wiederverwendung designed werden:
-- Props für verschiedene Modi (`mode: 'create' | 'edit' | 'view' | 'history'`)
-- Callback-Props statt hardcodierter Actions
-- Kein direkter Context-Zugriff in wiederverwendbaren Komponenten (stattdessen Props/Events)
-
-### 7.15 🔴🔴🔴 revalidateTag Hard-Refresh Killer (HÖCHSTE PRIORITÄT)
-**Problem:** `revalidateTag()` oder `revalidatePath()` in Server Actions triggert **FULL PAGE REFRESH** (3-10+ Sekunden!):
-- Next.js invalidiert Router Cache
-- Server Components werden komplett neu gefetcht
-- React Client-States werden zurückgesetzt
-- Dialoge schließen sich, Forms verlieren State
-
-**Lösung - Optimistic UI Pattern:**
-```typescript
-// ❌ VERBOTEN in Dialogs/Modals:
-revalidateTag(`items-${userId}`);
-
-// ✅ PFLICHT - Optimistic Update:
-return { success: true, data: createdItem }; // Daten zurückgeben
-// Client updated lokalen State INSTANT
-```
-
-**STANDARD für alle CRUD in modalen Kontexten!** Siehe Rule 3.4 und `global-coding-rules.md` Rule 1.4.
-
-### 7.17 🔴 Optimistic UI State-Update mit Callbacks (Stale Closure)
-**Problem:** `setState(newValue)` gefolgt von `callback(state)` referenziert den **alten State** (Stale Closure).
+### 7.12 🔴 Stale Closure Pattern
+> **Vollständige Doku:** `shared-docs/react-patterns/stale-closure-pattern.md`
 
 ```typescript
-// ❌ FALSCH - Stale Closure: habits ist noch ALTER State!
-setHabits((prev) => prev.map((h) => ...));
-onHabitsUpdate?.(habits); // habits = ALTER Wert!
+// ❌ FALSCH - habits ist noch ALTER State!
+setHabits(prev => prev.map(h => ...));
+onHabitsUpdate?.(habits);
 
-// ✅ RICHTIG - Callback innerhalb setHabits mit neuem State
-setHabits((prev) => {
-  const updatedHabits = prev.map((h) => ...);
-  onHabitsUpdate?.(updatedHabits); // ← NEUE Daten!
-  return updatedHabits;
+// ✅ RICHTIG - Callback mit neuen Daten
+setHabits(prev => {
+  const updated = prev.map(h => ...);
+  onHabitsUpdate?.(updated);
+  return updated;
 });
 ```
 
-**Race-Condition Guard:** Bei schnellem Klicken prüfen ob bereits ein Update läuft:
-```typescript
-if (loadingHabitId === habitId) return; // Guard
-setLoadingHabitId(habitId);
-// ... async operation
-```
+### 7.13 🔴 Wiederverwendbarkeit-First
+Dialoge MÜSSEN für Wiederverwendung designed werden: Props für Modi (`mode: 'create' | 'edit'`), Callback-Props.
 
 ---
 
@@ -399,112 +241,17 @@ setLoadingHabitId(habitId);
 ### 8.1 Database (Actions & Finders)
 - **Actions** (`db/actions/`): Alle mutations, MUSS `"use server"` haben
 - **Finders** (`db/finders/`): Alle queries, MUSS `"use server"` haben
-- **Auth:** `getCurrentProfile()` aus `profile-finder` statt auth-Methoden
+- **Auth:** `getCurrentProfile()` aus `profile-finder`
 
-### 8.1.0 🔴 Database-First Logic (Performance-Kritisch!)
-**Problem:** Client-seitige Filter-/Sortier-/Aggregationslogik verursacht Performance-Probleme bei größeren Datenmengen.
+### 8.2 🔴 Database-First Logic
+> **Vollständige Doku:** `shared-docs/database-testing-guide.md`
 
-**Lösung - Logik in die Datenbank verlagern:**
-- ✅ **Filter:** `WHERE`-Bedingungen in Queries statt `.filter()` im Client
-- ✅ **Sortierung:** `ORDER BY` in Queries statt `.sort()` im Client
-- ✅ **Aggregation:** `GROUP BY`, `COUNT()`, `SUM()` statt JS-Loops
-- ✅ **Pagination:** `LIMIT/OFFSET` statt alles laden und slicen
-- ✅ **Komplexe JOINs:** Nutze Drizzle-JOINs für zusammenhängende Daten
+- ✅ Filter: `WHERE` statt `.filter()` im Client
+- ✅ Sortierung: `ORDER BY` statt `.sort()` im Client
+- ✅ Pagination: `LIMIT/OFFSET` statt alles laden
+- ⚠️ **PFLICHT:** Neue Queries mit `npx tsx scripts/test-[feature].ts` testen!
 
-**Komplexe Queries erlaubt & erwünscht:**
-```typescript
-// ✅ RICHTIG - Komplexe Query mit JOINs, Filter, Sortierung
-const result = await db
-  .select({ ... })
-  .from(entries)
-  .leftJoin(categories, eq(entries.categoryId, categories.id))
-  .where(and(
-    eq(entries.profileId, profileId),
-    gte(entries.date, startDate),
-    isNotNull(entries.value)
-  ))
-  .orderBy(desc(entries.date), asc(entries.priority))
-  .limit(50);
-
-// ❌ FALSCH - Alles laden und im Client filtern
-const all = await db.select().from(entries);
-const filtered = all.filter(e => e.profileId === profileId && e.date >= startDate);
-const sorted = filtered.sort((a, b) => b.date - a.date);
-```
-
-**⚠️ PFLICHT: Live-DB Testing für komplexe Queries!**
-- Jede neue komplexe Query MUSS mit echten Daten getestet werden mit npx tsx
-- Prüfe: Korrekte Ergebnisse, Performance, Edge-Cases (leere Results)
-- Siehe Regel 8.1.1 für Test-Pattern mit `npx tsx`
-
-### 8.1.1 🔴 Live-DB Testing für Actions & Finders (PFLICHT!)
-**Problem:** Bugs in Actions/Finders (z.B. Timezone-Drift, fehlerhafte JOINs, falsche WHERE-Bedingungen) werden oft erst in der UI entdeckt - zu spät!
-
-**Lösung - Isolierte Test-Skripte mit `npx tsx`:**
-```bash
-# Direkte Skript-Ausführung gegen Live-DB
-DATABASE_URL="postgres://..." npx tsx scripts/test-[feature].ts
-```
-
-**Wann testen:**
-- ✅ Neue Finder-Funktionen (queries)
-- ✅ Neue Actions (mutations) - mit Test-Daten
-- ✅ Komplexe Date/Timezone-Logik
-- ✅ JOINs über mehrere Tabellen
-- ✅ Geänderte WHERE-Bedingungen
-
-**Test-Skript Pattern:**
-```typescript
-// scripts/test-[feature].ts
-import "dotenv/config";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-
-const client = postgres(process.env.DATABASE_URL!, { prepare: false });
-const db = drizzle(client);
-
-async function main() {
-  // 1. Test-Query ausführen
-  // 2. Ergebnis analysieren und loggen
-  // 3. Edge-Cases prüfen (leere Results, Timezone, etc.)
-  await client.end();
-}
-main();
-```
-
-**Nach erfolgreichem Test:** Skript löschen (nicht committen!)
-
-**Typische Bugs die damit gefunden werden:**
-- Timezone-Drift bei Date-Vergleichen
-- N+1 Queries in Loops
-- Falsche `toLocalDateKey()` vs `toISOString()` Verwendung
-- Fehlende Daten durch zu enge WHERE-Filter
-- schlechte Performance
-
-### 8.1.2 🔴 Database Seeding Scripts
-Seed-Skripte MÜSSEN `"dotenv/config"` importieren + via `npx tsx` ausgeführt werden:
-```typescript
-import "dotenv/config"; // IMMER Zeile 1
-import db from "../db";
-```
-Ausführung: `npx tsx scripts/seed-[name].ts`
-
-### 8.1.3 🔴 Lokale SQLite-DB Direkttest
-**Problem:** Service-Funktionen benötigen Auth-Session. Bei CLI-Tests fehlt diese.
-
-**Lösung:** Profil-DB direkt ansprechen via `db/profiles/profile-[id].sqlite`
-- ❌ `npx tsx -e "..."` → unzuverlässig
-- ✅ `npx tsx scripts/test-feature.ts` → separate Datei erstellen, nach Test löschen
-
-### 8.1.4 🔴 Next.js Caching bei dynamischen Seiten
-Server Components mit DB-Queries können gecacht werden. Fix:
-```typescript
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-```
-Setzen bei: User-spezifischen Daten, Filter-Seiten, Dashboards
-
-### 8.2 API Response Format
+### 8.3 API Response Format
 ```typescript
 export interface ApiResponse<T> {
   success: boolean;
@@ -513,40 +260,27 @@ export interface ApiResponse<T> {
 }
 ```
 
-### 8.3 State Management
+### 8.4 State Management
 - **Server State:** Next.js caching + Server Components
 - **Form State:** React Hook Form
 - **Optimistic Updates:** `useState` (nicht `useOptimistic`)
-- **Theme/Language:** React Context providers
-
-### 8.4 Error Handling
-- Toast notifications für User-facing errors
-- Error Boundaries für component crashes
-- Input validation inline (keine libraries)
 
 ### 8.5 Frontend Animation
-- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` (expanded) / `grid-rows-[0fr]` (collapsed) mit `transition-all duration-300`
-- FadeContent-Komponente einbauen (siehe `shared-docs\refactoring-docs\prompts\universal-fadeContent-refactoring-prompt.md`)
+- **Expand/Collapse:** CSS Grid `grid-rows-[1fr]` / `grid-rows-[0fr]` mit `transition-all duration-300`
+- FadeContent-Komponente nutzen
 
 ---
 
 ## Regel 9: Design System
 
-### 9.1 Dark Mode Glassmorphism Design Pattern
-Tiefschwarze Hintergründe, Subtile Neon-Glows, Glassmorphism-Ränder, Inset-Highlights, Gradient-Texte
+### 9.1 Dark Mode Glassmorphism
+Tiefschwarze Hintergründe, Subtile Neon-Glows, Glassmorphism-Ränder, Inset-Highlights
 
 ### 9.2 Theme System
 - **CSS Custom Properties:** `--primary`, `--accent`
 - **Glassmorphism:** `glass-card`, `backdrop-blur-sm/md/2xl`
-- **Gradients:** Three-color gradients (primary-dark → primary → primary-light)
 
-### 9.3 Component Classes
-- **Cards:** `glass-card`, `bg-card/50 backdrop-blur-sm`
-- **Buttons:** `bg-gradient-primary`, `hover:glow-primary`
-- **Borders:** `border-primary/10` to `border-primary/20`
-
-### 9.4 🔴 Vertical Space Efficiency (Notion-Style Compact)
-UI MUSS vertikales Spacing minimieren:
+### 9.3 🔴 Vertical Space Efficiency (Notion-Style)
 ```tsx
 // ✅ RICHTIG: Alles in EINER Zeile
 <div className="flex items-center gap-2 py-1.5 min-h-[44px] sm:min-h-[36px]">
@@ -562,34 +296,24 @@ UI MUSS vertikales Spacing minimieren:
 
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
 
-**Update-Rules:** Feature-Overview bei großen Änderungen, Task-History auf "abgeschlossen" setzen.
-
 ---
 
 ## Regel 11: Sonstige Kurzregeln
 
 ### 11.1 Revalidate-Sicherheitsregel
 ❌ `revalidatePath`/`revalidateTag` bei Autosave/hochfrequent
-❌ **NIEMALS** in Dialogen/Modals → Siehe Rule 3.4 (Optimistic UI)!
-✅ Nur auf Page-Ebene bei expliziten Actions (ohne offene Dialoge)
+❌ **NIEMALS** in Dialogen/Modals → Optimistic UI!
+✅ Nur auf Page-Ebene bei expliziten Actions
 
 ### 11.2 Loading-Feedback
 **Nicht gecached:** `isLoading=true` + Skeleton. **Gecached:** UI direkt updaten.
 
-### 11.3 Container-Child Size Verification
-Bei Height-Reduktion Child-Padding prüfen! Container `h-8` (32px) → Child `py-0.5` (4px total).
-
-### 11.4 🔴 Number Input Empty-State Handling
-HTML `<input type="number">` darf NIEMALS `value={0}` bei ungültigem 0:
+### 11.3 🔴 Number Input Empty-State
 ```tsx
-// ✅ RICHTIG
 <Input
   type="number"
   value={field === 0 ? "" : field}
-  onChange={(e) => {
-    const value = e.target.value;
-    handleChange("field", value === "" ? undefined : Number(value));
-  }}
+  onChange={(e) => handleChange("field", e.target.value === "" ? undefined : Number(e.target.value))}
 />
 ```
 
@@ -597,146 +321,48 @@ HTML `<input type="number">` darf NIEMALS `value={0}` bei ungültigem 0:
 
 ## 12. 📱 Mobile/Capacitor Performance-Regeln
 
+> **Vollständige Doku:** `shared-docs/performance/capacitor-performance-rules.md`
+
 ### 12.1 🔴 KRITISCH: backdrop-filter ist VERBOTEN!
+- ❌ `backdrop-blur-*` auf Mobile automatisch deaktiviert (capacitor.css)
+- ✅ `filter: blur(50px)` für Punkt-Glows ist OK
 
-**`backdrop-filter: blur()` ist der #1 Performance-Killer auf Mobile UND kann Desktop verlangsamen!**
+### 12.2 🔴 Ghost-Blobs Fix
+Bei Rendering-Artefakten auf Capacitor entferne:
+- `blur-[90px]`, `mix-blend-multiply`
+- Icon-Glows `shadow-[0_0_Xpx]`
+- Gradient-Overlays
 
-```
-❌ NIEMALS verwenden:
-- backdrop-blur-sm, backdrop-blur-md, backdrop-blur-xl, backdrop-blur-2xl, backdrop-blur-3xl
-- backdrop-filter: blur(Xpx)
+→ **Siehe `shared-docs/performance/capacitor-performance-rules.md`** Abschnitt 4
 
-✅ STATTDESSEN: Erhöhte Opacity für Glass-Effekte
-- bg-card/90 bis bg-card/95 (statt backdrop-blur)
-- bg-black/80 bis bg-black/90 (für dunkle Overlays)
-- bg-[#030303] (für tiefschwarze Karten)
-```
-
-**Wichtige Unterscheidung:**
-| Eigenschaft | Performance | Verwendung |
-|-------------|-------------|------------|
-| `backdrop-filter: blur()` | 🔴 **VERBOTEN** - GPU-Killer | Niemals verwenden! |
-| `filter: blur(50px)` | 🟢 **OK** | Für Punkt-Glows erlaubt |
-
-**Warum?** `backdrop-filter` muss jeden Frame ALLES dahinter neu berechnen. `filter: blur()` auf einem Element ist einmalig und gecacht.
-
-### 12.2 🟢 Globale Capacitor-Lösung für backdrop-blur
-
-**backdrop-filter wird NUR auf Capacitor/Mobile global deaktiviert** via `capacitor.css`:
-
+### 12.3 🔴 Icon-Rendering-Bug (GPU-Layer Fix)
+Icons unsichtbar bis Klick? → GPU-Layer Promotion:
 ```css
-/* In capacitor.css - deaktiviert ALLE backdrop-blur Klassen auf Mobile */
-body.capacitor [class*="backdrop-blur"] {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+body.capacitor [data-card="true"] svg {
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 ```
-
-**Vorteile:**
-- ✅ Desktop behält weiche Blur-Effekte
-- ✅ Mobile hat keine Performance-Probleme
-- ✅ Keine Änderungen in einzelnen Komponenten nötig
-- ✅ Zentrale Stelle für Mobile-Performance-Optimierungen
-
-**Light-Mode Blobs:** `dark:opacity-0` ist OK - funktioniert jetzt korrekt, da backdrop-filter auf Mobile deaktiviert ist.
-
-### 12.3 ✅ Glow-Effekte korrekt implementieren
-
-Punkt-Glows für Dark Mode mit Custom-Klassen:
-
-```tsx
-// Dark Mode Glow mit glow-blob-* Klasse für Mobile-Optimierung
-<div className="blur-[75px] rounded-full glow-blob-cardio" />
-
-// In capacitor.css: Blur auf Mobile reduzieren
-// body.capacitor .glow-blob-cardio { filter: blur(50px) !important; }
-```
-
-### 12.4 🚨 KRITISCH: Rendering-Artefakte auf Capacitor (Ghost-Blobs Fix)
-
-**Problem:** Wenn `backdrop-filter: none` global auf Capacitor angewendet wird, können bestimmte CSS-Eigenschaften **Rendering-Artefakte** ("Ghost-Blobs", "Light-Blobs") verursachen. Diese erscheinen als zufällige farbige Rechtecke/Kreise, die nicht verschwinden.
-
-**Ursache:** Android WebView hat Probleme mit komplexen Layer-Berechnungen, besonders wenn:
-- `mix-blend-mode` verwendet wird
-- Große `blur()` Werte auf Pseudo-Layern (`absolute` positioned divs) angewendet werden
-- Transparente Overlays mit Gradienten existieren
-- `opacity: 0` Layer im DOM bleiben (statt entfernt zu werden)
-
-#### ❌ VERBOTEN auf Cards/Sections (verursacht Ghost-Blobs):
-
-| CSS-Eigenschaft | Beispiel | Problem |
-|-----------------|----------|---------|
-| `mix-blend-multiply` | `mix-blend-multiply` auf Blur-Divs | WebView cached Layer falsch |
-| Große Blur-Blobs | `blur-[90px]`, `blur-[75px]` auf `absolute` Divs | Repaint-Artefakte |
-| Light-Mode Gradient Overlays | `bg-gradient-to-br from-white/40` als Overlay | Transparenz-Bugs |
-| Icon-Glows | `shadow-[0_0_12px_rgba(...)]` | Icon-Rendering-Fehler |
-| Hover-Glows | `hover:shadow-[0_0_20px_rgba(...)]` | Flackern bei Touch |
-| Dark-Mode Glow-Layer | Große `blur-[60px+]` Divs mit `dark:opacity-100` | Ghost-Layer bleiben sichtbar |
-
-#### ✅ ERLAUBT (performant und sicher):
-
-| CSS-Eigenschaft | Beispiel | Warum OK |
-|-----------------|----------|----------|
-| Solide Hintergründe | `bg-[#f8f8f8]`, `bg-[#030303]` | Keine Transparenz-Berechnung |
-| Texture-Patterns | `texture="grain"`, `texture="grid"` | Einfache CSS-Patterns |
-| Normale Shadows | `shadow-lg`, `shadow-xl` | Standard-Box-Shadows |
-| Farbige Borders | `border-amber-500/20` | Keine Blur-Berechnung |
-| Farbige Backgrounds | `bg-indigo-500/10` | Einfache Farb-Overlays |
-
-#### 🔧 FIX-Prompt bei Ghost-Blob-Problemen:
-
-Wenn Rendering-Artefakte auf Capacitor auftreten, entferne folgende Elemente aus der betroffenen Komponente:
-
-```tsx
-// ❌ ENTFERNEN - Diese Elemente verursachen Ghost-Blobs:
-
-// 1. Light-Mode Gradient Overlays
-<div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent ..." />
-
-// 2. Große Blur-Blobs (Light Mode)
-<div className="absolute ... blur-[90px] ... mix-blend-multiply light-mode-blob" />
-
-// 3. Dark-Mode Glow-Layer
-<div className="absolute ... blur-[75px] ... dark:opacity-100 glow-effect-layer">
-  <div className="blur-[80px] ..." />
-</div>
-
-// 4. Dark-Mode Overlay
-<div className="absolute inset-0 dark:bg-black/60 ..." />
-
-// ❌ ENTFERNEN bei Icons - Icon-Glows:
-shadow-[0_0_12px_rgba(...)]
-shadow-[0_0_15px_rgba(...)]
-hover:shadow-[0_0_20px_rgba(...)]
-```
-
-#### ✅ Ersetzen durch:
-
-```tsx
-// Verwende solide Hintergründe statt transparente:
-className="bg-[#f8f8f8] dark:bg-[#030303]"  // statt bg-white/95
-
-// Icons ohne Glow:
-className="bg-amber-500/10 text-amber-400 border border-amber-500/20"
-// statt: shadow-[0_0_12px_rgba(251,191,36,0.3)]
-```
-
-**Fazit:** Sobald `backdrop-filter: none` auf Capacitor aktiv ist, müssen ALLE dekorativen Blur-Layer und Glow-Effekte entfernt werden, um stabile Rendering zu gewährleisten.
+→ **Siehe `shared-docs/performance/capacitor-performance-rules.md`** Abschnitt 5
 
 ---
 
 ## ✅ Quick Checklist
 
-Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, Suspense boundaries, Static UI außerhalb Suspense, max 700 lines/file.
+Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, max 700 lines/file.
 
-**⚡ Bei CRUD in Dialogen/Modals:** Optimistic UI Pattern! KEIN `revalidateTag()` → Daten zurückgeben → lokaler State Update → INSTANT UI.
+**⚡ Bei CRUD in Dialogen:** Optimistic UI! KEIN `revalidateTag()` → Daten zurückgeben → lokaler State Update → INSTANT UI.
 
 **📱 Performance-Kritisch:**
-- ❌ `backdrop-blur-*` ist auf Mobile automatisch deaktiviert (capacitor.css)
-- ❌ **Ghost-Blobs?** → Entferne: `blur-[90px]`, `mix-blend-multiply`, Icon-Glows `shadow-[0_0_Xpx]`, Gradient-Overlays (siehe Regel 12.4)
+- ❌ `backdrop-blur-*` (auf Mobile deaktiviert)
+- ❌ Ghost-Blobs? → Siehe `capacitor-performance-rules.md`
+- ❌ Icons unsichtbar? → GPU-Layer Promotion
 - ✅ Solide Hintergründe: `bg-[#f8f8f8]` statt `bg-white/95`
-- ✅ `texture="grain"` und `texture="grid"` sind performant
 
 ---
 
-**🔗 Weiterführende Docs:** `shared-docs/performance/`, `shared-docs/design/`, `docs/mobile/postmortem/`
+**🔗 Weiterführende Docs:**
+- `shared-docs/performance/capacitor-performance-rules.md` - Mobile/Capacitor Details
+- `shared-docs/design/liquid-glass-guide.md` - Liquid Glass Design
+- `shared-docs/database-testing-guide.md` - DB Testing mit npx tsx
+- `shared-docs/react-patterns/stale-closure-pattern.md` - React State Patterns
