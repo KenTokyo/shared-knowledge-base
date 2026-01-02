@@ -80,12 +80,27 @@ if (result.success) setItems(prev => [...prev, result.data]);
 
 ### 2.2. Performance Optimization
 
+*   **Rule 2.2.1 (Memoization):** Prevent unnecessary re-renders to keep the UI fast and responsive.
+    *   Wrap expensive, pure calculations in `useMemo`.
+    *   Wrap function definitions passed as props to memoized child components in `useCallback`.
+    *   Wrap components in `React.memo` to prevent them from re-rendering if their props have not changed.
+*   **Rule 2.2.2 (UI Blocking):** Avoid running expensive, blocking computations directly in the render body. Offload them using `useMemo` or, for very heavy tasks, consider moving them to a web worker.
+*   **Rule 2.2.3 (Capacitor WebView Animation Guard):** In Capacitor/Android WebView, avoid reveal animations that combine `transform`, `opacity`, or `filter` on large card grids. Bypass `ScrollReveal`/page fade wrappers when `isCapacitorEnvironment()` or `body.capacitor` is present to prevent render artifacts (missing icons/ghosting).
+*   **Rule 2.2.4 (Shape Recognition Gating):** Polygon-Erkennung muss scharfe Ecken, Kanten-Geradheit und zusätzliche Ecken prüfen sowie hohe Zirkularität blocken, sonst entstehen Triangle-False-Positives bei Kreis/Quadrat.
 *   **Rule 2.2.1 (Memoization):** `useMemo` (calculations), `useCallback` (functions), `React.memo` (components).
 *   **Rule 2.2.2 (UI Blocking):** Offload expensive computations with `useMemo` or web workers.
 *   **Rule 2.2.3 (Capacitor):** Avoid reveal animations with `transform`/`opacity`/`filter` on card grids.
 
 ### 2.3. Effects & Lifecycle
 
+*   **Rule 2.3.1 (Effect Cleanup):** Always provide a cleanup function in `useEffect` when setting up subscriptions, timers, or event listeners. This is critical to prevent memory leaks.
+*   **Rule 2.3.2 (Accurate Dependency Arrays):** Always provide an accurate dependency array for `useEffect`, `useCallback`, and `useMemo`.
+    *   An empty array (`[]`) runs the effect only once on mount.
+    *   Omitting the array causes the effect to run on *every single render*.
+*   **Rule 2.3.3 (Avoid Unnecessary Effects):** Do not use `useEffect` for logic that can be derived directly from props or state during rendering. Also, avoid it for actions that can be handled directly within event handlers.
+*   **Rule 2.3.4 (Stable Effect Callbacks):** Wenn ein `useEffect` einen Callback aus Props nutzt (z.B. `onSelectedTopicsChange`), muss der Callback stabil sein (`useCallback`) oder der Effekt braucht Guard-Checks. Sonst entstehen Render-Loops (z.B. Radix `setRef`).
+*   **Rule 2.3.5 (Autoprocess User-Gate):** Auto-Detektoren dürfen nur nach echter User-Interaktion feuern; Content-Hydration oder programmatic Updates müssen geblockt werden, damit keine KI-Calls ohne User-Aktion starten.
+*   **Rule 2.3.6 (Hold/Long-Press Ticking):** Zeitbasierte Gesten (Hold/Long-Press) dürfen nicht nur von `pointermove` abhängen. Starte einen RAF/Timer-Tick während `pointerdown`, stoppe ihn bei `pointerup/cancel`, und flush batched Punkte vor der Erkennung.
 *   **Rule 2.3.1 (Cleanup):** Always provide cleanup function for subscriptions/timers/listeners.
 *   **Rule 2.3.2 (Dependencies):** Accurate dependency arrays. `[]` = mount only.
 *   **Rule 2.3.3 (Avoid Unnecessary):** Derive from props/state during render when possible.
