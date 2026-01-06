@@ -17,6 +17,15 @@ This guide provides comprehensive coding rules for building robust, performant, 
 - ✅ Projekt-/Feature-spezifische Heuristiken und Bugs gehören in `docs/[feature]/...`
 - ❌ Keine Canvas-, Diagramm- oder Feature-Detailregeln in den Global Rules
 
+**Rule 0.3 (Schema-Sync Pflicht):**
+- ✅ Wenn `db/schema/local/*` geändert wird, müssen die generierten Schema-Statements aktualisiert werden (z.B. `npm run schema:generate`)
+- ✅ Runtime-Migrationen/Ensure-Listen müssen neue Tabellen/Spalten abdecken, sonst fehlen sie in bestehenden DBs
+- ✅ Optional: `npm run schema:validate` oder `npm run schema:report` nutzen, um Drift früh zu erkennen
+
+**Rule 0.4 (FK-Rebuild Schutz):**
+- ✅ Vor `db:push:local` (oder wenn neue FKs hinzukommen) Orphan-Check durchführen
+- ✅ Orphan-Records vor dem Push bereinigen, sonst scheitert der Rebuild mit `SQLITE_CONSTRAINT_FOREIGNKEY`
+
 ---
 ## 1. 🚀 Next.js App Router Rules
 
