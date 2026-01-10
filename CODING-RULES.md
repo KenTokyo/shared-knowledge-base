@@ -280,6 +280,23 @@ setHabits(prev => {
 ### 7.13 🔴 Wiederverwendbarkeit-First
 Dialoge MÜSSEN für Wiederverwendung designed werden: Props für Modi (`mode: 'create' | 'edit'`), Callback-Props.
 
+### 7.14 🔴🔴🔴 RECHERCHE VOR RUMPROBIEREN (KRITISCH!)
+> **ABSOLUT VERBOTEN:** Blindes Trial-and-Error bei Fehlern!
+
+**Problem:** Mehrfaches Ausprobieren ohne zu verstehen WAS passiert → Zeitverschwendung, User-Frustration, unprofessionell.
+
+**PFLICHT-Workflow bei unbekannten Fehlern:**
+1. **Stack-Trace GENAU lesen** - Welche Datei, welche Zeile, welche Komponente?
+2. **RECHERCHIEREN** - Radix UI Docs, React Docs, GitHub Issues durchsuchen
+3. **Root Cause verstehen** - WARUM passiert der Fehler? (z.B. `Slot` erwartet genau 1 Kind)
+4. **DANN erst fixen** - Mit Verständnis der Ursache
+
+**Beispiel `React.Children.only` Fehler:**
+- ❌ **FALSCH:** 3x verschiedene Wrapper ausprobieren ohne zu wissen warum
+- ✅ **RICHTIG:** Radix Slot Docs lesen → verstehen dass `asChild` genau 1 Kind braucht → gezielt fixen
+
+**Merksatz:** _"Ein Entwickler der recherchiert ist 10x schneller als einer der rumprobiert."_
+
 ---
 
 ## Regel 8: Implementation Guidelines
