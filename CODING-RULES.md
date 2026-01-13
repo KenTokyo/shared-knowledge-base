@@ -160,6 +160,52 @@ Neon-orientierter Glasmorphism-Stil: Gradients, Glows aus CSS-Variablen (`--prim
 
 **Farben:** indigo=Allgemein, orange=Ernährung, emerald=Training, blue=Cardio, purple=Notizen
 
+### 5.6 🌟 Top-Glow Pattern (Premium Dialoge)
+> **Effekt:** Oben hell, unten dunkel - erzeugt Premium "frosted glass" Look
+
+**Struktur:**
+```tsx
+{/* Radial Glow Spot - OBEN zentriert */}
+<div className={cn(
+  "absolute top-[-15%] left-1/2 -translate-x-1/2 w-[400px] h-[300px] rounded-[100%] blur-[80px] transition-all duration-700",
+  activeTab === 'input' ? "bg-violet-600" : 
+  activeTab === 'analysis' ? "bg-blue-600" : "bg-amber-600"
+)} style={{ opacity: isDark ? 0.25 : 0.15 }} />
+
+{/* Grain Texture Overlay */}
+<div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"
+  style={{ opacity: isDark ? 0.05 : 0.08, mixBlendMode: isDark ? "overlay" : "multiply" }} />
+
+{/* Grid Lines Pattern */}
+<div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]"
+  style={{ opacity: isDark ? 0.08 : 0.06 }} />
+```
+
+### 5.7 🎨 Dynamische Tab-Farben
+> Tabs mit `indicatorClassName` UND `textClassName` Callbacks für pro-Tab Styling
+
+```tsx
+// Indicator (Background + Glow)
+const getIndicatorClassName = (value: string) => {
+  const styles: Record<string, string> = {
+    input: "bg-violet-500/20 border border-violet-500/30 shadow-[0_0_15px_-3px_rgba(139,92,246,0.5)]",
+    analysis: "bg-blue-500/20 border border-blue-500/30 shadow-[0_0_15px_-3px_rgba(59,130,246,0.5)]",
+    ask: "bg-amber-500/20 border border-amber-500/30 shadow-[0_0_15px_-3px_rgba(245,158,11,0.5)]",
+  };
+  return styles[value] || "";
+};
+
+// Text-Farben (NEU!)
+const getTextClassName = (value: string) => ({
+  input: "text-violet-400",
+  analysis: "text-blue-400",
+  ask: "text-amber-400",
+}[value] || "");
+
+// Verwendung
+<Tabs indicatorClassName={getIndicatorClassName} textClassName={getTextClassName}>
+```
+
 ---
 
 ## Regel 6: Network Performance (CRITICAL)
@@ -233,6 +279,23 @@ setHabits(prev => {
 
 ### 7.13 🔴 Wiederverwendbarkeit-First
 Dialoge MÜSSEN für Wiederverwendung designed werden: Props für Modi (`mode: 'create' | 'edit'`), Callback-Props.
+
+### 7.14 🔴🔴🔴 RECHERCHE VOR RUMPROBIEREN (KRITISCH!)
+> **ABSOLUT VERBOTEN:** Blindes Trial-and-Error bei Fehlern!
+
+**Problem:** Mehrfaches Ausprobieren ohne zu verstehen WAS passiert → Zeitverschwendung, User-Frustration, unprofessionell.
+
+**PFLICHT-Workflow bei unbekannten Fehlern:**
+1. **Stack-Trace GENAU lesen** - Welche Datei, welche Zeile, welche Komponente?
+2. **RECHERCHIEREN** - Radix UI Docs, React Docs, GitHub Issues durchsuchen
+3. **Root Cause verstehen** - WARUM passiert der Fehler? (z.B. `Slot` erwartet genau 1 Kind)
+4. **DANN erst fixen** - Mit Verständnis der Ursache
+
+**Beispiel `React.Children.only` Fehler:**
+- ❌ **FALSCH:** 3x verschiedene Wrapper ausprobieren ohne zu wissen warum
+- ✅ **RICHTIG:** Radix Slot Docs lesen → verstehen dass `asChild` genau 1 Kind braucht → gezielt fixen
+
+**Merksatz:** _"Ein Entwickler der recherchiert ist 10x schneller als einer der rumprobiert."_
 
 ---
 
