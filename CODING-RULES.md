@@ -410,6 +410,9 @@ body.capacitor [data-card="true"] svg {
 
 ---
 
+### 12.4 Planungen bzw Validierung - Richtigkeit und Sinnhaftigkeit von Planungen bzw Phasen hinterfragen
+Bevor du anfängst du die Planung zu implementieren, validiere Sie bzw die Phase bzw. die Planung ob die Sinn macht bzw ob sie richtig ist, ob alles korrekt geplant wurde oder ob zu grob geschaut wurde 
+
 ## ✅ Quick Checklist
 
 Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, max 700 lines/file.
