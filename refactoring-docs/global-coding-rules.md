@@ -45,6 +45,16 @@ This guide provides comprehensive coding rules for building robust, performant, 
     - ⚠️ **In Dialogen/Modals:** KEIN `revalidateTag()` → Optimistic UI Pattern!
     - ✅ **Auf Page-Ebene:** `revalidatePath('/')` oder `revalidateTag('tag')` ist OK
 *   **Rule 1.3.3 (Security):** Always validate input + authenticate with `getCurrentProfile()`.
+*   **Rule 1.3.4 (No Router Refresh in Modals):** In Dialog/Modal-Flows keine `revalidatePath()` oder `revalidateTag()` nutzen. Das triggert Router-Refresh und schließt Overlays. Stattdessen Optimistic UI + lokale Updates oder Events.
+*   **Rule 1.3.5 (Cache-Tag-Komplettheit & Client-Cache-Sync):**
+    - Mutations revalidieren **alle** betroffenen Tags (z. B. Schedule + Active-Plan).
+    - Client-Caches (Memory/localStorage) müssen invalidiert oder versioniert werden.
+    - Kurzbeispiel:
+      ```typescript
+      revalidateTag(`training-schedule-${profileId}`);
+      revalidateTag(`active-plan-schedule-${profileId}`);
+      // client: bump local cache version flag
+      ```
 
 ### 1.4. 🚨 Optimistic UI Pattern (MANDATORY für Dialoge/Modals)
 
