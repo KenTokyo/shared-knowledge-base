@@ -249,6 +249,7 @@ Page-Components: KEINE Data-Fetching-Logic die Header blockiert!
 *   **5.29 Single Source of Truth:** Link-Tabellen für alle Reads/Writes
 *   **5.30 Toolbar Inside-Click Guard:** `data-*` Marker für Toolbar-Bereiche, keine Style-Klassen für Logik
 *   **5.31 Production Persistence:** Dateibasierte SQLite-Datenbanken im Server-Betrieb dürfen **nie** auf ephemeral Container-Filesystem liegen. Immer persistentes Volume oder Remote-DB verwenden und Speicherort dokumentieren.
+*   **5.32 Library Callback Contracts:** Library-Callbacks nie per Typ-Cast "glattziehen". Wenn Statement-Objekte erwartet werden, müssen `{ sql, params }` geliefert werden, sonst drohen Runtime-Fehler.
 
 ---
 
