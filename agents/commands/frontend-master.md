@@ -231,7 +231,6 @@ className="shadow-[0_0_15px_...] hover:shadow-[0_0_25px_...]"
 
 ## 🚫 Verbotene Patterns
 
-❌ **Keine Framer Motion** - Nur CSS/Tailwind Animationen
 ❌ **Keine Endlos-Animationen** - Kein `animate-pulse`, `animate-shimmer`, `animate-spin` (außer bei Loading-Indikatoren)
 ❌ **Keine hardcodierten Farben** - Immer Theme-aware (`dark:...`)
 ❌ **Kein `npm run dev/build`** - Nur `npx tsc --noEmit`
