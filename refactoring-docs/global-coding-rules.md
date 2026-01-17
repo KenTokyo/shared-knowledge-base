@@ -143,6 +143,7 @@ if (result.success) setItems(prev => [...prev, result.data]);
 *   **Rule 3.3.2 (Accurate Dependency Arrays):** Accurate dependency array für `useEffect`, `useCallback`, `useMemo`.
 *   **Rule 3.3.3 (Avoid Unnecessary Effects):** ❌ `useEffect` nicht für Logik die aus props/state abgeleitet werden kann.
 *   **Rule 3.3.4 (Stable Effect Callbacks):** Callbacks aus Props in useEffect müssen stabil sein (`useCallback`) oder Guard-Checks haben.
+*   **Rule 3.3.5 (Persisted Preferences Init):** Persistierte UI-Preferences, die den Initial-Render steuern (z.B. Animationen, Theme, Motion), müssen synchron initialisiert werden (localStorage + System-Preference), um falsche Zwischenzustände zu vermeiden.
 
 ### 3.4. Error Handling
 *   **Rule 3.4.1 (Error Boundaries):** Kritische Trees wrappen, Fallback UI zeigen.
