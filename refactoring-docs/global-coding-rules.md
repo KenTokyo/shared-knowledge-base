@@ -137,6 +137,7 @@ if (result.success) setItems(prev => [...prev, result.data]);
     * `React.memo` für components die nicht re-rendern sollen wenn props gleich
 *   **Rule 3.2.2 (UI Blocking):** Expensive computations nicht direkt im render body. `useMemo` oder web worker nutzen.
 *   **Rule 3.2.3 (Capacitor WebView Animation Guard):** Reveal animations die `transform`, `opacity`, `filter` kombinieren auf großen card grids vermeiden bei Capacitor.
+*   **Rule 3.2.4 (Scoped Repaint Fixes):** Repaint-Workarounds (z. B. `translateZ(0)`/`force-repaint`) nur beim Mount und am kleinsten Container einsetzen; keine globalen Body-Repaints bei Tab-Wechsel/Scroll.
 
 ### 3.3. Effects & Lifecycle
 *   **Rule 3.3.1 (Effect Cleanup):** IMMER cleanup function in `useEffect` bei subscriptions, timers, event listeners.
