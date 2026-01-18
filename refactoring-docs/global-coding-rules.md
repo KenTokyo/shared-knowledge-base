@@ -144,6 +144,7 @@ if (result.success) setItems(prev => [...prev, result.data]);
 *   **Rule 3.3.2 (Accurate Dependency Arrays):** Accurate dependency array für `useEffect`, `useCallback`, `useMemo`.
 *   **Rule 3.3.3 (Avoid Unnecessary Effects):** ❌ `useEffect` nicht für Logik die aus props/state abgeleitet werden kann.
 *   **Rule 3.3.4 (Stable Effect Callbacks):** Callbacks aus Props in useEffect müssen stabil sein (`useCallback`) oder Guard-Checks haben.
+*   **Rule 3.3.5 (Effect Re-entrancy Guard):** Effekte, die State verändern, dürfen nicht von genau diesem State abhängen; nutze Ref-Guards oder Start-Flags, um doppelte Loads und UI-Jitter zu verhindern.
 ### 3.4. Error Handling
 *   **Rule 3.4.1 (Error Boundaries):** Kritische Trees wrappen, Fallback UI zeigen.
 *   **Rule 3.4.2 (Error Logging):** Fehler mit Detail-Text sichtbar loggen.
@@ -186,6 +187,7 @@ Tab-Komponenten dürfen **niemals eigene Daten-Fetches** durchführen. Parent fe
 ### 5.2. CSS & Positioning
 *   **Rule 5.2.1 (Scoped Positioning):** Parent braucht `position: relative` für contained `absolute` children.
 *   **Rule 5.2.2 (Responsive Overlays):** `clamp()` für proportional sizing, nicht breakpoint toggles.
+*   **Rule 5.2.3 (Glass Overflow Guard):** Bei `backdrop-filter`/Glow-Layern interaktive Controls nicht in `overflow-hidden` clippen; Blur/Glow in separaten Layer, Content ohne Clip (`overflow-visible`/`overflow-clip`).
 
 ### 5.3. 🎨 Design-Ästhetik: Liquid Glass
 > **Vollständige Doku:** `shared-docs/design/liquid-glass-guide.md`
