@@ -153,6 +153,7 @@ if (result.success) setItems(prev => [...prev, result.data]);
 ### 3.5. Component Styling
 *   **Rule 3.5.1 (Responsive Children):** Child components müssen mit parent resize skalieren.
 *   **Rule 3.5.2 (Empty-State Centering):** Innerhalb content width zentrieren, nicht viewport.
+*   **Rule 3.5.3 (Sidebar-Aware Centering):** Zentrierte Empty-States und Panels nutzen die gleiche Content-Frame-Breite wie der Editor (z.B. `contentMaxWidth` + Sidebar-CSS-Variablen), nicht absolute 50%-Positionierung gegen den Viewport.
 
 ---
 
@@ -258,6 +259,11 @@ Page-Components: KEINE Data-Fetching-Logic die Header blockiert!
 *   **6.26 Unique Default Names:** Client berechnet nächsten freien Namen vor Erstellen
 *   **6.27 Single Source of Truth:** Link-Tabellen für alle Reads/Writes
 *   **6.28 Toolbar Inside-Click Guard:** `data-*` Marker für Toolbar-Bereiche
+
+### 6.29 🔴 Media Autoplay Recovery & Volume Resume
+Medien-Playback braucht eine **einheitliche State-Machine** über Prime/Provider hinweg:
+- Autoplay-Block muss einen **sichtbaren Retry-Pfad** bei User-Geste haben
+- Volume/Mute-Änderungen müssen **Playback revalidieren** (Auto-Resume bei > 0)
 
 ---
 
