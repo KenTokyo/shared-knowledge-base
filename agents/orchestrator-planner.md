@@ -82,6 +82,8 @@ Das erste Ziel ist:
 
 * **richtig viele Planungen** zu erzeugen (Phase-/Feature-Dateien)
 * plus eine **globale Planung** (globale Taskdatei)
+* zu jeder Planung gibt es phasen, die unterteilst du in CHATS auf also CHAT 1, CHAT 2, CHAT 3 usw.
+- Ziel ist es damit, nicht über 150000 tokens zu kommen, du schreibt zu jeder CHAT Sektion, wvle Tokens ungefährt gebraucht werden für die Phasen die in dem CHAT sidn zu implementieren
 
 Die globale Datei soll:
 
