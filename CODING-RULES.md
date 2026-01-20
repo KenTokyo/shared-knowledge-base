@@ -303,9 +303,33 @@ Bevor du anfängst eine Planung zu implementieren, validiere ob sie Sinn macht u
 
 ---
 
+## 🔴 Regel 13: TypeScript-Fehler (KRITISCH!)
+
+### 13.1 🚨 ZERO TOLERANCE für TypeScript-Fehler
+- **NACH JEDER PHASE:** `npx tsc --noEmit` ausführen
+- **NIEMALS** TypeScript-Fehler ignorieren oder "später fixen"
+- **SOFORT** beheben bevor zur nächsten Phase gegangen wird
+- TypeScript-Fehler sind **BLOCKER** - keine Ausnahmen!
+
+### 13.2 TypeScript-Check Workflow
+```powershell
+# Nach jeder Änderung
+npx tsc --noEmit
+
+# Bei Fehlern: SOFORT fixen, nicht weitermachen!
+```
+
+### 13.3 Häufige Fehler-Kategorien
+- **TS2307:** Cannot find module → Paket installieren
+- **TS2322:** Type mismatch → Interface/Type anpassen
+- **TS2339:** Property does not exist → Type erweitern
+- **TS18048:** Possibly undefined → Optional chaining oder Guard
+
+---
+
 ## ✅ Quick Checklist
 
-Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, max 700 lines/file.
+Vor Commit: `npx tsc --noEmit` (🔴 MUSS 0 FEHLER HABEN!), ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, max 700 lines/file.
 
 **⚡ Bei CRUD in Dialogen:** Optimistic UI! KEIN `revalidateTag()` → Instant UI.
 
@@ -313,6 +337,88 @@ Vor Commit: `npx tsc --noEmit`, ungenutzter Code entfernt, Mobile-First, Edge Ca
 - ❌ `backdrop-blur-*` (auf Mobile deaktiviert)
 - ❌ Ghost-Blobs? → Siehe `capacitor-performance-rules.md`
 - ✅ Solide Hintergründe: `bg-[#f8f8f8]` statt `bg-white/95`
+
+---
+
+## 🤖 Regel 14: LLM-Kontextmanagement (KRITISCH!)
+
+### 14.1 🚨 TOKEN-LIMIT WARNUNG
+
+**ACHTUNG:** Nach ~150.000 Tokens beginnen LLMs zu halluzinieren und Fehler zu machen!
+
+| Kontext | Limit | Aktion |
+|---------|-------|--------|
+| Planungs-Chat | 4 Planungen max | Neuen Chat öffnen |
+| Coding-Chat | ~150.000 Tokens | STOPP, neuen Chat öffnen |
+| Kontext-Verlust | ~200.000 Tokens | Halluzinationen wahrscheinlich |
+
+### 14.2 Neuer Chat Workflow
+
+**Bei Erreichen des Token-Limits:**
+1. Aktuellen Stand in MASTER-ORCHESTRATOR.md dokumentieren
+2. Migrations-Tracker in der Phase-Datei aktualisieren
+3. Zusammenfassung für nächsten Chat erstellen
+4. Neuen Chat mit folgenden Dateien starten:
+   - MASTER-ORCHESTRATOR.md
+   - Relevante GLOBAL-TASK-LIST
+   - Aktuelle Phase-Datei
+
+### 14.3 Markierungssystem für migrierte Dateien
+
+**JEDE migrierte Datei MUSS diesen Header haben:**
+```typescript
+/**
+ * @migration-status MIGRATED
+ * @migration-source elevate-me-4.0/app/[original-pfad]
+ * @migration-phase [16-25]
+ * @migration-date YYYY-MM-DD
+ * @migration-chat CHAT-[1/2/...]
+ */
+```
+
+**Status-Werte:**
+- ❌ OFFEN - Noch nicht begonnen
+- ⏳ IN_ARBEIT - Aktuell in Bearbeitung
+- ✅ MIGRIERT - Vollständig migriert
+
+### 14.4 Warum ist das wichtig?
+
+LLMs verlieren Kontext nach ~150k Tokens. Dieses System stellt sicher:
+1. **Jeder neue Chat weiss sofort, was migriert wurde**
+2. **Keine doppelte Arbeit durch fehlende Information**
+3. **Einheitliche Markierung für alle Dateien**
+4. **Konsistente Qualität ohne Halluzinationen**
+
+### 14.5 Chat-Aufbau Template
+
+```
+ULTRATHINK
+
+Lies bitte:
+1. docs/react-native-migration/MASTER-ORCHESTRATOR.md
+2. docs/react-native-migration/GLOBAL-TASK-LISTS/[BEREICH]-TASKS.md
+3. docs/react-native-migration/phases/[bereich]/[phase].md
+
+Aktueller Stand: Phase [X], CHAT [Y]
+Aufgabe: Implementiere die Tasks aus CHAT [Y]
+
+Wichtig: Maximal 150.000 Tokens!
+```
+
+---
+
+## ✅ Quick Checklist
+
+Vor Commit: `npx tsc --noEmit` (🔴 MUSS 0 FEHLER HABEN!), ungenutzter Code entfernt, Mobile-First, Edge Cases, Server Actions `"use server"`, max 700 lines/file.
+
+**⚡ Bei CRUD in Dialogen:** Optimistic UI! KEIN `revalidateTag()` → Instant UI.
+
+**📱 Performance-Kritisch:**
+- ❌ `backdrop-blur-*` (auf Mobile deaktiviert)
+- ❌ Ghost-Blobs? → Siehe `capacitor-performance-rules.md`
+- ✅ Solide Hintergründe: `bg-[#f8f8f8]` statt `bg-white/95`
+
+**🤖 LLM-Kontext:** Nach 150k Tokens → NEUEN CHAT öffnen!
 
 ---
 
