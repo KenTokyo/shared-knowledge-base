@@ -190,6 +190,7 @@ Tab-Komponenten dürfen **niemals eigene Daten-Fetches** durchführen. Parent fe
 *   **Rule 5.2.1 (Scoped Positioning):** Parent braucht `position: relative` für contained `absolute` children.
 *   **Rule 5.2.2 (Responsive Overlays):** `clamp()` für proportional sizing, nicht breakpoint toggles.
 *   **Rule 5.2.3 (Glass Overflow Guard):** Bei `backdrop-filter`/Glow-Layern interaktive Controls nicht in `overflow-hidden` clippen; Blur/Glow in separaten Layer, Content ohne Clip (`overflow-visible`/`overflow-clip`).
+*   **Rule 5.2.4 (Fixed UI Safe-Area Guard):** Fixed-Overlays/Buttons auf Mobile müssen `env(safe-area-inset-*)` berücksichtigen (Top/Left/Bottom), da `body` Padding keine Wirkung auf `position: fixed` hat.
 
 ### 5.3. 🎨 Design-Ästhetik: Liquid Glass
 > **Vollständige Doku:** `shared-docs/design/liquid-glass-guide.md`
