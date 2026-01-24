@@ -266,6 +266,10 @@ Medien-Playback braucht eine **einheitliche State-Machine** über Prime/Provider
 - Autoplay-Block muss einen **sichtbaren Retry-Pfad** bei User-Geste haben
 - Volume/Mute-Änderungen müssen **Playback revalidieren** (Auto-Resume bei > 0)
 
+### 6.30 🔴 Platform Guard for Browser-only Storage APIs
+- Browser-only APIs (z. B. `navigator.storage.persist`, OPFS) **immer** per Platform-Check absichern.
+- In nativen WebViews (Capacitor) **keine** Browser-Dialogs/Buttons anzeigen; stattdessen klare Hinweise auf den nativen SQLite-Init geben.
+
 ---
 
 **🔗 Weiterführende Docs:**
