@@ -270,6 +270,11 @@ Medien-Playback braucht eine **einheitliche State-Machine** über Prime/Provider
 - Browser-only APIs (z. B. `navigator.storage.persist`, OPFS) **immer** per Platform-Check absichern.
 - In nativen WebViews (Capacitor) **keine** Browser-Dialogs/Buttons anzeigen; stattdessen klare Hinweise auf den nativen SQLite-Init geben.
 
+### 6.31 🔴 Native Storage Fallback Guard
+- In nativen Umgebungen (`platform === 'capacitor'` oder `isNative === true`) **keine stillen** Fallbacks auf Browser-Storage (OPFS/IndexedDB/Memory) ohne explizites Opt-in.
+- Bei Plugin-Fehlern Init-Stage + Fehlergrund sichtbar machen (UI/Panel) und konkrete Sync/Build-Hinweise geben.
+- Browser-Fallbacks nur nutzen, wenn `platform === 'browser'` und Persistenz-Checks explizit bestanden sind.
+
 ---
 
 **🔗 Weiterführende Docs:**
