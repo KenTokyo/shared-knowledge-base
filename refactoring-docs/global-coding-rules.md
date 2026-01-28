@@ -138,6 +138,7 @@ if (result.success) setItems(prev => [...prev, result.data]);
 *   **Rule 3.2.2 (UI Blocking):** Expensive computations nicht direkt im render body. `useMemo` oder web worker nutzen.
 *   **Rule 3.2.3 (Capacitor WebView Animation Guard):** Reveal animations die `transform`, `opacity`, `filter` kombinieren auf großen card grids vermeiden bei Capacitor.
 *   **Rule 3.2.4 (Scoped Repaint Fixes):** Repaint-Workarounds (z. B. `translateZ(0)`/`force-repaint`) nur beim Mount und am kleinsten Container einsetzen; keine globalen Body-Repaints bei Tab-Wechsel/Scroll.
+*   **Rule 3.2.5 (High-Frequency Interaction Guard):** Bei Drag/Pan/Hover keine Parent-State-Updates, wenn Canvas/Heavy-Layer im Tree haengen. Drag-Updates lokal (Refs/RAF) halten und Objekt-Props (z. B. Background) memoizen, damit Effekte nur bei echten Aenderungen laufen.
 
 ### 3.3. Effects & Lifecycle
 *   **Rule 3.3.1 (Effect Cleanup):** IMMER cleanup function in `useEffect` bei subscriptions, timers, event listeners.
@@ -264,6 +265,15 @@ Page-Components: KEINE Data-Fetching-Logic die Header blockiert!
 Medien-Playback braucht eine **einheitliche State-Machine** über Prime/Provider hinweg:
 - Autoplay-Block muss einen **sichtbaren Retry-Pfad** bei User-Geste haben
 - Volume/Mute-Änderungen müssen **Playback revalidieren** (Auto-Resume bei > 0)
+
+### 6.30 🔴 Platform Guard for Browser-only Storage APIs
+- Browser-only APIs (z. B. `navigator.storage.persist`, OPFS) **immer** per Platform-Check absichern.
+- In nativen WebViews (Capacitor) **keine** Browser-Dialogs/Buttons anzeigen; stattdessen klare Hinweise auf den nativen SQLite-Init geben.
+
+### 6.31 🔴 Native Storage Fallback Guard
+- In nativen Umgebungen (`platform === 'capacitor'` oder `isNative === true`) **keine stillen** Fallbacks auf Browser-Storage (OPFS/IndexedDB/Memory) ohne explizites Opt-in.
+- Bei Plugin-Fehlern Init-Stage + Fehlergrund sichtbar machen (UI/Panel) und konkrete Sync/Build-Hinweise geben.
+- Browser-Fallbacks nur nutzen, wenn `platform === 'browser'` und Persistenz-Checks explizit bestanden sind.
 
 ---
 
