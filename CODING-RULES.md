@@ -365,14 +365,11 @@ Vor Commit: `npx tsc --noEmit` (🔴 MUSS 0 FEHLER HABEN!), ungenutzter Code ent
 
 ### 14.3 Markierungssystem für migrierte Dateien
 
-**JEDE migrierte Datei MUSS diesen Header haben:**
+**JEDE migrierte Datei MUSS diesen Header haben falls TrackMe AI projekt:**
 ```typescript
 /**
  * @migration-status MIGRATED
- * @migration-source elevate-me-4.0/app/[original-pfad]
- * @migration-phase [16-25]
- * @migration-date YYYY-MM-DD
- * @migration-chat CHAT-[1/2/...]
+ * @migration-source trackme-ai-backend/app/[original-pfad]
  */
 ```
 
