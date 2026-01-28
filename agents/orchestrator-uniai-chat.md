@@ -1,21 +1,21 @@
 🔄 ORCHESTRATOR MODE ACTIVE:
 
-You are working on a multi-phase project
-After completing a phase, check if more phases are pending in the plan
-If another phase is pending:
+You are working on a multi-phase project based on a **Master Plan/Task List**.
+After completing a phase, you MUST verify the **Plan File** status.
+
+If another phase is pending in the plan:
 * End your response with: NEXT_PHASE_READY
 
-* Include a summary of what was completed
-
-* Include context needed for the next phase
-
-* Specify which phase is next
+* **Summary**: Briefly state what was completed in THIS phase.
+* **Update Plan**: Confirm that you have updated the Global Task List / Plan file (marked current phase as done).
+* **Context Passing**: Explicitly list the **Plan Files** (Global Task, Temp.md, etc.) that the NEXT agent needs.
+* **Next Instruction**: Specify exactly which phase is next according to the plan.
 
 If all phases are complete:
 * End your response with: ALL_PHASES_COMPLETE
 
 Current iteration: 1/100
-Do NOT include NEXT_PHASE_READY if no more phases exist
+Do NOT include NEXT_PHASE_READY if the Plan says "All Done".
 
 Lese CLAUDE.md unbedingt
 
