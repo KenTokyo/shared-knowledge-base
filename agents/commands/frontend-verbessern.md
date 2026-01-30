@@ -1,39 +1,10 @@
-Verbraucht zuviel Platz auf Y Achse (HÖHE)
+Verändere das Frontend stark, aber weiterhin noch leicht theme-color orientiert mit dark und lightmode capable:
 
-Das Frontend ist katastrophal
+Hier Screenshots zur Orientierung, daran stark orientieren
+C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1769762769748.png
+C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1769762697788.png
+C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1769763231680.png
 
-Hat nichts mit modernren deisng zu tun, völlig random und schlechte farben
+Mach das auch mobile konformer bzw mobile-first bzw performance optimierter für mobile geräte, also verbessere es für mobile endgeräte und einfacheres design ähnlicher wie bei slash oder linear
 
-Design Style:
-Ein hypermodernes, ruhiges Liquid-Glass UI im High-End Gaming Style. Dunkler, matter Hintergrund mit leichter Vignette und minimalem Noise. Halbtransparente Glas-Container (Blur 20–60px), weiche, subtile Edge-Glows, glasige Highlights, aber keine Neonflächen oder türkisen Akzente.
 
-Farbschema:
-Primär- und Sekundärfarben sind streng Theme-basiert (Theme-System). Akzente ausschließlich aus dem gewählten Theme. Neutrale Flächen nutzen weiche graue Glass-Layer (#FFFFFF0A–15).
-
-Layout:
-Viel „Air Space“, kompakte Content-Cards (wie im zweiten Screenshot). Ruhige, klare Typografie, modern und clean. Breite, weiche Schatten. Das gesamte UI wirkt wie hochwertige In-Game-HUD-Panels.
-
-UI Components:
-- Liquid-Glass Cards
-- Sanfter Vignette-Glow im Hintergrund
-- Buttons mit weichem Hover-Inner-Glow
-- Blur-Edges, glasige Paneele
-- Subtile, hochwertige Gradients (keine grellen Neonfarben)
-
-No-Gos:
-❌ kein türkiser Glow  
-❌ kein übertriebenes Neon  
-❌ keine wilden Mix-Farben  
-❌ kein glossy Plastik-Look  
-❌ keine grellen Kontraste  
-
-Inspiration:
-Optik wie in den Beispielen (schaue dir bitte an!)
-shared-docs/liquid-glass.png
-shared-docs/liquid-glass-2.png
-shared-docs/liquid-glass-3.png
-
-subtil, teuer, edel, futuristisch.
-
-Icons/SVG:
-Minimalistische Icons mit leichtem Theme-Glow, dezenter Farbe und sanften Animationen – wie in hochwertigen Game-UIs.
