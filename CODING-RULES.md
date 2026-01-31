@@ -202,4 +202,4 @@ Bevor du anfängst eine Planung zu implementieren, validiere ob sie Sinn macht u
 | Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
 | Liquid Glass Design for Tailwind CSS | `shared-docs/design/liquid-glass-guide.md` |
-| DB Testing | `shared-docs/database-testing-guide.md` |
+| DB Testing for Postgres | `shared-docs/database-testing-guide.md` |
