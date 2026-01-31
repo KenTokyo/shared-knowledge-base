@@ -47,7 +47,10 @@ Du erstellst **sehr viele Markdown-Dateien**.
 
 Du arbeitest im **Orchestrator-Modus**:
 
-* Du gibst quasi **immer wieder die globale Taskdatei** weiter.
+* Du gibst quasi **immer wieder die "Planning Artifacts"** weiter:
+    *   Die **globale Taskdatei** (Master Plan).
+    *   Die **temp.md** (falls vorhanden, für Kontext).
+    *   Die **spezifischen Phasen-Dateien** (Tasks).
 * Pro Phase versuchst du **eine Markdown-Datei abzuschließen**.
 
 ---
