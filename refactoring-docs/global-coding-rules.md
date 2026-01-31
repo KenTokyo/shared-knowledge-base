@@ -1,4 +1,7 @@
-﻿# Global Coding Rules
+﻿VORSICHT, manche CODING-RULES beziehen sich nur auf NEXT JS, 
+nicht für REACT NATIVE, bitte achte darauf, wo du gerade arbeitest, auch ist Tailwind nicht für React Native, sondern für Next JS, also Styling Guides etc. sind für Next JS, nicht für React Native
+
+# Global Coding Rules
 
 Comprehensive coding rules for robust, performant, and maintainable applications. Covers Next.js App Router, React best practices, and custom design patterns.
 
