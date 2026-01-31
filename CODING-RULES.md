@@ -21,9 +21,36 @@ Wenn du erkennst, dass wir gerade in eine **schlechte technische Richtung** abdr
 
 Wenn nötig, sag bitte klar:
 
-> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden.“** 🔧🔥
+> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden."** 🔧🔥
 
 Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀 Nutze auch das Internet, falls du spürst, das könnte in die falsche Richtung gehen und ob es nicht schon jemand gibt, der das Problem schon gelöst hat. Denn sobald unser Grundgerüst die Architektur falsch ist, werden wir immer wieder auf Probleme stoßen. 🔧🔥
+
+---
+
+### 🔴 REGEL 0: Anwender-Fehler vs. Code-Fehler (KRITISCH!)
+
+**BEVOR du einen Fehler fixst, IMMER zuerst prüfen:**
+
+| Frage | Wenn JA → |
+|-------|-----------|
+| Hat der User den Befehl im **falschen Verzeichnis** ausgeführt? | → **Kein Code-Fix nötig!** Hinweis geben. |
+| Hat der User **vergessen** etwas zu installieren/starten? | → **Kein Code-Fix nötig!** Checklist geben. |
+| Ist die Fehlermeldung ein **bekanntes Setup-Problem**? | → **Kein Code-Fix nötig!** Docs verlinken. |
+| Läuft ein **anderer Prozess** auf demselben Port? | → **Kein Code-Fix nötig!** Kill-Befehl geben. |
+
+**NIEMALS Workarounds für Anwender-Fehler bauen!**
+
+**Beispiel - WAS ICH HÄTTE TUN SOLLEN:**
+```
+❌ FALSCH: "Ich erstelle eine App.tsx im Root als Workaround"
+✅ RICHTIG: "Von welchem Verzeichnis hast du 'expo start' ausgeführt?
+            Bei Monorepos musst du im App-Verzeichnis sein: cd apps/mobile"
+```
+
+**Bei Fehlermeldungen IMMER nachfragen:**
+1. Von welchem Verzeichnis wurde der Befehl ausgeführt?
+2. Welcher Befehl genau wurde verwendet (`npm start` vs `expo start`)?
+3. Wurden alle Dependencies installiert?
 
 ## 🚨 WICHTIG: Framework-spezifische Regeln
 
@@ -180,9 +207,52 @@ Bevor du anfängst eine Planung zu implementieren, validiere ob sie Sinn macht u
 
 ---
 
-## 🤖 Regel 9: LLM-Kontextmanagement (KRITISCH!)
+## 🔴🔴🔴 Regel 9: MANDATORY VALIDATION (NEU - KRITISCH!)
 
-### 9.1 🚨 TOKEN-LIMIT WARNUNG
+### 9.1 🚨 NACH JEDER ÄNDERUNG VALIDIEREN
+
+**Ich (Claude) MUSS nach JEDER Code-Änderung diese Checks durchführen:**
+
+| Check | Befehl | Wann |
+|-------|--------|------|
+| **TypeScript** | `cd apps/mobile && npx tsc --noEmit` | Nach JEDER Änderung |
+| **Bundling** | `cd apps/mobile && npx expo start --web` | Nach Import-Änderungen |
+
+### 9.2 🚨 Monorepo-Validierung
+
+**KRITISCH:** In Monorepos MUSS die Validierung im RICHTIGEN Verzeichnis erfolgen!
+
+```bash
+# ❌ FALSCH - vom Root
+npx tsc --noEmit
+
+# ✅ RICHTIG - im App-Verzeichnis
+cd apps/mobile && npx tsc --noEmit
+```
+
+### 9.3 🚨 Bundling-Check Workflow
+
+**Nach Import/Export-Änderungen:**
+1. Metro stoppen falls läuft
+2. `cd apps/mobile && npx expo start --web`
+3. Warten auf "Web Bundling complete" oder Fehler
+4. Bei Fehler → STOPP, analysieren, fixen
+5. Erst bei Erfolg → Änderung abgeschlossen
+
+### 9.4 Bei Fehler: STOPP-Protokoll
+
+1. **STOPP** - Keine weiteren Änderungen
+2. **ANALYSIERE** - Root Cause verstehen (nicht raten!)
+3. **RECHERCHIERE** - Docs/Issues wenn unklar
+4. **FIXE** - Mit Verständnis der Ursache
+5. **VALIDIERE** - Alle Checks erneut
+6. **ERST DANN** - Weitermachen
+
+---
+
+## 🤖 Regel 10: LLM-Kontextmanagement (KRITISCH!)
+
+### 10.1 🚨 TOKEN-LIMIT WARNUNG
 
 **ACHTUNG:** Nach ~150.000 Tokens beginnen LLMs zu halluzinieren und Fehler zu machen!
 
@@ -192,7 +262,7 @@ Bevor du anfängst eine Planung zu implementieren, validiere ob sie Sinn macht u
 | Coding-Chat | ~150.000 Tokens | STOPP, neuen Chat öffnen |
 | Kontext-Verlust | ~200.000 Tokens | Halluzinationen wahrscheinlich |
 
-### 9.2 Neuer Chat Workflow
+### 10.2 Neuer Chat Workflow
 
 **Bei Erreichen des Token-Limits:**
 1. Aktuellen Stand in MASTER-ORCHESTRATOR.md dokumentieren
