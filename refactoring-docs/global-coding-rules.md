@@ -1,23 +1,21 @@
-﻿VORSICHT, manche CODING-RULES beziehen sich nur auf NEXT JS, 
-nicht für REACT NATIVE, bitte achte darauf, wo du gerade arbeitest, auch ist Tailwind nicht für React Native, sondern für Next JS, also Styling Guides etc. sind für Next JS, nicht für React Native
+# Global Coding Rules (UNIVERSELL)
 
-# Global Coding Rules
-
-Comprehensive coding rules for robust, performant, and maintainable applications. Covers Next.js App Router, React best practices, and custom design patterns.
+Universelle Coding-Regeln für robuste, performante und wartbare Anwendungen. LLM-optimiert.
 
 ---
 
-## 📱 Projekt-Spezifische Regeln
+## 🚨 WICHTIG: Framework-spezifische Regeln
 
-**React Native / Expo Projekte:**
-→ Lese zusätzlich: `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` (kompakt, ~400 Zeilen)
-→ Enthält: List Performance, Animation, Navigation, State Architecture, UI Patterns
+**BEVOR du weiter liest, identifiziere dein Projekt-Typ und lese die entsprechenden Regeln:**
 
-**Next.js Projekte:**
-→ Abschnitte 2-6 in diesem Dokument gelten primär für Next.js App Router
+| Projekt-Typ | Regeln lesen |
+|-------------|--------------|
+| **React Native / Expo** | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
+| **Next.js** | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
+| **Capacitor** | `shared-docs/performance/capacitor-performance-rules.md` |
+| **Electron** | Electron-spezifische Docs in `shared-docs/` |
 
-**Capacitor Projekte:**
-→ Lese zusätzlich: `shared-docs/performance/capacitor-performance-rules.md`
+**Die folgenden Regeln gelten UNIVERSELL für alle Frameworks.**
 
 ---
 
@@ -45,7 +43,7 @@ Comprehensive coding rules for robust, performant, and maintainable applications
 - Konsistentes, vorhersagbares Projekt-Layout verwenden
 - Code nach Feature/Screen gruppieren; shared utilities minimal halten
 - Einfache, offensichtliche Entry Points schaffen
-- **Shared Structure First:** Vor Scaffolding mehrerer Files gemeinsame Struktur identifizieren (Layouts, Templates, Provider, shared Components)
+- **Shared Structure First:** Vor Scaffolding mehrerer Files gemeinsame Struktur identifizieren
 - ❌ Duplikation die gleichen Fix an mehreren Stellen erfordert ist Code-Smell
 
 ### 1.2 Architektur (Architecture)
@@ -73,7 +71,7 @@ Comprehensive coding rules for robust, performant, and maintainable applications
 - Klare, deklarative Konfiguration bevorzugen (JSON/TypeScript Types)
 
 ### 1.7 Platform Use
-- Platform-Konventionen direkt und einfach nutzen (Next.js, React, Tailwind)
+- Platform-Konventionen direkt und einfach nutzen (Next.js, React Native, Expo, etc.)
 - ❌ Nicht über-abstrahieren
 
 ### 1.8 Modifikationen (Modifications)
@@ -92,210 +90,106 @@ Comprehensive coding rules for robust, performant, and maintainable applications
 
 ---
 
-## 2. 🚀 Next.js App Router Rules
+## 2. ⚛️ React Best Practices (UNIVERSELL)
 
-### 2.1. Component Architecture & Boundaries
-*   **Rule 2.1.1 (Server vs. Client):** Components sind **Server Components by default**. `"use client"` nur für Interaktivität.
-*   **Rule 2.1.2 (Placement):** `"use client"` an "leaf" des Component Tree, nicht in Root Layouts.
-*   **Rule 2.1.3 (Isolate Interactivity):** Interaktive Logik in eigene Client Component extrahieren.
-*   **Rule 2.1.4 (Server as Children):** Server Components als `children` an Client Components übergeben.
-*   **Rule 2.1.5 (Third-Party):** Third-Party Components mit client hooks in eigene Client Component wrappen.
+### 2.1. State & Props Management
+- **Rule 2.1.1 (Immutable State):** Functional updates `prev => ...` für sichere Updates
+- **Rule 2.1.2 (List Keys):** Stable, unique `key` für `.map()` items
+- **Rule 2.1.3 (State vs Ref):** `useState` = re-render, `useRef` = no re-render
 
-### 2.2. Data Fetching & Management
-*   **Rule 2.2.1 (Direct Fetching):** Daten direkt in Server Components mit `async/await` fetchen.
-*   **Rule 2.2.2 (Parallel Fetching):** `Promise.all` nutzen um Request Waterfalls zu verhindern.
-*   **Rule 2.2.3 (Automatic Caching):** Next.js cached `fetch`. Für ORMs `React.cache` nutzen.
-*   **Rule 2.2.4 (Dynamic Routes):** Via `params` prop zugreifen. `useSearchParams` in Client Components.
-*   **Rule 2.2.5 (`use()` Hook):** Fetch auf Server starten (kein `await`), Promise an Client, konsumieren mit `use(promise)`.
-*   **Rule 2.2.6 (Suspense):** `use()` Hook immer in `<Suspense>` boundary wrappen.
-*   **Rule 2.2.7 (No useEffect for Initial Data):** ❌ `useEffect` nicht für initial data fetching.
+### 2.2. Performance Optimization
+- **Rule 2.2.1 (Memoization):**
+  * `useMemo` für expensive, pure calculations
+  * `useCallback` für functions als props an memoized children
+  * `React.memo` für components die nicht re-rendern sollen wenn props gleich
+- **Rule 2.2.2 (UI Blocking):** Expensive computations nicht direkt im render body
 
-### 2.3. Data Mutations & State Updates
-*   **Rule 2.3.1 (Server Actions):** Server Actions für alle Mutations.
-*   **Rule 2.3.2 (UI Updates):**
-    - ⚠️ **In Dialogen/Modals:** KEIN `revalidateTag()` → Optimistic UI Pattern!
-    - ✅ **Auf Page-Ebene:** `revalidatePath('/')` oder `revalidateTag('tag')` OK
-*   **Rule 2.3.3 (Security):** Input validieren + `getCurrentProfile()` authentifizieren.
-*   **Rule 2.3.4 (No Router Refresh in Modals):** Keine `revalidatePath()` in Dialog/Modal-Flows.
+### 2.3. Effects & Lifecycle
+- **Rule 2.3.1 (Effect Cleanup):** IMMER cleanup function in `useEffect` bei subscriptions, timers, event listeners
+- **Rule 2.3.2 (Accurate Dependency Arrays):** Accurate dependency array für `useEffect`, `useCallback`, `useMemo`
+- **Rule 2.3.3 (Avoid Unnecessary Effects):** ❌ `useEffect` nicht für Logik die aus props/state abgeleitet werden kann
+- **Rule 2.3.4 (Stable Effect Callbacks):** Callbacks aus Props in useEffect müssen stabil sein
+- **Rule 2.3.5 (Effect Re-entrancy Guard):** Effekte, die State verändern, dürfen nicht von genau diesem State abhängen
 
-### 2.4. 🚨 Optimistic UI Pattern (MANDATORY für Dialoge/Modals)
-```typescript
-// ✅ RICHTIG - Kein revalidateTag(), Daten zurückgeben
-export async function createItemOptimistic(data) {
-  const [created] = await db.insert(items).values(data).returning();
-  return { success: true, data: created };
-}
-// Client: Instant Update
-const result = await createItemOptimistic(data);
-if (result.success) setItems(prev => [...prev, result.data]);
-```
-**Cross-Component:** `window.dispatchEvent(new CustomEvent('itemUpdated', { detail: result.data }))`
-
-### 2.5. Rendering, Loading & Secrets
-*   **Rule 2.5.1 (Suspense):** `loading.tsx` für Route-Level, `<Suspense>` für Component-Level.
-*   **Rule 2.5.2 (Re-trigger):** Unique `key` prop übergeben um Suspense neu zu triggern.
-*   **Rule 2.5.3 (Static vs Dynamic):** `cookies()`, `headers()`, `searchParams` in Server Components vermeiden.
-*   **Rule 2.5.4 (Env Variables):** Nur `NEXT_PUBLIC_*` im Browser exposed.
-*   **Rule 2.5.5 (Static-First):** Statische UI AUSSERHALB Suspense boundaries rendern (0ms render).
+### 2.4. Error Handling
+- **Rule 2.4.1 (Error Boundaries):** Kritische Trees wrappen, Fallback UI zeigen
+- **Rule 2.4.2 (Error Logging):** Fehler mit Detail-Text sichtbar loggen
+- **Rule 2.4.3 (Client Init Visibility):** Kritische Client-Initialisierungen müssen sichtbaren UI-Status bieten
 
 ---
 
-## 3. ⚛️ React Best Practices
+## 3. 🗂️ Component & File Architecture (UNIVERSELL)
 
-### 3.1. State & Props Management
-*   **Rule 3.1.1 (Immutable State):** Functional updates `prev => ...` für sichere Updates.
-*   **Rule 3.1.2 (List Keys):** Stable, unique `key` für `.map()` items.
-*   **Rule 3.1.3 (State vs Ref):** `useState` = re-render, `useRef` = no re-render.
-
-### 3.2. Performance Optimization
-*   **Rule 3.2.1 (Memoization):**
-    * `useMemo` für expensive, pure calculations
-    * `useCallback` für functions als props an memoized children
-    * `React.memo` für components die nicht re-rendern sollen wenn props gleich
-*   **Rule 3.2.2 (UI Blocking):** Expensive computations nicht direkt im render body. `useMemo` oder web worker nutzen.
-*   **Rule 3.2.3 (Capacitor WebView Animation Guard):** Reveal animations die `transform`, `opacity`, `filter` kombinieren auf großen card grids vermeiden bei Capacitor.
-*   **Rule 3.2.4 (Scoped Repaint Fixes):** Repaint-Workarounds (z. B. `translateZ(0)`/`force-repaint`) nur beim Mount und am kleinsten Container einsetzen; keine globalen Body-Repaints bei Tab-Wechsel/Scroll.
-*   **Rule 3.2.5 (High-Frequency Interaction Guard):** Bei Drag/Pan/Hover keine Parent-State-Updates, wenn Canvas/Heavy-Layer im Tree haengen. Drag-Updates lokal (Refs/RAF) halten und Objekt-Props (z. B. Background) memoizen, damit Effekte nur bei echten Aenderungen laufen.
-
-### 3.3. Effects & Lifecycle
-*   **Rule 3.3.1 (Effect Cleanup):** IMMER cleanup function in `useEffect` bei subscriptions, timers, event listeners.
-*   **Rule 3.3.2 (Accurate Dependency Arrays):** Accurate dependency array für `useEffect`, `useCallback`, `useMemo`.
-*   **Rule 3.3.3 (Avoid Unnecessary Effects):** ❌ `useEffect` nicht für Logik die aus props/state abgeleitet werden kann.
-*   **Rule 3.3.4 (Stable Effect Callbacks):** Callbacks aus Props in useEffect müssen stabil sein (`useCallback`) oder Guard-Checks haben.
-*   **Rule 3.3.5 (Effect Re-entrancy Guard):** Effekte, die State verändern, dürfen nicht von genau diesem State abhängen; nutze Ref-Guards oder Start-Flags, um doppelte Loads und UI-Jitter zu verhindern.
-### 3.4. Error Handling
-*   **Rule 3.4.1 (Error Boundaries):** Kritische Trees wrappen, Fallback UI zeigen.
-*   **Rule 3.4.2 (Error Logging):** Fehler mit Detail-Text sichtbar loggen.
-*   **Rule 3.4.3 (Client Init Visibility):** Kritische Client-Initialisierungen müssen sichtbaren UI-Status bieten.
-
-### 3.5. Component Styling
-*   **Rule 3.5.1 (Responsive Children):** Child components müssen mit parent resize skalieren.
-*   **Rule 3.5.2 (Empty-State Centering):** Innerhalb content width zentrieren, nicht viewport.
-*   **Rule 3.5.3 (Sidebar-Aware Centering):** Zentrierte Empty-States und Panels nutzen die gleiche Content-Frame-Breite wie der Editor (z.B. `contentMaxWidth` + Sidebar-CSS-Variablen), nicht absolute 50%-Positionierung gegen den Viewport.
-
----
-
-## 4. 🗂️ Component & File Architecture
-
-### 4.1. Core Philosophy
+### 3.1. Core Philosophy
 **Instant Navigation:** Jede Komponente in **< 5 Sekunden** finden - File mirrors UI hierarchy.
 
-### 4.2. Section-Based Architecture
-```
-app/feature/[param]/
-├── (mainSection)/
-│   ├── (subSection)/
-│   │   └── AktionButton.tsx
-│   └── MainSection.tsx
-└── page.tsx
-```
-❌ **Anti-Pattern:** Flat "components" folder (Junk Drawer)
-
-### 4.3. Naming Conventions
+### 3.2. Naming Conventions
 - `...Button.tsx`, `...Dialog.tsx`, `...Panel.tsx`, `...Section.tsx`
 - 🇩🇪 **German (User-Facing):** `SpeichernButton.tsx`
 - 🇺🇸 **English (Technical):** `ReviewSection.tsx`
 
----
+### 3.3. File Size
+- **Maximal 700 Zeilen Code pro Datei** - Auslagern wenn größer
 
-## 5. 🎬 Advanced Design Patterns
-
-### 5.1. High-Performance Tab Components
-Tab-Komponenten dürfen **niemals eigene Daten-Fetches** durchführen. Parent fetcht, Props weitergeben.
-
-### 5.2. CSS & Positioning
-*   **Rule 5.2.1 (Scoped Positioning):** Parent braucht `position: relative` für contained `absolute` children.
-*   **Rule 5.2.2 (Responsive Overlays):** `clamp()` für proportional sizing, nicht breakpoint toggles.
-*   **Rule 5.2.3 (Glass Overflow Guard):** Bei `backdrop-filter`/Glow-Layern interaktive Controls nicht in `overflow-hidden` clippen; Blur/Glow in separaten Layer, Content ohne Clip (`overflow-visible`/`overflow-clip`).
-
-### 5.3. 🎨 Design-Ästhetik: Liquid Glass
-> **Vollständige Doku:** `shared-docs/design/liquid-glass-guide.md`
-
-- **Tiefe:** `bg-black/40`, `backdrop-blur-xl`, `box-shadow` mit `inset`
-- **Licht als Akzent:** `blur-[50px]` Punkt-Glows, Status-Farben
-- **Muted Buttons:** `orange-500/20` statt `bg-orange-500`!
-- **Light/Dark Mode:** Jedes Element MUSS beide Modi unterstützen
-
-### 5.4. Animation Rules
-*   **Rule 5.4.1 (No Framer Motion):** Nur CSS Transitions oder Tailwind Animations.
-*   **Rule 5.4.2 (No Endless Animations):** Keine Endlos-Animationen außer Loading-Indikatoren.
-*   **Rule 5.4.3 (Interaction-Triggered):** Animationen durch User-Interaktion (`hover:`, `focus:`, `active:`).
+### 3.4. 🚨 Component-Based Architecture
+**NIEMALS Komponenten innerhalb anderer Komponenten definieren!**
+- Performance-Killer (jedes Render neu erstellt) + State-Verlust
 
 ---
 
-## 6. 🚨 General Anti-Patterns & Edge Cases
+## 4. 🚨 General Anti-Patterns & Edge Cases (UNIVERSELL)
 
-### 6.1-6.8 General Rules
-*   **SEO:** Critical content server-rendered
-*   **CLS:** Reserve space with skeletons
-*   **Animation Scope:** Animate content, not layout container
-*   **Animation Staggering:** Staggered, not grouped reveal
-*   **Data Fetching:** Don't fetch all at page level
-*   **Data Batching:** Batch related queries
-*   **Data Waterfall:** Avoid sequential loading
-
-### 6.9 🔴 Context Analysis Before Changes
+### 4.1 Context Analysis Before Changes
 Vor jeder Änderung die letzten 3-4 Tasks analysieren. Niemals bereits gelöste Probleme rückgängig machen!
 
-### 6.10 🔴 MANDATORY Legacy Code Removal
+### 4.2 MANDATORY Legacy Code Removal
 Nach jeder Änderung MUSS ungenutzter Code SOFORT entfernt werden!
 
-### 6.11 Empty States
+### 4.3 Empty States
 Always plan distinct "empty state" views for lists.
 
-### 6.12-6.16 Debugging Rules
-*   **6.12 Dialog-useEffect:** Bei "unsichtbaren" Loading-Indikatoren → useEffects prüfen
-*   **6.13 Systematic Debug:** Layout → Context → Component → useEffects
-*   **6.14 Race Conditions:** localStorage, multiple dependencies, async timing
-*   **6.15 Reference Implementation:** Erst nach funktionierenden ähnlichen Implementierungen suchen
-*   **6.16 Debug Infrastructure:** SOFORT Console-Logs für State-Changes implementieren
+### 4.4 Debugging Rules
+- **Dialog-useEffect:** Bei "unsichtbaren" Loading-Indikatoren → useEffects prüfen
+- **Systematic Debug:** Layout → Context → Component → useEffects
+- **Race Conditions:** localStorage, multiple dependencies, async timing
+- **Reference Implementation:** Erst nach funktionierenden ähnlichen Implementierungen suchen
+- **Debug Infrastructure:** SOFORT Console-Logs für State-Changes implementieren
 
-### 6.17 🔴 Dialog-EventListener-Pattern
-Dialoge über useEffect-EventListener öffnen wenn Trigger in Layout-kritischen Komponenten.
+### 4.5 Universal Component Purity
+Universal-Components bleiben feature-agnostic
 
-### 6.18-6.20 Component Rules
-*   **6.18 Universal Component Purity:** Universal-Components bleiben feature-agnostic
-*   **6.19 Dialog Naming:** `[Feature]Dialog`, `[Feature]View`, `[Feature]Modal`
-*   **6.20 Scroll Height:** `overflow-auto` braucht definierte Höhe! `h-[75vh]` oder `isDialog`-Props
+### 4.6 Single Loading Pipeline
+Kritische Daten-Loading durch zentrale Pipeline, keine unterschiedlichen Loading-Logiken
 
-### 6.21 🔴 will-change Font-Killer
-Niemals `will-change: transform, opacity` permanent! Zerstört Font-Rendering.
+### 4.7 📱 Mobile-First Space Efficiency
+Alle UI-Komponenten Mobile-First mit maximaler Space-Efficiency
 
-### 6.22 Single Loading Pipeline
-Kritische Daten-Loading durch zentrale Pipeline, keine unterschiedlichen Loading-Logiken.
+### 4.8 Dashboard Entry Persistence
+Completed Items nicht ausblenden, Status-Filter bereitstellen
 
-### 6.23 📱 Mobile-First Space Efficiency
-Alle UI-Komponenten Mobile-First mit maximaler Space-Efficiency.
+### 4.9 Unique Default Names
+Client berechnet nächsten freien Namen vor Erstellen
 
-### 6.24 🔴 Page-Level Data-Separation
-Page-Components: KEINE Data-Fetching-Logic die Header blockiert!
-- Page.tsx = 90% HTML (instant)
-- MainContent = 90% Data-Logic (async mit Suspense)
+### 4.10 Single Source of Truth
+Link-Tabellen für alle Reads/Writes
 
-### 6.25-6.28 Spezielle Regeln
-*   **6.25 Dashboard Entry Persistence:** Completed Items nicht ausblenden, Status-Filter bereitstellen
-*   **6.26 Unique Default Names:** Client berechnet nächsten freien Namen vor Erstellen
-*   **6.27 Single Source of Truth:** Link-Tabellen für alle Reads/Writes
-*   **6.28 Toolbar Inside-Click Guard:** `data-*` Marker für Toolbar-Bereiche
+### 4.11 Platform Guard for Browser-only Storage APIs
+- Browser-only APIs (z. B. `navigator.storage.persist`, OPFS) **immer** per Platform-Check absichern
+- In nativen WebViews (Capacitor) **keine** Browser-Dialogs/Buttons anzeigen
 
-### 6.29 🔴 Media Autoplay Recovery & Volume Resume
-Medien-Playback braucht eine **einheitliche State-Machine** über Prime/Provider hinweg:
-- Autoplay-Block muss einen **sichtbaren Retry-Pfad** bei User-Geste haben
-- Volume/Mute-Änderungen müssen **Playback revalidieren** (Auto-Resume bei > 0)
-
-### 6.30 🔴 Platform Guard for Browser-only Storage APIs
-- Browser-only APIs (z. B. `navigator.storage.persist`, OPFS) **immer** per Platform-Check absichern.
-- In nativen WebViews (Capacitor) **keine** Browser-Dialogs/Buttons anzeigen; stattdessen klare Hinweise auf den nativen SQLite-Init geben.
-
-### 6.31 🔴 Native Storage Fallback Guard
-- In nativen Umgebungen (`platform === 'capacitor'` oder `isNative === true`) **keine stillen** Fallbacks auf Browser-Storage (OPFS/IndexedDB/Memory) ohne explizites Opt-in.
-- Bei Plugin-Fehlern Init-Stage + Fehlergrund sichtbar machen (UI/Panel) und konkrete Sync/Build-Hinweise geben.
-- Browser-Fallbacks nur nutzen, wenn `platform === 'browser'` und Persistenz-Checks explizit bestanden sind.
+### 4.12 Native Storage Fallback Guard
+- In nativen Umgebungen keine stillen Fallbacks auf Browser-Storage ohne explizites Opt-in
+- Bei Plugin-Fehlern Init-Stage + Fehlergrund sichtbar machen
 
 ---
 
-**🔗 Weiterführende Docs:**
-- `shared-docs/CODING-RULES.md` - Haupt-Coding-Rules
-- `shared-docs/design/liquid-glass-guide.md` - Liquid Glass Design
-- `shared-docs/performance/capacitor-performance-rules.md` - Mobile Performance
-- `shared-docs/database-testing-guide.md` - DB Testing
+## 🔗 Framework-spezifische Docs
+
+| Framework | Dokumentation |
+|-----------|---------------|
+| React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
+| Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
+| Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
+| Liquid Glass Design | `shared-docs/design/liquid-glass-guide.md` |
+| DB Testing | `shared-docs/database-testing-guide.md` |
+| Haupt-Coding-Rules | `shared-docs/CODING-RULES.md` |
