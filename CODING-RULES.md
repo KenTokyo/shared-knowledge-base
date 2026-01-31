@@ -4,6 +4,19 @@
 
 ---
 
+## 📱 Projekt-Spezifische Regeln
+
+**React Native / Expo Projekte:**
+→ Lese zusätzlich: `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` (kompakt, ~400 Zeilen)
+
+**Next.js Projekte:**
+→ Die Regeln 3-8 in diesem Dokument gelten primär für Next.js
+
+**Capacitor Projekte:**
+→ Lese zusätzlich: `shared-docs/performance/capacitor-performance-rules.md`
+
+---
+
 ## Regel 1: Workflow & Arbeitsweise
 
 ### 1.1 Vor dem Start

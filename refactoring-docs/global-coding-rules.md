@@ -4,6 +4,20 @@ Comprehensive coding rules for robust, performant, and maintainable applications
 
 ---
 
+## 📱 Projekt-Spezifische Regeln
+
+**React Native / Expo Projekte:**
+→ Lese zusätzlich: `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` (kompakt, ~400 Zeilen)
+→ Enthält: List Performance, Animation, Navigation, State Architecture, UI Patterns
+
+**Next.js Projekte:**
+→ Abschnitte 2-6 in diesem Dokument gelten primär für Next.js App Router
+
+**Capacitor Projekte:**
+→ Lese zusätzlich: `shared-docs/performance/capacitor-performance-rules.md`
+
+---
+
 ## 0. Testing & Validation Rules
 
 **Rule 0.1 (No Test Suites Required):**
