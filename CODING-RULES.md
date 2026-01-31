@@ -1,3 +1,6 @@
+VORSICHT, manche CODING-RULES beziehen sich nur auf NEXT JS, 
+nicht für REACT NATIVE, bitte achte darauf, wo du gerade arbeitest, auch ist Tailwind nicht für React Native, sondern für Next JS, also Styling Guides etc. sind für Next JS, nicht für React Native
+
 # 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Essentielle Regeln für konsistente, performante und wartbare Code-Entwicklung.
