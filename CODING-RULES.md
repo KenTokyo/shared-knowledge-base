@@ -4,6 +4,27 @@
 
 ---
 
+Bitte achte bei **jedem** Problem nicht nur auf den konkreten Fehler (z. B. einen **TypeScript-Error**), sondern auch darauf, ob die **Architektur** dahinter grundsätzlich falsch oder riskant ist.
+
+### ✅ Was ich von dir erwarte
+
+* **Nicht nur den Error fixen**, sondern prüfen, ob die Lösung langfristig stabil ist. 🧩
+* Wenn du merkst, dass **die aktuelle Struktur uns in Zukunft Probleme macht**, dann **sag es direkt**. 🚨
+* Wenn etwas so gebaut ist, dass es **eigentlich nicht sauber funktionieren kann** (nur mit Workarounds/Tricks), dann **muss das klar benannt werden**. 🛑
+* Wenn es eine **bewährte Standard-Methode** gibt, die praktisch jeder nutzt – und wir umgehen sie gerade – dann **weise darauf hin**. ✅
+
+### ⚠️ Ganz wichtig
+
+Wenn du erkennst, dass wir gerade in eine **schlechte technische Richtung** abdriften (z. B. durch Workarounds, unklare Verantwortlichkeiten, falsche Layering/Struktur), dann musst du das ausdrücklich sagen – auch wenn es unbequem ist.
+
+### 🏗️ Konsequenz: Refactor statt Pflaster
+
+Wenn nötig, sag bitte klar:
+
+> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden.“** 🔧🔥
+
+Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀
+
 ## 🚨 WICHTIG: Framework-spezifische Regeln
 
 **BEVOR du weiter liest, identifiziere dein Projekt-Typ und lese die entsprechenden Regeln:**
