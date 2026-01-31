@@ -23,7 +23,7 @@ Wenn nötig, sag bitte klar:
 
 > **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden.“** 🔧🔥
 
-Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀
+Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀 Nutze auch das Internet, falls du spürst, das könnte in die falsche Richtung gehen und ob es nicht schon jemand gibt, der das Problem schon gelöst hat.
 
 ## 🚨 WICHTIG: Framework-spezifische Regeln
 
