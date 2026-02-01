@@ -4,6 +4,68 @@ Universelle Coding-Regeln für robuste, performante und wartbare Anwendungen. LL
 
 ---
 
+## 🔴🔴🔴 REGEL 0: MANDATORY VALIDATION AFTER EVERY CHANGE (KRITISCH!)
+
+### 0.0 PFLICHT-VALIDIERUNG NACH JEDER ÄNDERUNG
+
+**NIEMALS** eine Änderung als abgeschlossen betrachten ohne diese Checks:
+
+| Check | Befehl | Wann |
+|-------|--------|------|
+| **TypeScript** | `npx tsc --noEmit` (im richtigen Verzeichnis!) | Nach JEDER Code-Änderung |
+| **Bundling** | Prüfe ob Metro/Webpack startet ohne Fehler | Nach Import/Export-Änderungen |
+| **Runtime** | Starte App kurz, prüfe Console auf Fehler | Nach größeren Änderungen |
+
+### 0.1 🚨 Monorepo-Validierung (KRITISCH für Workspaces!)
+
+**Problem:** In Monorepos muss die Validierung im RICHTIGEN Verzeichnis erfolgen!
+
+```bash
+# ❌ FALSCH - vom Monorepo-Root
+npx tsc --noEmit  # Findet ggf. nicht die richtige tsconfig
+
+# ✅ RICHTIG - im App-Verzeichnis
+cd apps/mobile && npx tsc --noEmit
+```
+
+**Monorepo-Struktur-Check:**
+1. Prüfe `package.json` → `"workspaces"` Array
+2. Prüfe wo `"main"` Entry Point definiert ist
+3. Validierung IMMER im Verzeichnis der App ausführen, nicht im Root
+
+### 0.2 🚨 Expo/React Native Bundling-Validierung
+
+**NACH jeder Import-Änderung prüfen:**
+```bash
+# Im App-Verzeichnis (z.B. apps/mobile):
+npx expo start --web  # oder --android, --ios
+# Warte auf "Web Bundling complete" oder Fehlermeldung
+# Bei Fehler → SOFORT fixen, nicht weitermachen!
+```
+
+**Typische Bundling-Fehler:**
+- `Unable to resolve "..."` → Import-Pfad falsch oder Package fehlt
+- `Module not found` → Package nicht installiert
+- `Unexpected token` → Syntax-Fehler oder fehlende Babel-Config
+
+### 0.3 Validierungs-Reihenfolge (IMMER einhalten!)
+
+1. **TypeScript-Check** → `npx tsc --noEmit`
+2. **Import-Lint** → Prüfe neue/geänderte Imports visuell
+3. **Bundling-Check** → Starte Metro/Webpack, warte auf Success
+4. **Erst dann** → Änderung als abgeschlossen markieren
+
+### 0.4 🔴 Bei Fehler: NICHT weitermachen!
+
+**Wenn ein Check fehlschlägt:**
+1. **STOPP** - Keine weiteren Änderungen
+2. **Analysiere** - Root Cause verstehen
+3. **Fixe** - Den Fehler beheben
+4. **Validiere erneut** - Alle Checks nochmal
+5. **Erst dann** - Weitermachen
+
+---
+
 ## 🚨 WICHTIG: Framework-spezifische Regeln
 
 **BEVOR du weiter liest, identifiziere dein Projekt-Typ und lese die entsprechenden Regeln:**
