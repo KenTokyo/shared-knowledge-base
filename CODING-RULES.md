@@ -248,6 +248,67 @@ cd apps/mobile && npx tsc --noEmit
 5. **VALIDIERE** - Alle Checks erneut
 6. **ERST DANN** - Weitermachen
 
+### 9.5 🚨 Package-Installation bei neuen Imports (KRITISCH!)
+
+**PFLICHT:** Bei JEDEM neuen `import ... from 'package-name'`
+
+1. **SOFORT prüfen:** Ist `package-name` in `package.json`?
+2. **Falls NEIN:** Installation VOR weiteren Änderungen
+   ```bash
+   # Für Expo-Packages:
+   cd apps/mobile && npx expo install package-name
+
+   # Für andere Packages:
+   cd apps/mobile && npm install package-name
+   ```
+3. **Bundling-Check:** IMMER nach neuen Imports
+   ```bash
+   cd apps/mobile && npx expo start --web
+   # Warte auf "Web Bundling complete" oder Fehler
+   ```
+
+**WARUM DIESE REGEL EXISTIERT (Lessons Learned):**
+- `npx tsc --noEmit` prüft KEINE Package-Auflösung!
+- TypeScript findet ggf. Types aus anderen Workspace-Packages
+- Bundler (Metro/Webpack) brauchen die echten Packages
+- **Fehler-Beispiel:** `expo-image` Import hinzugefügt, aber Package nie installiert → Bundling schlägt fehl
+
+**MERKE:**
+- TypeScript-Check ≠ Bundling-Check
+- BEIDE Checks sind bei Import-Änderungen erforderlich!
+
+### 9.6 🚨 Expo-Package Installation
+
+**IMMER `npx expo install` statt `npm install` für:**
+- Packages mit `expo-` Prefix (z.B. `expo-image`, `expo-haptics`)
+- React Native Core-Packages (`react-native-*`)
+- Packages die native Module haben
+
+**Warum:** Expo CLI installiert automatisch kompatible Versionen
+
+```bash
+# ❌ FALSCH
+npm install expo-image
+
+# ✅ RICHTIG
+npx expo install expo-image
+```
+
+### 9.7 🚨 Phase-Abschluss Checklist (PFLICHT!)
+
+**BEVOR eine Phase als "abgeschlossen" markiert wird:**
+
+- [ ] `cd apps/mobile && npx tsc --noEmit` → 0 Fehler
+- [ ] `cd apps/mobile && npx expo start --web` → Bundling erfolgreich
+- [ ] Alle neuen Imports haben Package in `package.json`
+- [ ] Metro/Webpack zeigt keine "Unable to resolve" Fehler
+- [ ] App startet ohne Runtime-Errors (kurzer Test)
+
+**NIEMALS eine Phase als "abgeschlossen" markieren wenn:**
+- Bundling fehlschlägt
+- Packages fehlen
+- Runtime-Errors auftreten
+
 ---
 
 ## 🤖 Regel 10: LLM-Kontextmanagement (KRITISCH!)
@@ -285,6 +346,109 @@ cd apps/mobile && npx tsc --noEmit
 
 ---
 
+## 🧪 Regel 11: Browser-Testing mit Agent-Browser
+
+### 11.1 Wann Browser-Testing nutzen
+
+**PFLICHT bei folgenden Situationen:**
+- Nach Implementierung von UI-Features
+- Nach Änderungen an Formularen/Inputs
+- Nach Änderungen an Navigation/Routing
+- Wenn User explizit "teste das im Browser" sagt
+
+**Referenz:** `shared-docs/agents/agent-browser/SKILL.md`
+
+### 11.2 Browser-Testing Workflow
+
+**Standard-Workflow:**
+1. Expo Web starten: `cd apps/mobile && npx expo start --web`
+2. Port notieren (meist 8081 oder nächster freier)
+3. Browser öffnen: `agent-browser open http://localhost:PORT`
+4. Snapshot machen: `agent-browser snapshot -i`
+5. Mit UI interagieren (click, fill, etc.)
+6. Screenshot bei Fehler: `agent-browser screenshot error-NAME.png`
+
+### 11.3 Bei Port-Konflikten
+
+**Problem:** Expo sagt "Port 8081 belegt"
+
+**Lösung:**
+```bash
+# Option A: Anderen Port nutzen
+npx expo start --web --port 8082
+
+# Option B: Prozess auf Port beenden
+npx kill-port 8081
+```
+
+### 11.4 Bei langen Wartezeiten
+
+**Wenn Bundling > 60s dauert:**
+1. Status prüfen (nicht ewig warten)
+2. Cache clearen: `npx expo start --clear`
+3. Bei Endlos-Loop: Task abbrechen, User informieren
+
+### 11.5 Browser-Testing für Authentication
+
+**Problem:** App erfordert Login
+
+**Lösung:** Test-Account System nutzen (siehe Regel 12)
+
+---
+
+## 🔐 Regel 12: Test-Account System (Development-Only)
+
+### 12.1 Wann Test-Account nutzen
+
+**PFLICHT bei Browser-Testing von Auth-geschützten Features:**
+- TrainingTab testen
+- Dashboard testen
+- Alle Features die Login erfordern
+
+### 12.2 Test-Login Workflow
+
+1. Prüfe ob App in Development läuft
+2. Navigiere zu Login-Screen
+3. Klicke "🧪 Dev: Test-Login" Button (nur sichtbar wenn `__DEV__`)
+4. Warte auf Dashboard-Navigation
+5. Fahre mit Tests fort
+
+```bash
+# Agent-Browser Workflow
+agent-browser open http://localhost:8081
+agent-browser snapshot -i
+agent-browser click @test-login-btn  # ref des Test-Login Buttons
+agent-browser wait --url "**/dashboard"
+agent-browser snapshot -i  # Validierung
+```
+
+### 12.3 Sicherheitsregeln (NIEMALS VERLETZEN!)
+
+❌ **VERBOTEN:**
+- Test-Account Features in Production-Builds
+- Echte User-Credentials im Code
+- Test-Account mit Admin-Rechten
+- Test-Daten in Production-DB
+
+✅ **PFLICHT:**
+- `__DEV__` Check in Mobile-App
+- `NODE_ENV=development` Check im Backend
+- Isoliertes Test-Profil
+- Klar markierte Test-UI-Elemente
+
+### 12.4 Implementierung
+
+**Backend:** `POST /api/dev/test-login`
+- Nur wenn `NODE_ENV === 'development'`
+- Gibt 404 in Production
+
+**Mobile:** `DevTestLoginButton` Komponente
+- Nur sichtbar wenn `__DEV__ === true`
+
+**Planungs-Referenz:** `docs/migration/tasks/11-test-account-system.md`
+
+---
+
 ## 🔗 Framework-spezifische Docs
 
 | Framework | Dokumentation |
@@ -294,3 +458,4 @@ cd apps/mobile && npx tsc --noEmit
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
 | Liquid Glass Design for Tailwind CSS | `shared-docs/design/liquid-glass-guide.md` |
 | DB Live Testing for Postgres | `shared-docs/database-testing-guide.md` |
+| Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
