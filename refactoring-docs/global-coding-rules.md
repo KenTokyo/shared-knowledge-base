@@ -243,6 +243,11 @@ Link-Tabellen für alle Reads/Writes
 - In nativen Umgebungen keine stillen Fallbacks auf Browser-Storage ohne explizites Opt-in
 - Bei Plugin-Fehlern Init-Stage + Fehlergrund sichtbar machen
 
+### 4.13 Visual Effect Gating
+- Wenn ein System Effekte (Glow/Blur/Shadow/Mix-Blend) toggeln kann, **müssen** alle entsprechenden UI-Effekte an gemeinsame Utilities/Variablen gebunden sein
+- ❌ Keine ungegate-ten Tailwind-Glows (`shadow-[0_0_*]`, `drop-shadow-*`, `backdrop-blur-*`) in Kern-UI
+- ✅ Entweder `gfx-*` Klassen oder `data-gfx-*` Marker verwenden
+
 ---
 
 ## 🔗 Framework-spezifische Docs
