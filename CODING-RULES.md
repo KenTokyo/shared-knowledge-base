@@ -2,6 +2,13 @@
 
 **Zweck:** Universelle Regeln für konsistente, performante und wartbare Code-Entwicklung.
 
+## Projekt-Override: Test-Policy (Notedrill)
+
+Diese Regel ueberschreibt in diesem Projekt alle nachgelagerten Test-Pflichten:
+- Automatisierte Tests (Unit/E2E/Integration) sind **nicht erforderlich**.
+- Fokus ist **Praxis-Validierung im laufenden System** statt Test-Suiten.
+- Tests koennen bei Bedarf ergaenzend genutzt werden, sind aber kein Pflicht-Gate.
+
 ---
 
 Bitte achte bei **jedem** Problem nicht nur auf den konkreten Fehler (z. B. einen **TypeScript-Error**), sondern auch darauf, ob die **Architektur** dahinter grundsätzlich falsch oder riskant ist.
@@ -73,13 +80,19 @@ Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀 Nutze
 - **Vorhaben präsentieren:** Formatiert mit Icons, klare Struktur
 - **Größere Aufgaben:** Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md` erstellen
 - **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components mit `Grep` suchen
-- **Testing:** Nur `npx tsc --noEmit` (❌ kein `npm run dev/build`)
+- **Testing:** Keine Pflicht fuer automatisierte Tests; stattdessen Praxis-Testing im Feature-Flow
 - Sei hochmotiviert, liefere formatierte Antworten mit Icons in Deutsch
 
 ### 1.2 🚨 Planungs-Regel: Kein Code in Planungsdokumenten
 - ✅ **ERLAUBT:** Konzepte, Architektur, Dateipfade, API-Signaturen (max 3-5 Zeilen)
 - ❌ **VERBOTEN:** Vollständige Implementierungen, Code-Blöcke >10 Zeilen
 - **Ziel:** Max 500-800 Zeilen pro Plan (WAS und WARUM, nicht WIE im Detail)
+
+### 1.2.1 🗣️ Sprache in Planungen und Status-Updates (NEU)
+- Planungen, Phasenbeschreibungen und Abschluss-Updates müssen in **klarer Alltagssprache** geschrieben sein.
+- Fachwörter sind erlaubt, aber nur mit kurzer Erklärung in einfachen Worten.
+- Unklare Abkürzungen und interne Begriffe ohne Kontext sind zu vermeiden.
+- Jede Phase braucht zusätzlich einen kurzen Satz: **"Was bedeutet das konkret für den User?"**
 
 ### 1.3 Kritisches Denken (Edge Cases)
 Proaktiv: Extrem-Fälle, falsches User-Verhalten, Performance, Concurrent Access, Device-Unterschiede.
@@ -176,6 +189,23 @@ Dialoge/Komponenten MÜSSEN für Wiederverwendung designed werden: Props für Mo
 2. **RECHERCHIEREN** - Docs, GitHub Issues durchsuchen
 3. **Root Cause verstehen** - WARUM passiert der Fehler?
 4. **DANN erst fixen** - Mit Verständnis der Ursache
+
+### 5.6 🔴 UI Library Defaults respektieren
+**Niemals** die Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben (z.B. `py-3` auf `TabsTrigger`, `h-12` auf `Button`). Nutze stattdessen die vordefinierten Variants (`size="sm"`, `size="lg"` etc.). Wenn kein passender Variant existiert, erweitere das Variant-System in der UI-Komponente.
+
+### 5.7 🔴 Provider-Type Exhaustive Handling
+Bei jeder Komponente, die `AIProviderType`-basierte Switches/if-else-Branches hat, MUSS jeder Provider-Typ explizit behandelt werden. Nutze TypeScript exhaustive checks (`satisfies Record<AIProviderType, ...>`) oder `switch` mit `default: never`. **Kein Catch-All `else`** das unbekannte Provider-Typen stillschweigend falsch behandelt.
+
+### 5.8 🔴 Disabled Button Feedback
+Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären, **warum** er deaktiviert ist. Der User darf nie raten müssen, warum eine Aktion nicht verfügbar ist.
+
+### 5.9 🔴 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
+Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontextmenüs MUSS geprüft werden:
+- Gibt es einen Parent mit `overflow: hidden/auto` oder einen neuen Stacking Context (`transform`, `filter`, `opacity`, `position`, `isolation`)?
+- Wird das Overlay per Portal gerendert (z. B. Radix `Portal`) statt innerhalb eines abgeschnittenen Containers?
+- Ist der `z-index` relativ zu bestehenden Overlays (Dialog, Sheet, Drawer, Tooltip) korrekt priorisiert?
+
+Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. Erst Ursache im Layout/Portal/Overflow beheben.
 
 ---
 

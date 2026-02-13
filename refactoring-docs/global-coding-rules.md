@@ -248,6 +248,11 @@ Link-Tabellen für alle Reads/Writes
 - ❌ Keine ungegate-ten Tailwind-Glows (`shadow-[0_0_*]`, `drop-shadow-*`, `backdrop-blur-*`) in Kern-UI
 - ✅ Entweder `gfx-*` Klassen oder `data-gfx-*` Marker verwenden
 
+### 4.14 Overlay Stacking & Clipping
+- Vor Änderungen an Dropdowns/Popovers/Command-Listen immer Parent-Container auf `overflow` und neue Stacking-Contexts prüfen.
+- Overlay-Content bevorzugt über Portal rendern (z. B. Radix Portal), nicht in abgeschnittenen Containern.
+- `z-index` immer relativ zu Dialog/Sheet/Drawer-Layern validieren; ein höherer `z-index` allein ist kein vollständiger Fix.
+
 ---
 
 ## 🔗 Framework-spezifische Docs
