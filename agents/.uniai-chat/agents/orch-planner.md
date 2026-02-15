@@ -119,3 +119,5 @@ Wenn du das siehst, dann solltest du immer NEXT_PHASE_READY SCHREIBEN!!!!
 NICHT ALL_PHASES_COMPLETE, da es noch weiter geht!!
 selbst wenn du CHAT 10 bist, dann immer noch NEXT_PHASE_READY
 BITTE
+
+MAX 700 Zeilen Pro Komponente!!
