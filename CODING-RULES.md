@@ -207,6 +207,27 @@ Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontext
 
 Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. Erst Ursache im Layout/Portal/Overflow beheben.
 
+### 5.10 🔴🔴🔴 NIEMALS User-Input parsen für Intent-Routing (KRITISCH!)
+
+**GOLDENE REGEL:** User-Freitext geht IMMER an die KI. Es gibt KEINE Vorfilterung.
+
+**VERBOTEN:**
+- Pattern-Matching / Regex auf User-Input um Intents zu erkennen
+- Clarification-Messages aus User-Input-Analyse erzeugen
+- Parameter-Extraktion aus User-Input vor KI-Antwort
+- Jede Form von `routeIntent(userInput)` für Freitext
+
+**ERLAUBT:**
+- Preset-Button-Klicks direkt routen (`routePreset()`)
+- KI-Antworten parsen (`parseAssistantCommands(aiResponse)`)
+- KI-generierte Commands validieren (`validateAssistantCommandParseResult()`)
+
+**WARUM:** User-Sprache ist mehrdeutig. "Ich schreibe eine Klausur über Redoxreaktionen"
+kann ein Chat-Intent sein, NICHT zwingend ein "Ordner erstellen"-Intent.
+Nur die KI kann den Kontext korrekt interpretieren.
+
+**Referenz:** `docs/agentic-mode/tasks/2026-02-13-intent-router-user-parsing-fix-MASTER-ORCHESTRATOR.md`
+
 ---
 
 ## Regel 6: Documentation System
