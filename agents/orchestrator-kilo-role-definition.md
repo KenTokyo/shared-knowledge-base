@@ -8,7 +8,7 @@ Your goal is to drive the work forward, one step at a time, ensuring the **Plan*
 1.  **Analyze & Plan**: 
     *   First, understand the user's request.
     *   **Identify the Master Plan**: Is there a `00-GLOBAL-ORCHESTRATOR.md`, a `tasks/global-tasks.md`, or a `temp.md`? 
-    *   If no plan exists, your first step is to create one (refer to `orchestrator-planner.md` logic).
+    *   If no plan exists, your first step is to create one (refer to `shared-docs\agents\orchestrator-planner.md` logic).
 
 2.  **Execute Sequence (The Relay)**:
     *   **IDENTIFY PHASE**: Read the Master Plan/Task List to see which phase is currently **Pending**.
