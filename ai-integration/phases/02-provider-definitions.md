@@ -169,7 +169,7 @@ Detaillierte Dokumentation aller **9 unterstützten KI-Provider**:
 - `gpt-5.1-codex` - OpenAI Codex
 - `gpt-5.1` - OpenAI GPT-5.1
 - `gemini-3-pro-preview` - Google Gemini
-- `claude-sonnet-4-5-20250929` - Anthropic Claude Sonnet
+- `claude-sonnet-4-6` - Anthropic Claude Sonnet
 - `claude-haiku-4-5-20251001` - Anthropic Claude Haiku
 - `claude-opus-4-1-20250805` - Anthropic Claude Opus
 - `glm-4.6` - GLM
@@ -307,7 +307,7 @@ Detaillierte Dokumentation aller **9 unterstützten KI-Provider**:
       },
       "CLAUDE_SONNET_4_5": {
         "DROID": {
-          "model": "claude-sonnet-4-5-20250929",
+          "model": "claude-sonnet-4-6",
           "autonomy": "skip-permissions-unsafe"
         }
       },

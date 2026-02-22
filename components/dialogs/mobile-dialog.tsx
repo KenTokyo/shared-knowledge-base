@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X, ChevronLeft } from 'lucide-react';
+import { LuX as X, LuChevronLeft as ChevronLeft } from 'react-icons/lu';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

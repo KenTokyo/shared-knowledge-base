@@ -11,7 +11,7 @@ Oh-My-OpenCode ist ein Plugin für OpenCode, das ein **Multi-Agenten-System** be
 ### Sisyphus (Hauptagent)
 - **Rolle**: Der Chef/Orchestrator
 - **Aufgabe**: Koordiniert alle anderen Agenten, delegiert Aufgaben
-- **Empfohlenes Modell**: Claude Opus 4.5 (bei dir: Gemini 3 Pro)
+- **Empfohlenes Modell**: Claude Opus 4.6 (bei dir: Gemini 3 Pro)
 
 ### Oracle
 - **Rolle**: Strategischer Berater

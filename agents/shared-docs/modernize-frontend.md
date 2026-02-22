@@ -1,6 +1,6 @@
 ## 🎯 Aufgabe
 
-Die KOMPONENTE oben als pfade aufgelistet oder in screenshots gezeigt sehen sehr unmodern aus, die du kreiert hast. Bitte deutlich hochwertiger machen. Stärker an schauen, was für ein Screen, also die Screenshots sehen tatsächlich deutlich hochmoderner aus. Versucht bitte, dich an einem Screenshot zu orientieren, um die Modernität aufzulisten. Also das muss deutlich modernisiert werden, die Sektion. So können wir das nicht verkaufen. Bitte orientier dich an einem Screenshot sehr stark. Schaue, welcher Screenshot da am besten passt. Ich schicke dir wieder drei Stück, aber bitte orientier dich an einen sehr stark und versuch das Design sehr gut zu machen.
+Die KOMPONENTE oben als pfade aufgelistet oder in screenshots gezeigt sehen sehr unmodern aus, die du kreiert hast. Bitte deutlich hochwertiger machen. Schriften gut lesbar machen. Stärker an schauen, was für ein Screen, also die Screenshots sehen tatsächlich deutlich hochmoderner aus. Versucht bitte, dich an einem Screenshot zu orientieren, um die Modernität aufzulisten. Also das muss deutlich modernisiert werden, die Sektion. So können wir das nicht verkaufen. Bitte orientier dich an einem Screenshot sehr stark. Schaue, welcher Screenshot da am besten passt. Ich schicke dir wieder drei Stück, aber bitte orientier dich an einen sehr stark und versuch das Design sehr gut zu machen.
 
 - ** "Wow"-Effekt:** Der erste Eindruck muss sitzen.
 - **Micro-Interactions:** Buttons und Cards müssen auf Hover reagieren (Scale, Glow, Border-Color).
@@ -23,8 +23,6 @@ Die KOMPONENTE oben als pfade aufgelistet oder in screenshots gezeigt sehen sehr
 
 Lass uns das Design auf das nächste Level heben! 🚀
 
-Orientiere dich außerdem stark an den screenshots mitgegeben
-
-Bsp:
+FOLGENDE MOCK DESIGNS sollst du dir anschauen!!!
 shared-docs\mock-designs\mock-general-dark.png
 shared-docs\mock-designs\mock-general.png
