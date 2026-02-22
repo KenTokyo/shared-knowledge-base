@@ -199,7 +199,30 @@ Bei jeder Komponente, die `AIProviderType`-basierte Switches/if-else-Branches ha
 ### 5.8 🔴 Disabled Button Feedback
 Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären, **warum** er deaktiviert ist. Der User darf nie raten müssen, warum eine Aktion nicht verfügbar ist.
 
-### 5.9 🔴 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
+### 5.9 🔴 Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!)
+**Alle Dialoge, Sheets, Drawers und modale Overlays MÜSSEN eine solide Hintergrundfarbe mit Hex-Code bekommen.**
+
+**VERBOTEN:**
+- `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund
+- Halbtransparente Hintergründe, durch die der Content dahinter durchscheint
+
+**PFLICHT:**
+- Solide Hex-Farben verwenden: z.B. `!bg-[#0c0f1a]/95` oder `!bg-[#0c0f1a]`
+- Mindestens 90% Opazität, damit der Dialog-Inhalt klar lesbar bleibt
+- Das `!important` (`!bg-...`) nutzen, um Shadcn/Radix-Defaults zu überschreiben
+
+**Beispiel:**
+```tsx
+// ❌ FALSCH - halbtransparenter Hintergrund (Standard von DialogContent)
+<DialogContent className="bg-black/40">
+
+// ✅ RICHTIG - solide Hintergrundfarbe mit Hex
+<DialogContent className="!bg-[#0c0f1a]/95">
+```
+
+**WARUM:** Halbtransparente Dialoge machen den Inhalt schwer lesbar, weil der Content dahinter durchscheint. Besonders bei Editoren, Formularen und textlastigen Dialogen ist das ein UX-Problem.
+
+### 5.10 🔴 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
 Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontextmenüs MUSS geprüft werden:
 - Gibt es einen Parent mit `overflow: hidden/auto` oder einen neuen Stacking Context (`transform`, `filter`, `opacity`, `position`, `isolation`)?
 - Wird das Overlay per Portal gerendert (z. B. Radix `Portal`) statt innerhalb eines abgeschnittenen Containers?
@@ -207,7 +230,7 @@ Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontext
 
 Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. Erst Ursache im Layout/Portal/Overflow beheben.
 
-### 5.10 🔴🔴🔴 NIEMALS User-Input parsen für Intent-Routing (KRITISCH!)
+### 5.11 🔴🔴🔴 NIEMALS User-Input parsen für Intent-Routing (KRITISCH!)
 
 **GOLDENE REGEL:** User-Freitext geht IMMER an die KI. Es gibt KEINE Vorfilterung.
 
