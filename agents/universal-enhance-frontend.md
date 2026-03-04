@@ -280,3 +280,5 @@ Schau was am besten zum Design passt und bitte stark daran orientieren!!!
 Light und Dark Mode Beides implementieren
 
 Falls du mit React Native arbeitest, versuche das hier speziell für react Native umzusetzen aber du kannst was anderes verwenden, also GSAP geht ja nicht, aber was ähnliches in der Richtung
+
+Schön Richtung Liquid Glass, Gaming Design wenn es geht
