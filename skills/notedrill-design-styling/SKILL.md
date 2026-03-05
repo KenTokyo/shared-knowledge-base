@@ -35,7 +35,23 @@ Für konkrete Klassen nutze danach:
 
 ## Harte Regeln
 
-- **Ränder immer muted**: typischer Bereich `border-white/[0.06]` bis `border-white/[0.14]`.
+### BORDER-OPACITY — STRIKT EINHALTEN!
+
+**VERBOTEN (erzeugt hässliche weiße Ränder):**
+- `border-white/20`, `border-white/30`, `border-white/[0.20]` oder höher als Default
+- `border-slate-300/20`, `border-indigo-400/32`, `border-amber-400/34` oder andere farbige Borders > 0.14
+- `border-white/60` (Light Mode Regel gilt NICHT für Dark-first Komponenten!)
+
+**ERLAUBT — Einziger gültiger Bereich:**
+| Zustand | Weiße Borders | Farbige Borders |
+|---|---|---|
+| Default | `border-white/[0.06]` bis `border-white/[0.08]` | `border-{farbe}/[0.10]` bis `border-{farbe}/[0.14]` |
+| Hover | `border-white/[0.10]` bis `border-white/[0.14]` | `border-{farbe}/[0.14]` bis `border-{farbe}/[0.18]` |
+| Focus/Active | max `border-white/[0.14]` | max `border-{farbe}/[0.20]` |
+
+> Faustregel: Wenn du den Border auf dem Dark-Background deutlich siehst, ist er zu hell. Borders sollen nur bei genauem Hinsehen erkennbar sein.
+
+### Weitere Regeln
 - **Keine grellen Standard-Badges**: Badges klein, ruhig, lesbar.
 - **Button-Standard ist ruhig**: `bg-white/[0.03-0.08]` + subtile Hover-Stufen.
 - **Inputs ohne harte Outline**: dunkler Untergrund, feine Border, sauberer Focus-Ring.

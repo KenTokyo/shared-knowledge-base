@@ -1,10 +1,16 @@
 # Component Styling Checklist (Notedrill)
 
-## 1) Border-Qualität
+## 1) Border-Qualität — KRITISCH!
 
-- Vermeiden: `border-white/20+` als Standard auf vielen Elementen.
-- Ziel: `border-white/[0.06-0.14]` mit ruhigem Hover-Upgrade.
-- Für aktive Zustände nur leicht stärker werden.
+**VERBOTEN:** Jegliche Border-Opacity > 0.14 als Default. Das betrifft:
+- `border-white/20`, `border-white/[0.20]`, `border-white/[0.35]` etc.
+- Farbige Borders wie `border-indigo-400/32`, `border-amber-400/34` etc.
+- Tailwind-Shorthand `border-white/10` ist OK, aber `border-white/20` ist bereits zu viel!
+
+**Gültige Werte:**
+- Default: `border-white/[0.06]` bis `border-white/[0.08]` (weiß) oder `border-{farbe}/[0.10-0.14]` (farbig)
+- Hover: max `border-white/[0.14]` oder `border-{farbe}/[0.18]`
+- Focus/Active: max `border-white/[0.14]` oder `border-{farbe}/[0.20]`
 
 ## 2) Badge-Qualität
 
