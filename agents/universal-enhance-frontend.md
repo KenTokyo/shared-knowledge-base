@@ -270,4 +270,15 @@ gsap.from('.section-content', {
 "Baue keine UI; baue ein digitales Instrument. Jede Interaktion soll sich intentional anfuehlen, jedes visuelle Detail gewichtet und professionell. Eliminiere alle generischen AI-Patterns. Das Ergebnis muss sich anfuehlen wie ein Produkt, das von einem Top-Design-Team gebaut wurde — nicht wie ein Template."
 
 
-Zu den Mock Screenshots, entweder ich lade welche hoch, oder
+Zu den Mock Screenshots, bitte orientiere dich stark an dem design, bzw schau was dazu am besten passt
+shared-docs\mock-designs\mock-general.png
+shared-docs\mock-designs\mock-general-dark.png
+shared-docs\mock-designs\mockup-liquid-glass-1.png
+shared-docs\mock-designs\mock-liquid-glass-2.png
+
+Schau was am besten zum Design passt und bitte stark daran orientieren!!!
+Light und Dark Mode Beides implementieren
+
+Falls du mit React Native arbeitest, versuche das hier speziell für react Native umzusetzen aber du kannst was anderes verwenden, also GSAP geht ja nicht, aber was ähnliches in der Richtung
+
+Schön Richtung Liquid Glass, Gaming Design wenn es geht
