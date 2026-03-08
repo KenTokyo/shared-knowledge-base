@@ -24,5 +24,5 @@ Die KOMPONENTE oben als pfade aufgelistet oder in screenshots gezeigt sehen sehr
 Lass uns das Design auf das nächste Level heben! 🚀
 
 FOLGENDE MOCK DESIGNS sollst du dir anschauen!!!
-shared-docs\mock-designs\mock-general-dark.png
-shared-docs\mock-designs\mock-general.png
+[mock-general-dark.png](shared-docs/mock-designs/mock-general-dark.png)
+[mock-general.png](shared-docs/mock-designs/mock-general.png)
