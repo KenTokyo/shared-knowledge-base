@@ -1,7 +1,7 @@
 # Notedrill Backend Next.js: Phase 10 Messung, Tests und Rollout
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
 
 ## Ziel
 Diese Phase sorgt dafür, dass der Umbau nicht nur theoretisch gut klingt,

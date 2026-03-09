@@ -1,7 +1,7 @@
 # Notedrill Backend Next.js: Phase 09 Abo-Preise und Paketlogik
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
 
 ## Ziel
 Diese Phase verbindet die Technik sauber mit dem späteren Geschäftsmodell.
@@ -75,6 +75,20 @@ Zum Beispiel:
 1. jedes Paket hat klare Technikgrenzen
 2. persönlicher Tool-Zugang und Betreiber-Backend sind getrennt
 3. Nutzer-Server ist nur ein bewusster Premium-Weg
+
+## Umsetzung
+
+### Neue Dateien
+1. `lib/agentic/billing/subscription-types.ts` – Vier Pakete (free, standard, plus, pro) mit klaren Limits: erlaubte Host-Modi, Modellklassen, Queue-Grenzen, Concurrent-Runs, Tages-Budget, BYOK/BYOA-Flags, max Token pro Lauf und Laufdauer.
+2. `lib/agentic/billing/subscription-resolver.ts` – Bestimmt das aktive Abo pro User (In-Memory, spaeter DB/Stripe). Prueft Budget, Host-Modus, Live/Queue-Slots, BYOK-Berechtigung und clampt Token-Limits.
+3. `lib/agentic/billing/byok-guard.ts` – BYOK/BYOA-Trennung: Stellt sicher, dass persoenliche API-Keys nie mit Plattform-Keys verwechselt werden. Persoenliche Coding-Plaene werden nicht als Backend-Standard verwendet.
+4. `app/api/agentic/subscription/route.ts` – GET: Zeigt aktuelles Paket mit Limits, Verbrauch und allen verfuegbaren Tiers. POST: Setzt das Abo-Tier (spaeter Stripe-Webhook).
+
+### Geaenderte Dateien
+5. `app/api/chat/route.ts` – Subscription-Checks vor jedem Lauf: Budget, Host-Modus, Concurrent-Run-Slots und Queue-Slots. Token-Limit wird durch Paketgrenze geclampt. Subscription-Tier in Response-Headers und Run-Metadaten.
+
+### Validierung
+- `npx tsc --noEmit` – 0 Fehler.
 
 ## Nächste Phase danach
 `10-messung-tests-und-rollout.md`

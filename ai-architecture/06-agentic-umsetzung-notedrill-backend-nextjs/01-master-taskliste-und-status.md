@@ -52,9 +52,9 @@ Sie zeigt:
 | 05 | Artefakte, Importe und Übernahme | User muss weniger manuell machen | `DONE` | `phasen/05-artefakte-importe-und-uebernahme.md` |
 | 06 | Lange Läufe, Queue und 24h-Agenten | Browser-unabhängige Agent-Arbeit | `DONE` | `phasen/06-lange-laeufe-queue-und-24h-agenten.md` |
 | 07 | MCP-Server und externe Werkzeuge | sichere Erweiterungen | `DONE` | `phasen/07-mcp-server-und-externe-werkzeuge.md` |
-| 08 | Host-Modelle: Shared Remote, Companion, Nutzer-Server | Betriebswege sauber trennen | `NEXT_PHASE_READY` | `phasen/08-host-modelle-shared-remote-companion-und-nutzer-server.md` |
-| 09 | Abo-Preise und Paketlogik | Technik und Geschäft sauber verbinden | `PLANNED` | `phasen/09-abo-preise-und-paketlogik.md` |
-| 10 | Messung, Tests und Rollout | sicher und kontrolliert ausrollen | `PLANNED` | `phasen/10-messung-tests-und-rollout.md` |
+| 08 | Host-Modelle: Shared Remote, Companion, Nutzer-Server | Betriebswege sauber trennen | `DONE` | `phasen/08-host-modelle-shared-remote-companion-und-nutzer-server.md` |
+| 09 | Abo-Preise und Paketlogik | Technik und Geschäft sauber verbinden | `DONE` | `phasen/09-abo-preise-und-paketlogik.md` |
+| 10 | Messung, Tests und Rollout | sicher und kontrolliert ausrollen | `DONE` | `phasen/10-messung-tests-und-rollout.md` |
 
 ## Warum genau diese Reihenfolge sinnvoll ist
 
@@ -129,12 +129,10 @@ Wir brauchen ihn später besonders stark ab:
 | zu früher MCP-Schreibzugriff | Sicherheitsrisiko |
 
 ## Aktuelle Priorität
-Direkt bereit ist jetzt:
-`Phase 08 - Host-Modelle: Shared Remote, Companion und Nutzer-Server`
+Alle 10 Phasen sind abgeschlossen.
 
 ## Was direkt danach folgen sollte
-1. `Phase 08 - Host-Modelle: Shared Remote, Companion und Nutzer-Server`
-2. `Phase 09 - Abo-Preise und Paketlogik`
+Keine offenen Phasen mehr.
 
 ## Mein ehrlicher Befund
 Der größte Hebel ist nicht mehr ein besserer Prompt.
@@ -202,3 +200,32 @@ Der größte Hebel ist ein besserer Laufkern.
 3. Rechte-Regeln mit `allow`, `ask` und `deny` laufen jetzt zusammen mit Timeout, Aufruf-Limit und Circuit-Breaker.
 4. Chat-Laeufe speichern den Tool-Katalog-Kontext mit, damit spaetere Fehler leichter zu verstehen sind.
 5. `Phase 08 - Host-Modelle: Shared Remote, Companion und Nutzer-Server` ist jetzt der beste naechste Schritt.
+
+### Phase 08 abgeschlossen
+1. Drei Host-Modi (`shared_remote`, `desktop_companion`, `dedicated_worker`) mit klaren Capabilities definiert.
+2. Host-Modus-Resolver bestimmt pro Lauf den aktiven Modus: expliziter Request > User-Praeferenz > Fallback auf shared_remote.
+3. Companion-Vertrag definiert: Registrierung, Heartbeat, Run-Delegation und Onboarding-Steps. Companion spricht denselben Run-Vertrag.
+4. Host-Status API (`GET/POST /api/agentic/host-status`) zeigt Modi mit Status und erlaubt Praeferenz-Aenderung sowie Status-Updates.
+5. Run-Vertrag um `hostMode`-Feld erweitert. Chat-Route und Worker schreiben den aufgeloesten Host-Modus in Metadaten und Response-Header.
+6. `npx tsc --noEmit` – 0 Fehler.
+7. `Phase 09 - Abo-Preise und Paketlogik` ist jetzt der beste naechste Schritt.
+
+### Phase 09 abgeschlossen
+1. Vier Abo-Pakete (free, standard, plus, pro) mit klaren Technik-Limits definiert: Host-Modi, Modellklassen, Queue-Grenzen, Concurrent-Runs, Tages-Budget, max Token pro Lauf.
+2. BYOK/BYOA-Trennung eingebaut: Persoenliche API-Keys und Tool-Abos werden nicht mit Plattform-Schluesseln verwechselt.
+3. Chat-Route prueft vor jedem Lauf: Budget, Host-Modus-Berechtigung, Live/Queue-Slot-Limit.
+4. Token-Limit wird automatisch durch Paketgrenze geclampt.
+5. Subscription-API zeigt aktuelles Paket, Verbrauch und alle Tier-Optionen.
+6. `npx tsc --noEmit` – 0 Fehler.
+7. `Phase 10 - Messung, Tests und Rollout` ist jetzt der beste naechste Schritt.
+
+### Phase 10 abgeschlossen
+1. In-Memory Run-Metriken-Collector sammelt pro Lauf: Dauer, Kosten, Retry-Rate, Tool-Erfolgsrate, Queue-Fehler, Host-Modus und Abo-Paket.
+2. 30-Minuten-Aggregatfenster mit automatischem Rollover fuer Trend-Analyse (bis zu 24h History).
+3. Alarm-Schwellwerte (Fehlerrate, Retry-Rate, Tool-Erfolg, Kosten, Queue-Fehler) mit Health-Evaluation (normal/warning/critical).
+4. Feature-Flag-System mit 10 Flags (Kill-Switch, In-Memory-Override, Umgebungsvariable, Default, prozentbasierter Rollout).
+5. Rollout-Status-API (`GET /api/agentic/rollout-status`) zeigt Gesamtzustand, KPI-Gesundheit, Run-Metriken, Feature-Flags und Kill-Switches.
+6. Chat-Route und Worker zeichnen Metriken an allen End-Punkten auf (complete, fail, cancel, generation-fail), gesteuert per Feature-Flag.
+7. Subscription-Enforcement per Feature-Flag abschaltbar.
+8. `npx tsc --noEmit` – 0 Fehler.
+9. Alle 10 Phasen des Backend-Umbaus sind jetzt abgeschlossen.

@@ -1,7 +1,7 @@
 # Notedrill Backend Next.js: Phase 08 Host-Modelle, Shared Remote, Companion und Nutzer-Server
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
 
 ## Ziel
 Diese Phase trennt die Betriebswege sauber.
@@ -81,6 +81,22 @@ Nur mit:
 1. ein Standardweg ist glasklar
 2. Companion ist nur Zusatz, nicht Pflicht
 3. Nutzer-Server ist technisch planbar und begrenzt
+
+## Umsetzung
+
+### Neue Dateien
+1. `lib/agentic/host/host-mode-types.ts` – Drei Host-Modi (`shared_remote`, `desktop_companion`, `dedicated_worker`), Capabilities pro Modus, Status-Typen und Fallback-Reihenfolge.
+2. `lib/agentic/host/host-mode-resolver.ts` – Bestimmt den aktiven Modus pro Lauf: erst expliziter Request, dann User-Praeferenz, dann Fallback. In-Memory-Status pro User mit Cleanup.
+3. `lib/agentic/host/companion-contract.ts` – Companion-Registrierung, Heartbeat, Run-Delegation und Onboarding-Steps. Companion spricht denselben Run-Vertrag.
+4. `app/api/agentic/host-status/route.ts` – GET: Zeigt alle Modi mit Status, Capabilities und Praeferenz. POST: Setzt Praeferenz oder aktualisiert einen Host-Status (z.B. Companion-Heartbeat).
+
+### Geaenderte Dateien
+5. `lib/agentic/runs/agent-chat-run-contract.ts` – `hostMode` Feld in `AgentChatRunStartInput` ergaenzt.
+6. `app/api/chat/route.ts` – Host-Modus wird aus Body/Header aufgeloest, in Run-Metadaten gespeichert und als Response-Header (`X-Host-Mode`) zurueckgegeben.
+7. `lib/agentic/runs/agent-chat-run-worker.ts` – Worker loest Host-Modus pro Lauf auf und schreibt ihn in die Run-Metadaten.
+
+### Validierung
+- `npx tsc --noEmit` – 0 Fehler.
 
 ## Nächste Phase danach
 `09-abo-preise-und-paketlogik.md`
