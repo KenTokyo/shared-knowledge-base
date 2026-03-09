@@ -1,7 +1,7 @@
 # Notedrill Mobile: Phase 02 Host-Modi, Routing und Fallbacks
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
 
 ## Ziel
 Diese Phase regelt, wie Notedrill je nach Gerät und Lage den richtigen Host auswählt.
@@ -91,6 +91,20 @@ Ohne klare Host-Logik versteht später weder der Nutzer noch das System, was ger
 2. Jeder Host-Modus hat einen Fallback.
 3. Die App zeigt den aktiven Modus ehrlich an.
 4. Windows-Browser, Emulator und iPad-POC sind nicht mehr versteckte Sonderfälle.
+
+## Abschlussstand vom 8. März 2026
+1. Ein gemeinsamer Host-Resolver entscheidet jetzt aus Profil, Setup-Status und Remote-Fallback den echten aktiven Weg.
+2. Chat-Anfragen senden jetzt `runtimeMode`, `hostMode`, Fallback-Grund und den aktiven Profilweg direkt an die Bridge.
+3. Wenn Companion, Termux oder iSH nicht erreichbar sind, nutzt der Chat automatisch den passenden Remote-Weg statt blind am alten Host zu haengen.
+4. Das Chat-Banner zeigt den aktiven Weg jetzt ehrlich an, auch fuer Remote, Companion-Fallback, Termux und iSH.
+5. Failure-Faelle bauen den Run-Vertrag jetzt mit echtem Host-Modus und echtem Fallback-Status auf.
+
+## Betroffene Dateien
+1. `lib/agent/bridge/host-route-resolver.ts`
+2. `features/chat/components/store/chat-bridge-request.ts`
+3. `features/chat/components/store/chat-bridge-response.ts`
+4. `features/chat/components/interface/ProviderRouteBannerSimple.tsx`
+5. `lib/agent/bridge/ai-bridge-run-helpers.ts`
 
 ## Nächste Phase danach
 `03-provider-adapter-und-ausfuehrungswege.md`

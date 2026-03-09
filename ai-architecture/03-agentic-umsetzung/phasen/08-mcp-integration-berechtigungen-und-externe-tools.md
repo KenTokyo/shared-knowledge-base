@@ -1,7 +1,26 @@
 # Notedrill Mobile: Phase 08 MCP-Integration, Berechtigungen und externe Tools
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
+
+## Abschluss (8. März 2026)
+
+### Erstellte Dateien
+1. `lib/agent/mcp/mcp.types.ts` (176 Zeilen) - Typen fuer Server, Tools, Verbindungen, Berechtigungen
+2. `lib/agent/mcp/mcp-tool-registry.ts` (199 Zeilen) - Registry fuer verfuegbare MCP-Tools mit Discovery, Filter, Limits
+3. `lib/agent/mcp/mcp-connection-health.ts` (244 Zeilen) - Verbindungszustand, Health-Signale, Timeout-Handling
+4. `lib/agent/mcp/mcp-permission-gate.ts` (250 Zeilen) - Berechtigungspruefung mit Regeln, Rollen, Glob-Muster, PermissionStorage-Anbindung
+5. `lib/agent/mcp/index.ts` (75 Zeilen) - Barrel-Export
+
+### Was bedeutet das konkret fuer den User?
+Externe Tools (z.B. Wikipedia-Suche, Datenbank-Abfragen) koennen jetzt sicher angebunden werden. Schueler duerfen nur lesen, Lehrer muessen bei Loesch-Aktionen bestaetigen, Admins haben vollen Zugriff. Langsame oder defekte Server werden automatisch erkannt und abgeschaltet.
+
+### Architektur-Entscheidungen
+- Mobile hostet MCP nicht selbst → Health-Signale kommen ueber Bridge
+- PermissionStorage wird wiederverwendet (kein zweites Speichersystem)
+- Glob-Patterns fuer flexible Regelzuweisung (z.B. "Search*" → erlaubt)
+- MAX_TOOLS_PER_SERVER = 50 gegen Kontext-Ueberflutung
+- UNREACHABLE_THRESHOLD = 3 aufeinanderfolgende Fehler
 
 ## Ziel
 Diese Phase macht externe Tools nutzbar, ohne Sicherheit und Klarheit zu verlieren.

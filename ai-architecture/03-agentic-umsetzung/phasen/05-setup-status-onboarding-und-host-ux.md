@@ -1,69 +1,79 @@
 # Notedrill Mobile: Phase 05 Setup-Status, Onboarding und Host-UX
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
 
 ## Ziel
-Diese Phase macht das ganze System für normale Nutzer verständlich.
+Diese Phase macht den aktiven KI-Weg für normale Nutzer verständlich.
 
-## Warum diese Phase wichtig ist
-Technisch gute Agenten bringen wenig, wenn der Nutzer nicht versteht:
-1. welchen Host-Weg er gerade nutzt,
-2. ob ein Tool fehlt,
-3. ob nur der Login fehlt,
-4. ob der Companion offline ist.
+## Validierter Umfang
+Diese Phase wurde vor der Umsetzung noch einmal geprüft.
 
-## Hauptaufgaben
+Wichtig war dabei:
+1. Produktweg bleibt Mobile-App, nicht Web-Hauptprodukt.
+2. Windows-Browser bleibt ein Randfall aus der Recherche, aber nicht der Kern dieser Mobile-Phase.
+3. Kostenlogik mit Budgets und Paketen gehört als eigener Block in Phase 06.
 
-### 1. Setup-Status-Karten
-Für jeden lokalen oder halb-lokalen Weg:
-1. installiert
-2. Version
-3. angemeldet
-4. Host erreichbar
-5. bewusst getrennt
+## Was in dieser Phase konkret gelöst wurde
 
-### 2. Host-Modus im UI
-1. Remote
-2. Companion
-3. Termux-Testweg
-4. iSH-POC
+### 1. Setup-Status im aktiven Hauptweg
+Für die aktiven Wege gibt es jetzt klare Statuskarten mit:
+1. installiert,
+2. angemeldet,
+3. verbunden,
+4. Version,
+5. Pfad,
+6. kurzen Hilfehinweisen.
 
-### 3. klare Tutorials
-1. iPad-only
-2. iPad heute, MacBook später
-3. Windows-App
-4. Windows-Browser
-5. Android-Termux
-6. Schule mit gesperrten Geräten
+### 2. Host-Modus direkt im Chat
+Der Chat zeigt jetzt sichtbar:
+1. ob Remote,
+2. ob Companion,
+3. ob Termux-Testweg,
+4. ob iSH-Testweg,
+5. wann ein Fallback aktiv ist.
 
-### 4. Modell- und Kostenhinweise
-1. günstig
-2. Premium
-3. eigenes API-Key-Modell
-4. Abo-Login
+### 3. Alltagshilfen für echte Nutzerlagen
+Es gibt jetzt kurze Schnellstart-Hilfen für typische Fälle:
+1. nur iPad oder iPhone,
+2. heute iPad, später MacBook,
+3. nur Android als Testweg,
+4. iSH nur als Probe,
+5. Schulgerät mit Sperren.
 
-## Edge Cases
+### 4. Modell- und Kostenhinweise im Alltag
+Die Phase zeigt jetzt im Setup und im Chat:
+1. welches Modell gerade gewählt ist,
+2. ob es eher günstig, mittel oder eher Premium ist,
+3. ob der Weg eher über Server-Budget, API-Key oder Abo-Login läuft.
+
+## Edge Cases, die in Phase 05 sichtbar gemacht wurden
 
 | Edge Case | Antwort |
 |---|---|
-| Windows-Browser ohne Companion | klar sagen, dass Web keinen direkten CLI-Zugriff hat |
-| Android-Emulator | `10.0.2.2` in Hilfe sichtbar machen |
-| Companion absichtlich getrennt | nicht als Fehler anzeigen |
-| Nutzer hat gar kein Zahlungsmittel | betreiberfinanzierte Pakete sichtbar machen |
-| Nutzer hat nur Handy | kleine Aufgaben und Remote priorisieren |
+| Android-Emulator | Hilfe kann weiter auf `10.0.2.2` verweisen |
+| Companion absichtlich getrennt | Nutzer bekommt klare Hilfe statt nur rotem Status |
+| Nutzer hat nur Handy | Remote bleibt der ruhige Standard, lokale Wege sind klar als Test markiert |
+| iSH wackelt | der Rückweg zu Remote oder Companion ist direkt erklärt |
 
-## Betroffene Nutzerlagen
-1. iPad-only Schüler
-2. MacBook später
-3. Windows-Nutzer
-4. Linux- und MacBook-Power-User
-5. Lehrkräfte und Schulen
+## Was das konkret für den User bedeutet
+Der User sieht jetzt schneller:
+1. welcher Weg gerade aktiv ist,
+2. warum etwas nicht läuft,
+3. welcher einfache Rückweg gerade am sichersten ist.
+
+## Nicht Teil dieser Phase
+Diese Punkte bleiben absichtlich für Phase 06:
+1. Betreiberbudget,
+2. Quoten pro Nutzer,
+3. Premium- oder Schulpakete,
+4. echte Preislogik für Produktpakete.
 
 ## Done-Kriterien
 1. Nutzer versteht den aktiven Modus.
 2. Nutzer versteht den häufigsten Fehlergrund.
 3. Nutzer bekommt einen klaren Ausweichweg angezeigt.
+4. Modell- und Kostenhinweise sind im Alltag sichtbar.
 
 ## Nächste Phase danach
 `06-kosten-budget-quota-und-pakete.md`

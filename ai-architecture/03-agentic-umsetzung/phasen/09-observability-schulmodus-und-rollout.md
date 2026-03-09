@@ -1,7 +1,8 @@
 # Notedrill Mobile: Phase 09 Observability, Schulmodus und Rollout
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
+Umgesetzt: 8. März 2026
 
 ## Ziel
 Diese Phase macht aus der Architektur einen betreibbaren Produktweg.

@@ -1,7 +1,7 @@
 # Notedrill Mobile: Phase 03 Provider-Adapter und Ausführungswege
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
 
 ## Ziel
 Diese Phase trennt sauber:
@@ -86,6 +86,21 @@ Zum Beispiel kann `codex-cli` heißen, ohne echten lokalen Codex-Loop zu liefern
 1. Host und Provider sind nicht mehr vermischt.
 2. Der Nutzer sieht, ob er gerade API oder CLI nutzt.
 3. Fallbacks sind planbar und verständlich.
+
+## Abschlussstand vom 8. März 2026
+1. Ein gemeinsamer Runtime-Helfer trennt jetzt Anbieterfamilie, Provider-Modus, Ausfuehrungsweg und Anmeldung.
+2. Chat-Requests senden jetzt den echten Provider-Weg mit, statt nur Host und Modell halb zu beschreiben.
+3. Started- und Fallback-Runs setzen `providerMode` jetzt aus Host und Provider zusammen und nicht mehr blind auf `subscription_cli`.
+4. Das Chat-Banner zeigt jetzt den echten Anbieter, den API- oder CLI-Weg und die Art der Anmeldung.
+5. Damit ist Remote-API im Chat nicht mehr als lokales CLI getarnt.
+
+## Betroffene Dateien
+1. `lib/agent/bridge/bridge-provider-runtime.ts`
+2. `lib/agent/bridge/ai-bridge-run-helpers.ts`
+3. `lib/agent/bridge/provider-adapters.ts`
+4. `features/chat/components/store/chat-bridge-request.ts`
+5. `features/chat/components/store/chat-bridge-response.ts`
+6. `features/chat/components/interface/ProviderRouteBannerSimple.tsx`
 
 ## Nächste Phase danach
 `04-artefakt-pipeline-und-dateivertraege.md`
