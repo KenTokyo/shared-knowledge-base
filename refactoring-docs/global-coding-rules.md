@@ -253,14 +253,6 @@ Link-Tabellen für alle Reads/Writes
 - Overlay-Content bevorzugt über Portal rendern (z. B. Radix Portal), nicht in abgeschnittenen Containern.
 - `z-index` immer relativ zu Dialog/Sheet/Drawer-Layern validieren; ein höherer `z-index` allein ist kein vollständiger Fix.
 
-### 4.15 Env-Namen müssen zum echten Laufzeit-Code passen
-- Bei getrennten Diensten wie Web-App + MCP-Server müssen Doku, `.env.example` und echter Code dieselben Variablen-Namen verwenden.
-- Vor jedem Deploy-Plan immer prüfen: Welche Namen liest der Code **wirklich** (`AUTH_SECRET` vs. `NEXTAUTH_SECRET`, `AUTH_URL` vs. `NEXTAUTH_URL`)?
-- Keine alten oder historischen Variablen-Namen in neuen Anleitungen weiterziehen.
-- Wenn zwei Dienste denselben Auth-Schlüssel brauchen, muss das in Doku und Start-Checks glasklar sein.
-
----
-
 ## 🔗 Framework-spezifische Docs
 
 | Framework | Dokumentation |
