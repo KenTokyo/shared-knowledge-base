@@ -1,7 +1,7 @@
 # Notedrill Mobile: Phase 01 Run-Contract und Tool-Wörterbuch
 
 Stand: 8. März 2026
-Status: `NEXT_PHASE_READY`
+Status: `DONE`
 
 ## Ziel
 Diese Phase baut den gemeinsamen Kern für alle Agent-Läufe.
@@ -123,6 +123,19 @@ Interne Standardnamen:
 2. Tool-Logs können ohne Sonderlogik gerendert werden.
 3. `generatedArtifacts` sind einheitlich.
 4. Alte Antworten können notfalls noch gemappt werden.
+
+## Was in dieser Phase umgesetzt wurde
+1. Gemeinsame Vertrags-Dateien für Lauf, Tool-Wörterbuch, Parser und Artefakte liegen jetzt in `lib/agent/contracts/`.
+2. `provider-adapters.ts` und `ai-bridge-service.ts` geben jetzt denselben Run-Kern mit `run`, `toolCalls`, `toolResults` und `generatedArtifacts` weiter.
+3. Der mobile Chat nutzt jetzt die gemeinsame Parser-Schicht statt eigener Sonderlogik.
+4. Der Chat-Store wurde in kleine Hilfsdateien aufgeteilt, damit `useChatStore.ts` wieder deutlich kleiner ist.
+5. Die Chat-Metadaten speichern jetzt auch den echten `run` samt Tool-Daten für Anzeige und spätere Phasen.
+6. `npm run type-check` lief nach der Umsetzung erfolgreich durch.
+
+## Noch offen für spätere Phasen
+1. Die Backend-Bridge spricht den neuen Vertrag noch nicht überall gleich tief.
+2. Host-Routing, Fallback-Regeln und Provider-Wege folgen in den nächsten Phasen.
+3. Die Artefakt-Übernahme in Notizen, Quiz und Karten kommt erst in Phase 04 voll dazu.
 
 ## Nächste Phase danach
 `02-host-modi-routing-und-fallbacks.md`

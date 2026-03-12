@@ -34,13 +34,21 @@ Sie soll:
 2. Geräte-, Nutzer- und Kostenwege sind dokumentiert.
 3. Tool-Call-Architektur ist mit externen Referenzen dokumentiert.
 4. Mermaid-Diagramme für Nutzerwege, Kosten und Kontext sind erstellt.
+5. Phase 01 ist im Mobile-Code umgesetzt und der gemeinsame Run-Kern läuft jetzt bis in Bridge und Chat.
+6. Phase 02 ist im Mobile-Chat umgesetzt. Der aktive Host-Weg wird jetzt aus Profil, Setup-Status und Fallback sauber aufgelöst.
+7. Phase 03 ist im Mobile-Chat umgesetzt. Anbieter-Weg, Provider-Modus und API- oder CLI-Pfad laufen jetzt über einen gemeinsamen Runtime-Helfer.
+8. Phase 04 ist im Mobile-Chat umgesetzt. Artefakte (Notes, Quiz, Karten) werden jetzt sicher über einen Unified Dispatcher in die App übernommen. Artifact-Type-Registry klassifiziert Pfade, Quiz/Card-Pipelines sind eigenständig, Diagramme/Kreuzworträtsel als Platzhalter vorbereitet.
+9. Phase 05 ist im Mobile-Chat umgesetzt. Setup-Status, Host-Banner, Alltagshilfen für Gerätewege und einfache Modell-/Kostenhinweise sind jetzt im aktiven Hauptweg sichtbar.
+10. Phase 06 ist im Mobile-Chat umgesetzt. Paketwahl, Budget-Speicher, Tages- und Monatszähler und harte Stopps vor zu teuren Läufen laufen jetzt im aktiven Chat- und Setup-Weg.
+11. Setup und Banner nutzen denselben Budget-Maßstab und zeigen den aktuellen Stand für Paket, Tag und Monat.
+12. Phase 07 ist im Mobile-Chat umgesetzt. Rollen, Skill-Hilfen, Kurzverlauf und sichtbare Modus-Hinweise laufen jetzt durch UI, Request und Session-Speicher.
+13. Phase 08 ist im Mobile-Code umgesetzt. MCP-Typen, Tool-Registry, Connection-Health und Permission-Gate mit Rollen-, Muster- und Risiko-basierter Zugriffskontrolle sind jetzt verfuegbar.
+
+14. Phase 09 ist im Mobile-Chat umgesetzt. Observability-Collector, Rollout-Guard, Health-Assessment, School-Mode-Hints und Feature-Gate-Evaluation laufen jetzt im aktiven Chat- und Setup-Weg.
 
 ### Noch nicht umgesetzt
-1. Ein echter gemeinsamer `RunContract`
-2. Ein einheitliches Tool-Wörterbuch
-3. Ein voller Host-Loop mit echten Tool-Events im produktiven Notedrill-Host
-4. Ein sauberer Setup- und Host-Status im Alltag
-5. Ein sauberer Skills-, Rollen- und MCP-Layer für den Produktbetrieb
+1. Ein voller Host-Loop mit echten Tool-Events im produktiven Notedrill-Host
+2. Serverseitige Schul-, Team- und Speicherquoten für den späteren Produktbetrieb
 
 ## Empfohlene Lesereihenfolge in diesem Umsetzungsordner
 1. Diese Datei
@@ -59,15 +67,15 @@ Sie soll:
 
 | Phase | Titel | Hauptnutzen | Wichtige Geräte oder Wege | Status | Datei |
 |---|---|---|---|---|---|
-| 01 | Run-Contract und Tool-Wörterbuch | gemeinsamer Kern für alle Agent-Läufe | alle | `NEXT_PHASE_READY` | `phasen/01-run-contract-und-tool-woerterbuch.md` |
-| 02 | Host-Modi, Routing und Fallbacks | klarer Weg pro Gerät und Lage | iPad, iPhone, Android, Mac, Windows, Linux | `PLANNED` | `phasen/02-host-modi-routing-und-fallbacks.md` |
-| 03 | Provider-Adapter und Ausführungswege | gleiche Logik für Remote, Companion und Premium | Remote, Companion, API, CLI | `PLANNED` | `phasen/03-provider-adapter-und-ausfuehrungswege.md` |
-| 04 | Artefakt-Pipeline und Dateiverträge | sichere Übernahme in Notizen, Quiz und Karten | alle | `PLANNED` | `phasen/04-artefakt-pipeline-und-dateivertraege.md` |
-| 05 | Setup-Status, Onboarding und Host-UX | verständlicher Alltag für Nutzer | iPad-only, MacBook später, Windows-Web | `PLANNED` | `phasen/05-setup-status-onboarding-und-host-ux.md` |
-| 06 | Kosten, Budgets, Quoten und Pakete | wenig Kosten und klare Produktlogik | Remote, Schule, BYOK, Companion | `PLANNED` | `phasen/06-kosten-budget-quota-und-pakete.md` |
-| 07 | Kontext-Stabilisierung, Skills und Rollen | weniger Kontextprobleme und bessere Spezialisierung | alle | `PLANNED` | `phasen/07-kontext-stabilisierung-skills-und-rollen.md` |
-| 08 | MCP, Berechtigungen und externe Tools | sichere Erweiterbarkeit | MCP, Skills, externe Datenquellen | `PLANNED` | `phasen/08-mcp-integration-berechtigungen-und-externe-tools.md` |
-| 09 | Beobachtung, Schulmodus und Rollout | Betrieb, Support und Ausfallschutz | Schulen, Teams, Reseller | `PLANNED` | `phasen/09-observability-schulmodus-und-rollout.md` |
+| 01 | Run-Contract und Tool-Wörterbuch | gemeinsamer Kern für alle Agent-Läufe | alle | `DONE` | `phasen/01-run-contract-und-tool-woerterbuch.md` |
+| 02 | Host-Modi, Routing und Fallbacks | klarer Weg pro Gerät und Lage | iPad, iPhone, Android, Mac, Windows, Linux | `DONE` | `phasen/02-host-modi-routing-und-fallbacks.md` |
+| 03 | Provider-Adapter und Ausführungswege | gleiche Logik für Remote, Companion und Premium | Remote, Companion, API, CLI | `DONE` | `phasen/03-provider-adapter-und-ausfuehrungswege.md` |
+| 04 | Artefakt-Pipeline und Dateiverträge | sichere Übernahme in Notizen, Quiz und Karten | alle | `DONE` | `phasen/04-artefakt-pipeline-und-dateivertraege.md` |
+| 05 | Setup-Status, Onboarding und Host-UX | verständlicher Alltag für Nutzer | iPad-only, MacBook später, Android-Testweg | `DONE` | `phasen/05-setup-status-onboarding-und-host-ux.md` |
+| 06 | Kosten, Budgets, Quoten und Pakete | wenig Kosten und klare Produktlogik | Remote, Schule, BYOK, Companion | `DONE` | `phasen/06-kosten-budget-quota-und-pakete.md` |
+| 07 | Kontext-Stabilisierung, Skills und Rollen | weniger Kontextprobleme und bessere Spezialisierung | alle | `DONE` | `phasen/07-kontext-stabilisierung-skills-und-rollen.md` |
+| 08 | MCP, Berechtigungen und externe Tools | sichere Erweiterbarkeit | MCP, Skills, externe Datenquellen | `DONE` | `phasen/08-mcp-integration-berechtigungen-und-externe-tools.md` |
+| 09 | Beobachtung, Schulmodus und Rollout | Betrieb, Support und Ausfallschutz | Schulen, Teams, Reseller | `DONE` | `phasen/09-observability-schulmodus-und-rollout.md` |
 
 ## Warum genau diese Reihenfolge sinnvoll ist
 
@@ -161,21 +169,11 @@ Erst dann kommen:
 4. Wenn sich Prioritäten ändern, wird hier die Reihenfolge sichtbar geändert.
 
 ## Aktuelle Priorität
-Die nächste sinnvolle Phase ist:
-`Phase 01 - Run-Contract und Tool-Wörterbuch`
-
-Warum?
-1. Mobile und Backend sind dort noch nicht sauber gleich.
-2. Alle späteren Host- und UI-Verbesserungen hängen davon ab.
-
-## Was nach Phase 01 sofort folgen sollte
-1. `Phase 02 - Host-Modi, Routing und Fallbacks`
-2. `Phase 03 - Provider-Adapter und Ausführungswege`
-3. `Phase 04 - Artefakt-Pipeline und Dateiverträge`
+Alle 9 geplanten Agentic-Umsetzungsphasen sind jetzt abgeschlossen.
 
 ## Mein ehrlicher Befund
-Die große Recherche ist jetzt stark genug.
-Der nächste Engpass ist nicht Wissen, sondern saubere schrittweise Umsetzung.
+Die Agentic-Umsetzung ist jetzt vollstaendig im Mobile-Code verankert.
+Der naechste Schritt ist echter Produktbetrieb: Host-Loop mit echten Tool-Events und serverseitige Quoten.
 
 ## Verweise
 1. `shared-docs/ai-architecture/01-grundlagen/notedrill-ki-zielarchitektur.md`

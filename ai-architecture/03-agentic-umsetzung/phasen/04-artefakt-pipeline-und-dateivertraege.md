@@ -1,7 +1,8 @@
 # Notedrill Mobile: Phase 04 Artefakt-Pipeline und Dateiverträge
 
 Stand: 8. März 2026
-Status: `PLANNED`
+Status: `DONE`
+Abgeschlossen: 8. März 2026
 
 ## Ziel
 Diese Phase sorgt dafür, dass Agent-Ergebnisse nicht nur im Chat auftauchen, sondern sicher in der App landen.
@@ -74,6 +75,20 @@ Ein Agent-Text allein bringt wenig, wenn:
 1. Artefakte landen sicher in Notedrill.
 2. Die Sidebar wird sauber aktualisiert.
 3. Fehler sind klar sichtbar.
+
+## Umgesetzte Dateien
+
+### Neue Dateien
+1. `lib/agent/contracts/artifact-type-registry.ts` - Klassifiziert Agent-Pfade in Domain-Typen (note, quiz, flashcard, diagram, crossword)
+2. `features/chat/components/interface/agent-quiz-artifact-service.ts` - Quiz-Upsert-Pipeline: JSON parsen, Quiz+Fragen in DB erstellen
+3. `features/chat/components/interface/agent-card-artifact-service.ts` - Standalone-Karten-Upsert-Pipeline: JSON parsen, Lernkarten in DB erstellen
+4. `features/chat/components/interface/agent-artifact-dispatcher.ts` - Unified Dispatcher: routet nach Domain-Typ zur richtigen Pipeline
+
+### Geänderte Dateien
+1. `lib/agent/contracts/agent-note-upsert.ts` - CapabilityPolicy erweitert um quiz_upsert, card_upsert Actions und diagrams/, crosswords/ Pfade
+2. `lib/agent/contracts/index.ts` - Barrel um artifact-type-registry Exports erweitert
+3. `features/chat/components/interface/agent-note-upsert-service.ts` - Routing-Integration: non-note Pfade werden an den Dispatcher weitergeleitet; Pfad-Regex erweitert
+4. `features/chat/components/interface/ConversationView.tsx` - Nullsafe-Fix für createdCardCount
 
 ## Nächste Phase danach
 `05-setup-status-onboarding-und-host-ux.md`

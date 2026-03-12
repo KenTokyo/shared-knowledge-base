@@ -253,8 +253,6 @@ Link-Tabellen für alle Reads/Writes
 - Overlay-Content bevorzugt über Portal rendern (z. B. Radix Portal), nicht in abgeschnittenen Containern.
 - `z-index` immer relativ zu Dialog/Sheet/Drawer-Layern validieren; ein höherer `z-index` allein ist kein vollständiger Fix.
 
----
-
 ## 🔗 Framework-spezifische Docs
 
 | Framework | Dokumentation |
