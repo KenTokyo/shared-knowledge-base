@@ -1,0 +1,37 @@
+# Chat History: openui sdk split into verlauf 20260312 7gpo
+
+*Created on 3/12/2026, 3:52:43 PM*
+
+---
+
+**You (Draft):**
+# OpenUI SDK
+
+
+
+The OpenUI SDK is split into three packages that build on each other:
+
+* **`@openuidev/react-lang`** — Core runtime. Define component libraries with Zod schemas, generate system prompts, parse OpenUI Lang, and render streamed output to React. This is the foundation — you need it for any OpenUI integration.
+
+* **`@openuidev/react-headless`** — Headless chat state management. Provides `ChatProvider`, thread/message hooks, streaming protocol adapters (OpenAI, AG-UI), and message format converters. Use this when you want full control over your chat UI.
+
+* **`@openuidev/react-ui`** — Prebuilt chat layouts (`Copilot`, `FullScreen`, `BottomTray`) and two ready-to-use component libraries (general-purpose and chat-optimized). Depends on both packages above. Use this for the fastest path to a working chat interface.
+
+Packages [#packages]
+
+<Cards>
+  <Card title="@openuidev/react-lang" href="/docs/api-reference/react-lang">
+    defineComponent, createLibrary, Renderer, parser APIs, action types, context hooks, and form
+    validation.
+  </Card>
+
+  <Card title="@openuidev/react-headless" href="/docs/api-reference/react-headless">
+    ChatProvider, useThread/useThreadList, stream protocol adapters (OpenAI, AG-UI), and message
+    format converters.
+  </Card>
+
+  <Card title="@openuidev/react-ui" href="/docs/api-reference/react-ui">
+    Copilot, FullScreen, BottomTray chat layouts, and two built-in component libraries
+    (general-purpose and chat-optimized).
+  </Card>
+</Cards>
