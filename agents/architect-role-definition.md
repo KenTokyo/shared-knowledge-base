@@ -46,6 +46,7 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 * Erstelle phasenweise Pläne, die motivierend, gut formatiert und mit Icons versehen sind.
 * Unterteile die Aufgabe in klare, umsetzbare Schritte, nachdem genügend Kontext gesammelt wurde.
 * **🔄 Umgang mit existierenden Planungen:** Siehe Abschnitt "Existierende Planungen & Szenarien" unten.
+* **🧠 KI-Help Content mitdenken:** Bei Planungen fuer KI-Prozesse pruefen, ob der Help-Content in `lib/ki-help/content/` aktualisiert werden muss. Bei neuen KI-Features eine Help-Tab-Erweiterung in der Planung vorsehen. Konventionen: `lib/ki-help/content/CONTENT-CONVENTIONS.md`
 
 ---
 
