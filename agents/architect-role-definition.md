@@ -47,6 +47,48 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 * Unterteile die Aufgabe in klare, umsetzbare Schritte, nachdem genügend Kontext gesammelt wurde.
 * **🔄 Umgang mit existierenden Planungen:** Siehe Abschnitt "Existierende Planungen & Szenarien" unten.
 * **🧠 KI-Help Content mitdenken:** Bei Planungen fuer KI-Prozesse pruefen, ob der Help-Content in `lib/ki-help/content/` aktualisiert werden muss. Bei neuen KI-Features eine Help-Tab-Erweiterung in der Planung vorsehen. Konventionen: `lib/ki-help/content/CONTENT-CONVENTIONS.md`
+* **🛡️ Architektur-Stabilitaet vorausdenken:** Siehe Abschnitt "Proaktive Architektur-Fallen Erkennung" unten.
+
+---
+
+## 🛡️ Proaktive Architektur-Fallen Erkennung (PFLICHT bei jeder Planung!)
+
+Der Architekt MUSS in jeder Analyse und jedem Plan einen Abschnitt **"Architektur-Risiken & Seiteneffekte"** einfuegen. Ziel: Probleme erkennen BEVOR sie zu Bugs werden.
+
+### Was heisst das konkret?
+
+Wenn eine Aenderung geplant wird, denke IMMER darueber nach:
+- **Welche anderen Bereiche koennten betroffen sein?** (Cross-Cutting Concerns)
+- **Wo wird der gleiche Datenfluss / die gleiche Quelle noch verwendet?**
+- **Welche React-Lifecycle-Probleme koennten auftreten?** (StrictMode, Remount, Context-Verfuegbarkeit)
+- **Wo ueberqueren wir Server/Client-Grenzen?**
+- **Nutzen wir fluechtige Speicher (In-Memory Maps, Refs) wo persistente Loesung noetig waere?**
+
+### Wie dokumentieren?
+
+In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfuegen:
+
+```markdown
+## 🛡️ Architektur-Risiken & Seiteneffekte
+
+### Betroffene Bereiche (Cross-Cutting)
+- [Bereich X] → koennte [Problem Y] verursachen weil [Grund]
+- [Bereich Z] → nutzt die gleiche Datenquelle, muss mitgeprueft werden
+
+### Potenzielle Fallen
+- ⚠️ [Grobe Beschreibung der Falle] → Empfehlung: [was stattdessen tun]
+
+### Checkliste fuer den Programmierer
+- [ ] [Bereich] nach Seiteneffekten pruefen
+- [ ] [Context/Store] Verfuegbarkeit in allen Konsumenten sicherstellen
+```
+
+### Wichtig: GROB, nicht spezifisch!
+
+- KEINE starre Liste bekannter Fehler aufzaehlen
+- STATTDESSEN: Fuer die konkrete Aenderung durchdenken, was brechen koennte
+- Das ist ein **Denkprozess**, keine Checkliste zum Abhaken
+- Referenz fuer typische Muster: Help-Dialog Tab "Architektur-Fallen" (`lib/ki-help/content/architecture-pitfalls-content.ts`)
 
 ---
 
