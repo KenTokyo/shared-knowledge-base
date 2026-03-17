@@ -74,11 +74,11 @@ Pflichtprüfungen:
 ## Nächste Phase danach
 `06-lange-laeufe-queue-und-24h-agenten.md`
 
-## Umsetzung am 8. MÃ¤rz 2026
-1. Ein gemeinsamer Artefakt-Baustein beschreibt jetzt Vorschau, Quelle, Zielmodus und Pruefungen fuer Tool-Ergebnisse.
-2. Open-In laeuft serverseitig jetzt nur noch als Vorschau-Artefakt und blockiert die echte Editor-Uebernahme nicht mehr aus Versehen.
-3. Vor der Uebernahme pruefen wir jetzt zentrale Risiken:
+## Umsetzung am 8. März 2026
+1. Ein gemeinsamer Artefakt-Baustein beschreibt jetzt Vorschau, Quelle, Zielmodus und Prüfungen für Tool-Ergebnisse.
+2. Open-In läuft serverseitig jetzt nur noch als Vorschau-Artefakt und blockiert die echte Editor-Übernahme nicht mehr aus Versehen.
+3. Vor der Übernahme prüfen wir jetzt zentrale Risiken:
    - kaputte UTF-8-Zeichen
-   - zu grosse Import-Pakete
+   - zu große Import-Pakete
 4. Notiz- und Ordner-Ergebnisse nutzen denselben Artefakt-Weg mit klarer Vorschau.
 5. Vorschau-Meldungen aus dem Server-Tool-Feed erscheinen jetzt direkt im Chat.
