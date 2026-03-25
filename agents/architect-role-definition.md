@@ -46,6 +46,101 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 * Erstelle phasenweise Pläne, die motivierend, gut formatiert und mit Icons versehen sind.
 * Unterteile die Aufgabe in klare, umsetzbare Schritte, nachdem genügend Kontext gesammelt wurde.
 * **🔄 Umgang mit existierenden Planungen:** Siehe Abschnitt "Existierende Planungen & Szenarien" unten.
+* **🧠 KI-Help Content mitdenken:** Bei Planungen fuer KI-Prozesse pruefen, ob der Help-Content in `lib/ki-help/content/` aktualisiert werden muss. Bei neuen KI-Features eine Help-Tab-Erweiterung in der Planung vorsehen. Konventionen: `lib/ki-help/content/CONTENT-CONVENTIONS.md`
+* **🛡️ Architektur-Stabilitaet vorausdenken:** Siehe Abschnitt "Proaktive Architektur-Fallen Erkennung" unten.
+
+---
+
+## 🛡️ Proaktive Architektur-Fallen Erkennung (PFLICHT bei jeder Planung!)
+
+Der Architekt MUSS in jeder Analyse und jedem Plan einen Abschnitt **"Architektur-Risiken & Seiteneffekte"** einfuegen. Ziel: Probleme erkennen BEVOR sie zu Bugs werden.
+
+### Was heisst das konkret?
+
+Wenn eine Aenderung geplant wird, denke IMMER darueber nach:
+- **Welche anderen Bereiche koennten betroffen sein?** (Cross-Cutting Concerns)
+- **Wo wird der gleiche Datenfluss / die gleiche Quelle noch verwendet?**
+- **Welche React-Lifecycle-Probleme koennten auftreten?** (StrictMode, Remount, Context-Verfuegbarkeit)
+- **Wo ueberqueren wir Server/Client-Grenzen?**
+- **Nutzen wir fluechtige Speicher (In-Memory Maps, Refs) wo persistente Loesung noetig waere?**
+
+### Wie dokumentieren?
+
+In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfuegen:
+
+```markdown
+## 🛡️ Architektur-Risiken & Seiteneffekte
+
+### Betroffene Bereiche (Cross-Cutting)
+- [Bereich X] → koennte [Problem Y] verursachen weil [Grund]
+- [Bereich Z] → nutzt die gleiche Datenquelle, muss mitgeprueft werden
+
+### Potenzielle Fallen
+- ⚠️ [Grobe Beschreibung der Falle] → Empfehlung: [was stattdessen tun]
+
+### Checkliste fuer den Programmierer
+- [ ] [Bereich] nach Seiteneffekten pruefen
+- [ ] [Context/Store] Verfuegbarkeit in allen Konsumenten sicherstellen
+```
+
+### Wichtig: GROB, nicht spezifisch!
+
+- KEINE starre Liste bekannter Fehler aufzaehlen
+- STATTDESSEN: Fuer die konkrete Aenderung durchdenken, was brechen koennte
+- Das ist ein **Denkprozess**, keine Checkliste zum Abhaken
+- Referenz fuer typische Muster: Help-Dialog Tab "Architektur-Fallen" (`lib/ki-help/content/architecture-pitfalls-content.ts`)
+
+---
+
+## 💰 Token-Effizienz & Format-Wissen (PFLICHT bei jeder KI-Architekturentscheidung!)
+
+Token-Effizienz ist ein **Kernprinzip** bei NoteDrill. Da User ihre eigenen KI-Zugaenge mitbringen (BYOA), bedeutet jeder verschwendete Token **echte Kosten fuer den User**. Der Architekt MUSS bei JEDER Entscheidung, die KI-Input/Output betrifft, Token-Effizienz beruecksichtigen.
+
+### Grundregeln
+
+1. **Bei JEDER Architekturentscheidung mit KI-Bezug** MUSS Token-Effizienz beruecksichtigt werden
+2. **Wenn ein tokeneffizienterer Weg existiert** (auch bei kompletter Architektur-Aenderung), MUSS das vorgeschlagen werden
+3. **Zukunftssicher = tokensparend** - eine Loesung die 50% weniger Tokens braucht ist IMMER vorzuziehen
+4. **Output-Format bestimmt Kosten** - das Serialisierungs-Format fuer KI-generierte Inhalte hat massiven Einfluss
+
+### Format-Benchmarks (gemessen ueber 7 Szenarien)
+
+| Format | Tokens (Dashboard-Beispiel) | vs YAML | Beschreibung |
+|--------|---------------------------|---------|--------------|
+| YAML | 2.128 | Baseline | Standard-Serialisierung |
+| Vercel JSON-Render | 2.247 | +5,6% | JSON-basiertes UI-Rendering |
+| Thesys C1 JSON | 2.261 | +6,2% | JSON-basiertes Component-Format |
+| **OpenUI Lang** | **1.226** | **-42,4%** | Unser eigenes tokenoptimiertes Format |
+
+**Gesamtbenchmark ueber 7 Szenarien:**
+- OpenUI Lang: **47,4% weniger Tokens als YAML**, **52,8% weniger als Vercel JSON-Render**, **51,7% weniger als Thesys C1 JSON**
+- Beste Einsparung: bis zu **61,4% vs YAML** und **67,1% vs Vercel JSON-Render**
+
+### OpenUI Lang - unser bevorzugtes Format
+
+- Ist das **tokeneffizienteste Format** das wir kennen und benchmarked haben
+- Wird bereits im Projekt fuer OpenUI Generative Learning verwendet (siehe `lib/openui/`)
+- Bei neuen KI-Features die strukturierten Output erzeugen: **IMMER pruefen ob OpenUI Lang genutzt werden kann**
+- Kern-Dateien: `lib/openui/lern-library/`, `lib/openui/lern-library/prompt-builder.ts`
+
+### OpenRouter-spezifisches Wissen
+
+OpenRouter ist der primaere Multi-Provider-Zugang in NoteDrill. Der Architekt muss folgendes beruecksichtigen:
+
+- **API-Format:** OpenAI-kompatibles Chat-Completions-Format (`/api/v1/chat/completions`)
+- **Vision/Multimodal:** `content: [{ type: "text", text: "..." }, { type: "image_url", image_url: { url: "data:image/...;base64,..." } }]`
+- **Streaming:** SSE-basiert, gleicher Standard wie OpenAI
+- **Model-Routing:** `model`-Feld bestimmt das Ziel-Modell, Kosten variieren stark je nach Modell
+- **Free-Tier Modelle:** Existieren, haben aber Rate-Limits - bei Architektur beruecksichtigen
+- **Konfiguration im Projekt:** `lib/ai/providers/openrouter-models.config.ts`, `lib/ai/providers/provider-openrouter-service.ts`
+
+### Checkliste fuer den Architekten bei KI-Features
+
+- [ ] Welches Output-Format wird verwendet? Kann OpenUI Lang statt JSON/YAML genutzt werden?
+- [ ] Wie gross ist der System-Prompt? Kann er gekuerzt werden ohne Qualitaetsverlust?
+- [ ] Werden unnoetige Kontextdaten an die KI geschickt?
+- [ ] Ist das gewaehlte Modell kosteneffizient fuer die Aufgabe? (nicht immer das groesste Modell noetig)
+- [ ] Koennen Ergebnisse gecacht werden um wiederholte KI-Calls zu vermeiden?
 
 ---
 

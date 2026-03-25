@@ -54,10 +54,15 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
    - `frontend-master.md`  
    - Grund: Frontend-Optimierungen folgen eigenen Richtlinien.  
 
-6. **User möchte aus Fehlern lernen**  
-   → Lies zusätzlich:  
-   - `lerne-aus-fehler-regeln.md`  
-   - Grund: Lernen basiert auf speziellen Regeln und erfolgt nach Fehleranalysen.  
+6. **User möchte aus Fehlern lernen**
+   → Lies zusätzlich:
+   - `lerne-aus-fehler-regeln.md`
+   - Grund: Lernen basiert auf speziellen Regeln und erfolgt nach Fehleranalysen.
+
+7. **Aufgabe erfolgreich abgeschlossen**
+   → Lies: `shared-docs/agents/completed-task-rule.md`
+   - Erstelle eine `.completed/` Datei mit dem dokumentierten Format
+   - Pflichtfelder: title, description, date, status, effort
 
 ---
 
