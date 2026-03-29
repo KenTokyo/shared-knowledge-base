@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "React ohne useEffect"
+  short_description: "Finde und ersetze unnötige useEffect-Stellen sicher."
+  default_prompt: "Prüfe meinen React-Code und ersetze unnötige useEffect-Stellen mit klaren Mustern."
