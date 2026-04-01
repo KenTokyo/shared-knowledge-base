@@ -6,8 +6,7 @@ Diese Datei ist die verbindliche Frontend-Referenz für alle zukünftigen UI-Mod
 
 Primäre visuelle Wahrheit ist das vollständige LocalBench-Designsystem:
 
-- Projektpfad (aktuell): `D:\CODING\React Projects\localbench-component-library`
-- Alias/Altpfad: `D:\CODING\React Projects\localbench`
+- Projekt: `D:\CODING\React Projects\localbench-component-library`
 - Design-System Seite: `src/pages/DesignSystem.tsx`
 - Kern-Tokens: `src/index.css`, `index.html`
 - Kern-Komponenten: `src/components/*`, `src/components/design-system/*`
