@@ -1,180 +1,312 @@
-## 🎯 Aufgabe
+# Modernize Frontend (SSOT)
 
-Die KOMPONENTE oben als pfade aufgelistet oder in screenshots gezeigt sehen sehr unmodern aus, die du kreiert hast. Bitte deutlich hochwertiger machen. Schriften gut lesbar machen. Stärker an schauen, was für ein Screen, also die Screenshots sehen tatsächlich deutlich hochmoderner aus. Versucht bitte, dich an einem Screenshot zu orientieren, um die Modernität aufzulisten. Also das muss deutlich modernisiert werden, die Sektion. So können wir das nicht verkaufen. Bitte orientier dich an einem Screenshot sehr stark. Schaue, welcher Screenshot da am besten passt. Ich schicke dir 1-2 mock designs, ganz unten aufgelistet, aber bitte orientier dich an einen sehr stark und versuch das Design sehr gut zu machen.
+## Ziel dieser Datei
 
-## Aufgabe
+Diese Datei ist die verbindliche Frontend-Referenz für alle zukünftigen UI-Modernisierungen in NoteDrill und weiteren Apps.
 
-Diese Phase ist der **wichtigste visuelle Qualitaetsschritt**. Hier wird das Design auf Mock-Design-Niveau gebracht. Wenn die Farben oder Borders nicht stimmen, ist DIESE Phase dafuer verantwortlich, das zu korrigieren.
+Primäre visuelle Wahrheit ist das vollständige LocalBench-Designsystem:
 
-**PFLICHT: Analysiere die hochgeladenen Mock-Design-Screenshots gruendlich BEVOR du Code aenderst.**
+- Projektpfad (aktuell): `D:\CODING\React Projects\localbench-component-library`
+- Alias/Altpfad: `D:\CODING\React Projects\localbench`
+- Design-System Seite: `src/pages/DesignSystem.tsx`
+- Kern-Tokens: `src/index.css`, `index.html`
+- Kern-Komponenten: `src/components/*`, `src/components/design-system/*`
 
----
+Wenn Frontend-Komponenten gebaut oder überarbeitet werden, muss diese Datei vor dem Coding gelesen werden.
 
-## PFLICHT-SCHRITT 0: Mock-Design studieren (VOR dem Coden!)
+## Ergänzende Pflichtquellen
 
-1. **Analysiere die hochgeladenen Mock-Design-Screenshots** sehr genau
-2. Extrahiere visuell alle relevanten Design-Eigenschaften daraus
-3. Nutze den Mock als deine **einzige visuelle Wahrheit**
-
-Was du aus dem Mock-Screenshot visuell ableiten musst:
-1. **Farbpalette** - Hintergrund-Toene, Akzentfarben, Textfarben, Card-Hintergruende (schaetze die Hex-Werte so genau wie moeglich anhand des Bildes)
-2. **Font-Stil** - Sieht es nach Serif oder Sans-Serif aus? Duenn oder fett? Eng oder weit? Waehle passende Premium Google Fonts die dem Stil entsprechen
-3. **Border-Muster** - Wie werden Borders eingesetzt? Welche Opacity, Dicke, Farbe?
-4. **Card-Styling** - Rundung, Schatten, Hintergrund, Hover-Effekte
-5. **Section-Hintergruende** - Wie wechseln die Hintergruende zwischen Sektionen?
-
-Notiere deine Analyse als Kommentar: `{/* Mock-Analyse: Farben: ..., Fonts: ..., Borders: ..., Layout: ... */}`
+- [LocalBench Component Library Playbook](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/localbench-component-library-playbook.md)
+- [LocalBench Prompt-Katalog](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/localbench-component-library-prompts.md)
 
 ---
 
-## Mock-Design-Auswahl (KRITISCH)
+## Pflicht-Workflow vor Frontend-Code
 
-1. Analysiere die hochgeladenen Mock-Screenshots gruendlich
-2. Waehle **1 PRIMARY Mock** das am besten zur Branche passt
-3. Dokumentiere die Wahl: `{/* MOCK-REFERENZ: PRIMARY=[Beschreibung des gewaehlten Mocks] */}`
+1. Mock/Screenshot prüfen (falls vorhanden) und auf LocalBench-Stil mappen.
+2. Prüfen, ob es den Pattern-Baustein bereits gibt (Card, Selector, Sidebar, Dialog, Chat, Table).
+3. Tokens aus diesem Dokument übernehmen statt neue „ad hoc“-Styles zu erfinden.
+4. Erst dann Code schreiben.
 
-### Aus dem Mock visuell extrahieren und 1:1 umsetzen:
+Pflicht-Kommentar für neue UI-Sektionen:
 
-| Aspekt | Was visuell ableiten | Wie umsetzen |
-|--------|---------------------|--------------|
-| **Farben** | BG-Toene, Akzent-Farbe, Text-Farben, Card-BG - schaetze Hex-Werte vom Screenshot | `tailwind.config` Farben in index.html aktualisieren |
-| **Fonts** | Serif/Sans Stil, Gewichtungen, Tracking - waehle aehnliche Google Fonts | Google Fonts Link + fontFamily in tailwind.config |
-| **Layout** | Hero-Komposition, Grid, Card-Shapes | Komponenten-Struktur anpassen |
-| **Navbar** | Pill/Floating/Glass, Morphing-Verhalten | Navbar.tsx komplett ueberarbeiten |
-| **Cards** | Rundung, Schatten, Borders, Hover-States | Alle Card-Komponenten anpassen |
-| **Spacing** | Section-Padding, Element-Abstaende | Tailwind-Klassen anpassen |
+```tsx
+{/* MOCK-REFERENZ: PRIMARY=LocalBench Hero/Card System */}
+{/* Mock-Analyse: Farben=Neutral+Muted, Fonts=Inter/Playfair/JetBrains, Borders=Subtil, Layout=Kompakt+Luft */}
+```
 
 ---
 
-## FARB-REGELN (KRITISCH - Hauptgrund fuer schlechte Ergebnisse)
+## LocalBench Analyse (abgeleitet aus echtem Projekt)
 
-### Farben IMMER vom Mock ableiten - NIEMALS generisch waehlen
+### 1) Design-Charakter
 
-Du hast keine vorgefertigten Farbpaletten. Stattdessen:
+- Minimal, technisch, editorial.
+- Klare Flächen mit sehr subtilen Borders.
+- Große Radius-Sprache (`rounded-3xl`) für Cards/Sections.
+- Runde Controls (`rounded-full`) für Inputs/Buttons.
+- Hohe Lesbarkeit, wenig visuelles Rauschen.
+- Dark-first möglich, aber Light nicht „billig“: Off-White + Glass-Panels.
 
-1. **Schau dir den Mock-Screenshot genau an**
-2. **Schaetze die Hex-Farbwerte** so praezise wie moeglich anhand des Bildes
-3. **Definiere eine vollstaendige Palette** mit:
-   - Background (Haupt-Hintergrundfarbe)
-   - Card-BG (Karten-Hintergrund)
-   - Primary (Akzentfarbe fuer Buttons, Highlights)
-   - Text-Dunkel (Ueberschriften)
-   - Text-Muted (Fliesstext, sekundaere Infos)
-   - Border-Farben (immer muted/subtil)
+### 2) Farb- und Token-Basis
 
-4. **Dokumentiere jede Farbe** mit Herkunft: `{/* Farbe abgeleitet vom Mock: Hintergrund sieht nach warmem Off-White aus -> #faf8f5 */}`
+Aus LocalBench-Quellen (`src/index.css`, `index.html`, `ColorsSection.tsx`):
 
-### Grundregel: Light Mode ist Standard
-- Wenn der Mock dunkel ist, invertiere die Palette zu Light Mode
-- Dunkle Hintergruende werden hell, helle Texte werden dunkel
-- Akzentfarben bleiben gleich oder werden leicht angepasst
+- Light Background Basis: `--bg-light` (Default `#fafafa`, Varianten `#fdfbf7`, `#f0f4f8`, `#ffffff`)
+- Dark Background Basis: `#000000`
+- Panel Light (Liquid Glass): `bg-white/80` + `backdrop-blur-xl`
+- Panel Dark: `#0a0a0a` bis `#111`
+- Border Light: `border-black/5`, `border-black/10`, selten `border-white/60` für Glass-Panels
+- Border Dark: `border-white/5`, `border-white/10`
+- Accent: `#00cc7d` (light), `#00ff9d` (dark)
+- Text Primary: `#000000` / `#ffffff`
+- Text Muted: `text-black/50`, `text-white/50` (und feiner)
 
-Light und DarkMode kompatibel soll das jedoch sein
+### 3) Typografie-System
 
-### Font-Auswahl anhand des Mocks
-Schaue dir den Mock an und waehle passende Premium Google Fonts:
+Aus `index.html`, `src/index.css`, `TypographySection.tsx`, `PostDetail.tsx`:
 
-| Mock-Stil | Empfohlene Display-Fonts | Empfohlene Body-Fonts |
-|-----------|-------------------------|----------------------|
-| Elegant/Serif | DM Serif Display, Playfair Display, Cormorant Garamond | DM Sans, Inter, Plus Jakarta Sans |
-| Modern/Clean | Space Grotesk, Sora, Manrope | Inter, DM Sans, Plus Jakarta Sans |
-| Technisch/Bold | Rajdhani, Orbitron, Space Grotesk | Inter, DM Sans |
-| Warm/Handwerk | Playfair Display, Lora | DM Sans, Source Sans 3 |
+- Sans: Inter (`font-sans`) für UI, Buttons, Body.
+- Serif: Playfair Display (`font-serif italic font-light`) für H1/H2/H3 und Showcase-Wörter.
+- Mono: JetBrains Mono (`font-mono`) für Daten, Zahlen, technische Werte.
+
+Editorial-Pattern:
+
+- Hero-H1: Sans als Basis, einzelne Schlüsselwörter Serif+Italic.
+- Artikel-H1/H2/H3: immer Serif + Italic + Light.
+- Body: `font-light`, `leading-relaxed`.
+
+### 4) Radius-, Spacing-, Shadow-System
+
+Abgeleitete Baseline:
+
+- Section-Container: `rounded-3xl`, `p-8` (mobil `p-4` bis `p-6`).
+- Card-Container: `rounded-3xl`, `p-6` oder `p-8`.
+- Dialog-Innenlayer: meist `rounded-2xl`.
+- Controls: `rounded-full` (Buttons/Inputs), sekundär `rounded-xl`.
+- Shadow Light: `shadow-xl shadow-black/[0.04]` oder `shadow-sm`.
+- Shadow Dark: häufig `shadow-none`.
+
+### 5) Border-Regeln (kritisch)
+
+Borders sind immer subtil. Keine leuchtenden Primärfarben auf Border-Linien.
+
+Dark erlaubte Muster:
+
+- Ruhe: `border-white/5`, `border-white/10`
+- Hover: `hover:border-white/10`, max. `white/20`
+- Aktiv/Fokus: `border-white/20` bis `white/25`
+
+Light erlaubte Muster:
+
+- Ruhe: `border-black/5`, `border-black/10`, alternativ sehr helle neutrale Grautöne
+- Hover: `hover:border-black/20`
+- Aktiv/Fokus: `border-black/20` bis `black/30`
+
+Verboten als Standard-Border:
+
+- `border-primary-500`, `border-green-400`, `border-blue-500` auf neutralen UI-Flächen
+
+### 6) Bewegungsprinzipien
+
+Aus `Home.tsx`, `ScrollReveal.tsx`, `MagneticButton.tsx`, `Selector.tsx`:
+
+- Hero lädt mit eigener GSAP Timeline (Badge -> Title -> Description -> Actions).
+- Non-Hero-Sektionen nutzen GSAP ScrollReveal (`fromTo`, Y-Offset + Opacity).
+- Primäre CTA kann Magnetic-Effekt nutzen (dezent).
+- Dropdowns/Selector-Listen: Framer Motion Enter/Exit.
 
 ---
 
-### BORDER-REGELN (KRITISCH - muss eingehalten werden!)
+## Komponenten-Blueprints (wiederverwendbar)
 
-**Grundregel: Borders sind IMMER muted. KEINE leuchtenden Akzentfarben auf Borders.**
+## 1) Navigation Shell
 
-#### Dark Mode - erlaubte Borders:
-| Zustand | Erlaubt | VERBOTEN |
-|---------|---------|----------|
-| Ruhezustand | `border-white/5`, `border-white/8`, `border-white/10` | `border-primary`, `border-amber-500` |
-| Hover | `border-white/15`, `border-white/20` | `border-primary-400`, `border-blue-500` |
-| Fokus/Aktiv | `border-white/25`, `border-secondary/20` | `border-secondary`, `border-accent` |
+- Floating Header-Pille, `rounded-full`, `backdrop-blur-xl`.
+- Border sehr subtil (`black/10` oder `white/10`).
+- Kleine Uppercase-Navigation mit breitem Tracking.
 
-#### Light Mode - erlaubte Borders:
-| Zustand | Erlaubt | VERBOTEN |
-|---------|---------|----------|
-| Ruhezustand | `border-slate-200`, `border-stone-200/50`, `border-gray-100` | `border-primary-500`, `border-green-400` |
-| Hover | `border-slate-300`, `border-primary-200` | `border-primary-400`, `border-accent-500` |
-| Fokus/Aktiv | `border-slate-400`, `border-primary-300` | Volle Akzentfarben |
+## 2) Hero
 
-**Merke: Eine Border soll man kaum bemerken. Wenn die Border "leuchtet" oder "heraussticht", ist sie FALSCH.**
+- Große Headline mit gemischter Serif-Betonung.
+- Kompakte, klare CTA-Zeile (Primary + Secondary).
+- Dezentes Grid/Texture-Overlay im Hintergrund.
 
-## GSAP ScrollReveal Animations-Check
+## 3) Cards & Panels
 
-- **ScrollReveal** muss auf alle Non-Hero-Sektionen angewendet sein.
-- Nutze die GSAP-basierte `<ScrollReveal>` Komponente (nicht CSS-Transitions).
-- Hero hat eigene GSAP Timeline On-Load Animation.
-- Stagger fuer Child-Elemente innerhalb von Sektionen.
+- Light: `bg-white/80 backdrop-blur-xl border border-white/60 shadow-xl shadow-black/[0.04] rounded-3xl`.
+- Dark: `bg-[#0a0a0a] border border-white/5 shadow-none rounded-3xl`.
+- Hover nur leicht (`hover:border-black/10` oder `hover:border-white/10`).
 
-## Layering / Z-Index Fixes (Pflicht)
+## 4) Buttons
 
-- Wenn Textkarten, KPI-Badges oder Quote-Overlays auf Bildern liegen, muessen sie immer klar lesbar und voll sichtbar sein.
-- Behebe Stacking-Probleme explizit: Container sauber strukturieren (`position: relative`) und Text-Layer klar ueber Bild-Layer legen.
-- Achte auf versehentliche Stacking-Context-Fallen (`transform`, `filter`, `opacity`, `mix-blend-mode`).
-- Vermeide Clipping: `overflow` darf Overlays nicht abschneiden.
-- Kontrast sichern: Overlay-Text darf weder im Bild verschwinden noch durch zu geringe Kontraste unlesbar werden.
+- Primary: Vollfläche, hoher Kontrast, rund.
+- Secondary: Outline/Ghost mit subtiler Hover-Fläche.
+- Ghost: nur Textfarbe + leichte Hover-Hinterlegung.
+- Destructive: rot, aber gezielt nur bei destruktiven Aktionen.
+
+## 5) Inputs & Controls
+
+- Inputs und Suchfelder: `rounded-full`.
+- Selector-Komponente als eigener Primitive-Baustein statt native Select.
+- Fokus über Ring + subtile Border-Verstärkung, nicht über harte Farben.
+
+## 6) Overlays (Popover, Dropdown, Dialog, Toast)
+
+- Popover/Dropdown: `rounded-2xl`, leicht blur, feine Border.
+- Dialog: starker Fokus auf klaren Header, Content, Footer.
+- Toasts: Icon-Kreis + kurzer Titel + kurzer Erklärungstext.
+
+## 7) Sidebar / File-System
+
+- Mehrstufige Datei- und Ordnerstrukturen mit sanften Hover-Zuständen.
+- Einfache, klar erkennbare aktive Zeile.
+- Toolbar-Icons als dezente Utility-Aktionen.
+
+## 8) Chat-Interface
+
+- Zwei-Layer Architektur: Session-Historie + Chat-Content.
+- Chat-Bubbles mit klarer Nutzer-/Assistent-Differenz.
+- Eingabebox als ruhiger, leicht erhobener Container.
+
+## 9) Tabellen
+
+- Header sehr klein, Uppercase, breite Laufweite.
+- Zeilen-Hover minimal (`hover:bg-black/[0.02]` / `white/[0.02]`).
+- Datenwerte (Zahlen) in Mono.
+
+## 10) Empty States
+
+- Große, ruhige Center-Box mit `border-dashed`.
+- Primäre Aktion als klarer, runder Button.
 
 ---
 
-## Farb-Abschluss-Audit (PFLICHT vor Phase-Ende)
+## Globaler Tailwind-Contract (empfohlen)
 
-Fuehre dieses Audit Zeile fuer Zeile durch bevor du die Phase als abgeschlossen markierst:
+Für neue Frontend-Bereiche zuerst diese Utility-Bausteine sicherstellen:
 
-### 1. tailwind.config Check:
-- [ ] Pruefe die tailwind.config Farben im Code
-- [ ] Vergleiche JEDE Farbe mit dem Mock-Design-Screenshot - stimmen sie ueberein?
-- [ ] Gibt es generische Farben die nicht zum Mock passen? -> Ersetzen
+- `font-sans`, `font-serif`, `font-mono` korrekt gemappt
+- `bg-grid-light`, `bg-grid-dark` (falls Grid-Hintergrund nötig)
+- `--bg-light` als Light-Hintergrund-Variable
+- `dark`-Variante auf Root robust
 
-### 2. Border-Audit:
-- [ ] Pruefe im Code alle `border-` Klassen
-- [ ] Sind ALLE Borders muted? (white/10, slate-200, stone-200/50 etc.)
-- [ ] Gibt es leuchtende Border-Farben? -> Sofort durch muted ersetzen
-- [ ] Hover-Borders maximal white/20 oder secondary/30
+Wenn ein Pattern bereits in vorhandenen Primitives existiert, erweitern statt neu bauen.
 
-### 3. Card-BG Check:
-- [ ] Card-Hintergruende passen zum Gesamtschema
-- [ ] Kein zu starker Kontrast zwischen Card-BG und Section-BG
-- [ ] Cards auf dark: leicht heller als BG
-- [ ] Cards auf light: gleich oder leicht dunkler (z.B. white mit border auf off-white)
+---
 
-### 4. Vergleich mit Mock-Screenshot:
-- [ ] Schaue nochmal auf den Mock-Screenshot
-- [ ] Sieht DEIN Ergebnis qualitativ vergleichbar aus?
-- [ ] Wenn NEIN: Was ist anders? Farben? Borders? Fonts? -> Korrigieren
+## LocalBench als Component Library (Strategie für alle Apps)
 
-## Mock-Treue-Checkliste (vor Abschluss pruefen)
+LocalBench ist unser Referenz-Designsystem, nicht nur ein einzelnes Mock.
 
-- [ ] Farbpalette stimmt mit Mock ueberein (nicht generisch)
-- [ ] Font-Pairing passt zum Mock-Stil (nicht Standard Inter/Roboto allein)
-- [ ] Card-Design (Rundung, Schatten, BG) matcht Mock
-- [ ] Navbar-Stil folgt Mock-Vorbild
-- [ ] Section-Backgrounds und Spacing matchen Mock
-- [ ] Hero-Komposition ist mock-inspiriert, nicht generisch
-- [ ] **ALLE Borders sind muted** (keine leuchtenden Akzentfarben auf Borders)
-- [ ] Gesamteindruck: "Sieht das aus wie eine Premium-Agentur-Seite?" -> JA
+Übertragungsregel:
 
-## Abnahmekriterien (Pflicht)
+1. Verhalten und Struktur übernehmen (Primitives + Patterns).
+2. Tokens zentralisieren (Farben, Radius, Spacing, Typografie).
+3. App-spezifische Inhalte einsetzen, aber Visualsprache konstant halten.
 
-- `ScrollReveal` existiert und wird auf alle Non-Hero-Sektionen angewendet (GSAP-basiert).
-- Hero hat eigene GSAP Timeline On-Load Animation, nicht nur Standard-Fade.
-- Mindestens 1 markante Layout-Aenderung gegenueber dem vorherigen Zwischenstand.
-- Ueberlagerte Elemente (Hero-Karten, Quote-Boxen, KPI-Badges) sind auf Desktop und Mobile voll sichtbar.
-- Noise-Overlay im HTML intakt (nicht entfernt).
-- **Farben, Fonts, Layout sind mock-treu - nicht generisch.**
-- **Alle Borders sind muted - keine leuchtenden Border-Farben.**
-- **Ergebnis sieht aus wie eine hochwertige Agentur-Seite, nicht wie ein Template.**
+Empfohlene Primitive-Bibliothek:
 
+- `Selector`-Pattern
+- `Card`-Pattern (Liquid Glass + Dark Flat)
+- `Dialog`/`Popover`/`Toast`-Pattern
+- `Sidebar`/`FileSystem`-Pattern
+- `Chat`-Shell-Pattern
 
-WICHTIGSTE REGEL:
-Die Texte sollen sinn ergeben, also nicht einfach blind nach dem Mockup kopieren, sondern nur texte die sinnvoll sind einbauen
+---
 
-und wichtig, kompaktes design prioritisieren!
+## Verknüpfung mit Minimal-Weiß Designsystem
 
+## Grundprinzip
 
-FOLGENDE MOCK DESIGNS sollst du dir anschauen!!!
-"D:\CODING\React Projects\linearleads\public\step2WebDesigns\mock-general-dark.png"
-"D:\CODING\React Projects\linearleads\public\step2WebDesigns\mock-general-2.png"
+LocalBench liefert die Struktur- und Komponentenlogik.
+Minimal-Weiß liefert den reduzierten Theme-Layer für farbarme, ruhige Screens.
+
+## 3-Layer Modell
+
+1. Layer A: Struktur
+- Komponentenaufbau, Hierarchie, Spacing-Rhythmus, Motion.
+
+2. Layer B: Design-Tokens
+- Hintergrund, Surface, Text, Border, Radius, Shadow.
+
+3. Layer C: Theme-Variante
+- `default`, `warm`, `ocean`, `minimal-weiss`, etc.
+
+## Minimal-Weiß Regeln
+
+- Accent stark reduzieren; nur bei Status/Erfolg gezielt sichtbar.
+- Headings weiterhin Serif/Italic/Light.
+- Buttons neutralisieren (weiße/helle Flächen, reduzierte Farbsättigung).
+- Borders noch subtiler halten.
+- Card-Kontrast moderat, kein harter Kantenbruch.
+
+## Token-Mapping für Minimal-Weiß
+
+- Background: hell-neutral (`#ffffff` bis `#fafafa`)
+- Surface: nahezu weiß mit feiner Kante
+- Primary Text: sehr dunkel
+- Muted Text: mittlere Graustufe
+- Border: `black/5` bis `black/10`
+- Shadow: leicht, weich, nur wenn notwendig
+
+---
+
+## Pflicht-Audit vor Abschluss einer Frontend-Phase
+
+1. Mock-/Referenztreue
+- Sieht die Sektion wie LocalBench-inspiriert aus und nicht wie generisches Template?
+
+2. Border-Audit
+- Alle Borders muted?
+- Leuchtende Border-Farben entfernt?
+
+3. Typografie-Audit
+- Serif/Italic/Light für Headlines korrekt?
+- Mono für Zahlen/technische Werte?
+
+4. Component-Reuse-Audit
+- Vorhandene Primitive erweitert statt Duplikat gebaut?
+
+5. Motion-Audit
+- Hero GSAP Timeline vorhanden?
+- Non-Hero ScrollReveal korrekt?
+
+6. Responsive-Audit
+- 375px und Desktop geprüft?
+- Keine überlaufenden Headings, keine abgeschnittenen Overlays?
+
+---
+
+## Anti-Patterns (vermeiden)
+
+- Zufällige Farbauswahl ohne Tokenbezug
+- Leuchtende Border-Linien auf Standard-Flächen
+- Zu viele verschiedene Radius-Werte ohne System
+- Unruhige, harte Schatten im Dark Mode
+- Standard-Inter überall ohne Serif/Mono-Kontrast
+- Neue „One-Off“-Komponenten statt bestehende Primitives zu nutzen
+
+---
+
+## Kurz-Checkliste für neue UI-Aufgaben
+
+- [ ] LocalBench-Muster identifiziert (welcher Block wird adaptiert?)
+- [ ] Tokens aus dieser Datei übernommen
+- [ ] Minimal-Weiß-Regeln berücksichtigt (falls Theme relevant)
+- [ ] Borders muted, Spacing kompakt, Typografie klar
+- [ ] Bestehende Primitives genutzt/erweitert
+- [ ] Mobile + Dark/Light geprüft
+
+---
+
+## Quellenbasis
+
+- `D:\CODING\React Projects\localbench-component-library\DESIGN_SYSTEM.md`
+- `D:\CODING\React Projects\localbench-component-library\src\index.css`
+- `D:\CODING\React Projects\localbench-component-library\src\pages\DesignSystem.tsx`
+- `D:\CODING\React Projects\localbench-component-library\src\components\design-system\*.tsx`
+- `D:\CODING\React Projects\localbench-component-library\src\components\Selector.tsx`
+- `D:\CODING\React Projects\localbench-component-library\src\components\FileSystem.tsx`
+- `D:\CODING\React Projects\localbench-component-library\src\components\ChatInterface.tsx`
+- Legacy-Alias (alt): `D:\CODING\React Projects\localbench\...`
