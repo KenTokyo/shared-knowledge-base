@@ -1,13 +1,13 @@
-# LocalBench Component Library Playbook
+﻿# LocalBench Component Library Playbook
 
 ## Ziel
 
-Dieses Dokument beschreibt, wie wir `localbench-component-library` als wiederverwendbares System für mehrere Apps einsetzen.
+Dieses Dokument beschreibt, wie wir `localbench-component-library` als wiederverwendbares System fÃ¼r mehrere Apps einsetzen.
 
 Scope:
 
 - Bestehende Komponenten wiederverwenden.
-- Zukünftige Komponenten im gleichen Stil erzeugen.
+- ZukÃ¼nftige Komponenten im gleichen Stil erzeugen.
 - Bestehende Apps schrittweise auf LocalBench-Stil migrieren.
 
 Wichtige Referenz:
@@ -21,15 +21,15 @@ Wichtige Referenz:
 `localbench-component-library` ist aktuell technisch noch eine **App**, kein publishbares UI-Paket:
 
 - `package.json` ist `private: true`
-- keine Library-Entry-Exports (`index.ts` für Komponenten fehlt)
-- keine Build-Pipeline für Component Distribution (z. B. `tsup`/Vite Library Mode)
+- keine Library-Entry-Exports (`index.ts` fÃ¼r Komponenten fehlt)
+- keine Build-Pipeline fÃ¼r Component Distribution (z. B. `tsup`/Vite Library Mode)
 - Komponenten leben direkt neben Seiten und Content
 
-Das ist okay für Startphase, aber für Multi-App-Reuse brauchen wir eine klare Strategie.
+Das ist okay fÃ¼r Startphase, aber fÃ¼r Multi-App-Reuse brauchen wir eine klare Strategie.
 
 ---
 
-## Komponenten-Klassen (für Reuse)
+## Komponenten-Klassen (fÃ¼r Reuse)
 
 ## Klasse A: Direkt wiederverwendbare Primitives
 
@@ -45,7 +45,7 @@ Beispiele:
 - `EmptyPlaceholder.tsx`
 - `CodeBlock.tsx`
 
-Diese Bausteine sind die erste Reuse-Priorität.
+Diese Bausteine sind die erste Reuse-PrioritÃ¤t.
 
 ## Klasse B: Pattern-/Beispielkomponenten
 
@@ -53,7 +53,7 @@ Beispiele:
 
 - `src/components/design-system/*Section.tsx`
 
-Diese sind primär Showcase und als Pattern-Referenz gedacht, nicht als direkte App-Imports.
+Diese sind primÃ¤r Showcase und als Pattern-Referenz gedacht, nicht als direkte App-Imports.
 
 ## Klasse C: App-gekoppelte Seiten
 
@@ -62,7 +62,7 @@ Beispiele:
 - `src/pages/*`
 - `Layout.tsx` (Routing-/App-Kontext)
 
-Diese sollten nicht 1:1 in fremde Apps übernommen werden.
+Diese sollten nicht 1:1 in fremde Apps Ã¼bernommen werden.
 
 ---
 
@@ -83,7 +83,7 @@ Vorteile:
 Nachteile:
 
 - Forks driften auseinander
-- spätere Updates teuer
+- spÃ¤tere Updates teuer
 
 Einsatz:
 
@@ -94,14 +94,14 @@ Einsatz:
 Vorgehen:
 
 - `packages/localbench-ui` anlegen.
-- Primitives dort bündeln, mit `index.ts` exportieren.
+- Primitives dort bÃ¼ndeln, mit `index.ts` exportieren.
 - in Apps als Workspace-Dependency nutzen.
 
 Vorteile:
 
 - zentrale Wartung
 - saubere Versionierung
-- gute Skalierung über mehrere Apps
+- gute Skalierung Ã¼ber mehrere Apps
 
 Nachteile:
 
@@ -109,24 +109,24 @@ Nachteile:
 
 Einsatz:
 
-- Standardweg für produktive Reuse-Strategie.
+- Standardweg fÃ¼r produktive Reuse-Strategie.
 
-## Modell 3: Generator/Install Script (empfohlen ergänzend)
+## Modell 3: Generator/Install Script (empfohlen ergÃ¤nzend)
 
 Vorgehen:
 
-- Komponenten werden per Script in Zielprojekt „eingespielt“ (shadcn-ähnlich).
+- Komponenten werden per Script in Zielprojekt â€žeingespieltâ€œ (shadcn-Ã¤hnlich).
 - Script kann Tokens, Imports und optionale Adapter mit erzeugen.
 
 Vorteile:
 
 - reproduzierbar
-- schnell für neue Apps
+- schnell fÃ¼r neue Apps
 - Team-weit einheitlich
 
 Nachteile:
 
-- benötigt gutes Template-/Script-Design
+- benÃ¶tigt gutes Template-/Script-Design
 
 Einsatz:
 
@@ -137,12 +137,93 @@ Einsatz:
 ## Empfohlene Stufenstrategie
 
 1. Jetzt: Modell 1 + klare Regeln (nicht wild kopieren).
-2. Nächster Ausbau: Modell 2 (echtes `localbench-ui` Package).
+2. NÃ¤chster Ausbau: Modell 2 (echtes `localbench-ui` Package).
 3. Danach: Modell 3 (Install/Generate Script als Turbo).
 
 ---
 
-## Migrations-Playbook für bestehende Apps
+## Ist-Stand Privat-Setup (2026-04-01)
+
+Der Schritt zu Modell 2 wurde als private Variante bereits umgesetzt:
+
+1. Paketpfad:
+- `D:\CODING\React Projects\localbench-component-library\packages\localbench-ui`
+
+2. Paketname:
+- `@localbench/ui`
+
+3. Aktuelle Exports:
+- `LocalbenchButton`
+- `LocalbenchBadge`
+
+4. NoteDrill-Anbindung:
+- Dependency in `package.json`:
+  - `"@localbench/ui": "file:../../localbench-component-library/packages/localbench-ui"`
+- Next-Konfiguration:
+  - `transpilePackages: ['@localbench/ui']` in `next.config.js`
+- API-stabile Wrapper:
+  - `components/design-system/design-button.tsx`
+  - `components/design-system/design-badge.tsx`
+
+5. Warum diese Variante aktuell die beste private Loesung ist:
+- keine oeffentliche Registry noetig
+- zentrale Pflege in einem Ort
+- bestehende App-Aufrufer bleiben stabil (Wrapper-Layer)
+
+---
+## Beste Moeglichkeit fuer NoteDrill (konkret)
+
+Kurzantwort: Ja, wir koennen LocalBench sauber einbauen und sollten es ueber einen
+Token-first + Primitive-first Ansatz tun, nicht ueber einen Big-Bang-Redesign.
+
+Empfohlene Reihenfolge:
+
+1. `app/styles/core-theme-tokens.css` als visuelle SSOT stabilisieren.
+2. `components/ui/*` auf denselben Radius/Border/Surface-Vertrag bringen.
+3. Feature-Flaechen in Wellen migrieren:
+- Welle A: Sidebar + File-System
+- Welle B: Chat/Agentic
+- Welle C: Dashboard + Formular-Dialoge
+4. Danach Reuse-Haertung:
+- Klasse-A-Komponenten aus `localbench-component-library` entkoppeln
+- in `localbench-ui` exportieren
+- optional Generator (`localbench:add`) bereitstellen
+
+Warum das der beste Weg ist:
+
+- geringes Regressionsrisiko
+- schnelle sichtbare Qualitaetsgewinne
+- gleichzeitig saubere Basis fuer Multi-App-Reuse
+
+---
+
+## Pilot-Flows mit `/admin/design`
+
+`/admin/design` ist der ideale Pilotbereich fuer den Rollout.
+
+Pflicht fuer den Pilot:
+
+1. Jede neue Design-Variante zuerst dort als Showcase-Block umsetzen.
+2. Nur freigegebene Design-Primitives verwenden (`components/design-system/*` oder `components/ui/*`).
+3. Danach exakt denselben Block in ein produktives Feature uebernehmen.
+
+Damit wird `/admin/design` zur "sicheren Werkbank", bevor produktive Screens geaendert werden.
+
+---
+
+## Namenskonvention fuer die Referenz-Library
+
+Wenn im Team von der Basis gesprochen wird:
+
+- PrimÃ¤rname: `localbench-component-library`
+- Erlaubter Alias in Doku/Prompts: `Component LocalBench Component Library`
+
+Beide Begriffe meinen dieselbe Referenzquelle:
+- `D:\CODING\React Projects\localbench-component-library`
+
+---
+
+## Migrations-Playbook fÃ¼r bestehende Apps
 
 ## Phase 1: UI-Inventur
 
@@ -159,19 +240,19 @@ Einsatz:
 - Erst Klasse-A-Primitives austauschen/angleichen.
 - Danach Overlays und komplexe Container.
 
-## Phase 4: Feature-Blöcke
+## Phase 4: Feature-BlÃ¶cke
 
 - Sidebar, Chat, Dashboard, Tabellen.
 - Immer mit Screenshot-Vergleich vorher/nachher.
 
-## Phase 5: Minimal-Weiß Layer
+## Phase 5: Minimal-WeiÃŸ Layer
 
 - Struktur bleibt LocalBench, Farben werden minimalisiert.
 - Accent nur gezielt/semantisch.
 
 ## Phase 6: QA + Regression
 
-- Light/Dark/Minimal-Weiß Matrix.
+- Light/Dark/Minimal-WeiÃŸ Matrix.
 - Mobile/Desktop.
 - Fokus-/Hover-/Active-States.
 
@@ -180,11 +261,11 @@ Einsatz:
 ## Adapter-Regeln (damit Komponenten wirklich portabel sind)
 
 1. Routing:
-- Keine harten `react-router`-Abhängigkeiten in reinen UI-Primitives.
+- Keine harten `react-router`-AbhÃ¤ngigkeiten in reinen UI-Primitives.
 - Navigation via Callback/Adapter.
 
 2. Theme:
-- Theme über CSS-Variablen + optionalen ThemeProvider-Adapter.
+- Theme Ã¼ber CSS-Variablen + optionalen ThemeProvider-Adapter.
 
 3. Daten:
 - Keine direkte `import.meta.glob`-Kopplung in UI-Komponenten.
@@ -200,23 +281,23 @@ Einsatz:
 
 Ein Install-Script soll mindestens:
 
-1. Zielpfade prüfen/anlegen (`components/ui/localbench/*`).
-2. benötigte Dependencies prüfen (GSAP, Framer Motion, Lucide, Tailwind Merge).
-3. Komponenten + benötigte Utilities kopieren.
+1. Zielpfade prÃ¼fen/anlegen (`components/ui/localbench/*`).
+2. benÃ¶tigte Dependencies prÃ¼fen (GSAP, Framer Motion, Lucide, Tailwind Merge).
+3. Komponenten + benÃ¶tigte Utilities kopieren.
 4. fehlende CSS-Tokens/Font-Hinweise ausgeben oder patchen.
 5. optional Adapter-Dateien erzeugen (`theme-adapter.ts`, `motion-config.ts`).
 
 ---
 
-## Häufige Stolperfallen
+## HÃ¤ufige Stolperfallen
 
-- `custom-scrollbar`/`scrollbar-hide` Klassen sind nicht überall vordefiniert.
+- `custom-scrollbar`/`scrollbar-hide` Klassen sind nicht Ã¼berall vordefiniert.
 - `useTheme()` wird genutzt, aber Host-App hat anderen Theme-Store.
 - Komponente erwartet Tailwind Utilities, die im Host fehlen.
 - Z-Index-/Overflow-Konflikte bei Overlays.
 - Hardcoded Farbwerte kollidieren mit Host-Theme.
 
-Details und vollständige Liste:
+Details und vollstÃ¤ndige Liste:
 
 - `docs/design/tasks/2026-04-01-localbench-component-library-adoption/EDGE-CASE-KATALOG.md`
 
@@ -224,14 +305,14 @@ Details und vollständige Liste:
 
 ## Prompt-Verwendung
 
-Für konkrete KI-Eingaben nutze:
+FÃ¼r konkrete KI-Eingaben nutze:
 
 - [localbench-component-library-prompts.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/localbench-component-library-prompts.md)
 
 ---
 
-## Verknüpfte Referenzen
+## VerknÃ¼pfte Referenzen
 
 - [modernize-frontend.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/modernize-frontend.md)
 - [MASTER-PLAN.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/design/tasks/2026-04-01-localbench-component-library-adoption/MASTER-PLAN.md)
-
+- [ADMIN-DESIGN-TO-LOCALBENCH-PLAN.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/design/tasks/2026-04-01-localbench-component-library-adoption/ADMIN-DESIGN-TO-LOCALBENCH-PLAN.md)

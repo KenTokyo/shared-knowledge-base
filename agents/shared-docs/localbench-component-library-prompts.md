@@ -234,9 +234,68 @@ Pflicht:
 
 ---
 
+## Prompt 10: `/admin/design` als Pilot aktualisieren
+
+**Use Case:** Vor produktiver Migration erst Design im Showcase pruefen.
+
+```md
+Aktualisiere den Bereich `app/admin/design` auf LocalBench-Standard und nutze ihn als Pilot fuer die spaetere Produktivmigration.
+
+Pflicht:
+1. Lies zuerst:
+   - shared-docs/agents/shared-docs/modernize-frontend.md
+   - shared-docs/agents/shared-docs/localbench-component-library-playbook.md
+2. Finde veraltete Patterns in `app/admin/design/DesignShowcaseClient.tsx`.
+3. Ersetze sie durch LocalBench-konforme Patterns (muted borders, kompakte spacing, klare typografie).
+4. Dokumentiere pro Block:
+   - "Alt-Pattern"
+   - "Neues Pattern"
+   - "Produktive Zielkomponenten, die davon profitieren"
+5. Kein rein visuelles Tuning: Primitives zentral erweitern, nicht nur Klassen lokal ueberschreiben.
+
+Output:
+- Geaenderte Dateien
+- Mapping "Showcase-Block -> Produktive Zielbereiche"
+- Offene Risiken
+```
+
+---
+
+## Prompt 11: Komplettes Designsystem einer bestehenden App auf LocalBench umstellen
+
+**Use Case:** Bestehende App soll einheitlich auf LocalBench aussehen.
+
+```md
+Migriere das bestehende Designsystem von [APP_NAME] auf LocalBench-Komponentensystem.
+
+Rahmen:
+- Referenz-Library: D:\\CODING\\React Projects\\localbench-component-library
+- Interner Pilotbereich: /admin/design
+
+Pflicht:
+1. Erstelle zuerst eine Inventur (Buttons, Inputs, Cards, Overlays, Sidebar, Chat, Tabellen).
+2. Definiere Migration in Wellen:
+   - Welle A: Tokens + Primitives
+   - Welle B: Sidebar + Chat
+   - Welle C: Dashboard + Dialoge + Long-Tail
+3. Nach jeder Welle:
+   - Border-Audit (nur muted)
+   - Typography-Audit (Inter/Serif/Mono sinnvoll eingesetzt)
+   - Responsive-Audit (mobile + desktop)
+4. Aktualisiere die Task-Doku nach jeder Welle.
+5. Liefere am Ende ein "Stabilitaetsprotokoll" mit Regression-Risiken.
+
+Output:
+- Phasenplan mit betroffenen Dateien
+- konkrete Umsetzungsergebnisse je Welle
+- finale Audit-Checkliste
+```
+
+---
+
 ## Referenzen
 
 - [modernize-frontend.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/modernize-frontend.md)
 - [localbench-component-library-playbook.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/localbench-component-library-playbook.md)
 - [MASTER-PLAN.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/design/tasks/2026-04-01-localbench-component-library-adoption/MASTER-PLAN.md)
-
+- [ADMIN-DESIGN-TO-LOCALBENCH-PLAN.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/design/tasks/2026-04-01-localbench-component-library-adoption/ADMIN-DESIGN-TO-LOCALBENCH-PLAN.md)

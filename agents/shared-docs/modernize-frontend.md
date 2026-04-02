@@ -20,6 +20,38 @@ Wenn Frontend-Komponenten gebaut oder überarbeitet werden, muss diese Datei vor
 
 ---
 
+## Beste Integrationsstrategie (Kurzfassung)
+
+Ja, LocalBench kann und sollte in NoteDrill eingebaut werden.
+
+Die beste Strategie ist:
+
+1. zuerst Tokens vereinheitlichen,
+2. dann Primitives harmonisieren,
+3. dann Feature-Flaechen in Wellen migrieren.
+
+Kein Big-Bang-Designwechsel. Dieser erzeugt zu viele Regressionen.
+
+Empfohlene Migrationswellen:
+
+1. Welle A: `components/ui/*`
+2. Welle B: Sidebar + Chat
+3. Welle C: Dashboard + Formulare + Overlays
+
+Pilotbereich:
+
+- `http://localhost:3001/admin/design`
+- Dateien:
+  - `app/admin/design/page.tsx`
+  - `app/admin/design/DesignShowcaseClient.tsx`
+
+Regel:
+
+- Neue Designmuster zuerst im Pilotbereich bauen.
+- Erst danach in produktive Bereiche uebernehmen.
+
+---
+
 ## Pflicht-Workflow vor Frontend-Code
 
 1. Mock/Screenshot prüfen (falls vorhanden) und auf LocalBench-Stil mappen.
