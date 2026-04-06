@@ -1,18 +1,8 @@
-# LocalBench Component Library Prompt-Katalog
+# Design-System Prompt-Katalog
 
 ## Zweck
 
-Diese Prompts sind für typische Realfälle gedacht:
-
-- einzelne Komponente ist noch nicht im LocalBench-Stil
-- komplette App soll auf LocalBench umgestellt werden
-- Komponenten sollen wiederverwendbar/portabel gemacht werden
-- Install-Script oder Generator soll entstehen
-
-Hinweis:
-
-- Nutze die Prompts mit konkreten Datei-Pfaden.
-- Immer vorher `modernize-frontend.md` und das Playbook lesen lassen.
+Fertige Prompts fuer typische Frontend-Aufgaben in NoteDrill. Jeder Prompt setzt voraus, dass die KI zuerst `shared-docs/agents/shared-docs/modernize-frontend.md` liest.
 
 ---
 
@@ -21,281 +11,160 @@ Hinweis:
 **Use Case:** Eine bestehende Komponente sieht veraltet aus.
 
 ```md
-Du arbeitest in [REPO_PATH].
-Modernisiere die Komponente [DATEIPFAD] auf LocalBench-Designsystem-Niveau.
+Modernisiere die Komponente [DATEIPFAD] auf Design-System-Niveau.
 
 Pflicht:
-1. Lies zuerst:
-   - shared-docs/agents/shared-docs/modernize-frontend.md
-   - shared-docs/agents/shared-docs/localbench-component-library-playbook.md
-2. Analysiere IST-Zustand der Komponente und nenne die Top-5 Abweichungen zu LocalBench.
-3. Implementiere das Redesign direkt im Code (kein reiner Plan).
-4. Nutze nur muted Borders, klare Typography-Hierarchie, kompakte Spacing-Rhythmik.
-5. Wenn möglich: bestehende Primitives erweitern statt neue Datei erstellen.
-6. Führe am Ende einen kurzen Visual-Audit durch (Light/Dark, Mobile/Desktop, Hover/Focus/Active).
+1. Lies zuerst: shared-docs/agents/shared-docs/modernize-frontend.md
+2. Analysiere IST-Zustand und nenne die Top-5 Abweichungen zum Design-System.
+3. Nutze bestehende Design*-Komponenten aus components/design-system/ wo moeglich.
+4. Implementiere das Redesign direkt im Code.
+5. Nur muted Borders, klare Typography-Hierarchie, kompakte Spacing-Rhythmik.
+6. Visual-Audit: Light/Dark, Mobile/Desktop, Hover/Focus/Active.
 
 Output:
-- Geänderte Dateien
-- Welche LocalBench-Patterns übernommen wurden
+- Geaenderte Dateien
+- Welche Design-System-Patterns uebernommen wurden
 - Offene Edge Cases
 ```
 
 ---
 
-## Prompt 2: App-weiter Migrationsplan
-
-**Use Case:** Ganze App auf LocalBench-Stil migrieren.
-
-```md
-Erstelle einen phasenweisen Migrationsplan, um [APP_NAME] auf LocalBench Component Library Stil umzustellen.
-
-Pflicht:
-1. Lies zuerst:
-   - shared-docs/agents/shared-docs/modernize-frontend.md
-   - shared-docs/agents/shared-docs/localbench-component-library-playbook.md
-2. Führe eine Komponenten-Inventur durch:
-   - Buttons, Inputs, Cards, Overlays, Sidebar, Chat, Tabellen, Typografie
-3. Erstelle diese Artefakte:
-   - MASTER-PLAN.md
-   - PHASENPLAN.md
-   - PERFORMANCE-TESTPLAN.md
-   - EDGE-CASE-KATALOG.md
-4. Jede Phase braucht:
-   - Ziel
-   - Dateien
-   - Risiko
-   - Test
-   - Sichtbarer Nutzen
-5. Definiere zusätzlich eine Minimal-Weiß-Verknüpfung (Theme-Layer auf LocalBench-Struktur).
-
-Output:
-- Vollständige Task-Dokumente mit absoluten Pfaden
-```
-
----
-
-## Prompt 3: Komponente wiederverwendbar machen
-
-**Use Case:** Eine Komponente aus `localbench-component-library` soll portabel werden.
-
-```md
-Mache die Komponente [QUELLDATEI] aus localbench-component-library wiederverwendbar für andere Apps.
-
-Pflicht:
-1. Entkopple App-spezifische Abhängigkeiten (Routing, Content-Loader, globale Stores).
-2. Ersetze harte Annahmen durch Props/Callbacks.
-3. Halte Designsprache LocalBench-konform.
-4. Erstelle oder ergänze Exports in einem zentralen Index.
-5. Dokumentiere:
-   - welche Abhängigkeiten vorher app-gekoppelt waren
-   - wie der neue API-Vertrag aussieht (Props)
-   - ein kurzes Nutzungsbeispiel
-
-Output:
-- Refactor im Code
-- Mini-Migrationshinweis für Consumer-Apps
-```
-
----
-
-## Prompt 4: Install-Script erzeugen
-
-**Use Case:** Komponenten sollen nicht manuell kopiert werden.
-
-```md
-Erstelle ein Install-Script für LocalBench-UI-Komponenten.
-
-Ziel:
-- `npm run localbench:add <component-name>` oder ähnlicher Flow
-
-Pflicht:
-1. Script prüft Zielprojekt (Tailwind, React-Version, benötigte Dependencies).
-2. Script kopiert Komponente + direkte Abhängigkeiten in definierte Zielpfade.
-3. Script ergänzt fehlende Utility-Dateien nur wenn nötig.
-4. Script erzeugt klare Konsole-Ausgabe:
-   - was kopiert wurde
-   - was manuell zu tun ist
-5. Script ist idempotent (zweiter Lauf zerstört nichts).
-
-Output:
-- Script-Datei(en)
-- kurze README-Nutzung
-- bekannte Grenzen
-```
-
----
-
-## Prompt 5: Prompt für „Komponente noch nicht geupdatet“
-
-**Use Case:** Schneller Team-Standardprompt.
-
-```md
-Die Komponente [DATEIPFAD] ist noch nicht im LocalBench-Standard.
-Bitte bringe sie vollständig auf LocalBench Component Library Niveau.
-
-Vorgehen:
-1. Abweichungen analysieren (Farben, Typography, Radius, Border, States, Motion).
-2. Direkte Umsetzung im Code.
-3. Falls sinnvoll bestehende Primitives nutzen/erweitern.
-4. Ergebnis gegen diese Referenzen auditieren:
-   - modernize-frontend.md
-   - localbench-component-library-playbook.md
-5. Gib ein kurzes Vorher/Nachher-Delta aus.
-```
-
----
-
-## Prompt 6: Prompt für „gesamtes Designsystem wechseln“
-
-**Use Case:** Bestehende App komplett auf LocalBench-Look.
-
-```md
-Stelle das bestehende Designsystem in [APP_NAME] auf LocalBench Component Library um.
-
-Pflicht:
-1. Erst Analyse + Taskplanung, dann Umsetzung in Phasen.
-2. Keine Big-Bang-Änderung ohne Primitive-Layer zuerst.
-3. Theme-Kompatibilität erhalten (Light/Dark + optional Minimal-Weiß).
-4. Während der Umsetzung:
-   - nach jeder Phase Plan aktualisieren
-   - Risiken und Regressionen dokumentieren
-5. Abschluss mit UI-Audit:
-   - Border muted?
-   - Typography korrekt?
-   - Overlay-Layer stabil?
-   - Mobile sauber?
-```
-
----
-
-## Prompt 7: Edge-Case-Fix (Layering/Overflow)
-
-**Use Case:** Overlays oder Textchips verschwinden.
-
-```md
-Fixe die Layering-Probleme in [DATEIPFAD].
-
-Kontext:
-- Overlays/KPI-Karten müssen immer lesbar und sichtbar bleiben.
-
-Pflicht:
-1. Prüfe Stacking-Contexts (`position`, `z-index`, `transform`, `filter`, `opacity`).
-2. Prüfe Clipping durch `overflow`.
-3. Behalte LocalBench-Designsprache bei (keine Notlösung mit grellen Farben).
-4. Verifiziere Desktop + Mobile.
-
-Output:
-- Root-Cause
-- konkrete Fixes
-- kurzer Sicherheitscheck gegen Regression
-```
-
----
-
-## Prompt 8: Qualitäts-Audit ohne sofortige Umsetzung
-
-**Use Case:** Erst Bewertung, dann Implementierung.
-
-```md
-Führe ein LocalBench-Compliance-Audit für [DATEI_ODER_BEREICH] durch.
-
-Bewerte:
-1. Farben/Surfaces
-2. Borders (muted vs zu laut)
-3. Typography
-4. Radius/Spacing
-5. Interaktionszustände
-6. Motion
-
-Liefere:
-- Severity-Liste (kritisch, mittel, niedrig)
-- präzise Dateireferenzen
-- konkrete Fix-Vorschläge pro Punkt
-```
-
----
-
-## Prompt 9: Neue Komponente im LocalBench-Stil erzeugen
+## Prompt 2: Neue Komponente im Design-System-Stil
 
 **Use Case:** Feature braucht neue UI.
 
 ```md
-Erzeuge eine neue Komponente [NAME] im LocalBench-Stil.
+Erzeuge eine neue Komponente [NAME] im Design-System-Stil.
 
 Pflicht:
-1. Nutze bestehende Primitives zuerst (Selector, Card, Button, Overlay, etc.).
-2. Kein generisches Template-Design.
-3. Border und Shadow dezent halten.
-4. Zustände vollständig:
-   - default, hover, focus, active, disabled, loading
-5. Responsiv (375px, Tablet, Desktop).
-6. Dokumentiere kurze API (Props) und ein Nutzungsbeispiel.
+1. Lies zuerst: shared-docs/agents/shared-docs/modernize-frontend.md
+2. Nutze bestehende Design*-Komponenten zuerst (DesignButton, DesignCard, DesignBadge, etc.).
+3. Kein generisches Template-Design.
+4. Border und Shadow dezent (opacity-basiert, nicht leuchtend).
+5. Zustaende vollstaendig: default, hover, focus, active, disabled, loading.
+6. Responsiv (375px, Tablet, Desktop).
+7. Dark + Light Mode.
+
+Output:
+- Komponenten-Code
+- Kurze API-Doku (Props) und Nutzungsbeispiel
 ```
 
 ---
 
-## Prompt 10: `/admin/design` als Pilot aktualisieren
+## Prompt 3: Qualitaets-Audit (ohne Umsetzung)
 
-**Use Case:** Vor produktiver Migration erst Design im Showcase pruefen.
+**Use Case:** Erst Bewertung, dann Implementierung.
 
 ```md
-Aktualisiere den Bereich `app/admin/design` auf LocalBench-Standard und nutze ihn als Pilot fuer die spaetere Produktivmigration.
+Fuehre ein Design-System-Compliance-Audit fuer [DATEI_ODER_BEREICH] durch.
+
+Lies zuerst: shared-docs/agents/shared-docs/modernize-frontend.md
+
+Bewerte:
+1. Farben/Surfaces (Token-konform?)
+2. Borders (muted vs. zu laut)
+3. Typography (Sans/Serif/Mono korrekt eingesetzt?)
+4. Radius/Spacing (konsistent mit System?)
+5. Interaktionszustaende (Hover/Focus/Active)
+6. Dark/Light Mode
+
+Liefere:
+- Severity-Liste (kritisch, mittel, niedrig)
+- Praezise Dateireferenzen mit Zeilennummern
+- Konkrete Fix-Vorschlaege pro Punkt
+```
+
+---
+
+## Prompt 4: Layering/Overflow-Fix
+
+**Use Case:** Overlays oder Elemente verschwinden, z-Index Probleme.
+
+```md
+Fixe die Layering-Probleme in [DATEIPFAD].
 
 Pflicht:
-1. Lies zuerst:
-   - shared-docs/agents/shared-docs/modernize-frontend.md
-   - shared-docs/agents/shared-docs/localbench-component-library-playbook.md
-2. Finde veraltete Patterns in `app/admin/design/DesignShowcaseClient.tsx`.
-3. Ersetze sie durch LocalBench-konforme Patterns (muted borders, kompakte spacing, klare typografie).
-4. Dokumentiere pro Block:
-   - "Alt-Pattern"
-   - "Neues Pattern"
-   - "Produktive Zielkomponenten, die davon profitieren"
-5. Kein rein visuelles Tuning: Primitives zentral erweitern, nicht nur Klassen lokal ueberschreiben.
+1. Pruefe Stacking-Contexts (position, z-index, transform, filter, opacity).
+2. Pruefe Clipping durch overflow.
+3. Behalte Design-System-Sprache bei (keine Notloesung mit grellen Farben).
+4. Verifiziere Desktop + Mobile.
 
 Output:
-- Geaenderte Dateien
-- Mapping "Showcase-Block -> Produktive Zielbereiche"
+- Root-Cause
+- Konkrete Fixes
+- Kurzer Sicherheitscheck gegen Regression
+```
+
+---
+
+## Prompt 5: Schnell-Update (Team-Standard)
+
+**Use Case:** Komponente soll schnell auf Design-System-Niveau gebracht werden.
+
+```md
+Die Komponente [DATEIPFAD] ist noch nicht im Design-System-Standard.
+Bringe sie auf Design-System-Niveau.
+
+Vorgehen:
+1. Lies: shared-docs/agents/shared-docs/modernize-frontend.md
+2. Abweichungen analysieren (Farben, Typography, Radius, Border, States).
+3. Bestehende Design*-Komponenten aus components/design-system/ nutzen.
+4. Direkte Umsetzung im Code.
+5. Kurzes Vorher/Nachher-Delta ausgeben.
+```
+
+---
+
+## Prompt 6: Bereich-Migration (Sidebar, Chat, Dashboard)
+
+**Use Case:** Ganzer App-Bereich soll modernisiert werden.
+
+```md
+Migriere den Bereich [BEREICH_NAME] auf das Design-System.
+
+Pflicht:
+1. Lies: shared-docs/agents/shared-docs/modernize-frontend.md
+2. Inventur: Welche Komponenten gibt es im Bereich?
+3. Pro Komponente: Welche Design*-Primitives koennen eingesetzt werden?
+4. Umsetzung in Schritten (nicht alles auf einmal).
+5. Nach jedem Schritt:
+   - Border-Audit (nur muted)
+   - Typography-Audit (Inter/Serif/Mono sinnvoll)
+   - Responsive-Audit (mobile + desktop)
+6. Dark/Light Mode testen.
+
+Output:
+- Geaenderte Dateien pro Schritt
+- Welche Design*-Komponenten eingesetzt wurden
 - Offene Risiken
 ```
 
 ---
 
-## Prompt 11: Komplettes Designsystem einer bestehenden App auf LocalBench umstellen
+## Prompt 7: /admin/design Pilot aktualisieren
 
-**Use Case:** Bestehende App soll einheitlich auf LocalBench aussehen.
+**Use Case:** Neue Patterns zuerst im Showcase testen.
 
 ```md
-Migriere das bestehende Designsystem von [APP_NAME] auf LocalBench-Komponentensystem.
-
-Rahmen:
-- Referenz-Library: D:\\CODING\\React Projects\\localbench-component-library
-- Interner Pilotbereich: /admin/design
+Aktualisiere den Bereich app/admin/design auf Design-System-Standard.
 
 Pflicht:
-1. Erstelle zuerst eine Inventur (Buttons, Inputs, Cards, Overlays, Sidebar, Chat, Tabellen).
-2. Definiere Migration in Wellen:
-   - Welle A: Tokens + Primitives
-   - Welle B: Sidebar + Chat
-   - Welle C: Dashboard + Dialoge + Long-Tail
-3. Nach jeder Welle:
-   - Border-Audit (nur muted)
-   - Typography-Audit (Inter/Serif/Mono sinnvoll eingesetzt)
-   - Responsive-Audit (mobile + desktop)
-4. Aktualisiere die Task-Doku nach jeder Welle.
-5. Liefere am Ende ein "Stabilitaetsprotokoll" mit Regression-Risiken.
+1. Lies: shared-docs/agents/shared-docs/modernize-frontend.md
+2. Finde veraltete Patterns in app/admin/design/DesignShowcaseClient.tsx.
+3. Ersetze sie durch Design-System-konforme Patterns.
+4. Dokumentiere pro Block: Alt-Pattern -> Neues Pattern.
+5. Primitives zentral erweitern, nicht nur Klassen lokal ueberschreiben.
 
 Output:
-- Phasenplan mit betroffenen Dateien
-- konkrete Umsetzungsergebnisse je Welle
-- finale Audit-Checkliste
+- Geaenderte Dateien
+- Mapping: Showcase-Block -> Produktive Zielbereiche
 ```
 
 ---
 
 ## Referenzen
 
-- [modernize-frontend.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/modernize-frontend.md)
-- [localbench-component-library-playbook.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/shared-docs/agents/shared-docs/localbench-component-library-playbook.md)
-- [MASTER-PLAN.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/design/tasks/2026-04-01-localbench-component-library-adoption/MASTER-PLAN.md)
-- [ADMIN-DESIGN-TO-LOCALBENCH-PLAN.md](/d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/design/tasks/2026-04-01-localbench-component-library-adoption/ADMIN-DESIGN-TO-LOCALBENCH-PLAN.md)
+- [modernize-frontend.md](modernize-frontend.md) (Design-System SSOT)
+- [components/design-system/](../../../components/design-system/) (Fertige Komponenten)
+- [Pilot-Bereich](../../../app/admin/design/) (/admin/design Showcase)
