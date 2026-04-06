@@ -142,16 +142,16 @@ Output:
 
 ---
 
-## Prompt 7: /admin/design Pilot aktualisieren
+## Prompt 7: /design-system Pilot aktualisieren
 
 **Use Case:** Neue Patterns zuerst im Showcase testen.
 
 ```md
-Aktualisiere den Bereich app/admin/design auf Design-System-Standard.
+Aktualisiere den Bereich app/design-system auf Design-System-Standard.
 
 Pflicht:
 1. Lies: shared-docs/agents/shared-docs/modernize-frontend.md
-2. Finde veraltete Patterns in app/admin/design/DesignShowcaseClient.tsx.
+2. Finde veraltete Patterns im Design-System Mirror.
 3. Ersetze sie durch Design-System-konforme Patterns.
 4. Dokumentiere pro Block: Alt-Pattern -> Neues Pattern.
 5. Primitives zentral erweitern, nicht nur Klassen lokal ueberschreiben.
@@ -167,4 +167,4 @@ Output:
 
 - [modernize-frontend.md](modernize-frontend.md) (Design-System SSOT)
 - [components/design-system/](../../../components/design-system/) (Fertige Komponenten)
-- [Pilot-Bereich](../../../app/admin/design/) (/admin/design Showcase)
+- [Pilot-Bereich](../../../app/design-system/) (/design-system Showcase)

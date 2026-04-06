@@ -228,4 +228,4 @@ Kombiniert mit subtiler Border-Verstaerkung und leichtem Background-Shift. Kein 
 - Komponenten: `components/design-system/*.tsx`
 - Barrel-Export: `components/design-system/index.ts`
 - Design-Referenz (Original): `D:\CODING\React Projects\localbench-component-library\src`
-- Pilot-Bereich: `http://localhost:3001/admin/design` (`app/admin/design/`)
+- Pilot-Bereich: `http://localhost:3001/design-system` (`app/design-system/`)
