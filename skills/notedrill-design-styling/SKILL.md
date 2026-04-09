@@ -62,7 +62,7 @@ Für konkrete Klassen nutze danach:
 *   **Button-Standard ist ruhig**: `bg-white/[0.03-0.08]` + subtile Hover-Stufen.
 *   **Inputs ohne harte Outline**: dunkler Untergrund, feine Border, sauberer Focus-Ring.
 *   **Nur 1 starke Akzentfarbe pro Block** (z. B. Primary-Button).
-*   **Keine Admin-Zwischenseite**, wenn User direkt Design-Baukasten will: `/admin` auf `/admin/design` umleiten.
+*   **Design-System direkt erreichbar** unter `/design-system` (kein Umweg ueber Admin).
 
 ## Ergebnis-Definition
 

@@ -1,4 +1,0 @@
-interface:
-  display_name: "OpenUI Chat Integration"
-  short_description: "OpenUI Chat, GenUI und Headless Hilfe"
-  default_prompt: "Use $openui-chat-integration to build or debug OpenUI chat, headless hooks, GenUI rendering, or provider wiring in this app."
