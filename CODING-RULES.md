@@ -122,6 +122,29 @@ Proaktiv: Extrem-Fälle, falsches User-Verhalten, Performance, Concurrent Access
 
 ## Regel 3: React Best Practices (UNIVERSELL)
 
+### 3.0 🔴🔴🔴 useEffect wird NICHT benötigt (KRITISCH!)
+
+**BEVOR du useEffect benutzt, STOPP und lies:**
+- `shared-docs/react-useEffect/not-needed.md`
+
+**Oder nutze den Skill:** `react-no-use-effect`
+
+**Faustregel:** useEffect ist ein "Escape Hatch" - in 90% der Fälle brauchst du ihn NICHT!
+
+| Situation | FALSCH (useEffect) | RICHTIG |
+|-----------|-------------------|---------|
+| Daten transformieren | `useEffect(() => setFiltered(...))` | `const filtered = data.filter(...)` direkt berechnen |
+| State aus Props ableiten | `useEffect(() => setFullName(...))` | `const fullName = first + last` |
+| Teure Berechnungen | `useEffect(() => setResult(...))` | `useMemo(() => expensiveCalc())` |
+| State reset bei Prop-Change | `useEffect(() => setX(null), [prop])` | `key={prop}` am Component |
+| Event-Handler Logik | `useEffect(() => if(clicked) doX())` | Direkt im Event-Handler |
+| Parent über State informieren | `useEffect(() => onChange(state))` | Im Event-Handler: `setX(); onChange()` |
+
+**Wann useEffect OK ist:**
+- Externe Systeme synchronisieren (DOM, WebSocket, Third-Party)
+- Analytics bei Component-Mount
+- Data Fetching (aber besser: Server Components, React Query, SWR)
+
 ### 3.1 State & Props
 - **Immutable State:** `setState(prev => ...)`
 - **List Keys:** Stable, unique `key` prop für `.map()` items
@@ -133,6 +156,8 @@ Proaktiv: Extrem-Fälle, falsches User-Verhalten, Performance, Concurrent Access
 ### 3.3 Effects & Lifecycle
 - **Cleanup:** IMMER cleanup function bei subscriptions/timers/listeners
 - **Dependency Array:** Accurate dependencies, `[]` = mount only
+
+
 
 ### 3.4 Component Communication
 - **Parent↔Child:** Props down, Callbacks up
@@ -608,6 +633,7 @@ agent-browser snapshot -i  # Validierung
 
 | Thema | Dokumentation |
 |-------|---------------|
+| useEffect vermeiden | `shared-docs/react-useEffect/not-needed.md` |
 | CSS/Design-Patterns | `shared-docs/agents/global-rule-agent.md` |
 | Performance Tab-Komponenten | `shared-docs/performance/tab-component-performance-antipattern.md` |
 | Responsive Dialoge | `shared-docs/design/responsive-dialog-architecture.md` |
