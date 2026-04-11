@@ -56,9 +56,7 @@ Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen
 - Wenn etwas nur mit Workarounds funktioniert → **klar benennen** 🛑
 - Bewährte Standard-Methoden nutzen, nicht umgehen ✅
 
-> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden."** 🔧🔥
-
----
+> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden."** 🔧
 
 ## 2. Schreibstil & Sprache (AUCH FÜR UI empfohlen!)
 
@@ -135,8 +133,6 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
 - Spielerisch und modern, wie ein Retro Game 🎮
 - Sollen helfen Fehler und Probleme zu erkennen, auch Performance Issues
 - Bei Laggs: Timer einbauen für bestimmte Cases, um zu prüfen wie lange Prozesse dauern
-
----
 
 ## 4. Workflow & Dokumentation
 
