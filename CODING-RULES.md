@@ -60,7 +60,7 @@ Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen
 
 ---
 
-## 2. Schreibstil & Sprache
+## 2. Schreibstil & Sprache (AUCH FÜR UI empfohlen!)
 
 ### 2.1 Ziel
 So erklären, dass **8.-Klässler** es direkt verstehen: motiviert, klar, mit kurzen Beispielen aus dem Alltag.
@@ -84,40 +84,20 @@ Immer dieses Muster:
 ### 2.4 Wichtige Sprachregeln
 1. In Titeln und Planungen möglichst **einfache Wörter** nutzen
 2. Wenn ein Fachwort nötig ist: **erst einfaches Wort, dann Fachwort in Klammern** + 1 Kurz-Erklärung
-3. **Keine Abkürzungen** ohne Erklärung
-4. **Keine Buzzwords** ohne Inhalt
-5. Bei Fehlertexten immer zuerst: **„Was bedeutet das für mich?"**
-
-### 2.5 Regel für technische Begriffe
-1. Technischer Begriff okay, wenn normale Nutzer ihn wahrscheinlich verstehen
-2. Wenn nicht: im **selben Satz einfach erklären**
-3. Pro Abschnitt maximal **1 spezieller Fachbegriff**
-4. In Planungen und Überschriften **alltagstauglich** bleiben
-
-### 2.6 Sonderfall: Begriff „Orchestrator"
-1. „Orchestrator" darf verwendet werden
-2. Beim ersten Auftauchen immer erklären:
-   - **„Orchestrator = unser Ablauf-Steuerer für mehrere KI-Schritte hintereinander."**
+3. **Keine Abkürzungen** ohne Erklärung und  **Keine Buzzwords** ohne Inhalt
+4. Antworte hochmotiviert, mit sehr schöner lesbarer formatierung, also kursiv, fett nutzen,
+5. nicht soviele Linebreaks sondern lieber Überschriften
+6. und nutze gerne icons ✅, ⚠️, 🔧, 👉)!
+7. vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen
 
 ### 2.7 Kurz-Check vor jeder Antwort
 1. Würde ein 9.-Klässler den Satz direkt verstehen?
 2. Sind zu viele Fachwörter in einem Absatz?
 3. Kann ich ein Wort durch ein einfacheres deutsches Wort ersetzen?
 
-### 2.8 Vermeiden
-1. Lange Schachtelsätze
-2. Zu viele technische Begriffe auf einmal
-3. Kühle oder harte Formulierungen
-
-### 2.9 Icons in Antworten
-1. Icons sind erlaubt (z.B. ✅, ⚠️, 🔧, 👉), wenn sie die Lesbarkeit verbessern
-2. Icons **ersetzen keine Erklärung**
-
 ### 2.10 Umlaute & Encoding (Pflicht)
 - Dateien immer als **UTF-8** speichern
-- **VERWENDE UNBEDINGT UMLAUTE ÜBERALL** (ü, ä, ö, ß), sonst Encoding-Fehler!
-
----
+- **VERWENDE UNBEDINGT ECHTE UMLAUTE ÜBERALL** (ü, ä, ö, ß), sonst Encoding-Fehler!
 
 ## 3. Arbeitsweise & Motivation
 
@@ -144,9 +124,6 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
 
 ### 3.4 Antwort in deutscher Sprache
 - Antworte in **deutsch**, einfach, allgemeine Sprache, keine Fachsprache
-- Mit *kursiv*, **fett** und Sektionen und mit Icons und hochmotiviert
-- Erkläre was du gemacht hast, was noch hilfreich wäre
-- **Programmiere in englisch** (Code, Kommentare, Variablennamen)
 
 ### 3.5 Konsolenausgaben (wenn vom User gewünscht)
 - **Hochmoderne, superschöne und motivierende farbige Konsolenausgaben!**
@@ -164,7 +141,7 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
 ## 4. Workflow & Dokumentation
 
 ### 4.1 Generelle Regeln für Programmieraufgaben
-**Wenn der User explizit eine Programmieraufgabe gibt (keine Recherche):**
+**Wenn der User explizit eine Programmieraufgabe gibt auch gerne Recherchieren:**
 - Vom aktuellen Stand bis zur letzten Phase in **Phasen umsetzen**
 - In einer **Task-Datei tracken** mit Kontextinformationen und Phasenabläufen
 - Nach jeder Phase die Planung updaten und die nächste Phase durchgehen **ohne STOPP!!**
@@ -173,25 +150,8 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
   - Mit einer kleinen Summary was gemacht wurde
   - Weil genau die letzte Nachricht wird im nächsten Chat mit neuem Kontext erscheinen
 
-### 4.2 Verlauf-Dateien pro Chat
-Erstelle pro Chat eine Datei in `History/`, z.B. `[thema]-verlauf.md`.
-Inhalt:
-1. Kurz: was wurde gemacht?
-2. Betroffene Dateien
-3. Stand nach diesem Chat
-
-### 4.3 Completed-Task Dokumentation
-Nach erfolgreichem Abschluss MUSS eine Datei in `.completed/<YYYY-MM-DD>_<slug>.md` erstellt werden.
-Format laut: `shared-docs/agents/completed-task-rule.md`
-
-### 4.4 Signaltöne
-- **Frage stellen / auf User warten:** `powershell -c "[console]::beep(400,400)"`
-- **Fertig:** `powershell -c "[console]::beep(400,800)"`
-
 ### 4.5 Dokumentationssystem
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
-
----
 
 ## 5. Subagents & Erkundung
 
@@ -228,10 +188,6 @@ User-Task → Orchestrator
 - Bug-Fixes die mehrere Dateien betreffen könnten
 - Alles wo der Programmierer mehr als 2 Dateien ändern wird
 
-### Wann OPTIONAL?
-- Einzeiler-Fixes (Typo, CSS-Anpassung)
-- Wenn der User explizit sagt „mach einfach schnell"
-
 ### 5.3 Duplikat-Checker (PFLICHT bei neuen Dateien!)
 Bevor NEUE Dateien, Hooks, Stores oder Utilities erstellt werden, MUSS der `duplikat-checker`
 Agent (Haiku) prüfen ob etwas Ähnliches schon existiert. **80%-Regel:** Wenn eine existierende
@@ -248,17 +204,11 @@ Funktion 80%+ der gewünschten Funktionalität hat → **ERWEITERN** statt neu e
 | `duplikat-checker` | Haiku | Chat-Output an Orchestrator | Duplikat-Prüfung für geplante neue Dateien |
 | `abschliesser` | Haiku | `.completed/*.md` + ggf. CLAUDE.md Mini-Update | .completed/ Datei + Relevanz-Check Knowledge Map/Persistenz |
 | `ki-architekt` | Opus | `*-ARCHITEKTUR-ANALYSE.md` | Ist-Stand, Abweichungen, betroffene Dateien, Empfehlungen |
-
----
-
 ## 6. Planung & Analyse
 
 ### 6.1 Komplexe Planung (Pflicht)
 1. Bei großen Systemen: **Masterplan plus Unterdateien**
-2. Pflicht-Unterdateien:
-   - Phasenplan
-   - Performance-Testplan
-   - Edge-Case-Katalog
+2. Pflicht-Phasenpläne anhand unseres Phasenformats (siehe weiter unten, extrem wichtig!!!)
 3. Jede Phase braucht: **Ziel, Risiko, Test, sichtbaren Nutzen**
 4. Phasen am Stück umsetzen und sauber dokumentieren
    - Programmieren und dokumentieren im Wechsel, **ohne Pause!**
@@ -277,33 +227,9 @@ Jede Phase muss diese **6 Punkte** enthalten:
 Wenn die Phase Architektur betrifft, zusätzlich Pflicht:
 - Vorher/Nachher-Datenfluss in 3-6 Schritten
 - Klare Aussage, ob die Änderung mit `CLAUDE.md` konsistent ist
-
-### 6.3 Detaillierungs-Standard für Analyse & Planung (Pflicht)
-Wenn der User nach einer Analyse fragt oder schreibt „zu vage", gilt ab dann dieser Mindest-Standard:
-
-1. **Keine pauschalen Aussagen** ohne Begründung
-2. Jede wichtige Aussage braucht:
-   - Was passiert technisch?
-   - Warum passiert es genau?
-   - Welche sichtbare Auswirkung hat das für den User?
-3. Jede Analyse braucht klare Belege:
-   - Konkrete Datei/Modul-Nennung
-   - Konkrete Log-Hinweise oder Datenfluss-Schritte
-4. Jede Planung braucht Entscheidungstiefe:
-   - Option A (bevorzugt), Option B (Alternative), warum A besser passt
-5. Bei Architekturfragen immer klar trennen:
-   - Kurzfristiger Fix
-   - Mittelfristige Verbesserung
-   - Langfristige Zielarchitektur
-6. Jede große Antwort endet mit einer verständlichen Zusammenfassung in 4 Teilen:
-   - Ausgangsproblem
-   - Echte Ursache
-   - Umgesetzte oder empfohlene Lösung
-   - Verbleibendes Risiko / nächster sinnvoller Schritt
-
+- 
 ### 6.4 Analyse-Workflow (Pflicht bei Bug, Architektur, Performance)
 Nutze bei komplexen Themen immer dieses Ablaufmuster:
-
 1. **Problem-Satz:** „Was ist kaputt?" in einem klaren Satz
 2. **Auswirkungen:** „Was merkt der User davon?" in einem klaren Satz
 3. **Ist-Fluss:** Schritt-für-Schritt den aktuellen Datenfluss beschreiben (Eingang → Verarbeitung → Ausgabe)
@@ -322,7 +248,7 @@ Wenn mehrere Architekten gebraucht werden, laufen sie **linear**, nicht parallel
 ### 6.6 Validierung vor Implementierung
 Bevor du anfängst eine Planung zu implementieren, **validiere** ob sie Sinn macht und korrekt geplant wurde.
 
-### 6.7 Phasen mit To-dos (Pflicht)
+### 6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
 Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
 
 **Beispiel:**
@@ -356,9 +282,6 @@ Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebroche
 
 So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
 Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
-
-
----
 
 ## 7. Architektur & Dateistruktur
 
@@ -464,14 +387,6 @@ Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären
 - Mindestens 90% Opazität, damit der Dialog-Inhalt klar lesbar bleibt
 - Das `!important` (`!bg-...`) nutzen, um Shadcn/Radix-Defaults zu überschreiben
 
-**Beispiel:**
-```tsx
-// ❌ FALSCH - halbtransparenter Hintergrund (Standard von DialogContent)
-<DialogContent className="bg-black/40">
-
-// ✅ RICHTIG - solide Hintergrundfarbe mit Hex
-<DialogContent className="!bg-[#0c0f1a]/95">
-```
 
 ### 10.9 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
 Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontextmenüs MUSS geprüft werden:
@@ -480,25 +395,6 @@ Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontext
 - Ist der `z-index` relativ zu bestehenden Overlays (Dialog, Sheet, Drawer, Tooltip) korrekt priorisiert?
 
 Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. Erst Ursache im Layout/Portal/Overflow beheben.
-
-### 10.10 NIEMALS User-Input parsen für Intent-Routing (KRITISCH!)
-**GOLDENE REGEL:** User-Freitext geht IMMER an die KI. Es gibt KEINE Vorfilterung.
-
-**VERBOTEN:**
-- Pattern-Matching / Regex auf User-Input um Intents zu erkennen
-- Clarification-Messages aus User-Input-Analyse erzeugen
-- Parameter-Extraktion aus User-Input vor KI-Antwort
-- Jede Form von `routeIntent(userInput)` für Freitext
-
-**ERLAUBT:**
-- Preset-Button-Klicks direkt routen (`routePreset()`)
-- KI-Antworten parsen (`parseAssistantCommands(aiResponse)`)
-- KI-generierte Commands validieren (`validateAssistantCommandParseResult()`)
-
-### 10.11 Kritische Design-Prüfung
-Bitte achte bei **jedem** Problem nicht nur auf den konkreten Fehler, sondern auch darauf, ob die **Architektur** dahinter grundsätzlich falsch oder riskant ist.
-
----
 
 ## 11. TypeScript & Validierung
 
@@ -511,40 +407,6 @@ Bitte achte bei **jedem** Problem nicht nur auf den konkreten Fehler, sondern au
 - **NIEMALS** TypeScript-Fehler ignorieren oder „später fixen"
 - **SOFORT** beheben bevor zur nächsten Phase gegangen wird
 - TypeScript-Fehler sind **BLOCKER** - keine Ausnahmen!
-
-### 11.3 Häufige Fehler-Kategorien
-- **TS2307:** Cannot find module → Paket installieren
-- **TS2322:** Type mismatch → Interface/Type anpassen
-- **TS2339:** Property does not exist → Type erweitern
-- **TS18048:** Possibly undefined → Optional chaining oder Guard
-
-### 11.4 Bei Fehler: STOPP-Protokoll
-1. **STOPP** - Keine weiteren Änderungen
-2. **ANALYSIERE** - Root Cause verstehen (nicht raten!)
-3. **RECHERCHIERE** - Docs/Issues wenn unklar
-4. **FIXE** - Mit Verständnis der Ursache
-5. **VALIDIERE** - Alle Checks erneut
-6. **ERST DANN** - Weitermachen
-
----
-
-## 12. LLM-Kontextmanagement
-
-### 12.1 TOKEN-LIMIT WARNUNG
-**ACHTUNG:** Nach ~150.000 Tokens beginnen LLMs zu halluzinieren und Fehler zu machen!
-
-| Kontext | Limit | Aktion |
-|---------|-------|--------|
-| Planungs-Chat | 4 Planungen max | Neuen Chat öffnen |
-| Coding-Chat | ~150.000 Tokens | STOPP, neuen Chat öffnen |
-| Kontext-Verlust | ~200.000 Tokens | Halluzinationen wahrscheinlich |
-
-### 12.2 Neuer Chat Workflow
-**Bei Erreichen des Token-Limits:**
-1. Aktuellen Stand in MASTER-ORCHESTRATOR.md dokumentieren
-2. Migrations-Tracker in der Phase-Datei aktualisieren
-3. Zusammenfassung für nächsten Chat erstellen
-4. Neuen Chat mit relevanten Dateien starten
 
 ---
 
@@ -559,26 +421,6 @@ Bitte achte bei **jedem** Problem nicht nur auf den konkreten Fehler, sondern au
 
 **Referenz:** `shared-docs/agents/agent-browser/SKILL.md`
 
-### 13.2 Browser-Testing Workflow
-**Standard-Workflow:**
-1. Dev-Server starten
-2. Port notieren
-3. Browser öffnen: `agent-browser open http://localhost:PORT`
-4. Snapshot machen: `agent-browser snapshot -i`
-5. Mit UI interagieren (click, fill, etc.)
-6. Screenshot bei Fehler: `agent-browser screenshot error-NAME.png`
-
-### 13.3 Bei Port-Konflikten
-**Problem:** Port belegt
-
-**Lösung:**
-```bash
-# Option A: Anderen Port nutzen
-npm run dev -- --port 5174
-
-# Option B: Prozess auf Port beenden
-npx kill-port 5173
-```
 
 ### 13.4 Bei langen Wartezeiten
 **Wenn Bundling > 60s dauert:**
