@@ -2,10 +2,9 @@
  * Aufraeum-Skript fuer projektweite Doku-Ordner.
  *
  * Was wird geloescht?
- * - History: Behaelt nur die 7 neuesten Dateien, der Rest wird geloescht.
- * - docs/tasks: alle Dateien in Task-Ordnern, deren Aenderungszeit aelter als 7 Tage ist.
- * - docs: alle Markdown-Dateien (.md/.mdx), deren Aenderungszeit aelter als 30 Tage ist.
- * - Leere Ordner werden automatisch entfernt.
+ * - History: alle Dateien, deren Erstellungszeit aelter als X Tage ist.
+ * - docs: alle Markdown-Dateien (.md/.mdx), deren Aenderungszeit aelter als Y Tage ist.
+ * - Danach werden leere Unterordner entfernt.
  *
  * Aufruf:
  * - npx tsx shared-docs/scripts/cleanup-history-and-docs.ts
@@ -15,13 +14,11 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-const HISTORY_MAX_COUNT = 7;
-const TASKS_MAX_AGE_DAYS = 7;
-const DOCS_MAX_AGE_DAYS = 30;
+const HISTORY_MAX_AGE_DAYS = 14;
+const DOCS_MAX_AGE_DAYS = 14;
 
 const HISTORY_DIR_NAME = 'History';
 const DOCS_DIR_NAME = 'docs';
-const TASKS_DIR_NAME = 'tasks';
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -162,39 +159,27 @@ async function cleanupHistoryDirectory(
   };
 
   const files = await listFilesRecursively(absoluteHistoryDir);
+  const cutoff = cutoffTimestamp(HISTORY_MAX_AGE_DAYS);
 
-  // Sort by creation time (newest first)
-  const filesWithStats = await Promise.all(
-    files.map(async (filePath) => {
-      const stats = await fs.stat(filePath);
-      const { timestampMs } = creationTimestampFromStats(stats);
-      return { path: filePath, timestamp: timestampMs };
-    })
-  );
-
-  filesWithStats.sort((a, b) => b.timestamp - a.timestamp);
-
-  // Keep the newest N files, delete the rest
-  const filesToKeep = filesWithStats.slice(0, HISTORY_MAX_COUNT);
-  const filesToDelete = filesWithStats.slice(HISTORY_MAX_COUNT);
-
-  console.log('');
-  console.log(`[History] Behalte ${Math.min(filesToKeep.length, HISTORY_MAX_COUNT)} neueste Dateien:`);
-  for (const file of filesToKeep) {
-    const relativePath = path.relative(process.cwd(), file.path);
-    const ageDays = Math.round((Date.now() - file.timestamp) / DAY_IN_MS);
-    console.log(`  [Behalten] ${relativePath} (${ageDays} Tage alt)`);
-  }
-
-  for (const file of filesToDelete) {
+  for (const filePath of files) {
     result.scannedFiles += 1;
-    await deleteFileOrLog(file.path, dryRun);
-    result.deletedFiles += 1;
-    console.log(`[History geloescht] ${path.relative(process.cwd(), file.path)}`);
-  }
 
-  // Count kept files as skipped
-  result.skippedFiles = filesToKeep.length;
+    const stats = await fs.stat(filePath);
+    const { timestampMs, usedFallback } = creationTimestampFromStats(stats);
+
+    if (usedFallback) {
+      result.usedFallbackCreationTimeCount += 1;
+    }
+
+    if (timestampMs <= cutoff) {
+      await deleteFileOrLog(filePath, dryRun);
+      result.deletedFiles += 1;
+      console.log(`[History geloescht] ${path.relative(process.cwd(), filePath)}`);
+      continue;
+    }
+
+    result.skippedFiles += 1;
+  }
 
   result.deletedDirectories = await removeEmptyDirectories(absoluteHistoryDir, dryRun);
 
@@ -237,70 +222,6 @@ async function cleanupDocsDirectory(
   return result;
 }
 
-async function cleanupTasksDirectory(
-  absoluteDocsDir: string,
-  dryRun: boolean,
-): Promise<CleanupResult> {
-  const result: CleanupResult = {
-    scannedFiles: 0,
-    deletedFiles: 0,
-    deletedDirectories: 0,
-    skippedFiles: 0,
-    usedFallbackCreationTimeCount: 0,
-  };
-
-  // Find all tasks directories (docs/*/tasks/*)
-  const tasksPattern = path.join(absoluteDocsDir, '**', TASKS_DIR_NAME);
-  const allFiles = await listFilesRecursively(absoluteDocsDir);
-  
-  // Find task directories by looking for directories containing 'tasks' in the path
-  const taskDirs = new Set<string>();
-  for (const file of allFiles) {
-    const relativePath = path.relative(absoluteDocsDir, file);
-    const parts = relativePath.split(path.sep);
-    const taskIndex = parts.indexOf(TASKS_DIR_NAME);
-    if (taskIndex !== -1 && parts.length > taskIndex + 1) {
-      // Reconstruct the path up to the task folder
-      const taskDirPath = path.join(absoluteDocsDir, ...parts.slice(0, taskIndex + 2));
-      taskDirs.add(taskDirPath);
-    }
-  }
-
-  const cutoff = cutoffTimestamp(TASKS_MAX_AGE_DAYS);
-
-  for (const taskDir of taskDirs) {
-    try {
-      const stats = await fs.stat(taskDir);
-      const modifiedAtMs = toNumberTimestamp(stats.mtimeMs);
-
-      if (modifiedAtMs <= cutoff) {
-        // Delete entire task directory
-        const filesInDir = await listFilesRecursively(taskDir);
-        for (const file of filesInDir) {
-          result.scannedFiles += 1;
-          await deleteFileOrLog(file, dryRun);
-          result.deletedFiles += 1;
-        }
-        if (!dryRun) {
-          await fs.rmdir(taskDir);
-        }
-        result.deletedDirectories += 1;
-        console.log(`[Tasks geloescht] ${path.relative(process.cwd(), taskDir)}`);
-      } else {
-        // Count files in kept directories
-        const filesInDir = await listFilesRecursively(taskDir);
-        result.scannedFiles += filesInDir.length;
-        result.skippedFiles += filesInDir.length;
-      }
-    } catch (error) {
-      // Directory might not exist anymore, skip
-      continue;
-    }
-  }
-
-  return result;
-}
-
 function printSectionSummary(title: string, result: CleanupResult): void {
   console.log('');
   console.log(`=== ${title} ===`);
@@ -325,8 +246,7 @@ async function main(): Promise<void> {
 
   console.log(`Projektpfad: ${process.cwd()}`);
   console.log(`Modus: ${dryRun ? 'DRY RUN (nur anzeigen)' : 'LIVE (wirklich loeschen)'}`);
-  console.log(`History: Behaelt nur die ${HISTORY_MAX_COUNT} neuesten Dateien`);
-  console.log(`Tasks-Schwelle: ${TASKS_MAX_AGE_DAYS} Tage (Aenderungszeit)`);
+  console.log(`History-Schwelle: ${HISTORY_MAX_AGE_DAYS} Tage (Erstellungszeit)`);
   console.log(`Docs-Schwelle: ${DOCS_MAX_AGE_DAYS} Tage (Aenderungszeit)`);
 
   if (await directoryExists(absoluteHistoryDir)) {
@@ -338,9 +258,6 @@ async function main(): Promise<void> {
   }
 
   if (await directoryExists(absoluteDocsDir)) {
-    const tasksResult = await cleanupTasksDirectory(absoluteDocsDir, dryRun);
-    printSectionSummary('Tasks', tasksResult);
-
     const docsResult = await cleanupDocsDirectory(absoluteDocsDir, dryRun);
     printSectionSummary('Docs', docsResult);
   } else {

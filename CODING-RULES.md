@@ -2,40 +2,41 @@
 
 **Zweck:** Universelle Regeln für konsistente, performante und wartbare Code-Entwicklung.
 
-## Projekt-Override: Test-Policy (Notedrill)
+## 1. Kontext & Kommunikation
 
-Diese Regel überschreibt in diesem Projekt alle nachgelagerten Test-Pflichten:
-- Automatisierte Tests (Unit/E2E/Integration) sind **nicht erforderlich**.
-- Fokus ist **Praxis-Validierung im laufenden System** statt Test-Suiten.
-- Tests können bei Bedarf ergänzend genutzt werden, sind aber kein Pflicht-Gate.
+### 1.1 Eingabe-Verständnis (Speech-to-Text)
+Der User sendet meist **Sprachnachrichten** (Chat oder `.md`-Datei). Speech-to-Text ist nicht immer exakt – bitte **aktiv mitdenken**:
+- „Cloud Code" kann eigentlich „Claude Code" bedeuten
+- „React Grab" = React DevTools / React-Codeausschnitt
+- Bei Unklarheit: **kurz nachfragen**, nicht raten
 
----
+### 1.2 User-Profil: Junior Developer
+Der User ist Junior-Developer und beschreibt Probleme oft **grob und ungenau**:
+- Wenn die Annahme des Users nicht passt: **klar und freundlich korrigieren**
+- Der User will **lernen** – also erklären, nicht nur fixen
+- Kleine Änderungen können **Nebenwirkungen** haben → erst Überblick holen (Suche, betroffene Dateien, Duplikate)
+- User zeigt oft nur **Frontend-Komponenten** (React Code) – Backend-Teile selbst recherchieren
 
-Bitte achte bei **jedem** Problem nicht nur auf den konkreten Fehler (z. B. einen **TypeScript-Error**), sondern auch darauf, ob die **Architektur** dahinter grundsätzlich falsch oder riskant ist.
+### 1.3 Verstehen statt Umdeuten (Pflicht)
+1. Wenn der User A sagt → Lösung **A verbessern**, nicht still zu B wechseln
+2. Fachwörter nie eigenmächtig übersetzen, wenn dadurch die Richtung kippt
+3. **Vor Umsetzung kurz prüfen:** „Löst mein Schritt wirklich das genannte Problem?"
+4. **Keine versteckten Nebenwirkungen** einbauen (z.B. harte Limits), außer explizit gewünscht
+5. **Bei Effizienz-Themen:** erwähnen, ob Architektur komplett umbaut werden sollte
+6. Bei Zielkonflikten: erst **Ergebnisqualität** sichern, dann Kosten/Tempo optimieren
+7. **Vor Abschluss Zusammenfassung:**
+   - User-Ziel in 1 Satz
+   - Gebaute Änderung in paar Sätzen (hochmotiviert, Fachbegriffe erklärt, mit Icons)
+   - Passt beides direkt zusammen: ja/nein
 
-### ✅ Was ich von dir erwarte
+### 1.4 Rollen-Trennung (Pflicht)
+- **`AGENTS.md`** = Verweis auf diese Datei + CLAUDE.md
+- **`CLAUDE.md`** = Architekturwissen (wie das Projekt technisch aufgebaut ist)
+- **`shared-docs/CODING-RULES.md`** = Arbeitsregeln, Coding-Standards, Kommunikationsregeln
+- Wenn du Architektur brauchst: **in `CLAUDE.md` nachsehen**
+- Wenn du Coding-Verhalten brauchst: **in `CODING-RULES.md` bleiben**
 
-* **Nicht nur den Error fixen**, sondern prüfen, ob die Lösung langfristig stabil ist. 🧩
-* Wenn du merkst, dass **die aktuelle Struktur uns in Zukunft Probleme macht**, dann **sag es direkt**. 🚨
-* Wenn etwas so gebaut ist, dass es **eigentlich nicht sauber funktionieren kann** (nur mit Workarounds/Tricks), dann **muss das klar benannt werden**. 🛑
-* Wenn es eine **bewährte Standard-Methode** gibt, die praktisch jeder nutzt – und wir umgehen sie gerade – dann **weise darauf hin**. ✅
-
-### ⚠️ Ganz wichtig
-
-Wenn du erkennst, dass wir gerade in eine **schlechte technische Richtung** abdriften (z. B. durch Workarounds, unklare Verantwortlichkeiten, falsche Layering/Struktur), dann musst du das ausdrücklich sagen – auch wenn es unbequem ist.
-
-### 🏗️ Konsequenz: Refactor statt Pflaster
-
-Wenn nötig, sag bitte klar:
-
-> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden."** 🔧🔥
-
-Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀 Nutze auch das Internet, falls du spürst, das könnte in die falsche Richtung gehen und ob es nicht schon jemand gibt, der das Problem schon gelöst hat. Denn sobald unser Grundgerüst die Architektur falsch ist, werden wir immer wieder auf Probleme stoßen. 🔧🔥
-
----
-
-### 🔴 REGEL 0: Anwender-Fehler vs. Code-Fehler (KRITISCH!)
-
+### 1.5 Anwender-Fehler vs. Code-Fehler (KRITISCH!)
 **BEVOR du einen Fehler fixst, IMMER zuerst prüfen:**
 
 | Frage | Wenn JA → |
@@ -47,172 +48,274 @@ Denn wenn das nicht offen angesprochen wird, kommen wir nicht weiter. 🚀 Nutze
 
 **NIEMALS Workarounds für Anwender-Fehler bauen!**
 
-**Beispiel - WAS ICH HÄTTE TUN SOLLEN:**
+### 1.6 Architektur-Prüfung (Pflicht bei jedem Problem)
+Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen:
+- Ist die **Architektur** dahinter grundsätzlich falsch oder riskant?
+- Langfristig stabile Lösung finden, nicht nur schnellen Fix
+- Wenn Struktur zukünftige Probleme macht → **direkt ansprechen** 🚨
+- Wenn etwas nur mit Workarounds funktioniert → **klar benennen** 🛑
+- Bewährte Standard-Methoden nutzen, nicht umgehen ✅
+
+> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden."** 🔧
+
+## 2. Schreibstil & Sprache (AUCH FÜR UI empfohlen!)
+
+### 2.1 Ziel
+So erklären, dass **8.-Klässler** es direkt verstehen: motiviert, klar, mit kurzen Beispielen aus dem Alltag.
+
+### 2.2 Antwort-Aufbau (Pflicht)
+Immer dieses Muster:
+1. **Was wurde verstanden?**
+2. **Was ist der Plan?**
+3. **Was wurde konkret gemacht?**
+4. **Was ist der nächste Schritt?**
+
+### 2.3 Antwort-Tiefe (Pflicht)
+1. Wenn der User unsicher wirkt → **ausführlicher** antworten
+2. Immer kurz erklären:
+   - was ein Begriff bedeutet
+   - was sich sichtbar ändert
+   - was als nächstes passieren kann
+3. Pro wichtigem Begriff ein **Mini-Beispiel aus dem Alltag**
+4. Nicht zu knapp sein, wenn Risiko, Trade-off oder neues Konzept vorkommt
+
+### 2.4 Wichtige Sprachregeln
+1. In Titeln und Planungen möglichst **einfache Wörter** nutzen
+2. Wenn ein Fachwort nötig ist: **erst einfaches Wort, dann Fachwort in Klammern** + 1 Kurz-Erklärung
+3. **Keine Abkürzungen** ohne Erklärung und  **Keine Buzzwords** ohne Inhalt
+4. Antworte hochmotiviert, mit sehr schöner lesbarer formatierung, also kursiv, fett nutzen,
+5. nicht soviele Linebreaks sondern lieber Überschriften
+6. und nutze gerne icons ✅, ⚠️, 🔧, 👉)!
+7. vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen
+
+### 2.7 Kurz-Check vor jeder Antwort
+1. Würde ein 9.-Klässler den Satz direkt verstehen?
+2. Sind zu viele Fachwörter in einem Absatz?
+3. Kann ich ein Wort durch ein einfacheres deutsches Wort ersetzen?
+
+### 2.10 Umlaute & Encoding (Pflicht)
+- Dateien immer als **UTF-8** speichern
+- **VERWENDE UNBEDINGT ECHTE UMLAUTE ÜBERALL** (ü, ä, ö, ß), sonst Encoding-Fehler!
+
+## 3. Arbeitsweise & Motivation
+
+### 3.1 Motivierter Arbeitsstil
+1. Schreibe wie ein **starker Projekt-Partner**
+2. Bei größeren Aufgaben zuerst kurz einordnen: **Ziel + warum es wichtig ist**
+3. Zeige **Fortschritt** in kurzen Updates
+4. Bei kreativen Aufgaben **2-3 konkrete Vorschläge** statt abstrakter Ideen
+5. Schließe mit einem **klaren nächsten Schritt** ab
+
+### 3.2 Problem-Aufstellung vor Lösung (Pflicht)
+Bei komplexen Features zuerst kurz:
+- **Problem** in 1 Satz
+- **Auswirkung** für User in 1 Satz
+- **Lösungsweg** in 1 Satz
+
+Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
+
+### 3.3 User-Entlastung (Pflicht)
+1. User soll **keine unnötigen manuellen Schritte** machen
+2. Wir übernehmen Import, Mapping, Fallbacks, Defaults, Validierung
+3. Nur wenn externe Daten fehlen (z.B. API-Key), gezielt nach **genau 1 Info** fragen
+4. Jede Antwort prüfen: **„Nimmt das dem User Arbeit ab?"**
+
+### 3.4 Antwort in deutscher Sprache
+- Antworte in **deutsch**, einfach, allgemeine Sprache, keine Fachsprache
+
+### 3.5 Konsolenausgaben (wenn vom User gewünscht)
+- **Hochmoderne, superschöne und motivierende farbige Konsolenausgaben!**
+- Menschenlesbar mit allgemeiner Sprache welche Methode was macht
+- CAPS LOCK für bestimmte Sachen, eckige Klammern, kursiv, fett
+- Quasi wie eine Kunst, so lesbar wie möglich und so schön wie möglich
+- Auch ob es Server oder Client ist, welche Methode, welche Klasse
+- Kompakt, keine Endlos-Konsolenausgaben
+- Spielerisch und modern, wie ein Retro Game 🎮
+- Sollen helfen Fehler und Probleme zu erkennen, auch Performance Issues
+- Bei Laggs: Timer einbauen für bestimmte Cases, um zu prüfen wie lange Prozesse dauern
+
+## 4. Workflow & Dokumentation
+
+### 4.1 Generelle Regeln für Programmieraufgaben
+**Wenn der User explizit eine Programmieraufgabe gibt auch gerne Recherchieren:**
+- Vom aktuellen Stand bis zur letzten Phase in **Phasen umsetzen**
+- In einer **Task-Datei tracken** mit Kontextinformationen und Phasenabläufen
+- Nach jeder Phase die Planung updaten und die nächste Phase durchgehen **ohne STOPP!!**
+- Falls **ORCHESTRATOR MODUS AN** ist: nach jeder Phase den Plan updaten und dann `NEXT_PHASE_READY` am Ende schreiben
+  - Inklusive der `...TASK.md` als Referenz mitgeben
+  - Mit einer kleinen Summary was gemacht wurde
+  - Weil genau die letzte Nachricht wird im nächsten Chat mit neuem Kontext erscheinen
+
+### 4.5 Dokumentationssystem
+**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
+
+## 5. Subagents & Erkundung
+
+### 5.1 Subagent-Nutzung (Pflicht)
+- Subagents **nur zum Suchen und Abschließen** verwenden
+- Also zum Suchen von Dateien oder zum Aktualisieren von Dokumentationen
+- **Nicht** für das eigentliche Coding/Implementieren
+
+### 5.2 Pre-Task Reconnaissance (Pflicht bei größeren Tasks)
+
+**Inspiriert von ASMR (Agentic Search & Memory Retrieval):** Bevor Code geschrieben wird,
+MÜSSEN 2-3 Erkunder-Agents (Haiku) parallel gespawnt werden um den vollen Kontext zu sammeln.
+Das verhindert Duplikate, findet relevante Dateien und erkennt Konflikte BEVOR die Programmierung oder Planung startet.
+
+### Ablauf (IMMER linear spawnen!):
 ```
-❌ FALSCH: "Ich erstelle eine App.tsx im Root als Workaround"
-✅ RICHTIG: "Von welchem Verzeichnis hast du den Befehl ausgeführt?
-            Bei Monorepos musst du im App-Verzeichnis sein: cd apps/mobile"
+User-Task → Orchestrator
+  │
+  ├─ VOR dem Coding (parallel):
+  │   ├─ erkunder-docs  (Haiku) → Sucht in docs/, .completed/, History/
+  │   └─ erkunder-code  (Haiku) → Findet betroffene Dateien, Duplikate
+  │
+  ▼ Synthese → duplikat-checker (Haiku, bei neuen Dateien)
+  │
+  ├─ programmiere/plane (Opus) → Coding mit vollem Kontext
+  │
+  ▼ NACH dem Coding:
+  └─ abschliesser (Haiku) → .completed/ erstellen + CLAUDE.md Relevanz-Check
 ```
 
-**Bei Fehlermeldungen IMMER nachfragen:**
-1. Von welchem Verzeichnis wurde der Befehl ausgeführt?
-2. Welcher Befehl genau wurde verwendet?
-3. Wurden alle Dependencies installiert?
+### Wann PFLICHT?
+- Feature-Implementierung (neue Komponenten, Hooks, Stores)
+- Refactoring (betroffene Dateien kennen)
+- Bug-Fixes die mehrere Dateien betreffen könnten
+- Alles wo der Programmierer mehr als 2 Dateien ändern wird
 
-## 🚨 WICHTIG: Framework-spezifische Regeln
+### 5.3 Duplikat-Checker (PFLICHT bei neuen Dateien!)
+Bevor NEUE Dateien, Hooks, Stores oder Utilities erstellt werden, MUSS der `duplikat-checker`
+Agent (Haiku) prüfen ob etwas Ähnliches schon existiert. **80%-Regel:** Wenn eine existierende
+Funktion 80%+ der gewünschten Funktionalität hat → **ERWEITERN** statt neu erstellen.
 
-**BEVOR du weiter liest, identifiziere dein Projekt-Typ und lese die entsprechenden Regeln:**
+**WICHTIG:** Sollten die Subagents nicht existieren, lege sie an mit einem schnellen und token-effizienten Modell (z.B. Haiku 4.5) von dem Provider, von welchem du gerade aus arbeitest, und teile dem User mit, dass du die Subagents erzeugt hast.
 
-| Projekt-Typ | Regeln lesen |
-|-------------|--------------|
-| **React Native / Expo** | `shared-docs/expo/EXPO-RULES.md` |
-| **Next.js** | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
-| **Capacitor** | `shared-docs/performance/capacitor-performance-rules.md` |
-| **Electron** | Electron-spezifische Docs in `shared-docs/` |
+### 5.4 Wer schreibt was?
 
-**Die folgenden Regeln gelten UNIVERSELL für alle Frameworks.**
+| Agent | Modell | Datei-Output | Inhalt |
+| --- | --- | --- | --- |
+| `erkunder-docs` | Haiku | Chat-Output an Orchestrator | Verwandte Tasks, Architektur-Docs, History |
+| `erkunder-code` | Haiku | Chat-Output an Orchestrator | Betroffene Dateien, existierende Funktionen, Duplikate |
+| `duplikat-checker` | Haiku | Chat-Output an Orchestrator | Duplikat-Prüfung für geplante neue Dateien |
+| `abschliesser` | Haiku | `.completed/*.md` + ggf. CLAUDE.md Mini-Update | .completed/ Datei + Relevanz-Check Knowledge Map/Persistenz |
+| `ki-architekt` | Opus | `*-ARCHITEKTUR-ANALYSE.md` | Ist-Stand, Abweichungen, betroffene Dateien, Empfehlungen |
+## 6. Planung & Analyse
 
----
+### 6.1 Komplexe Planung (Pflicht)
+1. Bei großen Systemen: **Masterplan plus Unterdateien**
+2. Pflicht-Phasenpläne anhand unseres Phasenformats (siehe weiter unten, extrem wichtig!!!)
+3. Jede Phase braucht: **Ziel, Risiko, Test, sichtbaren Nutzen**
+4. Phasen am Stück umsetzen und sauber dokumentieren
+   - Programmieren und dokumentieren im Wechsel, **ohne Pause!**
 
-## Regel 1: Workflow & Arbeitsweise
+### 6.2 Planungs-Workflow mit Mindesttiefe (Pflicht)
+Bei Feature- oder Refactor-Planungen müssen die Phasen mehr erklären als nur Überschriften.
+Jede Phase muss diese **6 Punkte** enthalten:
 
-### 1.1 Vor dem Start
-- **Vorhaben präsentieren:** Formatiert mit Icons, klare Struktur
-- **Größere Aufgaben:** Plan in `docs/[feature]/tasks/[datum]-[feature]-plan.md` erstellen
-- **Code-Reuse prüfen:** ERST nach existierenden Funktionen/Components mit `Grep` suchen
-- **Testing:** Keine Pflicht für automatisierte Tests; stattdessen Praxis-Testing im Feature-Flow
-- Sei hochmotiviert, liefere formatierte Antworten mit Icons in Deutsch
+1. **Ziel:** Was ist am Ende sichtbar besser?
+2. **Warum:** Warum löst genau diese Phase das Kernproblem?
+3. **Umsetzung:** Welche 1-3 Dateien/Module werden konkret geändert?
+4. **Risiko:** Was könnte kaputtgehen?
+5. **Check:** Woran erkennen wir schnell, dass es funktioniert?
+6. **Ergebnis-Satz:** Ein kurzer Satz in einfacher Sprache für Nicht-Entwickler.
 
-### 1.2 🚨 Planungs-Regel: Kein Code in Planungsdokumenten
-- ✅ **ERLAUBT:** Konzepte, Architektur, Dateipfade, API-Signaturen (max 3-5 Zeilen)
-- ❌ **VERBOTEN:** Vollständige Implementierungen, Code-Blöcke >10 Zeilen
-- **Ziel:** Max 500-800 Zeilen pro Plan (WAS und WARUM, nicht WIE im Detail)
+Wenn die Phase Architektur betrifft, zusätzlich Pflicht:
+- Vorher/Nachher-Datenfluss in 3-6 Schritten
+- Klare Aussage, ob die Änderung mit `CLAUDE.md` konsistent ist
+- 
+### 6.4 Analyse-Workflow (Pflicht bei Bug, Architektur, Performance)
+Nutze bei komplexen Themen immer dieses Ablaufmuster:
+1. **Problem-Satz:** „Was ist kaputt?" in einem klaren Satz
+2. **Auswirkungen:** „Was merkt der User davon?" in einem klaren Satz
+3. **Ist-Fluss:** Schritt-für-Schritt den aktuellen Datenfluss beschreiben (Eingang → Verarbeitung → Ausgabe)
+4. **Bruchstelle:** Exakt benennen, an welchem Schritt der Fluss kaputt geht
+5. **Ursachenbeweis:** Logs, Codepfad oder Zustandswerte nennen, die die Ursache belegen
+6. **Lösungsweg:** Genau sagen, welche Änderung den Bruch behebt und warum
+7. **Nebenwirkungen:** Kurz prüfen, welche Bereiche mitbetroffen sein könnten
+8. **Abschluss:** Kurze, alltagstaugliche Zusammenfassung mit „Was heißt das jetzt für dich?"
 
-### 1.2.1 🗣️ Sprache in Planungen und Status-Updates
-- Planungen, Phasenbeschreibungen und Abschluss-Updates müssen in **klarer Alltagssprache** geschrieben sein.
-- Fachwörter sind erlaubt, aber nur mit kurzer Erklärung in einfachen Worten.
-- Unklare Abkürzungen und interne Begriffe ohne Kontext sind zu vermeiden.
-- Jede Phase braucht zusätzlich einen kurzen Satz: **"Was bedeutet das konkret für den User?"**
+### 6.5 Architekten-Kette (Pflicht bei Multi-Architekten-Planung)
+Wenn mehrere Architekten gebraucht werden, laufen sie **linear**, nicht parallel:
+1. Architekt 1 schreibt Analyse
+2. Architekt 2 baut darauf auf
+3. Architekt 3 baut auf 1+2 auf
 
-### 1.3 Kritisches Denken (Edge Cases)
-Proaktiv: Extrem-Fälle, falsches User-Verhalten, Performance, Concurrent Access, Device-Unterschiede.
+### 6.6 Validierung vor Implementierung
+Bevor du anfängst eine Planung zu implementieren, **validiere** ob sie Sinn macht und korrekt geplant wurde.
 
-### 1.4 Nach Abschluss
-- **Plan aktualisieren:** Phase als ✅ markieren
-- **Dokumentation erweitern:** Bei großen Änderungen `docs/[feature]/[feature]-overview.md`
-- **Zusammenfassung:** Icons, Dateipfade, abgeschlossene Phase nennen
+### 6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
+Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
 
----
+**Beispiel:**
+```markdown
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
+* [ ] `AUFGABE ABC` implementieren.
+**Referenzen:**
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
+```
 
-## Regel 2: Architektur & Dateistruktur (UNIVERSELL)
+### Kommentar Sektion unter der Phasenplanung
+Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
+und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
+Kriterien eingehalten z.B. 
 
-### 2.1 🚨 Component-Based Architecture (WICHTIGSTE REGEL)
+```markdown
+## Kommentare
+### Phase 1
+**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
+**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
+1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
+Beschreibung hierzu notieren, falls notwendig
+Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
+2. 🟠 **Hoch:**...
+
+### Phase 2....
+```
+
+So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
+
+## 7. Architektur & Dateistruktur
+
+### 7.1 Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!**
 - **Warum?** Performance-Killer (jedes Render neu erstellt) + State-Verlust
 - ✅ Jede Komponente in separater Datei
 
-### 2.2 Component Organization
+### 7.2 Component Organization
 **Maximal 700 Zeilen Code pro Datei** - Auslagern wenn größer
 
-### 2.3 Component Naming Convention
-
-**Component Naming System:**
-```
-ComponentName[Type].tsx where [Type] is:
-- Section.tsx    → Orchestrates UI area (ReviewSection.tsx)
-- Panel.tsx      → Input/config interface (EinstellungenPanel.tsx) 
-- Dialog.tsx     → Modal/overlay (BestätigenDialog.tsx)
-- Button.tsx     → Interactive trigger (SpeichernButton.tsx)
-- Card.tsx       → Reusable content block (ProductCard.tsx)
-- Item.tsx       → List/grid element (MenuItem.tsx)
-```
-**Deutsch/Englisch Naming Convention:**
-```
-🇩🇪 DEUTSCH (User-facing Komponenten):
-- Button.tsx     → SpeichernButton.tsx, LöschenButton.tsx
-- Panel.tsx      → EinstellungenPanel.tsx, BenutzerPanel.tsx  
-- Dialog.tsx     → BestätigenDialog.tsx, EinstellungenDialog.tsx
-
-🇺🇸 ENGLISCH (Technische Container):
-- Section.tsx    → ReviewSection.tsx, HeaderSection.tsx
-- Card.tsx       → ProductCard.tsx, UserCard.tsx
-- Item.tsx       → MenuItem.tsx, ListItem.tsx
-- Layout.tsx     → MainLayout.tsx, PageLayout.tsx
-```
-**Warum diese Aufteilung?**
-- **User-facing = Deutsch:** User klickt "Speichern" → Code heißt `SpeichernButton.tsx`
-- **Technical = Englisch:** Section names sind für Entwickler, nicht für User
-
-**Frontend-to-Code Navigation:**
-- **Button-Text = File-Name:** "Kommentar hinzufügen" button → `KommentarHinzufügenButton.tsx`
-- **Dialog-Title = File-Name:** "Einstellungen" dialog → `EinstellungenDialog.tsx`
-- **UI-Area = Section:** Comment area → `(commentSection)/`
-- **Fast Navigation:** Click UI element → Know exact file path in <5 seconds
-
-**Section Structure Example:**
-```
-feature/[param]/
-├── (mainSection)/
-│   ├── (subSection)/
-│   │   ├── AktionButton.tsx
-│   │   └── KonfigPanel.tsx
-│   ├── MainSection.tsx          ← Section orchestrator
-│   └── (otherSubSection)/
-│       └── DataCard.tsx
-```
-
-**Universal Pattern:**
-- **UI Area** → `(sectionName)` folder
-- **Button/Action** → `AktionButton.tsx`
-- **Form/Input** → `KonfigPanel.tsx`
-- **Popup** → `FeatureDialog.tsx`
+### 7.3 Component Naming Convention
+- 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
+- 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
 ---
 
-## Regel 3: React Best Practices (UNIVERSELL)
+## 8. React Best Practices
 
-### 3.0 🔴🔴🔴 useEffect wird NICHT benötigt (KRITISCH!)
-
-**BEVOR du useEffect benutzt, STOPP und lies:**
-- `shared-docs/react-useEffect/not-needed.md`
-
-**Oder nutze den Skill:** `react-no-use-effect`
-
-**Faustregel:** useEffect ist ein "Escape Hatch" - in 90% der Fälle brauchst du ihn NICHT!
-
-| Situation | FALSCH (useEffect) | RICHTIG |
-|-----------|-------------------|---------|
-| Daten transformieren | `useEffect(() => setFiltered(...))` | `const filtered = data.filter(...)` direkt berechnen |
-| State aus Props ableiten | `useEffect(() => setFullName(...))` | `const fullName = first + last` |
-| Teure Berechnungen | `useEffect(() => setResult(...))` | `useMemo(() => expensiveCalc())` |
-| State reset bei Prop-Change | `useEffect(() => setX(null), [prop])` | `key={prop}` am Component |
-| Event-Handler Logik | `useEffect(() => if(clicked) doX())` | Direkt im Event-Handler |
-| Parent über State informieren | `useEffect(() => onChange(state))` | Im Event-Handler: `setX(); onChange()` |
-
-**Wann useEffect OK ist:**
-- Externe Systeme synchronisieren (DOM, WebSocket, Third-Party)
-- Analytics bei Component-Mount
-- Data Fetching (aber besser: Server Components, React Query, SWR)
-
-### 3.1 State & Props
+### 8.1 State & Props
 - **Immutable State:** `setState(prev => ...)`
 - **List Keys:** Stable, unique `key` prop für `.map()` items
 - **State vs Ref:** `useState` = re-render, `useRef` = no re-render
 
-### 3.2 Performance
+### 8.2 Performance
 - **Memoization:** `useMemo` (expensive calculations), `useCallback` (functions as props), `React.memo` (components)
 
-### 3.3 Effects & Lifecycle
+### 8.3 Effects & Lifecycle
 - **Cleanup:** IMMER cleanup function bei subscriptions/timers/listeners
 - **Dependency Array:** Accurate dependencies, `[]` = mount only
 
-### 3.4 Component Communication
+### 8.4 Component Communication
 - **Parent↔Child:** Props down, Callbacks up
 - **2-3 Levels:** Lifting State Up
 - **3+ Levels:** Context API oder State Management
 - **Referenz:** `shared-docs/react-core-communication-patterns.md`
 
-### 3.5 🔴 Stale Closure Pattern
+### 8.5 Stale Closure Pattern
 ```typescript
 // ❌ FALSCH - habits ist noch ALTER State!
 setHabits(prev => prev.map(h => ...));
@@ -228,50 +331,47 @@ setHabits(prev => {
 
 ---
 
-## Regel 4: Network Performance (UNIVERSELL)
+## 9. Performance
 
-### 4.1 🔴 Waterfall-Fetching Prevention
+### 9.1 Waterfall-Fetching Prevention
 Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 
-### 4.2 🔴 Polling Cleanup
+### 9.2 Polling Cleanup
 Jeder `useEffect` mit Timers/Subscriptions MUSS Cleanup-Function haben
 
-### 4.3 🔴 N+1 Query Prevention
+### 9.3 N+1 Query Prevention
 Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray(itemIds)`
 
 ---
 
-## Regel 5: Kritische Anti-Patterns (UNIVERSELL)
+## 10. Kritische Anti-Patterns
 
-### 5.1 🔴 Context Analysis Before Changes
+### 10.1 Context Analysis Before Changes
 Vor Änderungen: Letzte 3-4 Tasks analysieren. Würde meine Änderung diese brechen?
 
-### 5.2 🔴 Legacy Code Removal
+### 10.2 Legacy Code Removal
 Nach jeder Änderung SOFORT ungenutzten Code entfernen.
 
-### 5.3 🔴 Mobile-First Space Efficiency
+### 10.3 Mobile-First Space Efficiency
 UI MUSS Mobile-First designed werden: Maximale Space-Efficiency.
 
-### 5.4 🔴 Wiederverwendbarkeit-First
+### 10.4 Wiederverwendbarkeit-First
 Dialoge/Komponenten MÜSSEN für Wiederverwendung designed werden: Props für Modi, Callback-Props.
 
-### 5.5 🔴🔴🔴 RECHERCHE VOR RUMPROBIEREN (KRITISCH!)
+### 10.5 RECHERCHE VOR RUMPROBIEREN (KRITISCH!)
 **PFLICHT-Workflow bei unbekannten Fehlern:**
 1. **Stack-Trace GENAU lesen** - Welche Datei, Zeile, Komponente?
 2. **RECHERCHIEREN** - Docs, GitHub Issues durchsuchen
 3. **Root Cause verstehen** - WARUM passiert der Fehler?
 4. **DANN erst fixen** - Mit Verständnis der Ursache
 
-### 5.6 🔴 UI Library Defaults respektieren
+### 10.6 UI Library Defaults respektieren
 **Niemals** die Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben (z.B. `py-3` auf `TabsTrigger`, `h-12` auf `Button`). Nutze stattdessen die vordefinierten Variants (`size="sm"`, `size="lg"` etc.). Wenn kein passender Variant existiert, erweitere das Variant-System in der UI-Komponente.
 
-### 5.7 🔴 Provider-Type Exhaustive Handling
-Bei jeder Komponente, die `AIProviderType`-basierte Switches/if-else-Branches hat, MUSS jeder Provider-Typ explizit behandelt werden. Nutze TypeScript exhaustive checks (`satisfies Record<AIProviderType, ...>`) oder `switch` mit `default: never`. **Kein Catch-All `else`** das unbekannte Provider-Typen stillschweigend falsch behandelt.
-
-### 5.8 🔴 Disabled Button Feedback
+### 10.7 Disabled Button Feedback
 Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären, **warum** er deaktiviert ist. Der User darf nie raten müssen, warum eine Aktion nicht verfügbar ist.
 
-### 5.9 🔴 Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!)
+### 10.8 Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!)
 **Alle Dialoge, Sheets, Drawers und modale Overlays MÜSSEN eine solide Hintergrundfarbe mit Hex-Code bekommen.**
 
 **VERBOTEN:**
@@ -283,18 +383,8 @@ Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären
 - Mindestens 90% Opazität, damit der Dialog-Inhalt klar lesbar bleibt
 - Das `!important` (`!bg-...`) nutzen, um Shadcn/Radix-Defaults zu überschreiben
 
-**Beispiel:**
-```tsx
-// ❌ FALSCH - halbtransparenter Hintergrund (Standard von DialogContent)
-<DialogContent className="bg-black/40">
 
-// ✅ RICHTIG - solide Hintergrundfarbe mit Hex
-<DialogContent className="!bg-[#0c0f1a]/95">
-```
-
-**WARUM:** Halbtransparente Dialoge machen den Inhalt schwer lesbar, weil der Content dahinter durchscheint. Besonders bei Editoren, Formularen und textlastigen Dialogen ist das ein UX-Problem.
-
-### 5.10 🔴 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
+### 10.9 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
 Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontextmenüs MUSS geprüft werden:
 - Gibt es einen Parent mit `overflow: hidden/auto` oder einen neuen Stacking Context (`transform`, `filter`, `opacity`, `position`, `isolation`)?
 - Wird das Overlay per Portal gerendert (z. B. Radix `Portal`) statt innerhalb eines abgeschnittenen Containers?
@@ -302,221 +392,92 @@ Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontext
 
 Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. Erst Ursache im Layout/Portal/Overflow beheben.
 
-### 5.11 🔴🔴🔴 NIEMALS User-Input parsen für Intent-Routing (KRITISCH!)
+## 11. TypeScript & Validierung
 
-**GOLDENE REGEL:** User-Freitext geht IMMER an die KI. Es gibt KEINE Vorfilterung.
+### 11.1 TypeScript-Prüfung
+- TypeScript immer prüfen: `npm run type-check`
+- Kein `npm run build` und kein `npm run dev` nötig
 
-**VERBOTEN:**
-- Pattern-Matching / Regex auf User-Input um Intents zu erkennen
-- Clarification-Messages aus User-Input-Analyse erzeugen
-- Parameter-Extraktion aus User-Input vor KI-Antwort
-- Jede Form von `routeIntent(userInput)` für Freitext
-
-**ERLAUBT:**
-- Preset-Button-Klicks direkt routen (`routePreset()`)
-- KI-Antworten parsen (`parseAssistantCommands(aiResponse)`)
-- KI-generierte Commands validieren (`validateAssistantCommandParseResult()`)
-
-**WARUM:** User-Sprache ist mehrdeutig. "Ich schreibe eine Klausur über Redoxreaktionen"
-kann ein Chat-Intent sein, NICHT zwingend ein "Ordner erstellen"-Intent.
-Nur die KI kann den Kontext korrekt interpretieren.
-
-**Referenz:** `docs/agentic-mode/tasks/2026-02-13-intent-router-user-parsing-fix-MASTER-ORCHESTRATOR.md`
-
----
-
-## Regel 6: Documentation System
-
-### 6.1 Struktur
-
-```
-docs/
-├── OVERVIEW.md                           ← Master-Navigation (nur bei großen Änderungen)
-├── FEATURE_MATRIX.md                     ← Use-Case → Feature Mapping
-└── [feature]/
-    ├── [feature]-overview.md             ← Feature-Übersicht
-    ├── features/[sub-feature].md         ← Sub-Feature Details
-    └── tasks/[datum]-[task].md           ← Task-History
-```
-
-### 6.2 Wann dokumentieren
-
-- **Feature-Overview:** Nur bei großen Änderungen oder neuen Features
-- **Task-History:** Nach jeder abgeschlossenen Phase
-- **Master-Navigation:** Nur bei sehr großen Änderungen
-
-### 6.3 Completed-Task Dokumentation (.completed/)
-
-Nach **erfolgreichem Abschluss** einer Aufgabe → Datei in `.completed/` erstellen:
-
-**Dateiname:** `<YYYY-MM-DD>_<kurzer-slug>.md`
-
-**Format:**
-```markdown
----
-title: Session Tabs Feature
-description: Multi-Session Tab-Switching implementiert
-date: 2026-03-17
-status: success
-effort: M
-files:
-  - src/pfad/zur/datei1.ts
-tags: [feature, ui]
----
-
-## Zusammenfassung
-Was wurde gemacht, warum so umgesetzt.
-```
-
-**Status-Werte:** `success`, `partial`, `failed`
-**Effort:** `S` (1 File), `M` (2-5 Files), `L` (5-15 Files), `XL` (15+ Files)
-
----
-
-## Regel 7: Kommunikation & Schreibstil
-
-### 7.1 Spracherkennung beachten
-
-- User sendet oft **Sprachnachrichten** (Speech-to-Text nicht immer exakt)
-- Aktiv mitdenken: "Cloud Code" = "Claude Code"
-- Bei Unklarheiten: Nachfragen statt raten
-
-### 7.2 Schreibstil
-
-**Ziel:** So erklären, dass 8.-Klässler es verstehen.
-
-**Antwort-Aufbau:**
-1. Was wurde verstanden?
-2. Was ist der Plan?
-3. Was wurde konkret gemacht?
-4. Was ist der nächste Schritt?
-
-**Sprache:** Deutsch, einfach, mit Icons, hochmotiviert.
-**Code:** Englisch.
-
-### 7.3 Echte Umlaute überall
-
-- ✅ **RICHTIG:** ä, ö, ü, ß (echte Umlaute)
-- ❌ **FALSCH:** ae, oe, ue, ss
-- **Ausnahme:** Nur Dateinamen mit ae/oe/ue (wegen Kompatibilität)
-
----
-
-## Regel 8: Validierung
-
-Bevor du anfängst eine Planung zu implementieren, validiere ob sie Sinn macht und korrekt geplant wurde.
-
----
-
-## 🔴 Regel 9: TypeScript-Fehler (KRITISCH!)
-
-### 9.1 🚨 ZERO TOLERANCE für TypeScript-Fehler
-- **NACH JEDER PHASE:** `npm run type-check` ausführen
-- **NIEMALS** TypeScript-Fehler ignorieren oder "später fixen"
+### 11.2 ZERO TOLERANCE für TypeScript-Fehler
+- **NACH JEDER PHASE:** `npx tsc --noEmit` ausführen
+- **NIEMALS** TypeScript-Fehler ignorieren oder „später fixen"
 - **SOFORT** beheben bevor zur nächsten Phase gegangen wird
 - TypeScript-Fehler sind **BLOCKER** - keine Ausnahmen!
 
-### 9.2 Häufige Fehler-Kategorien
-- **TS2307:** Cannot find module → Paket installieren
-- **TS2322:** Type mismatch → Interface/Type anpassen
-- **TS2339:** Property does not exist → Type erweitern
-- **TS18048:** Possibly undefined → Optional chaining oder Guard
-
 ---
 
-## 🔴🔴🔴 Regel 10: Expo/React Native Validierung
+## 13. Browser-Testing
 
-**Für Expo/React Native Projekte gilt zusätzlich:**
-
-→ **Lese die vollständige Doku:** `shared-docs/expo/EXPO-RULES.md`
-
-**Kurzfassung:**
-- Nach jeder Änderung: `npx tsc --noEmit`
-- Nach Import-Änderungen: `npx expo start --web` (Bundling prüfen)
-- Neue Packages: IMMER `npx expo install` statt `npm install`
-- Bei Monorepos: Validierung im RICHTIGEN Verzeichnis!
-
----
-
-## 🤖 Regel 11: LLM-Kontextmanagement (KRITISCH!)
-
-### 11.1 🚨 TOKEN-LIMIT WARNUNG
-
-**ACHTUNG:** Nach ~150.000 Tokens beginnen LLMs zu halluzinieren und Fehler zu machen!
-
-| Kontext | Limit | Aktion |
-|---------|-------|--------|
-| Planungs-Chat | 4 Planungen max | Neuen Chat öffnen |
-| Coding-Chat | ~150.000 Tokens | STOPP, neuen Chat öffnen |
-| Kontext-Verlust | ~200.000 Tokens | Halluzinationen wahrscheinlich |
-
-### 11.2 Neuer Chat Workflow
-
-**Bei Erreichen des Token-Limits:**
-1. Aktuellen Stand in MASTER-ORCHESTRATOR.md dokumentieren
-2. Migrations-Tracker in der Phase-Datei aktualisieren
-3. Zusammenfassung für nächsten Chat erstellen
-4. Neuen Chat mit relevanten Dateien starten
-
----
-
-## ✅ Quick Checklist (UNIVERSELL)
-
-**Vor Commit:**
-- `npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
-- Ungenutzter Code entfernt
-- Mobile-First
-- Edge Cases bedacht
-- Max 700 lines/file
-
-**🤖 LLM-Kontext:** Nach 150k Tokens → NEUEN CHAT öffnen!
-
----
-
-## 🧪 Regel 12: Browser-Testing
-
-→ **Lese die vollständige Doku:** `shared-docs/agents/agent-browser/SKILL.md`
-
-**Kurzfassung:**
+### 13.1 Wann Browser-Testing nutzen
+**PFLICHT bei folgenden Situationen:**
 - Nach Implementierung von UI-Features
 - Nach Änderungen an Formularen/Inputs
 - Nach Änderungen an Navigation/Routing
+- Wenn User explizit „teste das im Browser" sagt
+
+**Referenz:** `shared-docs/agents/agent-browser/SKILL.md`
+
+
+### 13.4 Bei langen Wartezeiten
+**Wenn Bundling > 60s dauert:**
+1. Status prüfen (nicht ewig warten)
+2. Cache clearen
+3. Bei Endlos-Loop: Task abbrechen, User informieren
 
 ---
 
-## 🔐 Regel 13: Test-Account System
+## 14. Test-Account System
 
-→ **Lese die vollständige Doku:** `shared-docs/testing/TEST-ACCOUNT-SYSTEM.md`
+### 14.1 Wann Test-Account nutzen
+**PFLICHT bei Browser-Testing von Auth-geschützten Features:**
+- Features die Login erfordern
 
-**Kurzfassung:**
-- Nur für Development-Testing
-- `__DEV__` Check in Mobile-App
-- NIEMALS Test-Account Features in Production!
+### 14.2 Sicherheitsregeln (NIEMALS VERLETZEN!)
+❌ **VERBOTEN:**
+- Test-Account Features in Production-Builds
+- Echte User-Credentials im Code
+- Test-Account mit Admin-Rechten
+- Test-Daten in Production-DB
+
+✅ **PFLICHT:**
+- `__DEV__` Check
+- `NODE_ENV=development` Check
+- Isoliertes Test-Profil
+- Klar markierte Test-UI-Elemente
 
 ---
 
-## 🔗 Referenzen (nur bei Bedarf lesen)
-
-### Framework-spezifisch
+## 15. Framework-spezifische Docs
 
 | Framework | Dokumentation |
 |-----------|---------------|
-| React Native/Expo | `shared-docs/expo/EXPO-RULES.md` |
+| React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
 | Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
-
-### Themen-spezifisch (nur bei Problem lesen)
-
-| Thema | Dokumentation |
-|-------|---------------|
-| useEffect vermeiden | `shared-docs/react-useEffect/not-needed.md` |
-| CSS/Design-Patterns | `shared-docs/agents/global-rule-agent.md` |
-| Frontend-Regeln | `shared-docs/frontend/FRONTEND-RULES.md` |
-| Performance Tab-Komponenten | `shared-docs/performance/tab-component-performance-antipattern.md` |
-| Responsive Dialoge | `shared-docs/design/responsive-dialog-architecture.md` |
-| Frontend-Modernisierung | `shared-docs/agents/shared-docs/modernize-frontend.md` |
+| Liquid Glass Design for Tailwind CSS | `shared-docs/design/liquid-glass-guide.md` |
+| DB Live Testing for Postgres | `shared-docs/database-testing-guide.md` |
 | Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
-| Test-Account | `shared-docs/testing/TEST-ACCOUNT-SYSTEM.md` |
-| Liquid Glass Design | `shared-docs/design/liquid-glass-guide.md` |
 
-**Regel:** Diese Docs NICHT pauschal lesen - nur wenn das spezifische Thema relevant ist.
+---
+
+## Achte auf folgende Sachen
+
+**Bei jeder Planung und Implementierung immer prüfen:**
+- ✅ **Wartbarkeit** – Ist der Code leicht zu pflegen?
+- ✅ **Modular/Komponentenbasiert** – Sind Teile unabhängig nutzbar?
+- ✅ **Helper/Service-Funktionen** – Wiederkehrende Logik ausgelagert?
+- ✅ **Trennung** – UI, Logik, Daten klar getrennt?
+- ✅ **Gute Architektur** – Passt die Struktur langfristig?
+- ✅ **Simpel und Wiederverwendbar** – Nicht überkompliziert?
+- ✅ **Performance Optimiert** – Edge Cases betrachtet?
+- ✅ **Zu diesen Kriterien immer Meinung/Feedback in Planungen schreiben**
+
+## 16. Quick Checklist
+
+- npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
+- Mobile-First
+- Max 700 lines/file
+- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
+
+**Weitere Extrem wichtige Regeln**
+- keine UNIT Tests schreiben
