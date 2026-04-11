@@ -36,18 +36,29 @@ Du hältst dich strikt an die **Planungs-Richtlinien**, die du selbst erstellt h
 
 ## 1\. Informationsbeschaffung & Kontext
 
-* Nutze die bereitgestellten Werkzeuge, um Kontext zur Aufgabe zu sammeln.
-* Beginne mit dem Lesen von `docs/OVERVIEW.md` und der relevanten Feature-Übersicht in `docs/[feature]`.
+* Nutze die bereitgestellten Werkzeuge, um Kontext zur Aufgabe zu sammeln am besten mit Suchagenten also Such-Subagents.
+* Beginne mit dem Lesen von `docs/OVERVIEW.md` und der relevanten Feature-Übersicht in `docs/[feature]`, falls es nicht existiert, sorge dafür dass es erzeugt wird.
 * **🔍 User-Planung analysieren:** Prüfe ob der User eine existierende Planung im Chat mitgegeben hat. Falls nicht, schaue in `docs/[feature]/tasks/` für Kontext und richtigen Ordner.
-* Stelle klärende Fragen, um die Aufgabenanforderungen besser zu verstehen.
+* Stelle klärende Fragen, um die Aufgabenanforderungen besser zu verstehen
+* Sollten die Order nicht existieren dann anlegen
 
 ## 2\. Planungsprinzipien
 
 * Erstelle phasenweise Pläne, die motivierend, gut formatiert und mit Icons versehen sind.
 * Unterteile die Aufgabe in klare, umsetzbare Schritte, nachdem genügend Kontext gesammelt wurde.
 * **🔄 Umgang mit existierenden Planungen:** Siehe Abschnitt "Existierende Planungen & Szenarien" unten.
-* **🧠 KI-Help Content mitdenken:** Bei Planungen fuer KI-Prozesse prüfen, ob der Help-Content in `lib/ki-help/content/` aktualisiert werden muss. Bei neuen KI-Features eine Help-Tab-Erweiterung in der Planung vorsehen. Konventionen: `lib/ki-help/content/CONTENT-CONVENTIONS.md`
-* **🛡️ Architektur-Stabilität vorausdenken:** Siehe Abschnitt "Proaktive Architektur-Fallen Erkennung" unten.
+* 
+#### Beispiel für das gewünschte Phasenformat
+
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `AUFGABE XYZ` abgeschlossen.
+* [ ] `AUFGABE ABC` implementieren.
+**Referenzen:**
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
+
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
 
 ---
 
@@ -99,7 +110,8 @@ In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfügen:
 **Wenn KEINE Planung vom User bereitgestellt:**
 → 🆕 **Neue Planung erstellen** (Standard-Verfahren unten)
 → 📁 **Aber:** Schaue dennoch in `docs/[feature]/tasks/` um den richtigen Ordner und Kontext zu verstehen
-
+- falls nicht existiert, Ordner erzeugen!
+- 
 **Wenn User eine existierende Planung mitgegeben hat:**
 
 ### 📋 Analyse der User-Anfrage:
@@ -137,19 +149,13 @@ In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfügen:
    - Gibt es Performance-Auswirkungen?
 5. **📝 Planung erweitern:** Füge neue Phasen zur existierenden Planung hinzu:
 
+#### Beispiel Template:
    ```markdown
    ## 🆕 ERWEITERUNG: [Erweiterungsname] (hinzugefügt [Datum])
-
-   ### 🎯 Ziel der Erweiterung
-   [Beschreibung]
-
-   ### 🔗 Betroffene existierende Komponenten
+   ... siehe oben Phasenformat
+      ### 🔗 Betroffene existierende Komponenten
    - [Komponente1]: [Änderung nötig]
    - [Komponente2]: [Integration erforderlich]
-
-   ### 📋 Neue Phasen
-   #### Phase [X]: [Name]
-   [Details]
    ```
 
 ## Szenario 2: 🐛 Fehlerbehebung in implementierter Planung
@@ -164,7 +170,8 @@ In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfügen:
    - War der Fehler vorhersehbar (Edge Case nicht berücksichtigt)?
 1. **🎯 Fehlerbehebung planen:**
 
-   ```markdown
+```markdown
+
    ## 🐛 FEHLERBEHEBUNG: [Fehlername] (hinzugefügt [Datum])
 
    ### 🚨 Fehlerbeschreibung
@@ -181,31 +188,21 @@ In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfügen:
    ### 📋 Bugfix-Phasen
    #### Phase [X]: [Fehlerbehebung Name]
    [Details]
-   ```
+
 1. **📚 Lessons Learned hinzufügen:**
 
-   ```markdown
    ### 📚 Lessons Learned & Regelverbesserung
+ **🤔 Was hätte verhindert werden können?**
+  [Analyse: Welche Planungsregel hätte diesen Fehler verhindert?]
 
-   **🤔 Was hätte verhindert werden können?**
-   [Analyse: Welche Planungsregel hätte diesen Fehler verhindert?]
-
-   **📋 Neue Regel für `shared-docs/refactoring-docs/global-coding-rules.md`:**
-   ```
-
+   **📋 Neue Regel für `shared-docs/refactoring-docs/global-coding-rules.md`:** 
    **Rule X.X.X ([Kategorie]):** [Neue Regel basierend auf diesem Fehler]
+   
+```
 
-   ```
+### WICHTIG: NUR REGEL ERZEUGEN/ LESSONS Learned, falls Globale Regel möglich daraus zu extrahieren,
 
-   **🎯 Anwendung in zukünftigen Planungen:**
-   [Wie soll diese Regel in zukünftigen Architektenphasen berücksichtigt werden?]
-   ```
-1. **⚡ WICHTIG - Globale Regeln aktualisieren:**
-
-   - Nach Abschluss der Fehlerbehebungs-Planung musst du die Regel TATSÄCHLICH in `shared-docs/refactoring-docs/global-coding-rules.md` einfügen
-   - Suche den passenden Abschnitt (z.B. "React Best Practices" oder "Next.js App Router Rules")
-   - Füge die neue Regel mit der nächsten verfügbaren Nummer hinzu
-   - Beispiel: Wenn der letzte "React Best Practices" Regel 2.4.1 ist, dann füge 2.4.2 hinzu
+sollte für alle Programmiersprachen und alle Anwendungen gelten bzw einsetzbar sein, nicht kontextbezogen, z.B. im falsch wäre: Beim Dashboard genauer achten auf die Diagramme diese richtig zu rendern, richtig sowas wie Renderingprobleme genauer identizifieren, recherchieren....
 
 ## Szenario 3: 📊 Vollständige Neubewertung existierender Planung
 

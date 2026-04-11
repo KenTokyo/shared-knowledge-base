@@ -1,20 +1,62 @@
-**Wenn der User Konsolenausgaben schreibt bzw möchte**, 
-- dann bitte hochmoderne superschöne und motivierende farbige konsolenausgaben!!
-- Sie sollen menschenlesbar sein mit allgemeiner Sprache welche Methode was macht, CAPS LOCK für bestimmte Sachen, eckige Klammer, kursiv, fett
-quasi wie eine Kunst, so lesbar wie möglich und so schön wie möglich, sodass ich sie dir auch geben kann, auch ob es server oder client ist, welche Methode, welche Klasse.. Kompakt, keine Endlos Konsolenausgaben... So spielerisch und modern! wie so ein Retro Game
-- Sie sollen dir auch helfen Fehler und Probleme zu erkennen, auch Performance Issues, also wenn was laggt, dann kannst du einen Timer einbauen, für bestimmte Cases, um zu prüfen, ob es laggs gibt, endlosschleifen, also wie lange prozesse dauern
 
-**ACHTE AUF FOLGENDE SACHEN:**
-Wartbarkeit, Modular/Komponentenbasiert, Helper/Service Funktion, Trennung, Gute Architektur, Simpel und Wiederverwendbar und Performance Optimiert bzw. Edge Cases betrachten und
-Zu diesen genannten Kriterien immer in Planungen Meinung kurz schreiben bzw Feedback abgeben ob die erzeugten Planungen den kritieren entsprechen
+# Wichtigste Coding Regeln
 
-## AUCH EXTREM WICHTIG:
-Wichtig ist bei Phasen in Planungen, dass du die Phasen bitte mit To-dos markierst. Also beispielsweise diese auch bitte updaten oder erzeugen, die To-dos. Also innerhalb von Phasen To-dos anlegst und dann schreibst, was genau gemacht worden ist. Beispiel siehe unten.
+## Konsolenausgaben
 
-### ✅ Phase NUMMER — Kurzbeschreibung z.B. Architektur, Modus-Trennung, Save-Basis
-**Ziel:** Hier schreiben worum es geht
-* [x] `AUFGABE XYZ` abgeschlossen.
+**Wenn der User Konsolenausgaben möchte oder es zu Fehlern kommt, dann diese einbauen im folgenden Stil:**
+
+* Bitte **hochmoderne, superschöne, motivierende und farbige Konsolenausgaben** verwenden.
+* Die Ausgaben sollen **menschenlesbar** sein und **allgemeine Sprache** nutzen, damit sofort klar ist, **welche Methode was macht**.
+* Bitte mit **CAPS LOCK** für wichtige Punkte arbeiten sowie mit **eckigen Klammern**, ***kursiv*** und **fett**.
+* Das Ganze soll **wie eine kleine Kunstform** wirken: **so lesbar, schön und klar wie möglich**.
+* Die Konsolenausgaben sollen so aufgebaut sein, dass ich sie dir direkt geben kann — inklusive Infos wie:
+  * **Server oder Client**, **welche Methode**, **welche Klasse**
+* Wichtig: **kompakt bleiben**, also **keine endlosen Konsolenausgaben**.
+* Der Stil soll **spielerisch, modern und ein bisschen wie ein Retro-Game** sein.
+
+Die Ausgaben sollen außerdem helfen, **Fehler**, **Probleme** und **Performance-Issues** schneller zu erkennen.
+Dazu kannst du z. B. **Timer** für bestimmte Fälle einbauen, um zu prüfen:
+
+* ob es **Laggs** gibt,
+* ob **Endlosschleifen** entstehen,
+* wie lange bestimmte **Prozesse dauern**.
+
+## Architektur, Code-Qualität und Planung
+**Achte immer auf folgende Punkte:**
+
+* **Wartbarkeit**
+* **Modularität / komponentenbasierte Struktur**
+* **Helper- und Service-Funktionen**
+* **saubere Trennung von Zuständigkeiten**
+* **gute Architektur**
+* **simpel und wiederverwendbar**
+* **performance-optimiert**
+* **Edge Cases mitdenken**
+
+Zu den genannten Kriterien bitte **immer kurz Meinung oder Feedback** geben, ob die erzeugten Planungen diesen Punkten entsprechen.
+
+## Phasen in Planungen
+
+Wenn du mit **Phasen in Planungen** arbeitest, dann bitte die Phasen **immer mit To-dos markieren**.
+
+Das heißt:
+
+* innerhalb der Phase konkrete **To-dos anlegen**
+* dazuschreiben, **was genau bereits gemacht wurde**
+* offene Punkte klar als **noch zu erledigen** markieren
+
+## Beispiel für das gewünschte Phasenformat
+
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
 * [ ] `AUFGABE ABC` implementieren.
 **Referenzen:**
-`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben, jeweils getrennt pro Zeile`
-Auch die Hauptkomponentenpfade angeben zu den referenzen, max 3 zu jeder Phase, da wo am meisten geändert wurde
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
+
+Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile
+Kriterien eingehalten: unter 700 Zeilen, architektur, Edge-Cases beachtet
+So kurz halt
+
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
