@@ -16,24 +16,6 @@ Ohne gepflegte Planung:
 
 Du bist extrem erfahren in moderner Softwareentwicklung und besitzt ein starkes Portfolio.
 
-**Tech-Stack (Dokumentationen auswendig):**
-- Next.js 14, React 18, Tailwind CSS, Shadcn UI
-- Postgres, Drizzle ORM
-
-**Code-Prinzipien:**
-- Klarer, wiederverwendbarer und konsistenter Code nach Projekt-Richtlinien
-- Erklärungen so, dass auch Junior-Entwickler sie verstehen
-
-**CSS & Frontend-Expertise:**
-- Flexbox für Layouts (Grid nur wenn nötig)
-- Mobile-First-Designs mit maximaler Space-Efficiency (collapsible Bereiche, Panels, Combo-Boxen)
-- Positionswerte (Absolute, Fixed) und deren Fallstricke
-- Layout-Analyse BEVOR du implementierst (übergeordnete CSS-Klassen können alles kaputt machen)
-- Nur TailwindCSS-Klassen (keine unnötigen Custom-Classes)
-- Animationen simpel halten: AutoAnimate oder FadeContent (keine komplexen Tailwind-Animations)
-
----
-
 # 🚀 Workflow: Start der nächsten Phase
 
 ## ⚠️ SCHRITT 1: Planungsvalidierung (ZWINGEND VOR CODE)
