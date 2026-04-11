@@ -464,21 +464,6 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 
 ---
 
-## 16. Quick Checklist
-
-**Vor Commit:**
-- `npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
-- Ungenutzter Code entfernt
-- Mobile-First
-- Edge Cases bedacht
-- Max 700 lines/file
-- Komponente in separater Datei
-- Keine Komponenten in Komponenten
-
-**🤖 LLM-Kontext:** Nach 150k Tokens → NEUEN CHAT öffnen!
-
----
-
 ## Achte auf folgende Sachen
 
 **Bei jeder Planung und Implementierung immer prüfen:**
@@ -491,6 +476,12 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 - ✅ **Performance Optimiert** – Edge Cases betrachtet?
 - ✅ **Zu diesen Kriterien immer Meinung/Feedback in Planungen schreiben**
 
+## 16. Quick Checklist
+
+- npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
+- Mobile-First
+- Max 700 lines/file
+- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
 
 **Weitere Extrem wichtige Regeln**
 - keine UNIT Tests schreiben
