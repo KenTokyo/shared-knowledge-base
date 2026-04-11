@@ -287,7 +287,64 @@ Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen
 - 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
 - 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
----
+## Komponentenstruktur (Sektionsbasiert)
+
+Basierend auf einer bestehenden Applikation — bewährtes Pattern für skalierbare UIs.
+
+### Grundprinzip
+
+- **Sektionen gruppieren** verwandte Komponenten in `(sektionsName)/`-Ordner
+- **Ordnerstruktur = UI-Hierarchie** — Verschachtelung spiegelt visuelle Struktur
+- **Frontend-to-Code Navigation**: UI-Element-Text = Dateiname
+
+### Ordner-Konvention bsp.
+```
+ansicht/
+├── zeiger/                      # Feature-Bereich
+│   ├── (hauptSektion)/          # Sektion mit Klammern
+│   │   ├── (unterSektion)/      # Verschachtelte Untersektion
+│   │   │   ├── AktionButton.tsx # User-facing = Deutsch
+│   │   │   └── KonfigPanel.tsx
+│   │   ├── HauptSection.tsx     # Orchestrator ohne Klammern
+│   │   └── DatenCard.tsx
+│   └── ZeigerDreieck.tsx        # Hauptkomponente
+├── ui/                          # Reusable UI-Elemente
+│   ├── SprechBlase.tsx
+│   └── VorschlagChips.tsx
+└── layout/                      # Container/Wrapper
+    └── ZeigerHuelle.tsx
+```
+
+### Deutsch/Englisch-Aufteilung
+```
+🇩🇪 DEUTSCH (User-facing Komponenten):
+- Button.tsx     → SpeichernButton.tsx, AbbrechenButton.tsx
+- Panel.tsx      → EinstellungenPanel.tsx, KonfigPanel.tsx
+- Dialog.tsx     → BestätigenDialog.tsx, HilfeDialog.tsx
+
+🇺🇸 ENGLISCH (Technische Container):
+- Section.tsx    → ZeigerSection.tsx, SprachSection.tsx
+- Card.tsx       → ZeigerCard.tsx, StatusCard.tsx
+- List.tsx       → VorschlagList.tsx
+- Layout.tsx     → ZeigerLayout.tsx
+```
+**Warum?** User klickt "Speichern" → Code heißt `SpeichernButton.tsx`
+### Beispiel: Sprechblasen-Sektion
+```
+ansicht/
+└── ui/
+    └── (sprechblasenSektion)/
+        ├── SprechblasenSection.tsx    ← Orchestrator
+        ├── (inhalt)/
+        │   ├── TextAnzeige.tsx
+        │   └── VorschlagChips.tsx
+        └── (steuerung)/
+            ├── SchließenButton.tsx
+            └── PositionPanel.tsx
+```
+### Richtwerte
+- **Max 7 Verschachtelungsebenen** (falls möglich)
+- **Eine Hauptkomponente pro Sektion** ohne Klammern (Orchestrator)
 
 ## 8. React Best Practices
 
