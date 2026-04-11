@@ -653,27 +653,14 @@ Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären
 
 Alle Dialoge, Sheets, Drawers und modale Overlays MÜSSEN eine solide Hintergrundfarbe mit Hex-Code bekommen.
 
-VERBOTEN:
-
-bg-black/40, bg-black/50, bg-white/10 oder jede andere Tailwind-Opacity-Notation als Haupthintergrund
-
-Halbtransparente Hintergründe, durch die der Content dahinter durchscheint
+VERBOTEN sind sowas wie bg-black/40, bg-black/50, bg-white/10 oder jede andere Tailwind-Opacity-Notation als Haupthintergrund
+und Halbtransparente Hintergründe, durch die der Content dahinter durchscheint
 
 PFLICHT:
-
 Solide Hex-Farben verwenden: z.B. !bg-[#0c0f1a]/95 oder !bg-[#0c0f1a]
-
 Mindestens 90% Opazität, damit der Dialog-Inhalt klar lesbar bleibt
-
 Das !important (!bg-...) nutzen, um Shadcn/Radix-Defaults zu überschreiben
 
-Beispiel:
-
-// ❌ FALSCH - halbtransparenter Hintergrund (Standard von DialogContent)
-&lt;DialogContent className="bg-black/40"&gt;
-
-// ✅ RICHTIG - solide Hintergrundfarbe mit Hex
-&lt;DialogContent className="!bg-[#0c0f1a]/95"&gt;
 ### 10.9 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
 
 Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontextmenüs MUSS geprüft werden:
@@ -685,28 +672,6 @@ Wird das Overlay per Portal gerendert (z. B. Radix Portal) statt innerhalb eines
 Ist der z-index relativ zu bestehenden Overlays (Dialog, Sheet, Drawer, Tooltip) korrekt priorisiert?
 
 Wenn Inhalte abgeschnitten sind, kein Workaround mit nur höherem z-index. Erst Ursache im Layout/Portal/Overflow beheben.
-
-### 10.10 NIEMALS User-Input parsen für Intent-Routing (KRITISCH!)
-
-GOLDENE REGEL: User-Freitext geht IMMER an die KI. Es gibt KEINE Vorfilterung.
-
-VERBOTEN:
-
-Pattern-Matching / Regex auf User-Input um Intents zu erkennen
-
-Clarification-Messages aus User-Input-Analyse erzeugen
-
-Parameter-Extraktion aus User-Input vor KI-Antwort
-
-Jede Form von routeIntent(userInput) für Freitext
-
-ERLAUBT:
-
-Preset-Button-Klicks direkt routen (routePreset())
-
-KI-Antworten parsen (parseAssistantCommands(aiResponse))
-
-KI-generierte Commands validieren (validateAssistantCommandParseResult())
 
 ### 10.11 Kritische Design-Prüfung
 
@@ -730,29 +695,6 @@ SOFORT beheben bevor zur nächsten Phase gegangen wird
 
 TypeScript-Fehler sind BLOCKER - keine Ausnahmen!
 
-### 11.3 Häufige Fehler-Kategorien
-
-TS2307: Cannot find module → Paket installieren
-
-TS2322: Type mismatch → Interface/Type anpassen
-
-TS2339: Property does not exist → Type erweitern
-
-TS18048: Possibly undefined → Optional chaining oder Guard
-
-### 11.4 Bei Fehler: STOPP-Protokoll
-
-STOPP - Keine weiteren Änderungen
-
-ANALYSIERE - Root Cause verstehen (nicht raten!)
-
-RECHERCHIERE - Docs/Issues wenn unklar
-
-FIXE - Mit Verständnis der Ursache
-
-VALIDIERE - Alle Checks erneut
-
-ERST DANN - Weitermachen
 
 ## 12. LLM-Kontextmanagement
 
