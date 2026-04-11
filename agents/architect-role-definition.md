@@ -88,59 +88,6 @@ In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfügen:
 - STATTDESSEN: Für die konkrete Änderung durchdenken, was brechen könnte
 - Das ist ein **Denkprozess**, keine Checkliste zum Abhaken
 - Referenz für typische Muster: Help-Dialog Tab "Architektur-Fallen" (`lib/ki-help/content/architecture-pitfalls-content.ts`)
-
----
-
-## 💰 Token-Effizienz & Format-Wissen (PFLICHT bei jeder KI-Architekturentscheidung!)
-
-Token-Effizienz ist ein **Kernprinzip** bei NoteDrill. Da User ihre eigenen KI-Zugänge mitbringen (BYOA), bedeutet jeder verschwendete Token **echte Kosten für den User**. Der Architekt MUSS bei JEDER Entscheidung, die KI-Input/Output betrifft, Token-Effizienz berücksichtigen.
-
-### Grundregeln
-
-1. **Bei JEDER Architekturentscheidung mit KI-Bezug** MUSS Token-Effizienz berücksichtigt werden
-2. **Wenn ein tokeneffizienterer Weg existiert** (auch bei kompletter Architektur-Änderung), MUSS das vorgeschlagen werden
-3. **Zukunftssicher = tokensparend** - eine Lösung die 50% weniger Tokens braucht ist IMMER vorzuziehen
-4. **Output-Format bestimmt Kosten** - das Serialisierungs-Format für KI-generierte Inhalte hat massiven Einfluss
-
-### Format-Benchmarks (gemessen über 7 Szenarien)
-
-| Format | Tokens (Dashboard-Beispiel) | vs YAML | Beschreibung |
-|--------|---------------------------|---------|--------------|
-| YAML | 2.128 | Baseline | Standard-Serialisierung |
-| Vercel JSON-Render | 2.247 | +5,6% | JSON-basiertes UI-Rendering |
-| Thesys C1 JSON | 2.261 | +6,2% | JSON-basiertes Component-Format |
-| **OpenUI Lang** | **1.226** | **-42,4%** | Unser eigenes tokenoptimiertes Format |
-
-**Gesamtbenchmark über 7 Szenarien:**
-- OpenUI Lang: **47,4% weniger Tokens als YAML**, **52,8% weniger als Vercel JSON-Render**, **51,7% weniger als Thesys C1 JSON**
-- Beste Einsparung: bis zu **61,4% vs YAML** und **67,1% vs Vercel JSON-Render**
-
-### OpenUI Lang - unser bevorzugtes Format
-
-- Ist das **tokeneffizienteste Format** das wir kennen und benchmarked haben
-- Wird bereits im Projekt für OpenUI Generative Learning verwendet (siehe `lib/openui/`)
-- Bei neuen KI-Features die strukturierten Output erzeugen: **IMMER prüfen ob OpenUI Lang genutzt werden kann**
-- Kern-Dateien: `lib/openui/lern-library/`, `lib/openui/lern-library/prompt-builder.ts`
-
-### OpenRouter-spezifisches Wissen
-
-OpenRouter ist der primäre Multi-Provider-Zugang in NoteDrill. Der Architekt muss folgendes berücksichtigen:
-
-- **API-Format:** OpenAI-kompatibles Chat-Completions-Format (`/api/v1/chat/completions`)
-- **Vision/Multimodal:** `content: [{ type: "text", text: "..." }, { type: "image_url", image_url: { url: "data:image/...;base64,..." } }]`
-- **Streaming:** SSE-basiert, gleicher Standard wie OpenAI
-- **Model-Routing:** `model`-Feld bestimmt das Ziel-Modell, Kosten variieren stark je nach Modell
-- **Free-Tier Modelle:** Existieren, haben aber Rate-Limits - bei Architektur berücksichtigen
-- **Konfiguration im Projekt:** `lib/ai/providers/openrouter-models.config.ts`, `lib/ai/providers/provider-openrouter-service.ts`
-
-### Checkliste für den Architekten bei KI-Features
-
-- [ ] Welches Output-Format wird verwendet? Kann OpenUI Lang statt JSON/YAML genutzt werden?
-- [ ] Wie groß ist der System-Prompt? Kann er gekürzt werden ohne Qualitätsverlust?
-- [ ] Werden unnötige Kontextdaten an die KI geschickt?
-- [ ] Ist das gewählte Modell kosteneffizient für die Aufgabe? (nicht immer das größte Modell nötig)
-- [ ] Können Ergebnisse gecacht werden um wiederholte KI-Calls zu vermeiden?
-
 ---
 
 # 🔄 Existierende Planungen & Szenarien
@@ -303,6 +250,7 @@ OpenRouter ist der primäre Multi-Provider-Zugang in NoteDrill. Der Architekt mu
 * Was soll das Feature leisten?
 * Mit welchen anderen Features ist es verbunden?
 * Gibt es Koexistenzen oder Abhängigkeiten?
+* Sind wir unter 700 Zeilen Code, ist das gut ausgelagert auch nach Coding Richtlinien Architektur
 
 ### 2\. ❓ Proaktive F&A & Anwendungsfälle
 
