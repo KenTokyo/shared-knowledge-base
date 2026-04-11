@@ -2,38 +2,6 @@
 
 **Zweck:** Universelle Regeln für konsistente, performante und wartbare Code-Entwicklung.
 
----
-
-## 📋 Inhaltsverzeichnis
-
-1. [Kontext & Kommunikation](#1-kontext--kommunikation)
-2. [Schreibstil & Sprache](#2-schreibstil--sprache)
-3. [Arbeitsweise & Motivation](#3-arbeitsweise--motivation)
-4. [Workflow & Dokumentation](#4-workflow--dokumentation)
-5. [Subagents & Erkundung](#5-subagents--erkundung)
-6. [Planung & Analyse](#6-planung--analyse)
-7. [Architektur & Dateistruktur](#7-architektur--dateistruktur)
-8. [React Best Practices](#8-react-best-practices)
-9. [Performance](#9-performance)
-10. [Kritische Anti-Patterns](#10-kritische-anti-patterns)
-11. [TypeScript & Validierung](#11-typescript--validierung)
-12. [LLM-Kontextmanagement](#12-llm-kontextmanagement)
-13. [Browser-Testing](#13-browser-testing)
-14. [Test-Account System](#14-test-account-system)
-15. [Framework-spezifische Docs](#15-framework-spezifische-docs)
-16. [Quick Checklist](#16-quick-checklist)
-
----
-
-## Projekt-Override: Test-Policy
-
-Diese Regel überschreibt in diesem Projekt alle nachgelagerten Test-Pflichten:
-- Automatisierte Tests (Unit/E2E/Integration) sind **nicht erforderlich**.
-- Fokus ist **Praxis-Validierung im laufenden System** statt Test-Suiten.
-- Tests können bei Bedarf ergänzend genutzt werden, sind aber kein Pflicht-Gate.
-
----
-
 ## 1. Kontext & Kommunikation
 
 ### 1.1 Eingabe-Verständnis (Speech-to-Text)
@@ -359,14 +327,36 @@ Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Al
 
 **Beispiel:**
 ```markdown
-### ✅ Phase NUMMER — Kurzbeschreibung z.B. Architektur, Modus-Trennung, Save-Basis
-**Ziel:** Hier schreiben worum es geht
-* [x] `AUFGABE XYZ` abgeschlossen.
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
 * [ ] `AUFGABE ABC` implementieren.
 **Referenzen:**
-`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben, jeweils getrennt pro Zeile`
-Auch die Hauptkomponentenpfade angeben zu den Referenzen, max 3 zu jeder Phase, da wo am meisten geändert wurde
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
 ```
+
+### Kommentar Sektion unter der Phasenplanung
+Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
+und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
+Kriterien eingehalten z.B. 
+
+```markdown
+## Kommentare
+### Phase 1
+**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
+**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
+1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
+Beschreibung hierzu notieren, falls notwendig
+Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
+2. 🟠 **Hoch:**...
+
+### Phase 2....
+```
+
+So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
+
 
 ---
 
@@ -658,3 +648,7 @@ npx kill-port 5173
 - ✅ **Simpel und Wiederverwendbar** – Nicht überkompliziert?
 - ✅ **Performance Optimiert** – Edge Cases betrachtet?
 - ✅ **Zu diesen Kriterien immer Meinung/Feedback in Planungen schreiben**
+
+
+**Weitere Extrem wichtige Regeln**
+- keine UNIT Tests schreiben
