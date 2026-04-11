@@ -15,6 +15,9 @@ Für **absolute Anfänger**, die Git verstehen und professionell damit arbeiten 
 | 04 | [Branch Workflow](04-branch-workflow.md) | Wie man professionell mit Branches arbeitet |
 | 05 | [Zusammenarbeit](05-zusammenarbeit.md) | Teamwork, Pull Requests, Code Review |
 | 06 | [Tools & Oberflächen](06-tools-und-oberflaechen.md) | GitHub, VS Code, Desktop-Apps, Terminal |
+| 07 | [Fehler & Verlauf](07-fehler-und-verlauf-notedrill.md) | Dein konkreter Fall mit TanStack |
+| 08 | [Teamgrößen & HEAD](08-teamgroessen-und-head.md) | Teams skalieren, HEAD-Befehle, Branch-Namen |
+| 09 | [Befehl-Anatomie](09-befehl-anatomie.md) | Warum Befehle so aufgebaut sind (origin, -u, force) |
 
 ---
 
@@ -92,6 +95,10 @@ Du kannst aus diesem Tutorial Quizfragen generieren:
 6. **Wie erstellt man einen neuen Branch?**
 7. **Was ist ein Pull Request?**
 8. **Wie löst man einen Merge Conflict?**
+9. **Was bedeutet HEAD~3?**
+10. **Unterschied zwischen `git reset` und `git revert`?**
+11. **Wie viele Reviews braucht ein Team mit 8 Leuten?**
+12. **Was ist der Unterschied zwischen main und develop?**
 
 ---
 
