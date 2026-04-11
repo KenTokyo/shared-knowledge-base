@@ -117,7 +117,6 @@ Proaktiv: Extrem-Fälle, falsches User-Verhalten, Performance, Concurrent Access
 ### 2.3 Component Naming Convention
 
 **Component Naming System:**
-
 ```
 ComponentName[Type].tsx where [Type] is:
 - Section.tsx    → Orchestrates UI area (ReviewSection.tsx)
@@ -127,9 +126,7 @@ ComponentName[Type].tsx where [Type] is:
 - Card.tsx       → Reusable content block (ProductCard.tsx)
 - Item.tsx       → List/grid element (MenuItem.tsx)
 ```
-
 **Deutsch/Englisch Naming Convention:**
-
 ```
 🇩🇪 DEUTSCH (User-facing Komponenten):
 - Button.tsx     → SpeichernButton.tsx, LöschenButton.tsx
@@ -142,7 +139,6 @@ ComponentName[Type].tsx where [Type] is:
 - Item.tsx       → MenuItem.tsx, ListItem.tsx
 - Layout.tsx     → MainLayout.tsx, PageLayout.tsx
 ```
-
 **Warum diese Aufteilung?**
 - **User-facing = Deutsch:** User klickt "Speichern" → Code heißt `SpeichernButton.tsx`
 - **Technical = Englisch:** Section names sind für Entwickler, nicht für User
@@ -154,7 +150,6 @@ ComponentName[Type].tsx where [Type] is:
 - **Fast Navigation:** Click UI element → Know exact file path in <5 seconds
 
 **Section Structure Example:**
-
 ```
 feature/[param]/
 ├── (mainSection)/
