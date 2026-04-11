@@ -1,5 +1,13 @@
-
 # Wichtigste Coding Regeln
+
+---
+version: 2.0
+updated: 2026-04-11
+hinweis: VERALTET - Siehe stattdessen shared-docs/wichtig/KRITISCHE-REGELN.md
+---
+
+> **WICHTIG:** Diese Datei wird durch `shared-docs/wichtig/KRITISCHE-REGELN.md` ersetzt.
+> Die folgenden Regeln bleiben als Ergaenzung fuer Konsolenausgaben und Phasen-Format.
 
 ## Konsolenausgaben
 
