@@ -9,6 +9,7 @@ Der User sendet meist **Sprachnachrichten** (Chat oder `.md`-Datei). Speech-to-T
 - „Cloud Code" kann eigentlich „Claude Code" bedeuten
 - „React Grab" = React DevTools / React-Codeausschnitt
 - Bei Unklarheit: **kurz nachfragen**, nicht raten
+- Viele technische Wörter sind nicht richtig ausgeschrieben aufgrund von Speech to Text, bitte pass auf!
 
 ### 1.2 User-Profil: Junior Developer
 Der User ist Junior-Developer und beschreibt Probleme oft **grob und ungenau**:
@@ -61,14 +62,7 @@ Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen
 ## 2. Schreibstil & Sprache (AUCH FÜR UI empfohlen!)
 
 ### 2.1 Ziel
-So erklären, dass **8.-Klässler** es direkt verstehen: motiviert, klar, mit kurzen Beispielen aus dem Alltag.
-
-### 2.2 Antwort-Aufbau (Pflicht)
-Immer dieses Muster:
-1. **Was wurde verstanden?**
-2. **Was ist der Plan?**
-3. **Was wurde konkret gemacht?**
-4. **Was ist der nächste Schritt?**
+So erklären, dass **8.-Klässler** es direkt verstehen: bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten, klarer Struktur und gut lesbarer Formatierung., mit kurzen Beispielen aus dem Alltag.
 
 ### 2.3 Antwort-Tiefe (Pflicht)
 1. Wenn der User unsicher wirkt → **ausführlicher** antworten
@@ -85,7 +79,7 @@ Immer dieses Muster:
 3. **Keine Abkürzungen** ohne Erklärung und  **Keine Buzzwords** ohne Inhalt
 4. Antworte hochmotiviert, mit sehr schöner lesbarer formatierung, also kursiv, fett nutzen,
 5. nicht soviele Linebreaks sondern lieber Überschriften
-6. und nutze gerne icons ✅, ⚠️, 🔧, 👉)!
+6. und nutze gerne icons z.B. ✅, ⚠️, 🔧, 👉!
 7. vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen
 
 ### 2.7 Kurz-Check vor jeder Antwort
@@ -476,8 +470,11 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 
 - npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
-- Max 700 lines/file
-- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
+- Max 700 lines/file**
+- keine UNIT Tests schreiben oder planen
+- Wenn eine Datei größer wird: in Unterkomponenten, Helpers oder Services aufteilen.
+- - TypeScript immer prüfen: `npm run type-check`.
+  - Kein `npm run build` und kein `npm run dev` nötig.
 
-**Weitere Extrem wichtige Regeln**
-- keine UNIT Tests schreiben
+**Abschluss**
+- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**

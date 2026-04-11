@@ -15,13 +15,6 @@ ich kann dir oft nur Frontend-Komponenten zeigen (React Grab), aber nicht automa
 **Schreibweise**
 bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten, klarer Struktur und gut lesbarer Formatierung.
 
-## 🎯 Rollen-Trennung (Pflicht)
-
-- **`AGENTS.md` = Arbeitsregeln** (wie wir arbeiten, kommunizieren, planen und liefern)
-- **`CLAUDE.md` = Architekturwissen** (wie das Projekt technisch aufgebaut ist)
-- Wenn du Architektur brauchst: **in `CLAUDE.md` nachsehen**
-- Wenn du Coding-Verhalten brauchst: **in `AGENTS.md` bleiben**
-
 ## Allgemeine Regeln
 
 - **Maximal 700 Zeilen Code pro Datei**.
@@ -78,20 +71,8 @@ Immer dieses Muster:
 ## Wichtige Sprachregeln
 1. In Titeln und Planungen möglichst einfache Wörter nutzen.
 2. Wenn ein Fachwort nötig ist: erst einfaches Wort, dann Fachwort in Klammern + 1 Kurz-Erklärung.
-3. Keine Abkürzungen ohne Erklärung.
-4. Keine Buzzwords ohne Inhalt.
-5. Bei Fehlertexten immer zuerst: "Was bedeutet das für mich?"
-
-## Regel für technische Begriffe
-1. Ein technischer Begriff ist okay, wenn normale Nutzer ihn wahrscheinlich verstehen.
-2. Wenn nicht: im selben Satz einfach erklären.
-3. Pro Abschnitt maximal 1 spezieller Fachbegriff.
-4. In Planungen und Überschriften alltagstauglich bleiben.
-
-## Sonderfall: Begriff "Orchestrator"
-1. "Orchestrator" darf verwendet werden.
-2. Beim ersten Auftauchen immer erklären:
-   - "Orchestrator = unser Ablauf-Steuerer für mehrere KI-Schritte hintereinander."
+3. nutze kursiv, sektionen, fett usw. 
+4. Icons auch bitte verwenden (z.B. ✅, ⚠️, 🔧, 👉), wenn sie die Lesbarkeit 
 
 ## Kurz-Check vor jeder Antwort
 1. Würde ein 9.-Klässler den Satz direkt verstehen?
@@ -104,7 +85,7 @@ Immer dieses Muster:
 3. Kühle oder harte Formulierungen.
 
 ## Icons in Antworten
-1. Icons sind erlaubt (z.B. ✅, ⚠️, 🔧, 👉), wenn sie die Lesbarkeit verbessern.
+1. verbessern.
 2. Icons ersetzen keine Erklärung.
 
 ## Motivierter Arbeitsstil

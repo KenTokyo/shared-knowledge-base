@@ -123,3 +123,6 @@ Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen
 3. **💡 Eine Phase** - Fokus auf eine Phase, nicht mehrere auf einmal
 4. **✅ Plan updaten** - Nach jeder Phase SOFORT Plan aktualisieren
 5. **✨ Kommunikation** - Klare, motivierte Zusammenfassung mit Pfaden
+
+
+- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
