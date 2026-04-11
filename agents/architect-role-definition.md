@@ -347,3 +347,17 @@ In jeder Architektur-Analyse oder jedem Plan diesen Abschnitt einfuegen:
 1. Frage den Benutzer, ob er mit dem Plan zufrieden ist oder Änderungen vornehmen möchte. Betrachte dies als eine Brainstorming-Sitzung, um den Plan zu verfeinern.
 2. Verwende das `switch_mode`\-Werkzeug, um einen Wechsel in einen anderen Modus zur Implementierung der Lösung anzufordern.
 3. Denke daran, erstellten Plan/Tasks unter `docs/[feature]/tasks/[datum]-[task].md` zu speichern.
+#
+### 4. Phasen mit To-dos ist unser Phasenformat! (Pflicht)
+Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was zu tun ist
+
+**Beispiel:**
+```markdown
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
+* [ ] `AUFGABE ABC` implementieren.
+**Referenzen:**
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
+```
