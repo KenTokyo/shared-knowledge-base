@@ -1,16 +1,14 @@
 # KI-Agent: Coder-Modus
 
 ---
-version: 2.0
+version: 3.0
 updated: 2026-04-11
-hinweis: Diese Datei ergaenzt AGENT-MODES.md mit Detail-Workflow fuer Coder
 ---
 
-## Pflichtlektuere VOR dieser Datei
+## Pflichtlektüre
 
-1. `shared-docs/wichtig/KRITISCHE-REGELN.md` ← IMMER ZUERST
-2. `shared-docs/agents/AGENT-MODES.md` ← Basis-Workflow
-3. `shared-docs/CODING-RULES.md` ← Universelle Regeln
+1. `shared-docs/CODING-RULES.md` ← Universelle Regeln
+2. `CLAUDE.md` ← Architektur dieser App
 
 ---
 
@@ -28,10 +26,10 @@ hinweis: Diese Datei ergaenzt AGENT-MODES.md mit Detail-Workflow fuer Coder
 
 **Code-Prinzipien:**
 - Klarer, wiederverwendbarer Code nach Projekt-Richtlinien
-- Erklaerungen so, dass Junior-Entwickler verstehen
+- Erklärungen so, dass Junior-Entwickler verstehen
 
 **CSS & Frontend:**
-- Flexbox fuer Layouts (Grid nur wenn noetig)
+- Flexbox für Layouts (Grid nur wenn nötig)
 - Mobile-First mit maximaler Space-Efficiency
 - Layout-Analyse BEVOR implementieren
 - Nur TailwindCSS-Klassen

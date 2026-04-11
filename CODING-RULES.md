@@ -4,7 +4,7 @@
 
 ## Projekt-Override: Test-Policy (Notedrill)
 
-Diese Regel ueberschreibt in diesem Projekt alle nachgelagerten Test-Pflichten:
+Diese Regel überschreibt in diesem Projekt alle nachgelagerten Test-Pflichten:
 - Automatisierte Tests (Unit/E2E/Integration) sind **nicht erforderlich**.
 - Fokus ist **Praxis-Validierung im laufenden System** statt Test-Suiten.
 - Tests koennen bei Bedarf ergaenzend genutzt werden, sind aber kein Pflicht-Gate.
@@ -255,7 +255,78 @@ Nur die KI kann den Kontext korrekt interpretieren.
 
 ## Regel 6: Documentation System
 
-**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
+### 6.1 Struktur
+
+```
+docs/
+├── OVERVIEW.md                           ← Master-Navigation (nur bei großen Änderungen)
+├── FEATURE_MATRIX.md                     ← Use-Case → Feature Mapping
+└── [feature]/
+    ├── [feature]-overview.md             ← Feature-Übersicht
+    ├── features/[sub-feature].md         ← Sub-Feature Details
+    └── tasks/[datum]-[task].md           ← Task-History
+```
+
+### 6.2 Wann dokumentieren
+
+- **Feature-Overview:** Nur bei großen Änderungen oder neuen Features
+- **Task-History:** Nach jeder abgeschlossenen Phase
+- **Master-Navigation:** Nur bei sehr großen Änderungen
+
+### 6.3 Completed-Task Dokumentation (.completed/)
+
+Nach **erfolgreichem Abschluss** einer Aufgabe → Datei in `.completed/` erstellen:
+
+**Dateiname:** `<YYYY-MM-DD>_<kurzer-slug>.md`
+
+**Format:**
+```markdown
+---
+title: Session Tabs Feature
+description: Multi-Session Tab-Switching implementiert
+date: 2026-03-17
+status: success
+effort: M
+files:
+  - src/pfad/zur/datei1.ts
+tags: [feature, ui]
+---
+
+## Zusammenfassung
+Was wurde gemacht, warum so umgesetzt.
+```
+
+**Status-Werte:** `success`, `partial`, `failed`
+**Effort:** `S` (1 File), `M` (2-5 Files), `L` (5-15 Files), `XL` (15+ Files)
+
+---
+
+## Regel 6b: Kommunikation & Schreibstil
+
+### 6b.1 Spracherkennung beachten
+
+- User sendet oft **Sprachnachrichten** (Speech-to-Text nicht immer exakt)
+- Aktiv mitdenken: "Cloud Code" = "Claude Code"
+- Bei Unklarheiten: Nachfragen statt raten
+
+### 6b.2 Schreibstil
+
+**Ziel:** So erklären, dass 8.-Klässler es verstehen.
+
+**Antwort-Aufbau:**
+1. Was wurde verstanden?
+2. Was ist der Plan?
+3. Was wurde konkret gemacht?
+4. Was ist der nächste Schritt?
+
+**Sprache:** Deutsch, einfach, mit Icons, hochmotiviert.
+**Code:** Englisch.
+
+### 6b.3 Echte Umlaute überall
+
+- ✅ **RICHTIG:** ä, ö, ü, ß (echte Umlaute)
+- ❌ **FALSCH:** ae, oe, ue, ss
+- **Ausnahme:** Nur Dateinamen mit ae/oe/ue (wegen Kompatibilität)
 
 ---
 
@@ -523,13 +594,25 @@ agent-browser snapshot -i  # Validierung
 
 ---
 
-## 🔗 Framework-spezifische Docs
+## 🔗 Referenzen (nur bei Bedarf lesen)
+
+### Framework-spezifisch
 
 | Framework | Dokumentation |
 |-----------|---------------|
 | React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
 | Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
-| Liquid Glass Design for Tailwind CSS | `shared-docs/design/liquid-glass-guide.md` |
-| DB Live Testing for Postgres | `shared-docs/database-testing-guide.md` |
+
+### Themen-spezifisch (nur bei Problem lesen)
+
+| Thema | Dokumentation |
+|-------|---------------|
+| CSS/Design-Patterns | `shared-docs/agents/global-rule-agent.md` |
+| Performance Tab-Komponenten | `shared-docs/performance/tab-component-performance-antipattern.md` |
+| Responsive Dialoge | `shared-docs/design/responsive-dialog-architecture.md` |
+| Frontend-Modernisierung | `shared-docs/agents/shared-docs/modernize-frontend.md` |
 | Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
+| Liquid Glass Design | `shared-docs/design/liquid-glass-guide.md` |
+
+**Regel:** Diese Docs NICHT pauschal lesen - nur wenn das spezifische Thema relevant ist.
