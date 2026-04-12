@@ -18,6 +18,11 @@ Für **absolute Anfänger**, die Git verstehen und professionell damit arbeiten 
 | 07 | [Fehler & Verlauf](07-fehler-und-verlauf-notedrill.md) | Dein konkreter Fall mit TanStack |
 | 08 | [Teamgrößen & HEAD](08-teamgroessen-und-head.md) | Teams skalieren, HEAD-Befehle, Branch-Namen |
 | 09 | [Befehl-Anatomie](09-befehl-anatomie.md) | Warum Befehle so aufgebaut sind (origin, -u, force) |
+| 10 | [Größere Änderungen & Worktrees](10-groessere-aenderungen-worktrees.md) | Parallel mit KI arbeiten, Worktree-System |
+| 11 | [Top Befehle Zusammenfassung](11-top-befehle-zusammenfassung.md) | Alles auf einen Blick mit Referenzen |
+| 12 | [npm zu pnpm Migration](12-npm-zu-pnpm-migration.md) | Umstieg auf pnpm, Edge-Cases, Schutz vor Versehen |
+| 13 | [pnpm vs Bun Vergleich](13-pnpm-vs-bun-vergleich.md) | Welcher Package Manager ist besser? |
+| 14 | [KI-Benchmarking: Worktrees vs Branches](14-ki-benchmarking-worktrees-vs-branches.md) | Mehrere KIs parallel vergleichen, Dev-Server auf verschiedenen Ports |
 
 ---
 
