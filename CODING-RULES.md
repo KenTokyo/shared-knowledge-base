@@ -9,6 +9,7 @@ Der User sendet meist **Sprachnachrichten** (Chat oder `.md`-Datei). Speech-to-T
 - „Cloud Code" kann eigentlich „Claude Code" bedeuten
 - „React Grab" = React DevTools / React-Codeausschnitt
 - Bei Unklarheit: **kurz nachfragen**, nicht raten
+- Viele technische Wörter sind nicht richtig ausgeschrieben aufgrund von Speech to Text, bitte pass auf!
 
 ### 1.2 User-Profil: Junior Developer
 Der User ist Junior-Developer und beschreibt Probleme oft **grob und ungenau**:
@@ -61,14 +62,7 @@ Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen
 ## 2. Schreibstil & Sprache (AUCH FÜR UI empfohlen!)
 
 ### 2.1 Ziel
-So erklären, dass **8.-Klässler** es direkt verstehen: motiviert, klar, mit kurzen Beispielen aus dem Alltag.
-
-### 2.2 Antwort-Aufbau (Pflicht)
-Immer dieses Muster:
-1. **Was wurde verstanden?**
-2. **Was ist der Plan?**
-3. **Was wurde konkret gemacht?**
-4. **Was ist der nächste Schritt?**
+So erklären, dass **8.-Klässler** es direkt verstehen: bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten, klarer Struktur und gut lesbarer Formatierung., mit kurzen Beispielen aus dem Alltag.
 
 ### 2.3 Antwort-Tiefe (Pflicht)
 1. Wenn der User unsicher wirkt → **ausführlicher** antworten
@@ -293,7 +287,64 @@ Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen
 - 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
 - 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
----
+## Komponentenstruktur (Sektionsbasiert)
+
+Basierend auf einer bestehenden Applikation — bewährtes Pattern für skalierbare UIs.
+
+### Grundprinzip
+
+- **Sektionen gruppieren** verwandte Komponenten in `(sektionsName)/`-Ordner
+- **Ordnerstruktur = UI-Hierarchie** — Verschachtelung spiegelt visuelle Struktur
+- **Frontend-to-Code Navigation**: UI-Element-Text = Dateiname
+
+### Ordner-Konvention bsp.
+```
+ansicht/
+├── zeiger/                      # Feature-Bereich
+│   ├── (hauptSektion)/          # Sektion mit Klammern
+│   │   ├── (unterSektion)/      # Verschachtelte Untersektion
+│   │   │   ├── AktionButton.tsx # User-facing = Deutsch
+│   │   │   └── KonfigPanel.tsx
+│   │   ├── HauptSection.tsx     # Orchestrator ohne Klammern
+│   │   └── DatenCard.tsx
+│   └── ZeigerDreieck.tsx        # Hauptkomponente
+├── ui/                          # Reusable UI-Elemente
+│   ├── SprechBlase.tsx
+│   └── VorschlagChips.tsx
+└── layout/                      # Container/Wrapper
+    └── ZeigerHuelle.tsx
+```
+
+### Deutsch/Englisch-Aufteilung
+```
+🇩🇪 DEUTSCH (User-facing Komponenten):
+- Button.tsx     → SpeichernButton.tsx, AbbrechenButton.tsx
+- Panel.tsx      → EinstellungenPanel.tsx, KonfigPanel.tsx
+- Dialog.tsx     → BestätigenDialog.tsx, HilfeDialog.tsx
+
+🇺🇸 ENGLISCH (Technische Container):
+- Section.tsx    → ZeigerSection.tsx, SprachSection.tsx
+- Card.tsx       → ZeigerCard.tsx, StatusCard.tsx
+- List.tsx       → VorschlagList.tsx
+- Layout.tsx     → ZeigerLayout.tsx
+```
+**Warum?** User klickt "Speichern" → Code heißt `SpeichernButton.tsx`
+### Beispiel: Sprechblasen-Sektion
+```
+ansicht/
+└── ui/
+    └── (sprechblasenSektion)/
+        ├── SprechblasenSection.tsx    ← Orchestrator
+        ├── (inhalt)/
+        │   ├── TextAnzeige.tsx
+        │   └── VorschlagChips.tsx
+        └── (steuerung)/
+            ├── SchließenButton.tsx
+            └── PositionPanel.tsx
+```
+### Richtwerte
+- **Max 7 Verschachtelungsebenen** (falls möglich)
+- **Eine Hauptkomponente pro Sektion** ohne Klammern (Orchestrator)
 
 ## 8. React Best Practices
 
@@ -476,8 +527,11 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 
 - npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
-- Max 700 lines/file
-- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
+- Max 700 lines/file**
+- keine UNIT Tests schreiben oder planen
+- Wenn eine Datei größer wird: in Unterkomponenten, Helpers oder Services aufteilen.
+- - TypeScript immer prüfen: `npm run type-check`.
+  - Kein `npm run build` und kein `npm run dev` nötig.
 
-**Weitere Extrem wichtige Regeln**
-- keine UNIT Tests schreiben
+**Abschluss**
+- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
