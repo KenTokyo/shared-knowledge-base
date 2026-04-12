@@ -18,6 +18,7 @@ Für **absolute Anfänger**, die Git verstehen und professionell damit arbeiten 
 | 07 | [Fehler & Verlauf](07-fehler-und-verlauf-notedrill.md) | Dein konkreter Fall mit TanStack |
 | 08 | [Teamgrößen & HEAD](08-teamgroessen-und-head.md) | Teams skalieren, HEAD-Befehle, Branch-Namen |
 | 09 | [Befehl-Anatomie](09-befehl-anatomie.md) | Warum Befehle so aufgebaut sind (origin, -u, force) |
+| 10 | [Komplett-Zusammenfassung](10-komplett-zusammenfassung.md) | Alle Befehle auf einen Blick + Edge Cases |
 
 ---
 
