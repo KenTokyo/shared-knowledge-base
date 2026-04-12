@@ -19,8 +19,8 @@ bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten,
 
 - **Maximal 700 Zeilen Code pro Datei**.
 - Wenn eine Datei größer wird: in Unterkomponenten, Helpers oder Services aufteilen.
-- TypeScript immer prüfen: `npm run type-check`.
-- Kein `npm run build` und kein `npm run dev` nötig.
+- TypeScript immer prüfen: `pnpm lint`.
+- Kein `pnpm build` und kein `pnpm dev` nötig.
 - Keine Unit-Tests schreiben oder planen, außer der User verlangt es explizit.
 
 ## Verstehen statt Umdeuten (Pflicht)
