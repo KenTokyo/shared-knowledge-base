@@ -446,8 +446,8 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 ## 11. TypeScript & Validierung
 
 ### 11.1 TypeScript-Prüfung
-- TypeScript immer prüfen: `npm run type-check`
-- Kein `npm run build` und kein `npm run dev` nötig
+- TypeScript immer prüfen: `pnpm lint`
+- Kein `pnpm build` und kein `pnpm dev` nötig
 
 ### 11.2 ZERO TOLERANCE für TypeScript-Fehler
 - **NACH JEDER PHASE:** `npx tsc --noEmit` ausführen
@@ -525,13 +525,13 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 
 ## 16. Quick Checklist
 
-- npm run type-check` (🔴 MUSS 0 FEHLER HABEN!)
+- `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
 - Max 700 lines/file**
 - keine UNIT Tests schreiben oder planen
 - Wenn eine Datei größer wird: in Unterkomponenten, Helpers oder Services aufteilen.
-- - TypeScript immer prüfen: `npm run type-check`.
-  - Kein `npm run build` und kein `npm run dev` nötig.
+- TypeScript immer prüfen: `pnpm lint`.
+- Kein `pnpm build` und kein `pnpm dev` nötig.
 
 **Abschluss**
 - Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
