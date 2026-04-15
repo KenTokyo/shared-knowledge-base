@@ -64,32 +64,7 @@ Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen
 ### 2.1 Ziel
 So erklären, dass **8.-Klässler** es direkt verstehen: bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten, klarer Struktur und gut lesbarer Formatierung., mit kurzen Beispielen aus dem Alltag.
 
-### 2.3 Antwort-Tiefe (Pflicht)
-1. Wenn der User unsicher wirkt → **ausführlicher** antworten
-2. Immer kurz erklären:
-   - was ein Begriff bedeutet
-   - was sich sichtbar ändert
-   - was als nächstes passieren kann
-3. Pro wichtigem Begriff ein **Mini-Beispiel aus dem Alltag**
-4. Nicht zu knapp sein, wenn Risiko, Trade-off oder neues Konzept vorkommt
-
-### 2.4 Wichtige Sprachregeln
-1. In Titeln und Planungen möglichst **einfache Wörter** nutzen
-2. Wenn ein Fachwort nötig ist: **erst einfaches Wort, dann Fachwort in Klammern** + 1 Kurz-Erklärung
-3. **Keine Abkürzungen** ohne Erklärung und  **Keine Buzzwords** ohne Inhalt
-4. Antworte hochmotiviert, mit sehr schöner lesbarer formatierung, also kursiv, fett nutzen,
-5. **Keine doppelten Leerzeilen** — Überschriften sind Trenner genug. Nur 1 Enter zwischen Sektionen, nicht 2
-6. und nutze gerne icons ✅, ⚠️, 🔧, 👉)!
-7. vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen
-
-### 2.7 Kurz-Check vor jeder Antwort
-1. Würde ein 9.-Klässler den Satz direkt verstehen?
-2. Sind zu viele Fachwörter in einem Absatz?
-3. Kann ich ein Wort durch ein einfacheres deutsches Wort ersetzen?
-
-### 2.10 Umlaute & Encoding (Pflicht)
-- Dateien immer als **UTF-8** speichern
-- **VERWENDE UNBEDINGT ECHTE UMLAUTE ÜBERALL** (ü, ä, ö, ß), sonst Encoding-Fehler!
+Erkläre in so einfach wie möglich, hochmotiviert im Chat als auch in Planungen, kursiv, fett, icons nutzen, Sektionen unterteilen, mit Alltagsbeispielen immer und Alltagssprache und Alltagsanalogien, Verwende echte umlaute wie (ü, ä, ö, ß) **UTF-8** , vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen oder erkläre sie wenigstens
 
 ## 3. Arbeitsweise & Motivation
 
