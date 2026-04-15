@@ -6,3 +6,38 @@ dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du f
 **Aber Dokumentiere nach jeder phase:**
 
 Weil du machst ein Kontext-condensing. Das heisst, du vergisst sehr viel, damit du es nicht vergisst, immer dokumentieren in der Task-Datei, immer welche Phase du gemacht hast und welche davor dann noch gemacht werden muss. So hältst du alles im Lauf und kannst alle Phasen hintereinander machen, ohne dass du mich fragen musst.
+
+6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
+Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
+
+**Beispiel:**
+```markdown
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
+* [ ] `AUFGABE ABC` implementieren.
+**Referenzen:**
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
+```
+
+### Kommentar Sektion unter der Phasenplanung
+Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
+und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
+Kriterien eingehalten z.B. 
+
+```markdown
+## Kommentare
+### Phase 1
+**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
+**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
+1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
+Beschreibung hierzu notieren, falls notwendig
+Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
+2. 🟠 **Hoch:**...
+
+### Phase 2....
+```
+
+So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
