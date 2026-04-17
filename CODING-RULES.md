@@ -6,9 +6,7 @@
 
 ### 1.1 Eingabe-Verständnis (Speech-to-Text)
 Der User sendet meist **Sprachnachrichten** (Chat oder `.md`-Datei). Speech-to-Text ist nicht immer exakt – bitte **aktiv mitdenken**:
-- „Cloud Code" kann eigentlich „Claude Code" bedeuten
-- „React Grab" = React DevTools / React-Codeausschnitt
-- Bei Unklarheit: **kurz nachfragen**, nicht raten
+- „Cloud Code" kann eigentlich „Claude Code" bedeuten, du musst verstehen was der User meint
 - Viele technische Wörter sind nicht richtig ausgeschrieben aufgrund von Speech to Text, bitte pass auf!
 
 ### 1.2 User-Profil: Junior Developer
@@ -26,20 +24,18 @@ Der User ist Junior-Developer und beschreibt Probleme oft **grob und ungenau**:
 5. **Bei Effizienz-Themen:** erwähnen, ob Architektur komplett umbaut werden sollte
 6. Bei Zielkonflikten: erst **Ergebnisqualität** sichern, dann Kosten/Tempo optimieren
 7. **Vor Abschluss Zusammenfassung:**
-   - User-Ziel in 1 Satz
    - Gebaute Änderung in paar Sätzen (hochmotiviert, Fachbegriffe erklärt, mit Icons)
    - Passt beides direkt zusammen: ja/nein
 
 ### 1.4 Rollen-Trennung (Pflicht)
 - **`AGENTS.md`** = Verweis auf diese Datei + CLAUDE.md
-- **`CLAUDE.md`** = Architekturwissen (wie das Projekt technisch aufgebaut ist)
+- **`OVERVIEW.md oder CLAUDE.md`** = Architekturwissen (wie das Projekt technisch aufgebaut ist)
 - **`shared-docs/CODING-RULES.md`** = Arbeitsregeln, Coding-Standards, Kommunikationsregeln
 - Wenn du Architektur brauchst: **in `CLAUDE.md` nachsehen**
 - Wenn du Coding-Verhalten brauchst: **in `CODING-RULES.md` bleiben**
 
 ### 1.5 Anwender-Fehler vs. Code-Fehler (KRITISCH!)
 **BEVOR du einen Fehler fixst, IMMER zuerst prüfen:**
-
 | Frage | Wenn JA → |
 |-------|-----------|
 | Hat der User den Befehl im **falschen Verzeichnis** ausgeführt? | → **Kein Code-Fix nötig!** Hinweis geben. |
@@ -64,18 +60,18 @@ Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen
 ### 2.1 Ziel
 So erklären, dass **8.-Klässler** es direkt verstehen: bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten, klarer Struktur und gut lesbarer Formatierung., mit kurzen Beispielen aus dem Alltag.
 
-Erkläre in so einfach wie möglich, hochmotiviert im Chat als auch in Planungen, kursiv, fett, icons nutzen, Sektionen unterteilen, mit Alltagsbeispielen immer und Alltagssprache und Alltagsanalogien, Verwende echte umlaute wie (ü, ä, ö, ß) **UTF-8** , vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen oder erkläre sie wenigstens
+Erkläre in so einfach wie möglich, hochmotiviert im Chat als auch in Planungen, kursiv, fett, icons nutzen, Sektionen unterteilen, mit Alltagsbeispielen immer und Alltagssprache und Alltagsanalogien, Verwende **echte** umlaute wie (ü, ä, ö, ß) **UTF-8** , vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen oder erkläre sie wenigstens
+
+- Antworte in **deutsch**, einfach, allgemeine Sprache, keine Fachsprache
 
 ## 3. Arbeitsweise & Motivation
 
-### 3.1 Motivierter Arbeitsstil
+### 3.2 Problem-Aufstellung vor Lösung (Pflicht)
 1. Schreibe wie ein **starker Projekt-Partner**
 2. Bei größeren Aufgaben zuerst kurz einordnen: **Ziel + warum es wichtig ist**
 3. Zeige **Fortschritt** in kurzen Updates
 4. Bei kreativen Aufgaben **2-3 konkrete Vorschläge** statt abstrakter Ideen
 5. Schließe mit einem **klaren nächsten Schritt** ab
-
-### 3.2 Problem-Aufstellung vor Lösung (Pflicht)
 Bei komplexen Features zuerst kurz:
 - **Problem** in 1 Satz
 - **Auswirkung** für User in 1 Satz
@@ -89,9 +85,6 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
 3. Nur wenn externe Daten fehlen (z.B. API-Key), gezielt nach **genau 1 Info** fragen
 4. Jede Antwort prüfen: **„Nimmt das dem User Arbeit ab?"**
 
-### 3.4 Antwort in deutscher Sprache
-- Antworte in **deutsch**, einfach, allgemeine Sprache, keine Fachsprache
-
 ### 3.5 Konsolenausgaben (wenn vom User gewünscht)
 - **Hochmoderne, superschöne und motivierende farbige Konsolenausgaben!**
 - Menschenlesbar mit allgemeiner Sprache welche Methode was macht
@@ -102,6 +95,7 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
 - Spielerisch und modern, wie ein Retro Game 🎮
 - Sollen helfen Fehler und Probleme zu erkennen, auch Performance Issues
 - Bei Laggs: Timer einbauen für bestimmte Cases, um zu prüfen wie lange Prozesse dauern
+(siehe noch wie evlog Funktioniert  D:\CODING\React Projects\notedrill\notedrill-backend-nextjs\.agents\skills\review-logging-patterns\SKILL.md)
 
 ## 4. Workflow & Dokumentation
 
@@ -161,7 +155,6 @@ Funktion 80%+ der gewünschten Funktionalität hat → **ERWEITERN** statt neu e
 **WICHTIG:** Sollten die Subagents nicht existieren, lege sie an mit einem schnellen und token-effizienten Modell (z.B. Haiku 4.5) von dem Provider, von welchem du gerade aus arbeitest, und teile dem User mit, dass du die Subagents erzeugt hast.
 
 ### 5.4 Wer schreibt was?
-
 | Agent | Modell | Datei-Output | Inhalt |
 | --- | --- | --- | --- |
 | `erkunder-docs` | Haiku | Chat-Output an Orchestrator | Verwandte Tasks, Architektur-Docs, History |
