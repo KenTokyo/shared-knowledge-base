@@ -200,6 +200,10 @@ User-Task → Orchestrator
   └─ abschliesser (Haiku) → .completed/ erstellen + CLAUDE.md Relevanz-Check
 ```
 
+
+- Fange nicht an mich zu fragen, was ich bevorzuge für eine Option sondern ausimplementieren direkt, 
+    - das was du empfohlen hast!
+
 ### Wann PFLICHT?
 - Feature-Implementierung (neue Komponenten, Hooks, Stores)
 - Refactoring (betroffene Dateien kennen)
