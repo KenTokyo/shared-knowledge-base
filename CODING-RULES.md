@@ -31,7 +31,6 @@ Der User ist Junior-Developer und beschreibt Probleme oft **grob und ungenau**:
 - **`AGENTS.md`** = Verweis auf diese Datei + CLAUDE.md
 - **`OVERVIEW.md oder CLAUDE.md`** = Architekturwissen (wie das Projekt technisch aufgebaut ist)
 - **`shared-docs/CODING-RULES.md`** = Arbeitsregeln, Coding-Standards, Kommunikationsregeln
-- Wenn du Architektur brauchst: **in `CLAUDE.md` nachsehen**
 - Wenn du Coding-Verhalten brauchst: **in `CODING-RULES.md` bleiben**
 
 ### 1.5 Anwender-Fehler vs. Code-Fehler (KRITISCH!)
@@ -100,17 +99,77 @@ Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
 ## 4. Workflow & Dokumentation
 
 ### 4.1 Generelle Regeln für Programmieraufgaben
-**Wenn der User explizit eine Programmieraufgabe gibt auch gerne Recherchieren:**
+**Wenn der User explizit eine Programmieraufgabe gibt auch gerne Recherchieren im Web mit WebFetch:**
+- Bevor mit programmierung angenfangen wird, muss die Planung exisiteren, als docs/[feature]/tasks/[datum]-[task].md Datei nach Phasenformat, falls nicht erstelle nach 5. Erzeugung von Planung-Regeln
+- Bevor du anfängst eine Planung zu implementieren, **validiere** ob sie Sinn macht und korrekt geplant wurde.
 - Vom aktuellen Stand bis zur letzten Phase in **Phasen umsetzen**
 - In einer **Task-Datei tracken** mit Kontextinformationen und Phasenabläufen
 - Nach jeder Phase die Planung updaten und die nächste Phase durchgehen **ohne STOPP!!**
 - Falls **ORCHESTRATOR MODUS AN** ist: nach jeder Phase den Plan updaten und dann `NEXT_PHASE_READY` am Ende schreiben
-  - Inklusive der `...TASK.md` als Referenz mitgeben
+  - Inklusive der `...TASK.md` als Referenz mitgeben, die vorher aktualisiert wurde,
+    - bevor du NEXT_PHASE_READY schreibst, also unbedingt den Pfad mitgeben, sonst weiß die nächste KI nicht, wo die Datei ist!
   - Mit einer kleinen Summary was gemacht wurde
   - Weil genau die letzte Nachricht wird im nächsten Chat mit neuem Kontext erscheinen
 
-### 4.5 Dokumentationssystem
+# 5 Erzeugung von Planung
+## 5. Dokumentationssystem (falls noch keine Planung exisitert
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
+
+Bei Feature- oder Refactor-Planungen müssen die Phasen mehr erklären als nur Überschriften.
+Jede Phase muss diese **6 Punkte** enthalten:
+
+1. **Ziel:** Was ist am Ende sichtbar besser?
+2. **Warum:** Warum löst genau diese Phase das Kernproblem?
+3. **Umsetzung:** Welche 1-3 Dateien/Module werden konkret geändert?
+4. **Risiko:** Was könnte kaputtgehen?
+5. **Check:** Woran erkennen wir schnell, dass es funktioniert?
+6. **Ergebnis-Satz:** Ein kurzer Satz in einfacher Sprache für Nicht-Entwickler.
+
+Wenn die Phase Architektur betrifft, zusätzlich Pflicht:
+- Vorher/Nachher-Datenfluss in 3-6 Schritten
+
+**Nutze bei komplexen Themen immer dieses Ablaufmuster:**
+- Probleme, Auswirkungen, Ist-Fluss, Bruchstelle, Ursachen, Lösungen/Optionen (liste alle auf) und danach was du empfiehst ausplanen, Nebenwirkungen Abschluss
+
+1. Bei großen Systemen: **Masterplan plus Unterdateien** - heißt docs/[feature]/tasks/[datum]-[masterplan].md referenziert dann mehrere docs/[feature]/tasks/[datum]-[task].md
+  2. Implementieren, wenn user sagt ***"erzeuge masterplan"***
+2. Pflicht-Phasenpläne anhand unseres Phasenformats**
+3. Phasen am Stück umsetzen und sauber dokumentieren
+   - Programmieren und dokumentieren im Wechsel, **ohne Pause!, bei Orchestrator Modus NEXT_PHASE_READY am ende jeder Phase schreiben
+
+### Phasen mit To-dos ist unser Phasenformat! (Pflicht)
+Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
+
+**Beispiel:**
+```markdown
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+**Ziel:** Hier schreiben, worum es geht.
+* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
+* [ ] `AUFGABE ABC` implementieren.
+**Referenzen:**
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Jeweils getrennt pro Zeile`
+```
+
+### Kommentar Sektion unter der Phasenplanung
+Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
+und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
+Kriterien eingehalten z.B. 
+
+```markdown
+## Kommentare
+### Phase 1
+**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
+**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
+1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
+Beschreibung hierzu notieren, falls notwendig
+Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
+2. 🟠 **Hoch:**...
+
+### Phase 2....
+```
+So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
 
 ## 5. Subagents & Erkundung
 
@@ -162,84 +221,6 @@ Funktion 80%+ der gewünschten Funktionalität hat → **ERWEITERN** statt neu e
 | `duplikat-checker` | Haiku | Chat-Output an Orchestrator | Duplikat-Prüfung für geplante neue Dateien |
 | `abschliesser` | Haiku | `.completed/*.md` + ggf. CLAUDE.md Mini-Update | .completed/ Datei + Relevanz-Check Knowledge Map/Persistenz |
 | `ki-architekt` | Opus | `*-ARCHITEKTUR-ANALYSE.md` | Ist-Stand, Abweichungen, betroffene Dateien, Empfehlungen |
-## 6. Planung & Analyse
-
-### 6.1 Komplexe Planung (Pflicht)
-1. Bei großen Systemen: **Masterplan plus Unterdateien**
-2. Pflicht-Phasenpläne anhand unseres Phasenformats (siehe weiter unten, extrem wichtig!!!)
-3. Jede Phase braucht: **Ziel, Risiko, Test, sichtbaren Nutzen**
-4. Phasen am Stück umsetzen und sauber dokumentieren
-   - Programmieren und dokumentieren im Wechsel, **ohne Pause!**
-
-### 6.2 Planungs-Workflow mit Mindesttiefe (Pflicht)
-Bei Feature- oder Refactor-Planungen müssen die Phasen mehr erklären als nur Überschriften.
-Jede Phase muss diese **6 Punkte** enthalten:
-
-1. **Ziel:** Was ist am Ende sichtbar besser?
-2. **Warum:** Warum löst genau diese Phase das Kernproblem?
-3. **Umsetzung:** Welche 1-3 Dateien/Module werden konkret geändert?
-4. **Risiko:** Was könnte kaputtgehen?
-5. **Check:** Woran erkennen wir schnell, dass es funktioniert?
-6. **Ergebnis-Satz:** Ein kurzer Satz in einfacher Sprache für Nicht-Entwickler.
-
-Wenn die Phase Architektur betrifft, zusätzlich Pflicht:
-- Vorher/Nachher-Datenfluss in 3-6 Schritten
-- Klare Aussage, ob die Änderung mit `CLAUDE.md` konsistent ist
-- 
-### 6.4 Analyse-Workflow (Pflicht bei Bug, Architektur, Performance)
-Nutze bei komplexen Themen immer dieses Ablaufmuster:
-1. **Problem-Satz:** „Was ist kaputt?" in einem klaren Satz
-2. **Auswirkungen:** „Was merkt der User davon?" in einem klaren Satz
-3. **Ist-Fluss:** Schritt-für-Schritt den aktuellen Datenfluss beschreiben (Eingang → Verarbeitung → Ausgabe)
-4. **Bruchstelle:** Exakt benennen, an welchem Schritt der Fluss kaputt geht
-5. **Ursachenbeweis:** Logs, Codepfad oder Zustandswerte nennen, die die Ursache belegen
-6. **Lösungsweg:** Genau sagen, welche Änderung den Bruch behebt und warum
-7. **Nebenwirkungen:** Kurz prüfen, welche Bereiche mitbetroffen sein könnten
-8. **Abschluss:** Kurze, alltagstaugliche Zusammenfassung mit „Was heißt das jetzt für dich?"
-
-### 6.5 Architekten-Kette (Pflicht bei Multi-Architekten-Planung)
-Wenn mehrere Architekten gebraucht werden, laufen sie **linear**, nicht parallel:
-1. Architekt 1 schreibt Analyse
-2. Architekt 2 baut darauf auf
-3. Architekt 3 baut auf 1+2 auf
-
-### 6.6 Validierung vor Implementierung
-Bevor du anfängst eine Planung zu implementieren, **validiere** ob sie Sinn macht und korrekt geplant wurde.
-
-### 6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
-Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
-
-**Beispiel:**
-```markdown
-### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
-**Ziel:** Hier schreiben, worum es geht.
-* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
-* [ ] `AUFGABE ABC` implementieren.
-**Referenzen:**
-`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
-`Jeweils getrennt pro Zeile`
-```
-
-### Kommentar Sektion unter der Phasenplanung
-Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
-und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
-Kriterien eingehalten z.B. 
-
-```markdown
-## Kommentare
-### Phase 1
-**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
-**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
-1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
-Beschreibung hierzu notieren, falls notwendig
-Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
-2. 🟠 **Hoch:**...
-
-### Phase 2....
-```
-
-So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
-Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
 
 ## 7. Architektur & Dateistruktur
 
@@ -267,8 +248,8 @@ Basierend auf einer bestehenden Applikation — bewährtes Pattern für skalierb
 
 ### Ordner-Konvention bsp.
 ```
-ansicht/
-├── zeiger/                      # Feature-Bereich
+ui/
+├── quiz/                      # Feature-Bereich
 │   ├── (hauptSektion)/          # Sektion mit Klammern
 │   │   ├── (unterSektion)/      # Verschachtelte Untersektion
 │   │   │   ├── AktionButton.tsx # User-facing = Deutsch
@@ -423,8 +404,6 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 - **SOFORT** beheben bevor zur nächsten Phase gegangen wird
 - TypeScript-Fehler sind **BLOCKER** - keine Ausnahmen!
 
----
-
 ## 13. Browser-Testing
 
 ### 13.1 Wann Browser-Testing nutzen
@@ -442,8 +421,6 @@ Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. E
 1. Status prüfen (nicht ewig warten)
 2. Cache clearen
 3. Bei Endlos-Loop: Task abbrechen, User informieren
-
----
 
 ## 14. Test-Account System
 
