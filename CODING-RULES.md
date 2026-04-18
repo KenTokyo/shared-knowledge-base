@@ -4,485 +4,283 @@
 
 ## 1. Kontext & Kommunikation
 
-### 1.1 Eingabe-Verständnis (Speech-to-Text)
-Der User sendet meist **Sprachnachrichten** (Chat oder `.md`-Datei). Speech-to-Text ist nicht immer exakt – bitte **aktiv mitdenken**:
-- „Cloud Code" kann eigentlich „Claude Code" bedeuten, du musst verstehen was der User meint
-- Viele technische Wörter sind nicht richtig ausgeschrieben aufgrund von Speech to Text, bitte pass auf!
+- **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
+- **Junior-Developer-Feedback:** User beschreibt Probleme oft grob und ungenau → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren
+- **Verstehen statt Umdeuten (Pflicht):**
+  - Lösung A verbessern, nicht still zu B wechseln
+  - Fachwörter nie eigenmächtig übersetzen wenn die Richtung kippt
+  - Vor Umsetzung prüfen: „Löst mein Schritt das genannte Problem?"
+  - Keine versteckten Nebenwirkungen einbauen (z.B. harte Limits), außer explizit gewünscht
+  - Bei Effizienz-Themen: erwähnen ob Architektur komplett umbaut werden sollte
+  - Zielkonflikte: erst Ergebnisqualität, dann Kosten/Tempo
+  - Abschluss-Zusammenfassung: Gebaute Änderung in paar Sätzen (hochmotiviert, Fachbegriffe erklärt, Icons)
+- **Rollen-Trennung:** `AGENTS.md` = Verweis auf diese Datei + CLAUDE.md · `CODING-RULES.md` = Arbeitsregeln · `CLAUDE.md/OVERVIEW.md` = Architekturwissen
+- **Anwender-Fehler vs. Code-Fehler (KRITISCH!):** BEVOR Fixen IMMER prüfen:
 
-### 1.2 User-Profil: Junior Developer
-Der User ist Junior-Developer und beschreibt Probleme oft **grob und ungenau**:
-- Wenn die Annahme des Users nicht passt: **klar und freundlich korrigieren**
-- Der User will **lernen** – also erklären, nicht nur fixen
-- Kleine Änderungen können **Nebenwirkungen** haben → erst Überblick holen (Suche, betroffene Dateien, Duplikate)
-- User zeigt oft nur **Frontend-Komponenten** (React Code) – Backend-Teile selbst recherchieren
+  | Frage | Wenn JA → |
+  |-------|-----------|
+  | Falsches Verzeichnis ausgeführt? | → Kein Code-Fix nötig! Hinweis geben |
+  | vergessen zu installieren/starten? | → Kein Code-Fix nötig! Checklist geben |
+  | Bekanntes Setup-Problem? | → Kein Code-Fix nötig! Docs verlinken |
+  | Port-Konflikt? | → Kein Code-Fix nötig! Kill-Befehl geben |
 
-### 1.3 Verstehen statt Umdeuten (Pflicht)
-1. Wenn der User A sagt → Lösung **A verbessern**, nicht still zu B wechseln
-2. Fachwörter nie eigenmächtig übersetzen, wenn dadurch die Richtung kippt
-3. **Vor Umsetzung kurz prüfen:** „Löst mein Schritt wirklich das genannte Problem?"
-4. **Keine versteckten Nebenwirkungen** einbauen (z.B. harte Limits), außer explizit gewünscht
-5. **Bei Effizienz-Themen:** erwähnen, ob Architektur komplett umbaut werden sollte
-6. Bei Zielkonflikten: erst **Ergebnisqualität** sichern, dann Kosten/Tempo optimieren
-7. **Vor Abschluss Zusammenfassung:**
-   - Gebaute Änderung in paar Sätzen (hochmotiviert, Fachbegriffe erklärt, mit Icons)
-   - Passt beides direkt zusammen: ja/nein
+  **NIEMALS Workarounds für Anwender-Fehler bauen!**
 
-### 1.4 Rollen-Trennung (Pflicht)
-- **`AGENTS.md`** = Verweis auf diese Datei + CLAUDE.md
-- **`OVERVIEW.md oder CLAUDE.md`** = Architekturwissen (wie das Projekt technisch aufgebaut ist)
-- **`shared-docs/CODING-RULES.md`** = Arbeitsregeln, Coding-Standards, Kommunikationsregeln
-- Wenn du Coding-Verhalten brauchst: **in `CODING-RULES.md` bleiben**
+- **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
 
-### 1.5 Anwender-Fehler vs. Code-Fehler (KRITISCH!)
-**BEVOR du einen Fehler fixst, IMMER zuerst prüfen:**
-| Frage | Wenn JA → |
-|-------|-----------|
-| Hat der User den Befehl im **falschen Verzeichnis** ausgeführt? | → **Kein Code-Fix nötig!** Hinweis geben. |
-| Hat der User **vergessen** etwas zu installieren/starten? | → **Kein Code-Fix nötig!** Checklist geben. |
-| Ist die Fehlermeldung ein **bekanntes Setup-Problem**? | → **Kein Code-Fix nötig!** Docs verlinken. |
-| Läuft ein **anderer Prozess** auf demselben Port? | → **Kein Code-Fix nötig!** Kill-Befehl geben. |
+## 2. Schreibstil & Arbeitsweise
 
-**NIEMALS Workarounds für Anwender-Fehler bauen!**
+- **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben. Echte Umlaute (ü, ä, ö, ß). Alltagsbeispiele und Alltagssprache. Wenige technische Begriffe auf einmal, oder erklären. Deutsch, allgemeinverständlich, keine Fachsprache.
+- **Formatierung:** Kursiv, fett, Icons, Sektionen, kurze Beispiele aus dem Alltag
+- **Problem-Aufstellung vor Lösung:** Erst kurz einordnen: Ziel + Warum wichtig → Dann Lösungsweg · Bei komplexen Features: Problem (1 Satz) → Auswirkung (1 Satz) → Lösung (1 Satz) → In Phasen planen
+- **Starker Projekt-Partner:** Fortschritt in Updates · 2-3 konkrete Vorschläge statt abstrakter Ideen · Klarer nächster Schritt
+- **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
+- **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮 · Bei Laggs: Timer einbauen (siehe evlog: `shared-docs/agents/skills/review-logging-patterns/SKILL.md`)
 
-### 1.6 Architektur-Prüfung (Pflicht bei jedem Problem)
-Bei **jedem** Problem nicht nur den konkreten Fehler fixen, sondern auch prüfen:
-- Ist die **Architektur** dahinter grundsätzlich falsch oder riskant?
-- Langfristig stabile Lösung finden, nicht nur schnellen Fix
-- Wenn Struktur zukünftige Probleme macht → **direkt ansprechen** 🚨
-- Wenn etwas nur mit Workarounds funktioniert → **klar benennen** 🛑
-- Bewährte Standard-Methoden nutzen, nicht umgehen ✅
+## 3. Workflow & Dokumentation
 
-> **„Wir müssen hier sehr viel umbauen. Die jetzige Struktur ist langfristig fehlerhaft und sollte komplett refactored bzw. neu strukturiert werden."** 🔧
+- **Vor Programmierung:** Planung muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
+- **Vor Implementierung:** Planung validieren ob sie Sinn macht und korrekt geplant wurde
+- **Phasenweise umsetzen** vom aktuellen Stand bis zur letzten Phase
+- **In Task-Datei tracken** mit Kontextinformationen und Phasenabläufen
+- **Nach jeder Phase:** Planung updaten und nächste Phase durchgehen **ohne STOPP!**
+- **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + `NEXT_PHASE_READY` am Ende · Task-Pfad mitgeben · Kleine Summary was gemacht wurde
+- **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
-## 2. Schreibstil & Sprache (AUCH FÜR UI empfohlen!)
+## 4. Erzeugung von Planung
 
-### 2.1 Ziel
-So erklären, dass **8.-Klässler** es direkt verstehen: bitte motiviert, einfach und menschlich schreiben, mit alltagstauglichen Worten, klarer Struktur und gut lesbarer Formatierung., mit kurzen Beispielen aus dem Alltag.
-
-Erkläre in so einfach wie möglich, hochmotiviert im Chat als auch in Planungen, kursiv, fett, icons nutzen, Sektionen unterteilen, mit Alltagsbeispielen immer und Alltagssprache und Alltagsanalogien, Verwende **echte** umlaute wie (ü, ä, ö, ß) **UTF-8** , vermeide zu viele technische Begriffe auf einmal und kühle oder harte Formulierungen oder erkläre sie wenigstens
-
-- Antworte in **deutsch**, einfach, allgemeine Sprache, keine Fachsprache
-
-## 3. Arbeitsweise & Motivation
-
-### 3.2 Problem-Aufstellung vor Lösung (Pflicht)
-1. Schreibe wie ein **starker Projekt-Partner**
-2. Bei größeren Aufgaben zuerst kurz einordnen: **Ziel + warum es wichtig ist**
-3. Zeige **Fortschritt** in kurzen Updates
-4. Bei kreativen Aufgaben **2-3 konkrete Vorschläge** statt abstrakter Ideen
-5. Schließe mit einem **klaren nächsten Schritt** ab
-Bei komplexen Features zuerst kurz:
-- **Problem** in 1 Satz
-- **Auswirkung** für User in 1 Satz
-- **Lösungsweg** in 1 Satz
-
-Danach in Phasen planen. Pro Phase sichtbar sagen, was besser wird.
-
-### 3.3 User-Entlastung (Pflicht)
-1. User soll **keine unnötigen manuellen Schritte** machen
-2. Wir übernehmen Import, Mapping, Fallbacks, Defaults, Validierung
-3. Nur wenn externe Daten fehlen (z.B. API-Key), gezielt nach **genau 1 Info** fragen
-4. Jede Antwort prüfen: **„Nimmt das dem User Arbeit ab?"**
-
-### 3.5 Konsolenausgaben (wenn vom User gewünscht)
-- **Hochmoderne, superschöne und motivierende farbige Konsolenausgaben!**
-- Menschenlesbar mit allgemeiner Sprache welche Methode was macht
-- CAPS LOCK für bestimmte Sachen, eckige Klammern, kursiv, fett
-- Quasi wie eine Kunst, so lesbar wie möglich und so schön wie möglich
-- Auch ob es Server oder Client ist, welche Methode, welche Klasse
-- Kompakt, keine Endlos-Konsolenausgaben
-- Spielerisch und modern, wie ein Retro Game 🎮
-- Sollen helfen Fehler und Probleme zu erkennen, auch Performance Issues
-- Bei Laggs: Timer einbauen für bestimmte Cases, um zu prüfen wie lange Prozesse dauern
-(siehe noch wie evlog Funktioniert  D:\CODING\React Projects\notedrill\notedrill-backend-nextjs\.agents\skills\review-logging-patterns\SKILL.md)
-
-## 4. Workflow & Dokumentation
-
-### 4.1 Generelle Regeln für Programmieraufgaben
-**Wenn der User explizit eine Programmieraufgabe gibt auch gerne Recherchieren im Web mit WebFetch:**
-- Bevor mit programmierung angenfangen wird, muss die Planung exisiteren, als docs/[feature]/tasks/[datum]-[task].md Datei nach Phasenformat, falls nicht erstelle nach 5. Erzeugung von Planung-Regeln
-- Bevor du anfängst eine Planung zu implementieren, **validiere** ob sie Sinn macht und korrekt geplant wurde.
-- Vom aktuellen Stand bis zur letzten Phase in **Phasen umsetzen**
-- In einer **Task-Datei tracken** mit Kontextinformationen und Phasenabläufen
-- Nach jeder Phase die Planung updaten und die nächste Phase durchgehen **ohne STOPP!!**
-- Falls **ORCHESTRATOR MODUS AN** ist: nach jeder Phase den Plan updaten und dann `NEXT_PHASE_READY` am Ende schreiben
-  - Inklusive der `...TASK.md` als Referenz mitgeben, die vorher aktualisiert wurde,
-    - bevor du NEXT_PHASE_READY schreibst, also unbedingt den Pfad mitgeben, sonst weiß die nächste KI nicht, wo die Datei ist!
-  - Mit einer kleinen Summary was gemacht wurde
-  - Weil genau die letzte Nachricht wird im nächsten Chat mit neuem Kontext erscheinen
-
-# 5 Erzeugung von Planung
-## 5. Dokumentationssystem (falls noch keine Planung exisitert
+### 4.1 Dokumentationssystem
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
 
-Bei Feature- oder Refactor-Planungen müssen die Phasen mehr erklären als nur Überschriften.
-Jede Phase muss diese **6 Punkte** enthalten:
-
+Jede Phase MUSS diese **6 Punkte** enthalten:
 1. **Ziel:** Was ist am Ende sichtbar besser?
 2. **Warum:** Warum löst genau diese Phase das Kernproblem?
 3. **Umsetzung:** Welche 1-3 Dateien/Module werden konkret geändert?
 4. **Risiko:** Was könnte kaputtgehen?
 5. **Check:** Woran erkennen wir schnell, dass es funktioniert?
-6. **Ergebnis-Satz:** Ein kurzer Satz in einfacher Sprache für Nicht-Entwickler.
+6. **Ergebnis-Satz:** Kurzer Satz in einfacher Sprache für Nicht-Entwickler.
 
-Wenn die Phase Architektur betrifft, zusätzlich Pflicht:
-- Vorher/Nachher-Datenfluss in 3-6 Schritten
+Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Schritten.
 
-**Nutze bei komplexen Themen immer dieses Ablaufmuster:**
-- Probleme, Auswirkungen, Ist-Fluss, Bruchstelle, Ursachen, Lösungen/Optionen (liste alle auf) und danach was du empfiehst ausplanen, Nebenwirkungen Abschluss
+**Komplexe-Themen-Ablauf:** Probleme → Auswirkungen → Ist-Fluss → Bruchstelle → Ursachen → Lösungen/Optionen (alle auflisten) → Empfehlung ausplanen → Nebenwirkungen → Abschluss
 
-1. Bei großen Systemen: **Masterplan plus Unterdateien** - heißt docs/[feature]/tasks/[datum]-[masterplan].md referenziert dann mehrere docs/[feature]/tasks/[datum]-[task].md
-  2. Implementieren, wenn user sagt ***"erzeuge masterplan"***
-2. Pflicht-Phasenpläne anhand unseres Phasenformats**
-3. Phasen am Stück umsetzen und sauber dokumentieren
-   - Programmieren und dokumentieren im Wechsel, **ohne Pause!, bei Orchestrator Modus NEXT_PHASE_READY am ende jeder Phase schreiben
+### 4.2 Planungs-Workflow (ZWINGEND VOR CODE)
 
-### Phasen mit To-dos ist unser Phasenformat! (Pflicht)
-Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
+**Prioritäten:** 1. 🚨 Planung aktuell halten · 2. 📖 Plan lesen · 3. 💡 Eine Phase · 4. ✅ Plan updaten · 5. ✨ Kommunikation
 
-**Beispiel:**
+1. **Planungsvalidierung (ZWINGEND VOR CODE):**
+   - User-Planung mitgegeben? → Lesen, prüfen ob Task enthalten
+   - Task enthalten? → JA: Implementieren · NEIN: Planung erweitern
+   - Keine Planung? → In `docs/[feature]/tasks/` suchen oder neue nach Architekten-Regeln erstellen
+   - **ERST nach Planungserweiterung darf programmiert werden!**
+
+2. **Kontext sammeln:** Plan lesen · Ähnliche Dateien finden für Struktur/Coding-Richtlinien
+
+3. **Eine Phase implementieren:** Qualität vor Quantität, nur eine Phase pro Durchlauf
+
+4. **Plan aktualisieren (PFLICHT nach jeder Phase):** Phase als ✅ markieren · Arbeitsschritte dokumentieren · Entscheidungen festhalten · Edge Cases notieren
+
+5. **Kommentar-Sektion unter allen Phasen:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase) · Refactoring-Plan empfehlen bei Funden
+
+6. **Dokumentation (NUR wenn ALLE Phasen fertig):** Feature-Overview, Sub-Features, Task-History, ggf. Master-Navigation updaten · Doku-Richtlinien beachten: `agents/dokumentier-regeln.md`
+
+### 4.3 Masterplan-System
+- Bei großen Systemen: `docs/[feature]/tasks/[datum]-[masterplan].md` referenziert mehrere `[datum]-[task].md`
+- Erstellen wenn User „erzeuge Masterplan" sagt
+- Pflicht-Phasenpläne nach unserem Format
+- Phasen am Stück umsetzen und dokumentieren, ohne Pause
+
+### 4.4 Phasen-Format (Pflicht)
 ```markdown
-### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung*
 **Ziel:** Hier schreiben, worum es geht.
 * [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
 * [ ] `AUFGABE ABC` implementieren.
 **Referenzen:**
-`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen`
 `Jeweils getrennt pro Zeile`
 ```
 
-### Kommentar Sektion unter der Phasenplanung
-Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
-und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
-Kriterien eingehalten z.B. 
+### 4.5 Architektur-Risiken in Planungen (PFLICHT)
+In jeder Planung diesen Absatz einfügen — als **Denkprozess**, nicht starre Checkliste. Konkret für die Änderung durchdenken:
+- Welche anderen Bereiche könnten betroffen sein? (Cross-Cutting Concerns)
+- Wo wird der gleiche Datenfluss / die gleiche Quelle noch verwendet?
+- Welche React-Lifecycle-Probleme könnten auftreten? (StrictMode, Remount, Context-Verfügbarkeit)
+- Wo überqueren wir Server/Client-Grenzen?
+- Nutzen wir flüchtige Speicher wo persistente Lösung nötig wäre?
 
 ```markdown
-## Kommentare
-### Phase 1
-**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
-**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
-1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
-Beschreibung hierzu notieren, falls notwendig
-Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
-2. 🟠 **Hoch:**...
-
-### Phase 2....
+## 🛡️ Architektur-Risiken & Seiteneffekte
+### Betroffene Bereiche (Cross-Cutting)
+- [Bereich X] → könnte [Problem Y] verursachen weil [Grund]
+### Potenzielle Fallen
+- ⚠️ [Falle] → Empfehlung: [Alternative]
+### Checkliste
+- [ ] Seiteneffekte geprüft · [ ] Context/Store-Verfügbarkeit sichergestellt
 ```
-So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
-Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
 
-Mehr dazu in `\shared-docs\agents\architect-role-definition.md`
+### 4.6 Planungs-Regeln
+- **KEIN vollständiger Code** in Planungen! Nur konzeptuelle Beschreibungen, API-Signaturen, kurze Pseudo-Code-Beispiele (max 3-5 Zeilen), Dateistrukturen, Import/Export-Listen
+- ❌ VERBOTEN: Komplette Funktions-Implementierungen (>10 Zeilen) · Vollständige React-Komponenten mit JSX · Copy-paste-ready Code-Blöcke
+- ✅ ERLAUBT: Konzeptuelle Beschreibungen · API-Signaturen · Kurze Pseudo-Code-Beispiele (max 3-5 Zeilen) · Dateistrukturen · Import/Export-Listen
+- Max ~700 Zeilen pro Planung (nicht 1500+ mit Code!)
+- 3-4 Komponenten pro Phase (neu oder angepasst), max ~900-1300 Zeilen Code gesamt
+- Vor Programmierung: existierende Funktionen suchen → **Wiederverwendung vor Redundanz** (Ziel: kein toter oder veralteter Code)
+- Proaktiv Edge-Cases identifizieren und dokumentieren (6 + F&A-Szenarien)
+- Menschenlesbare Pläne: einfach, kursiv, fett, Icons, Alltagsbeispiele, Alltagssprache
+
+### 4.7 Umgang mit existierenden Planungen
+
+**Erweiterung:** User möchte neues Feature → Abhängigkeiten prüfen · Integration planen · Edge Cases identifizieren · Neue Phasen hinzufügen
+
+**Fehlerbehebung:** Bug in implementiertem Feature → Welche Phase betroffen? Edge Case nicht berücksichtigt? Plan erweitern mit Fehleranalyse + Fix
+
+**Vollständige Neubewertung:** Grundlegende Überarbeitung → Status Quo erfassen · Refactoring vs. Neuentwicklung · Neue Planung mit Migration-Strategie
 
 ## 5. Subagents & Erkundung
 
 ### 5.1 Subagent-Nutzung (Pflicht)
-- Subagents **nur zum Suchen und Abschließen** verwenden
-- Also zum Suchen von Dateien oder zum Aktualisieren von Dokumentationen
-- **Nicht** für das eigentliche Coding/Implementieren
+- Subagents **nur zum Suchen und Abschließen** — nicht für Coding/Implementieren
+- Fange nicht an zu fragen was bevorzugt wird — direkt das Empfohlene ausimplementieren!
 
 ### 5.2 Pre-Task Reconnaissance (Pflicht bei größeren Tasks)
-
-**Inspiriert von ASMR (Agentic Search & Memory Retrieval):** Bevor Code geschrieben wird,
-MÜSSEN 2-3 Erkunder-Agents (Haiku) parallel gespawnt werden um den vollen Kontext zu sammeln.
-Das verhindert Duplikate, findet relevante Dateien und erkennt Konflikte BEVOR die Programmierung oder Planung startet.
-
-### Ablauf (IMMER linear spawnen!):
 ```
 User-Task → Orchestrator
-  │
   ├─ VOR dem Coding (parallel):
-  │   ├─ erkunder-docs  (Haiku) → Sucht in docs/, .completed/, History/
-  │   └─ erkunder-code  (Haiku) → Findet betroffene Dateien, Duplikate
-  │
+  │   ├─ erkunder-docs (Haiku) → Sucht in docs/, .completed/, History/
+  │   └─ erkunder-code (Haiku) → Findet betroffene Dateien, Duplikate
   ▼ Synthese → duplikat-checker (Haiku, bei neuen Dateien)
-  │
-  ├─ programmiere/plane (Opus) → Coding mit vollem Kontext
-  │
+  ├─ programmiere/plane (Opus)
   ▼ NACH dem Coding:
   └─ abschliesser (Haiku) → .completed/ erstellen + CLAUDE.md Relevanz-Check
 ```
+Pflicht bei: Feature-Implementierung, Refactoring, Bug-Fixes über mehrere Dateien, alles mit >2 Dateien
 
-
-- Fange nicht an mich zu fragen, was ich bevorzuge für eine Option sondern ausimplementieren direkt, 
-    - das was du empfohlen hast!
-
-### Wann PFLICHT?
-- Feature-Implementierung (neue Komponenten, Hooks, Stores)
-- Refactoring (betroffene Dateien kennen)
-- Bug-Fixes die mehrere Dateien betreffen könnten
-- Alles wo der Programmierer mehr als 2 Dateien ändern wird
+**Falls Subagents nicht existieren:** Erstelle sie mit token-effizientem Modell und informiere den User
 
 ### 5.3 Duplikat-Checker (PFLICHT bei neuen Dateien!)
-Bevor NEUE Dateien, Hooks, Stores oder Utilities erstellt werden, MUSS der `duplikat-checker`
-Agent (Haiku) prüfen ob etwas Ähnliches schon existiert. **80%-Regel:** Wenn eine existierende
-Funktion 80%+ der gewünschten Funktionalität hat → **ERWEITERN** statt neu erstellen.
-
-**WICHTIG:** Sollten die Subagents nicht existieren, lege sie an mit einem schnellen und token-effizienten Modell (z.B. Haiku 4.5) von dem Provider, von welchem du gerade aus arbeitest, und teile dem User mit, dass du die Subagents erzeugt hast.
+Vor neuen Dateien/Hooks/Stores/Utilities: `duplikat-checker` prüfen. **80%-Regel:** Existierende Funktion hat 80%+ Funktionalität? → **ERWEITERN** statt neu erstellen.
 
 ### 5.4 Wer schreibt was?
-| Agent | Modell | Datei-Output | Inhalt |
-| --- | --- | --- | --- |
-| `erkunder-docs` | Haiku | Chat-Output an Orchestrator | Verwandte Tasks, Architektur-Docs, History |
-| `erkunder-code` | Haiku | Chat-Output an Orchestrator | Betroffene Dateien, existierende Funktionen, Duplikate |
-| `duplikat-checker` | Haiku | Chat-Output an Orchestrator | Duplikat-Prüfung für geplante neue Dateien |
-| `abschliesser` | Haiku | `.completed/*.md` + ggf. CLAUDE.md Mini-Update | .completed/ Datei + Relevanz-Check Knowledge Map/Persistenz |
-| `ki-architekt` | Opus | `*-ARCHITEKTUR-ANALYSE.md` | Ist-Stand, Abweichungen, betroffene Dateien, Empfehlungen |
+| Agent | Modell | Output |
+|-------|--------|--------|
+| `erkunder-docs` | Haiku | Verwandte Tasks, Architektur-Docs, History |
+| `erkunder-code` | Haiku | Betroffene Dateien, existierende Funktionen, Duplikate |
+| `duplikat-checker` | Haiku | Duplikat-Prüfung für geplante neue Dateien |
+| `abschliesser` | Haiku | .completed/ + CLAUDE.md Relevanz-Check |
+| `ki-architekt` | Opus | Ist-Stand, Abweichungen, betroffene Dateien, Empfehlungen |
 
-## 7. Architektur & Dateistruktur
+## 6. Architektur & React Practices
 
-### 7.1 Component-Based Architecture (WICHTIGSTE REGEL)
-**NIEMALS Komponenten innerhalb anderer Komponenten definieren!**
-- **Warum?** Performance-Killer (jedes Render neu erstellt) + State-Verlust
-- ✅ Jede Komponente in separater Datei
+### 6.1 Component-Based Architecture (WICHTIGSTE REGEL)
+**NIEMALS Komponenten innerhalb anderer Komponenten definieren!** → Performance-Killer (jedes Render neu erstellt) + State-Verlust. Jede Komponente in separater Datei.
 
-### 7.2 Component Organization
-**Maximal 700 Zeilen Code pro Datei** - Auslagern wenn größer
+### 6.2 Komponenten-Organisation
+- **Maximal 700 Zeilen Code pro Datei** — Auslagern wenn größer
+- 🇩🇪 **Deutsch (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
+- 🇺🇸 **Englisch (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
-### 7.3 Component Naming Convention
-- 🇩🇪 **DEUTSCH (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
-- 🇺🇸 **ENGLISCH (Technical):** Section, Card, Item → `ReviewSection.tsx`
-
-## Komponentenstruktur (Sektionsbasiert)
-
-Basierend auf einer bestehenden Applikation — bewährtes Pattern für skalierbare UIs.
-
-### Grundprinzip
-
-- **Sektionen gruppieren** verwandte Komponenten in `(sektionsName)/`-Ordner
-- **Ordnerstruktur = UI-Hierarchie** — Verschachtelung spiegelt visuelle Struktur
-- **Frontend-to-Code Navigation**: UI-Element-Text = Dateiname
-
-### Ordner-Konvention bsp.
+### 6.3 Sektionsbasierte Ordnerstruktur
 ```
 ui/
-├── quiz/                      # Feature-Bereich
-│   ├── (hauptSektion)/          # Sektion mit Klammern
-│   │   ├── (unterSektion)/      # Verschachtelte Untersektion
-│   │   │   ├── AktionButton.tsx # User-facing = Deutsch
+├── quiz/                      
+│   ├── (hauptSektion)/          
+│   │   ├── (unterSektion)/     
+│   │   │   ├── AktionButton.tsx 
 │   │   │   └── KonfigPanel.tsx
-│   │   ├── HauptSection.tsx     # Orchestrator ohne Klammern
+│   │   ├── HauptSection.tsx     
 │   │   └── DatenCard.tsx
-│   └── ZeigerDreieck.tsx        # Hauptkomponente
-├── ui/                          # Reusable UI-Elemente
+│   └── ZeigerDreieck.tsx        
+├── ui/                          
 │   ├── SprechBlase.tsx
 │   └── VorschlagChips.tsx
-└── layout/                      # Container/Wrapper
+└── layout/                      
     └── ZeigerHuelle.tsx
 ```
+- Ordnerstruktur = UI-Hierarchie · `(sektionsName)/`-Ordner gruppieren verwandte Komponenten
+- Eine Hauptkomponente pro Sektion ohne Klammern (Orchestrator) · Max 7 Verschachtelungsebenen
+- **Frontend-to-Code Navigation:** UI-Element-Text = Dateiname (User klickt „Speichern" → `SpeichernButton.tsx`)
 
-### Deutsch/Englisch-Aufteilung
-```
-🇩🇪 DEUTSCH (User-facing Komponenten):
-- Button.tsx     → SpeichernButton.tsx, AbbrechenButton.tsx
-- Panel.tsx      → EinstellungenPanel.tsx, KonfigPanel.tsx
-- Dialog.tsx     → BestätigenDialog.tsx, HilfeDialog.tsx
+### 6.4 React Best Practices
+- **State & Props:** Immutable `setState(prev => ...)` · Stable unique `key` für `.map()` · `useState` = re-render, `useRef` = no re-render
+- **Memoization:** `useMemo` (expensive calculations) · `useCallback` (functions as props) · `React.memo` (components)
+- **Effects & Lifecycle:** IMMER cleanup function bei subscriptions/timers/listeners · Accurate dependencies · `[]` = mount only
+- **Component Communication:** Props down, Callbacks up · 2-3 Levels: Lifting State Up · 3+ Levels: Context/State Management · Referenz: `shared-docs/react-core-communication-patterns.md`
+- **Stale Closure Pattern:**
+  ```typescript
+  // ❌ FALSCH - habits ist noch ALTER State!
+  setHabits(prev => prev.map(h => ...));
+  onHabitsUpdate?.(habits);
 
-🇺🇸 ENGLISCH (Technische Container):
-- Section.tsx    → ZeigerSection.tsx, SprachSection.tsx
-- Card.tsx       → ZeigerCard.tsx, StatusCard.tsx
-- List.tsx       → VorschlagList.tsx
-- Layout.tsx     → ZeigerLayout.tsx
-```
-**Warum?** User klickt "Speichern" → Code heißt `SpeichernButton.tsx`
-### Beispiel: Sprechblasen-Sektion
-```
-ansicht/
-└── ui/
-    └── (sprechblasenSektion)/
-        ├── SprechblasenSection.tsx    ← Orchestrator
-        ├── (inhalt)/
-        │   ├── TextAnzeige.tsx
-        │   └── VorschlagChips.tsx
-        └── (steuerung)/
-            ├── SchließenButton.tsx
-            └── PositionPanel.tsx
-```
-### Richtwerte
-- **Max 7 Verschachtelungsebenen** (falls möglich)
-- **Eine Hauptkomponente pro Sektion** ohne Klammern (Orchestrator)
+  // ✅ RICHTIG - Callback mit neuen Daten
+  setHabits(prev => {
+    const updated = prev.map(h => ...);
+    onHabitsUpdate?.(updated);
+    return updated;
+  });
+  ```
 
-## 8. React Best Practices
+### 6.5 Performance
+- Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
+- Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
+- N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
 
-### 8.1 State & Props
-- **Immutable State:** `setState(prev => ...)`
-- **List Keys:** Stable, unique `key` prop für `.map()` items
-- **State vs Ref:** `useState` = re-render, `useRef` = no re-render
+## 7. Anti-Patterns & UI-Regeln
 
-### 8.2 Performance
-- **Memoization:** `useMemo` (expensive calculations), `useCallback` (functions as props), `React.memo` (components)
+- **Kontextanalyse vor Änderungen:** Letzte 3-4 Tasks prüfen · Würde meine Änderung diese brechen?
+- **Mobile-First Space Efficiency:** UI MUSS Mobile-First designed werden, maximale Space-Efficiency
+- **Wiederverwendbarkeit-First:** Dialoge/Komponenten MÜSSEN für Wiederverwendung designed werden: Props für Modi, Callback-Props
+- **Recherche vor Rumprobieren (KRITISCH!):** 1. Stack-Trace GENAU lesen → 2. Docs/GitHub Issues durchsuchen → 3. Root Cause verstehen → 4. DANN erst fixen
+- **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben → vordefinierte Variants nutzen (`size="sm"`, `size="lg"`). Kein passender Variant? → Variant-System erweitern
+- **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
+- **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
+  - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund · Halbtransparente Hintergründe durch die Content durchscheint
+  - ✅ PFLICHT: Solide Hex-Farben: `!bg-[#0c0f1a]/95` oder `!bg-[#0c0f1a]` · Mindestens 90% Opazität · `!important` nutzen um Shadcn/Radix-Defaults zu überschreiben
+- **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
-### 8.3 Effects & Lifecycle
-- **Cleanup:** IMMER cleanup function bei subscriptions/timers/listeners
-- **Dependency Array:** Accurate dependencies, `[]` = mount only
+## 8. Validierung & Testing
 
-### 8.4 Component Communication
-- **Parent↔Child:** Props down, Callbacks up
-- **2-3 Levels:** Lifting State Up
-- **3+ Levels:** Context API oder State Management
-- **Referenz:** `shared-docs/react-core-communication-patterns.md`
+### 8.1 TypeScript
+- Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
+- **ZERO TOLERANCE:** `npx tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
 
-### 8.5 Stale Closure Pattern
-```typescript
-// ❌ FALSCH - habits ist noch ALTER State!
-setHabits(prev => prev.map(h => ...));
-onHabitsUpdate?.(habits);
+### 8.2 Browser-Testing (PFLICHT bei UI-Features)
+- Nach UI-Feature-Implementierung · Nach Formular/Input-Änderungen · Nach Navigation/Routing-Änderungen · Wenn User „teste das im Browser" sagt
+- Referenz: `shared-docs/agents/agent-browser/SKILL.md`
+- Bei Bundling > 60s: Status prüfen → Cache clearen → Bei Endlos-Loop: Task abbrechen, User informieren
 
-// ✅ RICHTIG - Callback mit neuen Daten
-setHabits(prev => {
-  const updated = prev.map(h => ...);
-  onHabitsUpdate?.(updated);
-  return updated;
-});
-```
+### 8.3 Test-Account System
+- **PFLICHT** bei Browser-Testing von Auth-geschützten Features
+- ❌ VERBOTEN: Test-Account Features in Production-Builds · Echte User-Credentials im Code · Test-Account mit Admin-Rechten · Test-Daten in Production-DB
+- ✅ PFLICHT: `__DEV__` Check · `NODE_ENV=development` Check · Isoliertes Test-Profil · Klar markierte Test-UI-Elemente
 
----
+## 9. Referenzen & Qualitäts-Checkliste
 
-## 9. Performance
-
-### 9.1 Waterfall-Fetching Prevention
-Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
-
-### 9.2 Polling Cleanup
-Jeder `useEffect` mit Timers/Subscriptions MUSS Cleanup-Function haben
-
-### 9.3 N+1 Query Prevention
-Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray(itemIds)`
-
----
-
-## 10. Kritische Anti-Patterns
-
-### 10.1 Context Analysis Before Changes
-Vor Änderungen: Letzte 3-4 Tasks analysieren. Würde meine Änderung diese brechen?
-
-### 10.2 Legacy Code Removal
-Nach jeder Änderung SOFORT ungenutzten Code entfernen.
-
-### 10.3 Mobile-First Space Efficiency
-UI MUSS Mobile-First designed werden: Maximale Space-Efficiency.
-
-### 10.4 Wiederverwendbarkeit-First
-Dialoge/Komponenten MÜSSEN für Wiederverwendung designed werden: Props für Modi, Callback-Props.
-
-### 10.5 RECHERCHE VOR RUMPROBIEREN (KRITISCH!)
-**PFLICHT-Workflow bei unbekannten Fehlern:**
-1. **Stack-Trace GENAU lesen** - Welche Datei, Zeile, Komponente?
-2. **RECHERCHIEREN** - Docs, GitHub Issues durchsuchen
-3. **Root Cause verstehen** - WARUM passiert der Fehler?
-4. **DANN erst fixen** - Mit Verständnis der Ursache
-
-### 10.6 UI Library Defaults respektieren
-**Niemals** die Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben (z.B. `py-3` auf `TabsTrigger`, `h-12` auf `Button`). Nutze stattdessen die vordefinierten Variants (`size="sm"`, `size="lg"` etc.). Wenn kein passender Variant existiert, erweitere das Variant-System in der UI-Komponente.
-
-### 10.7 Disabled Button Feedback
-Jeder disabled Button MUSS über Tooltip oder benachbarten Hinweistext erklären, **warum** er deaktiviert ist. Der User darf nie raten müssen, warum eine Aktion nicht verfügbar ist.
-
-### 10.8 Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!)
-**Alle Dialoge, Sheets, Drawers und modale Overlays MÜSSEN eine solide Hintergrundfarbe mit Hex-Code bekommen.**
-
-**VERBOTEN:**
-- `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund
-- Halbtransparente Hintergründe, durch die der Content dahinter durchscheint
-
-**PFLICHT:**
-- Solide Hex-Farben verwenden: z.B. `!bg-[#0c0f1a]/95` oder `!bg-[#0c0f1a]`
-- Mindestens 90% Opazität, damit der Dialog-Inhalt klar lesbar bleibt
-- Das `!important` (`!bg-...`) nutzen, um Shadcn/Radix-Defaults zu überschreiben
-
-
-### 10.9 Dropdown/Popover Stacking-Check (Z-Index + Overflow)
-Vor jedem UI-Change an Dropdowns, Selects, Popovers, Command-Listen oder Kontextmenüs MUSS geprüft werden:
-- Gibt es einen Parent mit `overflow: hidden/auto` oder einen neuen Stacking Context (`transform`, `filter`, `opacity`, `position`, `isolation`)?
-- Wird das Overlay per Portal gerendert (z. B. Radix `Portal`) statt innerhalb eines abgeschnittenen Containers?
-- Ist der `z-index` relativ zu bestehenden Overlays (Dialog, Sheet, Drawer, Tooltip) korrekt priorisiert?
-
-Wenn Inhalte abgeschnitten sind, **kein Workaround mit nur höherem z-index**. Erst Ursache im Layout/Portal/Overflow beheben.
-
-## 11. TypeScript & Validierung
-
-### 11.1 TypeScript-Prüfung
-- TypeScript immer prüfen: `pnpm lint`
-- Kein `pnpm build` und kein `pnpm dev` nötig
-
-### 11.2 ZERO TOLERANCE für TypeScript-Fehler
-- **NACH JEDER PHASE:** `npx tsc --noEmit` ausführen
-- **NIEMALS** TypeScript-Fehler ignorieren oder „später fixen"
-- **SOFORT** beheben bevor zur nächsten Phase gegangen wird
-- TypeScript-Fehler sind **BLOCKER** - keine Ausnahmen!
-
-## 13. Browser-Testing
-
-### 13.1 Wann Browser-Testing nutzen
-**PFLICHT bei folgenden Situationen:**
-- Nach Implementierung von UI-Features
-- Nach Änderungen an Formularen/Inputs
-- Nach Änderungen an Navigation/Routing
-- Wenn User explizit „teste das im Browser" sagt
-
-**Referenz:** `shared-docs/agents/agent-browser/SKILL.md`
-
-
-### 13.4 Bei langen Wartezeiten
-**Wenn Bundling > 60s dauert:**
-1. Status prüfen (nicht ewig warten)
-2. Cache clearen
-3. Bei Endlos-Loop: Task abbrechen, User informieren
-
-## 14. Test-Account System
-
-### 14.1 Wann Test-Account nutzen
-**PFLICHT bei Browser-Testing von Auth-geschützten Features:**
-- Features die Login erfordern
-
-### 14.2 Sicherheitsregeln (NIEMALS VERLETZEN!)
-❌ **VERBOTEN:**
-- Test-Account Features in Production-Builds
-- Echte User-Credentials im Code
-- Test-Account mit Admin-Rechten
-- Test-Daten in Production-DB
-
-✅ **PFLICHT:**
-- `__DEV__` Check
-- `NODE_ENV=development` Check
-- Isoliertes Test-Profil
-- Klar markierte Test-UI-Elemente
-
----
-
-## 15. Framework-spezifische Docs
-
+### Framework-Dokumentation
 | Framework | Dokumentation |
 |-----------|---------------|
 | React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
 | Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
-| Liquid Glass Design for Tailwind CSS | `shared-docs/design/liquid-glass-guide.md` |
-| DB Live Testing for Postgres | `shared-docs/database-testing-guide.md` |
+| Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
+| DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
 | Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
 
----
+### Qualitäts-Kriterien (bei jeder Planung & Implementierung prüfen)
+- ✅ **Wartbarkeit** — Code leicht zu pflegen?
+- ✅ **Modular/Komponentenbasiert** — Teile unabhängig nutzbar?
+- ✅ **Helper/Service-Funktionen** — Wiederkehrende Logik ausgelagert?
+- ✅ **Trennung** — UI, Logik, Daten klar getrennt?
+- ✅ **Gute Architektur** — Passt die Struktur langfristig?
+- ✅ **Simpel & Wiederverwendbar** — Nicht überkompliziert?
+- ✅ **Performance optimiert** — Edge Cases betrachtet?
+- ✅ **Meinung/Feedback** in Planungen schreiben
 
-## Achte auf folgende Sachen
-
-**Bei jeder Planung und Implementierung immer prüfen:**
-- ✅ **Wartbarkeit** – Ist der Code leicht zu pflegen?
-- ✅ **Modular/Komponentenbasiert** – Sind Teile unabhängig nutzbar?
-- ✅ **Helper/Service-Funktionen** – Wiederkehrende Logik ausgelagert?
-- ✅ **Trennung** – UI, Logik, Daten klar getrennt?
-- ✅ **Gute Architektur** – Passt die Struktur langfristig?
-- ✅ **Simpel und Wiederverwendbar** – Nicht überkompliziert?
-- ✅ **Performance Optimiert** – Edge Cases betrachtet?
-- ✅ **Zu diesen Kriterien immer Meinung/Feedback in Planungen schreiben**
-
-## 16. Quick Checklist
-
+### Quick Checklist
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
-- Max 700 lines/file**
-- keine UNIT Tests schreiben oder planen
-- Wenn eine Datei größer wird: in Unterkomponenten, Helpers oder Services aufteilen.
-- TypeScript immer prüfen: `pnpm lint`.
-- Kein `pnpm build` und kein `pnpm dev` nötig.
-
-**Abschluss**
-- Commite nach Abschluss aller Phasen aus einer Masterplanung die Änderung mit einer schönen Commit message:**
+- Max 700 lines/file
+- Keine UNIT Tests schreiben oder planen
+- Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
+- TypeScript: `pnpm lint` · Kein `pnpm build`/`pnpm dev` nötig
+- Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
