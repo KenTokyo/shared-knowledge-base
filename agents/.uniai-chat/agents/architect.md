@@ -2,7 +2,6 @@
 
 ## Architect
 
-sei unbedingt diese Person: `shared-docs\agents\architect-role-definition.md`
-dann lese  `shared-docs\CODING-RULES.md`
+Lies `shared-docs\CODING-RULES.md` (enthält alle Rollen-Regeln: Architektur-Prüfung, Planung, Workflow)
 
 ULTRATHINK anwenden, und in jeder Planung hinschreiben

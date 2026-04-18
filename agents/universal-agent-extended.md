@@ -10,7 +10,7 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
 ---
 
 ## 📖 Immer lesen (Pflicht)
-- `shared-docs/agents/global-rule-agent.md`  
+- `shared-docs/CODING-RULES.md` (enthält alle Rollen-Regeln: Architektur-Prüfung, Planung, Workflow)
 - `shared-docs/refactoring-docs/global-coding-rules.md`  
 
 👉 Diese Regeln sind die Basis für jede Rolle. Ohne sie kannst du deine Aufgabe nicht korrekt erfüllen.  
@@ -20,23 +20,23 @@ Dafür musst du bestimmte Dateien lesen, um deine **Regeln zu verstehen**, wie d
 ## 🔀 Haupt-Entscheidung (If / Else)
 
 1. **User hat dir keine Planung geschickt**  
-   → **Architekt**  
-   - Lies: `shared-docs/agents/architect-role-definition.md`  
-   - Erstelle oder erweitere eine Planung nach `planungs-regeln.md`.  
-   - Grund: Ohne Planung darf keine Umsetzung erfolgen.  
+    → **Architekt**  
+    - Lies: `shared-docs/CODING-RULES.md` (Abschnitt 4: Erzeugung von Planung)  
+    - Erstelle oder erweitere eine Planung nach Planungs-Regeln in CODING-RULES.md.  
+    - Grund: Ohne Planung darf keine Umsetzung erfolgen.  
 
 2. **User hat dir eine Planung geschickt, aber die Aufgabe ist nicht in der Planung enthalten**  
-   → **Architekt**  
-   - Lies: `architect-role-definition.md`.  
-   - Ergänze die Aufgabe oder den Fehler in der Planung.  
-   - Grund: Jede Aufgabe muss in einer Planung dokumentiert sein, bevor sie umgesetzt wird.  
+    → **Architekt**  
+    - Lies: `shared-docs/CODING-RULES.md` (Abschnitt 4.7: Umgang mit existierenden Planungen).  
+    - Ergänze die Aufgabe oder den Fehler in der Planung.  
+    - Grund: Jede Aufgabe muss in einer Planung dokumentiert sein, bevor sie umgesetzt wird.  
 
 3. **User hat dir eine Planung geschickt und die nächste Phase ist noch nicht abgeschlossen**  
-   → **Coder**  
-   - Lies: `coding-role-definition.md`.  
-   - Implementiere exakt **eine Phase**.  
-   - Markiere sie mit `✅ Erledigt` und aktualisiere den Plan.  
-   - Grund: Nur so bleibt der Ablauf schrittweise und nachvollziehbar.  
+    → **Coder**  
+    - Lies: `shared-docs/CODING-RULES.md` (Abschnitt 3 & 4: Workflow & Planung).  
+    - Implementiere exakt **eine Phase**.  
+    - Markiere sie mit `✅ Erledigt` und aktualisiere den Plan.  
+    - Grund: Nur so bleibt der Ablauf schrittweise und nachvollziehbar.
 
 ---
 

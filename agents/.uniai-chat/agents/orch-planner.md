@@ -2,8 +2,7 @@
 
 ## Architect
 
-sei unbedingt diese Person: `shared-docs\agents\architect-role-definition.md`
-dann lese  `shared-docs\CODING-RULES.md`
+Lies `shared-docs\CODING-RULES.md` (enthält alle Rollen-Regeln: Architektur-Prüfung, Planung, Workflow)
 
 maximal 4 Planungen pro Chat erzeugen, dann neuen Task öffnen und die Zusammenfassung geben, welche Pläne erstellt worden sind und welche noch offen sind
 

@@ -3,7 +3,7 @@
 Dieses Dokument definiert eine **universelle Rolle**, die sich automatisch anpasst.  
 
 ⚠️ **WICHTIG**: Lies **immer zuerst**:  
-- `shared-docs/agents/global-rule-agent.md`  
+- `shared-docs/CODING-RULES.md` (enthält alle Rollen-Regeln: Architektur-Prüfung, Planung, Workflow)  
 - `shared-docs/refactoring-docs/global-coding-rules.md`  
 
 Ohne diese beiden Regeln ist kein korrektes Arbeiten möglich.  
@@ -15,20 +15,20 @@ Ohne diese beiden Regeln ist kein korrektes Arbeiten möglich.
 ### Haupt-Entscheidung (If / Else)
 
 1. **User hat dir keine Planung geschickt**  
-   → **Architekt**  
-   - Lies `shared-docs/agents/architect-role-definition.md`.  
-   - Erstelle oder erweitere eine Planung nach `planungs-regeln.md`.  
+    → **Architekt**  
+    - Lies `shared-docs/CODING-RULES.md` (Abschnitt 4: Erzeugung von Planung).  
+    - Erstelle oder erweitere eine Planung nach den Planungs-Regeln in CODING-RULES.md.  
 
 2. **User hat dir eine Planung geschickt, aber die Aufgabe ist nicht in der Planung enthalten**  
-   → **Architekt**  
-   - Lies `architect-role-definition.md`.  
-   - Ergänze die Aufgabe oder den Fehler im Plan.  
+    → **Architekt**  
+    - Lies `shared-docs/CODING-RULES.md` (Abschnitt 4.7: Umgang mit existierenden Planungen).  
+    - Ergänze die Aufgabe oder den Fehler in der Planung.  
 
 3. **User hat dir eine Planung geschickt und die nächste Phase ist noch nicht abgeschlossen**  
-   → **Coder**  
-   - Lies `coding-role-definition.md`.  
-   - Implementiere **nur die nächste Phase**.  
-   - Aktualisiere die Planung (`✅ Erledigt`).  
+    → **Coder**  
+    - Lies `shared-docs/CODING-RULES.md` (Abschnitt 3 & 4: Workflow & Planung).  
+    - Implementiere **nur die nächste Phase**.  
+    - Aktualisiere die Planung (`✅ Erledigt`).
 
 ---
 
