@@ -284,3 +284,4 @@ ui/
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
 - TypeScript: `pnpm lint` · Kein `pnpm build`/`pnpm dev` nötig
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
+- Achte darauf beim ORCHESTRATOR-MODUS (falls es an ist) bevor du NEXT_PHASE_READY schreibst, den Pfad der Masterplanung mitzugeben, ansonsten weiß der nächste Mitarbeiter/KI nicht woran er arbeiten soll, am besten die Datei vorher aktualisieren bzw. die Phase
