@@ -171,6 +171,8 @@ Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebroche
 So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
 Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
 
+Mehr dazu in `\shared-docs\agents\architect-role-definition.md`
+
 ## 5. Subagents & Erkundung
 
 ### 5.1 Subagent-Nutzung (Pflicht)
