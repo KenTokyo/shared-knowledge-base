@@ -204,7 +204,7 @@ The separation ensures that TrackMe AI 4.0 can evolve its user experience while 
 
 **Aufgabe**
 
-lese refactoring\user-profile-separation-refactor.md und shared-docs\agents\global-rule-agent.md unbedingt
+lese refactoring\user-profile-separation-refactor.md und shared-docs\CODING-RULES.md unbedingt
 also zusammenfassend vorkommende Fehler:
 
 const session = await auth();

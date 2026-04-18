@@ -61,5 +61,5 @@ async function GoodComponent() {
 
 ---
 
-Falls keine Refactoring-Planung vorhanden: erzeuge dann planung nach shared-docs\agents\planungs-regeln.md
+Falls keine Refactoring-Planung vorhanden: erzeuge dann planung nach shared-docs\CODING-RULES.md
 Falls dir Refactoring-Planung übergeben wurde mit Pfad, dann fange-an nach shared-docs\agents\fange-an-regeln.md
