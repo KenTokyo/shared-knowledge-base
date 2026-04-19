@@ -224,6 +224,8 @@ ui/
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
+- **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
+- **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
 
 ## 7. Anti-Patterns & UI-Regeln
 
