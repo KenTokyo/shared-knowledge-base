@@ -239,6 +239,9 @@ ui/
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund · Halbtransparente Hintergründe durch die Content durchscheint
   - ✅ PFLICHT: Solide Hex-Farben: `!bg-[#0c0f1a]/95` oder `!bg-[#0c0f1a]` · Mindestens 90% Opazität · `!important` nutzen um Shadcn/Radix-Defaults zu überschreiben
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
+- **Einheitliche abgerundete Ecken (Border-Radius):**
+  - ✅ PFLICHT: Alle Karten/Container einer Ansicht MÜSSEN denselben Border-Radius haben
+  - Empfohlen: `rounded-2xl` (16px) oder `rounded-xl` (12px) für Karten · `rounded-lg` (8px) für kleinere Elemente (Buttons, Inputs)
 
 ## 8. Validierung & Testing
 
@@ -289,6 +292,10 @@ ui/
 - Achte darauf beim ORCHESTRATOR-MODUS (falls es an ist) bevor du NEXT_PHASE_READY schreibst, den Pfad der Masterplanung mitzugeben, ansonsten weiß der nächste Mitarbeiter/KI nicht woran er arbeiten soll, am besten die Datei vorher aktualisieren bzw. die Phase
 - versuche sinnvoll auch WebFetches sehr oft einzubauen um Probleme zu recherchieren!!
 
-**Erzeuge Signaltöne anhands deines Fortschritts:**
-*   **Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
-*   **Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+## Erzeuge Signaltöne anhands deines Fortschritts
+**so gehts in Windows:**
+**Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
+**Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+**Bei Mac: Mac Signal Sounds (statt PowerShell):**
+Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 && afplay /System/Library/Sounds/Glass.aiff`
+Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
