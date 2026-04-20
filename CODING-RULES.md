@@ -288,3 +288,7 @@ ui/
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
 - Achte darauf beim ORCHESTRATOR-MODUS (falls es an ist) bevor du NEXT_PHASE_READY schreibst, den Pfad der Masterplanung mitzugeben, ansonsten weiß der nächste Mitarbeiter/KI nicht woran er arbeiten soll, am besten die Datei vorher aktualisieren bzw. die Phase
 - versuche sinnvoll auch WebFetches sehr oft einzubauen um Probleme zu recherchieren!!
+
+**Erzeuge Signaltöne anhands deines Fortschritts:**
+*   **Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
+*   **Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
