@@ -248,6 +248,9 @@ ui/
 ### 8.1 TypeScript
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
 - **ZERO TOLERANCE:** `npx tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
+- **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
+- **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
+- **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
 
 ### 8.2 Browser-Testing (PFLICHT bei UI-Features)
 - Nach UI-Feature-Implementierung · Nach Formular/Input-Änderungen · Nach Navigation/Routing-Änderungen · Wenn User „teste das im Browser" sagt
@@ -285,7 +288,9 @@ ui/
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
 - Max 700 lines/file
-- Keine UNIT Tests schreiben oder planen
+- Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
+- Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
+- Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
 - TypeScript: `pnpm lint` · Kein `pnpm build`/`pnpm dev` nötig
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
@@ -299,3 +304,7 @@ ui/
 **Bei Mac: Mac Signal Sounds (statt PowerShell):**
 Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 && afplay /System/Library/Sounds/Glass.aiff`
 Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
+**NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
+- Der Dev-Server läuft oft bereits im Hintergrund
+- Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
+- Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
