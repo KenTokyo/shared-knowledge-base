@@ -1,5 +1,5 @@
 
-Wichtig ist alles jetzt zu planen in einer quasi masterplanung also tasks datei mit phasen planst, falls fertig
+Wichtig ist alles jetzt zu planen in einer quasi masterplanung falls noch nicht gemacht also tasks datei mit phasen planst, falls fertig
 
 dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du für richtig hältst phasenweise, aber bitte alle Phasen implementiere ohne aufhören. 
 
