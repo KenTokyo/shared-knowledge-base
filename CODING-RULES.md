@@ -224,6 +224,8 @@ ui/
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
+- **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
+- **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
 
 ## 7. Anti-Patterns & UI-Regeln
 
@@ -237,12 +239,18 @@ ui/
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund · Halbtransparente Hintergründe durch die Content durchscheint
   - ✅ PFLICHT: Solide Hex-Farben: `!bg-[#0c0f1a]/95` oder `!bg-[#0c0f1a]` · Mindestens 90% Opazität · `!important` nutzen um Shadcn/Radix-Defaults zu überschreiben
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
+- **Einheitliche abgerundete Ecken (Border-Radius):**
+  - ✅ PFLICHT: Alle Karten/Container einer Ansicht MÜSSEN denselben Border-Radius haben
+  - Empfohlen: `rounded-2xl` (16px) oder `rounded-xl` (12px) für Karten · `rounded-lg` (8px) für kleinere Elemente (Buttons, Inputs)
 
 ## 8. Validierung & Testing
 
 ### 8.1 TypeScript
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
 - **ZERO TOLERANCE:** `npx tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
+- **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
+- **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
+- **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
 
 ### 8.2 Browser-Testing (PFLICHT bei UI-Features)
 - Nach UI-Feature-Implementierung · Nach Formular/Input-Änderungen · Nach Navigation/Routing-Änderungen · Wenn User „teste das im Browser" sagt
@@ -280,8 +288,23 @@ ui/
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
 - Max 700 lines/file
-- Keine UNIT Tests schreiben oder planen
+- Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
+- Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
+- Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
 - TypeScript: `pnpm lint` · Kein `pnpm build`/`pnpm dev` nötig
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
 - Achte darauf beim ORCHESTRATOR-MODUS (falls es an ist) bevor du NEXT_PHASE_READY schreibst, den Pfad der Masterplanung mitzugeben, ansonsten weiß der nächste Mitarbeiter/KI nicht woran er arbeiten soll, am besten die Datei vorher aktualisieren bzw. die Phase
+- versuche sinnvoll auch WebFetches sehr oft einzubauen um Probleme zu recherchieren!!
+
+## Erzeuge Signaltöne anhands deines Fortschritts
+**so gehts in Windows:**
+**Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
+**Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+**Bei Mac: Mac Signal Sounds (statt PowerShell):**
+Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 && afplay /System/Library/Sounds/Glass.aiff`
+Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
+**NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
+- Der Dev-Server läuft oft bereits im Hintergrund
+- Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
+- Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
