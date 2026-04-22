@@ -41,10 +41,12 @@
 
 - **Vor Programmierung:** Planung muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
 - **Vor Implementierung:** Planung validieren ob sie Sinn macht und korrekt geplant wurde
-- **Phasenweise umsetzen** vom aktuellen Stand bis zur letzten Phase
-- **In Task-Datei tracken** mit Kontextinformationen und Phasenabläufen
-- **Nach jeder Phase:** Planung updaten und nächste Phase durchgehen **ohne STOPP!**
-- **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + `NEXT_PHASE_READY` am Ende · Task-Pfad mitgeben · Kleine Summary was gemacht wurde
+- **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung anlegen
+- **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren)
+- **In Task-Datei tracken** mit Kontextinformationen, erledigten To-dos, offenen To-dos und nächster Phase
+- **Nach jeder Phase:** Planung updaten und nächste Phase direkt weiter umsetzen
+- **Nach allen Phasen:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen (falls noch nicht behoben)
+- **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
 ## 4. Erzeugung von Planung
@@ -76,21 +78,21 @@ Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Sch
 
 2. **Kontext sammeln:** Plan lesen · Ähnliche Dateien finden für Struktur/Coding-Richtlinien
 
-3. **Eine Phase implementieren:** Qualität vor Quantität, nur eine Phase pro Durchlauf
+3. **Phasen nacheinander implementieren:** Qualität vor Quantität, ohne Rückfrage bis alle Phasen abgeschlossen sind (außer externer Blocker)
 
-4. **Plan aktualisieren (PFLICHT nach jeder Phase):** Phase als ✅ markieren · Arbeitsschritte dokumentieren · Entscheidungen festhalten · Edge Cases notieren
+4. **Plan aktualisieren (PFLICHT nach jeder Phase):** Phase als ✅ markieren · Arbeitsschritte dokumentieren · Entscheidungen festhalten · Edge Cases notieren · erledigte/offene To-dos und nächste Phase festhalten
 
-5. **Kommentar-Sektion unter allen Phasen:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase) · Refactoring-Plan empfehlen bei Funden
+5. **Kommentar-Sektion unter allen Phasen:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase, mit den meisten Änderungen) · Refactoring-Plan empfehlen bei Funden
 
 6. **Dokumentation (NUR wenn ALLE Phasen fertig):** Feature-Overview, Sub-Features, Task-History, ggf. Master-Navigation updaten · Doku-Richtlinien beachten: `agents/dokumentier-regeln.md`
 
 ### 4.3 Masterplan-System
 - Bei großen Systemen: `docs/[feature]/tasks/[datum]-[masterplan].md` referenziert mehrere `[datum]-[task].md`
-- Erstellen wenn User „erzeuge Masterplan" sagt
+- Erstellen sobald Umfang/Abhängigkeiten es erfordern oder wenn User „erzeuge Masterplan" sagt
 - Pflicht-Phasenpläne nach unserem Format
 - Phasen am Stück umsetzen und dokumentieren, ohne Pause
 
-### 4.4 Phasen-Format (Pflicht)
+### 4.4 Phasen-mit-To-dos-Format (Pflicht, 6.7)
 ```markdown
 ### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung*
 **Ziel:** Hier schreiben, worum es geht.
@@ -137,6 +139,10 @@ In jeder Planung diesen Absatz einfügen — als **Denkprozess**, nicht starre C
 
 **Vollständige Neubewertung:** Grundlegende Überarbeitung → Status Quo erfassen · Refactoring vs. Neuentwicklung · Neue Planung mit Migration-Strategie
 
+### 4.8 Abschluss nach allen Phasen (PFLICHT)
+- Wenn in der Kommentar-Sektion offene Auffälligkeiten stehen: direkt eine Cleanup-Masterplanung in `docs/[feature]/tasks/` erstellen
+- Abschlussmeldung enthält immer: kurzen Umsetzungsstand + nächsten sinnvollen Verbesserungsvorschlag für die App
+
 ## 5. Subagents & Erkundung
 
 ### 5.1 Subagent-Nutzung (Pflicht)
@@ -145,7 +151,7 @@ In jeder Planung diesen Absatz einfügen — als **Denkprozess**, nicht starre C
 
 ### 5.2 Pre-Task Reconnaissance (Pflicht bei größeren Tasks)
 ```
-User-Task → Orchestrator
+User-Task → Hauptagent
   ├─ VOR dem Coding (parallel):
   │   ├─ erkunder-docs (Haiku) → Sucht in docs/, .completed/, History/
   │   └─ erkunder-code (Haiku) → Findet betroffene Dateien, Duplikate
@@ -198,7 +204,7 @@ ui/
     └── ZeigerHuelle.tsx
 ```
 - Ordnerstruktur = UI-Hierarchie · `(sektionsName)/`-Ordner gruppieren verwandte Komponenten
-- Eine Hauptkomponente pro Sektion ohne Klammern (Orchestrator) · Max 7 Verschachtelungsebenen
+- Eine Hauptkomponente pro Sektion ohne Klammern (Sektions-Container) · Max 7 Verschachtelungsebenen
 - **Frontend-to-Code Navigation:** UI-Element-Text = Dateiname (User klickt „Speichern" → `SpeichernButton.tsx`)
 
 ### 6.4 React Best Practices
@@ -294,7 +300,7 @@ ui/
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
 - TypeScript: `pnpm lint` · Kein `pnpm build`/`pnpm dev` nötig
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
-- Achte darauf beim ORCHESTRATOR-MODUS (falls es an ist) bevor du NEXT_PHASE_READY schreibst, den Pfad der Masterplanung mitzugeben, ansonsten weiß der nächste Mitarbeiter/KI nicht woran er arbeiten soll, am besten die Datei vorher aktualisieren bzw. die Phase
+- Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max 3 Hauptkomponentenpfade
 - versuche sinnvoll auch WebFetches sehr oft einzubauen um Probleme zu recherchieren!!
 
 ## Erzeuge Signaltöne anhands deines Fortschritts
