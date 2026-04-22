@@ -304,7 +304,12 @@ ui/
 **Bei Mac: Mac Signal Sounds (statt PowerShell):**
 Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 && afplay /System/Library/Sounds/Glass.aiff`
 Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
+
+
 **NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
 - Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
+
+- Nutze den Skill: `C:\Users\PC1\.agents\skills\caveman\SKILL.md` immer
+- Halte dich an die Design/Layout Regeln, möglicherweise in einer globals.css hinterlegt, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
