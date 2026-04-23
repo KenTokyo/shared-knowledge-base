@@ -4,15 +4,15 @@
    - Keine Planung? → In `docs/[feature]/tasks/`
    - **ERST nach Planungserweiterung darf programmiert werden!**
 
-Wichtig ist alles jetzt zu planen in einer quasi masterplanung falls noch nicht gemacht also tasks datei mit phasen planst, falls fertig, Nciht einfach masterplanung erzeugen, falls eine existiert, weil ich dir diese Datei eigentlich nur als Andenken mitgeben werde wie dein Workflow auszusehen hat, daran sollst du dich bitte halten, also an diese Regeln!
+Falls keine Masterplanung existiert: Tasks-Datei mit Phasen erstellen. Existiert bereits eine? Nicht überschreiben — diese Datei definiert deinen Workflow, halte dich an diese Regeln!
 
-dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du für richtig hältst phasenweise, aber bitte alle Phasen implementiere ohne aufzuhören. 
+Danach phasenweise implementieren, was sinnvoll ist — alle Phasen durcharbeiten ohne aufzuhören. 
 
 **Aber Dokumentiere nach jeder phase:**
 
 Weil du machst ein Kontext-condensing. Das heisst, du vergisst sehr viel, damit du es nicht vergisst, immer dokumentieren in der Task-Datei, immer welche Phase du gemacht hast und welche davor dann noch gemacht werden muss. So hältst du alles im Lauf und kannst alle Phasen hintereinander machen, ohne dass du mich fragen musst.
 
-6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
+## 6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
 Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
 
 **Beispiel:**
