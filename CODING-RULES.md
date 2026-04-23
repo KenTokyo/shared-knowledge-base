@@ -49,6 +49,10 @@
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
+
+Falls Orchestrator Modus an!
+- **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + `NEXT_PHASE_READY` am Ende · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
+
 ## 4. Erzeugung von Planung
 
 ### 4.1 Dokumentationssystem
@@ -93,33 +97,39 @@ Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Sch
 - Phasen am Stück umsetzen und dokumentieren, ohne Pause
 
 ### 4.4 Phasen-mit-To-dos-Format (Pflicht, 6.7)
+
+**Beispiel:**
 ```markdown
-### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung*
+### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
 **Ziel:** Hier schreiben, worum es geht.
 * [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
 * [ ] `AUFGABE ABC` implementieren.
 **Referenzen:**
-`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen`
+`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
 `Jeweils getrennt pro Zeile`
 ```
 
-### 4.5 Architektur-Risiken in Planungen (PFLICHT)
-In jeder Planung diesen Absatz einfügen — als **Denkprozess**, nicht starre Checkliste. Konkret für die Änderung durchdenken:
-- Welche anderen Bereiche könnten betroffen sein? (Cross-Cutting Concerns)
-- Wo wird der gleiche Datenfluss / die gleiche Quelle noch verwendet?
-- Welche React-Lifecycle-Probleme könnten auftreten? (StrictMode, Remount, Context-Verfügbarkeit)
-- Wo überqueren wir Server/Client-Grenzen?
-- Nutzen wir flüchtige Speicher wo persistente Lösung nötig wäre?
+### Kommentar Sektion unter der Phasenplanung
+Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
+und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
+Kriterien eingehalten z.B. 
 
 ```markdown
-## 🛡️ Architektur-Risiken & Seiteneffekte
-### Betroffene Bereiche (Cross-Cutting)
-- [Bereich X] → könnte [Problem Y] verursachen weil [Grund]
-### Potenzielle Fallen
-- ⚠️ [Falle] → Empfehlung: [Alternative]
-### Checkliste
-- [ ] Seiteneffekte geprüft · [ ] Context/Store-Verfügbarkeit sichergestellt
+## Kommentare
+### Phase 1
+**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
+**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
+1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
+Beschreibung hierzu notieren, falls notwendig
+Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
+2. 🟠 **Hoch:**...
+
+### Phase 2....
 ```
+
+So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
+Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
+
 
 ### 4.6 Planungs-Regeln
 - **KEIN vollständiger Code** in Planungen! Nur konzeptuelle Beschreibungen, API-Signaturen, kurze Pseudo-Code-Beispiele (max 3-5 Zeilen), Dateistrukturen, Import/Export-Listen
@@ -226,6 +236,13 @@ ui/
   });
   ```
 
+### 6.4.1 Render-Loop & Hydration Guard (PFLICHT)
+- **NIEMALS State im Render-Pfad setzen:** Kein `setState`, `setStore`, `dispatch` oder Context-Update im Komponenten-Body, in JSX-Ausdrücken oder in Funktionen, die während Render direkt ausgeführt werden.
+- **NIEMALS Setter in Setter-Updaters verschachteln:** Kein `setX(prev => { setY(...); return ...; })`. Erst Zielzustand berechnen, dann Updates getrennt außerhalb des Updaters ausführen.
+- **NIEMALS interaktive Elemente ineinander verschachteln:** Kein `<button>` in `<button>`, kein Link in Button, kein Button in Link. Bei klickbaren Zeilen: Wrapper als `div` mit `role="button"` + `tabIndex` + Tastatursteuerung nutzen.
+- **Pflicht-Check nach UI-Änderungen:** `pnpm exec next lint --file <geänderte-datei>` auf jede angepasste UI-Datei.
+- **Stop-Regel bei Warnungen:** Bei `validateDOMNesting`, `Cannot update a component while rendering`, `Too many re-renders` oder Hydration-Warnungen sofort Root Cause fixen, nicht unterdrücken.
+
 ### 6.5 Performance
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
@@ -312,6 +329,7 @@ Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 &&
 Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
 
 
+# Wichtige Regeln / Zusammmenfassung
 **NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
@@ -319,3 +337,8 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
 
 - Nutze den cavemen Skill immer: `C:\Users\PC1\.agents\skills\caveman\SKILL.md`
 - Halte dich an die Design/Layout Regeln, möglicherweise in einer globals.css hinterlegt, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
+
+- Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
+- **Beim ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + `NEXT_PHASE_READY` am Ende · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
+- Schreibe immer zu jeder Phase, falls fertig Anmerkungen in die Planung, was du noch für Schwachstellen rausgefunden hast, diese dann am Ende der Implementierung des Gesamtplans, also falls alle Phasen fertig sind, sollten dann Aufgaben anhand der Anmerkungen erzeugt werden 
+  - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!
