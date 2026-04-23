@@ -1,5 +1,5 @@
 
-Wichtig ist alles jetzt zu planen in einer quasi masterplanung falls noch nicht gemach also tasks datei mit phasen planst, falls fertig
+Wichtig ist alles jetzt zu planen in einer quasi masterplanung falls noch nicht gemacht also tasks datei mit phasen planst, falls fertig, Nciht einfach masterplanung erzeugen, falls eine existiert, weil ich dir diese Datei eigentlich nur als Andenken mitgeben werde wie dein Workflow auszusehen hat, daran sollst du dich bitte halten, also an diese Regeln!
 
 dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du für richtig hältst phasenweise, aber bitte alle Phasen implementiere ohne aufhören. 
 
