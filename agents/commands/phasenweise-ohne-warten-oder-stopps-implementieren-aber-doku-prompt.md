@@ -1,7 +1,12 @@
+1. **Planungsvalidierung (ZWINGEND VOR CODE):**
+   - User-Planung mitgegeben? → Lesen, prüfen ob Task enthalten
+   - Task enthalten? → JA: Implementieren · NEIN: Planung erweitern
+   - Keine Planung? → In `docs/[feature]/tasks/`
+   - **ERST nach Planungserweiterung darf programmiert werden!**
 
 Wichtig ist alles jetzt zu planen in einer quasi masterplanung falls noch nicht gemacht also tasks datei mit phasen planst, falls fertig, Nciht einfach masterplanung erzeugen, falls eine existiert, weil ich dir diese Datei eigentlich nur als Andenken mitgeben werde wie dein Workflow auszusehen hat, daran sollst du dich bitte halten, also an diese Regeln!
 
-dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du für richtig hältst phasenweise, aber bitte alle Phasen implementiere ohne aufhören. 
+dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du für richtig hältst phasenweise, aber bitte alle Phasen implementiere ohne aufzuhören. 
 
 **Aber Dokumentiere nach jeder phase:**
 
@@ -33,7 +38,7 @@ Kriterien eingehalten z.B.
 **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
 1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
 Beschreibung hierzu notieren, falls notwendig
-Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
+Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die Planung als Referenz
 2. 🟠 **Hoch:**...
 
 ### Phase 2....
