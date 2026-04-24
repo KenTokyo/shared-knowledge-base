@@ -55,48 +55,18 @@ Falls Orchestrator Modus an!
 
 ## 4. Erzeugung von Planung
 
-### 4.1 Dokumentationssystem
+### Dokumentationssystem - Phasenformat einhalten!
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
 
 Jede Phase MUSS diese **6 Punkte** enthalten:
 1. **Ziel:** Was ist am Ende sichtbar besser?
-2. **Warum:** Warum löst genau diese Phase das Kernproblem?
-3. **Umsetzung:** Welche 1-3 Dateien/Module werden konkret geändert?
-4. **Risiko:** Was könnte kaputtgehen?
-5. **Check:** Woran erkennen wir schnell, dass es funktioniert?
-6. **Ergebnis-Satz:** Kurzer Satz in einfacher Sprache für Nicht-Entwickler.
+2. **Todos:** Die markiert werden sollen falls fertig
+3. **Ergebnis-Satz:** Kurzer Satz in einfacher Sprache für Nicht-Entwickler.
+4. **Warum (optional):** Warum löst genau diese Phase das Kernproblem?
+5. **Eingehalten**: Coding Regeln die eingehalten wurden, z.B. unter 700 Zeilen, theme-orientierte Farben verwendet, React useEffect vermieden, wie im design-system...,
+6. Architektur passt
+7. **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings**: dies sind beispiele: Childkomponente nutzt unnötigerweise useEffect, Performance Issues, hardcodierte Farben entdeckt in Komponente XYZ, falsche Ausführung von react useRef..., finder im falschen Ordner abgelegt, schlechte Architektur, service Klassen im falschen Ordner, zuviele Komponenten verschachtelt, fehlerhafte Kompontennamen, kommentare veraltet...
 
-Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Schritten.
-
-**Komplexe-Themen-Ablauf:** Probleme → Auswirkungen → Ist-Fluss → Bruchstelle → Ursachen → Lösungen/Optionen (alle auflisten) → Empfehlung ausplanen → Nebenwirkungen → Abschluss
-
-### 4.2 Planungs-Workflow (ZWINGEND VOR CODE)
-
-**Prioritäten:** 1. 🚨 Planung aktuell halten · 2. 📖 Plan lesen · 3. 💡 Eine Phase · 4. ✅ Plan updaten · 5. ✨ Kommunikation
-
-1. **Planungsvalidierung (ZWINGEND VOR CODE):**
-   - User-Planung mitgegeben? → Lesen, prüfen ob Task enthalten
-   - Task enthalten? → JA: Implementieren · NEIN: Planung erweitern
-   - Keine Planung? → In `docs/[feature]/tasks/` suchen oder neue nach Architekten-Regeln erstellen
-   - **ERST nach Planungserweiterung darf programmiert werden!**
-
-2. **Kontext sammeln:** Plan lesen · Ähnliche Dateien finden für Struktur/Coding-Richtlinien
-
-3. **Phasen nacheinander implementieren:** Qualität vor Quantität, ohne Rückfrage bis alle Phasen abgeschlossen sind (außer externer Blocker)
-
-4. **Plan aktualisieren (PFLICHT nach jeder Phase):** Phase als ✅ markieren · Arbeitsschritte dokumentieren · Entscheidungen festhalten · Edge Cases notieren · erledigte/offene To-dos und nächste Phase festhalten
-
-5. **Kommentar-Sektion unter allen Phasen:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase, mit den meisten Änderungen) · Refactoring-Plan empfehlen bei Funden
-
-6. **Dokumentation (NUR wenn ALLE Phasen fertig):** Feature-Overview, Sub-Features, Task-History, ggf. Master-Navigation updaten · Doku-Richtlinien beachten: `agents/dokumentier-regeln.md`
-
-### 4.3 Masterplan-System
-- Bei großen Systemen: `docs/[feature]/tasks/[datum]-[masterplan].md` referenziert mehrere `[datum]-[task].md`
-- Erstellen sobald Umfang/Abhängigkeiten es erfordern oder wenn User „erzeuge Masterplan" sagt
-- Pflicht-Phasenpläne nach unserem Format
-- Phasen am Stück umsetzen und dokumentieren, ohne Pause
-
-### 4.4 Phasen-mit-To-dos-Format (Pflicht, 6.7)
 
 **Beispiel:**
 ```markdown
@@ -107,12 +77,12 @@ Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Sch
 **Referenzen:**
 `Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
 `Jeweils getrennt pro Zeile`
+**Ergebnis:** Frontend erzeugen für das Dashboard
 ```
 
 ### Kommentar Sektion unter der Phasenplanung
-Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
-und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
-Kriterien eingehalten z.B. 
+- Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit Komma getrennt in einer Zeile 
+- Danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren Kriterien eingehalten z.B. 
 
 ```markdown
 ## Kommentare
@@ -121,37 +91,53 @@ Kriterien eingehalten z.B.
 **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
 1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
 Beschreibung hierzu notieren, falls notwendig
-Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
-2. 🟠 **Hoch:**...
+Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Komponente XYZ und konnten eine Render-Schleife auslösen! Versehentlich angehängte Restzeilen entdeckt! Event-Werte blindcast entdeckt! State-Updates nicht idempotent - Rerender-Kette möglich!
+2. 🟠 **Hoch:** über 700 Zeilen, Coding Regel gebrochen
 
 ### Phase 2....
 ```
 
-So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
+So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar-Sektion
 Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
 
+- **Falls Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings vorliegen** direkt Optimierungsplan erzeugen mit Verweis auf die Planung als Referenz, also im selben in `docs/[feature]/tasks/...optimierung-tasks.md` alle Findings dort warten und nach Abschluss aller Phasen in dieser Planung - erst danach die Optimierungs-tasks durchgehen und im Loop alles fixen!
 
-### 4.6 Planungs-Regeln
 - **KEIN vollständiger Code** in Planungen! Nur konzeptuelle Beschreibungen, API-Signaturen, kurze Pseudo-Code-Beispiele (max 3-5 Zeilen), Dateistrukturen, Import/Export-Listen
-- ❌ VERBOTEN: Komplette Funktions-Implementierungen (>10 Zeilen) · Vollständige React-Komponenten mit JSX · Copy-paste-ready Code-Blöcke
-- ✅ ERLAUBT: Konzeptuelle Beschreibungen · API-Signaturen · Kurze Pseudo-Code-Beispiele (max 3-5 Zeilen) · Dateistrukturen · Import/Export-Listen
-- Max ~700 Zeilen pro Planung (nicht 1500+ mit Code!)
-- 3-4 Komponenten pro Phase (neu oder angepasst), max ~900-1300 Zeilen Code gesamt
-- Vor Programmierung: existierende Funktionen suchen → **Wiederverwendung vor Redundanz** (Ziel: kein toter oder veralteter Code)
+- ❌ **VERBOTEN**: Komplette Funktions-Implementierungen (>10 Zeilen) · Vollständige React-Komponenten mit JSX · Copy-paste-ready Code-Blöcke
+- ✅ **ERLAUBT**: Konzeptuelle Beschreibungen · API-Signaturen · Kurze Pseudo-Code-Beispiele (max 3-5 Zeilen) · Dateistrukturen · Import/Export-Listen
+- **Max ~700 Zeilen pro Planung** (nicht 1500+ mit Code!)
+- **3-4 Komponenten pro Phase** (neu oder angepasst), max ~900-1300 Zeilen Code gesamt
+- **Vor Programmierung**: existierende Funktionen suchen → **Wiederverwendung vor Redundanz** (Ziel: kein toter oder veralteter Code)
 - Proaktiv Edge-Cases identifizieren und dokumentieren (6 + F&A-Szenarien)
-- Menschenlesbare Pläne: einfach, kursiv, fett, Icons, Alltagsbeispiele, Alltagssprache
+- **Menschenlesbare Pläne**: einfach, kursiv, fett, Icons, Alltagsbeispiele, Alltagssprache
 
-### 4.7 Umgang mit existierenden Planungen
+Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Schritten.
 
+### Planungs-Workflow (ZWINGEND VOR CODE)
+1. **Planungsvalidierung (ZWINGEND VOR CODE):**
+   - User-Planung mitgegeben? → Lesen, prüfen ob Task enthalten
+   - Task enthalten? → JA: Implementieren · NEIN: Planung erweitern
+   - Keine Planung? → In `docs/[feature]/tasks/` suchen oder neue nach Architekten-Regeln erstellen
+   - **ERST nach Planungserweiterung darf programmiert werden!**
+2. **Kontext sammeln:** Plan lesen · Ähnliche Dateien finden für Struktur/Coding-Richtlinien
+3. **Phasen nacheinander implementieren:** Qualität vor Quantität, ohne Rückfrage bis alle Phasen abgeschlossen sind (außer externer Blocker)
+4. **Plan aktualisieren (PFLICHT nach jeder Phase):** Phase als ✅ markieren · Arbeitsschritte dokumentieren · Entscheidungen festhalten · Edge Cases notieren · erledigte/offene To-dos und nächste Phase festhalten
+5. **Kommentar-Sektion unter allen Phasen:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase, mit den meisten Änderungen) · Refactoring-Plan empfehlen bei Funden
+6. **Jetzt nächste Phase implementieren ohne STOPP:** Entweder NEXT_PHASE_READY schreiben, falls Orchestrator an ist oder einfach weitermachen und diesen Prozess wiederholen
+
+
+**Dokumentation (NUR wenn ALLE Phasen fertig):** Feature-Overview, Sub-Features, Task-History, ggf. Master-Navigation updaten · Doku-Richtlinien beachten: `agents/dokumentier-regeln.md`
+
+### Masterplan-System
+- Bei großen Systemen: `docs/[feature]/tasks/[thema]-[masterplan].md` referenziert mehrere `[thema]-[task].md`
+- Erstellen sobald Umfang/Abhängigkeiten es erfordern oder wenn User „erzeuge Masterplan" sagt
+- Pflicht-Phasenpläne nach unserem Format
+- Phasen am Stück umsetzen und dokumentieren, ohne Pause
+
+### Umgang mit existierenden Planungen
 **Erweiterung:** User möchte neues Feature → Abhängigkeiten prüfen · Integration planen · Edge Cases identifizieren · Neue Phasen hinzufügen
-
 **Fehlerbehebung:** Bug in implementiertem Feature → Welche Phase betroffen? Edge Case nicht berücksichtigt? Plan erweitern mit Fehleranalyse + Fix
-
 **Vollständige Neubewertung:** Grundlegende Überarbeitung → Status Quo erfassen · Refactoring vs. Neuentwicklung · Neue Planung mit Migration-Strategie
-
-### 4.8 Abschluss nach allen Phasen (PFLICHT)
-- Wenn in der Kommentar-Sektion offene Auffälligkeiten stehen: direkt eine Cleanup-Masterplanung in `docs/[feature]/tasks/` erstellen
-- Abschlussmeldung enthält immer: kurzen Umsetzungsstand + nächsten sinnvollen Verbesserungsvorschlag für die App
 
 ## 5. Subagents & Erkundung
 
@@ -242,6 +228,23 @@ ui/
 - **NIEMALS interaktive Elemente ineinander verschachteln:** Kein `<button>` in `<button>`, kein Link in Button, kein Button in Link. Bei klickbaren Zeilen: Wrapper als `div` mit `role="button"` + `tabIndex` + Tastatursteuerung nutzen.
 - **Pflicht-Check nach UI-Änderungen:** `pnpm exec next lint --file <geänderte-datei>` auf jede angepasste UI-Datei.
 - **Stop-Regel bei Warnungen:** Bei `validateDOMNesting`, `Cannot update a component while rendering`, `Too many re-renders` oder Hydration-Warnungen sofort Root Cause fixen, nicht unterdrücken.
+- 
+### 6.4.2 Controlled-Value Guard & Patch-Hygiene (PFLICHT)
+- **Kontrollierte UI-Werte immer validieren:** Bei `Tabs`, `Select`, `Popover` usw. nur erlaubte Werte an den State weitergeben (Allowlist-Prinzip).
+- **Fallback bei nicht verfügbaren Features:** Wenn ein Wert auf der aktuellen Plattform nicht erlaubt ist (z.B. `terminal` im Browser), sofort auf sicheren Wert zurückfallen (`chat` oder Default-Tab).
+- **Event-Werte nie blind casten:** Kein `onValueChange={v => setState(v as MyType)}` ohne Laufzeitcheck.
+- **State-Updates idempotent halten:** Nur updaten, wenn sich der Wert wirklich geändert hat (`prev === next ? prev : next`), damit keine unnötigen Re-Render-Ketten entstehen.
+- **Patch-Hygiene nach schnellen Edits:** Nach jedem Patch Dateiende prüfen (keine angehängten JSX-Reste, keine duplizierten Abschlussblöcke).
+- **Pflicht-Check danach:** `pnpm exec next lint --file <datei>`; bei auffälligem Laufzeitverhalten zusätzlich `npx tsc --noEmit` und Fehlerstellen dokumentieren.
+
+**Vorfall-Merkhilfe (2026-04-24, einfach erklärt):**
+- Ungültige Tab-Werte konnten eine Render-Schleife auslösen.
+- Versehentlich angehängte Restzeilen machten den UI-Stack instabil.
+- Falscher Zugriff auf `workspaces` (Array statt Objekt-Mapping) erzeugte TypeScript-Fehler.
+- UI-Werte immer prüfen (nicht blind casten),
+- nur bei echter Änderung State setzen,
+- bei nicht unterstütztem Wert sofort auf sicheren Fallback,
+- nach Patch immer Dateiende + Lint prüfen.
 
 ### 6.5 Performance
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
@@ -259,8 +262,11 @@ ui/
 - **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben → vordefinierte Variants nutzen (`size="sm"`, `size="lg"`). Kein passender Variant? → Variant-System erweitern
 - **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
-  - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund · Halbtransparente Hintergründe durch die Content durchscheint
-  - ✅ PFLICHT: Solide Hex-Farben: `!bg-[#0c0f1a]/95` oder `!bg-[#0c0f1a]` · Mindestens 90% Opazität · `!important` nutzen um Shadcn/Radix-Defaults zu überschreiben
+  - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund z.B. `bg-green-500`, `bg-red-600`...· Halbtransparente Hintergründe durch die Content durchscheint
+  - ✅ PFLICHT:
+    1. Entweder prüfen ob globale css Klassen existieren/theming-system, wo Farben schon dran sind z.B: `[data-theme="default"] { --background: 0 0% 100%; --foreground: 0 0% 3.9%; --card: 0 0% 100%;...}`
+    2. ODER: `bg-[#0c0f1a]` - immer volle Opacity!
+      - Achte hier auf eine hochwertige Farbpalette, minimalistisch, dunkel und lightmode orientiert - schaue hierzu unbedingt `\shared-docs\farbpalette\minimal-styling-template.css`
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 - **Einheitliche abgerundete Ecken (Border-Radius):**
   - ✅ PFLICHT: Alle Karten/Container einer Ansicht MÜSSEN denselben Border-Radius haben
