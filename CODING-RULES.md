@@ -268,28 +268,15 @@ ui/
 - **Recherche vor Rumprobieren (KRITISCH!):** 1. Stack-Trace GENAU lesen → 2. Docs/GitHub Issues durchsuchen → 3. Root Cause verstehen → 4. DANN erst fixen
 - **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben → vordefinierte Variants nutzen (`size="sm"`, `size="lg"`). Kein passender Variant? → Variant-System erweitern
 - **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
-
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
-
 ## 8. Validierung & Testing
-
 ### 8.1 TypeScript
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
 - **ZERO TOLERANCE:** `npx tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
-
-### 8.2 Browser-Testing (PFLICHT bei UI-Features)
-- Nach UI-Feature-Implementierung · Nach Formular/Input-Änderungen · Nach Navigation/Routing-Änderungen · Wenn User „teste das im Browser" sagt
-- Referenz: `shared-docs/agents/agent-browser/SKILL.md`
-- Bei Bundling > 60s: Status prüfen → Cache clearen → Bei Endlos-Loop: Task abbrechen, User informieren
-
-### 8.3 Test-Account System
-- **PFLICHT** bei Browser-Testing von Auth-geschützten Features
-- ❌ VERBOTEN: Test-Account Features in Production-Builds · Echte User-Credentials im Code · Test-Account mit Admin-Rechten · Test-Daten in Production-DB
-- ✅ PFLICHT: `__DEV__` Check · `NODE_ENV=development` Check · Isoliertes Test-Profil · Klar markierte Test-UI-Elemente
 
 ## 9. Referenzen & Qualitäts-Checkliste
 
@@ -312,7 +299,7 @@ ui/
 - ✅ **Simpel & Wiederverwendbar** — Nicht überkompliziert?
 - ✅ **Performance optimiert** — Edge Cases betrachtet?
 - ✅ **Meinung/Feedback** in Planungen schreiben
-
+- 
 ### Quick Checklist
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
