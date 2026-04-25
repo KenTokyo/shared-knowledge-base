@@ -1,13 +1,18 @@
+1. **Planungsvalidierung (ZWINGEND VOR CODE):**
+   - User-Planung mitgegeben? → Lesen, prüfen ob Task enthalten
+   - Task enthalten? → JA: Implementieren · NEIN: Planung erweitern
+   - Keine Planung? → In `docs/[feature]/tasks/`
+   - **ERST nach Planungserweiterung darf programmiert werden!**
 
-Wichtig ist alles jetzt zu planen in einer quasi masterplanung falls noch nicht gemacht also tasks datei mit phasen planst, falls fertig, Nciht einfach masterplanung erzeugen, falls eine existiert, weil ich dir diese Datei eigentlich nur als Andenken mitgeben werde wie dein Workflow auszusehen hat, daran sollst du dich bitte halten, also an diese Regeln!
+Falls keine Masterplanung existiert: Tasks-Datei mit Phasen erstellen. Existiert bereits eine? Nicht überschreiben — diese Datei definiert deinen Workflow, halte dich an diese Regeln!
 
-dass du danach hergehst und das, was du für sinnvoll hältst einbaust, was du für richtig hältst phasenweise, aber bitte alle Phasen implementiere ohne aufhören. 
+Danach phasenweise implementieren, was sinnvoll ist — alle Phasen durcharbeiten ohne aufzuhören. 
 
-**Aber Dokumentiere nach jeder phase:**
+**Aber Dokumentiere nach jeder phase und arbeite im Loop weiter!:**
 
 Weil du machst ein Kontext-condensing. Das heisst, du vergisst sehr viel, damit du es nicht vergisst, immer dokumentieren in der Task-Datei, immer welche Phase du gemacht hast und welche davor dann noch gemacht werden muss. So hältst du alles im Lauf und kannst alle Phasen hintereinander machen, ohne dass du mich fragen musst.
 
-6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
+## 6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
 Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos markierst. Also innerhalb von Phasen To-dos anlegen und dann schreiben, was genau gemacht worden ist.
 
 **Beispiel:**
@@ -33,14 +38,16 @@ Kriterien eingehalten z.B.
 **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
 1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
 Beschreibung hierzu notieren, falls notwendig
-Refactoring, Zeilenlimit überschrieben, über 700 Zeilen, Coding Regel gebrochen.... und direkt Optimierungsplan erzeugen mit Verweis auf die von dir erstelle Planung in 
-2. 🟠 **Hoch:**...
+Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Komponente XYZ und konnten eine Render-Schleife auslösen! Versehentlich angehängte Restzeilen entdeckt! Event-Werte blindcast entdeckt! State-Updates nicht idempotent - Rerender-Kette möglich!
+2. 🟠 **Hoch:** über 700 Zeilen, Coding Regel gebrochen
 
 ### Phase 2....
 ```
 
 So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
 Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
+
+- **Falls Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings vorliegen** direkt Optimierungsplan erzeugen mit Verweis auf die Planung als Referenz, also im selben in `docs/[feature]/tasks/...optimierung-tasks.md` alle Findings dort warten und nach Abschluss aller Phasen in dieser Planung - erst danach die Optimierungs-tasks durchgehen und im Loop alles fixen!
 
 # Weitere WICHTIGE Regeln
 - Nutze den cavemen Skill immer: `C:\Users\PC1\.agents\skills\caveman\SKILL.md`
