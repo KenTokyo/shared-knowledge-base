@@ -49,7 +49,6 @@
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
-
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + `NEXT_PHASE_READY` am Ende · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
 
@@ -174,15 +173,15 @@ Vor neuen Dateien/Hooks/Stores/Utilities: `duplikat-checker` prüfen. **80%-Rege
 
 ## 6. Architektur & React Practices
 
-### 6.1 Component-Based Architecture (WICHTIGSTE REGEL)
+### Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!** → Performance-Killer (jedes Render neu erstellt) + State-Verlust. Jede Komponente in separater Datei.
 
-### 6.2 Komponenten-Organisation
+### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — Auslagern wenn größer
 - 🇩🇪 **Deutsch (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
 - 🇺🇸 **Englisch (Technical):** Section, Card, Item → `ReviewSection.tsx`
 
-### 6.3 Sektionsbasierte Ordnerstruktur
+### Sektionsbasierte Ordnerstruktur
 ```
 ui/
 ├── quiz/                      
@@ -203,7 +202,7 @@ ui/
 - Eine Hauptkomponente pro Sektion ohne Klammern (Sektions-Container) · Max 7 Verschachtelungsebenen
 - **Frontend-to-Code Navigation:** UI-Element-Text = Dateiname (User klickt „Speichern" → `SpeichernButton.tsx`)
 
-### 6.4 React Best Practices
+### React Best Practices
 - **State & Props:** Immutable `setState(prev => ...)` · Stable unique `key` für `.map()` · `useState` = re-render, `useRef` = no re-render
 - **Memoization:** `useMemo` (expensive calculations) · `useCallback` (functions as props) · `React.memo` (components)
 - **Effects & Lifecycle:** IMMER cleanup function bei subscriptions/timers/listeners · Accurate dependencies · `[]` = mount only
@@ -222,14 +221,14 @@ ui/
   });
   ```
 
-### 6.4.1 Render-Loop & Hydration Guard (PFLICHT)
+#### Render-Loop & Hydration Guard (PFLICHT)
 - **NIEMALS State im Render-Pfad setzen:** Kein `setState`, `setStore`, `dispatch` oder Context-Update im Komponenten-Body, in JSX-Ausdrücken oder in Funktionen, die während Render direkt ausgeführt werden.
 - **NIEMALS Setter in Setter-Updaters verschachteln:** Kein `setX(prev => { setY(...); return ...; })`. Erst Zielzustand berechnen, dann Updates getrennt außerhalb des Updaters ausführen.
 - **NIEMALS interaktive Elemente ineinander verschachteln:** Kein `<button>` in `<button>`, kein Link in Button, kein Button in Link. Bei klickbaren Zeilen: Wrapper als `div` mit `role="button"` + `tabIndex` + Tastatursteuerung nutzen.
 - **Pflicht-Check nach UI-Änderungen:** `pnpm exec next lint --file <geänderte-datei>` auf jede angepasste UI-Datei.
 - **Stop-Regel bei Warnungen:** Bei `validateDOMNesting`, `Cannot update a component while rendering`, `Too many re-renders` oder Hydration-Warnungen sofort Root Cause fixen, nicht unterdrücken.
 - 
-### 6.4.2 Controlled-Value Guard & Patch-Hygiene (PFLICHT)
+### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
 - **Kontrollierte UI-Werte immer validieren:** Bei `Tabs`, `Select`, `Popover` usw. nur erlaubte Werte an den State weitergeben (Allowlist-Prinzip).
 - **Fallback bei nicht verfügbaren Features:** Wenn ein Wert auf der aktuellen Plattform nicht erlaubt ist (z.B. `terminal` im Browser), sofort auf sicheren Wert zurückfallen (`chat` oder Default-Tab).
 - **Event-Werte nie blind casten:** Kein `onValueChange={v => setState(v as MyType)}` ohne Laufzeitcheck.
@@ -246,14 +245,14 @@ ui/
 - bei nicht unterstütztem Wert sofort auf sicheren Fallback,
 - nach Patch immer Dateiende + Lint prüfen.
 
-### 6.5 Performance
+### Performance
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
 - **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
 - **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
 
-## 7. Frontend Regeln & Antipatterns!
+### Frontend Regeln & Antipatterns!
 - **Analysiere bestehendes Design, Prüfen ob globale css/tailwind Klassen existieren bevor du das Design kapputt machst!** Und nutze diesselben Farbpaletten wieder um einheitlich zu bleiben!
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund z.B. `bg-green-500`, `bg-red-600`... **Warum?** Halbtransparente Hintergründe sorgen für Probleme, aufgrund von Capacitor-Einstellungen bei uns!
@@ -270,7 +269,7 @@ ui/
 - **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
-## 8. Validierung & Testing
+## Validierung & Testing
 ### 8.1 TypeScript
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
 - **ZERO TOLERANCE:** `npx tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
@@ -278,7 +277,7 @@ ui/
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
 
-## 9. Referenzen & Qualitäts-Checkliste
+## Referenzen & Qualitäts-Checkliste
 
 ### Framework-Dokumentation
 | Framework | Dokumentation |
