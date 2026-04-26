@@ -326,8 +326,6 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
 - Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
-
-- Nutze den cavemen Skill immer: `C:\Users\PC1\.agents\skills\caveman\SKILL.md`
 - Halte dich an die Design/Layout Regeln, möglicherweise in einer globals.css hinterlegt, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
 
 - Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
