@@ -334,3 +334,4 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
   - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!
   - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
 - BITTE KEIN MOJIBAKE, achte auf ENCODING
+- Bevor Implementierung bzw. Planung - suche alle möglichen Arten dies zu implementiere und implementiere die beste Art bzw Option
