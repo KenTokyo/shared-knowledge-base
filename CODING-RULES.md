@@ -332,3 +332,5 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
 - **Beim ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + `NEXT_PHASE_READY` am Ende · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
 - Schreibe immer zu jeder Phase, falls fertig Anmerkungen in die Planung, was du noch für Schwachstellen rausgefunden hast, diese dann am Ende der Implementierung des Gesamtplans, also falls alle Phasen fertig sind, sollten dann Aufgaben anhand der Anmerkungen erzeugt werden 
   - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!
+  - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
+- BITTE KEIN MOJIBAKE, achte auf ENCODING

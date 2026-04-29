@@ -53,3 +53,7 @@ Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen
 - Nach allen Änderungen also wenn du alle Phasen vollendet, erzeuge dann Masterplanung direkt um die Auffälligkeiten zu beheben, die du bei den Phasen festgestellt hast, falls diese noch nicht durch deine Änderungen behoben wurden, damit wir immer aufräumen und cleanen code haben
 
 - Falls du dann auch die Auffälligkeiten behoben und die Phasen auch dokumentiert hast, auch dann melden und vorschlagen, welche Verbesserung man als nächstes machen könnte bzw. ein Feature was dir beim verbessern/entwickeln deiner vorherigen Aufgabe aufgefallen ist, was dieser App extrem helfen könnte!, Versuche also auch bewusst, Verbesserungen/Features zu finden, können auch kleine sein, aber was die App verbessern könnte! Kann alles sein, such dir das aus
+
+
+BITTE KEIN MOJIBAKE, achte auf ENCODING
+- Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
