@@ -202,6 +202,46 @@ ui/
 - Eine Hauptkomponente pro Sektion ohne Klammern (Sektions-Container) · Max 7 Verschachtelungsebenen
 - **Frontend-to-Code Navigation:** UI-Element-Text = Dateiname (User klickt „Speichern" → `SpeichernButton.tsx`)
 
+### Service-Ordnerstruktur: Sektion zuerst, `lib` nur global (PFLICHT)
+- **Default-Regel:** Service/Helper/Finder/Action kommt in die Sektion, wo er fachlich genutzt wird (z. B. `app/notes/services/*`, `app/dashboard/services/*`).
+- **`lib/` nur für globale Bausteine:** Nur Module, die wirklich sektionenübergreifend sind oder Plattform-Infrastruktur bilden.
+- **Verboten:** Sektionsspezifische Fachlogik in `lib/` ablegen.
+- **Entscheidungsregel vor neuer Datei:** Wird es nur in 1 Sektion genutzt? → **Sektion**. Wird es in 2+ Sektionen genutzt? → **global (`lib/`)**.
+- **Pflicht bei globalen Modulen:** Klarer Ordnerzweck (`lib/global/*`, `lib/platform/*`, `lib/shared/*`) statt unscharfer Sammeldateien.
+- **Import-Regel:** Sektionscode darf globale `lib`-Module nutzen, aber globale `lib`-Module dürfen keine Sektion importieren (kein Inversions-Chaos).
+
+### DB-Architektur: technologieklar + Finder/Actions strikt getrennt (PFLICHT)
+```text
+db/
+├── sqlite/
+│   ├── schema/
+│   ├── finders/
+│   ├── actions/
+│   └── runtime/
+│       ├── browser/
+│       ├── sqlocal/
+│       ├── capacitor/
+│       └── recovery/
+├── postgres/
+│   ├── schema/
+│   ├── finders/
+│   ├── actions/
+│   ├── drizzle/
+│   └── migrations/
+└── shared/
+    ├── types/
+    ├── guards/
+    └── utils/
+```
+- **Finder-Regel:** Finder lesen nur (SELECT/Read), keine Schreiboperationen.
+- **Action-Regel:** Actions schreiben (INSERT/UPDATE/DELETE/Upsert/Side-Effects); Read-only Logik bleibt in Findern.
+- **Naming-Pflicht:** `*.finder.ts` für Read-Module, `*.action.ts` für Write-Module.
+- **Technologie muss am Pfad erkennbar sein:** SQLite/Postgres/Browser/Capacitor nicht verstecken.
+- **`databases/`-Ordner-Regel:** Nur Datenbankdateien/Artefakte (z. B. `.db`, Dumps), keine Laufzeitlogik.
+- **SQLite-Dateiablage (Pflicht):** SQLite-Dateien, Profil-DBs und ähnliche Artefakte liegen unter `db/sqlite/files/*`, nicht im `db/`-Root.
+- **Mischdateien auflösen:** Enthält eine Datei Read + Write, muss sie in Finder + Action gesplittet werden.
+- **Globale DB-Utilities:** Nur in `db/shared/*`; keine Fachlogik in `db/shared`.
+
 ### React Best Practices
 - **State & Props:** Immutable `setState(prev => ...)` · Stable unique `key` für `.map()` · `useState` = re-render, `useRef` = no re-render
 - **Memoization:** `useMemo` (expensive calculations) · `useCallback` (functions as props) · `React.memo` (components)
@@ -335,3 +375,4 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
   - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
 - BITTE KEIN MOJIBAKE, achte auf ENCODING
 - Bevor Implementierung bzw. Planung - suche alle möglichen Arten dies zu implementiere und implementiere die beste Art bzw Option
+- Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!

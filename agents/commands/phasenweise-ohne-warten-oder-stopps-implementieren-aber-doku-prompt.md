@@ -58,3 +58,7 @@ Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen
 BITTE KEIN MOJIBAKE, achte auf ENCODING
 - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
 - Bevor Implementierung bzw. Planung - Suche mehrere Arten erstmal rauswie man das Problem lösen könnte, dann suche du die beste davon aus, um das Problem zu lösen, Feature zu implementieren..
+
+- Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
+
+ja bitte nicht aufhören, statt mir die sinnvollen schritte zu nennne einfach machen, also das gehört auch zu den aufgaben, dass erkennen von sinnvollen schritten und danach diese auch umsetzen im loop, quasi die sinnvollen schritte rausfinden und umsetzen
