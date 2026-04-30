@@ -1,3 +1,5 @@
+BITTE NACH FOLGENDEN REGELN WEITERARBEITEN, HALTE DICH DARAN!
+
 1. **Planungsvalidierung (ZWINGEND VOR CODE):**
    - User-Planung mitgegeben? → Lesen, prüfen ob Task enthalten
    - Task enthalten? → JA: Implementieren · NEIN: Planung erweitern
@@ -61,4 +63,4 @@ BITTE KEIN MOJIBAKE, achte auf ENCODING
 
 - Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
 
-ja bitte nicht aufhören, statt mir die sinnvollen schritte zu nennne einfach machen, also das gehört auch zu den aufgaben, dass erkennen von sinnvollen schritten und danach diese auch umsetzen im loop, quasi die sinnvollen schritte rausfinden und umsetzen
+- bitte nicht aufhören, statt mir die sinnvollen schritte zu nennne einfach machen, also das gehört auch zu den aufgaben, dass erkennen von sinnvollen schritten und danach diese auch umsetzen im loop, quasi die sinnvollen schritte rausfinden und umsetzen
