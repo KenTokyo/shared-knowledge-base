@@ -234,14 +234,17 @@ db/
     └── utils/
 ```
 - **Finder-Regel:** Finder lesen nur (SELECT/Read), keine Schreiboperationen.
-- **Action-Regel:** Actions schreiben (INSERT/UPDATE/DELETE/Upsert/Side-Effects); Read-only Logik bleibt in Findern.
+- **Action-Regel:** Actions schreiben (INSERT/UPDATE/DELETE/Upsert/Side-Effects); Read-only-Logik bleibt in Findern.
+- **Import-Regel (hart):** Dateien unter `db/*/finders/*` dürfen keine Module aus `db/*/actions/*` importieren.
+- **Domain-Pflicht unter SQLite:** `db/sqlite/finders/<domain>/*` und `db/sqlite/actions/<domain>/*` sind verpflichtend. Keine neuen Root-Dateien direkt in `finders/` oder `actions/`.
 - **Naming-Pflicht:** `*.finder.ts` für Read-Module, `*.action.ts` für Write-Module.
+- **Legacy-Hinweis:** Bestehende `*.local.ts`-Dateien sind bis zur schrittweisen Umbenennung erlaubt, müssen aber fachlich sauber in Domain-Ordnern liegen.
 - **Technologie muss am Pfad erkennbar sein:** SQLite/Postgres/Browser/Capacitor nicht verstecken.
+- **Client-Schicht-Regel (`db/sqlite/client/*`):** Nach Fachbereich gliedern; nur typsichere DB-Facades für Aufrufer bereitstellen, keine versteckte Runtime-Initialisierung.
 - **`databases/`-Ordner-Regel:** Nur Datenbankdateien/Artefakte (z. B. `.db`, Dumps), keine Laufzeitlogik.
 - **SQLite-Dateiablage (Pflicht):** SQLite-Dateien, Profil-DBs und ähnliche Artefakte liegen unter `db/sqlite/files/*`, nicht im `db/`-Root.
 - **Mischdateien auflösen:** Enthält eine Datei Read + Write, muss sie in Finder + Action gesplittet werden.
 - **Globale DB-Utilities:** Nur in `db/shared/*`; keine Fachlogik in `db/shared`.
-
 ### React Best Practices
 - **State & Props:** Immutable `setState(prev => ...)` · Stable unique `key` für `.map()` · `useState` = re-render, `useRef` = no re-render
 - **Memoization:** `useMemo` (expensive calculations) · `useCallback` (functions as props) · `React.memo` (components)
@@ -306,6 +309,7 @@ db/
 - **Wiederverwendbarkeit-First:** Dialoge/Komponenten MÜSSEN für Wiederverwendung designed werden: Props für Modi, Callback-Props, schaue nach, ob solche Komponenten existieren, z.B. wie andere Bereiche das machen oder nutze dafür 
 - **Recherche vor Rumprobieren (KRITISCH!):** 1. Stack-Trace GENAU lesen → 2. Docs/GitHub Issues durchsuchen → 3. Root Cause verstehen → 4. DANN erst fixen
 - **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben → vordefinierte Variants nutzen (`size="sm"`, `size="lg"`). Kein passender Variant? → Variant-System erweitern
+- **Radix Trigger-Ref-Sicherheit (KRITISCH):** Bei `TooltipTrigger`/`PopoverTrigger` `asChild` nur nutzen, wenn das Child garantiert ref-stabil ist. Für normale Buttons immer direkten Trigger verwenden (`<TooltipTrigger type="button" ...>`), um `setRef`-Schleifen und `Maximum update depth exceeded` zu vermeiden.
 - **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
