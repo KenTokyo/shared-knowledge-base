@@ -270,12 +270,28 @@ db/
 - **NIEMALS interaktive Elemente ineinander verschachteln:** Kein `<button>` in `<button>`, kein Link in Button, kein Button in Link. Bei klickbaren Zeilen: Wrapper als `div` mit `role="button"` + `tabIndex` + Tastatursteuerung nutzen.
 - **Pflicht-Check nach UI-Änderungen:** `pnpm exec next lint --file <geänderte-datei>` auf jede angepasste UI-Datei.
 - **Stop-Regel bei Warnungen:** Bei `validateDOMNesting`, `Cannot update a component while rendering`, `Too many re-renders` oder Hydration-Warnungen sofort Root Cause fixen, nicht unterdrücken.
-- 
+- **NIEMALS Parent-State in useEffect "korrigieren" (KRITISCH!):**
+  ```typescript
+  // ❌ FALSCH - Erzeugt Infinite Loop!
+  useEffect(() => {
+    if (activeTab !== effectiveTab) {
+      onTabChange(effectiveTab); // Parent-Update → Re-Render → useEffect erneut → Loop
+    }
+  }, [activeTab, effectiveTab, onTabChange]);
+
+  // ✅ RICHTIG - Berechneten Wert direkt nutzen, Parent nicht "korrigieren"
+  const effectiveTab = allowedTabs.includes(activeTab) ? activeTab : defaultTab;
+  // effectiveTab direkt an <Tabs value={effectiveTab}> übergeben
+  ```
+  **Warum:** useEffect triggert nach jedem Render. Wenn es Parent-State ändert → neuer Render → useEffect erneut → `Maximum update depth exceeded`. Kombiniert mit Radix UI Refs (Tooltip, Popover) wird das Problem verstärkt.
+
 ### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
 - **Kontrollierte UI-Werte immer validieren:** Bei `Tabs`, `Select`, `Popover` usw. nur erlaubte Werte an den State weitergeben (Allowlist-Prinzip).
 - **Fallback bei nicht verfügbaren Features:** Wenn ein Wert auf der aktuellen Plattform nicht erlaubt ist (z.B. `terminal` im Browser), sofort auf sicheren Wert zurückfallen (`chat` oder Default-Tab).
 - **Event-Werte nie blind casten:** Kein `onValueChange={v => setState(v as MyType)}` ohne Laufzeitcheck.
 - **State-Updates idempotent halten:** Nur updaten, wenn sich der Wert wirklich geändert hat (`prev === next ? prev : next`), damit keine unnötigen Re-Render-Ketten entstehen.
+- **Custom-Event-Payloads deduplizieren (PFLICHT):** Bei `window.dispatchEvent` + Listener-`setState` immer semantischen Vergleich nutzen (z. B. Snapshot-Key). Identische Payload darf weder erneut dispatcht noch erneut in State geschrieben werden.
+- **Scope-Merge deterministisch halten (PFLICHT):** In Normalizern niemals `Date.now()` als Fallback für Scope-Felder nutzen. Fallbacks müssen stabil sein (z. B. `0`), sonst entstehen künstliche `"scopeChanged"`-Schleifen.
 - **Patch-Hygiene nach schnellen Edits:** Nach jedem Patch Dateiende prüfen (keine angehängten JSX-Reste, keine duplizierten Abschlussblöcke).
 - **Pflicht-Check danach:** `pnpm exec next lint --file <datei>`; bei auffälligem Laufzeitverhalten zusätzlich `npx tsc --noEmit` und Fehlerstellen dokumentieren.
 
@@ -287,6 +303,31 @@ db/
 - nur bei echter Änderung State setzen,
 - bei nicht unterstütztem Wert sofort auf sicheren Fallback,
 - nach Patch immer Dateiende + Lint prüfen.
+
+**Vorfall-Merkhilfe (2026-05-05, HudTabBar Infinite Loop):**
+- useEffect rief `onTabChange(effectiveTab)` auf wenn `activeTab !== effectiveTab`
+- Parent-Update → Re-Render → useEffect erneut → `Maximum update depth exceeded`
+- Radix UI Tooltip-Refs verstärkten das Problem (setRef-Schleifen)
+- **Fix:** useEffect entfernt, `effectiveTab` direkt an Tabs übergeben ohne Parent-"Korrektur"
+- **Regel:** Niemals Parent-Callbacks in useEffect aufrufen, die denselben Wert "korrigieren" sollen
+
+**Vorfall-Merkhilfe (2026-05-06, WorkspaceScope + Provider Snapshot Loop):**
+- `autoprocess:provider-selected` konnte identische Snapshots wiederholt dispatchen → Listener setzte immer neues Objekt in State.
+- `workspaceScopeJson` konnte sich künstlich ändern, weil fehlendes `updatedAtMs` mit `Date.now()` normalisiert wurde.
+- Folge: `Scope-Merge -> Session aktualisiert` in Schleife und wiederkehrend `Maximum update depth exceeded`.
+- **Fix:** Snapshot-Sender und Snapshot-Listener beidseitig idempotent gemacht + Scope-Normalisierung deterministisch (`0` statt `Date.now()` Fallback).
+
+#### Tooltip-System: <HintTooltip> als defensiver Standard (PFLICHT, 2026-05-05)
+- **Standard:** `import { HintTooltip } from '@/components/ui/hint-tooltip'`
+  ```tsx
+  <HintTooltip label="Speichern (Strg+S)">
+    <button onClick={save}>Speichern</button>
+  </HintTooltip>
+  ```
+  Wrappt children automatisch in einen ref-stabilen `<span>` → setRef-Loops unmoeglich, auch bei `motion.*` mit `layoutId`, conditional Rendering oder forwardRef-Komponenten als Child.
+- **Fallback (Spezialfaelle):** Direkter `<Tooltip>/<TooltipTrigger asChild>`-Trigger NUR wenn der direkte Child garantiert ref-stabil ist (kein `motion.*`, kein bedingter Mount/Unmount im Subtree, kein verschachteltes asChild).
+- **Dev-Schutz:** `TooltipTrigger` warnt im Dev-Build, sobald `asChild` mit einem `motion.*`-Child kombiniert wird (Heuristik in `components/ui/tooltip.tsx`).
+- **Antipattern:** `<TooltipTrigger asChild><button>{cond && <motion.div layoutId="..." />}</button></TooltipTrigger>` → genau das hat 2026-05-05 die `setRef`-Schleife im HudTabBar ausgeloest.
 
 ### Performance
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
@@ -310,6 +351,7 @@ db/
 - **Recherche vor Rumprobieren (KRITISCH!):** 1. Stack-Trace GENAU lesen → 2. Docs/GitHub Issues durchsuchen → 3. Root Cause verstehen → 4. DANN erst fixen
 - **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben → vordefinierte Variants nutzen (`size="sm"`, `size="lg"`). Kein passender Variant? → Variant-System erweitern
 - **Radix Trigger-Ref-Sicherheit (KRITISCH):** Bei `TooltipTrigger`/`PopoverTrigger` `asChild` nur nutzen, wenn das Child garantiert ref-stabil ist. Für normale Buttons immer direkten Trigger verwenden (`<TooltipTrigger type="button" ...>`), um `setRef`-Schleifen und `Maximum update depth exceeded` zu vermeiden.
+- **Tooltip-Standard:** `<HintTooltip label="...">` aus `components/ui/hint-tooltip.tsx` ist der defensive Default — wrappt children in stabilen `<span>` und schuetzt vor setRef-Loops bei motion.*/conditional Childs.
 - **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
