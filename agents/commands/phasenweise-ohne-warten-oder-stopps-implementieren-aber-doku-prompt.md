@@ -64,3 +64,8 @@ BITTE KEIN MOJIBAKE, achte auf ENCODING
 - Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
 
 - bitte nicht aufhören, statt mir die sinnvollen schritte zu nennne einfach machen, also das gehört auch zu den aufgaben, dass erkennen von sinnvollen schritten und danach diese auch umsetzen im loop, quasi die sinnvollen schritte rausfinden und umsetzen
+
+
+Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also den CHAT beendest wird deine Arbeit kontrolliert. 
+
+Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen jeder Phase um das maximalste rauszufinden bzw qualität anzubieten
