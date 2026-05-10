@@ -293,6 +293,7 @@ db/
 - **State-Updates idempotent halten:** Nur updaten, wenn sich der Wert wirklich geändert hat (`prev === next ? prev : next`), damit keine unnötigen Re-Render-Ketten entstehen.
 - **Custom-Event-Payloads deduplizieren (PFLICHT):** Bei `window.dispatchEvent` + Listener-`setState` immer semantischen Vergleich nutzen (z. B. Snapshot-Key). Identische Payload darf weder erneut dispatcht noch erneut in State geschrieben werden.
 - **Scope-Merge deterministisch halten (PFLICHT):** In Normalizern niemals `Date.now()` als Fallback für Scope-Felder nutzen. Fallbacks müssen stabil sein (z. B. `0`), sonst entstehen künstliche `"scopeChanged"`-Schleifen.
+- **Session-Lese-Fallback im Chat-Store (PFLICHT):** Wenn `sessionId` fehlt oder `null` ist, dürfen `getMessagesForSession`/`getToolMessagesForSession` nicht auf einen leeren Default-Slice zeigen. In diesem Fall immer auf den Legacy-Top-Level-Fallback (`state.messages`, `state.toolMessages`) zurückfallen.
 - **Patch-Hygiene nach schnellen Edits:** Nach jedem Patch Dateiende prüfen (keine angehängten JSX-Reste, keine duplizierten Abschlussblöcke).
 - **Pflicht-Check danach:** `pnpm exec next lint --file <datei>`; bei auffälligem Laufzeitverhalten zusätzlich `npx tsc --noEmit` und Fehlerstellen dokumentieren.
 
@@ -317,6 +318,12 @@ db/
 - `workspaceScopeJson` konnte sich künstlich ändern, weil fehlendes `updatedAtMs` mit `Date.now()` normalisiert wurde.
 - Folge: `Scope-Merge -> Session aktualisiert` in Schleife und wiederkehrend `Maximum update depth exceeded`.
 - **Fix:** Snapshot-Sender und Snapshot-Listener beidseitig idempotent gemacht + Scope-Normalisierung deterministisch (`0` statt `Date.now()` Fallback).
+
+**Vorfall-Merkhilfe (2026-05-08, Leere Chat-Ansicht trotz erfolgreichem Lauf):**
+- In einem CLI-Flow ohne numerische `sessionId` wurden User-/Assistant-Nachrichten geschrieben, aber beim Lesen als leer behandelt.
+- Ursache: Session-Reader nutzte für `null` einen leeren Default-Slice statt Legacy-Top-Level-State.
+- Verstärker: Restore-Timeout konnte zu früh `restoreComplete` setzen, bevor DB-Fallback-Daten ankamen.
+- **Fix:** Session-Lese-Fallback für `null` auf Top-Level-Store ergänzt + Restore-Apply erst bei echten Daten markiert.
 
 #### Tooltip-System: <HintTooltip> als defensiver Standard (PFLICHT, 2026-05-05)
 - **Standard:** `import { HintTooltip } from '@/components/ui/hint-tooltip'`
