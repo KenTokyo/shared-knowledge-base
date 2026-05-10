@@ -51,6 +51,9 @@
 
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
+- **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen auf einmal.
+- **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss immer Mini-Check machen: Scope gegen Planung prüfen, geänderte UI auf Regressionen prüfen, passende Lint/TypeScript-Checks im geänderten Bereich ausführen und Ergebnis in der Planung notieren.
+- **ORCHESTRATOR HANDOVER-REIHENFOLGE (neu):** Immer in dieser Reihenfolge abschließen: 1) Phase dokumentieren, 2) offene Punkte + nächste Phase benennen, 3) Endstatus (`NEXT_PHASE_READY` oder `ALL_PHASES_COMPLETE`) als **letzte Zeile** ausgeben.
 - **KRITISCH (Loop-Stopper):** Wenn nur noch manuelle User-Checks offen sind (z.B. UI-Test, Ingame-Run, Recorder-Export, visueller Check), darf **kein** `NEXT_PHASE_READY` mehr kommen. In diesem Fall immer `ALL_PHASES_COMPLETE`, weil die KI ohne User-Input nicht weiter ausfuehren kann.
 
 ## 4. Erzeugung von Planung
@@ -424,11 +427,18 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
 
 - Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
 - **Beim ORCHESTRATOR MODUS (KRITISCH):** Nach jeder Phase Plan updaten + passenden Endstatus setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
+- **Beim ORCHESTRATOR MODUS (Tempo + Qualität):** Eine Phase/Subphase pro Iteration, danach Pflicht-Mini-Check (Plan-Abgleich, UI-Regression-Check, Lint/TypeScript im geänderten Scope), erst dann Endstatus setzen.
 - **Regel fuer Manual-Blocker (sehr wichtig):** Wenn User die Oberfläche oder Gameplay manuell pruefen muss, nie `NEXT_PHASE_READY` schreiben. Dann ist der korrekte Abschluss `ALL_PHASES_COMPLETE`.
 - Schreibe immer zu jeder Phase, falls fertig Anmerkungen in die Planung, was du noch für Schwachstellen rausgefunden hast, diese dann am Ende der Implementierung des Gesamtplans, also falls alle Phasen fertig sind, sollten dann Aufgaben anhand der Anmerkungen erzeugt werden 
   - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!
   - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
-- BITTE KEIN MOJIBAKE, achte auf ENCODING
+- **BITTE KEIN MOJIBAKE, achte auf ENCODING:** Dateien mit UTF-8 lesen/schreiben und nach Doku-Edits gezielt auf Zeichenfehler wie `Ã`, `â†’`, `ðŸ` prüfen.
 - Bevor Implementierung bzw. Planung - suche alle möglichen Arten dies zu implementiere und implementiere die beste Art bzw Option
 - Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
  kontext wird eh permanent im hintergrund condensed deswegen sollst du nicht aufhören,  nicht fragen ob du weitemrachen sollst, sondern du machst einfach weiter
+
+Analysiere zuerst selbst, worum es geht, welche Expertenrolle passt und welche Struktur der Prompt braucht. Verbessere meinen Rohprompt danach zu einem klaren, vollständigen und gut ausführbaren Zielprompt für dich intern, also im Gedanken aufnehmen.
+
+Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also ALL_PHASES_COMPLETE oder den CHAT beendest wird deine Arbeit kontrolliert. 
+
+Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen jeder Phase um das maximalste rauszufinden bzw um qualität anzubieten
