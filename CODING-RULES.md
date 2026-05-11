@@ -338,6 +338,17 @@ db/
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
 - **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
+- **Three.js Scene-Boundary-Regel (PFLICHT, 2026-05-10):** Schwere 3D-Subtrees (Terrain, Instancing, große Map-Listen) müssen hinter einer stabilen Scene-Grenze leben (`React.memo`, stabile Callback-Referenzen, keine HUD-State-Props in den Scene-Pfad). FPS/HUD-Updates dürfen niemals vollständige Terrain-Rebuilds auslösen.
+- **Ablation-Pflicht bei Terrain-Bugs (PFLICHT):** Immer per Feature-Schalter messen (`terrain on/off`, `top-faces`, `fog`, `material mode`) und Ursache per Messwert dokumentieren (`FPS NOW/AVG/LOW`, `frame ms`, `triangles`, `calls`), bevor man visuelle Effekte anfasst.
+- **Terrain-Budget-Regel (PFLICHT):** Für Standard-Run pro aktiver Kameraansicht ein klares Budget pflegen (z. B. Terrain möglichst unter `~20k` Triangles und `~1` Draw-Call). Bei Budget-Überschreitung zuerst Geometriepfad/Materialpfad korrigieren, nicht nur UI-Optionen ergänzen.
+- **Terrain-TopFaces-Regel (PFLICHT, 2026-05-10):** Wenn Seitenflächen spielerisch nicht nötig sind, Terrain standardmäßig als Top-Faces rendern (statt 10k Box-Tiles). Ziel: Geometriekosten zuerst senken, danach Look mit Side-Skirts/LOD stabilisieren.
+- **Procedural-Winding-Regel (PFLICHT, 2026-05-10):** Bei selbst erzeugten Terrain-Geometrien Triangle-Winding explizit prüfen (für `FrontSide` i. d. R. CCW von oben). Falsches Winding + Backface-Culling darf nie als "Map-Loch" in Produktion landen.
+- **Merged-vs-Instanced-Guard (PFLICHT, 2026-05-10):** Bei neuem Merging-Pfad immer A/B gegen Instanced-Pfad dokumentieren (FPS + `renderer.info` + Sichtprüfung). Performance-Gewinn ohne visuelle Parität darf nicht als Default aktiviert werden.
+- **Globale Voxel-Terrain-Regel (Gaming/Web/VFX, PFLICHT, 2026-05-10):** Bei grossen Tile-Maps (>2k Tiles sichtbar) niemals blind Voll-Boxen als Default rendern. Pflicht-Strategie: `Top Faces` fuer Geometrie-Reduktion, `Side-Skirts` fuer Look-Recovery, danach `Chunking/Culling` (nur sichtbare Bereiche rendern). Diese Regel gilt fuer Runtime-Code **und** Prompt-Spezifikationen.
+- **Minecraft-Lernregel (PFLICHT, 2026-05-10):** Performance wird bei Voxel-Welten primär durch Sichtbarkeit + Batching bestimmt, nicht durch "Blockzahl allein". Deshalb immer zuerst Sichtbarkeitsfenster/Chunks, Draw-Call-Reduktion und Face-Reduktion planen, bevor man Material-Feintuning macht.
+- **FPS-Cap-Benchmark-Regel (PFLICHT, 2026-05-11):** Wenn FPS am Monitor-Limit kleben (z. B. 120/144/240), Optimierungen primär über `frame ms`, `draw calls`, `triangles` und `geometries` bewerten. `FPS` allein ist dann als Vergleichswert unzuverlässig.
+- **Chunk-Boundary-Stutter-Regel (PFLICHT, 2026-05-11):** Bei Chunk-Culling dürfen Chunk-Gruppen an Grenzen nicht hart gemountet/unmountet werden. Pflicht: Chunk-Objekte persistent halten und nur `visible` toggeln; Chunk-Geometrien einmalig cachen; sichtbare Stats über Summen zählen statt bei jedem Grenzwechsel große Listen neu aufzubauen.
+- **Chunk-Update-Budget-Regel (PFLICHT, 2026-05-11):** Kamera-/Chunk-Updates als niedrig priorisierte UI-Arbeit behandeln (`startTransition` oder gleichwertig), damit kurze Navigations-Hänger bei Grenzwechseln ausbleiben.
 - **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
 
 ### Frontend Regeln & Antipatterns!
@@ -435,3 +446,9 @@ Analysiere zuerst selbst, worum es geht, welche Expertenrolle passt und welche S
 Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also ALL_PHASES_COMPLETE oder den CHAT beendest wird deine Arbeit kontrolliert. 
 
 Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen jeder Phase um das maximalste rauszufinden bzw um qualität anzubieten
+
+
+## Erzeuge Signaltöne anhands deines Fortschritts
+**so gehts in Windows:**
+**Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
+**Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
