@@ -424,10 +424,6 @@ db/
 **so gehts in Windows:**
 **Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
 **Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
-**Bei Mac: Mac Signal Sounds (statt PowerShell):**
-Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 && afplay /System/Library/Sounds/Glass.aiff`
-Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
-
 
 # Wichtige Regeln / Zusammmenfassung
 **NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
@@ -458,4 +454,4 @@ Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig
 ## Erzeuge Signaltöne anhands deines Fortschritts
 **so gehts in Windows:**
 **Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
-**Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+**Alle Phasen fertig, du bist komplett fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
