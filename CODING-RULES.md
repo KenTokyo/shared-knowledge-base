@@ -49,6 +49,14 @@
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
+### 3D-/Meshy-Asset-Qualitätsgate (PFLICHT)
+
+- **ImageGen-Referenz muss wirklich in die 3D-Pipeline:** Wenn ein Charakter/Objekt zuerst mit ImageGen freigegeben wurde, darf Meshy nicht nur mit einem freien Textprompt gestartet werden. Pflicht ist Image-to-3D oder Multi-Image-to-3D mit der freigegebenen Referenz, außer Meshy kann den Input technisch nicht verarbeiten. Dann muss der Grund vor Credit-Verbrauch dokumentiert und beim User bestätigt werden.
+- **GLB immer visuell prüfen, bevor weitere Credits verbraucht werden:** Nach jeder Meshy-Preview/Refine muss die GLB in einem Viewer oder direkt im Spiel per Screenshot geprüft werden. Vergleich gegen Referenz: Kopf/Form, Gesicht/Ohren/Nase/Mund, Kleidung, Hände, Füße, Proportionen, Farben, Low-Poly/Voxel-Stil.
+- **Stop-Regel bei starker Abweichung:** Wenn das GLB klar nicht wie die freigegebene Referenz aussieht, sofort stoppen. Kein Refine, Rigging oder Animate auf schlechtem Modell. Erst neue Generierung/Prompt/Image-Input oder User-Rückfrage.
+- **Dokumentationspflicht:** In der Task-Datei festhalten: verwendete Referenzdatei, Meshy-Methode (`image-to-3d`, `multi-image-to-3d`, `text-to-3d`), Task-ID, Screenshot-Pfad der GLB-Prüfung und Entscheidung `ACCEPTED` oder `REJECTED`.
+- **Credit-Schutz:** Animationen/Rigging erst starten, wenn das Modell visuell akzeptiert wurde. Gute Animationen retten kein falsches Modell.
+
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
 - **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen auf einmal.
