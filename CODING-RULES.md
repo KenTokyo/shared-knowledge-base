@@ -461,6 +461,8 @@ Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also AL
 
 Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen jeder Phase um das maximalste rauszufinden bzw um qualität anzubieten
 
+Auch ein Coding Rule was helfen kann: "Don’t fight errors! Whenever you encounter the same error twice, research the web and find 3-5 possible ways to fix it. Then choose the most efficient solution and implement it"
+
 
 ## Erzeuge Signaltöne anhands deines Fortschritts
 **so gehts in Windows:**
