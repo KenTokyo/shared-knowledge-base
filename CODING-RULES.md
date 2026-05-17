@@ -300,6 +300,14 @@ db/
 - **Patch-Hygiene nach schnellen Edits:** Nach jedem Patch Dateiende prüfen (keine angehängten JSX-Reste, keine duplizierten Abschlussblöcke).
 - **Pflicht-Check danach:** `pnpm exec next lint --file <datei>`; bei auffälligem Laufzeitverhalten zusätzlich `npx tsc --noEmit` und Fehlerstellen dokumentieren.
 
+### Globaler React-Loop-Schutz (PFLICHT, für alle Projekttypen)
+- **Gilt überall:** Diese Regeln gelten für klassische Web-Apps, Spiele-UIs/HUDs, Fitness-Apps, Mobile-Frontends und Desktop-Apps gleichermaßen.
+- **Write-Back-Effekte nie ohne Guard:** Ein `useEffect`, das Zustand in Store/DB zurückschreibt, muss deduplizieren (z. B. `signatureRef`) und darf nicht bei semantisch identischen Daten erneut schreiben.
+- **Idempotente Store-Actions als Standard:** Jede `update*`-Action muss bei No-Op den alten State zurückgeben (`return state`), statt neue Objekte zu erzeugen.
+- **Deterministische Normalisierung:** In Merge-/Normalizer-Pfaden keine zeitbasierten Fallbacks wie `Date.now()` verwenden. Nur stabile Fallbacks (`0`, `null`, feste Defaults).
+- **Einweg-Sync statt Ping-Pong:** Synchronisation immer von der echten Quelle aus triggern (z. B. `entry.updatedAtMs`) und nicht von der bereits zurückgeschriebenen Zielrepräsentation.
+- **Bei Loop-Fehlern sofort Root Cause prüfen:** `Maximum update depth exceeded`, `Too many re-renders` und `Cannot update while rendering` sind Stop-Signale. Nicht unterdrücken, sondern Update-Kette im Stacktrace bis zur ersten eigenen Datei zurückverfolgen.
+
 **Vorfall-Merkhilfe (2026-04-24, einfach erklärt):**
 - Ungültige Tab-Werte konnten eine Render-Schleife auslösen.
 - Versehentlich angehängte Restzeilen machten den UI-Stack instabil.
@@ -424,6 +432,13 @@ Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afp
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
 - Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
 - Halte dich an die Design/Layout Regeln, möglicherweise in einer globals.css hinterlegt, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
+
+**React Loop-Stopper (global, nie überspringen):**
+- No-Op-Updates müssen `return state` machen (idempotent).
+- Write-Back-`useEffect` nur mit Dedupe-Guard (`signatureRef`/semantischer Vergleich).
+- Kein `Date.now()`-Fallback in Scope-/Normalizer-Merges.
+- Sync immer von der Quelländerung triggern, nicht von zurückgespiegelten Zielwerten.
+- Bei `Maximum update depth exceeded`: sofort Kette im Stacktrace zur ersten eigenen Datei verfolgen und dort fixen.
 
 - Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
 - **Beim ORCHESTRATOR MODUS (KRITISCH):** Nach jeder Phase Plan updaten + passenden Endstatus setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
