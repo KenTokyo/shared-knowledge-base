@@ -49,6 +49,14 @@
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
+### 3D-/Meshy-Asset-Qualitätsgate (PFLICHT)
+
+- **ImageGen-Referenz muss wirklich in die 3D-Pipeline:** Wenn ein Charakter/Objekt zuerst mit ImageGen freigegeben wurde, darf Meshy nicht nur mit einem freien Textprompt gestartet werden. Pflicht ist Image-to-3D oder Multi-Image-to-3D mit der freigegebenen Referenz, außer Meshy kann den Input technisch nicht verarbeiten. Dann muss der Grund vor Credit-Verbrauch dokumentiert und beim User bestätigt werden.
+- **GLB immer visuell prüfen, bevor weitere Credits verbraucht werden:** Nach jeder Meshy-Preview/Refine muss die GLB in einem Viewer oder direkt im Spiel per Screenshot geprüft werden. Vergleich gegen Referenz: Kopf/Form, Gesicht/Ohren/Nase/Mund, Kleidung, Hände, Füße, Proportionen, Farben, Low-Poly/Voxel-Stil.
+- **Stop-Regel bei starker Abweichung:** Wenn das GLB klar nicht wie die freigegebene Referenz aussieht, sofort stoppen. Kein Refine, Rigging oder Animate auf schlechtem Modell. Erst neue Generierung/Prompt/Image-Input oder User-Rückfrage.
+- **Dokumentationspflicht:** In der Task-Datei festhalten: verwendete Referenzdatei, Meshy-Methode (`image-to-3d`, `multi-image-to-3d`, `text-to-3d`), Task-ID, Screenshot-Pfad der GLB-Prüfung und Entscheidung `ACCEPTED` oder `REJECTED`.
+- **Credit-Schutz:** Animationen/Rigging erst starten, wenn das Modell visuell akzeptiert wurde. Gute Animationen retten kein falsches Modell.
+
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
 - **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen auf einmal.
@@ -352,7 +360,21 @@ db/
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
+- **WebGPU-Real-Browser-Testregel (PFLICHT):** WebGPU-FPS niemals aus Default-Headless-Chromium als Wahrheit ableiten. Für WebGPU-Performance zuerst echten headed Chrome/Edge auf der aktuell laufenden App-URL nutzen. Pflicht-Prüfung vor FPS-Bewertung: `window.isSecureContext === true`, `navigator.gpu` vorhanden, `requestAdapter()` liefert Adapter, `requestDevice()` klappt, App meldet `engineState.renderStats.backend === "webgpu"`. Wenn Adapter fehlt, Ergebnis nur als Adapter-/Fallback-Diagnose dokumentieren.
+- **Playwright-CLI WebGPU Best-Option (PFLICHT):** Bei Playwright-WebGPU-QA den installierten Chrome verwenden: `C:/Program Files/Google/Chrome/Application/chrome.exe`, headed, temporäres User-Profil, Flags `--enable-unsafe-webgpu` und `--ignore-gpu-blocklist`. Im WebGPU-Worktree bevorzugt das vorhandene Script nutzen: `node scripts/perf/webgpu-real-browser-smoke.mjs`. Optional: `--keep-open` für manuelle Sichtprüfung.
+- **WebGPU Cross-Check (OPTIONAL):** Zusätzliche Browser nur prüfen, wenn sie lokal installiert sind und WebGPU auf Windows zuverlässig liefern. Immer dieselbe aktuell laufende App-URL verwenden; Ports nie hardcoden. Chrome/Edge bleibt Referenzpfad für Performance-Traces und CDP/DevTools.
 - **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
+- **Three.js Scene-Boundary-Regel (PFLICHT, 2026-05-10):** Schwere 3D-Subtrees (Terrain, Instancing, große Map-Listen) müssen hinter einer stabilen Scene-Grenze leben (`React.memo`, stabile Callback-Referenzen, keine HUD-State-Props in den Scene-Pfad). FPS/HUD-Updates dürfen niemals vollständige Terrain-Rebuilds auslösen.
+- **Ablation-Pflicht bei Terrain-Bugs (PFLICHT):** Immer per Feature-Schalter messen (`terrain on/off`, `top-faces`, `fog`, `material mode`) und Ursache per Messwert dokumentieren (`FPS NOW/AVG/LOW`, `frame ms`, `triangles`, `calls`), bevor man visuelle Effekte anfasst.
+- **Terrain-Budget-Regel (PFLICHT):** Für Standard-Run pro aktiver Kameraansicht ein klares Budget pflegen (z. B. Terrain möglichst unter `~20k` Triangles und `~1` Draw-Call). Bei Budget-Überschreitung zuerst Geometriepfad/Materialpfad korrigieren, nicht nur UI-Optionen ergänzen.
+- **Terrain-TopFaces-Regel (PFLICHT, 2026-05-10):** Wenn Seitenflächen spielerisch nicht nötig sind, Terrain standardmäßig als Top-Faces rendern (statt 10k Box-Tiles). Ziel: Geometriekosten zuerst senken, danach Look mit Side-Skirts/LOD stabilisieren.
+- **Procedural-Winding-Regel (PFLICHT, 2026-05-10):** Bei selbst erzeugten Terrain-Geometrien Triangle-Winding explizit prüfen (für `FrontSide` i. d. R. CCW von oben). Falsches Winding + Backface-Culling darf nie als "Map-Loch" in Produktion landen.
+- **Merged-vs-Instanced-Guard (PFLICHT, 2026-05-10):** Bei neuem Merging-Pfad immer A/B gegen Instanced-Pfad dokumentieren (FPS + `renderer.info` + Sichtprüfung). Performance-Gewinn ohne visuelle Parität darf nicht als Default aktiviert werden.
+- **Globale Voxel-Terrain-Regel (Gaming/Web/VFX, PFLICHT, 2026-05-10):** Bei grossen Tile-Maps (>2k Tiles sichtbar) niemals blind Voll-Boxen als Default rendern. Pflicht-Strategie: `Top Faces` fuer Geometrie-Reduktion, `Side-Skirts` fuer Look-Recovery, danach `Chunking/Culling` (nur sichtbare Bereiche rendern). Diese Regel gilt fuer Runtime-Code **und** Prompt-Spezifikationen.
+- **Minecraft-Lernregel (PFLICHT, 2026-05-10):** Performance wird bei Voxel-Welten primär durch Sichtbarkeit + Batching bestimmt, nicht durch "Blockzahl allein". Deshalb immer zuerst Sichtbarkeitsfenster/Chunks, Draw-Call-Reduktion und Face-Reduktion planen, bevor man Material-Feintuning macht.
+- **FPS-Cap-Benchmark-Regel (PFLICHT, 2026-05-11):** Wenn FPS am Monitor-Limit kleben (z. B. 120/144/240), Optimierungen primär über `frame ms`, `draw calls`, `triangles` und `geometries` bewerten. `FPS` allein ist dann als Vergleichswert unzuverlässig.
+- **Chunk-Boundary-Stutter-Regel (PFLICHT, 2026-05-11):** Bei Chunk-Culling dürfen Chunk-Gruppen an Grenzen nicht hart gemountet/unmountet werden. Pflicht: Chunk-Objekte persistent halten und nur `visible` toggeln; Chunk-Geometrien einmalig cachen; sichtbare Stats über Summen zählen statt bei jedem Grenzwechsel große Listen neu aufzubauen.
+- **Chunk-Update-Budget-Regel (PFLICHT, 2026-05-11):** Kamera-/Chunk-Updates als niedrig priorisierte UI-Arbeit behandeln (`startTransition` oder gleichwertig), damit kurze Navigations-Hänger bei Grenzwechseln ausbleiben.
 - **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
 
 ### Frontend Regeln & Antipatterns!
@@ -421,10 +443,6 @@ db/
 **so gehts in Windows:**
 **Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
 **Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
-**Bei Mac: Mac Signal Sounds (statt PowerShell):**
-Phase fertig/generell: `afplay /System/Library/Sounds/Glass.aiff && sleep 0.3 && afplay /System/Library/Sounds/Glass.aiff`
-Alle Phasen fertig: `afplay /System/Library/Sounds/Hero.aiff && sleep 0.5 && afplay /System/Library/Sounds/Funk.aiff`
-
 
 # Wichtige Regeln / Zusammmenfassung
 **NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
@@ -457,3 +475,12 @@ Analysiere zuerst selbst, worum es geht, welche Expertenrolle passt und welche S
 Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also ALL_PHASES_COMPLETE oder den CHAT beendest wird deine Arbeit kontrolliert. 
 
 Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen jeder Phase um das maximalste rauszufinden bzw um qualität anzubieten
+
+Auch ein Coding Rule was helfen kann: "Don’t fight errors! Whenever you encounter the same error twice, research the web and find 3-5 possible ways to fix it. Then choose the most efficient solution and implement it"
+
+
+## Erzeuge Signaltöne anhands deines Fortschritts
+**so gehts in Windows:**
+**Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
+**Alle Phasen fertig, du bist komplett fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+
