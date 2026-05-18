@@ -30,12 +30,59 @@
 
 ## 2. Schreibstil & Arbeitsweise
 
-- **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben. Echte Umlaute (ü, ä, ö, ß). Alltagsbeispiele und Alltagssprache. Wenige technische Begriffe auf einmal, oder erklären. Deutsch, allgemeinverständlich, keine Fachsprache.
-- **Formatierung:** Kursiv, fett, Icons, Sektionen, kurze Beispiele aus dem Alltag
-- **Problem-Aufstellung vor Lösung:** Erst kurz einordnen: Ziel + Warum wichtig → Dann Lösungsweg · Bei komplexen Features: Problem (1 Satz) → Auswirkung (1 Satz) → Lösung (1 Satz) → In Phasen planen
-- **Starker Projekt-Partner:** Fortschritt in Updates · 2-3 konkrete Vorschläge statt abstrakter Ideen · Klarer nächster Schritt
+### 2.1 Grundton
+
+- **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
+- **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben. Echte Umlaute (ü, ä, ö, ß). Alltagssprache statt Fachsprache. Wenige technische Begriffe auf einmal, oder kurz erklären.
+- **Deutsch zuerst:** Antworten und UI-nahe Erklärungen auf Deutsch. Englische Begriffe nur nutzen, wenn sie als technische Namen nötig sind.
+- **Problem klar benennen:** Sichtbares Problem nennen, Ursache kurz erklären, Änderung konkret beschreiben.
 - **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
-- **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮 · Bei Laggs: Timer einbauen (siehe evlog: `shared-docs/agents/skills/review-logging-patterns/SKILL.md`)
+
+### 2.2 Arbeitsstatus im Chat
+
+- **Thinking-/Status-Blöcke kurz halten:** Nur aktueller Stand, Fokus, offene Prüfung. Keine Abschluss-Zusammenfassung im Zwischenstand.
+- **Keine langen Erklärungen während der Arbeit:** Nicht ausschweifen, nicht jeden Zwischenschritt rechtfertigen.
+- **Gute Statusstruktur:**
+  ```md
+  🔎 Prüfe Problem XYZ ...
+
+  Fokus:
+  ABC, DEF, GHI
+
+  Status:
+  Ursache eingegrenzt, Fix wird getestet ...
+  ```
+- **Aktionsnah schreiben:** „Prüfe ...", „Fix läuft ...", „Validiere ...". Keine langen Ich-Formulierungen.
+- **Starker Projekt-Partner:** Fortschritt sichtbar machen · 2-3 konkrete Vorschläge statt abstrakter Ideen · klarer nächster Schritt.
+
+### 2.3 Abschluss im Chat
+
+- **Standardformat nach Änderungen:**
+  ```md
+  ✅ Problem XYZ gelöst
+
+  ### Problem
+  - Was war sichtbar falsch?
+
+  ### Ursache
+  - Warum ist es passiert?
+
+  ### Änderung
+  - Was wurde konkret angepasst?
+
+  ### Dateien / Pfade
+  - `pfad/zur/datei.ts`
+
+  ### Prüfung
+  - Lint / Typecheck / Sichtprüfung
+  ```
+- **Pfadpflicht:** Geänderte oder geprüfte Dateien, Dokumente und Komponenten immer mit Pfad nennen.
+- **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
+- **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
+
+### 2.4 Konsolenausgaben
+
+- **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮 · Bei Laggs: Timer einbauen (siehe evlog: `shared-docs/agents/skills/review-logging-patterns/SKILL.md`)
 
 ## 3. Workflow & Dokumentation
 
@@ -48,14 +95,6 @@
 - **Nach allen Phasen:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen (falls noch nicht behoben)
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
-
-### 3D-/Meshy-Asset-Qualitätsgate (PFLICHT)
-
-- **ImageGen-Referenz muss wirklich in die 3D-Pipeline:** Wenn ein Charakter/Objekt zuerst mit ImageGen freigegeben wurde, darf Meshy nicht nur mit einem freien Textprompt gestartet werden. Pflicht ist Image-to-3D oder Multi-Image-to-3D mit der freigegebenen Referenz, außer Meshy kann den Input technisch nicht verarbeiten. Dann muss der Grund vor Credit-Verbrauch dokumentiert und beim User bestätigt werden.
-- **GLB immer visuell prüfen, bevor weitere Credits verbraucht werden:** Nach jeder Meshy-Preview/Refine muss die GLB in einem Viewer oder direkt im Spiel per Screenshot geprüft werden. Vergleich gegen Referenz: Kopf/Form, Gesicht/Ohren/Nase/Mund, Kleidung, Hände, Füße, Proportionen, Farben, Low-Poly/Voxel-Stil.
-- **Stop-Regel bei starker Abweichung:** Wenn das GLB klar nicht wie die freigegebene Referenz aussieht, sofort stoppen. Kein Refine, Rigging oder Animate auf schlechtem Modell. Erst neue Generierung/Prompt/Image-Input oder User-Rückfrage.
-- **Dokumentationspflicht:** In der Task-Datei festhalten: verwendete Referenzdatei, Meshy-Methode (`image-to-3d`, `multi-image-to-3d`, `text-to-3d`), Task-ID, Screenshot-Pfad der GLB-Prüfung und Entscheidung `ACCEPTED` oder `REJECTED`.
-- **Credit-Schutz:** Animationen/Rigging erst starten, wenn das Modell visuell akzeptiert wurde. Gute Animationen retten kein falsches Modell.
 
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
@@ -356,10 +395,23 @@ db/
 - **Dev-Schutz:** `TooltipTrigger` warnt im Dev-Build, sobald `asChild` mit einem `motion.*`-Child kombiniert wird (Heuristik in `components/ui/tooltip.tsx`).
 - **Antipattern:** `<TooltipTrigger asChild><button>{cond && <motion.div layoutId="..." />}</button></TooltipTrigger>` → genau das hat 2026-05-05 die `setRef`-Schleife im HudTabBar ausgeloest.
 
-### Performance
+### Performance: React, Daten & Web
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
 - Polling Cleanup: Jeder useEffect mit Timers/Subscriptions MUSS Cleanup-Function haben
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
+
+### 3D, Three.js & WebGPU
+
+#### Three.js / R3F Grundregeln
+
+- **Three.js zuerst als eigener Performance-Bereich behandeln:** 3D-Probleme nie nur wie normale React-UI debuggen. Immer Render-Loop, Szene, Geometrie, Materialien, Texturen, Draw Calls und GPU-Fallbacks getrennt prüfen.
+- **Primäre Messwerte:** `frame ms`, `draw calls`, `triangles`, `geometries`, Texture-Größe, Speicherverbrauch und sichtbare Stotterer. `FPS` allein reicht nicht.
+- **Canvas-Sichtprüfung Pflicht:** Nach 3D-Änderungen per Screenshot oder Browser-Sichtprüfung prüfen, ob Canvas nicht leer ist, Kamera/Objekte korrekt gerahmt sind und Interaktion/Animation noch läuft.
+- **Dokumentationsreferenzen prüfen:** Bei Three.js/R3F-Änderungen passende lokale Doku oder offizielle Three.js/R3F-Dokumentation heranziehen, bevor größere Architektur- oder Performance-Entscheidungen getroffen werden.
+- **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
+
+#### Three.js / R3F Performance
+
 - **WebGPU-Real-Browser-Testregel (PFLICHT):** WebGPU-FPS niemals aus Default-Headless-Chromium als Wahrheit ableiten. Für WebGPU-Performance zuerst echten headed Chrome/Edge auf der aktuell laufenden App-URL nutzen. Pflicht-Prüfung vor FPS-Bewertung: `window.isSecureContext === true`, `navigator.gpu` vorhanden, `requestAdapter()` liefert Adapter, `requestDevice()` klappt, App meldet `engineState.renderStats.backend === "webgpu"`. Wenn Adapter fehlt, Ergebnis nur als Adapter-/Fallback-Diagnose dokumentieren.
 - **Playwright-CLI WebGPU Best-Option (PFLICHT):** Bei Playwright-WebGPU-QA den installierten Chrome verwenden: `C:/Program Files/Google/Chrome/Application/chrome.exe`, headed, temporäres User-Profil, Flags `--enable-unsafe-webgpu` und `--ignore-gpu-blocklist`. Im WebGPU-Worktree bevorzugt das vorhandene Script nutzen: `node scripts/perf/webgpu-real-browser-smoke.mjs`. Optional: `--keep-open` für manuelle Sichtprüfung.
 - **WebGPU Cross-Check (OPTIONAL):** Zusätzliche Browser nur prüfen, wenn sie lokal installiert sind und WebGPU auf Windows zuverlässig liefern. Immer dieselbe aktuell laufende App-URL verwenden; Ports nie hardcoden. Chrome/Edge bleibt Referenzpfad für Performance-Traces und CDP/DevTools.
@@ -379,7 +431,14 @@ db/
 - **FPS-Cap-Benchmark-Regel (PFLICHT, 2026-05-11):** Wenn FPS am Monitor-Limit kleben (z. B. 120/144/240), Optimierungen primär über `frame ms`, `draw calls`, `triangles` und `geometries` bewerten. `FPS` allein ist dann als Vergleichswert unzuverlässig.
 - **Chunk-Boundary-Stutter-Regel (PFLICHT, 2026-05-11):** Bei Chunk-Culling dürfen Chunk-Gruppen an Grenzen nicht hart gemountet/unmountet werden. Pflicht: Chunk-Objekte persistent halten und nur `visible` toggeln; Chunk-Geometrien einmalig cachen; sichtbare Stats über Summen zählen statt bei jedem Grenzwechsel große Listen neu aufzubauen.
 - **Chunk-Update-Budget-Regel (PFLICHT, 2026-05-11):** Kamera-/Chunk-Updates als niedrig priorisierte UI-Arbeit behandeln (`startTransition` oder gleichwertig), damit kurze Navigations-Hänger bei Grenzwechseln ausbleiben.
-- **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
+
+#### 3D-/Meshy-Asset-Qualitätsgate (PFLICHT)
+
+- **ImageGen-Referenz muss wirklich in die 3D-Pipeline:** Wenn ein Charakter/Objekt zuerst mit ImageGen freigegeben wurde, darf Meshy nicht nur mit einem freien Textprompt gestartet werden. Pflicht ist Image-to-3D oder Multi-Image-to-3D mit der freigegebenen Referenz, außer Meshy kann den Input technisch nicht verarbeiten. Dann muss der Grund vor Credit-Verbrauch dokumentiert und beim User bestätigt werden.
+- **GLB immer visuell prüfen, bevor weitere Credits verbraucht werden:** Nach jeder Meshy-Preview/Refine muss die GLB in einem Viewer oder direkt im Spiel per Screenshot geprüft werden. Vergleich gegen Referenz: Kopf/Form, Gesicht/Ohren/Nase/Mund, Kleidung, Hände, Füße, Proportionen, Farben, Low-Poly/Voxel-Stil.
+- **Stop-Regel bei starker Abweichung:** Wenn das GLB klar nicht wie die freigegebene Referenz aussieht, sofort stoppen. Kein Refine, Rigging oder Animate auf schlechtem Modell. Erst neue Generierung/Prompt/Image-Input oder User-Rückfrage.
+- **Dokumentationspflicht:** In der Task-Datei festhalten: verwendete Referenzdatei, Meshy-Methode (`image-to-3d`, `multi-image-to-3d`, `text-to-3d`), Task-ID, Screenshot-Pfad der GLB-Prüfung und Entscheidung `ACCEPTED` oder `REJECTED`.
+- **Credit-Schutz:** Animationen/Rigging erst starten, wenn das Modell visuell akzeptiert wurde. Gute Animationen retten kein falsches Modell.
 
 ### Frontend Regeln & Antipatterns!
 - **Analysiere bestehendes Design, Prüfen ob globale css/tailwind Klassen existieren bevor du das Design kapputt machst!** Und nutze diesselben Farbpaletten wieder um einheitlich zu bleiben!

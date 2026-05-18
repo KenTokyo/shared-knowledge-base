@@ -133,6 +133,28 @@ Hintergrund bleibt immer die Surface-Skala oben.
 | `bg-black/40` | halbtransparent → Capacitor-Bug | `bg-surface-2` solid |
 | `bg-zinc-900` direkt | umgeht Theming | `bg-surface-2` |
 | `border-white/10`, `border-white/20`, helle weiße Border auf Badges/Buttons | wirkt hart, unruhig, nicht Mock-konform | `border-subtle`, `border`, `border-strong` |
-|  |  |  |
+| `border-black/12`, `border-{color}-200/70` ohne `dark:border-…` Override auf Badges | im Darkmode bleibt die helle Light-Border aktiv → wirkt wie harter weißer Stempel | `border-subtle` ODER `border-status-{tone}/40` + `dark:border-status-{tone}/25` |
+| `bg-white/95 dark:bg-[#111]/95` auf Selects / Popovers / Dropdowns | Opacity → Capacitor-Bug, zudem manchmal kein Dark-Override greifend → wirkt wie native Browser-Select | `bg-surface-2 dark:bg-surface-3` solid |
+| Natives `<select>` mit `<option>` Eintraegen | erbt Browser-Default-Style (weiß mit schwarzem Text), bricht komplett aus dem Design-System aus, keine Icons / Keyboard / Search | `<DesignSelect ... options={[...]} />` aus `@/components/design-system` mit Lucide-Icons |
+| `text-primary-foreground` auf `bg-accent-subtle`/`bg-accent-soft`/`bg-accent-medium` | `*-foreground`-Farben sind nur für **Buttons mit echtem Primary-Hintergrund** gedacht — auf gold getönten Surfaces wird der Text unsichtbar (Gold-auf-Gold) | `text-foreground` (immer lesbar) oder `text-primary` in beiden Modes |
+| Eigener Radix `DropdownMenu` als Select-Ersatz (Sort, Filter, Anzahl) | bricht Look & Feel, kein Portal/Keyboard/Highlight aus Design-System, doppelte Implementierung | `<DesignSelect ... options={[...]} />` aus `@/components/design-system` |
 | Eigene `--cw-*` / `--sidebar-*` Variablen für Hintergründe | Token-Wildwuchs | `var(--surface-1)` … `var(--surface-4)` |
-d
+
+---
+
+## 🐛 Known Issues / Häufige Fehler
+
+Ein-Satz-Regeln. Pflicht-Gegencheck vor jedem Frontend-Patch. Bei Wiederholung neuen Eintrag ergänzen.
+
+| # | Symptom | Fix (1 Satz) |
+| --- | --- | --- |
+| 1 | Aktive Zeile unlesbar (Gold-auf-Gold, Lila-auf-Lila) auf `bg-accent-*` | `font-bold text-foreground` statt `text-primary-foreground` — Foreground-Tokens nur auf echtem `bg-primary`. |
+| 2 | Sort/Filter/Anzahl als eigener `<button>` + `DropdownMenu` | Migriere auf `<DesignSelect options={DesignSelectOption[]} size="sm" />`, Custom-Trigger via `renderValue`. |
+| 3 | Popover/Dropdown halbtransparent (Capacitor-Bug) | Solid Surface-Tokens (`bg-surface-2`/`bg-surface-4`) — keine `bg-*/95`-Opacity auf Overlays. |
+| 4 | Hover/Active-Border wirkt hart weiß | `border-subtle` / `border` / `border-strong` statt `border-white/10`, `border-black/20`. |
+| 5 | Badge-Rand im Darkmode stempelartig hell | Status-Tones `border-status-*/40` + `dark:border-status-*/25`, neutral → `border-subtle`. |
+| 6 | Commit-/Datei-Hover zeigt nur „Klicken für Details" | Auf `onMouseEnter`/`onFocus` Detail prefetchen (`gitShow`), Ergebnis im Tooltip rendern, per `useRef` einmal-pro-Hash cachen. |
+| 7 | Sieht aus wie Browser-Standard-Dropdown (weiß + schwarzer Text) | Natives `<select>` → `<DesignSelect>` migrieren (Lucide-Icons, `value`-String, Cast im `onValueChange`). |
+| 8 | Icons springen zwischen links/rechts in Listen | 3-Spalten-Layout pro Row: `[leading icon] [content flex-1] [trailing action/state]`. |
+
+**Offene `<select>`-Treffer (Stand 2026-05-18):** `QuizDashboardClient.tsx` (4×), `OpenInPromptWorkspace.tsx` (2×), `OpenInPromptManagementDialog.tsx`, `callout-node-view.tsx` (2×), `ExamProgressSection.tsx`, `LearningSummaryChatTargetPicker.tsx`, `CreateHomeworkQuickDialog.tsx`, `SemesterTransitionDialog.tsx`, `CameraCaptureDialog.tsx`, `CreateExamTopicDialog.tsx`, `NotificationSettingsDropdown.tsx`, `CodeBlockComponent.tsx`, `AccessibilityToolbar.tsx`, `lib/openui/lern-library/**/form-components.tsx`. Bewusst belassen: `_showcase/.../StepDialogSection.tsx`.
