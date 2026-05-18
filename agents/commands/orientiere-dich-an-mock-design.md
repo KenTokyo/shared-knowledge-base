@@ -115,7 +115,7 @@ Hintergrund bleibt immer die Surface-Skala oben.
 >    - **Sektion / Container** → `bg-surface-2`
 >    - **Karte / Card** → `bg-surface-4`
 >    - **Hover** → `hover:bg-surface-5`
->    - **Border** → `border-surface-6` ODER `border-white/10`
+>    - **Border (Pflicht, subtil)** → `border-subtle`, `border` oder `border-strong`
 > 2. Tailwind-Opacity-Hintergründe wie `bg-black/40`, `bg-white/80` SIND VERBOTEN (Capacitor-Bug) → solid Surface-Token.
 > 3. Akzent-Farben (Buttons, aktive Tabs, Primary-Indikatoren) NICHT anfassen — die sind theme-abhängig.
 > 4. Light + Dark IMMER beide prüfen — Token regelt das automatisch.
@@ -132,6 +132,7 @@ Hintergrund bleibt immer die Surface-Skala oben.
 | `bg-[#0a0f18]` | bläulich-schwarz, wirkt „komisch" neben neutralem Schwarz | `bg-surface-1` |
 | `bg-black/40` | halbtransparent → Capacitor-Bug | `bg-surface-2` solid |
 | `bg-zinc-900` direkt | umgeht Theming | `bg-surface-2` |
+| `border-white/10`, `border-white/20`, helle weiße Border auf Badges/Buttons | wirkt hart, unruhig, nicht Mock-konform | `border-subtle`, `border`, `border-strong` |
 |  |  |  |
 | Eigene `--cw-*` / `--sidebar-*` Variablen für Hintergründe | Token-Wildwuchs | `var(--surface-1)` … `var(--surface-4)` |
-
+d
