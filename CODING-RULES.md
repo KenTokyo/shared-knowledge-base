@@ -306,7 +306,7 @@ db/
 - **Scope-Merge deterministisch halten (PFLICHT):** In Normalizern niemals `Date.now()` als Fallback für Scope-Felder nutzen. Fallbacks müssen stabil sein (z. B. `0`), sonst entstehen künstliche `"scopeChanged"`-Schleifen.
 - **Session-Lese-Fallback im Chat-Store (PFLICHT):** Wenn `sessionId` fehlt oder `null` ist, dürfen `getMessagesForSession`/`getToolMessagesForSession` nicht auf einen leeren Default-Slice zeigen. In diesem Fall immer auf den Legacy-Top-Level-Fallback (`state.messages`, `state.toolMessages`) zurückfallen.
 - **Patch-Hygiene nach schnellen Edits:** Nach jedem Patch Dateiende prüfen (keine angehängten JSX-Reste, keine duplizierten Abschlussblöcke).
-- **Pflicht-Check danach:** `pnpm exec next lint --file <datei>`; bei auffälligem Laufzeitverhalten zusätzlich `npx tsc --noEmit` und Fehlerstellen dokumentieren.
+- **Pflicht-Check danach:** `pnpm exec next lint --file <datei>`; bei auffälligem Laufzeitverhalten zusätzlich `pnpm exec tsc --noEmit` und Fehlerstellen dokumentieren.
 
 ### Globaler React-Loop-Schutz (PFLICHT, für alle Projekttypen)
 - **Gilt überall:** Diese Regeln gelten für klassische Web-Apps, Spiele-UIs/HUDs, Fitness-Apps, Mobile-Frontends und Desktop-Apps gleichermaßen.
@@ -365,7 +365,7 @@ db/
 - **WebGPU Cross-Check (OPTIONAL):** Zusätzliche Browser nur prüfen, wenn sie lokal installiert sind und WebGPU auf Windows zuverlässig liefern. Immer dieselbe aktuell laufende App-URL verwenden; Ports nie hardcoden. Chrome/Edge bleibt Referenzpfad für Performance-Traces und CDP/DevTools.
 - **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
 - **Effects.tsx Klassen-VFX-Regel (PFLICHT, 2026-05-18):** `src/components/3d/Effects.tsx` ist ein 3D-Hotpath. Lokale Klassen-VFX-Renderer duerfen dort nur fuer die aktive lokale Klasse gemountet werden. Mixed Remote-/Raid-Klassen brauchen eigene Remote-VFX-Deskriptoren mit Fidelity-/Distanz-Caps; niemals alle lokalen Klassen-VFX gleichzeitig mounten, nur damit Remote-Skills sichtbar werden.
-- **VFX-PR-Guardrail-Checkliste (PFLICHT, 2026-05-18 / Phase 7):** Bei jeder Aenderung mit `useFrame`, transparenten Materialien oder `engineState.*.push` zuerst `npm run perf:vfx-guardrails` ausfuehren; nur bei absichtlicher Hotpath-Erweiterung danach Baseline mit `npm run perf:vfx-guardrails:update-baseline` aktualisieren und den Grund im Task dokumentieren.
+- **VFX-PR-Guardrail-Checkliste (PFLICHT, 2026-05-18 / Phase 7):** Bei jeder Aenderung mit `useFrame`, transparenten Materialien oder `engineState.*.push` zuerst `pnpm run perf:vfx-guardrails` ausfuehren; nur bei absichtlicher Hotpath-Erweiterung danach Baseline mit `pnpm run perf:vfx-guardrails:update-baseline` aktualisieren und den Grund im Task dokumentieren.
 - **Hotpath-Warnregeln fuer neue Loops/Transparenz-Serien (PFLICHT, 2026-05-18 / Phase 7):** Neue oder erweiterte `useFrame`-Stellen und transparente Serien ohne Instancing/Batching gelten als Warnsignal und duerfen nur mit Messwerten (`fps`, `frameMs`, `calls`, `transparentLayerEstimate`, `activeUseFrameSubsystems`) freigegeben werden.
 - **Root-Cause-Dokumentationspflicht fuer VFX-Hotpath-PRs (PFLICHT, 2026-05-18 / Phase 7):** Vor Merge ist ein kurzer Root-Cause-Block im Task verpflichtend: Trigger, technische Ursache, verworfene Alternativen, Messwert-Delta WebGL/WebGPU und finale Entscheidung inklusive Risiko/Guardrail.
 - **Three.js Scene-Boundary-Regel (PFLICHT, 2026-05-10):** Schwere 3D-Subtrees (Terrain, Instancing, große Map-Listen) müssen hinter einer stabilen Scene-Grenze leben (`React.memo`, stabile Callback-Referenzen, keine HUD-State-Props in den Scene-Pfad). FPS/HUD-Updates dürfen niemals vollständige Terrain-Rebuilds auslösen.
@@ -404,7 +404,7 @@ db/
 ## Validierung & Testing
 ### 8.1 TypeScript
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
-- **ZERO TOLERANCE:** `npx tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
+- **ZERO TOLERANCE:** `pnpm exec tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
@@ -450,7 +450,7 @@ db/
 **Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
 
 # Wichtige Regeln / Zusammmenfassung
-**NIEMALS automatisch `npm run dev` oder `pnpm dev` starten!**
+**NIEMALS automatisch `pnpm run dev` oder `pnpm dev` starten!**
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
 - Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
