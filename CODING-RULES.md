@@ -33,6 +33,7 @@
 ### Grundton
 - **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
 - **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben. Echte Umlaute (ü, ä, ö, ß). Alltagssprache statt Fachsprache. Wenige technische Begriffe auf einmal, oder kurz erklären.
+- **UTF-8 und echte Umlaute in Dokumentation (PFLICHT):** Neue oder bearbeitete Markdown-/Dokumentationsdateien immer als UTF-8 schreiben und echte Umlaute verwenden: `ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`. Keine Ersatzschreibweisen wie `ae`, `oe`, `ue`, wenn ein deutsches Wort gemeint ist. Nach Doku-Edits gezielt auf Mojibake prüfen, z. B. `Ã`, `â`, `ðŸ`.
 - **Deutsch zuerst:** Antworten und UI-nahe Erklärungen auf Deutsch. Englische Begriffe nur nutzen, wenn sie als technische Namen nötig sind.
 - **Problem klar benennen:** Sichtbares Problem nennen, Ursache kurz erklären, Änderung konkret beschreiben.
 - **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
@@ -98,7 +99,7 @@ Falls Orchestrator Modus an!
 - **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen auf einmal.
 - **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss immer Mini-Check machen: Scope gegen Planung prüfen, geänderte UI auf Regressionen prüfen, passende Lint/TypeScript-Checks im geänderten Bereich ausführen und Ergebnis in der Planung notieren.
 - **ORCHESTRATOR HANDOVER-REIHENFOLGE (neu):** Immer in dieser Reihenfolge abschließen: 1) Phase dokumentieren, 2) offene Punkte + nächste Phase benennen, 3) Endstatus (`NEXT_PHASE_READY` oder `ALL_PHASES_COMPLETE`) als **letzte Zeile** ausgeben.
-- **KRITISCH (Loop-Stopper):** Wenn nur noch manuelle User-Checks offen sind (z.B. UI-Test, Ingame-Run, Recorder-Export, visueller Check), darf **kein** `NEXT_PHASE_READY` mehr kommen. In diesem Fall immer `ALL_PHASES_COMPLETE`, weil die KI ohne User-Input nicht weiter ausfuehren kann.
+- **KRITISCH (Loop-Stopper):** Wenn nur noch manuelle User-Checks offen sind (z.B. UI-Test, Ingame-Run, Recorder-Export, visueller Check), darf **kein** `NEXT_PHASE_READY` mehr kommen. In diesem Fall immer `ALL_PHASES_COMPLETE`, weil die KI ohne User-Input nicht weiter ausführen kann.
 
 ## 4. Erzeugung von Planung
 
@@ -398,44 +399,7 @@ db/
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
 
 ### 3D, Three.js & WebGPU
-
-#### Three.js / R3F Grundregeln
-
-- **Three.js zuerst als eigener Performance-Bereich behandeln:** 3D-Probleme nie nur wie normale React-UI debuggen. Immer Render-Loop, Szene, Geometrie, Materialien, Texturen, Draw Calls und GPU-Fallbacks getrennt prüfen.
-- **Primäre Messwerte:** `frame ms`, `draw calls`, `triangles`, `geometries`, Texture-Größe, Speicherverbrauch und sichtbare Stotterer. `FPS` allein reicht nicht.
-- **Canvas-Sichtprüfung Pflicht:** Nach 3D-Änderungen per Screenshot oder Browser-Sichtprüfung prüfen, ob Canvas nicht leer ist, Kamera/Objekte korrekt gerahmt sind und Interaktion/Animation noch läuft.
-- **Dokumentationsreferenzen prüfen:** Bei Three.js/R3F-Änderungen passende lokale Doku oder offizielle Three.js/R3F-Dokumentation heranziehen, bevor größere Architektur- oder Performance-Entscheidungen getroffen werden.
-- **Post-Mortem Referenz (verbindlich bei ähnlichen Bugs):** `docs/performance/threejs-fps-postmortem-2026-04-19.md`
-
-#### Three.js / R3F Performance
-
-- **WebGPU-Real-Browser-Testregel (PFLICHT):** WebGPU-FPS niemals aus Default-Headless-Chromium als Wahrheit ableiten. Für WebGPU-Performance zuerst echten headed Chrome/Edge auf der aktuell laufenden App-URL nutzen. Pflicht-Prüfung vor FPS-Bewertung: `window.isSecureContext === true`, `navigator.gpu` vorhanden, `requestAdapter()` liefert Adapter, `requestDevice()` klappt, App meldet `engineState.renderStats.backend === "webgpu"`. Wenn Adapter fehlt, Ergebnis nur als Adapter-/Fallback-Diagnose dokumentieren.
-- **Playwright-CLI WebGPU Best-Option (PFLICHT):** Bei Playwright-WebGPU-QA den installierten Chrome verwenden: `C:/Program Files/Google/Chrome/Application/chrome.exe`, headed, temporäres User-Profil, Flags `--enable-unsafe-webgpu` und `--ignore-gpu-blocklist`. Im WebGPU-Worktree bevorzugt das vorhandene Script nutzen: `node scripts/perf/webgpu-real-browser-smoke.mjs`. Optional: `--keep-open` für manuelle Sichtprüfung.
-- **WebGPU Cross-Check (OPTIONAL):** Zusätzliche Browser nur prüfen, wenn sie lokal installiert sind und WebGPU auf Windows zuverlässig liefern. Immer dieselbe aktuell laufende App-URL verwenden; Ports nie hardcoden. Chrome/Edge bleibt Referenzpfad für Performance-Traces und CDP/DevTools.
-- **Three.js / R3F Hotpath-Regel (PFLICHT):** Bei FPS-Spikes zuerst Render-/State-Churn im Trefferpfad prüfen, nicht nur Partikel reduzieren. In High-Frequency-Pfaden (`useFrame`, Sustain-Hit-Loops) keine breiten Store-Subscriptions oder häufiges `setState`; stattdessen selektive Selector (`useShallow`), `useRef` und gedrosselte Cross-Store-UI-Syncs nutzen.
-- **Effects.tsx Klassen-VFX-Regel (PFLICHT, 2026-05-18):** `src/components/3d/Effects.tsx` ist ein 3D-Hotpath. Lokale Klassen-VFX-Renderer duerfen dort nur fuer die aktive lokale Klasse gemountet werden. Mixed Remote-/Raid-Klassen brauchen eigene Remote-VFX-Deskriptoren mit Fidelity-/Distanz-Caps; niemals alle lokalen Klassen-VFX gleichzeitig mounten, nur damit Remote-Skills sichtbar werden.
-- **VFX-PR-Guardrail-Checkliste (PFLICHT, 2026-05-18 / Phase 7):** Bei jeder Aenderung mit `useFrame`, transparenten Materialien oder `engineState.*.push` zuerst `pnpm run perf:vfx-guardrails` ausfuehren; nur bei absichtlicher Hotpath-Erweiterung danach Baseline mit `pnpm run perf:vfx-guardrails:update-baseline` aktualisieren und den Grund im Task dokumentieren.
-- **Hotpath-Warnregeln fuer neue Loops/Transparenz-Serien (PFLICHT, 2026-05-18 / Phase 7):** Neue oder erweiterte `useFrame`-Stellen und transparente Serien ohne Instancing/Batching gelten als Warnsignal und duerfen nur mit Messwerten (`fps`, `frameMs`, `calls`, `transparentLayerEstimate`, `activeUseFrameSubsystems`) freigegeben werden.
-- **Root-Cause-Dokumentationspflicht fuer VFX-Hotpath-PRs (PFLICHT, 2026-05-18 / Phase 7):** Vor Merge ist ein kurzer Root-Cause-Block im Task verpflichtend: Trigger, technische Ursache, verworfene Alternativen, Messwert-Delta WebGL/WebGPU und finale Entscheidung inklusive Risiko/Guardrail.
-- **Three.js Scene-Boundary-Regel (PFLICHT, 2026-05-10):** Schwere 3D-Subtrees (Terrain, Instancing, große Map-Listen) müssen hinter einer stabilen Scene-Grenze leben (`React.memo`, stabile Callback-Referenzen, keine HUD-State-Props in den Scene-Pfad). FPS/HUD-Updates dürfen niemals vollständige Terrain-Rebuilds auslösen.
-- **Ablation-Pflicht bei Terrain-Bugs (PFLICHT):** Immer per Feature-Schalter messen (`terrain on/off`, `top-faces`, `fog`, `material mode`) und Ursache per Messwert dokumentieren (`FPS NOW/AVG/LOW`, `frame ms`, `triangles`, `calls`), bevor man visuelle Effekte anfasst.
-- **Terrain-Budget-Regel (PFLICHT):** Für Standard-Run pro aktiver Kameraansicht ein klares Budget pflegen (z. B. Terrain möglichst unter `~20k` Triangles und `~1` Draw-Call). Bei Budget-Überschreitung zuerst Geometriepfad/Materialpfad korrigieren, nicht nur UI-Optionen ergänzen.
-- **Terrain-TopFaces-Regel (PFLICHT, 2026-05-10):** Wenn Seitenflächen spielerisch nicht nötig sind, Terrain standardmäßig als Top-Faces rendern (statt 10k Box-Tiles). Ziel: Geometriekosten zuerst senken, danach Look mit Side-Skirts/LOD stabilisieren.
-- **Procedural-Winding-Regel (PFLICHT, 2026-05-10):** Bei selbst erzeugten Terrain-Geometrien Triangle-Winding explizit prüfen (für `FrontSide` i. d. R. CCW von oben). Falsches Winding + Backface-Culling darf nie als "Map-Loch" in Produktion landen.
-- **Merged-vs-Instanced-Guard (PFLICHT, 2026-05-10):** Bei neuem Merging-Pfad immer A/B gegen Instanced-Pfad dokumentieren (FPS + `renderer.info` + Sichtprüfung). Performance-Gewinn ohne visuelle Parität darf nicht als Default aktiviert werden.
-- **Globale Voxel-Terrain-Regel (Gaming/Web/VFX, PFLICHT, 2026-05-10):** Bei grossen Tile-Maps (>2k Tiles sichtbar) niemals blind Voll-Boxen als Default rendern. Pflicht-Strategie: `Top Faces` fuer Geometrie-Reduktion, `Side-Skirts` fuer Look-Recovery, danach `Chunking/Culling` (nur sichtbare Bereiche rendern). Diese Regel gilt fuer Runtime-Code **und** Prompt-Spezifikationen.
-- **Minecraft-Lernregel (PFLICHT, 2026-05-10):** Performance wird bei Voxel-Welten primär durch Sichtbarkeit + Batching bestimmt, nicht durch "Blockzahl allein". Deshalb immer zuerst Sichtbarkeitsfenster/Chunks, Draw-Call-Reduktion und Face-Reduktion planen, bevor man Material-Feintuning macht.
-- **FPS-Cap-Benchmark-Regel (PFLICHT, 2026-05-11):** Wenn FPS am Monitor-Limit kleben (z. B. 120/144/240), Optimierungen primär über `frame ms`, `draw calls`, `triangles` und `geometries` bewerten. `FPS` allein ist dann als Vergleichswert unzuverlässig.
-- **Chunk-Boundary-Stutter-Regel (PFLICHT, 2026-05-11):** Bei Chunk-Culling dürfen Chunk-Gruppen an Grenzen nicht hart gemountet/unmountet werden. Pflicht: Chunk-Objekte persistent halten und nur `visible` toggeln; Chunk-Geometrien einmalig cachen; sichtbare Stats über Summen zählen statt bei jedem Grenzwechsel große Listen neu aufzubauen.
-- **Chunk-Update-Budget-Regel (PFLICHT, 2026-05-11):** Kamera-/Chunk-Updates als niedrig priorisierte UI-Arbeit behandeln (`startTransition` oder gleichwertig), damit kurze Navigations-Hänger bei Grenzwechseln ausbleiben.
-
-#### 3D-/Meshy-Asset-Qualitätsgate (PFLICHT)
-
-- **ImageGen-Referenz muss wirklich in die 3D-Pipeline:** Wenn ein Charakter/Objekt zuerst mit ImageGen freigegeben wurde, darf Meshy nicht nur mit einem freien Textprompt gestartet werden. Pflicht ist Image-to-3D oder Multi-Image-to-3D mit der freigegebenen Referenz, außer Meshy kann den Input technisch nicht verarbeiten. Dann muss der Grund vor Credit-Verbrauch dokumentiert und beim User bestätigt werden.
-- **GLB immer visuell prüfen, bevor weitere Credits verbraucht werden:** Nach jeder Meshy-Preview/Refine muss die GLB in einem Viewer oder direkt im Spiel per Screenshot geprüft werden. Vergleich gegen Referenz: Kopf/Form, Gesicht/Ohren/Nase/Mund, Kleidung, Hände, Füße, Proportionen, Farben, Low-Poly/Voxel-Stil.
-- **Stop-Regel bei starker Abweichung:** Wenn das GLB klar nicht wie die freigegebene Referenz aussieht, sofort stoppen. Kein Refine, Rigging oder Animate auf schlechtem Modell. Erst neue Generierung/Prompt/Image-Input oder User-Rückfrage.
-- **Dokumentationspflicht:** In der Task-Datei festhalten: verwendete Referenzdatei, Meshy-Methode (`image-to-3d`, `multi-image-to-3d`, `text-to-3d`), Task-ID, Screenshot-Pfad der GLB-Prüfung und Entscheidung `ACCEPTED` oder `REJECTED`.
-- **Credit-Schutz:** Animationen/Rigging erst starten, wenn das Modell visuell akzeptiert wurde. Gute Animationen retten kein falsches Modell.
+LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 ### Frontend Regeln & Antipatterns!
 - **Analysiere bestehendes Design, Prüfen ob globale css/tailwind Klassen existieren bevor du das Design kapputt machst!** Und nutze diesselben Farbpaletten wieder um einheitlich zu bleiben!
@@ -462,6 +426,7 @@ db/
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
 - **ZERO TOLERANCE:** `pnpm exec tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
+- **Keine automatischen Oberflächentests:** Keine Browser-, Playwright-, Screenshot-, Recorder-, Ingame- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es ausdrücklich befiehlt. Sonst statische Checks, vorhandene Messreports und Blocker-Notiz nutzen.
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
 
@@ -491,6 +456,7 @@ db/
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
 - Max 700 lines/file
+- Keine Oberflächen-/Screenshot-/Browser-/Ingame-Tests ohne ausdrücklichen User-Auftrag
 - Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
 - Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
@@ -521,12 +487,12 @@ db/
 
 - Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
 - **Beim ORCHESTRATOR MODUS (KRITISCH):** Nach jeder Phase Plan updaten + passenden Endstatus setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
-- **Beim ORCHESTRATOR MODUS (Tempo + Qualität):** Eine Phase/Subphase pro Iteration, danach Pflicht-Mini-Check (Plan-Abgleich, UI-Regression-Check, Lint/TypeScript im geänderten Scope), erst dann Endstatus setzen.
-- **Regel fuer Manual-Blocker (sehr wichtig):** Wenn User die Oberfläche oder Gameplay manuell pruefen muss, nie `NEXT_PHASE_READY` schreiben. Dann ist der korrekte Abschluss `ALL_PHASES_COMPLETE`.
+- **Beim ORCHESTRATOR MODUS (Tempo + Qualität):** Eine Phase/Subphase pro Iteration, danach Pflicht-Mini-Check (Plan-Abgleich, statische UI-Regressionsprüfung ohne Browser/Screenshot, Lint/TypeScript im geänderten Scope), erst dann Endstatus setzen.
+- **Regel für Manual-Blocker (sehr wichtig):** Wenn User die Oberfläche oder Gameplay manuell prüfen muss, nie `NEXT_PHASE_READY` schreiben. Dann ist der korrekte Abschluss `ALL_PHASES_COMPLETE`.
 - Schreibe immer zu jeder Phase, falls fertig Anmerkungen in die Planung, was du noch für Schwachstellen rausgefunden hast, diese dann am Ende der Implementierung des Gesamtplans, also falls alle Phasen fertig sind, sollten dann Aufgaben anhand der Anmerkungen erzeugt werden 
   - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!
   - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
-- **BITTE KEIN MOJIBAKE, achte auf ENCODING:** Dateien mit UTF-8 lesen/schreiben und nach Doku-Edits gezielt auf Zeichenfehler wie `Ã`, `â†’`, `ðŸ` prüfen.
+- **BITTE KEIN MOJIBAKE, achte auf ENCODING:** Dateien mit UTF-8 lesen/schreiben und nach Doku-Edits gezielt auf Zeichenfehler wie `Ã`, `â`, `ðŸ` prüfen.
 - Bevor Implementierung bzw. Planung - suche alle möglichen Arten dies zu implementiere und implementiere die beste Art bzw Option
 - Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
  kontext wird eh permanent im hintergrund condensed deswegen sollst du nicht aufhören,  nicht fragen ob du weitemrachen sollst, sondern du machst einfach weiter
