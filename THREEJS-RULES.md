@@ -85,6 +85,8 @@
 - **Triangle-Regel:** Viele Triangles deuten oft auf Terrain, Modelle, Full-Box-Voxel, unnötige Seitenflächen oder zu hohe Asset-Details hin.
 - **Transparenz-Regel:** Hohe transparente Layer sind besonders kritisch bei Glow, AOE, Nebel, Partikeln, Slashes und DoubleSide-Materialien.
 - **Interpretationsregel:** Ein einzelner Wert beweist selten die Ursache. Erst Muster aus mehreren Werten bildet die Diagnose.
+- **Renderer-Stats-Regel (2026-05-19):** `Draw Calls` und `Triangles` im HUD müssen aus `renderer.info.render.calls` und `renderer.info.render.triangles` kommen. Eigene Scene-Traversal-Schätzungen dürfen nur als Hilfswerte für Layer/Transparenz genutzt werden, sonst wirken `drei <Instances>` oder Proxy-Objekte teurer als echte GPU-Draw-Calls.
+- **Option-E-Learning (2026-05-19):** Skill-Cast-Prewarm hilft nur bei Erstkosten wie Shader-Compile, Audio-Decode oder Pool-Aufbau. Wenn die FPS dauerhaft niedrig bleiben und `FPS Avg`/`frameMs` nach dem ersten Cast nicht besser werden, nicht nochmal Option E wiederholen. Dann zuerst Shadow, DPR, Town/Props, Map und Enemy-Ablation testen.
 
 ---
 
@@ -455,6 +457,18 @@ In `d:\CODING\React Projects\7-3D-Voxel-Samurai-Quiz`
 - `src/lib/performance/runtimePerformanceSnapshot.ts`
 
 ---
+
+## VFX Fehler
+**Vorfall-Merkhilfe (2026-05-19, Slash-Type-ID Kollision):**
+- Tank-Slash-IDs `50-52` lagen im Mage-Bereich (`29-56`) und wurden dadurch im Slash-Renderer als Mage klassifiziert/gefiltert.
+- Sichtbares Symptom: Slashes wurden gespawnt, aber in Klassen-Layern teilweise unsichtbar oder falsch einsortiert.
+- **Fix-Regel:** Klassenbereiche strikt trennen, neue IDs nur ueber `*_SLASH_TYPES`, danach Kollisions-Scan + `pnpm lint` + `npx tsc --noEmit`.
+
+### VFX Slash-Type Namespace Guard (PFLICHT)
+- **Keine numerischen Slash-IDs hart coden:** Immer nur ueber `*_SLASH_TYPES` Konstanten arbeiten.
+- **Vor neuen Slash-Typen Pflicht-Check:** Aktive Bereiche in `Archer`, `Tank`, `Mage`, `Chanter`, `Lai`, `Sturmfaust` und `src/lib/vfx/vfxSchema.ts` gegenpruefen.
+- **Range-Kollisionen sind kritisch:** Besonders `Mage` nutzt einen Bereichsfilter (`29-56`). Wenn eine andere Klasse in diesem Bereich IDs nutzt, koennen Slashes unsichtbar werden oder falsch gerendert werden.
+- **Nach jeder ID-Migration Pflicht-Validierung:** Kollisions-Scan auf `_SLASH_TYPES` + `pnpm lint` + `npx tsc --noEmit`.
 
 ## 28. Merksatz
 
