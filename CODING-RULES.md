@@ -429,6 +429,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
 - **ZERO TOLERANCE:** `pnpm exec tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
+- **Keine automatischen Oberflächentests:** Keine Browser-, Playwright-, Screenshot-, Recorder-, Ingame- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es ausdrücklich befiehlt. Sonst statische Checks, vorhandene Messreports und Blocker-Notiz nutzen.
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
 
@@ -458,6 +459,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
 - Max 700 lines/file
+- Keine Oberflächen-/Screenshot-/Browser-/Ingame-Tests ohne ausdrücklichen User-Auftrag
 - Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
 - Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
@@ -488,7 +490,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 - Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
 - **Beim ORCHESTRATOR MODUS (KRITISCH):** Nach jeder Phase Plan updaten + passenden Endstatus setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
-- **Beim ORCHESTRATOR MODUS (Tempo + Qualität):** Eine Phase/Subphase pro Iteration, danach Pflicht-Mini-Check (Plan-Abgleich, UI-Regression-Check, Lint/TypeScript im geänderten Scope), erst dann Endstatus setzen.
+- **Beim ORCHESTRATOR MODUS (Tempo + Qualität):** Eine Phase/Subphase pro Iteration, danach Pflicht-Mini-Check (Plan-Abgleich, statische UI-Regressionsprüfung ohne Browser/Screenshot, Lint/TypeScript im geänderten Scope), erst dann Endstatus setzen.
 - **Regel für Manual-Blocker (sehr wichtig):** Wenn User die Oberfläche oder Gameplay manuell prüfen muss, nie `NEXT_PHASE_READY` schreiben. Dann ist der korrekte Abschluss `ALL_PHASES_COMPLETE`.
 - Schreibe immer zu jeder Phase, falls fertig Anmerkungen in die Planung, was du noch für Schwachstellen rausgefunden hast, diese dann am Ende der Implementierung des Gesamtplans, also falls alle Phasen fertig sind, sollten dann Aufgaben anhand der Anmerkungen erzeugt werden 
   - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!

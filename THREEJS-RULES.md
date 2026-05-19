@@ -40,7 +40,7 @@
 - **Ablation statt Raten:** VFX on/off, Particles only, Slashes only, Enemy Model on/off, Terrain on/off, PostFX on/off, Shadows on/off, WebGL/WebGPU, Audio on/off und Skill ohne Trefferkontakt vergleichen.
 - **Root Cause trennen:** CPU-Loop, React-State-Churn, Draw Calls, Triangles, Transparenz/Overdraw, Shader/PostFX, Texture/Memory, Server, Audio, Physik, Display-Cap und Browser-Fallback getrennt betrachten.
 - **Architektur fixen:** Batching, Instancing, Pooling, stabile Scene-Boundaries, Dirty-Signaturen, zentrale Queues, Budget-Gates und perzeptive Skalierung nutzen.
-- **Sicht prüfen:** Screenshot/Browser/Playwright: Canvas nicht leer, Kamera korrekt, Terrain sichtbar, Gegner sichtbar, VFX sichtbar, Hitboxen intakt, Skill-Treffer funktionieren.
+- **Visuelle Prüfung als User-Gate:** Screenshot/Browser/Playwright/Recorder/Ingame-Checks nur starten, wenn der User es ausdrücklich befiehlt. Sonst Canvas-/Gameplay-Parität als offenen manuellen Blocker dokumentieren und statische Checks, vorhandene Reports und Messwerte nutzen.
 - **Dokumentieren:** Ursache, verworfene Alternativen, Messwert-Delta, Reportpfad, Restrisiko, Qualitätsverlust und Folgeaufgaben notieren.
 - **Nicht automatisch Dev-Server starten:** Wenn `http://localhost:3070/` nicht erreichbar ist, Messblocker dokumentieren. Keine Port-Konflikte erzeugen.
 
@@ -94,6 +94,7 @@
 - **R3F-Warnung ernst nehmen:** R3F warnt vor `setState` in `useFrame`, weil Frame-Arbeit sonst durch React-Scheduling und Re-renders läuft.
 - **Store-Zugriffe selektiv halten:** Keine breiten Store-Subscriptions in FPS-, Skill-, Gegner- oder Terrain-Hotpaths. Selector, `useShallow`, Refs oder Runtime-Objekte nutzen.
 - **UI-Sync drosseln:** FPS-HUD, Debug-Panel und Profiling-Anzeigen dürfen nicht selbst schwere 3D-Subtrees neu rendern.
+- **Performance-HUD bleibt billig:** HUD-Sampling drosseln, Details nur bei Bedarf rendern, Store-Subscriptions schmal halten und keine großen Listen pro Frame formatieren. Das Diagnosewerkzeug darf nicht selbst zum Performance-Problem werden.
 - **Keine Inline-Komponenten:** Komponenten nicht im Body anderer Komponenten definieren. Das erzeugt neue Component Types pro Render und kann State verlieren.
 - **Stabile Scene-Boundaries:** Terrain, Instancing, Gegnerlisten, VFX-Runtimes und große Map-Listen hinter stabilen Grenzen halten.
 - **Schwere Objekte stabil halten:** Materialien, Geometrien, Lights, Shader und PostFX nicht pro Render neu erzeugen.
@@ -191,7 +192,7 @@
 
 - **PostFX trennen:** Bloom, Vignette, Shadow/Glow, Edge Blur, DPR/Resolution Scale, Tone Mapping und Backend-Fallbacks getrennt messen.
 - **Nicht pauschal abschalten:** Wenn ein Backend schlechter ist, Kostenpfad isolieren und backend-sensitives Profil bauen.
-- **Screenshot-Parität:** PostFX-Fix braucht visuelle Parität, nicht nur bessere FPS.
+- **Visuelle Parität:** PostFX-Fix braucht sichtbare Parität, nicht nur bessere FPS. Ohne ausdrücklichen User-Auftrag wird dafür kein Screenshot-/Browser-Check gestartet; der manuelle Prüfpunkt wird dokumentiert.
 - **DPR beachten:** Höhere interne Auflösung kann teurer sein als einzelne Effektparameter.
 - **Geometrien teilen:** Gleiche Geometrien wiederverwenden, statt viele identische GPU-Ressourcen anzulegen.
 - **Materialien teilen:** Materialvarianten begrenzen. Zu viele Varianten verhindern Batching und erhöhen Draw Calls.
@@ -207,7 +208,7 @@
 
 - **Referenz wirklich verwenden:** Wenn ein Charakter/Objekt zuerst mit ImageGen freigegeben wurde, muss diese Referenz wirklich in die 3D-Pipeline.
 - **Methode dokumentieren:** `image-to-3d`, `multi-image-to-3d` oder `text-to-3d` mit Task-ID festhalten.
-- **GLB visuell prüfen:** Nach Preview/Refine die GLB in Viewer oder Spiel per Screenshot prüfen.
+- **GLB visuell prüfen:** Nach Preview/Refine braucht die GLB eine Viewer-/Spiel-Freigabe. Screenshot-/Browser-Checks nur starten, wenn der User es ausdrücklich befiehlt; sonst als manuellen Freigabe-Blocker dokumentieren.
 - **Vergleichskriterien:** Kopf/Form, Gesicht, Kleidung, Hände, Füße, Proportionen, Farben, Low-Poly/Voxel-Stil.
 - **Stop-Regel:** Wenn das GLB klar nicht wie die Referenz aussieht, stoppen. Kein Refine, Rigging oder Animate auf schlechtem Modell.
 - **Credit-Schutz:** Animationen/Rigging erst starten, wenn das Modell visuell akzeptiert wurde.
@@ -290,7 +291,7 @@
 - **WebGPU-Learning:** Einzelruns streuen stark; Median mehrerer identischer Paarläufe ist belastbarer.
 - **WebGPU-Blocker:** Leerer Canvas oder `calls=0` ist ein Messfehler.
 - **PostFX-Learning:** WebGPU wurde durch gezielte Shadow/Glow- und DPR-Anpassung stabiler, nicht durch pauschales Bloom/Vignette-Off.
-- **Paritätsregel:** WebGPU/PostFX-Fix ist erst fertig, wenn Optik, Gameplay und Messwerte zusammen passen.
+- **Paritätsregel:** WebGPU/PostFX-Fix ist erst fachlich vollständig, wenn Optik, Gameplay und Messwerte zusammen passen. Ohne User-Auftrag zur Oberfläche endet die KI-Arbeit mit dokumentiertem manuellem Prüfpunkt.
 
 ---
 
@@ -306,7 +307,7 @@
 - **Enemy-Model-Fall Fix:** Sichtbare Slots, Part-Batching, Dirty-Signaturen.
 - **WebGPU/PostFX-Fall Symptom:** WebGPU war in einzelnen Profilen langsamer oder instabil.
 - **WebGPU/PostFX-Fall Ursache:** WebGL-orientierte PostFX-/Quality-Pfade und Messstreuung.
-- **WebGPU/PostFX-Fall Lektion:** WebGPU nur mit Backend-Validierung, Canvas-Sichtprüfung und identischen A/B-Paarläufen bewerten.
+- **WebGPU/PostFX-Fall Lektion:** WebGPU nur mit Backend-Validierung, dokumentierter Canvas-/Paritätsprüfung und identischen A/B-Paarläufen bewerten. Automatische Oberfläche nur bei ausdrücklichem User-Auftrag öffnen.
 
 ---
 
@@ -340,7 +341,7 @@
 - Bleiben Gameplay-Hitboxen bei VFX-Off intakt?
 - Wurde per Ablation gemessen statt geraten?
 - Gibt es Reportpfade und Vorher/Nachher-Werte?
-- Wurde visuelle Parität per Screenshot/Browser geprüft?
+- Wurde visuelle Parität geprüft oder als manueller User-Blocker dokumentiert?
 - Wurden `pnpm lint` und passende Perf-Commands ausgeführt?
 - Ist dokumentiert, was bewusst nicht optimiert wurde und warum?
 
@@ -383,8 +384,8 @@
 - **Besser:** Layer, Material, Sortierung und Overdraw gezielt prüfen.
 - **Antipattern:** PostFX nur als einen großen On/Off-Schalter behandeln.
 - **Besser:** Bloom, Shadow/Glow, Vignette, DPR und Tone Mapping getrennt messen.
-- **Antipattern:** Performance-Fix ohne Screenshot-Parität.
-- **Besser:** Immer prüfen, ob das Spiel noch korrekt aussieht und Trefferfeedback lesbar bleibt.
+- **Antipattern:** Performance-Fix ohne Paritäts-Gate.
+- **Besser:** Prüfen oder dokumentieren, ob das Spiel noch korrekt aussieht und Trefferfeedback lesbar bleibt. Screenshot-/Browser-Checks nur mit ausdrücklichem User-Auftrag starten.
 - **Antipattern:** Neue Guardrail-Baseline ohne Begründung.
 - **Besser:** Baseline nur nach bewusstem Strukturwechsel mit Root-Cause-Notiz aktualisieren.
 
@@ -439,13 +440,15 @@
 ## 27. Projektinterne Pflichtreferenzen
 
 In `d:\CODING\React Projects\7-3D-Voxel-Samurai-Quiz`
-
-- `shared-docs/THREEJS-BEGRIFFE.md`
-- `shared-docs/THREEJS-PERFORMANCE-DETAILS.md`
+**Dokumentationen oder Historien die kritisch waren bzw wo länger nach Performance Lösungen geschaut wurde**
 - `docs/performance-issue/BIG-PERFORMANCE-ISSUE-HISTORY.md`
+  - Was haben wir daraus gelernt:
+    -
 - `docs/performance/tasks/2026-05-18-vfx-aaa-runtime-architecture-masterplan.md`
+  - Was haben wir daraus gelernt:
+    - ...
 
-Komponente hier schreiben die Performance kritisch waren, oder sind und beobachten, die Liste füllen
+**Komponente hier schreiben die Performance kritisch waren, oder sind und beobachten, die Liste füllen**
 - `src/components/3d/Effects.tsx`
 - `src/components/3d/enemies/InstancedRegularEnemies.tsx`
 - `src/lib/vfx/runtime/vfxEventRuntime.ts`
