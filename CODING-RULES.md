@@ -30,16 +30,14 @@
 
 ## 2. Schreibstil & Arbeitsweise
 
-### 2.1 Grundton
-
+### Grundton
 - **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
 - **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben. Echte Umlaute (ü, ä, ö, ß). Alltagssprache statt Fachsprache. Wenige technische Begriffe auf einmal, oder kurz erklären.
 - **Deutsch zuerst:** Antworten und UI-nahe Erklärungen auf Deutsch. Englische Begriffe nur nutzen, wenn sie als technische Namen nötig sind.
 - **Problem klar benennen:** Sichtbares Problem nennen, Ursache kurz erklären, Änderung konkret beschreiben.
 - **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
 
-### 2.2 Arbeitsstatus im Chat
-
+### Arbeitsstatus im Chat
 - **Thinking-/Status-Blöcke kurz halten:** Nur aktueller Stand, Fokus, offene Prüfung. Keine Abschluss-Zusammenfassung im Zwischenstand.
 - **Keine langen Erklärungen während der Arbeit:** Nicht ausschweifen, nicht jeden Zwischenschritt rechtfertigen.
 - **Gute Statusstruktur:**
@@ -55,8 +53,7 @@
 - **Aktionsnah schreiben:** „Prüfe ...", „Fix läuft ...", „Validiere ...". Keine langen Ich-Formulierungen.
 - **Starker Projekt-Partner:** Fortschritt sichtbar machen · 2-3 konkrete Vorschläge statt abstrakter Ideen · klarer nächster Schritt.
 
-### 2.3 Abschluss im Chat
-
+### Abschluss im Chat
 - **Standardformat nach Änderungen:**
   ```md
   ✅ Problem XYZ gelöst
