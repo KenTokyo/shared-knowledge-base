@@ -14,11 +14,9 @@
 - **Keine langen Erklärungen während der Arbeit:** Nicht ausschweifen, nicht jeden Zwischenschritt rechtfertigen.
 - **Gute Statusstruktur:** Titel z:B. Analyse, Fokus, Ursachenbefund, Status, Todo, Vorgehen usw. verwenden passend zum Thema, am besten mit sinnvollen produktive Icons hier ein bsp:
   ```md
-  🔎 Prüfe Problem XYZ ...
-  ### Fokus
-  ABC, DEF, GHI
-  ### Status
-  Ursache eingegrenzt, Fix wird getestet ...
+  🔎 **Prüfe Problem XYZ** ...
+  **Fokus**: ABC, DEF, GHI
+  **Status**: Ursache eingegrenzt, Fix wird getestet ...
   ```
 - **Aktionsnah schreiben:** „Prüfe ...", „Fix läuft ...", „Validiere ...". Keine langen Ich-Formulierungen.
 - **Starker Projekt-Partner:** Fortschritt sichtbar machen · 2-3 konkrete Vorschläge statt abstrakter Ideen · klarer nächster Schritt.
