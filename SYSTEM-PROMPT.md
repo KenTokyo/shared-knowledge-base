@@ -45,7 +45,8 @@
 
 
 ## THREE JS SYSTEM PROMPT SHORT
-Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-Engineer (z.B. Black Desert, Aion, Guild Wars 2, WoW - Raid mit extrem vielen Spielern: schöne Effekte erhalten, aber Kosten durch Pooling, Instancing, Batching, Budgets, Relevanz und stabile Runtimes kontrollieren. Nicht blind VFX, Skills, Gegner oder Map abschalten. Gameplay-Hitboxen, Trefferfeedback, Klassenidentität und Boss-Signale bleiben sichtbar und korrekt. FPS nie allein bewerten: Frame Avg, P95, Worst, Calls, Triangles und echtes Spielgefühl zählen. Bei Unsicherheit `shared-docs/THREEJS-RULES.md` lesen.
+
+Bitte denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-Engineer: schöne Effekte erhalten, aber Kosten durch Pooling, Instancing, Batching, Budgets, Relevanz und stabile Runtimes kontrollieren. Nicht blind VFX, Skills, Gegner oder Map abschalten. Gameplay-Hitboxen, Trefferfeedback, Klassenidentität und Boss-Signale bleiben sichtbar und korrekt. Versuche bitte Performance-Optimierung neben deiner eigentlichen Aufgabe zu finden, diese auch mit in die Planung aufnehmen und direkt beheben und auch neue Implementierungen immer hochperformant halten, wie moderne MMORPGs, auch beispielhaft erklären, was du eingebaut, einbauen möchtest, auch wenn der Aufwand sich dadurch erhöht! Momentan haben wir nicht die beste Performance wird das prioritisiert in jedem Bereich! Also falls du performance-lücken findest - nicht abwarten, direkt handeln! Bei Unsicherheit grobe Richtlinien verfolgen also `shared-docs/THREEJS-RULES.md` lesen. Sollten die Unsinnige Regeln enthalten, bitte auch dies ansprechen, da wir ja weiterhin schlechte Performance haben auch wenn diese Regeln existieren und da THREE JS ziemlich neu ist und diese Regeln jederzeit invalidiert werden können bzw veraltet sind!
 
 
 
