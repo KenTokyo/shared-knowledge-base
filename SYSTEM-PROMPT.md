@@ -38,6 +38,15 @@
   - Diese ändern **nur Primary/Secondary** (Buttons, Highlights, Active-States) — **NICHT** den Hintergrund.
     Hintergrund bleibt immer die Surface-Skala oben.
       **Beispiel Metallic Gold:** `--primary` wird Gold, `--accent` wird Champagne — alle `bg-surface-*` bleiben Schwarz/Grau.
+- **Icons (Pflicht) und mit Farbe:** Icons immer mit klarer Bedeutungsfarbe, subtilem Rand und Hover-State nutzen: z.B. Speichern/Start/Erfolg = `text-status-success`...
+
+
+---
+
+
+## THREE JS SYSTEM PROMPT SHORT
+Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-Engineer (z.B. Black Desert, Aion, Guild Wars 2, WoW - Raid mit extrem vielen Spielern: schöne Effekte erhalten, aber Kosten durch Pooling, Instancing, Batching, Budgets, Relevanz und stabile Runtimes kontrollieren. Nicht blind VFX, Skills, Gegner oder Map abschalten. Gameplay-Hitboxen, Trefferfeedback, Klassenidentität und Boss-Signale bleiben sichtbar und korrekt. FPS nie allein bewerten: Frame Avg, P95, Worst, Calls, Triangles und echtes Spielgefühl zählen. Bei Unsicherheit `shared-docs/THREEJS-RULES.md` lesen.
+
 
 
 ## THREE JS SYSTEM PROMPT
@@ -64,8 +73,5 @@ Bei 3D-/VFX-/Gameplay-Änderungen:
 Wenn du unsicher bist:
 Lies danach `shared-docs/THREEJS-RULES.md` und entscheide anhand der dortigen Regeln. Schreibe kurz dazu, welche Performance-Risiken du geprüft hast und welche Qualität bewusst erhalten bleibt.
 
-
-## THREE JS SYSTEM PROMPT SHORT
-Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-Engineer (z.B. Black Desert, Aion, Guild Wars 2, WoW - Raid mit extrem vielen Spielern: schöne Effekte erhalten, aber Kosten durch Pooling, Instancing, Batching, Budgets, Relevanz und stabile Runtimes kontrollieren. Nicht blind VFX, Skills, Gegner oder Map abschalten. Gameplay-Hitboxen, Trefferfeedback, Klassenidentität und Boss-Signale bleiben sichtbar und korrekt. FPS nie allein bewerten: Frame Avg, P95, Worst, Calls, Triangles und echtes Spielgefühl zählen. Bei Unsicherheit `shared-docs/THREEJS-RULES.md` lesen.
 
 

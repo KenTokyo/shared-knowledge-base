@@ -507,16 +507,15 @@ Auch ein Coding Rule was helfen kann: "Don’t fight errors! Whenever you encoun
 
 
 ## Frontend:
-- 
-  - kompakt halten, verstecke Inhalt in Popover, Dropdowns und Collapsible für Cleane UI, Dialoge verwenden, achtung bei Tooltips wegen React Anfängerfehler, aber dennoch verwenden.
+- kompakt halten, verstecke Inhalt in Popover, Dropdowns und Collapsible für Cleane UI, Dialoge verwenden, achtung bei Tooltips wegen React Anfängerfehler, aber dennoch verwenden.
 - Komponentenbasiert arbeiten, versuche React-Komponenten auszulagern (max 700 Zeilen Code pro Komponente)
 - Nutze icons schöne und nutze auch erkennbares Farbsystem, bei Speichern Grün, Abbrechen Rot...
 - **Abgerundete Container mit Floating Effekt**: `rounded-2xl` bis `rounded-4xl` für alle Karten und Sektions-Container. Keine harten Ecken.
   - schau hierzu was verwendet wird, immer min rounded-2xl, empholen rounded-3xl
   - **Floating/Schwebeeffekt**durch backdrop blur/dropshadows erzeugen (bei Lightmode dunkler shadow, stärker, darkmode grauweiß/weißer shadow, jedoch subtiler)
-- **Icons (Pflicht):** Aktions-Icons immer mit klarer Bedeutungsfarbe, subtilem Rand und Hover-State nutzen: Speichern/Start/Erfolg = `text-status-success`, Aktualisieren/Sync/Code/Info = `text-status-info`, Warnung/Ordner/Sonderaktion = `text-status-warning`, Löschen/Abbrechen/Fehler = `text-status-error`, neutrale Anzeige = `text-muted-foreground`; wichtige Aktionen mit Text kombinieren, reine Icon-Buttons nur für bekannte Toolbar-Aktionen mit `aria-label`/Tooltip.
+- **Icons (Pflicht) und mit Farbe:** Icons immer mit klarer Bedeutungsfarbe, subtilem Rand und Hover-State nutzen: z.B. Speichern/Start/Erfolg = `text-status-success`...
 - **Gruppierte Buttons (Pflicht bei Toolbars):** Zusammengehörige Icon-Aktionen in einer kleinen Button-Gruppe bündeln statt lose verteilen, z.B. `flex items-center gap-1 rounded-2xl border border-subtle bg-surface-2 p-1`; innere Buttons teilen sich die Gruppe, haben `rounded-xl`, `hover:bg-surface-5`/`hover:bg-accent-subtle`, keine harten Einzelkarten und klare Trenner (`w-px bg-border`) nur zwischen unterschiedlichen Aktionsarten.
-- **Optionen verstecken:** Erweiterte Einstellungen, Varianten und seltene Aktionen über Popover, Dropdown, Collapsible oder Dialog öffnen; Trigger bevorzugt als `Settings2`, `SlidersHorizontal` oder `ChevronDown` mit deutschem `title`/`aria-label`, damit Oberflächen ruhig bleiben und Bedienmuster überall gleich wirken.
+- **Optionen verstecken:** Erweiterte Einstellungen, Varianten und seltene Aktionen über Popover, Dropdown, Collapsible oder Dialog öffnen; Trigger bevorzugt als `Settings2`, `SlidersHorizontal` oder `ChevronDown`, damit Oberflächen ruhig bleiben und Bedienmuster überall gleich wirken.
 
 ### Farben
 - Nutze subtile Border also dunklere, fast unauffällig, wenn möglich schauen ob es globale Variablen/ Tailwind Klassen gibt oder Frontend System bzw. Komponenten z.B. `border-subtle`
