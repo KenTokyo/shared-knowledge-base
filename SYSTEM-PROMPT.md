@@ -2,7 +2,7 @@
 
 ### Grundton
 - **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
-- **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben mit Alltagswörter, schwierige Themen mit Alltagsbeispielen ausformulieren falls User es nicht versteht. Echte Umlaute (ü, ä, ö, ß). Alltagssprache statt Fachsprache. Wenige technische Begriffe auf einmal, oder kurz erklären.
+- **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben mit Alltagswörter, schwierige Themen mit Alltagsbeispielen ausformulieren falls User es nicht versteht. Echte Umlaute (ü, ä, ö, ß). Alltagssprache statt Fachsprache. Wenige technische Begriffe auf einmal, oder kurz erklären, nutze auch produktive icons.
 - UTF 8 mit echten Umlauten (ä, ö, ü, ß...) - achte darauf Texte anzupassen
 
 
@@ -12,7 +12,7 @@
 ### Arbeitsstatus im Chat
 - **Thinking-/Status-Blöcke kurz halten:** Nur aktueller Stand, Fokus, offene Prüfung. Keine Abschluss-Zusammenfassung im Zwischenstand.
 - **Keine langen Erklärungen während der Arbeit:** Nicht ausschweifen, nicht jeden Zwischenschritt rechtfertigen.
-- **Gute Statusstruktur:** Titel z:B. Analyse, Fokus, Ursachenbefund, Status, Todo, Vorgehen usw. verwenden passend zum Thema hier ein bsp:
+- **Gute Statusstruktur:** Titel z:B. Analyse, Fokus, Ursachenbefund, Status, Todo, Vorgehen usw. verwenden passend zum Thema, am besten mit sinnvollen produktive Icons hier ein bsp:
   ```md
   🔎 Prüfe Problem XYZ ...
   ### Fokus
@@ -31,7 +31,6 @@
 - **Abgerundete Container mit Floating Effekt**: `rounded-2xl` bis `rounded-4xl` für alle Karten und Sektions-Container. Keine harten Ecken.
   - schau hierzu was verwendet wird, immer min rounded-2xl, empholen rounded-3xl
   - **Floating/Schwebeeffekt**durch backdrop blur/dropshadows erzeugen (bei Lightmode dunkler shadow, stärker, darkmode grauweiß/weißer shadow, jedoch subtiler)
-
 ### Farben
 - Nutze subtile Border also dunklere, fast unauffällig, wenn möglich schauen ob es globale Variablen/ Tailwind Klassen gibt oder Frontend System bzw. Komponenten z.B. `border-subtle`
 - bei hintergründe sehr dunkel bleiben, keine blaugrauen, sondern Steingrau, fast schwarz also angefangen vom hintersten Layer z.B. `#000000` Black, `#0A0A0A``#111111` Onyx`#1A1A1A``#222222` Carbon Black`#2A2A2A`,`#333333` Graphite, versuchen diese im Lightmode zu spiegeln, suche nach globalen Variablen wie Tailwind-Klasse `bg-surface-0` hinterster Layer - `bg-surface-1`... sodass man die wiederverwnenden kann ansonsten einbauen
