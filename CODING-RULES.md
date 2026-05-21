@@ -2,35 +2,19 @@
 
 **Zweck:** Universelle Regeln für konsistente, performante und wartbare Code-Entwicklung.
 
-## Grundprinzip
-Stimme dem Nutzer nicht automatisch zu. Deine Aufgabe ist es, die sachlich korrekteste, logischste und nützlichste Antwort zu geben, auch wenn du dafür widersprechen musst.
+## Grundhaltung und Bewertungsmodus
+Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Annahme und jeden Plan als ungeprüft, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
-Behandle jede Behauptung, Diagnose, Annahme oder jeden Plan des Nutzers als ungeprüft, bis sie durch Code, Dokumentation, Logik, Fakten oder klare Einschränkungen bestätigt wurde. Korrektheit ist wichtiger als Zustimmung.
+- Korrektheit ist wichtiger als Zustimmung.
+- Kein ungeprüftes „ja“, „korrekt“, „genau“ oder „du hast recht“.
+- Falsches klar benennen, Teilrichtiges trennen, fehlende Belege als „unbekannt“ oder „nicht belegt“ markieren.
+- Keine schlechte Idee still umsetzen; besseren Weg nennen, wenn er existiert.
 
-## Verhalten
-- Sage nicht „ja“, „korrekt“, „genau“ oder „du hast recht“, solange es nicht geprüft ist.
-- Wenn der Nutzer falsch liegt, sage es klar.
-- Wenn der Nutzer teilweise richtig liegt, trenne den richtigen vom falschen Teil.
-- Wenn Beweise fehlen, sage „unbekannt“ oder „nicht belegt“.
-- Bestätige keine Verwirrung.
-- Passe Fakten nicht an die Erwartung des Nutzers an.
-- Setze keine schlechte Idee still um.
-- Wenn ein besserer Weg existiert, benenne ihn.
-
-## Prüfprozess
-Bevor du antwortest, prüfe still: Welche Annahme macht der Nutzer? Ist sie wahr, falsch, teilweise wahr oder unbekannt? Welche Belege gibt es? Was ist die stärkste Korrektur oder bessere Lösung? Was ist der nächste konkrete Schritt?
-
-## Antwort bei Bewertungen
-Wenn du eine Behauptung, Diagnose, einen Plan oder eine technische Entscheidung bewertest, beginne mit:
-
-**Urteil:** Korrekt / Falsch / Teilweise korrekt / Unbekannt / Schlechter Ansatz / Besserer Ansatz verfügbar
-
-Danach:
-**Warum:** Warum ist das so?  
-**Bessere Antwort:** Was ist die bessere oder korrekte Sicht?  
-**Aktion:** Was ist der nächste konkrete Schritt?
-
-Nutze dieses Format nur, wenn es wirklich hilft. Bei einfachen Fragen antworte direkt.
+Bei Bewertungen nur bei echtem Nutzen dieses Format verwenden:
+- **Urteil:** Korrekt / Falsch / Teilweise korrekt / Unbekannt / Schlechter Ansatz / Besserer Ansatz verfügbar
+- **Warum:** Sachlicher oder technischer Grund
+- **Bessere Antwort:** Korrigierte Sicht oder besserer Weg
+- **Aktion:** Nächster konkreter Schritt
 
 ## Code- und Architekturregeln
 - Akzeptiere keine Diagnose, bevor du den tatsächlichen Codepfad geprüft hast.
@@ -77,24 +61,7 @@ Sei direkt, ruhig, logisch, belegt und konstruktiv. Nicht streiten, nicht schmei
 - **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
 
 ### Abschluss im Chat
-- **Standardformat nach Änderungen:**
-  ```md
-  ✅ Problem XYZ gelöst
-  ### Problem
-  - Was war sichtbar falsch?
-
-  ### Ursache
-  - Warum ist es passiert?
-
-  ### Änderung
-  - Was wurde konkret angepasst?
-
-  ### Dateien / Pfade
-  - `pfad/zur/datei.ts`
-
-  ### Prüfung
-  - Lint / Typecheck / Sichtprüfung
-  ```
+- **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Prüfung`.
 - **Pfadpflicht:** Geänderte oder geprüfte Dateien, Dokumente und Komponenten immer mit Pfad nennen.
 - **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
@@ -125,14 +92,14 @@ Falls Orchestrator Modus an!
 ### Dokumentationssystem - Phasenformat einhalten!
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
 
-Jede Phase MUSS diese **6 Punkte** enthalten:
+Jede Phase MUSS diese **7 Punkte** enthalten:
 1. **Ziel:** Was ist am Ende sichtbar besser?
-2. **Todos:** Die markiert werden sollen falls fertig
+2. **Todos:** Abhakbare Aufgaben.
 3. **Ergebnis-Satz:** Kurzer Satz in einfacher Sprache für Nicht-Entwickler.
-4. **Warum (optional):** Warum löst genau diese Phase das Kernproblem?
-5. **Eingehalten**: Coding Regeln die eingehalten wurden, z.B. unter 700 Zeilen, theme-orientierte Farben verwendet, React useEffect vermieden, wie im design-system...,
-6. Architektur passt
-7. **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings**: dies sind beispiele: Childkomponente nutzt unnötigerweise useEffect, Performance Issues, hardcodierte Farben entdeckt in Komponente XYZ, falsche Ausführung von react useRef..., finder im falschen Ordner abgelegt, schlechte Architektur, service Klassen im falschen Ordner, zuviele Komponenten verschachtelt, fehlerhafte Kompontennamen, kommentare veraltet...
+4. **Warum (optional):** Warum löst diese Phase das Kernproblem?
+5. **Eingehalten:** Relevante Regeln, z.B. 700-Zeilen-Limit, Theme-Farben, React-Loop-Schutz, Design-System.
+6. **Architektur passt:** Kurze Begründung.
+7. **Auffälligkeiten/Performance/Kritische Findings:** z.B. unnötiger `useEffect`, harte Farben, falsche Service-Ablage, Render-Loop-Risiko, veraltete Kommentare.
 
 **Beispiel:**
 ```markdown
@@ -146,15 +113,15 @@ Jede Phase MUSS diese **6 Punkte** enthalten:
 **Ergebnis:** Frontend erzeugen für das Dashboard
 ```
 
-### Kommentar Sektion unter der Phasenplanung
-- Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit Komma getrennt in einer Zeile 
-- Danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren Kriterien eingehalten z.B. 
+### Kommentar-Sektion unter der Phasenplanung
+- Nach Abschluss pro Phase eine kurze Kriterien-Zeile schreiben.
+- Auffälligkeiten/Fehler/Regelverstöße nach Schwere sortieren und bei Bedarf Refactoring-Plan empfehlen.
 
 ```markdown
 ## Kommentare
 ### Phase 1
 **Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
-**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**
 1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
 Beschreibung hierzu notieren, falls notwendig
 Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Komponente XYZ und konnten eine Render-Schleife auslösen! Versehentlich angehängte Restzeilen entdeckt! Event-Werte blindcast entdeckt! State-Updates nicht idempotent - Rerender-Kette möglich!
@@ -163,21 +130,14 @@ Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Kompon
 ### Phase 2....
 ```
 
-So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar-Sektion
-Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
+Die Kommentar-Sektion steht **unterhalb aller Phasen**. Referenzen enthalten zusätzlich max. 3 Hauptkomponentenpfade pro Phase.
 
-- **Falls Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings vorliegen** direkt Optimierungsplan erzeugen mit Verweis auf die Planung als Referenz, also im selben in `docs/[feature]/tasks/...optimierung-tasks.md` alle Findings dort warten und nach Abschluss aller Phasen in dieser Planung - erst danach die Optimierungs-tasks durchgehen und im Loop alles fixen!
-
-- **KEIN vollständiger Code** in Planungen! Nur konzeptuelle Beschreibungen, API-Signaturen, kurze Pseudo-Code-Beispiele (max 3-5 Zeilen), Dateistrukturen, Import/Export-Listen
-- ❌ **VERBOTEN**: Komplette Funktions-Implementierungen (>10 Zeilen) · Vollständige React-Komponenten mit JSX · Copy-paste-ready Code-Blöcke
-- ✅ **ERLAUBT**: Konzeptuelle Beschreibungen · API-Signaturen · Kurze Pseudo-Code-Beispiele (max 3-5 Zeilen) · Dateistrukturen · Import/Export-Listen
-- **Max ~700 Zeilen pro Planung** (nicht 1500+ mit Code!)
-- **3-4 Komponenten pro Phase** (neu oder angepasst), max ~900-1300 Zeilen Code gesamt
-- **Vor Programmierung**: existierende Funktionen suchen → **Wiederverwendung vor Redundanz** (Ziel: kein toter oder veralteter Code)
-- Proaktiv Edge-Cases identifizieren und dokumentieren (6 + F&A-Szenarien)
-- **Menschenlesbare Pläne**: einfach, kursiv, fett, Icons, Alltagsbeispiele, Alltagssprache
-
-Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Schritten.
+- **Findings:** Bei echten Auffälligkeiten direkt `docs/[feature]/tasks/...optimierung-tasks.md` mit Referenz auf die Planung anlegen; nach Abschluss aller Phasen abarbeiten.
+- **Planungsgrenzen:** Kein vollständiger Code, keine kompletten React-Komponenten, keine Copy-paste-Blöcke. Erlaubt sind Konzepte, API-Signaturen, Dateistrukturen und Pseudo-Code bis 3-5 Zeilen.
+- **Umfang:** Max. ~700 Zeilen pro Planung, 3-4 Komponenten pro Phase, max. ~900-1300 Codezeilen pro Phase.
+- **Vor Code:** Existierende Funktionen suchen, Wiederverwendung vor Redundanz, Edge-Cases dokumentieren.
+- **Architektur-Phasen:** Vorher/Nachher-Datenfluss in 3-6 Schritten ergänzen.
+- **Sprache:** Menschenlesbar, einfach, mit Icons, Alltagsbeispielen und klarer Meinung.
 
 ### Planungs-Workflow (ZWINGEND VOR CODE)
 1. **Planungsvalidierung (ZWINGEND VOR CODE):**
@@ -208,35 +168,16 @@ Bei Architektur-Phasen zusätzlich Pflicht: Vorher/Nachher-Datenfluss in 3-6 Sch
 ## 5. Subagents & Erkundung
 
 ### 5.1 Subagent-Nutzung (Pflicht)
-- Subagents **nur zum Suchen und Abschließen** — nicht für Coding/Implementieren
-- Fange nicht an zu fragen was bevorzugt wird — direkt das Empfohlene ausimplementieren!
+- Subagents **nur zum Suchen und Abschließen** — nicht für Coding/Implementieren.
+- Nicht nach Präferenz fragen, wenn der empfohlene Weg fachlich klar ist.
 
 ### 5.2 Pre-Task Reconnaissance (Pflicht bei größeren Tasks)
-```
-User-Task → Hauptagent
-  ├─ VOR dem Coding (parallel):
-  │   ├─ erkunder-docs (Haiku) → Sucht in docs/, .completed/, History/
-  │   └─ erkunder-code (Haiku) → Findet betroffene Dateien, Duplikate
-  ▼ Synthese → duplikat-checker (Haiku, bei neuen Dateien)
-  ├─ programmiere/plane (Opus)
-  ▼ NACH dem Coding:
-  └─ abschliesser (Haiku) → .completed/ erstellen + CLAUDE.md Relevanz-Check
-```
-Pflicht bei: Feature-Implementierung, Refactoring, Bug-Fixes über mehrere Dateien, alles mit >2 Dateien
-
-**Falls Subagents nicht existieren:** Erstelle sie mit token-effizientem Modell und informiere den User
-
-### 5.3 Duplikat-Checker (PFLICHT bei neuen Dateien!)
-Vor neuen Dateien/Hooks/Stores/Utilities: `duplikat-checker` prüfen. **80%-Regel:** Existierende Funktion hat 80%+ Funktionalität? → **ERWEITERN** statt neu erstellen.
-
-### 5.4 Wer schreibt was?
-| Agent | Modell | Output |
-|-------|--------|--------|
-| `erkunder-docs` | Haiku | Verwandte Tasks, Architektur-Docs, History |
-| `erkunder-code` | Haiku | Betroffene Dateien, existierende Funktionen, Duplikate |
-| `duplikat-checker` | Haiku | Duplikat-Prüfung für geplante neue Dateien |
-| `abschliesser` | Haiku | .completed/ + CLAUDE.md Relevanz-Check |
-| `ki-architekt` | Opus | Ist-Stand, Abweichungen, betroffene Dateien, Empfehlungen |
+Pflicht bei Feature-Implementierung, Refactoring, Bug-Fixes über mehrere Dateien und allem mit >2 Dateien:
+- Vor Coding parallel: `erkunder-docs` sucht in `docs/`, `.completed/`, History; `erkunder-code` findet betroffene Dateien und Duplikate.
+- Bei neuen Dateien/Hooks/Stores/Utilities: `duplikat-checker`; 80%+ vorhandene Funktionalität → bestehendes Modul erweitern.
+- Nach Coding: `abschliesser` erstellt `.completed/` und prüft CLAUDE.md-Relevanz.
+- `ki-architekt` nur für Ist-Stand, Abweichungen, betroffene Dateien und Empfehlungen.
+- Falls Subagents fehlen: token-effizient erstellen und User kurz informieren.
 
 ## 6. Architektur & React Practices
 
@@ -406,10 +347,10 @@ db/
     <button onClick={save}>Speichern</button>
   </HintTooltip>
   ```
-  Wrappt children automatisch in einen ref-stabilen `<span>` → setRef-Loops unmoeglich, auch bei `motion.*` mit `layoutId`, conditional Rendering oder forwardRef-Komponenten als Child.
-- **Fallback (Spezialfaelle):** Direkter `<Tooltip>/<TooltipTrigger asChild>`-Trigger NUR wenn der direkte Child garantiert ref-stabil ist (kein `motion.*`, kein bedingter Mount/Unmount im Subtree, kein verschachteltes asChild).
+  Wrappt children automatisch in einen ref-stabilen `<span>` → setRef-Loops unmöglich, auch bei `motion.*` mit `layoutId`, conditional Rendering oder forwardRef-Komponenten als Child.
+- **Fallback (Spezialfälle):** Direkter `<Tooltip>/<TooltipTrigger asChild>`-Trigger NUR wenn der direkte Child garantiert ref-stabil ist (kein `motion.*`, kein bedingter Mount/Unmount im Subtree, kein verschachteltes asChild).
 - **Dev-Schutz:** `TooltipTrigger` warnt im Dev-Build, sobald `asChild` mit einem `motion.*`-Child kombiniert wird (Heuristik in `components/ui/tooltip.tsx`).
-- **Antipattern:** `<TooltipTrigger asChild><button>{cond && <motion.div layoutId="..." />}</button></TooltipTrigger>` → genau das hat 2026-05-05 die `setRef`-Schleife im HudTabBar ausgeloest.
+- **Antipattern:** `<TooltipTrigger asChild><button>{cond && <motion.div layoutId="..." />}</button></TooltipTrigger>` → genau das hat 2026-05-05 die `setRef`-Schleife im HudTabBar ausgelöst.
 
 ### Performance: React, Daten & Web
 - Unabhängige Fetches parallel: `Promise.all([fetch1(), fetch2()])`
@@ -420,23 +361,26 @@ db/
 LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 ### Frontend Regeln & Antipatterns!
-- **Analysiere bestehendes Design, Prüfen ob globale css/tailwind Klassen existieren bevor du das Design kapputt machst!** Und nutze diesselben Farbpaletten wieder um einheitlich zu bleiben!
+- **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund z.B. `bg-green-500`, `bg-red-600`... **Warum?** Halbtransparente Hintergründe sorgen für Probleme, aufgrund von Capacitor-Einstellungen bei uns!
-  - Außer Border ist es pflicht so transparent wie möglich die borders zu machen, nutze am besten aber die tailwind-klasse dafür --border oder so dunkel wie möglich im darkmode
+  - Außer Border ist es Pflicht, so transparent wie möglich die Borders zu machen; nutze am besten `border-subtle`, `--border` oder sehr dunkle Darkmode-Borders.
   - ✅ PFLICHT:
     1. Entweder prüfen ob globale css Klassen existieren/theming-system, wo Farben schon dran sind z.B: `[data-theme="default"] { --background: 0 0% 100%; --foreground: 0 0% 3.9%; --card: 0 0% 100%;...}`
     2. ODER: `bg-[#0c0f1a]` - immer volle Opacity!
       - Achte hier auf eine hochwertige Farbpalette, minimalistisch, dunkel und lightmode orientiert - schaue hierzu unbedingt `\shared-docs\farbpalette\minimal-styling-template.css`
-- **Dark Mode und Lightmode**: Sorge dafür, dass beides berücksichtigt wird!
-- **Mobile-First Space Efficiency:** UI MUSS Mobile-First designed werden, maximale Space-Efficiency auf Y-Achse gewährleisten
-- **Wiederverwendbarkeit-First:** Dialoge/Komponenten MÜSSEN für Wiederverwendung designed werden: Props für Modi, Callback-Props, schaue nach, ob solche Komponenten existieren, z.B. wie andere Bereiche das machen oder nutze dafür 
-- **Recherche vor Rumprobieren (KRITISCH!):** 1. Stack-Trace GENAU lesen → 2. Docs/GitHub Issues durchsuchen → 3. Root Cause verstehen → 4. DANN erst fixen
-- **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von UI-Library-Komponenten (Radix, Shadcn) manuell überschreiben → vordefinierte Variants nutzen (`size="sm"`, `size="lg"`). Kein passender Variant? → Variant-System erweitern
+- **Dark/Light Mode + Surface-Skala:** Hintergründe schwarz/grau halten (`#000`, `#0A0A0A`, `#111`, `#1A1A1A`, `#222`, `#2A2A2A`, `#333`) und im Lightmode sauber spiegeln; Akzent-Themes ändern nur Primary/Secondary, nie die Surface-Skala.
+- **Mobile-First Space Efficiency:** UI kompakt halten, Breite/Höhe nutzen, seltene Optionen in Popover/Dropdown/Collapsible/Dialog verstecken.
+- **Wiederverwendbarkeit-First:** Dialoge/Komponenten mit Modi, Callback-Props und vorhandenen Patterns bauen.
+- **Recherche vor Rumprobieren (KRITISCH!):** Stacktrace lesen → Docs/GitHub Issues prüfen → Root Cause verstehen → erst dann fixen. Bei demselben Fehler zweimal: 3-5 Lösungswege recherchieren, effizientesten umsetzen.
+- **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von Radix/Shadcn manuell überschreiben → vorhandene Variants nutzen (`size="sm"`, `size="lg"`) oder Variant-System erweitern.
+- **Rounded/Floating UI:** Karten und Sektions-Container `rounded-2xl` bis `rounded-4xl`, bevorzugt `rounded-3xl`; Floating über subtile Shadows/Backdrop-Blur, nicht harte Ecken.
+- **Icons/Farben:** Icons in Buttons/Toolbars nutzen; Bedeutungsfarben verwenden (Speichern/Start/Erfolg = Success, Abbrechen/Gefahr = Danger).
+- **Gruppierte Toolbars:** Zusammengehörige Icon-Aktionen in Button-Gruppen bündeln (`rounded-2xl border border-subtle bg-surface-2 p-1`), innere Buttons `rounded-xl`, klare Trenner nur zwischen Aktionsarten.
 - **Radix Trigger-Ref-Sicherheit (KRITISCH):** Bei `TooltipTrigger`/`PopoverTrigger` `asChild` nur nutzen, wenn das Child garantiert ref-stabil ist. Für normale Buttons immer direkten Trigger verwenden (`<TooltipTrigger type="button" ...>`), um `setRef`-Schleifen und `Maximum update depth exceeded` zu vermeiden.
-- **Tooltip-Standard:** `<HintTooltip label="...">` aus `components/ui/hint-tooltip.tsx` ist der defensive Default — wrappt children in stabilen `<span>` und schuetzt vor setRef-Loops bei motion.*/conditional Childs.
+- **Tooltip-Standard:** `<HintTooltip label="...">` aus `components/ui/hint-tooltip.tsx` ist der defensive Default — wrappt children in stabilen `<span>` und schützt vor setRef-Loops bei motion.*/conditional Childs.
 - **Disabled Button Feedback:** MUSS über Tooltip/Hinweistext erklären WARUM deaktiviert. User darf nie raten müssen.
-- **Ressourcen-Blocker in HUD/Skill-UI:** Wenn ein Skill wegen Mana/Energie/Fokus nicht nutzbar ist, muss die UI sichtbar den Grund und moeglichst den konkreten Bedarf zeigen (z.B. `NO MP`, `Need 18 MP`, Tooltip mit `18/110`). Nicht nur ausgrauen.
+- **Ressourcen-Blocker in HUD/Skill-UI:** Wenn ein Skill wegen Mana/Energie/Fokus nicht nutzbar ist, muss die UI sichtbar den Grund und möglichst den konkreten Bedarf zeigen (z.B. `NO MP`, `Need 18 MP`, Tooltip mit `18/110`). Nicht nur ausgrauen.
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
 ## Validierung & Testing
@@ -456,21 +400,15 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 |-----------|---------------|
 | React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
 | Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
+| TanStack | `shared-docs/tanstack/upgrade-from-nextjs.md` |
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
 | Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
 | DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
 | Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
 
 ### Qualitäts-Kriterien (bei jeder Planung & Implementierung prüfen)
-- ✅ **Wartbarkeit** — Code leicht zu pflegen?
-- ✅ **Modular/Komponentenbasiert** — Teile unabhängig nutzbar?
-- ✅ **Helper/Service-Funktionen** — Wiederkehrende Logik ausgelagert?
-- ✅ **Trennung** — UI, Logik, Daten klar getrennt?
-- ✅ **Gute Architektur** — Passt die Struktur langfristig?
-- ✅ **Simpel & Wiederverwendbar** — Nicht überkompliziert?
-- ✅ **Performance optimiert** — Edge Cases betrachtet?
-- ✅ **Meinung/Feedback** in Planungen schreiben
-- 
+- ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
+
 ### Quick Checklist
 - `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
 - Mobile-First
@@ -480,74 +418,26 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
-- TypeScript: `pnpm lint` · Kein `pnpm build`/`pnpm dev` nötig
+- TypeScript: `pnpm lint` · `pnpm exec tsc --noEmit` nach jeder Phase · Kein `pnpm build`/`pnpm dev` nötig
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
 - Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max 3 Hauptkomponentenpfade
-- versuche sinnvoll auch WebFetches sehr oft einzubauen um Probleme zu recherchieren!!
+- WebFetch/Websuche sinnvoll nutzen, besonders bei wiederholten Fehlern oder unsicherer externer Doku.
 
-## Erzeuge Signaltöne anhands deines Fortschritts
+## Erzeuge Signaltöne anhand deines Fortschritts
 **so gehts in Windows:**
 **Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
 **Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
 
-# Wichtige Regeln / Zusammmenfassung
+# Wichtige Regeln / Zusammenfassung
 **NIEMALS automatisch `pnpm run dev` oder `pnpm dev` starten!**
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
 - Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
 - Halte dich an die Design/Layout Regeln, möglicherweise in einer globals.css hinterlegt, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
 
-**React Loop-Stopper (global, nie überspringen):**
-- No-Op-Updates müssen `return state` machen (idempotent).
-- Write-Back-`useEffect` nur mit Dedupe-Guard (`signatureRef`/semantischer Vergleich).
-- Kein `Date.now()`-Fallback in Scope-/Normalizer-Merges.
-- Sync immer von der Quelländerung triggern, nicht von zurückgespiegelten Zielwerten.
-- Bei `Maximum update depth exceeded`: sofort Kette im Stacktrace zur ersten eigenen Datei verfolgen und dort fixen.
-
-- Höre nicht auf, bis wirklich alle Phasen implementiert sind und alle Phasen in der Planung abgeschlossen also abgehackte Todos - nach jeder Phase bitte plan updaten
-- **Beim ORCHESTRATOR MODUS (KRITISCH):** Nach jeder Phase Plan updaten + passenden Endstatus setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
-- **Beim ORCHESTRATOR MODUS (Tempo + Qualität):** Eine Phase/Subphase pro Iteration, danach Pflicht-Mini-Check (Plan-Abgleich, statische UI-Regressionsprüfung ohne Browser/Screenshot, Lint/TypeScript im geänderten Scope), erst dann Endstatus setzen.
-- **Regel für Manual-Blocker (sehr wichtig):** Wenn User die Oberfläche oder Gameplay manuell prüfen muss, nie `NEXT_PHASE_READY` schreiben. Dann ist der korrekte Abschluss `ALL_PHASES_COMPLETE`.
-- Schreibe immer zu jeder Phase, falls fertig Anmerkungen in die Planung, was du noch für Schwachstellen rausgefunden hast, diese dann am Ende der Implementierung des Gesamtplans, also falls alle Phasen fertig sind, sollten dann Aufgaben anhand der Anmerkungen erzeugt werden 
-  - diese dann direkt abarbeiten auch genauso wie bei der vorherigen Aufgabe!
-  - Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
-- **BITTE KEIN MOJIBAKE, achte auf ENCODING:** Dateien mit UTF-8 lesen/schreiben und nach Doku-Edits gezielt auf Zeichenfehler wie `Ã`, `â`, `ðŸ` prüfen.
-- Bevor Implementierung bzw. Planung - suche alle möglichen Arten dies zu implementiere und implementiere die beste Art bzw Option
-- Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
- kontext wird eh permanent im hintergrund condensed deswegen sollst du nicht aufhören,  nicht fragen ob du weitemrachen sollst, sondern du machst einfach weiter
-
-Analysiere zuerst selbst, worum es geht, welche Expertenrolle passt und welche Struktur der Prompt braucht. Verbessere meinen Rohprompt danach zu einem klaren, vollständigen und gut ausführbaren Zielprompt für dich intern, also im Gedanken aufnehmen.
-
-Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also ALL_PHASES_COMPLETE oder den CHAT beendest wird deine Arbeit kontrolliert. 
-
-Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen jeder Phase um das maximalste rauszufinden bzw um qualität anzubieten
-
-Auch ein Coding Rule was helfen kann: "Don’t fight errors! Whenever you encounter the same error twice, research the web and find 3-5 possible ways to fix it. Then choose the most efficient solution and implement it"
-
-
-## Frontend:
-- kompakt halten, verstecke Inhalt in Popover, Dropdowns und Collapsible für Cleane UI, Dialoge verwenden, achtung bei Tooltips wegen React Anfängerfehler, aber dennoch verwenden.
-- Komponentenbasiert arbeiten, versuche React-Komponenten auszulagern (max 700 Zeilen Code pro Komponente)
-- Nutze icons schöne und nutze auch erkennbares Farbsystem, bei Speichern Grün, Abbrechen Rot...
-- **Abgerundete Container mit Floating Effekt**: `rounded-2xl` bis `rounded-4xl` für alle Karten und Sektions-Container. Keine harten Ecken.
-  - schau hierzu was verwendet wird, immer min rounded-2xl, empholen rounded-3xl
-  - **Floating/Schwebeeffekt**durch backdrop blur/dropshadows erzeugen (bei Lightmode dunkler shadow, stärker, darkmode grauweiß/weißer shadow, jedoch subtiler)
-- **Icons (Pflicht) und mit Farbe:** Icons immer mit klarer Bedeutungsfarbe, subtilem Rand und Hover-State nutzen: z.B. Speichern/Start/Erfolg = `text-status-success`...
-- **Gruppierte Buttons (Pflicht bei Toolbars):** Zusammengehörige Icon-Aktionen in einer kleinen Button-Gruppe bündeln statt lose verteilen, z.B. `flex items-center gap-1 rounded-2xl border border-subtle bg-surface-2 p-1`; innere Buttons teilen sich die Gruppe, haben `rounded-xl`, `hover:bg-surface-5`/`hover:bg-accent-subtle`, keine harten Einzelkarten und klare Trenner (`w-px bg-border`) nur zwischen unterschiedlichen Aktionsarten.
-- **Optionen verstecken:** Erweiterte Einstellungen, Varianten und seltene Aktionen über Popover, Dropdown, Collapsible oder Dialog öffnen; Trigger bevorzugt als `Settings2`, `SlidersHorizontal` oder `ChevronDown`, damit Oberflächen ruhig bleiben und Bedienmuster überall gleich wirken.
-
-### Farben
-- Nutze subtile Border also dunklere, fast unauffällig, wenn möglich schauen ob es globale Variablen/ Tailwind Klassen gibt oder Frontend System bzw. Komponenten z.B. `border-subtle`
-- bei hintergründe sehr dunkel bleiben, keine blaugrauen, sondern Steingrau, fast schwarz also angefangen vom hintersten Layer z.B. `#000000` Black, `#0A0A0A``#111111` Onyx`#1A1A1A``#222222` Carbon Black`#2A2A2A`,`#333333` Graphite, versuchen diese im Lightmode zu spiegeln, suche nach globalen Variablen wie Tailwind-Klasse `bg-surface-0` hinterster Layer - `bg-surface-1`... sodass man die wiederverwnenden kann ansonsten einbauen
-- Nutze akzent themes oder baue diese ein also Akzent-Themes (Default, Forest, Cyber, Metallic Gold, …)
-  - Diese ändern **nur Primary/Secondary** (Buttons, Highlights, Active-States) — **NICHT** den Hintergrund.
-    Hintergrund bleibt immer die Surface-Skala oben.
-      **Beispiel Metallic Gold:** `--primary` wird Gold, `--accent` wird Champagne — alle `bg-surface-*` bleiben Schwarz/Grau.
-
-Schau dazu auch ob es eine DESIGN.md Datei gibt zum Frontend bereich
-
-
-## Erzeuge Signaltöne anhands deines Fortschritts
-**so gehts in Windows:**
-**Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
-**Alle Phasen fertig, du bist komplett fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+**Nie überspringen:**
+- React Loop-Stopper aus Abschnitt 6 anwenden: idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
+- Orchestrator-Regeln aus Abschnitt 3 anwenden: Phase dokumentieren, Mini-Check, korrekter Endstatus; bei manuellen UI-/Gameplay-Checks immer `ALL_PHASES_COMPLETE`.
+- UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen.
+- Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
+- Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
