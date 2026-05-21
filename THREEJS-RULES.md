@@ -246,3 +246,8 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - Three.js WebGPURenderer Manual: https://threejs.org/manual/en/webgpurenderer
 - Three.js WebGPURenderer API: https://threejs.org/docs/pages/WebGPURenderer.html
 - Three.js EffectComposer API: https://threejs.org/docs/examples/en/postprocessing/EffectComposer.html
+
+
+- **Renderer-Default ist WebGL:** Bei Bugs, VFX, Gameplay-Optik und Performance immer zuerst vom WebGL-Pfad ausgehen.
+- **WebGPU nicht als Ursache annehmen:** WebGPU nur bearbeiten, wenn der User ausdrücklich WebGPU nennt, `renderer=webgpu` belegt ist oder ein Log eindeutig `backend=webgpu` zeigt.
+- **Bei unklaren Render-Bugs zuerst Backend prüfen:** WebGL/WebGPU im HUD, Store oder Renderer-Log verifizieren, dann erst backend-spezifisch fixen.
