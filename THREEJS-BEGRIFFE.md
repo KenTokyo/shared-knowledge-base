@@ -66,6 +66,38 @@ Ein Bounding Volume ist eine einfache Hülle um ein Objekt, zum Beispiel eine Ku
 
 Culling bedeutet: Dinge, die nicht sichtbar sind, werden nicht gerendert. Das spart Arbeit. Bei Terrain und vielen Gegnern ist gutes Culling sehr wichtig.
 
+## View-Culling
+
+View-Culling bedeutet: Die Engine prüft, was die Kamera überhaupt sehen kann, und lässt den Rest weg. Das ist gut, weil die Grafikkarte nicht an Dingen arbeiten muss, die hinter der Kamera, zu weit weg oder außerhalb des Bildes liegen.
+
+**Alltagsbeispiel:** Wenn du aus einem Fenster schaust, musst du nicht gleichzeitig die Rückseite des Hauses malen.
+
+**Wichtig:** View-Culling darf keine wichtigen Gameplay-Signale verstecken. Boss-Warnungen, Trefferfeedback, Gegner direkt neben dem Spieler und Skill-Hitboxen müssen sichtbar bleiben.
+
+## Frustum-Culling
+
+Frustum-Culling ist die Standardform von View-Culling. Das Kamera-Sichtfeld ist wie ein unsichtbarer Kegel oder eine Pyramide. Objekte außerhalb dieses Bereichs werden nicht gezeichnet.
+
+**Three.js-Hinweis:** Three.js macht Frustum-Culling für normale Objekte oft automatisch. Bei `InstancedMesh`, Chunks oder selbst gebauter Geometry muss die Bounding Sphere/Box aber stimmen, sonst wird etwas zu früh oder zu spät ausgeblendet.
+
+## Distance-Culling
+
+Distance-Culling bedeutet: Dinge ab einer bestimmten Entfernung werden ausgeblendet oder gar nicht mehr aktualisiert. Das ist nützlich für kleine Deko, entfernte Partikel, kleine Props oder Remote-VFX.
+
+**Merksatz:** Was weit weg und unwichtig ist, darf verschwinden. Was fürs Spiel wichtig ist, braucht eine Ersatzdarstellung.
+
+## Occlusion-Culling
+
+Occlusion-Culling bedeutet: Dinge hinter anderen Dingen werden nicht gezeichnet, zum Beispiel ein Gegner hinter einer Wand. Das klingt perfekt, ist im Browser/Three.js aber nicht automatisch immer billig. Man nutzt es eher gezielt über Räume, Portale, Chunk-Logik oder einfache Sichtlinien.
+
+## LOD / Level of Detail
+
+LOD bedeutet: Ein Objekt hat mehrere Detailstufen. Nah an der Kamera sieht es schön und detailliert aus. Weit weg wird eine einfachere Version genutzt, weil man die kleinen Details sowieso kaum erkennt.
+
+**Beispiel:** Ein naher Gegner hat Körperteile, Animation, Glow und Partikel. Ein weiter Gegner nutzt weniger Teile, weniger Animation oder nur eine einfache Silhouette.
+
+**Wichtig:** LOD ist gut, aber kein Freifahrtschein für kaputte Optik. Übergänge dürfen nicht stark auffallen, und Gameplay-Hinweise müssen erhalten bleiben.
+
 ## Chunk
 
 Ein Chunk ist ein Abschnitt einer großen Welt oder Karte. Statt die ganze Map auf einmal zu verarbeiten, teilt man sie in Stücke. Sichtbare Chunks bleiben aktiv, entfernte Chunks werden ausgeblendet.

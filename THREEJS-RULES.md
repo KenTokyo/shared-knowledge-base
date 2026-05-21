@@ -39,6 +39,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Schwere R3F-Objekte stabil halten.** Materialien, Geometrien, Lights, Shader und PostFX nicht unnötig mounten/unmounten.
 - **MUSS: Gleiche Dinge batchen oder instancen.** Gegnerteile, Partikel, Decals, Slashes, Tiles und Remote-VFX über wenige Renderer laufen lassen.
 - **MUSS: VFX budgetieren statt löschen.** Wichtige Treffer bleiben sichtbar; entfernte, doppelte oder kleine Neben-Effekte dürfen reduziert werden.
+- **MUSS: LOD und View-Culling bei großen Szenen prüfen.** Weit entfernte Objekte einfacher rendern und Dinge außerhalb der Kamera, Relevanzdistanz oder Sichtlinie früh auslassen.
 - **MUSS: Terrain nicht als Full-Box-Default bauen.** Top-Faces, Side-Skirts, Chunking, Culling und persistente Chunks nutzen.
 - **MUSS: Keine automatischen 3D-FPS-Beweise aus Headless-Browsern.** Echte FPS brauchen echten Browser/GPU oder User-Messwerte.
 - **CHECK: Wenn Messwerte widersprüchlich sind,** mehrere identische Paarläufe oder einen manuellen User-Lauf nutzen.
@@ -105,6 +106,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Update-Flags setzen.** Nach `setMatrixAt()` immer `instanceMatrix.needsUpdate = true`; nach `setColorAt()` immer `instanceColor.needsUpdate = true`.
 - **MUSS: Kapazität beachten.** `count` darf nur innerhalb der Max-Kapazität variieren.
 - **MUSS: Bounding Volumes prüfen.** Bei veränderten Instanzen `computeBoundingBox()` oder `computeBoundingSphere()` beachten.
+- **MUSS: View-Culling nicht durch falsche Bounds kaputtmachen.** Wenn Instanzen, Chunks oder prozedurale Geometrien außerhalb ihrer alten Hülle liegen, kann Three.js sie falsch ausblenden.
 - **CHECK: Dirty-Signaturen nutzen.** Position, Yaw, Scale, Animation-Speed, Farbe, Rage, Flash, Telegraph, Sichtbarkeit, Count und Reihenfolge nur bei Änderung hochladen.
 - **CHECK: CPU-Kosten gegen Renderkosten trennen.** Wenn Kosten vom CPU-Update kommen, reicht Draw-Call-Reduktion allein nicht.
 
@@ -143,6 +145,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Sichtbare Faces reduzieren.** Top-Faces, Side-Skirts und nur nötige Seitenflächen nutzen.
 - **MUSS: Chunks persistent halten.** Sichtbarkeit toggeln statt harte Mount/Unmount-Spikes erzeugen.
 - **MUSS: Chunk-Geometrien cachen.** Nicht bei jeder Kamerabewegung neu bauen.
+- **MUSS: Chunk-LOD und Chunk-Culling planen.** Nahe Chunks dürfen mehr Details haben; entfernte Chunks brauchen grobere Geometrie, weniger VFX/Props oder werden außerhalb des Sichtfensters deaktiviert.
 - **MUSS: Map-Off muss echt sein.** Wenn `Map Off` aktiv ist, müssen Terrain-Basisflächen, Walls und große Layer wirklich weg sein.
 - **CHECK: Terrain-Budget beachten.** Für Standardkamera Richtung `~20k` Triangles und wenige Draw Calls pro sichtbarem Batch zielen.
 - **CHECK: Map-/Town-Hide richtig deuten.** Wenn das Ausblenden `+400 FPS` bringt, ist die Map ein Hauptkostenblock.
@@ -158,6 +161,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: `InstancedMesh.count` auf echte sichtbare Runtime setzen.**
 - **MUSS: Gegner-Parts batchen statt pro Part ein Mesh.**
 - **MUSS: Matrix/Farbe nur bei Dirty-Signatur hochladen.**
+- **MUSS: Gegner-LOD und Relevanz-Culling nutzen.** Nahe Gegner behalten Silhouette, Animation und Trefferfeedback; entfernte Gegner nutzen vereinfachte Parts, reduzierte Animation/VFX oder reine Marker.
 - **MUSS: Boss-Modelle nicht an Array-Indizes koppeln.** Spawns/Deletes dürfen keine Slot-Fehler oder unnötigen React-State-Churn erzeugen.
 - **CHECK: Enemy-Model-Layer nicht einfach abschalten und als Fix verkaufen.**
 - **CHECK: Remote-VFX nach Relevanz reduzieren.** Distanz, Kamera-/Screen-Space, Combat-Relevanz, Skill-Priorität, Queue-/Batch-Druck und lokale Spielernähe nutzen.
@@ -199,6 +203,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **FPS droppt, Calls gleich:** CPU-Hotpath, React-State-Churn, Matrix-/Color-Uploads, Audio, Gameplay-Loop, Input oder PostFX prüfen.
 - **Draw Calls steigen:** Mesh-Splitting, Materialvarianten, PostFX-Pässe, transparente Serien, ungebatchte Partikel oder Enemy-Parts prüfen.
 - **Triangles steigen:** Terrain, Full-Box-Voxel, Modell-Detailgrad, sichtbare Faces, Side-Skirts und LOD prüfen.
+- **Objekte sichtbar, aber weit weg:** LOD, Distanz-Culling, Screen-Space-Größe und Relevanz-Budget prüfen.
 - **Nur Worst schlecht:** Mount/Unmount, Shader-Kompilierung, Texture-Upload, Chunk-Grenze, Asset-Ladepunkt oder Garbage Collection prüfen.
 - **P95 schlecht:** Dauerhaft teurer Hotpath, aktive Runtimes, Gegner-Update, VFX-Queue oder Terrain-Sichtfenster prüfen.
 - **VFX-Off hilft kaum:** Hitbox-Semantik, Audio, Animation, Enemy-Reaktion, Snapshot-Logik und React-State prüfen.
@@ -219,6 +224,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - Sind InstancedMesh-Updates mit Dirty-Signatur oder Begründung versehen?
 - Werden `instanceMatrix`/`instanceColor` Update-Flags korrekt gesetzt?
 - Werden Bounding Volumes bei Instancing/Procedural Geometry korrekt behandelt?
+- Sind LOD-Stufen, View-Culling und Relevanzdistanz so gesetzt, dass wichtige Gameplay-Signale sichtbar bleiben?
 - Bleiben Gameplay-Hitboxen bei VFX-Off intakt?
 - Wurde per Ablation gemessen statt geraten?
 - Gibt es Reportpfade und Vorher/Nachher-Werte?
@@ -232,6 +238,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 - React Three Fiber Performance Pitfalls: https://r3f.docs.pmnd.rs/advanced/pitfalls
 - Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
+- Three.js LOD API: https://threejs.org/docs/api/en/objects/LOD.html
 - Three.js InstancedMesh API: https://threejs.org/docs/api/en/objects/InstancedMesh
 - Three.js How to Update Things: https://threejs.org/manual/en/how-to-update-things.html
 - Three.js Material API: https://threejs.org/docs/pages/Material.html
