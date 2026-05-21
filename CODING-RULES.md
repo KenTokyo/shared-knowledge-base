@@ -397,10 +397,10 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 ### Framework-Dokumentation
 | Framework | Dokumentation |
-|-----------|---------------|
+| --- | --- |
 | React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
 | Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
-| TanStack | `shared-docs/tanstack/upgrade-from-nextjs.md` |
+|  |  |
 | Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
 | Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
 | DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
@@ -433,7 +433,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
 - Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
-- Halte dich an die Design/Layout Regeln, möglicherweise in einer globals.css hinterlegt, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
+- Halte dich an die Design/Layout Regeln, möglicherweise tailwind css klassen, globals.css oder in DESIGN.md reinschauen, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
 
 **Nie überspringen:**
 - React Loop-Stopper aus Abschnitt 6 anwenden: idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
