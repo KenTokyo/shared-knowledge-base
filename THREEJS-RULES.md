@@ -131,11 +131,19 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 - **MUSS: Transparenz ernst nehmen.** Additive, transparent und DoubleSide können Overdraw, Sortierung und Draw Calls stark erhöhen.
 - **MUSS: Wichtige VFX sichtbar halten.** Telegraphs, Hitbox-Hinweise, eigene Treffer, Boss-Gefahren und Klassenidentität dürfen nicht verschwinden.
+- **MUSS: WebGL-Partikel-Farbpfad prüfen.** Wenn Partikel-Daten und Poolwerte gut aussehen, aber Sparks unsichtbar oder schwarz bleiben, nicht weiter Pool/Größe erhöhen. Den Materialpfad prüfen: `meshBasicMaterial + vertexColors + InstancedMesh.setColorAt` kann bei Partikeln im WebGL-Spielbild unzuverlässig wirken. Stabiler Fix: wie bei Slashes einen kleinen Shader nutzen, `instanceColor` explizit lesen und Farbe/Intensität direkt ausgeben.
 - **CHECK: `forceSinglePass` prüfen.** Bei flachen VFX/Sprites kann es helfen, muss aber visuell geprüft werden.
 - **CHECK: `depthWrite=false` prüfen.** Für transparente Overlays oft sinnvoll, Sortierung trotzdem testen.
 - **CHECK: `renderOrder` sparsam nutzen.** Nicht als globalen Sortier-Hack verwenden.
 - **CHECK: PostFX getrennt messen.** Bloom, Shadow/Glow, Vignette, DPR/Resolution Scale, Tone Mapping und Backend-Fallbacks einzeln bewerten.
 - **CHECK: Leere PostFX-Pfade entfernen.** Wenn Bloom/RFX aus ist, darf kein leerer Composer weiterlaufen.
+
+**Vorfall-Merkhilfe (2026-05-21, Samurai-Partikel in WebGL):**
+- Sichtbares Problem: Slash-Effekte waren normal, aber echte Partikel/Sparks waren unsichtbar oder schwarz.
+- Falsche Fährten: Pool war grün, Spark-Größe +10% half nicht, WebGPU war nicht aktiv.
+- Ursache: Partikel nutzten den Three.js-Standardpfad `meshBasicMaterial + vertexColors + InstancedMesh.setColorAt`; Slashes nutzten dagegen einen eigenen Shader mit explizitem `instanceColor`.
+- Fix: Partikel-Buckets in `src/components/3d/vfx/Particles.tsx` auf kleinen WebGL-Shader umgestellt, der `instanceColor` direkt liest und Sparks/Additive-Orbs heller ausgibt.
+- Merksatz: Wenn Slash sichtbar ist, Partikel aber nicht, zuerst Render-Material/Farbpfad vergleichen, nicht Spawn, Pool oder WebGPU beschuldigen.
 
 ---
 

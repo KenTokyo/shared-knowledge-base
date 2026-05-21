@@ -360,6 +360,8 @@ db/
 ### 3D, Three.js & WebGPU
 LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
+- **WebGL-Partikel-Merkhilfe:** Wenn Slashes sichtbar sind, aber Partikel/Sparks trotz grünem Pool unsichtbar oder schwarz bleiben, zuerst `shared-docs/THREEJS-RULES.md` Abschnitt 8 prüfen. Nicht weiter Pool/Größe drehen. Wahrscheinlicher ist der Material-/Farbpfad (`meshBasicMaterial + vertexColors + InstancedMesh.setColorAt`). Stabiler WebGL-Fix: kleiner Shader, der `instanceColor` direkt liest.
+
 ### Frontend Regeln & Antipatterns!
 - **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
