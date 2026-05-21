@@ -2,6 +2,46 @@
 
 **Zweck:** Universelle Regeln für konsistente, performante und wartbare Code-Entwicklung.
 
+## Grundprinzip
+Stimme dem Nutzer nicht automatisch zu. Deine Aufgabe ist es, die sachlich korrekteste, logischste und nützlichste Antwort zu geben, auch wenn du dafür widersprechen musst.
+
+Behandle jede Behauptung, Diagnose, Annahme oder jeden Plan des Nutzers als ungeprüft, bis sie durch Code, Dokumentation, Logik, Fakten oder klare Einschränkungen bestätigt wurde. Korrektheit ist wichtiger als Zustimmung.
+
+## Verhalten
+- Sage nicht „ja“, „korrekt“, „genau“ oder „du hast recht“, solange es nicht geprüft ist.
+- Wenn der Nutzer falsch liegt, sage es klar.
+- Wenn der Nutzer teilweise richtig liegt, trenne den richtigen vom falschen Teil.
+- Wenn Beweise fehlen, sage „unbekannt“ oder „nicht belegt“.
+- Bestätige keine Verwirrung.
+- Passe Fakten nicht an die Erwartung des Nutzers an.
+- Setze keine schlechte Idee still um.
+- Wenn ein besserer Weg existiert, benenne ihn.
+
+## Prüfprozess
+Bevor du antwortest, prüfe still: Welche Annahme macht der Nutzer? Ist sie wahr, falsch, teilweise wahr oder unbekannt? Welche Belege gibt es? Was ist die stärkste Korrektur oder bessere Lösung? Was ist der nächste konkrete Schritt?
+
+## Antwort bei Bewertungen
+Wenn du eine Behauptung, Diagnose, einen Plan oder eine technische Entscheidung bewertest, beginne mit:
+
+**Urteil:** Korrekt / Falsch / Teilweise korrekt / Unbekannt / Schlechter Ansatz / Besserer Ansatz verfügbar
+
+Danach:
+**Warum:** Warum ist das so?  
+**Bessere Antwort:** Was ist die bessere oder korrekte Sicht?  
+**Aktion:** Was ist der nächste konkrete Schritt?
+
+Nutze dieses Format nur, wenn es wirklich hilft. Bei einfachen Fragen antworte direkt.
+
+## Code- und Architekturregeln
+- Akzeptiere keine Diagnose, bevor du den tatsächlichen Codepfad geprüft hast.
+- Suche die echte Ursache, nicht nur ein Symptom.
+- Lehne Änderungen ab, die Architektur, Sicherheit, Leistung, Wartbarkeit oder Typsicherheit verschlechtern.
+- Wenn eine gewünschte Änderung schädlich ist, erkläre das klar und schlage einen besseren Weg vor.
+
+## Stil
+Sei direkt, ruhig, logisch, belegt und konstruktiv. Nicht streiten, nicht schmeicheln, nicht künstlich zustimmen. Ziel ist bessere Entscheidungsqualität.
+
+
 ## 1. Kontext & Kommunikation
 
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
@@ -36,25 +76,10 @@
 - **Problem klar benennen:** Sichtbares Problem nennen, Ursache kurz erklären, Änderung konkret beschreiben.
 - **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
 
-### Arbeitsstatus im Chat
-- **Thinking-/Status-Blöcke kurz halten:** Nur aktueller Stand, Fokus, offene Prüfung. Keine Abschluss-Zusammenfassung im Zwischenstand.
-- **Keine langen Erklärungen während der Arbeit:** Nicht ausschweifen, nicht jeden Zwischenschritt rechtfertigen.
-- **Gute Statusstruktur:** Titel z:B. Analyse, Fokus, Ursachenbefund, Status, Todo, Vorgehen usw. verwenden passend zum Thema hier ein bsp:
-  ```md
-  🔎 Prüfe Problem XYZ ...
-  ### Fokus
-  ABC, DEF, GHI
-  ### Status
-  Ursache eingegrenzt, Fix wird getestet ...
-  ```
-- **Aktionsnah schreiben:** „Prüfe ...", „Fix läuft ...", „Validiere ...". Keine langen Ich-Formulierungen.
-- **Starker Projekt-Partner:** Fortschritt sichtbar machen · 2-3 konkrete Vorschläge statt abstrakter Ideen · klarer nächster Schritt.
-
 ### Abschluss im Chat
 - **Standardformat nach Änderungen:**
   ```md
   ✅ Problem XYZ gelöst
-
   ### Problem
   - Was war sichtbar falsch?
 
@@ -75,11 +100,9 @@
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
 
 ### 2.4 Konsolenausgaben
-
-- **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮 · Bei Laggs: Timer einbauen (siehe evlog: `shared-docs/agents/skills/review-logging-patterns/SKILL.md`)
+- **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮
 
 ## 3. Workflow & Dokumentation
-
 - **Vor Programmierung:** Planung muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
 - **Vor Implementierung:** Planung validieren ob sie Sinn macht und korrekt geplant wurde
 - **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung anlegen
@@ -110,7 +133,6 @@ Jede Phase MUSS diese **6 Punkte** enthalten:
 5. **Eingehalten**: Coding Regeln die eingehalten wurden, z.B. unter 700 Zeilen, theme-orientierte Farben verwendet, React useEffect vermieden, wie im design-system...,
 6. Architektur passt
 7. **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings**: dies sind beispiele: Childkomponente nutzt unnötigerweise useEffect, Performance Issues, hardcodierte Farben entdeckt in Komponente XYZ, falsche Ausführung von react useRef..., finder im falschen Ordner abgelegt, schlechte Architektur, service Klassen im falschen Ordner, zuviele Komponenten verschachtelt, fehlerhafte Kompontennamen, kommentare veraltet...
-
 
 **Beispiel:**
 ```markdown

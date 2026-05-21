@@ -74,3 +74,36 @@ Lies danach `shared-docs/THREEJS-RULES.md` und entscheide anhand der dortigen Re
 
 
 
+## REACT PERFORMANCE SYSTEM PROMPT SHORT
+
+Bitte denke bei jeder React-/Frontend-Änderung zuerst wie ein Performance-Engineer: Neue Features sollen nicht nur funktionieren, sondern schnell bleiben. Prüfe bei jeder Änderung Render-Kosten, State-Größe, Datenfluss, Bundle-Größe, Netzwerkzugriffe und unnötige Wiederholungen. Nicht blind memoizen, sondern messen, vereinfachen und teure Arbeit aus dem Renderpfad entfernen.
+
+Wichtige Regeln:
+- Komponenten klein halten: Ziel unter 700 Zeilen, komplexe UI in klare Unterkomponenten auslagern.
+- State so nah wie möglich halten. Kein globaler Store für Werte, die nur eine Komponente brauchen.
+- Keine abgeleiteten Daten doppelt speichern. Berechnen statt spiegeln, außer es ist messbar teuer.
+- `useEffect` nur für echte externe Synchronisation nutzen: Netzwerk, DOM, Browser APIs, Subscriptions. Keine Render-Logik oder State-Ketten in Effects verstecken.
+- Teure Berechnungen aus Rendern entfernen: vorher normalisieren, cachen, `useMemo` gezielt nutzen.
+- Listen virtualisieren, paginieren oder filtern, bevor tausende Elemente gerendert werden.
+- Event-Handler stabil halten, aber `useCallback` nur nutzen, wenn es echte Re-Renders verhindert.
+- Keine neuen Objekte, Arrays oder Funktionen unnötig an memoized Child-Komponenten übergeben.
+- Bilder, Icons, Charts, Editoren, 3D, Tabellen und große Modals lazy laden.
+- Imports direkt halten. Keine großen Barrel-Imports, wenn dadurch unnötiger Code ins Bundle kommt.
+- Netzwerk-Waterfalls vermeiden: unabhängige Requests parallel starten, abhängige sauber staffeln.
+- API/DB: Keine N+1 Queries, keine ungefilterten Full-Table-Loads, keine SELECT-* Mentalität. Immer Pagination, Limits, Index-Nutzung und serverseitige Filter prüfen.
+- Client bekommt nur Daten, die er wirklich anzeigen oder bearbeiten muss. Keine riesigen Objekte „für später“ mitschicken.
+- Loading-, Error- und Empty-States einbauen, damit langsame Daten nicht wie kaputte UI wirken.
+- Bei Formularen Eingaben lokal halten und erst speichern/synchronisieren, wenn nötig. Keine Server-Requests pro Tastendruck ohne Debounce.
+- Animationen über CSS Transform/Opacity bevorzugen. Layout-triggernde Animationen vermeiden.
+- Vor Abschluss kurz prüfen: Was rendert zu oft? Was lädt zu viel? Was blockiert den Start? Was wächst später schlecht?
+- Wenn Performance-Lücken auffallen, direkt klein beheben oder als konkreten Optimierungspunkt dokumentieren.
+
+
+## REACT ARCHITECTURE GUARD
+
+Baue Features komponentenbasiert, testbar und wartbar. Bevor neue Dateien entstehen, vorhandene Hooks, Stores, Services und Komponenten suchen. Wiederverwenden oder erweitern statt duplizieren. UI-Komponenten bleiben dumm, Datenlogik liegt in Hooks/Services. Keine versteckten Nebenwirkungen, keine magischen globalen Zustände, keine unnötig tiefen Prop-Ketten. Wenn Architektur sichtbar kippt, erst sauber trennen.
+
+
+## DATA PERFORMANCE GUARD
+
+Jede Datenabfrage muss begründet klein sein: filterbar, paginiert, indexfreundlich und ohne N+1 Muster. Keine großen JSON-Bäume an den Client senden, keine Admin-/Debug-Daten in normale Views laden. Server bereitet Daten passend für die UI vor. Client rendert keine Datenmassen, die der Server vorher hätte reduzieren können.
