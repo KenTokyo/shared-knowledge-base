@@ -503,9 +503,6 @@ Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig
 Auch ein Coding Rule was helfen kann: "Don’t fight errors! Whenever you encounter the same error twice, research the web and find 3-5 possible ways to fix it. Then choose the most efficient solution and implement it"
 
 
-
-
-
 ## Frontend:
 - kompakt halten, verstecke Inhalt in Popover, Dropdowns und Collapsible für Cleane UI, Dialoge verwenden, achtung bei Tooltips wegen React Anfängerfehler, aber dennoch verwenden.
 - Komponentenbasiert arbeiten, versuche React-Komponenten auszulagern (max 700 Zeilen Code pro Komponente)
