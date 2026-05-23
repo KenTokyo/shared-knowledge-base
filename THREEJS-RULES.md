@@ -105,12 +105,16 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 ## 6. Instancing, Batching, Dirty-Signaturen
 
 - **MUSS: Instancing nutzen, wenn viele Objekte gleich sind.** Gute Kandidaten: Gegnerteile, Partikel, Ground Decals, Damage Numbers, Slashes, Trails, Tiles, Deko, Projektile, Remote-VFX.
+- **MUSS: Auto-Instancing-Kandidaten sammeln.** Bei Maps, Kitbash-Props, Gegnerteilen, Deko und VFX-Familien nicht nur einzelne `InstancedMesh`-Fixes bauen, sondern eine Pipeline prüfen, die gleiche Geometrie + gleiches Material automatisch in Rendererfamilien gruppiert.
+- **MUSS: Texturwechsel reduzieren.** Wenn viele kleine Texturen, Decals, Sprite-Masks, Icons, Tile-Varianten oder Materialvarianten Draw Calls aufsplitten, zuerst Atlas, Spritesheet, `DataArrayTexture`/Texture-Array oder Material-ID-Attribute prüfen.
+- **MUSS: Material-Varianten budgetieren.** Gleiche Geometrie mit zehn fast gleichen Materialien ist oft kein Instancing-Gewinn. Varianten bevorzugt über Uniforms, Instancing-Attribute, Texture-Layer-ID oder gemeinsame Shaderfamilie lösen.
 - **MUSS: Update-Flags setzen.** Nach `setMatrixAt()` immer `instanceMatrix.needsUpdate = true`; nach `setColorAt()` immer `instanceColor.needsUpdate = true`.
 - **MUSS: Kapazität beachten.** `count` darf nur innerhalb der Max-Kapazität variieren.
 - **MUSS: Bounding Volumes prüfen.** Bei veränderten Instanzen `computeBoundingBox()` oder `computeBoundingSphere()` beachten.
 - **MUSS: View-Culling nicht durch falsche Bounds kaputtmachen.** Wenn Instanzen, Chunks oder prozedurale Geometrien außerhalb ihrer alten Hülle liegen, kann Three.js sie falsch ausblenden.
 - **CHECK: Dirty-Signaturen nutzen.** Position, Yaw, Scale, Animation-Speed, Farbe, Rage, Flash, Telegraph, Sichtbarkeit, Count und Reihenfolge nur bei Änderung hochladen.
 - **CHECK: CPU-Kosten gegen Renderkosten trennen.** Wenn Kosten vom CPU-Update kommen, reicht Draw-Call-Reduktion allein nicht.
+- **CHECK: Typed-Array-/Worker-/WASM-Hotpaths nur bei echtem CPU-Bottleneck.** Erst Algorithmus, Datenlayout und Allokationen reparieren; AssemblyScript/WASM lohnt sich nur für isolierte, oft laufende Module wie Culling, Matrix-Updates, Sortierung oder Spatial Queries.
 
 ---
 
@@ -284,12 +288,14 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
 - Three.js LOD API: https://threejs.org/docs/api/en/objects/LOD.html
 - Three.js InstancedMesh API: https://threejs.org/docs/api/en/objects/InstancedMesh
+- Three.js DataArrayTexture API: https://threejs.org/docs/pages/DataArrayTexture.html
 - Three.js How to Update Things: https://threejs.org/manual/en/how-to-update-things.html
 - Three.js Material API: https://threejs.org/docs/pages/Material.html
 - Three.js Renderer API / `renderer.info`: https://threejs.org/docs/pages/Renderer.html
 - Three.js WebGPURenderer Manual: https://threejs.org/manual/en/webgpurenderer
 - Three.js WebGPURenderer API: https://threejs.org/docs/pages/WebGPURenderer.html
 - Three.js EffectComposer API: https://threejs.org/docs/examples/en/postprocessing/EffectComposer.html
+- MDN WebGL Best Practices: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices
 
 
 - **Renderer-Default ist WebGL:** Bei Bugs, VFX, Gameplay-Optik und Performance immer zuerst vom WebGL-Pfad ausgehen.
