@@ -56,10 +56,10 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 - **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
 - **Vor Implementierung:** Planung/Todo validieren ob sie Sinn macht und korrekt geplant wurde
 - **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung/Todo anlegen
-- **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren)
+- **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren) und Todos phasenweise abhaken, nach jeder Phase, ohen Stopp
 - **In Task/Todo-Datei tracken** mit Kontextinformationen, erledigten To-dos, offenen To-dos und nächster Phase
-- **Nach jeder Phase/Todo:** Planung updaten und nächste Phase direkt weiter umsetzen
-- **Nach allen Phasen/Todo:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen (falls noch nicht behoben)
+- **Nach jeder Phase/Todo:** Planung updaten, Todo abhaken und nächste Phase direkt weiter umsetzen
+- **Nach allen Phasen/Todo:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen und phasenweise verbessern und todos nach jeder Phase abhaken (falls noch nicht behoben)
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
