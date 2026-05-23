@@ -53,26 +53,26 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 - **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮
 
 ## 3. Workflow & Dokumentation
-- **Vor Programmierung:** Planung muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
-- **Vor Implementierung:** Planung validieren ob sie Sinn macht und korrekt geplant wurde
-- **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung anlegen
+- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
+- **Vor Implementierung:** Planung/Todo validieren ob sie Sinn macht und korrekt geplant wurde
+- **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung/Todo anlegen
 - **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren)
-- **In Task-Datei tracken** mit Kontextinformationen, erledigten To-dos, offenen To-dos und nächster Phase
-- **Nach jeder Phase:** Planung updaten und nächste Phase direkt weiter umsetzen
-- **Nach allen Phasen:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen (falls noch nicht behoben)
+- **In Task/Todo-Datei tracken** mit Kontextinformationen, erledigten To-dos, offenen To-dos und nächster Phase
+- **Nach jeder Phase/Todo:** Planung updaten und nächste Phase direkt weiter umsetzen
+- **Nach allen Phasen/Todo:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen (falls noch nicht behoben)
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
-- **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen auf einmal.
-- **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss Scope gegen Planung abgleichen, Doku aktualisieren und offene manuelle User-Gates notieren. Automatische Gameplay-/Werte-/Ingame-Prüfungen sind verboten, außer der User fordert sie ausdrücklich. Lint/TypeScript sind nur Code-Sicherheitschecks bei echten Codeänderungen und kein Produktbeweis.
+- **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen/Todos auf einmal.
+- **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss Scope gegen Planung/Todo abgleichen, Doku aktualisieren und offene manuelle User-Gates notieren. Automatische Gameplay-/Werte-/Ingame-Prüfungen sind verboten, außer der User fordert sie ausdrücklich. Lint/TypeScript sind nur Code-Sicherheitschecks bei echten Codeänderungen und kein Produktbeweis.
 - **ORCHESTRATOR HANDOVER-REIHENFOLGE (neu):** Immer in dieser Reihenfolge abschließen: 1) Phase dokumentieren, 2) offene Punkte + nächste Phase benennen, 3) Endstatus (`NEXT_PHASE_READY` oder `ALL_PHASES_COMPLETE`) als **letzte Zeile** ausgeben.
 - **KRITISCH (Loop-Stopper):** Wenn nur noch manuelle User-Checks offen sind (z.B. UI-Test, Ingame-Run, Recorder-Export, visueller Check), darf **kein** `NEXT_PHASE_READY` mehr kommen. In diesem Fall immer `ALL_PHASES_COMPLETE`, weil die KI ohne User-Input nicht weiter ausführen kann.
 
 ## 4. Erzeugung von Planung
 
-### Dokumentationssystem - Phasenformat einhalten!
+### Dokumentationssystem - Todoformat einhalten!
 **Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
 
 Jede Phase MUSS diese **7 Punkte** enthalten:
@@ -96,7 +96,7 @@ Jede Phase MUSS diese **7 Punkte** enthalten:
 **Ergebnis:** Frontend erzeugen für das Dashboard
 ```
 
-### Kommentar-Sektion unter der Phasenplanung
+### Kommentar-Sektion unter der Phasen/Todo-Planung
 - Nach Abschluss pro Phase eine kurze Kriterien-Zeile schreiben.
 - Auffälligkeiten/Fehler/Regelverstöße nach Schwere sortieren und bei Bedarf Refactoring-Plan empfehlen.
 
@@ -113,13 +113,13 @@ Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Kompon
 ### Phase 2....
 ```
 
-Die Kommentar-Sektion steht **unterhalb aller Phasen**. Referenzen enthalten zusätzlich max. 3 Hauptkomponentenpfade pro Phase.
+Die Kommentar-Sektion steht **unterhalb aller Phasen/Todos**. Referenzen enthalten zusätzlich max. 3 Hauptkomponentenpfade pro Phase.
 
-- **Findings:** Bei echten Auffälligkeiten direkt `docs/[feature]/tasks/...optimierung-tasks.md` mit Referenz auf die Planung anlegen; nach Abschluss aller Phasen abarbeiten.
+- **Findings:** Bei echten Auffälligkeiten direkt `docs/[feature]/tasks/...optimierung-tasks.md` mit Referenz auf die Planung anlegen; nach Abschluss aller Phasen/Todos abarbeiten.
 - **Planungsgrenzen:** Kein vollständiger Code, keine kompletten React-Komponenten, keine Copy-paste-Blöcke. Erlaubt sind Konzepte, API-Signaturen, Dateistrukturen und Pseudo-Code bis 3-5 Zeilen.
 - **Umfang:** Max. ~700 Zeilen pro Planung, 3-4 Komponenten pro Phase, max. ~900-1300 Codezeilen pro Phase.
 - **Vor Code:** Existierende Funktionen suchen, Wiederverwendung vor Redundanz, Edge-Cases dokumentieren.
-- **Architektur-Phasen:** Vorher/Nachher-Datenfluss in 3-6 Schritten ergänzen.
+- **Architektur-Phasen/Todos:** Vorher/Nachher-Datenfluss in 3-6 Schritten ergänzen.
 - **Sprache:** Menschenlesbar, einfach, mit Icons, Alltagsbeispielen und klarer Meinung.
 
 ### Planungs-Workflow (ZWINGEND VOR CODE)
@@ -129,18 +129,18 @@ Die Kommentar-Sektion steht **unterhalb aller Phasen**. Referenzen enthalten zus
    - Keine Planung? → In `docs/[feature]/tasks/` suchen oder neue nach Architekten-Regeln erstellen
    - **ERST nach Planungserweiterung darf programmiert werden!**
 2. **Kontext sammeln:** Plan lesen · Ähnliche Dateien finden für Struktur/Coding-Richtlinien
-3. **Phasen nacheinander implementieren:** Qualität vor Quantität, ohne Rückfrage bis alle Phasen abgeschlossen sind (außer externer Blocker)
+3. **Phasen/Todos nacheinander implementieren:** Qualität vor Quantität, ohne Rückfrage bis alle Phasen/Todos abgeschlossen sind (außer externer Blocker)
 4. **Plan aktualisieren (PFLICHT nach jeder Phase):** Phase als ✅ markieren · Arbeitsschritte dokumentieren · Entscheidungen festhalten · Edge Cases notieren · erledigte/offene To-dos und nächste Phase festhalten
-5. **Kommentar-Sektion unter allen Phasen:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase, mit den meisten Änderungen) · Refactoring-Plan empfehlen bei Funden
-6. **Orchestrator-Ausgabe (KRITISCH):** Solange weitere KI-umsetzbare Phasen offen sind, `NEXT_PHASE_READY` nutzen. Sobald nur noch manuelle User-Checks offen sind oder alle Phasen abgeschlossen sind, immer `ALL_PHASES_COMPLETE` nutzen.
+5. **Kommentar-Sektion unter allen Phasen/Todos:** Eingehaltene Kriterien (kommasepariert) + Auffälligkeiten/Fehler nach Schwere sortieren (🔴🟠🟡) · Hauptkomponentenpfade (max 3 pro Phase, mit den meisten Änderungen) · Refactoring-Plan empfehlen bei Funden
+6. **Orchestrator-Ausgabe (KRITISCH):** Solange weitere KI-umsetzbare Phasen/Todos offen sind, `NEXT_PHASE_READY` nutzen. Sobald nur noch manuelle User-Checks offen sind oder alle Phasen/Todos abgeschlossen sind, immer `ALL_PHASES_COMPLETE` nutzen.
 
 
-**Dokumentation (NUR wenn ALLE Phasen fertig):** Feature-Overview, Sub-Features, Task-History, ggf. Master-Navigation updaten · Doku-Richtlinien beachten: `agents/dokumentier-regeln.md`
+**Dokumentation (NUR wenn ALLE Phasen/Todos fertig):** Feature-Overview, Sub-Features, Task-History, ggf. Master-Navigation updaten · Doku-Richtlinien beachten: `agents/dokumentier-regeln.md`
 
 ### Masterplan-System
 - Bei großen Systemen: `docs/[feature]/tasks/[thema]-[masterplan].md` referenziert mehrere `[thema]-[task].md`
 - Erstellen sobald Umfang/Abhängigkeiten es erfordern oder wenn User „erzeuge Masterplan" sagt
-- Pflicht-Phasenpläne nach unserem Format
+- Pflicht-Phasen/Todos-Pläne nach unserem Format
 - Phasen am Stück umsetzen und dokumentieren, ohne Pause
 
 ### Umgang mit existierenden Planungen
@@ -417,14 +417,14 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
 - Keine automatischen Multiplayer-Smokes, Serverwert-Beweise oder selbst gebauten Prüfmechanismen
-- Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
+- Commite nach Abschluss aller Phasen/Todos aus einer Masterplanung mit schöner Commit message
 - Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max 3 Hauptkomponentenpfade
 - WebFetch/Websuche sinnvoll nutzen, besonders bei wiederholten Fehlern oder unsicherer externer Doku.
 
 ## Erzeuge Signaltöne anhand deines Fortschritts
 **so gehts in Windows:**
-**Phase implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
-**Alle Phasen fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
+**Phase/Todo implementiert oder fertig**: `powershell -c "[console]::beep(400,800)"` (längere Dauer)
+**Alle Phasen/Todos fertig**: `powershell -c "[console]::beep(400,300); Start-Sleep -Milliseconds 100; [console]::beep(400,300)"` (Doppel-Beep)
 
 # Wichtige Regeln / Zusammenfassung
 **NIEMALS automatisch `pnpm run dev` oder `pnpm dev` starten!**
