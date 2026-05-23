@@ -27,12 +27,14 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 **Nicht tun:** Performance nicht durch blinde Qualitätsverluste verkaufen. VFX-Off, No-AI, No-GameFX, No-Skills, Map-Off und Gegner-Off sind Diagnose-Hebel, keine Produktlösung.
 
+**User-Gate für Messungen:** Keine automatischen Browser-, Ingame-, Smoke-, Bot-, FPS-, A/B-, Recorder- oder Serverwert-Läufe ohne ausdrücklichen User-Auftrag. Ohne Auftrag nur Code, vorhandene Reports, offizielle Doku und User-Beschreibung nutzen und ein manuelles Prüf-Gate dokumentieren. Metriken sind Hinweise für Technik, aber kein Beweis für Kampfgefühl, AOE-Lesbarkeit, Sound, Vibration oder Despawn-Verständlichkeit.
+
 ---
 
 ## 2. Pflichtregeln
 
-- **MUSS: FPS allein reicht nie.** Immer `frameMsAvg`, `frameMsP95`, `frameMsWorst`, Draw Calls, Triangles, Geometries, Texturen, aktive `useFrame`-Systeme und sichtbare Stotterer prüfen.
-- **MUSS: Erst messen, dann ändern.** Szene, Klasse, Skill, Gegnerzahl, Kamera, Zoom, Backend, Browser und aktive Debug-Schalter notieren.
+- **MUSS: FPS allein reicht nie.** Wenn Performance mit vorhandenen Daten oder User-Auftrag bewertet wird, nicht nur FPS nutzen, sondern auch `frameMsAvg`, `frameMsP95`, `frameMsWorst`, Draw Calls, Triangles, Geometries, Texturen, aktive `useFrame`-Systeme und sichtbare Stotterer einordnen.
+- **MUSS: Vorhandene Evidenz nutzen, nicht automatisch messen.** Wenn der User Messwerte, Logs, Screenshots oder Recording-Pfade liefert, Szene, Klasse, Skill, Gegnerzahl, Kamera, Zoom, Backend, Browser und aktive Debug-Schalter notieren. Ohne ausdrücklichen Auftrag keine neuen Messläufe starten.
 - **MUSS: Ursache trennen.** Renderlast, CPU-Loop, React-State, `useFrame`, VFX, Audio, Animation, Gegnerlogik, Terrain/Map, PostFX und Input getrennt betrachten.
 - **MUSS: Gameplay und Visuals trennen.** Eine visuelle Reduktion darf keine Hitbox, keinen Damage, keine Boss-Mechanik und kein Skill-Timing entfernen.
 - **MUSS: `useFrame` bleibt billig.** Kein häufiges React-`setState`, keine breiten Store-Subscriptions, keine Objektmassen pro Frame neu erzeugen.
@@ -178,16 +180,16 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 11. Diagnose-Workflow
 
-- **Reproduzieren:** Szene, Klasse, Skill, Gegnerzahl, VFX-Schalter, Browser, Backend, Monitor-/FPS-Cap, Kamera, Zoom und Debug-Schalter notieren.
-- **Messen:** FPS, Frame Avg, P95, Worst, Calls, Triangles, Geometries, Texturen, transparente Layer, aktive `useFrame`-Systeme, Queue-/Pool-Druck.
+- **Reproduzieren:** Nur mit User-Auftrag oder vorhandenen User-Daten. Szene, Klasse, Skill, Gegnerzahl, VFX-Schalter, Browser, Backend, Monitor-/FPS-Cap, Kamera, Zoom und Debug-Schalter notieren.
+- **Messen:** Nur vorhandene Messwerte oder ausdrücklich beauftragte Messläufe nutzen: FPS, Frame Avg, P95, Worst, Calls, Triangles, Geometries, Texturen, transparente Layer, aktive `useFrame`-Systeme, Queue-/Pool-Druck.
 - **Ablation statt Raten:** VFX, Partikel, Slashes, Enemy Model, Terrain, Map, PostFX, Shadows, WebGL/WebGPU, Audio und Skill ohne Trefferkontakt getrennt prüfen.
 - **Root Cause trennen:** CPU-Loop, React-State-Churn, Draw Calls, Triangles, Overdraw, Shader/PostFX, Texture/Memory, Audio, Physik, Input, Display-Cap.
 - **Architektur fixen:** Batching, Instancing, Pooling, Dirty-Signaturen, zentrale Queues, Budget-Gates, stabile Boundaries.
 - **Qualität prüfen:** Was sieht gleich aus? Was sieht anders aus? Ist Trefferfeedback noch lesbar?
 - **User-Gate beachten:** Screenshot/Browser/Playwright/Recorder/Ingame-Checks nur mit ausdrücklichem User-Auftrag starten. Sonst manuellen Blocker dokumentieren.
-- **Dokumentieren:** Ursache, verworfene Alternativen, Messwert-Delta, Reportpfad, Restrisiko, Qualitätsverlust und Folgeaufgaben.
+- **Dokumentieren:** Ursache, verworfene Alternativen, vorhandene Messwert-Delta/Reportpfade, Restrisiko, Qualitätsverlust, manuelles User-Gate und Folgeaufgaben.
 
-**Fight-Runtime-Pflichtblock:** Bei Skill-/Treffer-Fixes zusätzlich Default-Samurai, Gegnerzahl, Kamera/Zoom, Skillfolge, `No P Skills`-Delta, `No GameFX`-Delta und Segmente wie `combat.hitScan`, `combat.damageApply`, `combat.enemyReaction`, `combat.hitFeedback`, `combat.damageNumberSpawn`, `combat.hitStopApply`, `player.slam.hitFrame` notieren.
+**Fight-Runtime-Pflichtblock:** Nur bei vorhandenen Reports oder ausdrücklichem User-Auftrag Default-Samurai, Gegnerzahl, Kamera/Zoom, Skillfolge, `No P Skills`-Delta, `No GameFX`-Delta und Segmente wie `combat.hitScan`, `combat.damageApply`, `combat.enemyReaction`, `combat.hitFeedback`, `combat.damageNumberSpawn`, `combat.hitStopApply`, `player.slam.hitFrame` notieren.
 
 ---
 

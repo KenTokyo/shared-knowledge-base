@@ -30,6 +30,9 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
   **NIEMALS Workarounds für Anwender-Fehler bauen!**
 
 - **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
+- **Research-First bei wiederholten oder unklaren Fehlern (PFLICHT):** Wenn ein Problem nach einem Fix weiter besteht, nicht weiter Werte drehen. Erst offizielle Dokumentation, vorhandene Projekt-Skills, passende GitHub-Repositories/Issues oder bewährte Referenzprojekte recherchieren. Danach 2-3 konkrete Lösungswege vergleichen und den kleinsten stabilen Ansatz umsetzen.
+- **Keine automatischen Gameplay-/Werte-Beweise (PFLICHT):** Smoke-Skripte, Debug-Zahlen, Serverwerte, Ingame-Recorder, Browser-Checks oder selbst gebaute Prüfmechanismen dürfen nicht mehr als Beweis gelten, dass Gameplay gut ist. Sie dürfen nur bei ausdrücklichem User-Auftrag laufen. Produktgefühl, Lesbarkeit, AOE-Sinn, Trefferfeedback, Sound, Vibration und Despawn-Verständlichkeit prüft der User manuell.
+- **Frontend-Ausnahme:** Für reine Frontend-/Layout-Arbeit darf Playwright CLI genutzt werden, wenn ein Mock-Screenshot oder UI-Zielbild möglichst ähnlich getroffen werden soll. Das gilt nicht als Gameplay-, 3D-FPS-, Multiplayer- oder Werteprüfung.
 
 ### Grundton
 - **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
@@ -40,7 +43,7 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 - **User-Entlastung:** Keine unnötigen manuellen Schritte für den User · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · Nur bei fehlenden externen Daten nach genau 1 Info fragen · Jede Antwort prüfen: „Nimmt das dem User Arbeit ab?"
 
 ### Abschluss im Chat
-- **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Prüfung`.
+- **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Code-Sicherheit/Manuelles Gate`.
 - **Pfadpflicht:** Geänderte oder geprüfte Dateien, Dokumente und Komponenten immer mit Pfad nennen.
 - **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
@@ -62,7 +65,7 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
 - **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen auf einmal.
-- **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss immer Mini-Check machen: Scope gegen Planung prüfen, geänderte UI auf Regressionen prüfen, passende Lint/TypeScript-Checks im geänderten Bereich ausführen und Ergebnis in der Planung notieren.
+- **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss Scope gegen Planung abgleichen, Doku aktualisieren und offene manuelle User-Gates notieren. Automatische Gameplay-/Werte-/Ingame-Prüfungen sind verboten, außer der User fordert sie ausdrücklich. Lint/TypeScript sind nur Code-Sicherheitschecks bei echten Codeänderungen und kein Produktbeweis.
 - **ORCHESTRATOR HANDOVER-REIHENFOLGE (neu):** Immer in dieser Reihenfolge abschließen: 1) Phase dokumentieren, 2) offene Punkte + nächste Phase benennen, 3) Endstatus (`NEXT_PHASE_READY` oder `ALL_PHASES_COMPLETE`) als **letzte Zeile** ausgeben.
 - **KRITISCH (Loop-Stopper):** Wenn nur noch manuelle User-Checks offen sind (z.B. UI-Test, Ingame-Run, Recorder-Export, visueller Check), darf **kein** `NEXT_PHASE_READY` mehr kommen. In diesem Fall immer `ALL_PHASES_COMPLETE`, weil die KI ohne User-Input nicht weiter ausführen kann.
 
@@ -341,6 +344,16 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 - **WebGL-Partikel-Merkhilfe:** Wenn Slashes sichtbar sind, aber Partikel/Sparks trotz grünem Pool unsichtbar oder schwarz bleiben, zuerst `shared-docs/THREEJS-RULES.md` Abschnitt 8 prüfen. Nicht weiter Pool/Größe drehen. Wahrscheinlicher ist der Material-/Farbpfad (`meshBasicMaterial + vertexColors + InstancedMesh.setColorAt`). Stabiler WebGL-Fix: kleiner Shader, der `instanceColor` direkt liest.
 
+### Multiplayer, Colyseus & Kampfgefühl
+- **Colyseus-Research vor Multiplayer-Fixes (PFLICHT):** Bei Sync-, Snapshot-, HP-, AOE-, Despawn-, Hitfeedback-, Animations- oder Serverautoritätsproblemen zuerst `.agents/skills/starwards-colyseus/SKILL.md`, offizielle Colyseus-Doku und passende Referenz-Repositories prüfen. Nicht weiter eigene Prüfwerte erfinden.
+- **Server bleibt Wahrheit, Client bleibt Gefühlsschicht:** HP, Positionen, Bossphasen, Adds, Damage und Tod bleiben serverautoritativ. Der Client darf Treffer nicht entscheiden, aber er muss serverbestätigte Ereignisse sofort lesbar machen: Hit-Sound, Impact-VFX, Damage-Flash, Hitstop/Vibration, Damage Number, Todes-/Despawn-Cue.
+- **State vs. Messages sauber trennen:** Dauerhafte Werte gehören in synchronisierten State. Kurzlebige Ereignisse gehören als Messages raus: Angriff gestartet, Treffer bestätigt, Spieler HP verloren, Gegner gestorben, Boss-Cast gestartet, AOE ausgelöst, Sound/VFX abspielen. Wenn eine Message zu einer State-Änderung gehört, nach dem State-Patch senden, damit UI und Effekt nicht auseinanderlaufen.
+- **Singleplayer-Parität ist Pflicht:** Multiplayer darf sich nicht billiger anfühlen als der lokale Kampf. Bestehende lokale Feedback-Systeme wiederverwenden statt eine zweite schwächere Multiplayer-Feedback-Schicht bauen.
+- **AOE und Angriffe müssen lesbar sein:** Jede Schadensquelle muss die Frage beantworten: Wer greift an? Wo trifft es? Wann trifft es? Warum habe ich HP verloren? Telegraph, Animation, Trefferfenster und Server-Hitbox müssen dieselbe Geschichte erzählen.
+- **Despawn darf nie heimlich sein:** Wenn ein Gegner stirbt oder verschwindet, braucht es ein sichtbares und hörbares Ende, z.B. Flash, Collapse, Partikel, Sound oder kurzes Fade. Kein stilles Entfernen aus der Liste, wenn der Spieler gerade kämpft.
+- **Feedback performant bauen:** Hit-/Death-/AOE-Feedback über bestehende Pools, Instancing, Queues und Rate-Limits führen. Keine neuen globalen `useFrame`-Loops und keine ungebremsten Partikel pro Snapshot.
+- **Keine Wert-Fixes als Gefühl-Fix verkaufen:** Mehr Schaden, mehr HP, größere AOE oder schnellere Bewegung lösen schlechte Lesbarkeit nicht. Erst Signale, Animation, Sound und Eventfluss reparieren, dann Balancing.
+
 ### Frontend Regeln & Antipatterns!
 - **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
@@ -364,12 +377,14 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - **Ressourcen-Blocker in HUD/Skill-UI:** Wenn ein Skill wegen Mana/Energie/Fokus nicht nutzbar ist, muss die UI sichtbar den Grund und möglichst den konkreten Bedarf zeigen (z.B. `NO MP`, `Need 18 MP`, Tooltip mit `18/110`). Nicht nur ausgrauen.
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
-## Validierung & Testing
+## Code-Sicherheit & manuelle Produktprüfung
 ### 8.1 TypeScript
-- Immer prüfen: `pnpm lint` · Kein `pnpm build` oder `pnpm dev` nötig
-- **ZERO TOLERANCE:** `pnpm exec tsc --noEmit` nach JEDER Phase · NIEMALS Fehler ignorieren oder „später fixen" · SOFORT beheben · TypeScript-Fehler sind **BLOCKER** — keine Ausnahmen!
+- Statische Code-Sicherheitschecks (`pnpm lint`, `pnpm exec tsc --noEmit`) sind nur Kompilier- und Typ-Schutz. Sie beweisen kein Gameplay, keine Werte, kein Kampfgefühl und keine Multiplayer-Lesbarkeit.
+- Bei reinen Doku-, Prompt- oder Regeländerungen keine Tests/Checks starten.
+- Bei echten Codeänderungen dürfen Lint/TypeScript genutzt werden, wenn sie den geänderten Scope absichern. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
-- **Keine automatischen Oberflächentests:** Keine Browser-, Playwright-, Screenshot-, Recorder-, Ingame- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es ausdrücklich befiehlt. Sonst statische Checks, vorhandene Messreports und Blocker-Notiz nutzen.
+- **Keine automatischen Gameplay-/Werte-/Oberflächentests:** Keine Browser-, Playwright-, Screenshot-, Recorder-, Ingame-, Smoke-, Bot-, Serverwert- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es ausdrücklich befiehlt. Sonst Research, Codeänderung und manuellen User-Blocker dokumentieren.
+- **Playwright-Ausnahme für Frontend:** Playwright CLI ist erlaubt, wenn es nur um UI-/Layout-Ähnlichkeit zu einem Mock-Screenshot geht. Nicht erlaubt für Multiplayer-Gefühl, 3D-FPS, AOE-Werte, Hitboxen, Damage-Zahlen oder Boss-Verhalten.
 - **Keine Playwright-/Browser-Use-Performance-Tests für 3D-FPS:** Headless-Chromium hat keinen echten GPU-Treiber und liefert keine aussagekräftigen FPS-Werte. Playwright/Browser-Use bleibt erlaubt für **Oberflächen-/Snapshot-/UI-Smoke-Tests**, aber **NICHT** für 3D-Frame-Benchmarks, WebGPU-A/B-Vergleiche oder VFX-Performance-Messungen. Echte Performance-Messung läuft nur über echten Chrome/Edge mit DevTools-Performance-Tab + Recording-Export. Bei Bedarf User um manuelle Recording-Aufnahme bitten und Pfad in `docs/performance/recordings/` ablegen.
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
@@ -391,15 +406,16 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
 
 ### Quick Checklist
-- `pnpm lint` (🔴 MUSS 0 FEHLER HABEN!)
+- Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
 - Mobile-First
 - Max 700 lines/file
-- Keine Oberflächen-/Screenshot-/Browser-/Ingame-Tests ohne ausdrücklichen User-Auftrag
+- Keine Gameplay-/Werte-/Smoke-/Browser-/Ingame-Tests ohne ausdrücklichen User-Auftrag
+- Frontend-Mock-Abgleich per Playwright CLI ist erlaubt, wenn es nur um UI-Ähnlichkeit geht
 - Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
 - Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
-- TypeScript: `pnpm lint` · `pnpm exec tsc --noEmit` nach jeder Phase · Kein `pnpm build`/`pnpm dev` nötig
+- Keine automatischen Multiplayer-Smokes, Serverwert-Beweise oder selbst gebauten Prüfmechanismen
 - Commite nach Abschluss aller Phasen aus einer Masterplanung mit schöner Commit message
 - Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max 3 Hauptkomponentenpfade
 - WebFetch/Websuche sinnvoll nutzen, besonders bei wiederholten Fehlern oder unsicherer externer Doku.
