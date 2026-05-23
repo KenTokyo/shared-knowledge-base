@@ -242,7 +242,45 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ---
 
-## 15. Offizielle Referenzen
+## 15. Skillforge-/Unity-Learnings: Vorab optimieren statt später retten
+
+**Kontext:** Die öffentliche Unity-Zusammenfassung zu Skillforge nennt 200+ Helden, sehr detailreiche Welten, Speicherreduktion von `4 GB` auf `1.3 GB` und `+57%` Framerate. Das Nutzer-Transkript ergänzt: `-76%` Shader-Varianten, 200+ Portraits per Atlas, Addressables/CDN-Reduktion, Occlusion Culling, Mipmaps/Asset-Tuning, Low/Medium/High-Geräteprofile und Ladezeiten von ca. `5-6s` auf `1-2s`. Diese Werte sind Unity/Godforge-spezifisch; die Regeln unten sind die Three.js/R3F-Übersetzung davon.
+
+**MUSS: Zielgerät und Qualitätsprofile früh festlegen.** Jede neue 3D-Funktion braucht ein Low/Medium/High-Profil: DPR/Resolution-Scale, Texture-Max, Shadow/PostFX-Stufe, Partikelbudget, sichtbare Gegner, Terrain-/Chunk-Reichweite und VFX-Dichte. WebGL ist der sichere Baseline-Pfad; WebGPU ist ein Bonuspfad mit Paritätsprüfung.
+
+**MUSS: Asset-Budget vor Import.** Neue Helden, Gegner, Maps, VFX-Texturen und UI-3D-Assets brauchen vor Merge ein kleines Budget: Triangles pro LOD, Materialanzahl, Texturgrößen, geschätzte GPU-Textur-MB, Animationsclips, Preload/Lazy-Load-Strategie und Entladepunkt. "Sieht gut aus" reicht nicht, wenn das Asset dauerhaft Speicher frisst.
+
+**MUSS: Texturen nach Dimension budgetieren, nicht nur nach Dateigröße.** WebP/JPG/PNG können klein herunterladen, aber in WebGL trotzdem groß im GPU-Speicher liegen. Faustregel aus Three.js: `width * height * 4 * 1.33` Bytes für RGBA + Mips. Für 3D-Oberflächen Mipmaps gezielt nutzen; für UI/Pixel-Art bewusst entscheiden. KTX2/BasisU prüfen, wenn viele große 3D-Texturen dauerhaft im Spiel sind.
+
+**MUSS: Atlanten für viele kleine Bilder.** Hero-Portraits, Skill-Icons, Decals, Partikel-Sprites, Slash-Masks und Status-Icons dürfen bei Massenlisten nicht als 100+ einzelne Texturen/Materialien laufen. Bevor viele ähnliche Sprites gebaut werden: Atlas/Spritesheet/Texture-Array oder ein zentrales Icon-/Decal-Registry prüfen.
+
+**MUSS: Asset-Duplikate verhindern.** Dieselbe Textur, dasselbe GLTF, dieselbe Geometrie und dasselbe Material dürfen nicht über mehrere Loader-Pfade doppelt im Speicher landen. Asset-Keys normalisieren, zentrale Caches nutzen und beim Verlassen von Arena/Map/Dialog bewusst `dispose()` für Geometrien, Materialien und Texturen einplanen.
+
+**MUSS: Lazy Loading statt Alles-am-Start.** Nicht alle Helden, Bosse, VFX, Portraits und Maps beim ersten Canvas-Start laden. Route, Encounter, Klasse und sichtbare UI bestimmen, was vorgeladen wird. Für kommende Bossphasen/Skill-Sets lieber früh genug prefetching nutzen, aber nicht dauerhaft alles resident halten.
+
+**MUSS: Shader-/Material-Variant-Disziplin.** In Three.js entsteht die Variant-Explosion durch viele Materialtypen, Defines, Lights, Shadow-Flags, Skinning/Morphing, Fog, Tone-Mapping- und PostFX-Kombinationen. Neue Effekte bevorzugt über gemeinsame Shaderfamilien, Uniforms, Instancing-Attribute und Renderer-Buckets bauen. Neue `#define`-/Material-Kombinationen brauchen einen Grund und einen Messpunkt.
+
+**MUSS: Shader-Warmup für kritische Kampfpfade prüfen.** Wenn erster Skill, erster Boss, erster Skin oder erster PostFX-Frame ruckelt, nicht am Gameplay drehen. Material-/Program-Kompilierung, Texture-Upload und GLTF-Decode getrennt prüfen. Kritische Shader/Materialien können beim Szenenwechsel oder Ladebildschirm einmal unsichtbar vorbereitet werden.
+
+**MUSS: Occlusion-/Relevanz-Culling projektgerecht bauen.** Three.js macht Frustum-Culling, aber keine Unity-artige Scene-Occlusion automatisch. Für Wände, große Felsen, Gebäude, Towns, Dungeons und Boss-Arenen eigene Zellen/Portale/Chunks, Distanz-Culling, Screen-Space-Größe oder einfache Occluder-Logik planen. Wichtig: Culling darf Gegner-Telegraphs, Hitbox-Signale und Boss-Gefahren nicht verstecken.
+
+**MUSS: Ladezeit, Speicher und CDN-Größe als Produktmetriken behandeln.** Neben FPS immer Asset-Downloadgröße, decoded Texture-Memory, GLTF/Animation-Speicher, First-Combat-Time, first-skill-stutter und Reload-Zeit prüfen. Performance ist nicht nur Kampf-FPS; ein 6-Sekunden-Roster- oder Arena-Load ist auch ein Performance-Bug.
+
+**CHECK: Profile wählen wie Godforge, aber nicht blind kopieren.** Für Web/Three.js heißen die Hebel meist `DPR`, `texture max size`, `KTX2`, `meshopt/draco`, `LOD`, `InstancedMesh`, `BatchedMesh`/Merged Geometry, Chunk-Culling, PostFX-Auflösung, Shadow-Map-Größe und VFX-Budget. Unity-Begriffe wie Addressables, SpriteAtlas oder Shader Variant Stripping immer in diese Web-Hebel übersetzen.
+
+**CHECK: Neue Content-Systeme bekommen ein "200-Helden-Problem"-Gate.** Wenn ein System theoretisch auf viele Helden, Skins, Skills, Gegner, Portraits oder Maps wächst, muss es schon bei 5 Einträgen batching-, caching- und lazy-load-fähig sein. Später nachrüsten ist teurer und riskanter.
+
+**Quellen/Anker:**
+- Godforge/Unity-Video-Zusammenfassung: https://www.gamesinprogress.com/indie-game-developers/unity/optimizing-godforge-200-heroes-million-polygon-worlds
+- Unity Shader Variants: https://docs.unity.cn/6000.0/Documentation/Manual/shader-variants-landing.html
+- Unity Mobile Optimierung: https://docs.unity.cn/530/Documentation/Manual/MobileOptimisation.html
+- Unity Addressables + Sprite Atlases: https://docs.unity.cn/Packages/com.unity.addressables%401.21/manual/AddressablesAndSpriteAtlases.html
+- Three.js Texture Memory: https://threejs.org/manual/en/textures.html
+- Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
+
+---
+
+## 16. Offizielle Referenzen
 
 - React Three Fiber Performance Pitfalls: https://r3f.docs.pmnd.rs/advanced/pitfalls
 - Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
