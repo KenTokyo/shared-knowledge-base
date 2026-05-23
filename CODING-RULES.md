@@ -8,6 +8,7 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 ## 1. Kontext & Kommunikation
 
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in einer Datei zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext, bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege abdriftest, denn was der User möchte sollte schon erstmals erneut irgendwo in schön und kompakt notiert werden in der Masterplanung/Todo bevor du überhaupt mit der eigentlichen Planung beginnst
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob und ungenau → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren
 - **Verstehen statt Umdeuten (Pflicht):**
   - Lösung A verbessern, nicht still zu B wechseln
