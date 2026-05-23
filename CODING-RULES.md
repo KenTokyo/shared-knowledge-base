@@ -32,8 +32,8 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 - **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
 - **Research-First bei wiederholten oder unklaren Fehlern (PFLICHT):** Wenn ein Problem nach einem Fix weiter besteht, nicht weiter Werte drehen. Erst offizielle Dokumentation, vorhandene Projekt-Skills, passende GitHub-Repositories/Issues oder bewährte Referenzprojekte recherchieren. Danach 2-3 konkrete Lösungswege vergleichen und den kleinsten stabilen Ansatz umsetzen.
 - **Keine automatischen Gameplay-/Werte-Beweise (PFLICHT):** Smoke-Skripte, Debug-Zahlen, Serverwerte, Ingame-Recorder, Browser-Checks oder selbst gebaute Prüfmechanismen dürfen nicht mehr als Beweis gelten, dass Gameplay gut ist. Sie dürfen nur bei ausdrücklichem User-Auftrag laufen. Produktgefühl, Lesbarkeit, AOE-Sinn, Trefferfeedback, Sound, Vibration und Despawn-Verständlichkeit prüft der User manuell.
-- **Frontend-Ausnahme:** Für reine Frontend-/Layout-Arbeit darf Playwright CLI genutzt werden, wenn ein Mock-Screenshot oder UI-Zielbild möglichst ähnlich getroffen werden soll. Das gilt nicht als Gameplay-, 3D-FPS-, Multiplayer- oder Werteprüfung.
 
+- **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, UI-Smoke- oder manuellen UI-Checks automatisch starten. Auch Frontend-/Layout- und Mock-Abgleiche laufen nur, wenn der User es klar befiehlt, z. B. „führe einen UI-Test aus“. Dann Mock-Screenshots mit deinem gebauten Änderungen/Frontend vergleichen. Ohne Befehl wird der UI-Check als manuelles Gate dokumentiert.
 ### Grundton
 - **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
 - **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben mit Alltagswörter, schwierige Themen mit Alltagsbeispielen ausformulieren falls User es nicht versteht. Echte Umlaute (ü, ä, ö, ß). Alltagssprache statt Fachsprache. Wenige technische Begriffe auf einmal, oder kurz erklären.
@@ -383,9 +383,9 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Bei reinen Doku-, Prompt- oder Regeländerungen keine Tests/Checks starten.
 - Bei echten Codeänderungen dürfen Lint/TypeScript genutzt werden, wenn sie den geänderten Scope absichern. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
-- **Keine automatischen Gameplay-/Werte-/Oberflächentests:** Keine Browser-, Playwright-, Screenshot-, Recorder-, Ingame-, Smoke-, Bot-, Serverwert- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es ausdrücklich befiehlt. Sonst Research, Codeänderung und manuellen User-Blocker dokumentieren.
-- **Playwright-Ausnahme für Frontend:** Playwright CLI ist erlaubt, wenn es nur um UI-/Layout-Ähnlichkeit zu einem Mock-Screenshot geht. Nicht erlaubt für Multiplayer-Gefühl, 3D-FPS, AOE-Werte, Hitboxen, Damage-Zahlen oder Boss-Verhalten.
-- **Keine Playwright-/Browser-Use-Performance-Tests für 3D-FPS:** Headless-Chromium hat keinen echten GPU-Treiber und liefert keine aussagekräftigen FPS-Werte. Playwright/Browser-Use bleibt erlaubt für **Oberflächen-/Snapshot-/UI-Smoke-Tests**, aber **NICHT** für 3D-Frame-Benchmarks, WebGPU-A/B-Vergleiche oder VFX-Performance-Messungen. Echte Performance-Messung läuft nur über echten Chrome/Edge mit DevTools-Performance-Tab + Recording-Export. Bei Bedarf User um manuelle Recording-Aufnahme bitten und Pfad in `docs/performance/recordings/` ablegen.
+- **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, Recorder-, Ingame-, Smoke-, Bot-, Serverwert- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es klar befiehlt. Sonst Research, Codeänderung und manuellen User-Blocker dokumentieren.
+- **Keine stille Playwright-Ausnahme:** Auch reine Frontend-/Layout- oder Mock-Abgleiche laufen nur, wenn der User sie ausdrücklich befiehlt. Ohne Befehl: beschreiben, was der User manuell prüfen soll.
+- **Keine Playwright-/Browser-Use-Performance-Tests für 3D-FPS:** Headless-Chromium hat keinen echten GPU-Treiber und liefert keine aussagekräftigen FPS-Werte. Browser-/Playwright-Checks sind nur bei User-Befehl erlaubt und bleiben **NICHT** erlaubt als 3D-Frame-Benchmark, WebGPU-A/B-Vergleich oder VFX-Performance-Messung. Echte Performance-Messung läuft nur über echten Chrome/Edge mit DevTools-Performance-Tab + Recording-Export. Bei Bedarf User um manuelle Recording-Aufnahme bitten und Pfad in `docs/performance/recordings/` ablegen.
 - **Keine neuen Tests erstellen:** Es werden **keine** Unit-/Integration-/E2E-Tests neu erzeugt, außer der User fordert es ausdrücklich.
 - **Keine Testarbeit ohne expliziten Auftrag:** Keine bestehenden Tests umbauen und keine Test-Konfigurationen (z. B. `vitest.config.ts`) ändern, außer der User verlangt es klar.
 
@@ -409,8 +409,8 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
 - Mobile-First
 - Max 700 lines/file
-- Keine Gameplay-/Werte-/Smoke-/Browser-/Ingame-Tests ohne ausdrücklichen User-Auftrag
-- Frontend-Mock-Abgleich per Playwright CLI ist erlaubt, wenn es nur um UI-Ähnlichkeit geht
+- Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-Tests ohne klaren User-Befehl
+- Frontend-Mock- und Layout-Abgleich nur manuell dokumentieren, außer der User befiehlt den UI-Test ausdrücklich
 - Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
 - Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
@@ -429,7 +429,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 **NIEMALS automatisch `pnpm run dev` oder `pnpm dev` starten!**
 - Der Dev-Server läuft oft bereits im Hintergrund
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
-- Bei UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
+- Bei vom User befohlenen UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
 - Halte dich an die Design/Layout Regeln, möglicherweise tailwind css klassen, globals.css oder in DESIGN.md reinschauen, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
 
 **Nie überspringen:**
