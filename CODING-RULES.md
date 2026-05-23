@@ -8,7 +8,14 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 ## 1. Kontext & Kommunikation
 
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
-- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext Usernachricht: User möchte...., Er möchte, dass...., bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege abdriftest, denn was der User möchte sollte schon erstmals erneut irgendwo in schön und kompakt notiert werden in der Masterplanung/Todo bevor du überhaupt mit der eigentlichen Planung beginnst
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[datum]-[task].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp:
+
+Usernachricht - User möchte:
+- HUD Anzeige oben links kleiner, kompakter haben
+- FPS Anzeige oben rechts eingebaut haben, mit grüner Schrift, FPS NOW
+- ....
+
+bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege abdriftest, denn was der User möchte sollte schon erstmals erneut irgendwo in schön und kompakt notiert werden in der Masterplanung/Todo bevor du überhaupt mit der eigentlichen Planung beginnst
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob und ungenau → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren
 - **Verstehen statt Umdeuten (Pflicht):**
   - Lösung A verbessern, nicht still zu B wechseln
