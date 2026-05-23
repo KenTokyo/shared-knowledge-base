@@ -447,3 +447,4 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen.
 - Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
+- Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll

@@ -69,7 +69,8 @@ Bitte denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Perform
 - Bei Multiplayer-Änderungen direkt alles commiten, auch wenn es nicht deine Änderungen sind, damit der Multiplayer Server läuft, guten Commit mit Push
 
 
-
+# Erkläre Abschluss Benutzerfreundlichkeit
+- Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
 
 
 
