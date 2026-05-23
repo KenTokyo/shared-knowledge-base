@@ -64,7 +64,7 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 
 Falls Orchestrator Modus an!
-- **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
+- **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten/Todos abhaken + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
 - **ORCHESTRATOR TEMPO-GUARD (neu):** Bei aktivem Orchestrator-Modus nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration** umsetzen. Keine Sammel-Implementierung über mehrere große Phasen/Todos auf einmal.
 - **ORCHESTRATOR QUALITÄTS-GATE (neu):** Vor Phasenabschluss Scope gegen Planung/Todo abgleichen, Doku aktualisieren und offene manuelle User-Gates notieren. Automatische Gameplay-/Werte-/Ingame-Prüfungen sind verboten, außer der User fordert sie ausdrücklich. Lint/TypeScript sind nur Code-Sicherheitschecks bei echten Codeänderungen und kein Produktbeweis.
 - **ORCHESTRATOR HANDOVER-REIHENFOLGE (neu):** Immer in dieser Reihenfolge abschließen: 1) Phase dokumentieren, 2) offene Punkte + nächste Phase benennen, 3) Endstatus (`NEXT_PHASE_READY` oder `ALL_PHASES_COMPLETE`) als **letzte Zeile** ausgeben.
