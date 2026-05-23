@@ -39,6 +39,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 
 - **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
 - **Research-First bei wiederholten oder unklaren Fehlern (PFLICHT):** Wenn ein Problem nach einem Fix weiter besteht, nicht weiter Werte drehen. Erst offizielle Dokumentation, vorhandene Projekt-Skills, passende GitHub-Repositories/Issues oder bewährte Referenzprojekte recherchieren. Danach 2-3 konkrete Lösungswege vergleichen und den kleinsten stabilen Ansatz umsetzen.
+  - Das ist effektiver als rumprobiererei
 - **Keine automatischen Gameplay-/Werte-Beweise (PFLICHT):** Smoke-Skripte, Debug-Zahlen, Serverwerte, Ingame-Recorder, Browser-Checks oder selbst gebaute Prüfmechanismen dürfen nicht mehr als Beweis gelten, dass Gameplay gut ist. Sie dürfen nur bei ausdrücklichem User-Auftrag laufen. Produktgefühl, Lesbarkeit, AOE-Sinn, Trefferfeedback, Sound, Vibration und Despawn-Verständlichkeit prüft der User manuell.
 
 - **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, UI-Smoke- oder manuellen UI-Checks automatisch starten. Auch Frontend-/Layout- und Mock-Abgleiche laufen nur, wenn der User es klar befiehlt, z. B. „führe einen UI-Test aus“. Dann Mock-Screenshots mit deinem gebauten Änderungen/Frontend vergleichen. Ohne Befehl wird der UI-Check als manuelles Gate dokumentiert.
