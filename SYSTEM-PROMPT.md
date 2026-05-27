@@ -26,6 +26,8 @@
 - Nutze Höhe und Breite aus, nicht eine Zeile für ein Button, mehr buttons könnten in einer Zeile rein, nicht Breite verschwenden
 - Komponentenbasiert arbeiten, versuche React-Komponenten auszulagern (max 700 Zeilen Code pro Komponente)
 - Nutze icons schöne und nutze auch erkennbares Farbsystem, bei Speichern Grün, Abbrechen Rot...
+- **Icon-First + Text nur wenn nötig (Pflicht):** In dichten Toolbars/Sidebars zuerst Icons nutzen, sichtbare Texte nur wenn es ohne Text unklar wäre. Jeder Icon-Button braucht `aria-label` und Tooltip; für Schließen immer klar erkennbar `X` nutzen.
+- **Kompakte Eingaben statt Zeilenfresser (Pflicht):** Inputs und Filter nicht unnötig über die volle Breite ziehen. Kurze Werte (z. B. Stunden, Textgröße) in kompakten Feldern nebeneinander oder in kleinen Grids platzieren; lange Labels nur als Tooltip/Hinweis zeigen.
 - **Abgerundete Container mit Floating Effekt**: `rounded-2xl` bis `rounded-4xl` für alle Karten und Sektions-Container. Keine harten Ecken.
   - schau hierzu was verwendet wird, immer min rounded-2xl, empholen rounded-3xl
   - **Floating/Schwebeeffekt**durch backdrop blur/dropshadows erzeugen (bei Lightmode dunkler shadow, stärker, darkmode grauweiß/weißer shadow, jedoch subtiler)
