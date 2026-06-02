@@ -16,6 +16,20 @@ agent-browser fill @e2 "text"   # Fill input by ref
 agent-browser close             # Close browser
 ```
 
+## NoteDrill: Browser-FSA-Gate
+
+Für NoteDrill kann der erste Chrome/Edge-Ordnergrant nicht zuverlässig durch Playwright, CDP oder globale Tastatureingaben ersetzt werden. Der lokale Endbeweis ist deshalb manual-assisted:
+
+```powershell
+pnpm run test:e2e:real-gemini-fsa:check
+$env:ND_E2E_USE_SYSTEM_BROWSER='1'
+$env:ND_E2E_WORKSPACE_PATH='C:\Users\PC1\Documents\Testordner'
+$env:ND_E2E_PICKER_WAIT_MS='600000'
+pnpm run test:e2e:real-gemini-fsa:picker
+```
+
+Der Nutzer muss im sichtbaren nativen Chrome-Dialog exakt `C:\Users\PC1\Documents\Testordner` bestätigen. Erfolg zählt erst, wenn das Summary `reloadWorkspaceRestored: true` und `clientToolExecutorActive: true` enthält. Kein globales Windows-`SendKeys` nutzen; UIAutomation- oder CDP-Versuche nur nach aktueller Task-Dokumentation und mit frischem Testprofil wiederholen.
+
 ## Core workflow
 
 1. Navigate: `agent-browser open <url>`

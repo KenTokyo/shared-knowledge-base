@@ -40,6 +40,10 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 - **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
 - **Research-First bei wiederholten oder unklaren Fehlern (PFLICHT):** Wenn ein Problem nach einem Fix weiter besteht, nicht weiter Werte drehen. Erst offizielle Dokumentation, vorhandene Projekt-Skills, passende GitHub-Repositories/Issues oder bewährte Referenzprojekte recherchieren. Danach 2-3 konkrete Lösungswege vergleichen und den kleinsten stabilen Ansatz umsetzen.
   - Das ist effektiver als rumprobiererei
+- **Playwright-/Browser-Research-First (PFLICHT bei beauftragter Browserarbeit):** Wenn Browser, Playwright CLI, Playwright-Testdateien, native Dialoge, File System Access API, Login/API-Key-Seeding oder Search Params genutzt werden, zuerst den offiziellen Skill `C:\Users\PC1\.codex\skills\playwright\SKILL.md` und danach die NoteDrill-Findings-Doku `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` lesen. Bei Electron-Desktoparbeit zusätzlich `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` lesen. Nach Context-Condensing diese Dateien erneut lesen.
+- **Electron-Playwright-CLI-Referenz (PFLICHT bei Electron-Desktoparbeit):** Wenn Electron, Desktop-App, Electron-KI-Chat, `window.electronAPI`, IPC, Desktop-Workspace oder `electron:pwcli` genutzt wird, ist `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` die Projekt-Referenz. Normales Browser-Playwright bleibt für Web-URL-Flows; Electron-Playwright-CLI ist für echte Electron-Fenster und Desktop-IPC.
+- **Playwright-CLI + FSA-MCP-Helper (PFLICHT bei Browser-Dateisystemproblemen):** Wenn Playwright CLI an File System Access API, Ordner-Picker, Chrome-`Zulassen`-Prompt, Workspace-Restore, IndexedDB/FSA-Persistierung oder `clientToolExecutorActive` hängt, nicht blind Timings/Fokus/Clicks drehen. Nutze den lokalen Helper `pnpm run mcp:notedrill-fsa-helper` bzw. `scripts/mcp/notedrill-fsa-helper.ts` zusammen mit dem Runner `scripts/e2e/browser-real-gemini-fsa-smoke.ts`. Der stabile Ansatz ist ein isoliertes Chrome-Testprofil mit geseedeten `Default/Preferences` für exakt Origin + Zielordner; echter Erfolg zählt erst bei `reloadWorkspaceRestored=true` und `clientToolExecutorActive=true`. Details/Fallstricke stehen in `docs/chat/tasks/2026-06-02-mcp-helper-fsa-architecture-plan.md` und `shared-docs/agents/agent-browser/notedrill-playwright-findings.md`.
+- **Browser-Findings sofort sichern (PFLICHT):** Neue Erkenntnisse aus Playwright-Läufen, native Dialoggrenzen, Browser-Permission-Probleme, Search-Param-Hinweise, Login-/API-Key-Setups und gescheiterte Ansätze sofort in der aktiven Task-/Masterplanung notieren, bevor weiter experimentiert wird. Wenn das Finding dauerhaft relevant ist, zusätzlich `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` aktualisieren.
 - **Keine automatischen Gameplay-/Werte-Beweise (PFLICHT):** Smoke-Skripte, Debug-Zahlen, Serverwerte, Ingame-Recorder, Browser-Checks oder selbst gebaute Prüfmechanismen dürfen nicht mehr als Beweis gelten, dass Gameplay gut ist. Sie dürfen nur bei ausdrücklichem User-Auftrag laufen. Produktgefühl, Lesbarkeit, AOE-Sinn, Trefferfeedback, Sound, Vibration und Despawn-Verständlichkeit prüft der User manuell.
 
 - **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, UI-Smoke- oder manuellen UI-Checks automatisch starten. Auch Frontend-/Layout- und Mock-Abgleiche laufen nur, wenn der User es klar befiehlt, z. B. „führe einen UI-Test aus“. Dann Mock-Screenshots mit deinem gebauten Änderungen/Frontend vergleichen. Ohne Befehl wird der UI-Check als manuelles Gate dokumentiert.
@@ -67,6 +71,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 - **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren) und Todos phasenweise abhaken, nach jeder Phase, ohen Stopp
 - **In Task/Todo-Datei tracken** mit Kontextinformationen, erledigten To-dos, offenen To-dos und nächster Phase
 - **Nach jeder Phase/Todo:** Planung updaten, Todo abhaken und nächste Phase direkt weiter umsetzen
+- **Bei Browser-/Playwright-Goals nach jedem echten Befund:** Task-/Masterplanung aktualisieren mit Befehl/URL, Browsermodus, Seed/Search Params, Screenshot-/Failure-Artefakt, Root Cause, nicht erneut zu wiederholendem Fehlweg und nächstem stabilen Ansatz. Das gilt auch mitten im Goal und besonders vor Context-Condensing.
 - **Nach allen Phasen/Todo:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen und phasenweise verbessern und todos nach jeder Phase abhaken (falls noch nicht behoben)
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
@@ -372,12 +377,13 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
     1. Entweder prüfen ob globale css Klassen existieren/theming-system, wo Farben schon dran sind z.B: `[data-theme="default"] { --background: 0 0% 100%; --foreground: 0 0% 3.9%; --card: 0 0% 100%;...}`
     2. ODER: `bg-[#0c0f1a]` - immer volle Opacity!
       - Achte hier auf eine hochwertige Farbpalette, minimalistisch, dunkel und lightmode orientiert - schaue hierzu unbedingt `\shared-docs\farbpalette\minimal-styling-template.css`
+- **Dialog-Schärfe statt grundlosem Blur (PFLICHT):** Dichte Lese-, API-Key-, Modell-, Experten- und Einstellungsdialoge dürfen keinen starken `backdrop-filter` nutzen. Vermeide dort `gfx-backdrop-blur-*`, `gfx-blur-backdrop-*`, `backdrop-blur-*`, `bg-blur*` und `nd-dialog-overlay-blur`, außer eine kurze Design-/Performance-Begründung steht direkt im Task und Electron zeigt scharfen Text. Nutze für solche Dialoge solide Flächen wie `bg-background`, `bg-card` oder `bg-surface-*`.
 - **Dark/Light Mode + Surface-Skala:** Hintergründe schwarz/grau halten (`#000`, `#0A0A0A`, `#111`, `#1A1A1A`, `#222`, `#2A2A2A`, `#333`) und im Lightmode sauber spiegeln; Akzent-Themes ändern nur Primary/Secondary, nie die Surface-Skala.
 - **Mobile-First Space Efficiency:** UI kompakt halten, Breite/Höhe nutzen, seltene Optionen in Popover/Dropdown/Collapsible/Dialog verstecken.
 - **Wiederverwendbarkeit-First:** Dialoge/Komponenten mit Modi, Callback-Props und vorhandenen Patterns bauen.
 - **Recherche vor Rumprobieren (KRITISCH!):** Stacktrace lesen → Docs/GitHub Issues prüfen → Root Cause verstehen → erst dann fixen. Bei demselben Fehler zweimal: 3-5 Lösungswege recherchieren, effizientesten umsetzen.
 - **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von Radix/Shadcn manuell überschreiben → vorhandene Variants nutzen (`size="sm"`, `size="lg"`) oder Variant-System erweitern.
-- **Rounded/Floating UI:** Karten und Sektions-Container `rounded-2xl` bis `rounded-4xl`, bevorzugt `rounded-3xl`; Floating über subtile Shadows/Backdrop-Blur, nicht harte Ecken.
+- **Rounded/Floating UI:** Karten und Sektions-Container `rounded-2xl` bis `rounded-4xl`, bevorzugt `rounded-3xl`; Floating über subtile Shadows und solide Flächen. Backdrop-Blur nur bewusst und sparsam einsetzen, nicht in dichten Lesedialogen.
 - **Icons/Farben:** Icons in Buttons/Toolbars nutzen; Bedeutungsfarben verwenden (Speichern/Start/Erfolg = Success, Abbrechen/Gefahr = Danger).
 - **Icon-First + Text nur wenn nötig (PFLICHT):** In dichten Toolbars/Sidebars primär mit Icons arbeiten; sichtbare Labels nur bei wirklich nötiger Erklärung. Jeder Icon-Button braucht `aria-label` + Tooltip. Eindeutige Aktions-Icons sind Pflicht (z. B. `X` für „Schließen“, korrektes Mehrfachauswahl-Icon statt Plus-Symbol).
 - **Kompakte Control-Layouts (PFLICHT):** Inputs/Filter dürfen nicht unnötig eine ganze Zeile blockieren. Platz in mehreren Zeilen/Spalten nutzen (z. B. 2er-Grid), kurze Werte als kompakte Felder darstellen und Langlabels wie „Stunden“/„Textgröße“ in Tooltip oder Kontexttext auslagern.
@@ -412,6 +418,8 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 | Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
 | DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
 | Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
+| NoteDrill Playwright-Findings | `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` |
+| NoteDrill Electron Playwright CLI | `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` |
 
 ### Qualitäts-Kriterien (bei jeder Planung & Implementierung prüfen)
 - ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
@@ -429,6 +437,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Keine automatischen Multiplayer-Smokes, Serverwert-Beweise oder selbst gebauten Prüfmechanismen
 - Commite nach Abschluss aller Phasen/Todos aus einer Masterplanung mit schöner Commit message
 - Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max 3 Hauptkomponentenpfade
+- Bei Browser-/Playwright-Arbeit: offiziellen Playwright-Skill + `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` lesen; bei Electron zusätzlich `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md`; neue Findings sofort in Task/Masterplan sichern
 - WebFetch/Websuche sinnvoll nutzen, besonders bei wiederholten Fehlern oder unsicherer externer Doku.
 
 ## Erzeuge Signaltöne anhand deines Fortschritts
@@ -449,4 +458,6 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen.
 - Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
+- Bei Browser-/Playwright-Fehlern nicht auf Gedächtnis vertrauen: Findings in Task/Masterplan und bei Wiederverwendung in `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` schreiben.
 - Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
+- Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!
