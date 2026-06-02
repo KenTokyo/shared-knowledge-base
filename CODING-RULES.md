@@ -451,4 +451,4 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
   - Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
 - Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
-- Wenn du denkst, du bist fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!
+- Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!
