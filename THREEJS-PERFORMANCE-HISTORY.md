@@ -45,6 +45,19 @@
 
 ---
 
+## 3a. Shrine-Instancing und Dirty-Uploads
+
+**Vorfall-Merkhilfe 2026-05-28:**
+- **Symptom:** `No Shrines` brachte im echten Browser ca. 100 bis 150 FPS zurück; `No Runtime` und `No Text` erklärten den Drop kaum.
+- **Ursache:** Shrine-Visuals waren zwar schon teilweise instanced, aber noch in mehrere Mesh-/Material-Familien und Letter-Materialien gesplittet. Außerdem wurden Matrix-, Farb- und Alpha-Daten breiter hochgeladen als nötig.
+- **Fix:** Torii-Boxen in ein farbiges `InstancedMesh` gebündelt, A/B/C/D-Letter in einen Canvas-Atlas gelegt, Gate/Core/Fill/Letter-Daten mit Dirty-Signaturen geschützt. Ring-Rotation läuft weiter, weil sie sichtbares Shrine-Signal ist.
+- **Messwert aus User-Gate:** Der Nachfix brachte ca. 150 FPS zurück.
+- **Regel:** Nicht nur "InstancedMesh verwenden", sondern Renderer-Familie + Atlas/Texture-Array + Dirty-Signatur zusammen denken.
+- **Nicht tun:** Mehrere fast gleiche Materialien, Mini-Texturen oder Mesh-Familien behalten und nur hoffen, dass Instancing allein reicht.
+- **Task:** `docs/performance/tasks/2026-05-28-shrine-labels-performance-followup.md`
+
+---
+
 ## 4. Voxel-Terrain, Map und Town
 
 - **Terrain-Regel:** Dieses Projekt darf nicht zu Full-Box-Voxel als Default zurückfallen.

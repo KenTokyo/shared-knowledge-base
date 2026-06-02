@@ -357,6 +357,7 @@ db/
 LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 - **WebGL-Partikel-Merkhilfe:** Wenn Slashes sichtbar sind, aber Partikel/Sparks trotz grünem Pool unsichtbar oder schwarz bleiben, zuerst `shared-docs/THREEJS-RULES.md` Abschnitt 8 prüfen. Nicht weiter Pool/Größe drehen. Wahrscheinlicher ist der Material-/Farbpfad (`meshBasicMaterial + vertexColors + InstancedMesh.setColorAt`). Stabiler WebGL-Fix: kleiner Shader, der `instanceColor` direkt liest.
+- **Globale Renderer-Familien-Regel (2026-05-29, PFLICHT):** Jedes neue oder überarbeitete 3D-Feature muss zuerst nach diesem Prinzip geplant werden: gleiche Geometrie über `InstancedMesh`, unterschiedliche statische Geometrie mit gleichem Material über `BatchedMesh`/Merge prüfen, viele kleine Text-/Icon-/Decal-Varianten über Atlas/Texture-Array lösen. Matrix-, Farb-, Alpha- und UV-Daten nur mit Dirty-Signatur hochladen. Das gilt global für VFX, Deko, Props, Gegnerteile, Projektile, Telegraphs, Dungeon-/Arena-Visuals, Map-Details, UI-im-3D-Raum und alle wiederholten Mesh-/Material-Familien. Der 150-FPS-Schrein-Vorfall ist nur das Beispiel, nicht der Name der Regel.
 
 ### Multiplayer, Colyseus & Kampfgefühl
 - **Colyseus-Research vor Multiplayer-Fixes (PFLICHT):** Bei Sync-, Snapshot-, HP-, AOE-, Despawn-, Hitfeedback-, Animations- oder Serverautoritätsproblemen zuerst `.agents/skills/starwards-colyseus/SKILL.md`, offizielle Colyseus-Doku und passende Referenz-Repositories prüfen. Nicht weiter eigene Prüfwerte erfinden.
@@ -456,7 +457,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - React Loop-Stopper aus Abschnitt 6 anwenden: idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
 - Orchestrator-Regeln aus Abschnitt 3 anwenden: Phase dokumentieren, Mini-Check, korrekter Endstatus; bei manuellen UI-/Gameplay-Checks immer `ALL_PHASES_COMPLETE`.
 - UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen.
-- Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
+  - Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
 - Bei Browser-/Playwright-Fehlern nicht auf Gedächtnis vertrauen: Findings in Task/Masterplan und bei Wiederverwendung in `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` schreiben.
 - Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
