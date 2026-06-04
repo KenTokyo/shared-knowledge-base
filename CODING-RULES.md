@@ -430,6 +430,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 ### Quick Checklist
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
+- Gesichtselement-Regel im ganzen Spiel: Nur Augen sind erlaubt. Keine Münder, Gesichtslinien, Faceplates, Visor-/Maskenstreifen, Stirn-Gems oder andere gesichtsähnliche Markierungen an Charakteren/Gegnern.
 - Mobile-First
 - Max 700 lines/file
 - Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-Tests ohne klaren User-Befehl
@@ -451,8 +452,9 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 # Wichtige Regeln / Zusammenfassung
 **NIEMALS automatisch `pnpm run dev` oder `pnpm dev` starten!**
-- Der Dev-Server läuft oft bereits im Hintergrund
+- Der Dev-Server läuft oft bereits im Hintergrund (zu 90% der Fälle)
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
+- Sollte der wirklich nicht laufen, dann darfst du den starten
 - Bei vom User befohlenen UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
 - Halte dich an die Design/Layout Regeln, möglicherweise tailwind css klassen, globals.css oder in DESIGN.md reinschauen, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
 
