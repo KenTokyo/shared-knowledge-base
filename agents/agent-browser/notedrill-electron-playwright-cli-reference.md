@@ -27,6 +27,7 @@ Für Electron nicht direkt `playwright-cli` verwenden. Für NoteDrill-Electron i
 | `.playwright/cli.config.json` | Electron-Launch-Konfiguration für NoteDrill. |
 | `node_modules/electron-playwright-cli/README.md` | Installierte Paket-Doku. Erklärt Standardbefehle plus Electron-Spezialbefehle. |
 | `node_modules/electron-playwright-cli/skills/playwright-cli/SKILL.md` | Vom Paket mitgelieferte Skill-Doku. Nur Referenz, nicht die NoteDrill-Projektregel. |
+| `docs/ai-testability/ai-playwright-testability-guide.md` | Stabiler Locator- und Accessibility-Vertrag für KI-/Playwright-Oberflächentests. |
 | `docs/electron-playwright/electron-playwright-overview.md` | NoteDrill-Überblick zur Integration und zu Artefakten. |
 | `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` | Projektspezifische Browser-/Playwright-Findings. |
 
@@ -43,6 +44,7 @@ pnpm run electron:pwcli -- --help
 | Web-App im Browser testen, URL öffnen, Browser-FSA prüfen | Offizieller Playwright-Skill und normales `playwright-cli` |
 | Electron-Desktop-App öffnen, KI-Chat in Electron bedienen, IPC oder `window.electronAPI` prüfen | `pnpm run electron:pwcli -- <befehl>` |
 | Native Chrome-Ordnerfreigabe, File System Access API, echter Browser-Permission-Grant | Browser-FSA-Runner und `notedrill-playwright-findings.md` |
+| Native Electron-Ordnerdialoge außerhalb des DOM, z. B. `Workspace-Ordner auswählen` | `pnpm run mcp:notedrill-fsa-helper` mit `notedrill_electron_list_native_folder_dialogs` und `notedrill_electron_select_workspace_folder`; direkter Skriptfallback: `scripts/e2e/electron-select-workspace-folder.ps1` |
 | Wiederverwendbare Regressionstestdatei schreiben | Nur wenn der User ausdrücklich Testdateien verlangt |
 
 Merksatz: Browser-Playwright steuert Webseiten. Electron-Playwright steuert die Desktop-App.
@@ -77,6 +79,14 @@ pnpm run electron:pwcli -- electron_evaluate "electron => electron.app.getName()
 pnpm run electron:pwcli -- electron_windows
 pnpm run electron:pwcli -- close
 ```
+
+MCP-Stdio-Smoke für den FSA-/Electron-Dialog-Helper:
+
+```powershell
+cmd /c node_modules\.bin\tsx.cmd scripts\mcp\notedrill-fsa-helper.ts
+```
+
+Danach per JSON-RPC `initialize`, `notifications/initialized` und `tools/list` senden. Erwartete Electron-Tools: `notedrill_electron_list_native_folder_dialogs` und `notedrill_electron_select_workspace_folder`. Für diesen manuellen Stdio-Smoke nicht `pnpm run mcp:notedrill-fsa-helper` verwenden, weil Paketmanager-Ausgaben auf `stdout` das MCP-Protokoll stören können.
 
 Für den vorhandenen NoteDrill-Dev-Port:
 
@@ -134,17 +144,21 @@ Wenn Help-Ausgabe und Paket-Doku voneinander abweichen, zuerst `pnpm run electro
 1. Offiziellen Playwright-Skill lesen: `C:\Users\PC1\.codex\skills\playwright\SKILL.md`.
 2. NoteDrill-Findings lesen: `shared-docs/agents/agent-browser/notedrill-playwright-findings.md`.
 3. Bei Electron zusätzlich diese Datei lesen.
-4. Prüfen, ob die App oder der Dev-Server schon läuft, besonders Port `3005`.
-5. Mit `pnpm run electron:pwcli:snapshot` starten.
-6. Nur frische Refs aus dem neuesten Snapshot verwenden.
-7. Nach Navigation, Dialogen, Tabwechseln oder großen UI-Änderungen erneut snapshotten.
-8. Neue Findings sofort in der aktiven Task- oder Masterplanung dokumentieren.
+4. Für Locator-/Accessibility-Fragen die Testbarkeits-Guideline lesen: `docs/ai-testability/ai-playwright-testability-guide.md`.
+5. Prüfen, ob die App oder der Dev-Server schon läuft, besonders Port `3005`.
+6. Mit `pnpm run electron:pwcli:snapshot` starten.
+7. Nur frische Refs aus dem neuesten Snapshot verwenden.
+8. Nach Navigation, Dialogen, Tabwechseln oder großen UI-Änderungen erneut snapshotten.
+9. Neue Findings sofort in der aktiven Task- oder Masterplanung dokumentieren.
 
 ## Wichtige Guardrails
 
 - Keine UI-, Browser-, Screenshot- oder Playwright-Checks ohne klaren User-Befehl starten.
 - Keine Refs raten. Wenn ein Ref fehlt oder alt wirkt, neu snapshotten.
 - Kein globales Windows-`SendKeys` für native Dialoge verwenden.
+- Native Electron-Ordnerdialoge gehören nicht zum Electron-DOM. Nicht nach Snapshot-Refs für `Workspace-Ordner auswählen` suchen und keine Koordinatenklicks wiederholen. Erst `notedrill_electron_list_native_folder_dialogs` aus dem FSA-MCP-Helper nutzen, dann nur bei genau einem passenden `#32770`-Dialog aus dem NoteDrill-`electron.exe`-Prozess bestätigen.
+- Wenn der native Dialog kein Pfad-Eingabefeld anbietet, ist `confirm-current` nur erlaubt, wenn die Adresszeile oder eine eindeutige Nutzerangabe zeigt, dass der aktuelle sichtbare Ordner der Zielordner ist.
+- Für lokale E2E-Läufe kann der nicht paketierte Electron-Dialoghandler mit `ND_ELECTRON_TEST_WORKSPACE_PATH` einen geprüften Ordner zurückgeben. Das ist ein Testhook; er ersetzt nicht den normalen Produktdialog.
 - Für langen Text in `run-code` auf Windows vorsichtig sein: kleine Snippets direkt, große Inhalte lieber über Base64, Datei-Input, fokussierten Editor oder `keyboard.insertText` einspielen.
 - Der NoteDrill-Wrapper startet `node_modules/electron-playwright-cli/playwright-cli.js` direkt über Node, damit Windows-Argumente stabil ankommen.
 - `electron-playwright-cli` schreibt eigene Artefakte unter `.playwright-cli/`. Ein Screenshot mit `--filename=output/playwright/electron.png` landet dadurch effektiv unter `.playwright-cli/output/playwright/electron.png`.
