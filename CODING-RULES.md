@@ -359,6 +359,8 @@ db/
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
 
 ### 3D, Three.js & WebGPU
+
+- **Instancing-Layering-Pflicht (2026-06-06, PFLICHT):** Wiederholte Einzelmeshes in Three.js/R3F sind als Performance-Fehler zu melden. Keine Map-, Arena-, Voxel-, Deko-, VFX-, Gegnerteil-, Projectile-, Shrine- oder UI-im-3D-Raum-Serie darf als viele `.map(() => <mesh>)`-Einzelobjekte fertig bleiben. Standard ist: vorberechnete Instanzdaten (Position, Rotation, Scale, Farbe, Alpha), wenige stabile `InstancedMesh`-/Batched-/Atlas-Layer, Dirty-Uploads und begruendete Ausnahmen nur fuer echte Unikate oder sehr kleine Serien. Sunfall-Kolosseum hat gezeigt: Einzelmesh-Serien + viele echte Lights laggen massiv; Instancing rettet die Map.
 LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 - **WebGL-Partikel-Merkhilfe:** Wenn Slashes sichtbar sind, aber Partikel/Sparks trotz grünem Pool unsichtbar oder schwarz bleiben, zuerst `shared-docs/THREEJS-RULES.md` Abschnitt 8 prüfen. Nicht weiter Pool/Größe drehen. Wahrscheinlicher ist der Material-/Farbpfad (`meshBasicMaterial + vertexColors + InstancedMesh.setColorAt`). Stabiler WebGL-Fix: kleiner Shader, der `instanceColor` direkt liest.

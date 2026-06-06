@@ -33,6 +33,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 2. Pflichtregeln
 
+- **MUSS: Wiederholte Einzelmeshes sind ein Performance-Fehler.** Serien aus gleichen oder aehnlichen Meshes duerfen nicht als `.map(() => <mesh ...>)` oder viele kleine R3F-Komponenten gebaut bleiben. Sie muessen als `InstancedMesh`, Instanz-Layer, Batched/Merged Geometry, Atlas-/Texture-Array-Layer oder Pool umgesetzt werden. Einzelmeshes sind nur fuer echte Unikate oder sehr kleine, begruendete Ausnahmen erlaubt.
 - **MUSS: FPS allein reicht nie.** Wenn Performance mit vorhandenen Daten oder User-Auftrag bewertet wird, nicht nur FPS nutzen, sondern auch `frameMsAvg`, `frameMsP95`, `frameMsWorst`, Draw Calls, Triangles, Geometries, Texturen, aktive `useFrame`-Systeme und sichtbare Stotterer einordnen.
 - **MUSS: Vorhandene Evidenz nutzen, nicht automatisch messen.** Wenn der User Messwerte, Logs, Screenshots oder Recording-Pfade liefert, Szene, Klasse, Skill, Gegnerzahl, Kamera, Zoom, Backend, Browser und aktive Debug-Schalter notieren. Ohne ausdrücklichen Auftrag keine neuen Messläufe starten.
 - **MUSS: Ursache trennen.** Renderlast, CPU-Loop, React-State, `useFrame`, VFX, Audio, Animation, Gegnerlogik, Terrain/Map, PostFX und Input getrennt betrachten.
@@ -104,6 +105,11 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 6. Instancing, Batching, Dirty-Signaturen
 
+- **MUSS: Instancing-Layering ist Default fuer wiederholte 3D-Details.** Maps, Arenen, Voxel-Deko, Bodenplatten, Fugen, Schutt, Mauern, Zinnen, Kisten, Banner, Portale, Props, Gegnerteile, Telegraphs, Shrine-Visuals, Skill-VFX und UI-im-3D-Raum werden als Renderer-/Instanz-Familien geplant. Viele kleine Einzelmeshes sind kein fertiger Zustand, sondern ein zu meldender Performance-Bug.
+- **MUSS: Serien vor dem Rendern in Daten umwandeln.** Wiederholte Boxen/Planes/Ringe erst als vorberechnete Instanzdaten beschreiben: Position, Rotation, Scale, Farbe, Alpha, Materialfamilie und optional Layer/RenderOrder. Danach wenige stabile Renderer-Komponenten rendern. Die Render-Komponente darf nicht hunderte kleine React-Subtrees erzeugen.
+- **MUSS: Gleiche Geometrie + gleiche Materialfamilie zusammenfassen.** Farbvarianten laufen bevorzugt ueber `setColorAt`, Instancing-Attribute, Atlas/Texture-ID oder gemeinsame Shaderfamilie. Wenn ein Detail nur durch Farbe/Alpha/Scale variiert, ist ein eigenes Mesh pro Detail verboten.
+- **MUSS: Instancing-Helfer lokal oder global wiederverwenden.** Wenn ein Bereich viele statische Boxen/Platten/Props braucht, einen kleinen Instanz-Layer oder vorhandenen Renderer-Familien-Helfer nutzen. Datenaufbereitung auslagern, damit Hauptkomponenten unter der Zeilengrenze bleiben und nicht wieder zu grossen Mesh-Listen werden.
+- **MUSS: Einzelmesh-Serien im Review sofort melden.** Warnsignale: `Array.from(...).map(... <mesh>)`, viele kleine Komponenten mit je 1-5 Meshes, Deko-Funktionen wie `WallSegment`, `FloorPatch`, `Crate`, `Rubble`, `Torch`, die dutzendfach laufen, oder viele echte `pointLight`s in einer Map. Bei Treffer nicht nur optimieren, sondern im Task als Root Cause dokumentieren.
 - **MUSS: Instancing nutzen, wenn viele Objekte gleich sind.** Gute Kandidaten: Gegnerteile, Partikel, Ground Decals, Damage Numbers, Slashes, Trails, Tiles, Deko, Projektile, Remote-VFX.
 - **MUSS: Auto-Instancing-Kandidaten sammeln.** Bei Maps, Kitbash-Props, Gegnerteilen, Deko und VFX-Familien nicht nur einzelne `InstancedMesh`-Fixes bauen, sondern eine Pipeline prüfen, die gleiche Geometrie + gleiches Material automatisch in Rendererfamilien gruppiert.
 - **MUSS: Texturwechsel reduzieren.** Wenn viele kleine Texturen, Decals, Sprite-Masks, Icons, Tile-Varianten oder Materialvarianten Draw Calls aufsplitten, zuerst Atlas, Spritesheet, `DataArrayTexture`/Texture-Array oder Material-ID-Attribute prüfen.
@@ -120,6 +126,15 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **CHECK: Leere Instanced-Pools schlafen lassen.** Bei `count=0` nach Möglichkeit `visible=false` setzen und keine Matrix-/Color-Uploads als dirty markieren.
 - **CHECK: CPU-Kosten gegen Renderkosten trennen.** Wenn Kosten vom CPU-Update kommen, reicht Draw-Call-Reduktion allein nicht.
 - **CHECK: Typed-Array-/Worker-/WASM-Hotpaths nur bei echtem CPU-Bottleneck.** Erst Algorithmus, Datenlayout und Allokationen reparieren; AssemblyScript/WASM lohnt sich nur für isolierte, oft laufende Module wie Culling, Matrix-Updates, Sortierung oder Spatial Queries.
+
+---
+
+**Vorfall-Merkhilfe (2026-06-06, PvP Sunfall-Kolosseum):**
+- Sichtbares Problem: Die neue Kolosseum-Map sah besser aus, laggte aber extrem stark.
+- Ursache: Viele Bodenplatten, Terrassen, Wandsegmente, Schutt- und Detailboxen wurden als Einzelmeshes/kleine React-Komponenten gerendert. Dazu kamen 24 echte Fackel-`pointLight`s.
+- Fix: Statische Voxel-Serien wurden in vorberechnete Instanzdaten umgebaut und als wenige `InstancedMesh`-Layer gerendert. Die Fackel-Lichter wurden von 24 auf 4 gemeinsame Lichter reduziert; sichtbare Glow-Meshes blieben erhalten.
+- Wirkung: Bodenpatches ca. 864 Einzelmeshes -> 3 Instanced-Layer, Terrassen ca. 960 -> 4 Layer, Wandsegmente ca. 240 -> 5 Layer, Detail-Deko -> 17 Layer.
+- Pflicht-Learning: Schoene Voxel-Details zuerst als Daten + Instanz-Layer bauen. Wenn eine Map durch Details laggt, nicht Details loeschen, sondern Einzelmesh-Serien, Material-Splits und echte Light-Massen instancen/batchen/reduzieren.
 
 ---
 
@@ -236,6 +251,8 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 14. Review-Checkliste
 
+- Gibt es wiederholte `.map(() => <mesh>)`-Serien, die als Instanced-/Batched-Layer gebaut werden muessen?
+- Sind vorberechnete Instanzdaten fuer statische Voxel-/Map-/Deko-Serien vorhanden?
 - Wurde der passende Scope-Lesepfad genutzt?
 - Gibt es neue `useFrame`-Stellen?
 - Gibt es neue transparente/Additive/DoubleSide-Serien?
