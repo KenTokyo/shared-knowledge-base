@@ -33,14 +33,18 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 2. Pflichtregeln
 
+- **MUSS: Wiederholte Einzelmeshes sind ein Performance-Fehler.** Serien aus gleichen oder aehnlichen Meshes duerfen nicht als `.map(() => <mesh ...>)` oder viele kleine R3F-Komponenten gebaut bleiben. Sie muessen als `InstancedMesh`, Instanz-Layer, Batched/Merged Geometry, Atlas-/Texture-Array-Layer oder Pool umgesetzt werden. Einzelmeshes sind nur fuer echte Unikate oder sehr kleine, begruendete Ausnahmen erlaubt.
 - **MUSS: FPS allein reicht nie.** Wenn Performance mit vorhandenen Daten oder User-Auftrag bewertet wird, nicht nur FPS nutzen, sondern auch `frameMsAvg`, `frameMsP95`, `frameMsWorst`, Draw Calls, Triangles, Geometries, Texturen, aktive `useFrame`-Systeme und sichtbare Stotterer einordnen.
 - **MUSS: Vorhandene Evidenz nutzen, nicht automatisch messen.** Wenn der User Messwerte, Logs, Screenshots oder Recording-Pfade liefert, Szene, Klasse, Skill, Gegnerzahl, Kamera, Zoom, Backend, Browser und aktive Debug-Schalter notieren. Ohne ausdrücklichen Auftrag keine neuen Messläufe starten.
 - **MUSS: Ursache trennen.** Renderlast, CPU-Loop, React-State, `useFrame`, VFX, Audio, Animation, Gegnerlogik, Terrain/Map, PostFX und Input getrennt betrachten.
 - **MUSS: Gameplay und Visuals trennen.** Eine visuelle Reduktion darf keine Hitbox, keinen Damage, keine Boss-Mechanik und kein Skill-Timing entfernen.
 - **MUSS: `useFrame` bleibt billig.** Kein häufiges React-`setState`, keine breiten Store-Subscriptions, keine Objektmassen pro Frame neu erzeugen.
+- **MUSS: Skill-Runtimes schlafen im Idle.** VFX-/Afterimage-/Aura-/Skill-Renderer dürfen nicht dauerhaft pro Frame Arbeit machen, wenn kein aktiver Skill, keine sichtbaren Instanzen und kein laufender Timer existieren. Inaktive Pools setzen `visible=false`, `count=0` und überspringen Matrix-/Color-Uploads.
 - **MUSS: Schwere R3F-Objekte stabil halten.** Materialien, Geometrien, Lights, Shader und PostFX nicht unnötig mounten/unmounten.
 - **MUSS: Gleiche Dinge batchen oder instancen.** Gegnerteile, Partikel, Decals, Slashes, Tiles und Remote-VFX über wenige Renderer laufen lassen.
 - **MUSS: VFX budgetieren statt löschen.** Wichtige Treffer bleiben sichtbar; entfernte, doppelte oder kleine Neben-Effekte dürfen reduziert werden.
+- **MUSS: Skill-Cast-VFX hart budgetieren.** Slashes, Ground-Decals, Partikel, Damage Numbers, Afterimages und HitFX brauchen pro Skill/Fenster feste Caps, Pooling und Drop-/Prioritätslogik. Ein Skill-Cast darf keine Listen erzeugen, die nach Hitstop oder vielen Gegnern dauerhaft teuer bleiben.
+- **MUSS: Instanced-Layer cullbar halten.** Statische Map-/Arena-/VFX-Layer brauchen korrekte Bounding-Sphere/Box und normales Frustum-Culling. `frustumCulled={false}` ist nur für begründete dynamische Sonderfälle erlaubt und darf nicht pauschal auf große statische Instanced-Layer gesetzt werden.
 - **MUSS: LOD und View-Culling bei großen Szenen prüfen.** Weit entfernte Objekte einfacher rendern und Dinge außerhalb der Kamera, Relevanzdistanz oder Sichtlinie früh auslassen.
 - **MUSS: Terrain nicht als Full-Box-Default bauen.** Top-Faces, Side-Skirts, Chunking, Culling und persistente Chunks nutzen.
 - **MUSS: Keine automatischen 3D-FPS-Beweise aus Headless-Browsern.** Echte FPS brauchen echten Browser/GPU oder User-Messwerte.
@@ -104,6 +108,11 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 6. Instancing, Batching, Dirty-Signaturen
 
+- **MUSS: Instancing-Layering ist Default fuer wiederholte 3D-Details.** Maps, Arenen, Voxel-Deko, Bodenplatten, Fugen, Schutt, Mauern, Zinnen, Kisten, Banner, Portale, Props, Gegnerteile, Telegraphs, Shrine-Visuals, Skill-VFX und UI-im-3D-Raum werden als Renderer-/Instanz-Familien geplant. Viele kleine Einzelmeshes sind kein fertiger Zustand, sondern ein zu meldender Performance-Bug.
+- **MUSS: Serien vor dem Rendern in Daten umwandeln.** Wiederholte Boxen/Planes/Ringe erst als vorberechnete Instanzdaten beschreiben: Position, Rotation, Scale, Farbe, Alpha, Materialfamilie und optional Layer/RenderOrder. Danach wenige stabile Renderer-Komponenten rendern. Die Render-Komponente darf nicht hunderte kleine React-Subtrees erzeugen.
+- **MUSS: Gleiche Geometrie + gleiche Materialfamilie zusammenfassen.** Farbvarianten laufen bevorzugt ueber `setColorAt`, Instancing-Attribute, Atlas/Texture-ID oder gemeinsame Shaderfamilie. Wenn ein Detail nur durch Farbe/Alpha/Scale variiert, ist ein eigenes Mesh pro Detail verboten.
+- **MUSS: Instancing-Helfer lokal oder global wiederverwenden.** Wenn ein Bereich viele statische Boxen/Platten/Props braucht, einen kleinen Instanz-Layer oder vorhandenen Renderer-Familien-Helfer nutzen. Datenaufbereitung auslagern, damit Hauptkomponenten unter der Zeilengrenze bleiben und nicht wieder zu grossen Mesh-Listen werden.
+- **MUSS: Einzelmesh-Serien im Review sofort melden.** Warnsignale: `Array.from(...).map(... <mesh>)`, viele kleine Komponenten mit je 1-5 Meshes, Deko-Funktionen wie `WallSegment`, `FloorPatch`, `Crate`, `Rubble`, `Torch`, die dutzendfach laufen, oder viele echte `pointLight`s in einer Map. Bei Treffer nicht nur optimieren, sondern im Task als Root Cause dokumentieren.
 - **MUSS: Instancing nutzen, wenn viele Objekte gleich sind.** Gute Kandidaten: Gegnerteile, Partikel, Ground Decals, Damage Numbers, Slashes, Trails, Tiles, Deko, Projektile, Remote-VFX.
 - **MUSS: Auto-Instancing-Kandidaten sammeln.** Bei Maps, Kitbash-Props, Gegnerteilen, Deko und VFX-Familien nicht nur einzelne `InstancedMesh`-Fixes bauen, sondern eine Pipeline prüfen, die gleiche Geometrie + gleiches Material automatisch in Rendererfamilien gruppiert.
 - **MUSS: Texturwechsel reduzieren.** Wenn viele kleine Texturen, Decals, Sprite-Masks, Icons, Tile-Varianten oder Materialvarianten Draw Calls aufsplitten, zuerst Atlas, Spritesheet, `DataArrayTexture`/Texture-Array oder Material-ID-Attribute prüfen.
@@ -123,12 +132,30 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ---
 
+**Vorfall-Merkhilfe (2026-06-06, PvP Sunfall-Kolosseum):**
+- Sichtbares Problem: Die neue Kolosseum-Map sah besser aus, laggte aber extrem stark.
+- Ursache: Viele Bodenplatten, Terrassen, Wandsegmente, Schutt- und Detailboxen wurden als Einzelmeshes/kleine React-Komponenten gerendert. Dazu kamen 24 echte Fackel-`pointLight`s.
+- Fix: Statische Voxel-Serien wurden in vorberechnete Instanzdaten umgebaut und als wenige `InstancedMesh`-Layer gerendert. Die Fackel-Lichter wurden von 24 auf 4 gemeinsame Lichter reduziert; sichtbare Glow-Meshes blieben erhalten.
+- Wirkung: Bodenpatches ca. 864 Einzelmeshes -> 3 Instanced-Layer, Terrassen ca. 960 -> 4 Layer, Wandsegmente ca. 240 -> 5 Layer, Detail-Deko -> 17 Layer.
+- Pflicht-Learning: Schoene Voxel-Details zuerst als Daten + Instanz-Layer bauen. Wenn eine Map durch Details laggt, nicht Details loeschen, sondern Einzelmesh-Serien, Material-Splits und echte Light-Massen instancen/batchen/reduzieren.
+
+---
+
+**Vorfall-Merkhilfe (2026-06-07, Doppelschwert-Skill + Sunfall):**
+- Sichtbares Problem: Nach Skill-Nutzung fiel die Szene laut User ungefähr von `80 FPS` auf `20 FPS`; nach dem Fix waren die Lags verschwunden.
+- Ursache: Mehrere kleine Kostenstellen lagen zusammen: Doppelschwert-Skill-VFX konnten Slash-/Decal-/Partikel-Last stapeln, ein DualSword-Afterimage-Pfad lief auch ohne sinnvolle Instanzen pro Frame und Sunfall-Instanced-Layer waren durch pauschales `frustumCulled={false}` immer renderrelevant.
+- Fix: Skill-VFX mit harten Caps budgetieren, leere Afterimage-/VFX-Runtimes im Idle schlafen legen, transparente Aura mit `forceSinglePass` prüfen und statische Instanced-Layer mit korrekten Bounds wieder cullbar machen.
+- Pflicht-Learning: Bei "Lag erst nach Skill" immer Kombination aus Skill-Caps, VFX-Lifecycle, `useFrame`-Idle-Schlaf, Hitstop-Lebenszeit und Map-/Arena-Culling prüfen. Nicht nur eine Zahl drehen und nicht Effekte blind löschen.
+
+---
+
 ## 7. VFX-Architektur
 
 - **MUSS: Kosten skalieren mit aktueller Effektlast, nicht mit Anzahl eingebauter Klassen.**
 - **MUSS: Skill erzeugt Descriptor/Event, nicht direkt viele globale Renderobjekte.**
 - **MUSS: Zentrale Queue nutzen.** VFX-Events sammeln, priorisieren, begrenzen und kontrolliert rendern.
 - **MUSS: Pooling nutzen.** Partikel, Slashes, Decals, Damage Numbers und ImpactFX recyceln.
+- **MUSS: VFX-Lifecycle vollständig prüfen.** Spawn, Alterung, Hitstop-Pause, Despawn, Pool-Rückgabe und Idle-Sleep gehören zusammen. Wenn ein Skill kurz startet, darf dessen Effektlast nicht länger voll teuer bleiben als sichtbar oder spielerisch nötig.
 - **MUSS: Rendererfamilien denken.** `Beam`, `Trail`, `Ring`, `Aura`, `Impact`, `Spark`, `Number`, `Slash`, `Projectile` als wenige gebatchte Renderer planen.
 - **MUSS: Hitbox bleibt Gameplay.** Keine Gameplay-Hitbox entfernen, nur weil sie visuell wie ein Effekt aussieht.
 - **MUSS: Remote-/Ally-VFX lesbar halten.** In normalen Gruppenkämpfen nicht standardmäßig verstecken, sondern per Relevanz reduzieren.
@@ -143,6 +170,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Transparenz ernst nehmen.** Additive, transparent und DoubleSide können Overdraw, Sortierung und Draw Calls stark erhöhen.
 - **MUSS: Wichtige VFX sichtbar halten.** Telegraphs, Hitbox-Hinweise, eigene Treffer, Boss-Gefahren und Klassenidentität dürfen nicht verschwinden.
 - **MUSS: WebGL-Partikel-Farbpfad prüfen.** Wenn Partikel-Daten und Poolwerte gut aussehen, aber Sparks unsichtbar oder schwarz bleiben, nicht weiter Pool/Größe erhöhen. Den Materialpfad prüfen: `meshBasicMaterial + vertexColors + InstancedMesh.setColorAt` kann bei Partikeln im WebGL-Spielbild unzuverlässig wirken. Stabiler Fix: wie bei Slashes einen kleinen Shader nutzen, `instanceColor` explizit lesen und Farbe/Intensität direkt ausgeben.
+- **MUSS: Instanced-Sprite-Sichtbarkeit vollständig prüfen.** Unsichtbare fallende Partikel entstehen oft nicht durch zu wenig Count, sondern durch einen kaputten Sichtpfad: `instanceColor` fehlt oder hat kein `needsUpdate`, der Shader liest die Farbe nicht, Geometry/`drawRange` ist leer, Fog/ToneMapping neutralisiert warme Farben, `depthWrite` verdeckt transparente Layer oder flache Planes stehen aus Kamerasicht fast auf der Kante. Erst diese Kette prüfen, danach Count/Opacity ändern.
 - **CHECK: `forceSinglePass` prüfen.** Bei flachen VFX/Sprites kann es helfen, muss aber visuell geprüft werden.
 - **CHECK: `depthWrite=false` prüfen.** Für transparente Overlays oft sinnvoll, Sortierung trotzdem testen.
 - **CHECK: `renderOrder` sparsam nutzen.** Nicht als globalen Sortier-Hack verwenden.
@@ -236,6 +264,8 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ## 14. Review-Checkliste
 
+- Gibt es wiederholte `.map(() => <mesh>)`-Serien, die als Instanced-/Batched-Layer gebaut werden muessen?
+- Sind vorberechnete Instanzdaten fuer statische Voxel-/Map-/Deko-Serien vorhanden?
 - Wurde der passende Scope-Lesepfad genutzt?
 - Gibt es neue `useFrame`-Stellen?
 - Gibt es neue transparente/Additive/DoubleSide-Serien?
