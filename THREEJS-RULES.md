@@ -39,9 +39,12 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Ursache trennen.** Renderlast, CPU-Loop, React-State, `useFrame`, VFX, Audio, Animation, Gegnerlogik, Terrain/Map, PostFX und Input getrennt betrachten.
 - **MUSS: Gameplay und Visuals trennen.** Eine visuelle Reduktion darf keine Hitbox, keinen Damage, keine Boss-Mechanik und kein Skill-Timing entfernen.
 - **MUSS: `useFrame` bleibt billig.** Kein häufiges React-`setState`, keine breiten Store-Subscriptions, keine Objektmassen pro Frame neu erzeugen.
+- **MUSS: Skill-Runtimes schlafen im Idle.** VFX-/Afterimage-/Aura-/Skill-Renderer dürfen nicht dauerhaft pro Frame Arbeit machen, wenn kein aktiver Skill, keine sichtbaren Instanzen und kein laufender Timer existieren. Inaktive Pools setzen `visible=false`, `count=0` und überspringen Matrix-/Color-Uploads.
 - **MUSS: Schwere R3F-Objekte stabil halten.** Materialien, Geometrien, Lights, Shader und PostFX nicht unnötig mounten/unmounten.
 - **MUSS: Gleiche Dinge batchen oder instancen.** Gegnerteile, Partikel, Decals, Slashes, Tiles und Remote-VFX über wenige Renderer laufen lassen.
 - **MUSS: VFX budgetieren statt löschen.** Wichtige Treffer bleiben sichtbar; entfernte, doppelte oder kleine Neben-Effekte dürfen reduziert werden.
+- **MUSS: Skill-Cast-VFX hart budgetieren.** Slashes, Ground-Decals, Partikel, Damage Numbers, Afterimages und HitFX brauchen pro Skill/Fenster feste Caps, Pooling und Drop-/Prioritätslogik. Ein Skill-Cast darf keine Listen erzeugen, die nach Hitstop oder vielen Gegnern dauerhaft teuer bleiben.
+- **MUSS: Instanced-Layer cullbar halten.** Statische Map-/Arena-/VFX-Layer brauchen korrekte Bounding-Sphere/Box und normales Frustum-Culling. `frustumCulled={false}` ist nur für begründete dynamische Sonderfälle erlaubt und darf nicht pauschal auf große statische Instanced-Layer gesetzt werden.
 - **MUSS: LOD und View-Culling bei großen Szenen prüfen.** Weit entfernte Objekte einfacher rendern und Dinge außerhalb der Kamera, Relevanzdistanz oder Sichtlinie früh auslassen.
 - **MUSS: Terrain nicht als Full-Box-Default bauen.** Top-Faces, Side-Skirts, Chunking, Culling und persistente Chunks nutzen.
 - **MUSS: Keine automatischen 3D-FPS-Beweise aus Headless-Browsern.** Echte FPS brauchen echten Browser/GPU oder User-Messwerte.
@@ -138,12 +141,21 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ---
 
+**Vorfall-Merkhilfe (2026-06-07, Doppelschwert-Skill + Sunfall):**
+- Sichtbares Problem: Nach Skill-Nutzung fiel die Szene laut User ungefähr von `80 FPS` auf `20 FPS`; nach dem Fix waren die Lags verschwunden.
+- Ursache: Mehrere kleine Kostenstellen lagen zusammen: Doppelschwert-Skill-VFX konnten Slash-/Decal-/Partikel-Last stapeln, ein DualSword-Afterimage-Pfad lief auch ohne sinnvolle Instanzen pro Frame und Sunfall-Instanced-Layer waren durch pauschales `frustumCulled={false}` immer renderrelevant.
+- Fix: Skill-VFX mit harten Caps budgetieren, leere Afterimage-/VFX-Runtimes im Idle schlafen legen, transparente Aura mit `forceSinglePass` prüfen und statische Instanced-Layer mit korrekten Bounds wieder cullbar machen.
+- Pflicht-Learning: Bei "Lag erst nach Skill" immer Kombination aus Skill-Caps, VFX-Lifecycle, `useFrame`-Idle-Schlaf, Hitstop-Lebenszeit und Map-/Arena-Culling prüfen. Nicht nur eine Zahl drehen und nicht Effekte blind löschen.
+
+---
+
 ## 7. VFX-Architektur
 
 - **MUSS: Kosten skalieren mit aktueller Effektlast, nicht mit Anzahl eingebauter Klassen.**
 - **MUSS: Skill erzeugt Descriptor/Event, nicht direkt viele globale Renderobjekte.**
 - **MUSS: Zentrale Queue nutzen.** VFX-Events sammeln, priorisieren, begrenzen und kontrolliert rendern.
 - **MUSS: Pooling nutzen.** Partikel, Slashes, Decals, Damage Numbers und ImpactFX recyceln.
+- **MUSS: VFX-Lifecycle vollständig prüfen.** Spawn, Alterung, Hitstop-Pause, Despawn, Pool-Rückgabe und Idle-Sleep gehören zusammen. Wenn ein Skill kurz startet, darf dessen Effektlast nicht länger voll teuer bleiben als sichtbar oder spielerisch nötig.
 - **MUSS: Rendererfamilien denken.** `Beam`, `Trail`, `Ring`, `Aura`, `Impact`, `Spark`, `Number`, `Slash`, `Projectile` als wenige gebatchte Renderer planen.
 - **MUSS: Hitbox bleibt Gameplay.** Keine Gameplay-Hitbox entfernen, nur weil sie visuell wie ein Effekt aussieht.
 - **MUSS: Remote-/Ally-VFX lesbar halten.** In normalen Gruppenkämpfen nicht standardmäßig verstecken, sondern per Relevanz reduzieren.
