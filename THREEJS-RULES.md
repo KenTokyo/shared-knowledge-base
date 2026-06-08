@@ -44,6 +44,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Gleiche Dinge batchen oder instancen.** Gegnerteile, Partikel, Decals, Slashes, Tiles und Remote-VFX über wenige Renderer laufen lassen.
 - **MUSS: VFX budgetieren statt löschen.** Wichtige Treffer bleiben sichtbar; entfernte, doppelte oder kleine Neben-Effekte dürfen reduziert werden.
 - **MUSS: Skill-Cast-VFX hart budgetieren.** Slashes, Ground-Decals, Partikel, Damage Numbers, Afterimages und HitFX brauchen pro Skill/Fenster feste Caps, Pooling und Drop-/Prioritätslogik. Ein Skill-Cast darf keine Listen erzeugen, die nach Hitstop oder vielen Gegnern dauerhaft teuer bleiben.
+- **MUSS: Skill-Cast-Lag-Pflichtcheck.** Wenn FPS erst nach Skill-Nutzung einbrechen oder niedrig bleiben, immer diese vier Stellen prüfen, bevor Werte gedreht werden: harte VFX-Caps für Slashes/Decals/Partikel, schlafende `useFrame`-/VFX-Runtimes im Idle, korrekte `InstancedMesh`-Bounds mit normalem Frustum-Culling und keine pauschalen `frustumCulled={false}`-Layer für statische Map-/Arena-Details. Doppelschwert + Sunfall hat gezeigt: Der stabile Fix war nicht "Effekte löschen", sondern Effektlast budgetieren, leere Dauer-Loops schlafen legen und cullbare Instanced-Layer bauen.
 - **MUSS: Instanced-Layer cullbar halten.** Statische Map-/Arena-/VFX-Layer brauchen korrekte Bounding-Sphere/Box und normales Frustum-Culling. `frustumCulled={false}` ist nur für begründete dynamische Sonderfälle erlaubt und darf nicht pauschal auf große statische Instanced-Layer gesetzt werden.
 - **MUSS: LOD und View-Culling bei großen Szenen prüfen.** Weit entfernte Objekte einfacher rendern und Dinge außerhalb der Kamera, Relevanzdistanz oder Sichtlinie früh auslassen.
 - **MUSS: Terrain nicht als Full-Box-Default bauen.** Top-Faces, Side-Skirts, Chunking, Culling und persistente Chunks nutzen.
@@ -176,6 +177,13 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **CHECK: `renderOrder` sparsam nutzen.** Nicht als globalen Sortier-Hack verwenden.
 - **CHECK: PostFX getrennt messen.** Bloom, Shadow/Glow, Vignette, DPR/Resolution Scale, Tone Mapping und Backend-Fallbacks einzeln bewerten.
 - **CHECK: Leere PostFX-Pfade entfernen.** Wenn Bloom/RFX aus ist, darf kein leerer Composer weiterlaufen.
+- **MUSS: Dungeon-Wandlichter & Schatten-Optimierung.** In geschlossenen Bereichen (z. B. Dungeon-Tunneln) mit vielen Wandlichtern (Fackeln/PointLights) müssen Schatten extrem budgetiert werden. Da PointLights mit Schatten 6-mal pro Frame in ein Cubemap zeichnen, dürfen sie Schatten nur werfen (`castShadow={true}`), wenn der Spieler in unmittelbarer Nähe ist (z. B. `< 38` Einheiten Radius). Außerhalb dieses Radius wird `castShadow` deaktiviert. Lichter müssen zudem physikalisch vor Wänden versetzt platziert werden (z. B. `[0, 0.45, 0.45]` Offset), um Lichtdurchbrüche und Collider-Clipping zu vermeiden.
+- **CHECK: Richtwerte für Boden-Telegraphs (AOEs) mit Additive Blending:**
+  Beim Entwurf von Shader-Bodenflächen (z. B. Kreise, Lanes) einen guten Mittelweg für den Glow wählen, damit es unter Bloom gut sichtbar ist, aber bei Überlappungen nicht weiß auswäscht:
+  - **Innere Opazität:** Ca. 6% bis 8% (z. B. `0.06 - 0.08` als Untergrenze für `alphaMask`), um Bodendetails durchscheinen zu lassen.
+  - **Äußere Randschärfe:** Bis zu 90% Opazität am Rand, weich auslaufend (`smoothstep`).
+  - **HDR-Randfarben:** Ränder moderat überstrahlen lassen (RGB-Werte bis max. `2.2`, z. B. `vec3(2.0, 0.9, 0.2)` für Danger) und mit maximal `1.2x` Rim-Multiplikator glühen lassen.
+
 
 **Vorfall-Merkhilfe (2026-05-21, Samurai-Partikel in WebGL):**
 - Sichtbares Problem: Slash-Effekte waren normal, aber echte Partikel/Sparks waren unsichtbar oder schwarz.
@@ -336,3 +344,17 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **Renderer-Default ist WebGL:** Bei Bugs, VFX, Gameplay-Optik und Performance immer zuerst vom WebGL-Pfad ausgehen.
 - **WebGPU nicht als Ursache annehmen:** WebGPU nur bearbeiten, wenn der User ausdrücklich WebGPU nennt, `renderer=webgpu` belegt ist oder ein Log eindeutig `backend=webgpu` zeigt.
 - **Bei unklaren Render-Bugs zuerst Backend prüfen:** WebGL/WebGPU im HUD, Store oder Renderer-Log verifizieren, dann erst backend-spezifisch fixen.
+
+---
+
+## 17. Multiplayer, Colyseus & Kampfgefühl
+
+- **MUSS: Colyseus-Research vor Multiplayer-Fixes.** Bei Sync-, Snapshot-, HP-, AOE-, Despawn-, Hitfeedback-, Animations- oder Serverautoritätsproblemen zuerst `.agents/skills/starwards-colyseus/SKILL.md`, offizielle Colyseus-Doku und passende Referenz-Repositories prüfen. Nicht weiter eigene Prüfwerte erfinden.
+- **MUSS: Server bleibt Wahrheit, Client bleibt Gefühlsschicht.** HP, Positionen, Bossphasen, Adds, Damage und Tod bleiben serverautoritativ. Der Client darf Treffer nicht entscheiden, aber er muss serverbestätigte Ereignisse sofort lesbar machen: Hit-Sound, Impact-VFX, Damage-Flash, Hitstop/Vibration, Damage Number, Todes-/Despawn-Cue.
+- **MUSS: State vs. Messages sauber trennen.** Dauerhafte Werte gehören in synchronisierten State. Kurzlebige Ereignisse gehören als Messages raus: Angriff gestartet, Treffer bestätigt, Spieler HP verloren, Gegner gestorben, Boss-Cast gestartet, AOE ausgelöst, Sound/VFX abspielen. Wenn eine Message zu einer State-Änderung gehört, nach dem State-Patch senden, damit UI und Effekt nicht auseinanderlaufen.
+- **MUSS: Singleplayer-Parität ist Pflicht.** Multiplayer darf sich nicht billiger anfühlen als der lokale Kampf. Bestehende lokale Feedback-Systeme wiederverwenden statt eine zweite schwächere Multiplayer-Feedback-Schicht bauen.
+- **MUSS: AOE und Angriffe müssen lesbar sein.** Jede Schadensquelle muss die Frage beantworten: Wer greift an? Wo trifft es? Wann trifft es? Warum habe ich HP verloren? Telegraph, Animation, Trefferfenster und Server-Hitbox müssen dieselbe Geschichte erzählen.
+- **MUSS: Despawn darf nie heimlich sein.** Wenn ein Gegner stirbt oder verschwindet, braucht es ein sichtbares und hörbares Ende, z.B. Flash, Collapse, Partikel, Sound oder kurzes Fade. Kein stilles Entfernen aus der Liste, wenn der Spieler gerade kämpft.
+- **MUSS: Feedback performant bauen.** Hit-/Death-/AOE-Feedback über bestehende Pools, Instancing, Queues und Rate-Limits führen. Keine neuen globalen `useFrame`-Loops und keine ungebremsten Partikel pro Snapshot.
+- **MUSS: Keine Wert-Fixes als Gefühl-Fix verkaufen.** Mehr Schaden, mehr HP, größere AOE oder schnellere Bewegung lösen schlechte Lesbarkeit nicht. Erst Signale, Animation, Sound und Eventfluss reparieren, dann Balancing.
+
