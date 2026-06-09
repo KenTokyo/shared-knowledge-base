@@ -333,3 +333,16 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Feedback performant bauen.** Hit-/Death-/AOE-Feedback über bestehende Pools, Instancing, Queues und Rate-Limits führen. Keine neuen globalen `useFrame`-Loops und keine ungebremsten Partikel pro Snapshot.
 - **MUSS: Keine Wert-Fixes als Gefühl-Fix verkaufen.** Mehr Schaden, mehr HP, größere AOE oder schnellere Bewegung lösen schlechte Lesbarkeit nicht. Erst Signale, Animation, Sound und Eventfluss reparieren, dann Balancing.
 
+---
+
+## 18. Prozedurale Dungeon-Böden, Wände & Beleuchtungen (Visual Acceptance Blueprint)
+
+- **EMPFEHLUNG: Wet-Look Dungeon Design Standard**: Dieses Design wurde für das Solo-Dungeon entwickelt und dient als optischer Richtwert (High-End-Ästhetik ohne cartoonhafte neongelbe/lilane Linien).
+  * **Boden**: Organische, kachelnde Worley-Zellen (Voronoi) mit gewölbten Kacheln (Bump Map via Cosinus-Interpolation) und nasser Optik (`roughness: 0.24 - 0.28`, `metalness: 0.10 - 0.12`).
+  * **Wände**: Organische, zersplitterte Steinsäulen durch stapelweise zusammengesetzte und leicht rotierte Einzelquader mit variierten Farben.
+  * **Beleuchtung**: Dramatische Beleuchtung durch gegenüberliegende Richtungsstrahler, einen zentralen Spotlight-Kegel und fackelbasierte Ambientbeleuchtung (inkl. dynamischer Schatten-Budgetierung bei Nähe).
+- **Details & Codebeispiele**: Das vollständige technische Konzept, Codebeispiele zur Canvas-Voronoi-Generierung, R3F-Materialien und Wand-Instanzierung sind detailliert in der Design-Datei [dungeon-solo-design.md](file:///d:/CODING/React Projects/7-3D-Voxel-Samurai-Quiz/docs/dungeon/dungeon-solo-design.md) beschrieben.
+
+
+
+
