@@ -466,6 +466,14 @@ db/
 - Bei vom User befohlenen UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
 - Halte dich an die Design/Layout Regeln, möglicherweise tailwind css klassen, globals.css oder in DESIGN.md reinschauen, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
 
+**NIEMALS automatisch CLI-, Terminal- oder PowerShell-Prozesse im Hintergrund starten!**
+- Kein `codex`, `gemini`, `claude`, `opencode`, `cmdc`, `command-code`, `agy`, `qwen`, `kilo`, `powershell`, `cmd.exe` oder Terminalfenster nur für Statusanzeige, App-Start, Notes-Öffnen, Chat-Header, Watcher-Event, Modellselector oder Hover/Popover starten.
+- Hintergrundpfade dürfen nur Cache, gespeicherte JSON-Dateien, Env-Signale oder leichte Dateisystem-Metadaten lesen. Das ist wie auf einen Zettel schauen, nicht wie eine Maschine anschalten.
+- Echte CLI-Prozesse sind nur erlaubt bei klarer Nutzeraktion: Chat senden, Terminalprofil starten, Login-Klick, manueller „Aktualisieren/Prüfen“-Button oder ausdrücklich beauftragter CLI-Test.
+- Datei-Watcher dürfen UI-Status melden, aber niemals `forceRefresh`, `refreshAll`, `refreshOne`, Detection mit Versionsprobe oder Account-Usage-Abfragen starten.
+- Codex-/Gemini-/Command-Code-Konten zeigen gespeicherte Daten sofort an; Live-Limits oder Account-Details werden nur manuell aktualisiert.
+- Nach jedem CLI-Start muss der Prozess sauber beendet, abgebrochen oder vom Nutzer bewusst als Terminalfenster weitergeführt werden.
+
 **Nie überspringen:**
 - React Loop-Stopper aus Abschnitt 6 anwenden: idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
 - Orchestrator-Regeln aus Abschnitt 3 anwenden: Phase dokumentieren, Mini-Check, korrekter Endstatus; bei manuellen UI-/Gameplay-Checks immer `ALL_PHASES_COMPLETE`.
