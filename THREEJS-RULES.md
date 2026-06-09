@@ -315,31 +315,6 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 **CHECK: 200-Helden-Problem früh lösen.** Systeme für Helden, Skins, Skills, Gegner, Portraits oder Maps müssen schon bei wenigen Einträgen caching-, batching- und lazy-load-fähig sein.
 
-**Quellen:**
-- SkillForge/Unity-Video-Zusammenfassung: https://www.gamesinprogress.com/indie-game-developers/unity/optimizing-SkillForge-200-heroes-million-polygon-worlds
-- Unity Shader Variants: https://docs.unity.cn/6000.0/Documentation/Manual/shader-variants-landing.html
-- Unity Mobile Optimierung: https://docs.unity.cn/530/Documentation/Manual/MobileOptimisation.html
-- Unity Addressables + Sprite Atlases: https://docs.unity.cn/Packages/com.unity.addressables%401.21/manual/AddressablesAndSpriteAtlases.html
-- Three.js Texture Memory: https://threejs.org/manual/en/textures.html
-- Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
-
----
-
-## 16. Offizielle Referenzen
-
-- React Three Fiber Performance Pitfalls: https://r3f.docs.pmnd.rs/advanced/pitfalls
-- Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
-- Three.js LOD API: https://threejs.org/docs/api/en/objects/LOD.html
-- Three.js InstancedMesh API: https://threejs.org/docs/api/en/objects/InstancedMesh
-- Three.js DataArrayTexture API: https://threejs.org/docs/pages/DataArrayTexture.html
-- Three.js How to Update Things: https://threejs.org/manual/en/how-to-update-things.html
-- Three.js Material API: https://threejs.org/docs/pages/Material.html
-- Three.js Renderer API / `renderer.info`: https://threejs.org/docs/pages/Renderer.html
-- Three.js WebGPURenderer Manual: https://threejs.org/manual/en/webgpurenderer
-- Three.js WebGPURenderer API: https://threejs.org/docs/pages/WebGPURenderer.html
-- Three.js EffectComposer API: https://threejs.org/docs/examples/en/postprocessing/EffectComposer.html
-- MDN WebGL Best Practices: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices
-
 
 - **Renderer-Default ist WebGL:** Bei Bugs, VFX, Gameplay-Optik und Performance immer zuerst vom WebGL-Pfad ausgehen.
 - **WebGPU nicht als Ursache annehmen:** WebGPU nur bearbeiten, wenn der User ausdrücklich WebGPU nennt, `renderer=webgpu` belegt ist oder ein Log eindeutig `backend=webgpu` zeigt.
