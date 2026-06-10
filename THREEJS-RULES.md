@@ -315,31 +315,6 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 **CHECK: 200-Helden-Problem früh lösen.** Systeme für Helden, Skins, Skills, Gegner, Portraits oder Maps müssen schon bei wenigen Einträgen caching-, batching- und lazy-load-fähig sein.
 
-**Quellen:**
-- SkillForge/Unity-Video-Zusammenfassung: https://www.gamesinprogress.com/indie-game-developers/unity/optimizing-SkillForge-200-heroes-million-polygon-worlds
-- Unity Shader Variants: https://docs.unity.cn/6000.0/Documentation/Manual/shader-variants-landing.html
-- Unity Mobile Optimierung: https://docs.unity.cn/530/Documentation/Manual/MobileOptimisation.html
-- Unity Addressables + Sprite Atlases: https://docs.unity.cn/Packages/com.unity.addressables%401.21/manual/AddressablesAndSpriteAtlases.html
-- Three.js Texture Memory: https://threejs.org/manual/en/textures.html
-- Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
-
----
-
-## 16. Offizielle Referenzen
-
-- React Three Fiber Performance Pitfalls: https://r3f.docs.pmnd.rs/advanced/pitfalls
-- Three.js Optimize Lots of Objects: https://threejs.org/manual/en/optimize-lots-of-objects.html
-- Three.js LOD API: https://threejs.org/docs/api/en/objects/LOD.html
-- Three.js InstancedMesh API: https://threejs.org/docs/api/en/objects/InstancedMesh
-- Three.js DataArrayTexture API: https://threejs.org/docs/pages/DataArrayTexture.html
-- Three.js How to Update Things: https://threejs.org/manual/en/how-to-update-things.html
-- Three.js Material API: https://threejs.org/docs/pages/Material.html
-- Three.js Renderer API / `renderer.info`: https://threejs.org/docs/pages/Renderer.html
-- Three.js WebGPURenderer Manual: https://threejs.org/manual/en/webgpurenderer
-- Three.js WebGPURenderer API: https://threejs.org/docs/pages/WebGPURenderer.html
-- Three.js EffectComposer API: https://threejs.org/docs/examples/en/postprocessing/EffectComposer.html
-- MDN WebGL Best Practices: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices
-
 
 - **Renderer-Default ist WebGL:** Bei Bugs, VFX, Gameplay-Optik und Performance immer zuerst vom WebGL-Pfad ausgehen.
 - **WebGPU nicht als Ursache annehmen:** WebGPU nur bearbeiten, wenn der User ausdrücklich WebGPU nennt, `renderer=webgpu` belegt ist oder ein Log eindeutig `backend=webgpu` zeigt.
@@ -357,6 +332,19 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Despawn darf nie heimlich sein.** Wenn ein Gegner stirbt oder verschwindet, braucht es ein sichtbares und hörbares Ende, z.B. Flash, Collapse, Partikel, Sound oder kurzes Fade. Kein stilles Entfernen aus der Liste, wenn der Spieler gerade kämpft.
 - **MUSS: Feedback performant bauen.** Hit-/Death-/AOE-Feedback über bestehende Pools, Instancing, Queues und Rate-Limits führen. Keine neuen globalen `useFrame`-Loops und keine ungebremsten Partikel pro Snapshot.
 - **MUSS: Keine Wert-Fixes als Gefühl-Fix verkaufen.** Mehr Schaden, mehr HP, größere AOE oder schnellere Bewegung lösen schlechte Lesbarkeit nicht. Erst Signale, Animation, Sound und Eventfluss reparieren, dann Balancing.
+
+---
+
+## 18. Prozedurale Dungeon-Böden, Wände & Beleuchtungen (Visual Acceptance Blueprint)
+
+- **EMPFEHLUNG: Wet-Look Dungeon Design Standard**: Dieses Design wurde für das Solo-Dungeon entwickelt und dient als optischer Richtwert (High-End-Ästhetik ohne cartoonhafte neongelbe/lilane Linien).
+  * **Boden**: Organische, kachelnde Worley-Zellen (Voronoi) mit gewölbten Kacheln (Bump Map via Cosinus-Interpolation) und nasser Optik (`roughness: 0.24 - 0.28`, `metalness: 0.10 - 0.12`).
+  * **Wände**: Organische, zersplitterte Steinsäulen durch stapelweise zusammengesetzte und leicht rotierte Einzelquader mit variierten Farben.
+  * **Beleuchtung**: Dramatische Beleuchtung durch gegenüberliegende Richtungsstrahler, einen zentralen Spotlight-Kegel und fackelbasierte Ambientbeleuchtung (inkl. dynamischer Schatten-Budgetierung bei Nähe).
+- **Details & Codebeispiele**: Das vollständige technische Konzept, Codebeispiele zur Canvas-Voronoi-Generierung, R3F-Materialien und Wand-Instanzierung sind detailliert in der Design-Datei [dungeon-solo-design.md](file:///d:/CODING/React Projects/7-3D-Voxel-Samurai-Quiz/docs/dungeon/dungeon-solo-design.md) beschrieben.
+
+
+
 - **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
 - **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
 - **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
