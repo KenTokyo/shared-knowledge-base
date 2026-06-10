@@ -357,4 +357,6 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **MUSS: Despawn darf nie heimlich sein.** Wenn ein Gegner stirbt oder verschwindet, braucht es ein sichtbares und hörbares Ende, z.B. Flash, Collapse, Partikel, Sound oder kurzes Fade. Kein stilles Entfernen aus der Liste, wenn der Spieler gerade kämpft.
 - **MUSS: Feedback performant bauen.** Hit-/Death-/AOE-Feedback über bestehende Pools, Instancing, Queues und Rate-Limits führen. Keine neuen globalen `useFrame`-Loops und keine ungebremsten Partikel pro Snapshot.
 - **MUSS: Keine Wert-Fixes als Gefühl-Fix verkaufen.** Mehr Schaden, mehr HP, größere AOE oder schnellere Bewegung lösen schlechte Lesbarkeit nicht. Erst Signale, Animation, Sound und Eventfluss reparieren, dann Balancing.
-
+- **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
+- **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
+- **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
