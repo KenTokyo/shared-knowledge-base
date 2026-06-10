@@ -468,6 +468,7 @@ db/
 
 **NIEMALS automatisch CLI-, Terminal- oder PowerShell-Prozesse im Hintergrund starten!**
 - Kein `codex`, `gemini`, `claude`, `opencode`, `cmdc`, `command-code`, `agy`, `qwen`, `kilo`, `powershell`, `cmd.exe` oder Terminalfenster nur für Statusanzeige, App-Start, Notes-Öffnen, Chat-Header, Watcher-Event, Modellselector oder Hover/Popover starten.
+- **CPU-Auslastung & Unsichtbarkeit (Kritisch):** Das automatische oder leichtfertige Starten von CLI-Modellen (z.B. für lokale KI-Chats/Abfragen) erzeugt eine extrem hohe CPU-Auslastung (oft bis zu 100% Core Load). Da diese Hintergrund-Prozesse für den Nutzer völlig unsichtbar laufen, bemerkt er die Ursache des plötzlichen System-Lags gar nicht. CLI-Modellprozesse dürfen daher nur und ausschließlich durch eine explizite, bewusste Aktion des Nutzers (z.B. Absenden einer Nachricht im spezifischen CLI-Chat) initiiert werden.
 - Hintergrundpfade dürfen nur Cache, gespeicherte JSON-Dateien, Env-Signale oder leichte Dateisystem-Metadaten lesen. Das ist wie auf einen Zettel schauen, nicht wie eine Maschine anschalten.
 - Echte CLI-Prozesse sind nur erlaubt bei klarer Nutzeraktion: Chat senden, Terminalprofil starten, Login-Klick, manueller „Aktualisieren/Prüfen“-Button oder ausdrücklich beauftragter CLI-Test.
 - Datei-Watcher dürfen UI-Status melden, aber niemals `forceRefresh`, `refreshAll`, `refreshOne`, Detection mit Versionsprobe oder Account-Usage-Abfragen starten.
