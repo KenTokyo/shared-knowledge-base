@@ -413,3 +413,11 @@ Nicht blind weiter Timings, Retries oder Fensterfokus drehen.
 - Für `7-3D-Voxel-Samurai-Quiz` Sakura-Schwenks Culling und Renderlast getrennt messen: `chunkVisibilityFlipsDelta`, `maxCullingCostMs` und `visibleChunks` sind die wichtigen Culling-Werte. Ein Lauf mit `0` Chunk-Flips und `0 ms` Culling kann trotzdem unter `200 FPS` fallen, wenn PostFX/Shadow/Bloom den Kameraschwenk belasten.
 - Finaler stabiler Vergleichslauf am 2026-06-03: `PERF_EXTRA_SCENARIOS='shadows_low,bloom_off' pnpm run perf:sakura-camera-sweep` ergab `279.527 FPS`, `45` sichtbare Chunks, `0` Chunk-Flips und `0 ms` Culling. Report: `output/perf/sakura-camera-sweep-culling-2026-06-03T21-31-36-854Z.json`.
 - Bei Einzelspikes mit `worstFrameMs: 50` erst Browser-/RAF-/PostFX-Diagnose prüfen, nicht wieder Frustum-Culling als Schwenkfilter aktivieren. Das Frustum war der ursprüngliche Chunk-Churn-Treiber.
+
+## ACP-Integration-Electron-Main-JSONRPC-final 2026-06-10
+
+- **ACP-Protokoll-Handler:** Erfolgreiche Integration des Agent Client Protocols (ACP) JSON-RPC 2.0 Clients über Stdio (`electron/acp-client.js`). Ermöglicht deterministisches, zeilenbasiertes JSON-RPC-Streaming.
+- **Permission Gates (Sicherheitsfreigaben):** Der Stream-Runner (`electron/cli-stream-runner.js`) fängt `tool/call`-Aufrufe von Agenten ab und leitet sie als `acp-permission-request` via IPC an die React-UI weiter.
+- **Lokale Werkzeug-Ausführung:** Über den IPC-Handler `cli:respondToAcpPermission` (`electron/cli-stream-handlers.js`) wird die Freigabe des Benutzers asynchron zurückgespeist. Bei Genehmigung werden Aktionen sicher lokal ausgeführt. Dies umfasst `fs/write` -> `handleWriteFile`, `fs/read` -> `handleReadFile`, `fs/list` -> `handleListFiles`, `fs/mkdir` -> `handleMkdir`, `fs/delete` -> `handleDeletePath`, `fs/rename` -> `handleRename` sowie `shell/execute` über `exec` (mit hartem 30-Sekunden-Timeout).
+- **Verifizierte Test-Suite:** Ein automatisiertes Integrationstest-Skript (`electron/test-acp.js`) und ein passender Mock-Agent (`electron/mock-acp-agent.js`) simulieren den vollständigen Handshake, Streaming und Dateisystem-Schreibzugriff über JSON-RPC erfolgreich. Tests sind lokal 100% bestanden.
+

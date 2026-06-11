@@ -347,3 +347,12 @@ Maps werden non-voxel gebaut, wie ein Open-World-RPG (Black Desert / Chrono Odys
 
 ZIEL: Jedes Biom fühlt sich komplett anders an, bleibt aber leicht verwandt mit den vorherigen.
 
+- **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
+- **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
+- **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
+
+
+## 7. 3D-Map-Design in Voxel Samurai Quiz (Stand 2026-06-11)
+- **Kein Voxel-Look mehr fuer Maps/Umgebungen.** Neue Maps und Map-Redesigns werden wie ein Open-World-RPG gebaut (Referenz: Black Desert, Chrono Odyssey): smoothe Geometrie statt Boxen - konische Zylinder fuer Staemme, Ikosaeder-/Blob-Shapes fuer Laub und Bueschel, Low-Poly-Felsen, displaced Terrain-Meshes fuer den Boden.
+- **Leichte Erhoehungen sind der Normalfall:** sanfte Huegel (max. ~3 Einheiten), aber NICHT permanent wellig - Kampfzentren, Spawns, Shrine-Plaetze und Wege bleiben als gerade/flache Flaechen erhalten. Hoehen ueber eine analytische Funktion definieren und via `registerTerrainHeightSnapshot()` (terrainHeightRuntime) registrieren, damit Spieler/Gegner/Kamera automatisch folgen.
+- **Boden hochwertig designen:** Welt-Raum-Makrovariation + Trampelpfade ueber Vertex-Colors auf dem Terrain-Mesh (nichts tiled), Detail ueber die prozedurale Textur, Gras/Decor meidet Pfade. Instanzfarben werden mit Texturen MULTIPLIZIERT - dunkle Tints auf hellen Texturen wirken schwarz.
