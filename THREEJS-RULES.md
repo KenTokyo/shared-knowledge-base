@@ -335,14 +335,15 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ---
 
-## 18. Prozedurale Dungeon-Böden, Wände & Beleuchtungen (Visual Acceptance Blueprint)
+## 18. Map-/Biom-Design (optional, NUR EIN BEISPIEL - Inspiration, nicht kopieren!)
 
-- **EMPFEHLUNG: Wet-Look Dungeon Design Standard**: Dieses Design wurde für das Solo-Dungeon entwickelt und dient als optischer Richtwert (High-End-Ästhetik ohne cartoonhafte neongelbe/lilane Linien).
-  * **Boden**: Organische, kachelnde Worley-Zellen (Voronoi) mit gewölbten Kacheln (Bump Map via Cosinus-Interpolation) und nasser Optik (`roughness: 0.24 - 0.28`, `metalness: 0.10 - 0.12`).
-  * **Wände**: Organische, zersplitterte Steinsäulen durch stapelweise zusammengesetzte und leicht rotierte Einzelquader mit variierten Farben.
-  * **Beleuchtung**: Dramatische Beleuchtung durch gegenüberliegende Richtungsstrahler, einen zentralen Spotlight-Kegel und fackelbasierte Ambientbeleuchtung (inkl. dynamischer Schatten-Budgetierung bei Nähe).
-- **Details & Codebeispiele**: Das vollständige technische Konzept, Codebeispiele zur Canvas-Voronoi-Generierung, R3F-Materialien und Wand-Instanzierung sind detailliert in der Design-Datei [dungeon-solo-design.md](file:///d:/CODING/React Projects/7-3D-Voxel-Samurai-Quiz/docs/dungeon/dungeon-solo-design.md) beschrieben.
+Maps werden non-voxel gebaut, wie ein Open-World-RPG (Black Desert / Chrono Odyssey / Valheim). Referenz-Implementierung: Level 5 "Blutwald" (`CrimsonForestDecor.tsx`, `ArenaFloor.tsx`, `dungeonCaveHelpers.ts`).
 
+- **Terrain**: analytische Höhenfunktion → leichte Erhöhungen (max. ~3 Einheiten), Kampfzentren/Spawns/Wege bleiben flach. Boden-Mesh displaced, Höhen via `registerTerrainHeightSnapshot()` registrieren (Spieler/Gegner/Kamera folgen automatisch).
+- **Boden**: prozedurale Textur OHNE sichtbares Zellmuster (Mottling-Blotches + geclusterte Strokes + Specks), Welt-Raum-Makrovariation und Trampelpfade über Vertex-Colors (tiled nie). Pfade: heller festgetretener Kern + dunkler Trittrand + eingelassene instanzierte Pflastersteine.
+- **Decor**: smoothe instanzierte Meshes - konische Zylinderstämme, Ikosaeder-Laubblobs/-Büsche, Low-Poly-Felsen. Pro Material ein Drawcall.
+- **Gras**: EIN instanziertes ShaderMaterial-Mesh, Wind im Vertex-Shader, Halme getapert + gekrümmt, geclumpte Tuft-Verteilung, Basis-AO, Typen-Mix (grün/Akzent/Blüten). Custom-Shader brauchen `fog: true` + Fog-Chunks, sonst ignorieren sie den Szenen-Nebel.
+- **Stimmung**: neutrales entsättigtes Licht statt starker Farbtints (Tints waschen Böden aus), lokale Fog-Volumes nie zentriert über Kampfzonen (lesen als "Wand").
 
-
+ZIEL: Jedes Biom fühlt sich komplett anders an, bleibt aber leicht verwandt mit den vorherigen.
 
