@@ -444,6 +444,7 @@ db/
 
 ### Quick Checklist
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
+- **NO-GO Live-Collection-Mutation:** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. Das kann Endloswachstum erzeugen, weil JS-Iteratoren neue Eintraege mitlaufen lassen. Fuer Nachbarschaften, Chunk-/Ufer-Ringe, Flood-Fill, Graphen, Spawn-Ausbreitung und Geometry-Builds immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen.
 - Gesichtselement-Regel im ganzen Spiel: Nur Augen sind erlaubt. Keine Münder, Gesichtslinien, Faceplates, Visor-/Maskenstreifen, Stirn-Gems oder andere gesichtsähnliche Markierungen an Charakteren/Gegnern.
 - Mobile-First
 - Max 700 lines/file

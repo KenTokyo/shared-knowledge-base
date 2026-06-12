@@ -197,6 +197,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 ## 9. Terrain, Voxel, Map und WebGPU
 
 - **MUSS: Keine Full-Box-Defaults bei großen Tile-Maps.**
+- **NO-GO: Keine Live-Collection beim Nachbarschafts-/Chunk-/Ufer-Aufbau erweitern.** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. JS-Iteratoren koennen neu angehaengte Eintraege wieder mitlaufen lassen; fuer Ringe, Flood-Fill, Chunk-Wachstum, Wasser-Ufer, Graphen und Spawn-Ausbreitung immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen. Sakura-Wasser-Root-Cause: live `Map.values()` + `Map.set()` expandierte endlos bis `Map maximum size exceeded`.
 - **MUSS: Sichtbare Faces reduzieren.** Top-Faces, Side-Skirts und nur nötige Seitenflächen nutzen.
 - **MUSS: Chunks persistent halten.** Sichtbarkeit toggeln statt harte Mount/Unmount-Spikes erzeugen.
 - **MUSS: Chunk-Geometrien cachen.** Nicht bei jeder Kamerabewegung neu bauen.
@@ -207,6 +208,19 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **CHECK: WebGPU ist ein A/B-Hebel, kein Wundermittel.** Erst Runtime-Architektur, Batching, Pools und PostFX-Kosten klären.
 - **CHECK: WebGPU nur bewerten, wenn Backend aktiv ist.** Canvas sichtbar, RendererStats frisch, `calls>0`, Effekte und Hitboxen vorhanden.
 - **CHECK: WebGPU/PostFX-Parität sichern.** Kein Backend als Default setzen, wenn VFX, Hitboxen oder Look fehlen.
+
+### 9.1 Map-Bau-System v2 (Entvoxelung) — Pflicht für alle neuen und umgebauten Maps
+
+Seit 2026-06-12 ist das Dungeon-v2-System (bewiesen in Dungeon Ebene 1-4 und Ebene 6 "Abendglut") der **einzige zulässige Map-Baustil**. Kern-Dateien als Referenz: `dungeonRockGeometry.ts`, `dungeonStructuresV2.ts`, `caveFloorDesign.ts`, `dungeonLevelThemes.ts`.
+
+- **MUSS: Organische Felsgeometrie statt Einheitsbox.** Wände/Decken/Deko-Blöcke nutzen eine deterministisch noise-verformte Box (`createOrganicRockGeometry`/`createRockSlabGeometry`-Muster) in **denselben InstancedMeshes** — 0 zusätzliche Draw Calls. Keine neuen achsparallel grid-gestapelten Box-Instanzen ("Voxel-Stapel") für Wände, Böden oder Strukturen.
+- **MUSS: Wenige große Monolithe statt vieler kleiner Würfel.** Lehnende, rotierte, überlappende Großblöcke; Instanzzahl gegenüber Voxel-Stapeln senken (Referenz: ~340 statt ~600 Wandblöcke pro Dungeon-Ring).
+- **MUSS: Boden als displaced Terrain mit Vertex-Farben.** Eine analytische Höhenfunktion pro Map (flaches Kampfzentrum, sanfte Randschwellung zum Wandfuß) speist sowohl die verschobene Bodengeometrie als auch `registerTerrainHeightSnapshot` — niemals zwei getrennte Höhenquellen. Pfade/Adern/Teppiche über Vertex-Farb-Multiplikatoren, nicht über zusätzliche Meshes.
+- **MUSS: Theme-Objekt pro Map mit Licht-Learning.** Jede Map definiert ein Theme (Name, Sky-/Fill-/Spot-Farben, Hemisphären-Faktor). Up-Normalen (Böden) leben fast nur vom Hemisphären-Anteil: Faktor **0.34-0.62** (0.22 ließ Böden als schwarze Masse wirken — Level-6-Learning).
+- **MUSS: Kollisions-Kontrakt unverändert lassen.** Clamp-Logik, Arena-Radien, Spawn-Punkte und Terrain-Snapshot-Tile-Größen bleiben beim Umbau identisch; nur die Optik wechselt.
+- **MUSS: Jede Map unique.** Vor jedem Umbau die alte Map ansehen (Palette, Landmarken, Beschreibungstext, Stimmung) und diese Identität mit dem v2-System neu interpretieren — gleiches System, komplett anderer Look pro Map. Keine Map darf wie eine Farbvariante einer anderen wirken; jede braucht eigene Landmarken/Decor-Sets (Referenz: Ebene 1 "Obsidianhallen" Runen-Monolithe vs. Ebene 2 "Glutschlund" Basaltsäulen + Lava-Fissuren).
+- **CHECK: Instanz- und Drawcall-Budget nach Umbau vergleichen.** Ziel: gleich oder besser als die Voxel-Version.
+- **CHECK: Decor budget-skaliert.** Decor-Instanzen und PointLights über `renderBudgetTier` reduzieren.
 
 ---
 
