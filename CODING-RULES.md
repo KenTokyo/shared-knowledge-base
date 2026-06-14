@@ -417,6 +417,7 @@ db/
 - Bei reinen Doku-, Prompt- oder Regeländerungen keine Tests/Checks starten.
 - Bei echten Codeänderungen dürfen Lint/TypeScript genutzt werden, wenn sie den geänderten Scope absichern. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
+- **KEIN PLAYWRIGHT, KEINE UNNÖTIGEN TESTS (User-Order 2026-06-11, ABSOLUT):** Playwright/Browser-Automation ist komplett verboten — auch nicht für "Visual Gates", Screenshots, Bug-Reproduktion oder Debug-Proben. Keine neuen Diag-/Test-Scripts unter `scripts/` anlegen. Verifikation läuft über `typecheck` + Guardrails + Code-Review; die sichtbare Abnahme macht der USER manuell — dafür am Ende einen kurzen, präzisen Test-Guide schreiben (was, wo, welche Taste).
 - **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, Recorder-, Ingame-, Smoke-, Bot-, Serverwert- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es klar befiehlt. Sonst Research, Codeänderung und manuellen User-Blocker dokumentieren.
 - **Keine stille Playwright-Ausnahme:** Auch reine Frontend-/Layout- oder Mock-Abgleiche laufen nur, wenn der User sie ausdrücklich befiehlt. Ohne Befehl: beschreiben, was der User manuell prüfen soll.
 - **Keine Playwright-/Browser-Use-Performance-Tests für 3D-FPS:** Headless-Chromium hat keinen echten GPU-Treiber und liefert keine aussagekräftigen FPS-Werte. Browser-/Playwright-Checks sind nur bei User-Befehl erlaubt und bleiben **NICHT** erlaubt als 3D-Frame-Benchmark, WebGPU-A/B-Vergleich oder VFX-Performance-Messung. Echte Performance-Messung läuft nur über echten Chrome/Edge mit DevTools-Performance-Tab + Recording-Export. Bei Bedarf User um manuelle Recording-Aufnahme bitten und Pfad in `docs/performance/recordings/` ablegen.
@@ -443,6 +444,7 @@ db/
 
 ### Quick Checklist
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
+- **NO-GO Live-Collection-Mutation:** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. Das kann Endloswachstum erzeugen, weil JS-Iteratoren neue Eintraege mitlaufen lassen. Fuer Nachbarschaften, Chunk-/Ufer-Ringe, Flood-Fill, Graphen, Spawn-Ausbreitung und Geometry-Builds immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen.
 - Gesichtselement-Regel im ganzen Spiel: Nur Augen sind erlaubt. Keine Münder, Gesichtslinien, Faceplates, Visor-/Maskenstreifen, Stirn-Gems oder andere gesichtsähnliche Markierungen an Charakteren/Gegnern.
 - Mobile-First
 - Max 700 lines/file
@@ -489,3 +491,6 @@ db/
 - Bei Browser-/Playwright-Fehlern nicht auf Gedächtnis vertrauen: Findings in Task/Masterplan und bei Wiederverwendung in `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` schreiben.
 - Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
 - Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!
+- **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
+- **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
+- **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.

@@ -197,6 +197,7 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 ## 9. Terrain, Voxel, Map und WebGPU
 
 - **MUSS: Keine Full-Box-Defaults bei großen Tile-Maps.**
+- **NO-GO: Keine Live-Collection beim Nachbarschafts-/Chunk-/Ufer-Aufbau erweitern.** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. JS-Iteratoren koennen neu angehaengte Eintraege wieder mitlaufen lassen; fuer Ringe, Flood-Fill, Chunk-Wachstum, Wasser-Ufer, Graphen und Spawn-Ausbreitung immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen. Sakura-Wasser-Root-Cause: live `Map.values()` + `Map.set()` expandierte endlos bis `Map maximum size exceeded`.
 - **MUSS: Sichtbare Faces reduzieren.** Top-Faces, Side-Skirts und nur nötige Seitenflächen nutzen.
 - **MUSS: Chunks persistent halten.** Sichtbarkeit toggeln statt harte Mount/Unmount-Spikes erzeugen.
 - **MUSS: Chunk-Geometrien cachen.** Nicht bei jeder Kamerabewegung neu bauen.
@@ -207,6 +208,19 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 - **CHECK: WebGPU ist ein A/B-Hebel, kein Wundermittel.** Erst Runtime-Architektur, Batching, Pools und PostFX-Kosten klären.
 - **CHECK: WebGPU nur bewerten, wenn Backend aktiv ist.** Canvas sichtbar, RendererStats frisch, `calls>0`, Effekte und Hitboxen vorhanden.
 - **CHECK: WebGPU/PostFX-Parität sichern.** Kein Backend als Default setzen, wenn VFX, Hitboxen oder Look fehlen.
+
+### 9.1 Map-Bau-System v2 (Entvoxelung) — Pflicht für alle neuen und umgebauten Maps
+
+Seit 2026-06-12 ist das Dungeon-v2-System (bewiesen in Dungeon Ebene 1-4 und Ebene 6 "Abendglut") der **einzige zulässige Map-Baustil**. Kern-Dateien als Referenz: `dungeonRockGeometry.ts`, `dungeonStructuresV2.ts`, `caveFloorDesign.ts`, `dungeonLevelThemes.ts`.
+
+- **MUSS: Organische Felsgeometrie statt Einheitsbox.** Wände/Decken/Deko-Blöcke nutzen eine deterministisch noise-verformte Box (`createOrganicRockGeometry`/`createRockSlabGeometry`-Muster) in **denselben InstancedMeshes** — 0 zusätzliche Draw Calls. Keine neuen achsparallel grid-gestapelten Box-Instanzen ("Voxel-Stapel") für Wände, Böden oder Strukturen.
+- **MUSS: Wenige große Monolithe statt vieler kleiner Würfel.** Lehnende, rotierte, überlappende Großblöcke; Instanzzahl gegenüber Voxel-Stapeln senken (Referenz: ~340 statt ~600 Wandblöcke pro Dungeon-Ring).
+- **MUSS: Boden als displaced Terrain mit Vertex-Farben.** Eine analytische Höhenfunktion pro Map (flaches Kampfzentrum, sanfte Randschwellung zum Wandfuß) speist sowohl die verschobene Bodengeometrie als auch `registerTerrainHeightSnapshot` — niemals zwei getrennte Höhenquellen. Pfade/Adern/Teppiche über Vertex-Farb-Multiplikatoren, nicht über zusätzliche Meshes.
+- **MUSS: Theme-Objekt pro Map mit Licht-Learning.** Jede Map definiert ein Theme (Name, Sky-/Fill-/Spot-Farben, Hemisphären-Faktor). Up-Normalen (Böden) leben fast nur vom Hemisphären-Anteil: Faktor **0.34-0.62** (0.22 ließ Böden als schwarze Masse wirken — Level-6-Learning).
+- **MUSS: Kollisions-Kontrakt unverändert lassen.** Clamp-Logik, Arena-Radien, Spawn-Punkte und Terrain-Snapshot-Tile-Größen bleiben beim Umbau identisch; nur die Optik wechselt.
+- **MUSS: Jede Map unique.** Vor jedem Umbau die alte Map ansehen (Palette, Landmarken, Beschreibungstext, Stimmung) und diese Identität mit dem v2-System neu interpretieren — gleiches System, komplett anderer Look pro Map. Keine Map darf wie eine Farbvariante einer anderen wirken; jede braucht eigene Landmarken/Decor-Sets (Referenz: Ebene 1 "Obsidianhallen" Runen-Monolithe vs. Ebene 2 "Glutschlund" Basaltsäulen + Lava-Fissuren).
+- **CHECK: Instanz- und Drawcall-Budget nach Umbau vergleichen.** Ziel: gleich oder besser als die Voxel-Version.
+- **CHECK: Decor budget-skaliert.** Decor-Instanzen und PointLights über `renderBudgetTier` reduzieren.
 
 ---
 
@@ -335,16 +349,24 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-E
 
 ---
 
-## 18. Prozedurale Dungeon-Böden, Wände & Beleuchtungen (Visual Acceptance Blueprint)
+## 18. Map-/Biom-Design (optional, NUR EIN BEISPIEL - Inspiration, nicht kopieren!)
 
-- **EMPFEHLUNG: Wet-Look Dungeon Design Standard**: Dieses Design wurde für das Solo-Dungeon entwickelt und dient als optischer Richtwert (High-End-Ästhetik ohne cartoonhafte neongelbe/lilane Linien).
-  * **Boden**: Organische, kachelnde Worley-Zellen (Voronoi) mit gewölbten Kacheln (Bump Map via Cosinus-Interpolation) und nasser Optik (`roughness: 0.24 - 0.28`, `metalness: 0.10 - 0.12`).
-  * **Wände**: Organische, zersplitterte Steinsäulen durch stapelweise zusammengesetzte und leicht rotierte Einzelquader mit variierten Farben.
-  * **Beleuchtung**: Dramatische Beleuchtung durch gegenüberliegende Richtungsstrahler, einen zentralen Spotlight-Kegel und fackelbasierte Ambientbeleuchtung (inkl. dynamischer Schatten-Budgetierung bei Nähe).
-- **Details & Codebeispiele**: Das vollständige technische Konzept, Codebeispiele zur Canvas-Voronoi-Generierung, R3F-Materialien und Wand-Instanzierung sind detailliert in der Design-Datei [dungeon-solo-design.md](file:///d:/CODING/React Projects/7-3D-Voxel-Samurai-Quiz/docs/dungeon/dungeon-solo-design.md) beschrieben.
+Maps werden non-voxel gebaut, wie ein Open-World-RPG (Black Desert / Chrono Odyssey / Valheim). Referenz-Implementierung: Level 5 "Blutwald" (`CrimsonForestDecor.tsx`, `ArenaFloor.tsx`, `dungeonCaveHelpers.ts`).
 
+- **Terrain**: analytische Höhenfunktion → leichte Erhöhungen (max. ~3 Einheiten), Kampfzentren/Spawns/Wege bleiben flach. Boden-Mesh displaced, Höhen via `registerTerrainHeightSnapshot()` registrieren (Spieler/Gegner/Kamera folgen automatisch).
+- **Boden**: prozedurale Textur OHNE sichtbares Zellmuster (Mottling-Blotches + geclusterte Strokes + Specks), Welt-Raum-Makrovariation und Trampelpfade über Vertex-Colors (tiled nie). Pfade: heller festgetretener Kern + dunkler Trittrand + eingelassene instanzierte Pflastersteine.
+- **Decor**: smoothe instanzierte Meshes - konische Zylinderstämme, Ikosaeder-Laubblobs/-Büsche, Low-Poly-Felsen. Pro Material ein Drawcall.
+- **Gras**: EIN instanziertes ShaderMaterial-Mesh, Wind im Vertex-Shader, Halme getapert + gekrümmt, geclumpte Tuft-Verteilung, Basis-AO, Typen-Mix (grün/Akzent/Blüten). Custom-Shader brauchen `fog: true` + Fog-Chunks, sonst ignorieren sie den Szenen-Nebel.
+- **Stimmung**: neutrales entsättigtes Licht statt starker Farbtints (Tints waschen Böden aus), lokale Fog-Volumes nie zentriert über Kampfzonen (lesen als "Wand").
 
+ZIEL: Jedes Biom fühlt sich komplett anders an, bleibt aber leicht verwandt mit den vorherigen.
 
 - **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
 - **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
 - **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
+
+
+## 7. 3D-Map-Design in Voxel Samurai Quiz (Stand 2026-06-11)
+- **Kein Voxel-Look mehr fuer Maps/Umgebungen.** Neue Maps und Map-Redesigns werden wie ein Open-World-RPG gebaut (Referenz: Black Desert, Chrono Odyssey): smoothe Geometrie statt Boxen - konische Zylinder fuer Staemme, Ikosaeder-/Blob-Shapes fuer Laub und Bueschel, Low-Poly-Felsen, displaced Terrain-Meshes fuer den Boden.
+- **Leichte Erhoehungen sind der Normalfall:** sanfte Huegel (max. ~3 Einheiten), aber NICHT permanent wellig - Kampfzentren, Spawns, Shrine-Plaetze und Wege bleiben als gerade/flache Flaechen erhalten. Hoehen ueber eine analytische Funktion definieren und via `registerTerrainHeightSnapshot()` (terrainHeightRuntime) registrieren, damit Spieler/Gegner/Kamera automatisch folgen.
+- **Boden hochwertig designen:** Welt-Raum-Makrovariation + Trampelpfade ueber Vertex-Colors auf dem Terrain-Mesh (nichts tiled), Detail ueber die prozedurale Textur, Gras/Decor meidet Pfade. Instanzfarben werden mit Texturen MULTIPLIZIERT - dunkle Tints auf hellen Texturen wirken schwarz.
