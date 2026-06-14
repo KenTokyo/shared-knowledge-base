@@ -41,7 +41,7 @@
 - **Icons (Pflicht) und mit Farbe:** Icons immer mit klarer Bedeutungsfarbe, subtilem Rand und Hover-State nutzen: z.B. Speichern/Start/Erfolg = `text-status-success`...
 
 # User Message aufnehmen in die Todos/Masterplanung
-- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[datum]-[task].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[task]-[datum].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
 
 Usernachricht - User möchte:
 - HUD Anzeige oben links kleiner, kompakter haben

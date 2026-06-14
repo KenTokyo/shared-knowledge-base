@@ -8,7 +8,7 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 ## 1. Kontext & Kommunikation
 
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
-- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[datum]-[task].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[task]-[datum].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
 
 Usernachricht - User möchte:
 - HUD Anzeige oben links kleiner, kompakter haben
@@ -75,7 +75,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 - **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮
 
 ## 3. Workflow & Dokumentation
-- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
+- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[task]-[datum].md`), sonst nach Abschnitt 4 erstellen
 - **Vor Implementierung:** Planung/Todo validieren ob sie Sinn macht und korrekt geplant wurde
 - **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung/Todo anlegen
 - **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren) und Todos phasenweise abhaken, nach jeder Phase, ohen Stopp
@@ -96,7 +96,7 @@ Falls Orchestrator Modus an!
 ## 4. Erzeugung von Planung
 
 ### Dokumentationssystem - Todoformat einhalten!
-**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
+**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[task]-[datum].md`
 
 Jede Phase MUSS diese **7 Punkte** enthalten:
 1. **Ziel:** Was ist am Ende sichtbar besser?

@@ -54,6 +54,8 @@ Stand 2026-06-01: Die globale Playwright CLI wurde auf `0.1.13` aktualisiert und
 
 Stand 2026-06-04: Normale Browser-Playwright-CLI-Tests in NoteDrill bevorzugt mit Microsoft Edge/System-Edge ausführen, nicht mit Chrome. Grund: Edge ist lokal performanter; Chrome laggt in NoteDrill-Smokes stärker. Ausnahme nur, wenn Edge fehlt oder ein konkretes Feature ausdrücklich Chrome verlangt. Electron-Playwright-CLI bleibt unverändert über den NoteDrill-Electron-/Chromium-Wrapper.
 
+Stand 2026-06-11: Die globale `playwright-cli` ist aktuell defekt. Jeder `open`-Aufruf (auch ohne Argumente, auch nach `kill-all`) bricht ab mit `Daemon pid=…: Arguments can not specify page to be opened`. NICHT wiederholen: weitere `playwright-cli open`-Varianten durchprobieren. Funktionierender Ersatz für Browser-Smokes: direktes `playwright-core` aus den Projekt-Dependencies mit `chromium.launch({ channel: 'msedge', headless: true })` in einem kleinen `node`-Skript. Referenzbeispiel: `output/playwright/presentations-smoke.mjs` (Smoke für `/presentations`, inkl. Konsolen-Fehler-Sammlung und Screenshot nach `output/playwright/`).
+
 Nutze diesen Ablauf:
 
 1. `playwright-cli open <url> --headed`
