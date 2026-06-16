@@ -190,6 +190,14 @@ Pflicht bei Feature-Implementierung, Refactoring, Bug-Fixes über mehrere Dateie
 ### Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!** → Performance-Killer (jedes Render neu erstellt) + State-Verlust. Jede Komponente in separater Datei.
 
+### Fachliche Komponentenstruktur / Clean Code (PFLICHT)
+- **Komponentenbasiert heißt fachlicher Besitz pro Datei**, nicht nur irgendein Ordner mit einer großen Sammeldatei. Ein konkretes UI-Element, Asset, Map, Benchmark-Ziel, Generator-Output, Service-Use-Case oder Datenmodell bekommt eine eigene Datei oder einen eigenen Unterordner, wenn es fachlich eigenständig ist.
+- **Keine wachsenden `entries.ts`-/`config.ts`-/`data.ts`-Monster:** Aggregator-Dateien importieren nur und exportieren nur. Sie enthalten keine Build-Logik, keine langen Objektlisten, keine Ziel-spezifischen Helper, keine Terrain-/Scatter-/Generatorlogik.
+- **Faustregel:** Wenn eine Datei mehrere unabhängige fachliche Ziele enthält (z. B. fünf Benchmark-Assets, drei Maps, viele Custom-Ziele), splitte in `zielName.ts`/`mapName.ts` plus kleinen `index.ts`. Bei 20+ oder erwartbar 100+ Einträgen von Anfang an Unterordner nutzen.
+- **Dateiname muss den generierten Inhalt erklären:** `v3/skyRidge.ts`, `custom/dungeonProps/crystalGate.ts` oder `settings/ThemeToggle.tsx` ist gut. `v3Entries.ts`, `customEntries.ts`, `misc.ts`, `helpers.ts` oder `allAssets.ts` ist nur erlaubt, wenn die Datei wirklich ein kleiner Aggregator ist.
+- **Shared nur bei echter Wiederverwendung:** `kit.ts`, `shared.ts`, `builders.ts` oder `utils.ts` dürfen neutrale Bausteine enthalten, aber keine versteckten konkreten Features. Wenn ein Helper nur für ein Ziel existiert, bleibt er in der Ziel-Datei.
+- **Änderungen additiv denken:** Neue Generationen, Modi, Varianten oder Custom-Sets kommen als eigene Dateien/Ordner dazu. Bestehende fachliche Dateien werden nicht ersetzt oder zusammengeworfen, außer der User fordert genau diese Regeneration.
+
 ### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — Auslagern wenn größer
 - 🇩🇪 **Deutsch (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`
