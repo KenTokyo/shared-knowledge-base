@@ -7,6 +7,7 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 
 ## 1. Kontext & Kommunikation
 
+- **Keine Rückfragen / kein `AskUserQuestion` (PFLICHT, User-Order 2026-06-19):** Nicht beim User nachfragen und keinen `AskUserQuestion`-Dialog öffnen. Bei mehreren Wegen eigenständig die fachlich beste, kleinste stabile Lösung wählen, kurz im Plan/Abschluss begründen und direkt umsetzen. Nur bei einem echten externen Blocker (fehlende externe Daten/Zugänge, die die KI nicht selbst beschaffen kann) genau 1 konkrete Info anfordern. Siehe auch Schlusszeile „Stelle keine Fragen!".
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
 - Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[task]-[datum].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
 
@@ -451,6 +452,7 @@ db/
 - ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
 
 ### Quick Checklist
+- **Keine Rückfragen / kein `AskUserQuestion`** — eigenständig die fachlich beste Lösung umsetzen (User-Order)
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
 - **NO-GO Live-Collection-Mutation:** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. Das kann Endloswachstum erzeugen, weil JS-Iteratoren neue Eintraege mitlaufen lassen. Fuer Nachbarschaften, Chunk-/Ufer-Ringe, Flood-Fill, Graphen, Spawn-Ausbreitung und Geometry-Builds immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen.
 - Gesichtselement-Regel im ganzen Spiel: Nur Augen sind erlaubt. Keine Münder, Gesichtslinien, Faceplates, Visor-/Maskenstreifen, Stirn-Gems oder andere gesichtsähnliche Markierungen an Charakteren/Gegnern.
@@ -502,3 +504,4 @@ db/
 - **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
 - **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
 - **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
+- Stelle keine Fragen!
