@@ -11,10 +11,16 @@ Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Anna
 - **Empfehlung = Auftrag:** Steht im Plan bereits eine klare Empfehlung, gilt sie als gewählt. Nicht erneut zur Bestätigung vorlegen, sondern direkt bauen.
 - **Einziger Ausnahmefall:** Eine echte externe Blockade, die ohne den User unmöglich lösbar ist (fehlender Secret/Zugang, widersprüchliche Pflichtdaten, destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern und sonst weiterarbeiten.
 
+## Keine Rückfragen (PFLICHT)
+- **Niemals Klärungsfragen an den User stellen** (kein `AskUserQuestion`, keine "Soll ich A oder B?"-Rückfragen). Der User will Umsetzung, keine Auswahl-Dialoge.
+- Bei Unklarheit: **die fachlich beste Option selbst wählen**, kurz in Plan/Antwort begründen und sofort umsetzen. Annahmen klar als Annahme markieren.
+- Nur stoppen bei echten externen Blockern (fehlende Credentials/Daten, die nur der User hat) — und dann als Hinweis formulieren, nicht als Multiple-Choice-Frage.
+
 ## 1. Kontext & Kommunikation
 
+- **Keine Rückfragen / kein `AskUserQuestion` (PFLICHT, User-Order 2026-06-19):** Nicht beim User nachfragen und keinen `AskUserQuestion`-Dialog öffnen. Bei mehreren Wegen eigenständig die fachlich beste, kleinste stabile Lösung wählen, kurz im Plan/Abschluss begründen und direkt umsetzen. Nur bei einem echten externen Blocker (fehlende externe Daten/Zugänge, die die KI nicht selbst beschaffen kann) genau 1 konkrete Info anfordern. Siehe auch Schlusszeile „Stelle keine Fragen!".
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
-- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[datum]-[task].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[task]-[datum].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
 
 Usernachricht - User möchte:
 - HUD Anzeige oben links kleiner, kompakter haben
@@ -81,7 +87,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 - **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮
 
 ## 3. Workflow & Dokumentation
-- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
+- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[task]-[datum].md`), sonst nach Abschnitt 4 erstellen
 - **Vor Implementierung:** Planung/Todo validieren ob sie Sinn macht und korrekt geplant wurde
 - **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung/Todo anlegen
 - **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren) und Todos phasenweise abhaken, nach jeder Phase, ohen Stopp
@@ -102,7 +108,7 @@ Falls Orchestrator Modus an!
 ## 4. Erzeugung von Planung
 
 ### Dokumentationssystem - Todoformat einhalten!
-**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
+**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[task]-[datum].md`
 
 Jede Phase MUSS diese **7 Punkte** enthalten:
 1. **Ziel:** Was ist am Ende sichtbar besser?
@@ -195,6 +201,14 @@ Pflicht bei Feature-Implementierung, Refactoring, Bug-Fixes über mehrere Dateie
 
 ### Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!** → Performance-Killer (jedes Render neu erstellt) + State-Verlust. Jede Komponente in separater Datei.
+
+### Fachliche Komponentenstruktur / Clean Code (PFLICHT)
+- **Komponentenbasiert heißt fachlicher Besitz pro Datei**, nicht nur irgendein Ordner mit einer großen Sammeldatei. Ein konkretes UI-Element, Asset, Map, Benchmark-Ziel, Generator-Output, Service-Use-Case oder Datenmodell bekommt eine eigene Datei oder einen eigenen Unterordner, wenn es fachlich eigenständig ist.
+- **Keine wachsenden `entries.ts`-/`config.ts`-/`data.ts`-Monster:** Aggregator-Dateien importieren nur und exportieren nur. Sie enthalten keine Build-Logik, keine langen Objektlisten, keine Ziel-spezifischen Helper, keine Terrain-/Scatter-/Generatorlogik.
+- **Faustregel:** Wenn eine Datei mehrere unabhängige fachliche Ziele enthält (z. B. fünf Benchmark-Assets, drei Maps, viele Custom-Ziele), splitte in `zielName.ts`/`mapName.ts` plus kleinen `index.ts`. Bei 20+ oder erwartbar 100+ Einträgen von Anfang an Unterordner nutzen.
+- **Dateiname muss den generierten Inhalt erklären:** `v3/skyRidge.ts`, `custom/dungeonProps/crystalGate.ts` oder `settings/ThemeToggle.tsx` ist gut. `v3Entries.ts`, `customEntries.ts`, `misc.ts`, `helpers.ts` oder `allAssets.ts` ist nur erlaubt, wenn die Datei wirklich ein kleiner Aggregator ist.
+- **Shared nur bei echter Wiederverwendung:** `kit.ts`, `shared.ts`, `builders.ts` oder `utils.ts` dürfen neutrale Bausteine enthalten, aber keine versteckten konkreten Features. Wenn ein Helper nur für ein Ziel existiert, bleibt er in der Ziel-Datei.
+- **Änderungen additiv denken:** Neue Generationen, Modi, Varianten oder Custom-Sets kommen als eigene Dateien/Ordner dazu. Bestehende fachliche Dateien werden nicht ersetzt oder zusammengeworfen, außer der User fordert genau diese Regeneration.
 
 ### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — Auslagern wenn größer
@@ -449,6 +463,7 @@ db/
 - ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
 
 ### Quick Checklist
+- **Keine Rückfragen / kein `AskUserQuestion`** — eigenständig die fachlich beste Lösung umsetzen (User-Order)
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
 - **NO-GO Live-Collection-Mutation:** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. Das kann Endloswachstum erzeugen, weil JS-Iteratoren neue Eintraege mitlaufen lassen. Fuer Nachbarschaften, Chunk-/Ufer-Ringe, Flood-Fill, Graphen, Spawn-Ausbreitung und Geometry-Builds immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen.
 - Gesichtselement-Regel im ganzen Spiel: Nur Augen sind erlaubt. Keine Münder, Gesichtslinien, Faceplates, Visor-/Maskenstreifen, Stirn-Gems oder andere gesichtsähnliche Markierungen an Charakteren/Gegnern.
@@ -500,3 +515,4 @@ db/
 - **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
 - **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
 - **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
+- Stelle keine Fragen!

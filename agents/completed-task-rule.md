@@ -21,13 +21,13 @@ Falls der Ordner nicht existiert, erstelle ihn.
 ## Dateiname
 
 ```
-<YYYY-MM-DD>_<kurzer-slug>.md
+<kurzer-slug>_<YYYY-MM-DD>.md
 ```
 
 Beispiele:
-- `2026-03-17_session-tabs-feature.md`
-- `2026-03-17_fix-login-redirect.md`
-- `2026-03-17_refactor-api-service.md`
+- `session-tabs-feature_2026-03-17.md`
+- `fix-login-redirect_2026-03-17.md`
+- `refactor-api-service_2026-03-17.md`
 
 ## Datei-Format
 

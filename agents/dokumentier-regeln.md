@@ -6,7 +6,7 @@
 
 **Sub-Features**:`docs/[feature]/features/[sub-feature].md`
 
-**Task-History**:`docs/[feature]/tasks/[datum]-[task].md`
+**Task-History**:`docs/[feature]/tasks/[task]-[datum].md`
 
 **Master-Navigation** (nur bei sehr großen Änderungen):`docs/OVERVIEW.md`
 
@@ -42,7 +42,7 @@ Ebenfalls in Tabellenform, falls Details tiefer aufgeschlüsselt werden müssen 
 
 ---
 
-### **Task-History (**`**tasks/[datum]-[task].md**`**\*\*\*\*)**
+### **Task-History (**`**tasks/[task]-[datum].md**`**\*\*\*\*)**
 
 <table><tbody><tr><td>Datum</td><td>Task</td><td>Status</td><td>Betroffene Features</td></tr><tr><td>2025-09-11</td><td>Refactoring Notizen</td><td>✅ abgeschlossen</td><td>Notes, tiptap-editor</td></tr></tbody></table>
 
