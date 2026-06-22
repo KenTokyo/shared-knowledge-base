@@ -5,6 +5,12 @@
 ## Grundhaltung und Bewertungsmodus
 Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Annahme und jeden Plan als ungeprüft, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
+## Durcharbeiten statt Fragen (PFLICHT, Userregel 2026-06-21)
+- **Keine Rückfragen stellen — durcharbeiten.** Wenn eine Aufgabe, ein Plan oder eine Masterplanung vorliegt, wird **ohne Zwischenfragen** vom aktuellen Stand bis zur letzten Phase durchgearbeitet.
+- **Keine Auswahl-Dialoge ("Option A oder B?") an den User zurückgeben.** Wenn mehrere Wege existieren, selbst die fachlich beste/empfohlene Option wählen, kurz begründen, umsetzen und die Entscheidung im Task-Doc dokumentieren.
+- **Empfehlung = Auftrag:** Steht im Plan bereits eine klare Empfehlung, gilt sie als gewählt. Nicht erneut zur Bestätigung vorlegen, sondern direkt bauen.
+- **Einziger Ausnahmefall:** Eine echte externe Blockade, die ohne den User unmöglich lösbar ist (fehlender Secret/Zugang, widersprüchliche Pflichtdaten, destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern und sonst weiterarbeiten.
+
 ## 1. Kontext & Kommunikation
 
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
