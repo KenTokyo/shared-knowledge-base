@@ -393,6 +393,7 @@ db/
 
 ### Frontend Regeln & Antipatterns!
 - **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
+- **KI-Lernformate = warme Stein-/Glutgold-Palette (vom User bestätigt, 2026-06-25):** Simulation, Whiteboard, Diagramm und Kreativ-HTML nutzen warme Steingrau-/Glutgold-Töne statt blau-schwarz/Neon (Canvas Dark `#141210` / Light `#f5f1e9`, Grid `#383229` / `#e8e0d2`, Ink `#d8d0c4` / `#3c352c`). **Prinzip: gedämpft statt Neon, warm statt kühl, Rand≠Füllung** — die Farb-Identität sitzt in Rand + Titel + Icon, die Karten-Füllung bleibt subtil (Diagramm-Karten ≈ 10 % Hue-Wasch, nur Gruppen-Backdrops kräftiger). Volle Hex-Tabelle + Warm-Modus-Surfaces in `DESIGN.md` („Warme Stein-/Glutgold-Palette"). SSoT: `components/common/custom-diagram-canvas/utils/{color-utils,theme-manager}.ts` + `regeln/FORMAT-KREATIV-HTML.md`.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund z.B. `bg-green-500`, `bg-red-600`... **Warum?** Halbtransparente Hintergründe sorgen für Probleme, aufgrund von Capacitor-Einstellungen bei uns!
   - Außer Border ist es Pflicht, so transparent wie möglich die Borders zu machen; nutze am besten `border-subtle`, `--border` oder sehr dunkle Darkmode-Borders.
