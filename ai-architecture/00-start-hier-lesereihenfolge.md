@@ -15,8 +15,8 @@ Stand: 8. März 2026
 | `02-betrieb-und-szenarien/` | Gerätewege, Nutzerwege, Kosten und Verantwortungen |
 | `03-agentic-umsetzung/` | konkrete Maßnahmen und Mermaid-Diagramme |
 | `04-zusatzthemen/` | einzelne Ergänzungen wie ChatGPT-Connector |
-| `05-analyse-notedrill-backend-nextjs/` | ehrlicher Ist-Stand für KI-Chat, JSON, Bridge und Backend-Lücken |
-| `06-agentic-umsetzung-notedrill-backend-nextjs/` | ausführliche Backend-Phasen mit Tasklisten, Kostenweg und Betriebsmodellen |
+| `05-analyse-notetree-tanstack/` | ehrlicher Ist-Stand für KI-Chat, JSON, Bridge und Backend-Lücken |
+| `06-agentic-umsetzung-notetree-tanstack/` | ausführliche Backend-Phasen mit Tasklisten, Kostenweg und Betriebsmodellen |
 | `toolcall-architecture/` | tiefer Technikvergleich zu Tool-Calls, MCP, Skills und Host-Systemen |
 | `99-history/` | längerer Verlauf und frühere Entscheidungen |
 
@@ -70,23 +70,23 @@ Dann hast du das grobe Ziel, die Reihenfolge und die Maßnahmen.
 9. `toolcall-architecture/08-vergleich-und-was-notedrill-lernen-soll.md`
 
 ### Schritt 5: Wenn du jetzt speziell das Backend Next.js umbauen willst
-1. `05-analyse-notedrill-backend-nextjs/00-start-hier-und-lesereihenfolge.md`
-2. `05-analyse-notedrill-backend-nextjs/01-ist-zustand-ki-chat-bridge-und-json-vertraege.md`
-3. `05-analyse-notedrill-backend-nextjs/02-heute-schon-besser-optimieren-ohne-grossumbau.md`
-4. `05-analyse-notedrill-backend-nextjs/03-was-wir-aus-mobile-und-anderen-systemen-lernen-sollten.md`
-5. `05-analyse-notedrill-backend-nextjs/04-zukunftsbilder-mcp-kosten-und-server-pro-nutzer.md`
-6. `06-agentic-umsetzung-notedrill-backend-nextjs/00-start-hier-und-lesereihenfolge.md`
-7. `06-agentic-umsetzung-notedrill-backend-nextjs/01-master-taskliste-und-status.md`
-8. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/01-run-vertrag-und-server-runner.md`
-9. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/02-tool-registry-und-app-aktionen-ohne-json-hickhack.md`
-10. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/03-provider-routing-budget-und-modelle.md`
-11. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/04-kontext-speicher-zusammenfassung-und-rollen.md`
-12. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/05-artefakte-importe-und-uebernahme.md`
-13. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/06-lange-laeufe-queue-und-24h-agenten.md`
-14. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/07-mcp-server-und-externe-werkzeuge.md`
-15. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/08-host-modelle-shared-remote-companion-und-nutzer-server.md`
-16. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/09-abo-preise-und-paketlogik.md`
-17. `06-agentic-umsetzung-notedrill-backend-nextjs/phasen/10-messung-tests-und-rollout.md`
+1. `05-analyse-notetree-tanstack/00-start-hier-und-lesereihenfolge.md`
+2. `05-analyse-notetree-tanstack/01-ist-zustand-ki-chat-bridge-und-json-vertraege.md`
+3. `05-analyse-notetree-tanstack/02-heute-schon-besser-optimieren-ohne-grossumbau.md`
+4. `05-analyse-notetree-tanstack/03-was-wir-aus-mobile-und-anderen-systemen-lernen-sollten.md`
+5. `05-analyse-notetree-tanstack/04-zukunftsbilder-mcp-kosten-und-server-pro-nutzer.md`
+6. `06-agentic-umsetzung-notetree-tanstack/00-start-hier-und-lesereihenfolge.md`
+7. `06-agentic-umsetzung-notetree-tanstack/01-master-taskliste-und-status.md`
+8. `06-agentic-umsetzung-notetree-tanstack/phasen/01-run-vertrag-und-server-runner.md`
+9. `06-agentic-umsetzung-notetree-tanstack/phasen/02-tool-registry-und-app-aktionen-ohne-json-hickhack.md`
+10. `06-agentic-umsetzung-notetree-tanstack/phasen/03-provider-routing-budget-und-modelle.md`
+11. `06-agentic-umsetzung-notetree-tanstack/phasen/04-kontext-speicher-zusammenfassung-und-rollen.md`
+12. `06-agentic-umsetzung-notetree-tanstack/phasen/05-artefakte-importe-und-uebernahme.md`
+13. `06-agentic-umsetzung-notetree-tanstack/phasen/06-lange-laeufe-queue-und-24h-agenten.md`
+14. `06-agentic-umsetzung-notetree-tanstack/phasen/07-mcp-server-und-externe-werkzeuge.md`
+15. `06-agentic-umsetzung-notetree-tanstack/phasen/08-host-modelle-shared-remote-companion-und-nutzer-server.md`
+16. `06-agentic-umsetzung-notetree-tanstack/phasen/09-abo-preise-und-paketlogik.md`
+17. `06-agentic-umsetzung-notetree-tanstack/phasen/10-messung-tests-und-rollout.md`
 
 ### Schritt 6: Zusatzthemen nur bei Bedarf
 1. `04-zusatzthemen/chatgpt-connector.md`
@@ -108,16 +108,16 @@ Dann hast du das grobe Ziel, die Reihenfolge und die Maßnahmen.
 | Welche Phase ist als Nächstes dran? | `03-agentic-umsetzung/phasen/01-run-contract-und-tool-woerterbuch.md` |
 | Gibt es Diagramme? | `03-agentic-umsetzung/notedrill-ki-agentic-userwege-und-kosten-diagramme.md` |
 | Wie funktionieren Tool-Calls technisch? | `toolcall-architecture/00-master-ueberblick-toolcall-architektur.md` |
-| Wie sieht das Backend Next.js heute wirklich aus? | `05-analyse-notedrill-backend-nextjs/01-ist-zustand-ki-chat-bridge-und-json-vertraege.md` |
-| Was können wir kurzfristig im Backend verbessern? | `05-analyse-notedrill-backend-nextjs/02-heute-schon-besser-optimieren-ohne-grossumbau.md` |
-| Welche Backend-Phasen bauen wir als Nächstes? | `06-agentic-umsetzung-notedrill-backend-nextjs/01-master-taskliste-und-status.md` |
+| Wie sieht das Backend Next.js heute wirklich aus? | `05-analyse-notetree-tanstack/01-ist-zustand-ki-chat-bridge-und-json-vertraege.md` |
+| Was können wir kurzfristig im Backend verbessern? | `05-analyse-notetree-tanstack/02-heute-schon-besser-optimieren-ohne-grossumbau.md` |
+| Welche Backend-Phasen bauen wir als Nächstes? | `06-agentic-umsetzung-notetree-tanstack/01-master-taskliste-und-status.md` |
 
 ## Meine empfohlene Arbeitsweise
 1. Erst `Grundlagen`
 2. Dann `Betrieb und Szenarien`
 3. Dann `Agentic-Umsetzung`
 4. Danach `toolcall-architecture`
-5. Wenn Backend-Umbau ansteht: `05-analyse-notedrill-backend-nextjs/` und `06-agentic-umsetzung-notedrill-backend-nextjs/`
+5. Wenn Backend-Umbau ansteht: `05-analyse-notetree-tanstack/` und `06-agentic-umsetzung-notetree-tanstack/`
 6. `Zusatzthemen` und `History` nur bei Bedarf
 
 ## Warum diese Reihenfolge sinnvoll ist

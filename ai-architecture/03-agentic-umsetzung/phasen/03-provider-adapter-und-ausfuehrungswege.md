@@ -80,7 +80,7 @@ Zum Beispiel kann `codex-cli` heißen, ohne echten lokalen Codex-Loop zu liefern
 1. `lib/agent/bridge/provider-adapters.ts`
 2. `lib/agent/bridge/bridge-model-catalog.ts`
 3. `lib/agent/bridge/provider-adapters.ts`
-4. `notedrill-backend-nextjs` Bridge- und Provider-Dateien
+4. `notetree-tanstack` Bridge- und Provider-Dateien
 
 ## Done-Kriterien
 1. Host und Provider sind nicht mehr vermischt.

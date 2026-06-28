@@ -11,7 +11,7 @@ Lese AGENTS.md unbedingt.
 Github Tutorials Markdown dateien erzeugen bzw ordner, schöne formatierte einfache zu verstehen infos erzeugen und wie ich jetrzt weitergehe tanstack branch und next js, next js soll main branch sein
 
 D:\CODING\React Projects\notedrill
-D:\CODING\React Projects\notedrill\notedrill-backend-nextjs
+D:\CODING\React Projects\notedrill\notetree-tanstack
 
 Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1775897744477.png
 Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1775897896466.png
@@ -90,7 +90,7 @@ main ●─●─●─●─●─●─●─●  (mit TanStack - 8da14794)
 
 Dein PC:
 ┌─────────────────────────────────┐
-│ notedrill-backend-nextjs        │  ← Main-Ordner (mit TanStack)
+│ notetree-tanstack        │  ← Main-Ordner (mit TanStack)
 └─────────────────────────────────┘
 
 ┌─────────────────────────────────┐
@@ -102,7 +102,7 @@ Dein PC:
 
 ```
 ┌─────────────────────────────────┐
-│ notedrill-backend-nextjs        │  ← Sauberer Stand (c62afbc7, OHNE TanStack)
+│ notetree-tanstack        │  ← Sauberer Stand (c62afbc7, OHNE TanStack)
 │ Branch: main                    │
 └─────────────────────────────────┘
 
@@ -208,7 +208,7 @@ Die Tutorial-Dateien sind da. Jetzt zeige ich dir die finale Situation:
 │  NACHHER                                                   │
 ├────────────────────────────────────────────────────────────┤
 │                                                            │
-│  📁 notedrill-backend-nextjs                               │
+│  📁 notetree-tanstack                               │
 │  ├── Branch: clean                                         │
 │  └── Commit: c62afbc7 (SAUBER, ohne TanStack)             │
 │                                                            │
@@ -225,7 +225,7 @@ Die Tutorial-Dateien sind da. Jetzt zeige ich dir die finale Situation:
 
 | Ordner | Für was? | Branch |
 |--------|----------|--------|
-| `notedrill-backend-nextjs` | Next.js ohne TanStack | `clean` |
+| `notetree-tanstack` | Next.js ohne TanStack | `clean` |
 | `notedrill-tanstack-branch` | TanStack-Experimente | `tanstack` |
 
 **Tipp:** Wenn du TanStack doch nicht mehr willst, bleibt der `clean` Branch erhalten. Wenn TanStack gut läuft, kannst du später entscheiden, ob du es in main mergen willst.
@@ -257,7 +257,7 @@ Lese AGENTS.md unbedingt.
 Github Tutorials Markdown dateien erzeugen bzw ordner, schöne formatierte einfache zu verstehen infos erzeugen und wie ich jetrzt weitergehe tanstack branch und next js, next js soll main branch sein
 
 D:\CODING\React Projects\notedrill
-D:\CODING\React Projects\notedrill\notedrill-backend-nextjs
+D:\CODING\React Projects\notedrill\notetree-tanstack
 
 Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1775897744477.png
 Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1775897896466.png
@@ -336,7 +336,7 @@ main ●─●─●─●─●─●─●─●  (mit TanStack - 8da14794)
 
 Dein PC:
 ┌─────────────────────────────────┐
-│ notedrill-backend-nextjs        │  ← Main-Ordner (mit TanStack)
+│ notetree-tanstack        │  ← Main-Ordner (mit TanStack)
 └─────────────────────────────────┘
 
 ┌─────────────────────────────────┐
@@ -348,7 +348,7 @@ Dein PC:
 
 ```
 ┌─────────────────────────────────┐
-│ notedrill-backend-nextjs        │  ← Sauberer Stand (c62afbc7, OHNE TanStack)
+│ notetree-tanstack        │  ← Sauberer Stand (c62afbc7, OHNE TanStack)
 │ Branch: main                    │
 └─────────────────────────────────┘
 
@@ -454,7 +454,7 @@ Die Tutorial-Dateien sind da. Jetzt zeige ich dir die finale Situation:
 │  NACHHER                                                   │
 ├────────────────────────────────────────────────────────────┤
 │                                                            │
-│  📁 notedrill-backend-nextjs                               │
+│  📁 notetree-tanstack                               │
 │  ├── Branch: clean                                         │
 │  └── Commit: c62afbc7 (SAUBER, ohne TanStack)             │
 │                                                            │
@@ -471,7 +471,7 @@ Die Tutorial-Dateien sind da. Jetzt zeige ich dir die finale Situation:
 
 | Ordner | Für was? | Branch |
 |--------|----------|--------|
-| `notedrill-backend-nextjs` | Next.js ohne TanStack | `clean` |
+| `notetree-tanstack` | Next.js ohne TanStack | `clean` |
 | `notedrill-tanstack-branch` | TanStack-Experimente | `tanstack` |
 
 **Tipp:** Wenn du TanStack doch nicht mehr willst, bleibt der `clean` Branch erhalten. Wenn TanStack gut läuft, kannst du später entscheiden, ob du es in main mergen willst.
