@@ -216,6 +216,7 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 | **CSS-Diorama** | Preview „Mini-3D-Szene" | `menu/ArenaPreview.tsx` |
 | **CornerBrackets** | Ecken-Winkel | `shop/CornerBrackets.tsx` |
 | **Pause-Konsole** | Overlay-Hero (Lit-Logo + Wortmarke + Motes) + juicy Buttons | `screens/(pause)/PauseHero.tsx`, `PauseButton.tsx` |
+| **Upgrade-Konsole** | Endless-Reward als Tab-Konsole: Lit-Hero + `layoutId`-TabRail + genau *ein* Tab-Body + ein „Weiter"-CTA; distinkter Akzent je Tab | `RewardShopHub.tsx`, `(upgrade)/UpgradeHero.tsx`, `UpgradeTabRail.tsx`, `BoostDraftTab.tsx`, `SkillsTab.tsx` |
 
 ---
 
@@ -270,6 +271,7 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 - `menu/ArenaPreview.tsx` — **CSS-Diorama-Vollvorlage** · `menu/PilotBadge.tsx` — Live-3D-Row
 - `shop/CornerBrackets.tsx` · `shop/CharacterPreview3D.tsx`
 - `screens/PauseMenu.tsx` + `screens/(pause)/PauseHero.tsx` · `PauseButton.tsx` · `ActiveBoostsPanel.tsx`
+- `RewardShopHub.tsx` (Endless-Upgrade-Konsole) + `(upgrade)/UpgradeHero.tsx` · `UpgradeTabRail.tsx` · `BoostDraftTab.tsx` · `SkillsTab.tsx`
 - Tokens: `src/config/constants.ts` (`WARM_STONE`) · Palette-Doku: `crossword-core-breaker/DESIGN.md`
 - Entstehungs-Masterplan: `crossword-core-breaker/docs/v6-ui-overhaul-stepper-floor/masterplan.md`
 
