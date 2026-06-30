@@ -4,7 +4,7 @@ Stand: 13.03.2026
 
 ## 1) Was wir heute wirklich haben
 
-- Hauptprojekt (`notedrill-backend-nextjs`): Next.js 14, grosses App-Router-Projekt, viele API-Routen.
+- Hauptprojekt (`notetree-tanstack`): Next.js 14, grosses App-Router-Projekt, viele API-Routen.
 - Unterprojekt (`notedrill-web`): Next.js 15, kleines Web-Projekt.
 - Paketmanager: npm (nicht "MPM").
 - Direktes Vite im Hauptprojekt: nein.

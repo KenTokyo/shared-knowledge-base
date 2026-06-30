@@ -5,6 +5,12 @@
 ## Grundhaltung und Bewertungsmodus
 Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Annahme und jeden Plan als ungeprüft, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
+## Durcharbeiten statt Fragen (PFLICHT, Userregel 2026-06-21)
+- **Keine Rückfragen stellen — durcharbeiten.** Wenn eine Aufgabe, ein Plan oder eine Masterplanung vorliegt, wird **ohne Zwischenfragen** vom aktuellen Stand bis zur letzten Phase durchgearbeitet.
+- **Keine Auswahl-Dialoge ("Option A oder B?") an den User zurückgeben.** Wenn mehrere Wege existieren, selbst die fachlich beste/empfohlene Option wählen, kurz begründen, umsetzen und die Entscheidung im Task-Doc dokumentieren.
+- **Empfehlung = Auftrag:** Steht im Plan bereits eine klare Empfehlung, gilt sie als gewählt. Nicht erneut zur Bestätigung vorlegen, sondern direkt bauen.
+- **Einziger Ausnahmefall:** Eine echte externe Blockade, die ohne den User unmöglich lösbar ist (fehlender Secret/Zugang, widersprüchliche Pflichtdaten, destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern und sonst weiterarbeiten.
+
 ## Keine Rückfragen (PFLICHT)
 - **Niemals Klärungsfragen an den User stellen** (kein `AskUserQuestion`, keine "Soll ich A oder B?"-Rückfragen). Der User will Umsetzung, keine Auswahl-Dialoge.
 - Bei Unklarheit: **die fachlich beste Option selbst wählen**, kurz in Plan/Antwort begründen und sofort umsetzen. Annahmen klar als Annahme markieren.
@@ -51,7 +57,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
   2. **Lokaler Geschwister-Abgleich (Sibling Repos):** Zuerst benachbarte Arbeitsverzeichnisse wenn es welche gibt also in `D:\CODING\React Projects\` (z.B. `AntigravityManager`, `codeg`, `AionUi`, `happier` falls verlinkt über `docs\RESSOURCES-UNIVERSAL-DOCS.md` bzw. falls die Datei vorhanden ist) nach funktionierenden Mustern, CLI-Brücken oder Dateisystem-Handhabung scannen.
   3. **Repository-Mining:** GitHub-Repositories und Issue-Tracker durchsuchen (z.B. mit Websuche `site:github.com` oder unserem Such-Skript), um lauffähige Code-Snippets und Best Practices zu identifizieren.
   4. **Lösungs-Ranking:** 2-3 konkrete Lösungswege/Architekturen strukturieren, vergleichen, im Plan dokumentieren und erst nach Auswahl des kleinsten stabilen Ansatzes mit dem Coden beginnen.
-  *Details siehe:* [autonomous-research-guide.md](file:///d:/CODING/React%20Projects/notedrill/notedrill-backend-nextjs/docs/agentic/autonomous-research-guide.md)
+  *Details siehe:* [autonomous-research-guide.md](file:///d:/CODING/React%20Projects/notedrill/notetree-tanstack/docs/agentic/autonomous-research-guide.md)
 - **Playwright-/Browser-Research-First (PFLICHT bei beauftragter Browserarbeit):** Wenn Browser, Playwright CLI, Playwright-Testdateien, native Dialoge, File System Access API, Login/API-Key-Seeding oder Search Params genutzt werden, zuerst den offiziellen Skill `C:\Users\PC1\.codex\skills\playwright\SKILL.md` und danach die NoteDrill-Findings-Doku `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` lesen. Bei Electron-Desktoparbeit zusätzlich `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` lesen. Nach Context-Condensing diese Dateien erneut lesen.
 - **Browser-Playwright mit Microsoft Edge (PFLICHT):** Normale Browser-Playwright-CLI-Tests in NoteDrill zuerst mit Microsoft Edge/System-Edge ausführen, nicht mit Chrome, weil Edge lokal performanter ist und Chrome in NoteDrill-Smokes stärker laggt. Playwright-CLI dabei über Edge-Channel/System-Edge nutzen und **nicht** durch Browser-use/In-App-Browser ersetzen. Ausnahme nur, wenn Edge fehlt oder ein Feature ausdrücklich Chrome verlangt. Electron-Playwright-CLI bleibt davon unberührt und nutzt weiter den Electron-/Chromium-Projektwrapper.
 - **Electron-Playwright-CLI-Referenz (PFLICHT bei Electron-Desktoparbeit):** Wenn Electron, Desktop-App, Electron-KI-Chat, `window.electronAPI`, IPC, Desktop-Workspace oder `electron:pwcli` genutzt wird, ist `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` die Projekt-Referenz. Normales Browser-Playwright bleibt für Web-URL-Flows; Electron-Playwright-CLI ist für echte Electron-Fenster und Desktop-IPC.
@@ -387,6 +393,7 @@ db/
 
 ### Frontend Regeln & Antipatterns!
 - **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
+- **KI-Lernformate = warme Stein-/Glutgold-Palette (vom User bestätigt, 2026-06-25):** Simulation, Whiteboard, Diagramm und Kreativ-HTML nutzen warme Steingrau-/Glutgold-Töne statt blau-schwarz/Neon (Canvas Dark `#141210` / Light `#f5f1e9`, Grid `#383229` / `#e8e0d2`, Ink `#d8d0c4` / `#3c352c`). **Prinzip: gedämpft statt Neon, warm statt kühl, Rand≠Füllung** — die Farb-Identität sitzt in Rand + Titel + Icon, die Karten-Füllung bleibt subtil (Diagramm-Karten ≈ 10 % Hue-Wasch, nur Gruppen-Backdrops kräftiger). Volle Hex-Tabelle + Warm-Modus-Surfaces in `DESIGN.md` („Warme Stein-/Glutgold-Palette"). SSoT: `components/common/custom-diagram-canvas/utils/{color-utils,theme-manager}.ts` + `regeln/FORMAT-KREATIV-HTML.md`.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund z.B. `bg-green-500`, `bg-red-600`... **Warum?** Halbtransparente Hintergründe sorgen für Probleme, aufgrund von Capacitor-Einstellungen bei uns!
   - Außer Border ist es Pflicht, so transparent wie möglich die Borders zu machen; nutze am besten `border-subtle`, `--border` oder sehr dunkle Darkmode-Borders.

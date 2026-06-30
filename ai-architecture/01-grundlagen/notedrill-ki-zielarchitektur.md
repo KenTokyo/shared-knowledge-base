@@ -42,7 +42,7 @@ Orchestrator = unser Ablauf-Steuerer für mehrere KI-Schritte hintereinander.
 1.  `app/api/agent/bridge/codex-cli/route.ts` und `app/api/agent/bridge/gemini-cli/route.ts` leiten auf dieselbe gemeinsame Bridge-Logik.
 2.  `app/api/agent/bridge/_shared/bridge-route.ts` liefert heute nur Text plus leere `toolCalls` und `toolResults`.
 3.  Der Name `codex-cli` bedeutet im aktuellen Stand also nicht automatisch echte lokale Codex-CLI-Ausführung.
-4.  Eine Route für `local-artifact` habe ich im `notedrill-backend-nextjs`\-Stand vom 8. März 2026 nicht gefunden.
+4.  Eine Route für `local-artifact` habe ich im `notetree-tanstack`\-Stand vom 8. März 2026 nicht gefunden.
 
 ### Was das für uns bedeutet
 

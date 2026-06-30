@@ -91,7 +91,7 @@ Interne Standardnamen:
 3. `lib/agent/bridge/provider-adapters.ts`
 4. `lib/agent/contracts/*`
 5. `features/chat/components/store/useChatStore.ts`
-6. `notedrill-backend-nextjs/app/api/agent/bridge/_shared/bridge-route.ts`
+6. `notetree-tanstack/app/api/agent/bridge/_shared/bridge-route.ts`
 
 ## Edge Cases
 

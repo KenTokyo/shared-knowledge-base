@@ -74,7 +74,7 @@ Aus losem Bridge-Verhalten einen echten Lauf-Vertrag machen.
 2. `features/chat/components/interface/agent-note-artifact-service.ts`
 3. `features/chat/components/interface/agent-note-upsert-service.ts`
 4. `lib/agent/bridge/*`
-5. Backend-Bridge in `notedrill-backend-nextjs/app/api/agent/bridge/*`
+5. Backend-Bridge in `notetree-tanstack/app/api/agent/bridge/*`
 
 ### Done-Kriterien
 1. Mobile und Backend sprechen über denselben Lauf-Vertrag.

@@ -5,7 +5,7 @@ Stand: 8. März 2026
 ## Was wurde verstanden?
 1. Du willst nicht nur Fremdsysteme vergleichen.
 2. Du willst wissen, wo Notedrill heute wirklich steht.
-3. Dabei sollen `notedrill-backend-nextjs` und `notedrill-mobile-react-native-expo` zusammen gelesen werden.
+3. Dabei sollen `notetree-tanstack` und `notedrill-mobile-react-native-expo` zusammen gelesen werden.
 
 ## Kurzbild
 Notedrill hat heute schon viele gute Bausteine.
@@ -141,6 +141,6 @@ Der aktuelle produktive Tool-Lauf ist noch nicht so geschlossen wie bei den star
 5. `/mnt/d/CODING/React Projects/notedrill/notedrill-mobile-react-native-expo/lib/agent/contracts/index.ts`
 6. `/mnt/d/CODING/React Projects/notedrill/notedrill-mobile-react-native-expo/lib/sdk/adapters/mcp-adapter.ts`
 7. `/mnt/d/CODING/React Projects/notedrill/notedrill-mobile-react-native-expo/docs/unified-migration/phase-09-sdk-integration/sdk-integration.md`
-8. `/mnt/d/CODING/React Projects/notedrill/notedrill-backend-nextjs/app/api/agent/bridge/_shared/bridge-route.ts`
-9. `/mnt/d/CODING/React Projects/notedrill/notedrill-backend-nextjs/app/api/agent/bridge/codex-cli/route.ts`
-10. `/mnt/d/CODING/React Projects/notedrill/notedrill-backend-nextjs/app/api/agent/bridge/gemini-cli/route.ts`
+8. `/mnt/d/CODING/React Projects/notedrill/notetree-tanstack/app/api/agent/bridge/_shared/bridge-route.ts`
+9. `/mnt/d/CODING/React Projects/notedrill/notetree-tanstack/app/api/agent/bridge/codex-cli/route.ts`
+10. `/mnt/d/CODING/React Projects/notedrill/notetree-tanstack/app/api/agent/bridge/gemini-cli/route.ts`
