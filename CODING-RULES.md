@@ -385,11 +385,11 @@ db/
 
 ### 3D, Three.js & WebGPU
 
-- **PFLICHT: Three.js Rules lesen:** Falls an irgendwelchen Dateien gearbeitet wird, die mit Three.js, R3F, Shaders, Mesh-Erstellung, Lichtquellen oder WebGL/WebGPU-Render-Optionen zu tun haben, MÜSSEN zwingend die [THREEJS-RULES.md](file:///D:/CODING/React%20Projects/7-3D-Voxel-Samurai-Quiz/shared-docs/THREEJS-RULES.md) gelesen und befolgt werden. In den `THREEJS-RULES.md` sind alle Pflichtregeln zu Instancing, Schatten-Budgetierung, Lag-Pflichtchecks und Partikeln zentralisiert.
+- **PFLICHT: Three.js Rules lesen:** Falls an irgendwelchen Dateien gearbeitet wird, die mit Three.js, R3F, Shaders, Mesh-Erstellung, Lichtquellen oder WebGL/WebGPU-Render-Optionen zu tun haben, MÜSSEN zwingend die [THREEJS-RULES.md](file:///D:/CODING/React%20Projects/voxel-samurai-quiz/shared-docs/THREEJS-RULES.md) gelesen und befolgt werden. In den `THREEJS-RULES.md` sind alle Pflichtregeln zu Instancing, Schatten-Budgetierung, Lag-Pflichtchecks und Partikeln zentralisiert.
 
 ### Multiplayer, Colyseus & Kampfgefühl
 
-- **PFLICHT: Colyseus- & Kampfgefühl-Regeln lesen:** Falls an Colyseus-State-Synchronisation, Multiplayer-Events, Hitboxen, Schadens-Timing, Sounds oder Network-Visuals gearbeitet wird, MÜSSEN zwingend die Multiplayer-Regeln im hinteren Teil von [THREEJS-RULES.md](file:///D:/CODING/React%20Projects/7-3D-Voxel-Samurai-Quiz/shared-docs/THREEJS-RULES.md) (Abschnitt 17) gelesen und befolgt werden.
+- **PFLICHT: Colyseus- & Kampfgefühl-Regeln lesen:** Falls an Colyseus-State-Synchronisation, Multiplayer-Events, Hitboxen, Schadens-Timing, Sounds oder Network-Visuals gearbeitet wird, MÜSSEN zwingend die Multiplayer-Regeln im hinteren Teil von [THREEJS-RULES.md](file:///D:/CODING/React%20Projects/voxel-samurai-quiz/shared-docs/THREEJS-RULES.md) (Abschnitt 17) gelesen und befolgt werden.
 
 ### Frontend Regeln & Antipatterns!
 - **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
