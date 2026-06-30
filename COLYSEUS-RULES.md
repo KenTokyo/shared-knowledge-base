@@ -1,6 +1,6 @@
 # Colyseus-Regeln für dieses Projekt
 
-**Zweck:** Diese Datei ist die kompakte Projekt-Regeldatei für Multiplayer-Arbeit in `7-3D-Voxel-Samurai-Quiz`.
+**Zweck:** Diese Datei ist die kompakte Projekt-Regeldatei für Multiplayer-Arbeit in `voxel-samurai-quiz`.
 
 **Detail-Referenz:** `.agents/skills/starwards-colyseus/SKILL.md`
 
