@@ -15,7 +15,7 @@ Ein Worktree ist ein **zusatzlicher Arbeitsordner** fur dasselbe Git-Repo:
 Deine Worktree eigenschaften 
 Port nummer je nachdem welche KI:
 Endung + THE-**[Port]+[KI-Modell]**
-D:\CODING\React Projects\7-3D-Voxel-Samurai-Quiz--Map-**[Port]+[KI-Modell]**
+D:\CODING\React Projects\voxel-samurai-quiz--Map-**[Port]+[KI-Modell]**
 3071-CODEX-5-3-XHigh
 3072-Opus-4-7-XHigh
 3073-Gemini-3-Pro-Preview

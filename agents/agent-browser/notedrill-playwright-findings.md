@@ -412,7 +412,7 @@ Nicht blind weiter Timings, Retries oder Fensterfokus drehen.
 
 ## Sakura-Valley Kamera-Sweep Performance
 
-- Für `7-3D-Voxel-Samurai-Quiz` Sakura-Schwenks Culling und Renderlast getrennt messen: `chunkVisibilityFlipsDelta`, `maxCullingCostMs` und `visibleChunks` sind die wichtigen Culling-Werte. Ein Lauf mit `0` Chunk-Flips und `0 ms` Culling kann trotzdem unter `200 FPS` fallen, wenn PostFX/Shadow/Bloom den Kameraschwenk belasten.
+- Für `voxel-samurai-quiz` Sakura-Schwenks Culling und Renderlast getrennt messen: `chunkVisibilityFlipsDelta`, `maxCullingCostMs` und `visibleChunks` sind die wichtigen Culling-Werte. Ein Lauf mit `0` Chunk-Flips und `0 ms` Culling kann trotzdem unter `200 FPS` fallen, wenn PostFX/Shadow/Bloom den Kameraschwenk belasten.
 - Finaler stabiler Vergleichslauf am 2026-06-03: `PERF_EXTRA_SCENARIOS='shadows_low,bloom_off' pnpm run perf:sakura-camera-sweep` ergab `279.527 FPS`, `45` sichtbare Chunks, `0` Chunk-Flips und `0 ms` Culling. Report: `output/perf/sakura-camera-sweep-culling-2026-06-03T21-31-36-854Z.json`.
 - Bei Einzelspikes mit `worstFrameMs: 50` erst Browser-/RAF-/PostFX-Diagnose prüfen, nicht wieder Frustum-Culling als Schwenkfilter aktivieren. Das Frustum war der ursprüngliche Chunk-Churn-Treiber.
 
