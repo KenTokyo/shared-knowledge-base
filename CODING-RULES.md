@@ -5,10 +5,22 @@
 ## Grundhaltung und Bewertungsmodus
 Stimme dem Nutzer nicht automatisch zu. Behandle jede Behauptung, Diagnose, Annahme und jeden Plan als ungeprüft, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
+## Durcharbeiten statt Fragen (PFLICHT, Userregel 2026-06-21)
+- **Keine Rückfragen stellen — durcharbeiten.** Wenn eine Aufgabe, ein Plan oder eine Masterplanung vorliegt, wird **ohne Zwischenfragen** vom aktuellen Stand bis zur letzten Phase durchgearbeitet.
+- **Keine Auswahl-Dialoge ("Option A oder B?") an den User zurückgeben.** Wenn mehrere Wege existieren, selbst die fachlich beste/empfohlene Option wählen, kurz begründen, umsetzen und die Entscheidung im Task-Doc dokumentieren.
+- **Empfehlung = Auftrag:** Steht im Plan bereits eine klare Empfehlung, gilt sie als gewählt. Nicht erneut zur Bestätigung vorlegen, sondern direkt bauen.
+- **Einziger Ausnahmefall:** Eine echte externe Blockade, die ohne den User unmöglich lösbar ist (fehlender Secret/Zugang, widersprüchliche Pflichtdaten, destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern und sonst weiterarbeiten.
+
+## Keine Rückfragen (PFLICHT)
+- **Niemals Klärungsfragen an den User stellen** (kein `AskUserQuestion`, keine "Soll ich A oder B?"-Rückfragen). Der User will Umsetzung, keine Auswahl-Dialoge.
+- Bei Unklarheit: **die fachlich beste Option selbst wählen**, kurz in Plan/Antwort begründen und sofort umsetzen. Annahmen klar als Annahme markieren.
+- Nur stoppen bei echten externen Blockern (fehlende Credentials/Daten, die nur der User hat) — und dann als Hinweis formulieren, nicht als Multiple-Choice-Frage.
+
 ## 1. Kontext & Kommunikation
 
+- **Keine Rückfragen / kein `AskUserQuestion` (PFLICHT, User-Order 2026-06-19):** Nicht beim User nachfragen und keinen `AskUserQuestion`-Dialog öffnen. Bei mehreren Wegen eigenständig die fachlich beste, kleinste stabile Lösung wählen, kurz im Plan/Abschluss begründen und direkt umsetzen. Nur bei einem echten externen Blocker (fehlende externe Daten/Zugänge, die die KI nicht selbst beschaffen kann) genau 1 konkrete Info anfordern. Siehe auch Schlusszeile „Stelle keine Fragen!".
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code"). Viele technische Wörter durch Speech-to-Text falsch geschrieben → aufpassen!
-- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[datum]-[task].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[task]-[datum].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
 
 Usernachricht - User möchte:
 - HUD Anzeige oben links kleiner, kompakter haben
@@ -38,8 +50,22 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
   **NIEMALS Workarounds für Anwender-Fehler bauen!**
 
 - **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
-- **Research-First bei wiederholten oder unklaren Fehlern (PFLICHT):** Wenn ein Problem nach einem Fix weiter besteht, nicht weiter Werte drehen. Erst offizielle Dokumentation, vorhandene Projekt-Skills, passende GitHub-Repositories/Issues oder bewährte Referenzprojekte recherchieren. Danach 2-3 konkrete Lösungswege vergleichen und den kleinsten stabilen Ansatz umsetzen.
-  - Das ist effektiver als rumprobiererei
+- **Wirksamkeits-Umfeld prüfen (PFLICHT bei sichtbaren oder verhaltensrelevanten Änderungen):** Wenn Aufgabe A umgesetzt wird, immer auch prüfen, ob B/C/D/E die Wirkung von A überlagern, verfälschen oder verhindern. Nicht nur deklarierte Werte ändern, sondern den kompletten Wirkungspfad bis zur sichtbaren Ausgabe bzw. Runtime-Wirkung kontrollieren: globale Settings, Theme-/CSS-Variablen, Shader/Tone-Mapping, Material-Overrides, Feature-Flags, Cache, User-Optionen, Render-Modi, Daten-Normalisierung, Runtime-Fallbacks, Server-State oder Persistenz können das Ergebnis anders erscheinen lassen als programmiert. Relevante Edge Cases kurz dokumentieren und bei UI/Visual-Aufgaben gegen die tatsächliche Oberfläche prüfen.
+- **Research-First & Architektur-Vergleich (PFLICHT bei komplexen Problemen):** 
+  Wenn Probleme (z.B. Performance-Lags, Fehler in der Synchronisation, UI-Ruckeln) auftreten oder neue Konzepte entwickelt werden, darf die KI nicht blind Workarounds im lokalen Code bauen. Es besteht eine **Recherche-Pflicht**:
+  1. **Konzept-Abstraktion:** Das Problem vom konkreten UI-Symptom auf das darunterliegende Software-Muster abstrahieren (z. B. *"Chat ruckelt"* -> *Virtualisierung/Scroll-Dämpfung*; *"3D laggt"* -> *Instancing/Mesh-Batching*).
+  2. **Lokaler Geschwister-Abgleich (Sibling Repos):** Zuerst benachbarte Arbeitsverzeichnisse wenn es welche gibt also in `D:\CODING\React Projects\` (z.B. `AntigravityManager`, `codeg`, `AionUi`, `happier` falls verlinkt über `docs\RESSOURCES-UNIVERSAL-DOCS.md` bzw. falls die Datei vorhanden ist) nach funktionierenden Mustern, CLI-Brücken oder Dateisystem-Handhabung scannen.
+  3. **Repository-Mining:** GitHub-Repositories und Issue-Tracker durchsuchen (z.B. mit Websuche `site:github.com` oder unserem Such-Skript), um lauffähige Code-Snippets und Best Practices zu identifizieren.
+  4. **Lösungs-Ranking:** 2-3 konkrete Lösungswege/Architekturen strukturieren, vergleichen, im Plan dokumentieren und erst nach Auswahl des kleinsten stabilen Ansatzes mit dem Coden beginnen.
+  *Details siehe:* [autonomous-research-guide.md](file:///d:/CODING/React%20Projects/notedrill/notetree-tanstack/docs/agentic/autonomous-research-guide.md)
+- **Playwright-/Browser-Research-First (PFLICHT bei beauftragter Browserarbeit):** Wenn Browser, Playwright CLI, Playwright-Testdateien, native Dialoge, File System Access API, Login/API-Key-Seeding oder Search Params genutzt werden, zuerst den offiziellen Skill `C:\Users\PC1\.codex\skills\playwright\SKILL.md` und danach die NoteDrill-Findings-Doku `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` lesen. Bei Electron-Desktoparbeit zusätzlich `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` lesen. Nach Context-Condensing diese Dateien erneut lesen.
+- **Browser-Playwright mit Microsoft Edge (PFLICHT):** Normale Browser-Playwright-CLI-Tests in NoteDrill zuerst mit Microsoft Edge/System-Edge ausführen, nicht mit Chrome, weil Edge lokal performanter ist und Chrome in NoteDrill-Smokes stärker laggt. Playwright-CLI dabei über Edge-Channel/System-Edge nutzen und **nicht** durch Browser-use/In-App-Browser ersetzen. Ausnahme nur, wenn Edge fehlt oder ein Feature ausdrücklich Chrome verlangt. Electron-Playwright-CLI bleibt davon unberührt und nutzt weiter den Electron-/Chromium-Projektwrapper.
+- **Electron-Playwright-CLI-Referenz (PFLICHT bei Electron-Desktoparbeit):** Wenn Electron, Desktop-App, Electron-KI-Chat, `window.electronAPI`, IPC, Desktop-Workspace oder `electron:pwcli` genutzt wird, ist `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` die Projekt-Referenz. Normales Browser-Playwright bleibt für Web-URL-Flows; Electron-Playwright-CLI ist für echte Electron-Fenster und Desktop-IPC.
+- **NoteDrill Chat-Testmodelle (PFLICHT bei Electron-/Playwright-Chat-Tests):** Bei Electron-Playwright-CLI und Playwright-CLI im Agentic-Chat zuerst die Testoberfläche mit OpenCode CLI nutzen. Bevorzugte Modelle: `Deepseek V4 Flash Free` (`cli:opencode/deepseek-v4-flash-free`) und `Mimo V2.5 Free` (`cli:opencode/mimo-v2.5-free`). Falls lokal vorhanden, darf `Mimo V2.3 Free` nur als Fallback oder Vergleich genutzt werden. Web-Tests mit API-Key-Provider nur nutzen, wenn CLI nicht reicht oder der User es ausdrücklich verlangt. API-Keys niemals in AGENTS.md, Coding-Rules, Task-Dateien, Screenshots, Logs, Commits oder Abschlussantworten schreiben; nur temporär über Env-Variable oder nicht-committed localStorage/ProviderStorage-Seed setzen und Artefakte auf Secret-Leaks prüfen.
+- **Playwright-CLI + FSA-MCP-Helper (PFLICHT bei Browser-Dateisystemproblemen):** Wenn Playwright CLI an File System Access API, Ordner-Picker, Chrome-`Zulassen`-Prompt, Workspace-Restore, IndexedDB/FSA-Persistierung oder `clientToolExecutorActive` hängt, nicht blind Timings/Fokus/Clicks drehen. Nutze den lokalen Helper `pnpm run mcp:notedrill-fsa-helper` bzw. `scripts/mcp/notedrill-fsa-helper.ts` zusammen mit dem Runner `scripts/e2e/browser-real-gemini-fsa-smoke.ts`. Der stabile Ansatz ist ein isoliertes Chrome-Testprofil mit geseedeten `Default/Preferences` für exakt Origin + Zielordner; echter Erfolg zählt erst bei `reloadWorkspaceRestored=true` und `clientToolExecutorActive=true`. Details/Fallstricke stehen in `docs/chat/tasks/2026-06-02-mcp-helper-fsa-architecture-plan.md` und `shared-docs/agents/agent-browser/notedrill-playwright-findings.md`.
+- **Electron-Native-Dialog-MCP-Helper (PFLICHT bei Electron-Ordnerdialogen):** Wenn Electron `dialog.showOpenDialog` oder ein nativer Windows-Dialog wie `Workspace-Ordner auswählen` außerhalb des Electron-DOM öffnet, zuerst `pnpm run mcp:notedrill-fsa-helper` bzw. `scripts/mcp/notedrill-fsa-helper.ts` nutzen: Tool `notedrill_electron_list_native_folder_dialogs` read-only ausführen, danach nur bei genau einem passenden `#32770`-Dialog aus dem NoteDrill-`electron.exe`-Prozess `notedrill_electron_select_workspace_folder` nutzen. Wenn kein Pfadfeld existiert, ist `confirm-current` nur erlaubt, wenn die Adresszeile oder Nutzerangabe eindeutig den gewünschten Ordner zeigt. Keine globalen `SendKeys`, keine Koordinaten-Retries, kein Fokus-Drehen. Für nicht paketierte E2E-Läufe darf zusätzlich `ND_ELECTRON_TEST_WORKSPACE_PATH` genutzt werden, aber nur nach Pfadprüfung und als Testhook, nicht als Produktlogik.
+- **MCP-Stdio-Smoke für den FSA-Helper:** Für Tool-Listen- oder Stdio-Smokes den Helper direkt über `cmd /c node_modules\.bin\tsx.cmd scripts\mcp\notedrill-fsa-helper.ts` starten und JSON-RPC `initialize` + `tools/list` senden. `pnpm run mcp:notedrill-fsa-helper` ist für normale MCP-Clients okay, kann aber bei manuellen Stdio-Smokes Paketmanager-Ausgaben auf `stdout` erzeugen und das Protokoll stören.
+- **Browser-Findings sofort sichern (PFLICHT):** Neue Erkenntnisse aus Playwright-Läufen, native Dialoggrenzen, Browser-Permission-Probleme, Search-Param-Hinweise, Login-/API-Key-Setups und gescheiterte Ansätze sofort in der aktiven Task-/Masterplanung notieren, bevor weiter experimentiert wird. Wenn das Finding dauerhaft relevant ist, zusätzlich `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` aktualisieren.
 - **Keine automatischen Gameplay-/Werte-Beweise (PFLICHT):** Smoke-Skripte, Debug-Zahlen, Serverwerte, Ingame-Recorder, Browser-Checks oder selbst gebaute Prüfmechanismen dürfen nicht mehr als Beweis gelten, dass Gameplay gut ist. Sie dürfen nur bei ausdrücklichem User-Auftrag laufen. Produktgefühl, Lesbarkeit, AOE-Sinn, Trefferfeedback, Sound, Vibration und Despawn-Verständlichkeit prüft der User manuell.
 
 - **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, UI-Smoke- oder manuellen UI-Checks automatisch starten. Auch Frontend-/Layout- und Mock-Abgleiche laufen nur, wenn der User es klar befiehlt, z. B. „führe einen UI-Test aus“. Dann Mock-Screenshots mit deinem gebauten Änderungen/Frontend vergleichen. Ohne Befehl wird der UI-Check als manuelles Gate dokumentiert.
@@ -61,12 +87,13 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 - **Wenn gewünscht:** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen · Retro-Game-Stil 🎮
 
 ## 3. Workflow & Dokumentation
-- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[datum]-[task].md`), sonst nach Abschnitt 4 erstellen
+- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[task]-[datum].md`), sonst nach Abschnitt 4 erstellen
 - **Vor Implementierung:** Planung/Todo validieren ob sie Sinn macht und korrekt geplant wurde
 - **Wenn keine passende Planung existiert:** Sofort Task- oder Masterplanung/Todo anlegen
 - **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren) und Todos phasenweise abhaken, nach jeder Phase, ohen Stopp
 - **In Task/Todo-Datei tracken** mit Kontextinformationen, erledigten To-dos, offenen To-dos und nächster Phase
 - **Nach jeder Phase/Todo:** Planung updaten, Todo abhaken und nächste Phase direkt weiter umsetzen
+- **Bei Browser-/Playwright-Goals nach jedem echten Befund:** Task-/Masterplanung aktualisieren mit Befehl/URL, Browsermodus, Seed/Search Params, Screenshot-/Failure-Artefakt, Root Cause, nicht erneut zu wiederholendem Fehlweg und nächstem stabilen Ansatz. Das gilt auch mitten im Goal und besonders vor Context-Condensing.
 - **Nach allen Phasen/Todo:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen und phasenweise verbessern und todos nach jeder Phase abhaken (falls noch nicht behoben)
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
@@ -81,7 +108,7 @@ Falls Orchestrator Modus an!
 ## 4. Erzeugung von Planung
 
 ### Dokumentationssystem - Todoformat einhalten!
-**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[datum]-[task].md`
+**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[task]-[datum].md`
 
 Jede Phase MUSS diese **7 Punkte** enthalten:
 1. **Ziel:** Was ist am Ende sichtbar besser?
@@ -174,6 +201,14 @@ Pflicht bei Feature-Implementierung, Refactoring, Bug-Fixes über mehrere Dateie
 
 ### Component-Based Architecture (WICHTIGSTE REGEL)
 **NIEMALS Komponenten innerhalb anderer Komponenten definieren!** → Performance-Killer (jedes Render neu erstellt) + State-Verlust. Jede Komponente in separater Datei.
+
+### Fachliche Komponentenstruktur / Clean Code (PFLICHT)
+- **Komponentenbasiert heißt fachlicher Besitz pro Datei**, nicht nur irgendein Ordner mit einer großen Sammeldatei. Ein konkretes UI-Element, Asset, Map, Benchmark-Ziel, Generator-Output, Service-Use-Case oder Datenmodell bekommt eine eigene Datei oder einen eigenen Unterordner, wenn es fachlich eigenständig ist.
+- **Keine wachsenden `entries.ts`-/`config.ts`-/`data.ts`-Monster:** Aggregator-Dateien importieren nur und exportieren nur. Sie enthalten keine Build-Logik, keine langen Objektlisten, keine Ziel-spezifischen Helper, keine Terrain-/Scatter-/Generatorlogik.
+- **Faustregel:** Wenn eine Datei mehrere unabhängige fachliche Ziele enthält (z. B. fünf Benchmark-Assets, drei Maps, viele Custom-Ziele), splitte in `zielName.ts`/`mapName.ts` plus kleinen `index.ts`. Bei 20+ oder erwartbar 100+ Einträgen von Anfang an Unterordner nutzen.
+- **Dateiname muss den generierten Inhalt erklären:** `v3/skyRidge.ts`, `custom/dungeonProps/crystalGate.ts` oder `settings/ThemeToggle.tsx` ist gut. `v3Entries.ts`, `customEntries.ts`, `misc.ts`, `helpers.ts` oder `allAssets.ts` ist nur erlaubt, wenn die Datei wirklich ein kleiner Aggregator ist.
+- **Shared nur bei echter Wiederverwendung:** `kit.ts`, `shared.ts`, `builders.ts` oder `utils.ts` dürfen neutrale Bausteine enthalten, aber keine versteckten konkreten Features. Wenn ein Helper nur für ein Ziel existiert, bleibt er in der Ziel-Datei.
+- **Änderungen additiv denken:** Neue Generationen, Modi, Varianten oder Custom-Sets kommen als eigene Dateien/Ordner dazu. Bestehende fachliche Dateien werden nicht ersetzt oder zusammengeworfen, außer der User fordert genau diese Regeneration.
 
 ### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — Auslagern wenn größer
@@ -349,22 +384,16 @@ db/
 - N+1 Prevention: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`
 
 ### 3D, Three.js & WebGPU
-LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
-- **WebGL-Partikel-Merkhilfe:** Wenn Slashes sichtbar sind, aber Partikel/Sparks trotz grünem Pool unsichtbar oder schwarz bleiben, zuerst `shared-docs/THREEJS-RULES.md` Abschnitt 8 prüfen. Nicht weiter Pool/Größe drehen. Wahrscheinlicher ist der Material-/Farbpfad (`meshBasicMaterial + vertexColors + InstancedMesh.setColorAt`). Stabiler WebGL-Fix: kleiner Shader, der `instanceColor` direkt liest.
+- **PFLICHT: Three.js Rules lesen:** Falls an irgendwelchen Dateien gearbeitet wird, die mit Three.js, R3F, Shaders, Mesh-Erstellung, Lichtquellen oder WebGL/WebGPU-Render-Optionen zu tun haben, MÜSSEN zwingend die [THREEJS-RULES.md](file:///D:/CODING/React%20Projects/7-3D-Voxel-Samurai-Quiz/shared-docs/THREEJS-RULES.md) gelesen und befolgt werden. In den `THREEJS-RULES.md` sind alle Pflichtregeln zu Instancing, Schatten-Budgetierung, Lag-Pflichtchecks und Partikeln zentralisiert.
 
 ### Multiplayer, Colyseus & Kampfgefühl
-- **Colyseus-Research vor Multiplayer-Fixes (PFLICHT):** Bei Sync-, Snapshot-, HP-, AOE-, Despawn-, Hitfeedback-, Animations- oder Serverautoritätsproblemen zuerst `.agents/skills/starwards-colyseus/SKILL.md`, offizielle Colyseus-Doku und passende Referenz-Repositories prüfen. Nicht weiter eigene Prüfwerte erfinden.
-- **Server bleibt Wahrheit, Client bleibt Gefühlsschicht:** HP, Positionen, Bossphasen, Adds, Damage und Tod bleiben serverautoritativ. Der Client darf Treffer nicht entscheiden, aber er muss serverbestätigte Ereignisse sofort lesbar machen: Hit-Sound, Impact-VFX, Damage-Flash, Hitstop/Vibration, Damage Number, Todes-/Despawn-Cue.
-- **State vs. Messages sauber trennen:** Dauerhafte Werte gehören in synchronisierten State. Kurzlebige Ereignisse gehören als Messages raus: Angriff gestartet, Treffer bestätigt, Spieler HP verloren, Gegner gestorben, Boss-Cast gestartet, AOE ausgelöst, Sound/VFX abspielen. Wenn eine Message zu einer State-Änderung gehört, nach dem State-Patch senden, damit UI und Effekt nicht auseinanderlaufen.
-- **Singleplayer-Parität ist Pflicht:** Multiplayer darf sich nicht billiger anfühlen als der lokale Kampf. Bestehende lokale Feedback-Systeme wiederverwenden statt eine zweite schwächere Multiplayer-Feedback-Schicht bauen.
-- **AOE und Angriffe müssen lesbar sein:** Jede Schadensquelle muss die Frage beantworten: Wer greift an? Wo trifft es? Wann trifft es? Warum habe ich HP verloren? Telegraph, Animation, Trefferfenster und Server-Hitbox müssen dieselbe Geschichte erzählen.
-- **Despawn darf nie heimlich sein:** Wenn ein Gegner stirbt oder verschwindet, braucht es ein sichtbares und hörbares Ende, z.B. Flash, Collapse, Partikel, Sound oder kurzes Fade. Kein stilles Entfernen aus der Liste, wenn der Spieler gerade kämpft.
-- **Feedback performant bauen:** Hit-/Death-/AOE-Feedback über bestehende Pools, Instancing, Queues und Rate-Limits führen. Keine neuen globalen `useFrame`-Loops und keine ungebremsten Partikel pro Snapshot.
-- **Keine Wert-Fixes als Gefühl-Fix verkaufen:** Mehr Schaden, mehr HP, größere AOE oder schnellere Bewegung lösen schlechte Lesbarkeit nicht. Erst Signale, Animation, Sound und Eventfluss reparieren, dann Balancing.
+
+- **PFLICHT: Colyseus- & Kampfgefühl-Regeln lesen:** Falls an Colyseus-State-Synchronisation, Multiplayer-Events, Hitboxen, Schadens-Timing, Sounds oder Network-Visuals gearbeitet wird, MÜSSEN zwingend die Multiplayer-Regeln im hinteren Teil von [THREEJS-RULES.md](file:///D:/CODING/React%20Projects/7-3D-Voxel-Samurai-Quiz/shared-docs/THREEJS-RULES.md) (Abschnitt 17) gelesen und befolgt werden.
 
 ### Frontend Regeln & Antipatterns!
 - **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
+- **KI-Lernformate = warme Stein-/Glutgold-Palette (vom User bestätigt, 2026-06-25):** Simulation, Whiteboard, Diagramm und Kreativ-HTML nutzen warme Steingrau-/Glutgold-Töne statt blau-schwarz/Neon (Canvas Dark `#141210` / Light `#f5f1e9`, Grid `#383229` / `#e8e0d2`, Ink `#d8d0c4` / `#3c352c`). **Prinzip: gedämpft statt Neon, warm statt kühl, Rand≠Füllung** — die Farb-Identität sitzt in Rand + Titel + Icon, die Karten-Füllung bleibt subtil (Diagramm-Karten ≈ 10 % Hue-Wasch, nur Gruppen-Backdrops kräftiger). Volle Hex-Tabelle + Warm-Modus-Surfaces in `DESIGN.md` („Warme Stein-/Glutgold-Palette"). SSoT: `components/common/custom-diagram-canvas/utils/{color-utils,theme-manager}.ts` + `regeln/FORMAT-KREATIV-HTML.md`.
 - **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT!):**
   - ❌ VERBOTEN: `bg-black/40`, `bg-black/50`, `bg-white/10` oder jede andere Tailwind-Opacity-Notation als Haupthintergrund z.B. `bg-green-500`, `bg-red-600`... **Warum?** Halbtransparente Hintergründe sorgen für Probleme, aufgrund von Capacitor-Einstellungen bei uns!
   - Außer Border ist es Pflicht, so transparent wie möglich die Borders zu machen; nutze am besten `border-subtle`, `--border` oder sehr dunkle Darkmode-Borders.
@@ -372,13 +401,17 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
     1. Entweder prüfen ob globale css Klassen existieren/theming-system, wo Farben schon dran sind z.B: `[data-theme="default"] { --background: 0 0% 100%; --foreground: 0 0% 3.9%; --card: 0 0% 100%;...}`
     2. ODER: `bg-[#0c0f1a]` - immer volle Opacity!
       - Achte hier auf eine hochwertige Farbpalette, minimalistisch, dunkel und lightmode orientiert - schaue hierzu unbedingt `\shared-docs\farbpalette\minimal-styling-template.css`
+- **Dialog-Schärfe statt grundlosem Blur (PFLICHT):** Dichte Lese-, API-Key-, Modell-, Experten- und Einstellungsdialoge dürfen keinen starken `backdrop-filter` nutzen. Vermeide dort `gfx-backdrop-blur-*`, `gfx-blur-backdrop-*`, `backdrop-blur-*`, `bg-blur*` und `nd-dialog-overlay-blur`, außer eine kurze Design-/Performance-Begründung steht direkt im Task und Electron zeigt scharfen Text. Nutze für solche Dialoge solide Flächen wie `bg-background`, `bg-card` oder `bg-surface-*`.
+- **Dialog-/Dropdown-Pointer-Lock-Schutz (KRITISCH):** Dialoge nie direkt aus einem noch modal offenen Dropdown, Popover oder ContextMenu heraus offen lassen. Vor dem Öffnen eines Dialogs das auslösende Menü/Popover schließen oder den Menü-Root bewusst non-modal halten. Symptom bei Verstoß: Die App ist sichtbar, aber nach `Abbrechen`/`Schließen` nicht mehr anklickbar, weil `body.style.pointerEvents = "none"` hängen bleiben kann. Globaler Cleanup darf diesen Body-Lock nur nach Close und nur ohne offenen Overlay-Layer entfernen. Niemals per CSS `body { pointer-events: auto !important; }` erzwingen, weil das echte modale Dialoge kaputtmacht.
 - **Dark/Light Mode + Surface-Skala:** Hintergründe schwarz/grau halten (`#000`, `#0A0A0A`, `#111`, `#1A1A1A`, `#222`, `#2A2A2A`, `#333`) und im Lightmode sauber spiegeln; Akzent-Themes ändern nur Primary/Secondary, nie die Surface-Skala.
 - **Mobile-First Space Efficiency:** UI kompakt halten, Breite/Höhe nutzen, seltene Optionen in Popover/Dropdown/Collapsible/Dialog verstecken.
 - **Wiederverwendbarkeit-First:** Dialoge/Komponenten mit Modi, Callback-Props und vorhandenen Patterns bauen.
 - **Recherche vor Rumprobieren (KRITISCH!):** Stacktrace lesen → Docs/GitHub Issues prüfen → Root Cause verstehen → erst dann fixen. Bei demselben Fehler zweimal: 3-5 Lösungswege recherchieren, effizientesten umsetzen.
 - **UI Library Defaults respektieren:** Niemals Standard-Höhe/Padding von Radix/Shadcn manuell überschreiben → vorhandene Variants nutzen (`size="sm"`, `size="lg"`) oder Variant-System erweitern.
-- **Rounded/Floating UI:** Karten und Sektions-Container `rounded-2xl` bis `rounded-4xl`, bevorzugt `rounded-3xl`; Floating über subtile Shadows/Backdrop-Blur, nicht harte Ecken.
+- **Rounded/Floating UI:** Karten und Sektions-Container `rounded-2xl` bis `rounded-4xl`, bevorzugt `rounded-3xl`; Floating über subtile Shadows und solide Flächen. Backdrop-Blur nur bewusst und sparsam einsetzen, nicht in dichten Lesedialogen.
 - **Icons/Farben:** Icons in Buttons/Toolbars nutzen; Bedeutungsfarben verwenden (Speichern/Start/Erfolg = Success, Abbrechen/Gefahr = Danger).
+- **Icon-First + Text nur wenn nötig (PFLICHT):** In dichten Toolbars/Sidebars primär mit Icons arbeiten; sichtbare Labels nur bei wirklich nötiger Erklärung. Jeder Icon-Button braucht `aria-label` + Tooltip. Eindeutige Aktions-Icons sind Pflicht (z. B. `X` für „Schließen“, korrektes Mehrfachauswahl-Icon statt Plus-Symbol).
+- **Kompakte Control-Layouts (PFLICHT):** Inputs/Filter dürfen nicht unnötig eine ganze Zeile blockieren. Platz in mehreren Zeilen/Spalten nutzen (z. B. 2er-Grid), kurze Werte als kompakte Felder darstellen und Langlabels wie „Stunden“/„Textgröße“ in Tooltip oder Kontexttext auslagern.
 - **Gruppierte Toolbars:** Zusammengehörige Icon-Aktionen in Button-Gruppen bündeln (`rounded-2xl border border-subtle bg-surface-2 p-1`), innere Buttons `rounded-xl`, klare Trenner nur zwischen Aktionsarten.
 - **Radix Trigger-Ref-Sicherheit (KRITISCH):** Bei `TooltipTrigger`/`PopoverTrigger` `asChild` nur nutzen, wenn das Child garantiert ref-stabil ist. Für normale Buttons immer direkten Trigger verwenden (`<TooltipTrigger type="button" ...>`), um `setRef`-Schleifen und `Maximum update depth exceeded` zu vermeiden.
 - **Tooltip-Standard:** `<HintTooltip label="...">` aus `components/ui/hint-tooltip.tsx` ist der defensive Default — wrappt children in stabilen `<span>` und schützt vor setRef-Loops bei motion.*/conditional Childs.
@@ -387,11 +420,25 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - **Dropdown/Popover Stacking-Check:** Vor jedem UI-Change an Dropdowns/Selects/Popovers prüfen: overflow/stacking-context? Portal-Rendering? z-index-Priorität? · Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben
 
 ## Code-Sicherheit & manuelle Produktprüfung
+### 8.2 Sichtbare Ergebnisqualität / Visual Acceptance Gate
+- **Code-Sicherheit ist kein Produktbeweis:** Lint, TypeScript, gespeicherte Daten, generierte Screenshots, grüne Konsolenlogs oder ein erfolgreiches Playwright-Skript beweisen nur, dass etwas technisch ausgeführt wurde. Sie beweisen nicht, dass das sichtbare Ergebnis gut, lesbar, fachlich richtig oder nutzbar ist.
+- **Akzeptanzkriterien vor Umsetzung ableiten:** Bei jeder sichtbaren oder produktnahen Aufgabe zuerst 3-7 konkrete Prüffragen aus dem Userziel notieren. Beispiele: Sind in einer Animation beide Hände sichtbar? Liegt die Klinge auf der Mittellinie? Ist Text in einer Notiz lesbar und nicht abgeschnitten? Stimmen Einheiten und Tageswerte in einem Fitnessplan? Zeigt ein Dashboard die wichtigste Zahl ohne Scrollen?
+- **Screenshots aktiv beurteilen:** Wenn der User Browser, Playwright, Screenshot, Referenzbild oder visuellen Vergleich beauftragt, muss das Bild gegen diese Prüffragen bewertet werden. Ein Screenshot, der sichtbar falsch aussieht, ist ein Fehlerbeweis. Er darf nie als Abschlussbeweis genutzt werden.
+- **Abnahme-Viewport zuerst herstellen:** Vor jedem visuellen Urteil mit Playwright/Browser/Preview zuerst die Arbeitsfläche so groß und frei wie möglich machen: Viewport/Fenster maximieren, störende Sidebars einklappen oder passend verbreitern, Referenzbilder groß genug anzeigen, Kamera/Zoom auf das Prüfobjekt ausrichten und Debug-/Handle-/Overlay-Elemente ausblenden. Wenn das Hauptobjekt nicht klar sichtbar ist, ist der Screenshot kein gültiger Abnahme-Screenshot.
+- **Bewegte Objekte aktiv verfolgen:** Wenn das geprüfte Objekt sich bewegt, scrollt, animiert, springt, zoomt oder per Root-Motion/Transition die Position ändert, muss das Prüfwerkzeug eine klare Follow-/Center-/Keep-visible-Funktion haben und diese vor dem Screenshot bewusst setzen. Relevante Bewegung muss sichtbar messbar sein, z. B. als Pfad, Distanz, Scrollposition, Timeline-Zeit oder Vorher/Nachher-Versatz. Ein Screenshot, bei dem das Hauptobjekt aus dem Bild läuft oder nur zufällig sichtbar ist, ist kein gültiges Gate.
+- **Kamera-Presets für Bewegungsgates:** Bei 3D-, Canvas- oder Preview-Werkzeugen mit bewegten Figuren braucht die Abnahme mindestens Keep-visible/Follow, Center/Fit und klare Prüfperspektiven wie Front, Side, Back und Top. Die Bewegungsstrecke muss im Tool sichtbar und exportierbar sein, z. B. als Skill-Pfad, Distanz, Offset oder Timeline-State.
+- **Werkzeug darf Fehler nicht verdecken:** Editor-Hilfen wie Joint-Handles, Pfad-Overlays, Grid-Markierungen, Tooltips oder Mini-Maps dürfen die eigentliche Produktansicht nicht überdecken. Für Abnahmen braucht es einen Clean-/Gate-Modus; falls er fehlt, ist das Tooling Teil des Bugs und wird vor weiterer Feinarbeit verbessert.
+- **Nicht hinter manuellen Gates verstecken:** Wenn bereits ein Screenshot, Log, Preview, Datenexport oder sichtbarer Zustand vorliegt, muss er fachlich bewertet werden. Nur wenn wirklich keine automatische oder eigene Sichtprüfung erlaubt oder möglich ist, als `manuelles Gate` dokumentieren.
+- **Fertig nur bei bestandenem Gate:** Eine Phase darf nicht als `success`, `fertig` oder `completed` dokumentiert werden, solange die sichtbaren Kernkriterien nicht erfüllt sind. Dann ehrlich `partial`, `blocked`, `manual gate` oder `technisch umgesetzt, visuell nicht abgenommen` schreiben.
+- **Allgemeine Beispiele:** UI-Arbeit braucht Lesbarkeit, Layout, leere Zustände und Interaktion. Notizen-/Dokumentarbeit braucht korrekte Struktur, verständlichen Text und keine abgeschnittenen Inhalte. Fitness-/Datenarbeit braucht plausible Werte, Einheiten und Zeiträume. Animation/VFX braucht Pose, Timing, Silhouette, Bewegungspfad, Sound/VFX-Lesbarkeit und Vergleich zum Zielbild.
+- **Bei wiederholtem visuellen Scheitern:** Nicht weiter einzelne Werte drehen. Erst Root Cause nennen, Vergleichsreferenz prüfen, Editor/Tooling verbessern und dann erneut implementieren. Wenn das Werkzeug schlechte Ergebnisse nicht erkennt, ist das Werkzeug Teil des Bugs.
+
 ### 8.1 TypeScript
 - Statische Code-Sicherheitschecks (`pnpm lint`, `pnpm exec tsc --noEmit`) sind nur Kompilier- und Typ-Schutz. Sie beweisen kein Gameplay, keine Werte, kein Kampfgefühl und keine Multiplayer-Lesbarkeit.
 - Bei reinen Doku-, Prompt- oder Regeländerungen keine Tests/Checks starten.
 - Bei echten Codeänderungen dürfen Lint/TypeScript genutzt werden, wenn sie den geänderten Scope absichern. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
 - **Fehler direkt mitfixen (Pflicht):** Wenn du im bearbeiteten Scope sichtbare Fehler findest (TS, Lint, Runtime), dann sofort beheben und nicht „für später“ liegen lassen.
+- **KEIN PLAYWRIGHT, KEINE UNNÖTIGEN TESTS (User-Order 2026-06-11, ABSOLUT):** Playwright/Browser-Automation ist komplett verboten — auch nicht für "Visual Gates", Screenshots, Bug-Reproduktion oder Debug-Proben. Keine neuen Diag-/Test-Scripts unter `scripts/` anlegen. Verifikation läuft über `typecheck` + Guardrails + Code-Review; die sichtbare Abnahme macht der USER manuell — dafür am Ende einen kurzen, präzisen Test-Guide schreiben (was, wo, welche Taste).
 - **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, Recorder-, Ingame-, Smoke-, Bot-, Serverwert- oder manuellen UI-Checks automatisch starten. Nur ausführen, wenn der User es klar befiehlt. Sonst Research, Codeänderung und manuellen User-Blocker dokumentieren.
 - **Keine stille Playwright-Ausnahme:** Auch reine Frontend-/Layout- oder Mock-Abgleiche laufen nur, wenn der User sie ausdrücklich befiehlt. Ohne Befehl: beschreiben, was der User manuell prüfen soll.
 - **Keine Playwright-/Browser-Use-Performance-Tests für 3D-FPS:** Headless-Chromium hat keinen echten GPU-Treiber und liefert keine aussagekräftigen FPS-Werte. Browser-/Playwright-Checks sind nur bei User-Befehl erlaubt und bleiben **NICHT** erlaubt als 3D-Frame-Benchmark, WebGPU-A/B-Vergleich oder VFX-Performance-Messung. Echte Performance-Messung läuft nur über echten Chrome/Edge mit DevTools-Performance-Tab + Recording-Export. Bei Bedarf User um manuelle Recording-Aufnahme bitten und Pfad in `docs/performance/recordings/` ablegen.
@@ -410,12 +457,17 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 | Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
 | DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
 | Browser-Testing | `shared-docs/agents/agent-browser/SKILL.md` |
+| NoteDrill Playwright-Findings | `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` |
+| NoteDrill Electron Playwright CLI | `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md` |
 
 ### Qualitäts-Kriterien (bei jeder Planung & Implementierung prüfen)
 - ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
 
 ### Quick Checklist
+- **Keine Rückfragen / kein `AskUserQuestion`** — eigenständig die fachlich beste Lösung umsetzen (User-Order)
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck nutzen, nicht als Gameplay-Beweis
+- **NO-GO Live-Collection-Mutation:** Niemals ueber `Map.values()`, `Set.values()` oder ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben. Das kann Endloswachstum erzeugen, weil JS-Iteratoren neue Eintraege mitlaufen lassen. Fuer Nachbarschaften, Chunk-/Ufer-Ringe, Flood-Fill, Graphen, Spawn-Ausbreitung und Geometry-Builds immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen.
+- Gesichtselement-Regel im ganzen Spiel: Nur Augen sind erlaubt. Keine Münder, Gesichtslinien, Faceplates, Visor-/Maskenstreifen, Stirn-Gems oder andere gesichtsähnliche Markierungen an Charakteren/Gegnern.
 - Mobile-First
 - Max 700 lines/file
 - Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-Tests ohne klaren User-Befehl
@@ -427,6 +479,7 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 - Keine automatischen Multiplayer-Smokes, Serverwert-Beweise oder selbst gebauten Prüfmechanismen
 - Commite nach Abschluss aller Phasen/Todos aus einer Masterplanung mit schöner Commit message
 - Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max 3 Hauptkomponentenpfade
+- Bei Browser-/Playwright-Arbeit: offiziellen Playwright-Skill + `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` lesen; Playwright-CLI zuerst mit Edge/System-Edge ausführen und nicht durch Browser-use ersetzen; bei Electron zusätzlich `shared-docs/agents/agent-browser/notedrill-electron-playwright-cli-reference.md`; neue Findings sofort in Task/Masterplan sichern
 - WebFetch/Websuche sinnvoll nutzen, besonders bei wiederholten Fehlern oder unsicherer externer Doku.
 
 ## Erzeuge Signaltöne anhand deines Fortschritts
@@ -436,15 +489,31 @@ LESE UNBEDINGT `\shared-docs\THREEJS-RULES.md` wenn du mit THREEJS Arbeitest!!!
 
 # Wichtige Regeln / Zusammenfassung
 **NIEMALS automatisch `pnpm run dev` oder `pnpm dev` starten!**
-- Der Dev-Server läuft oft bereits im Hintergrund
+- Der Dev-Server läuft oft bereits im Hintergrund (zu 90% der Fälle)
 - Automatisches Starten verursacht Port-Konflikte (EADDRINUSE)
+- Sollte der wirklich nicht laufen, dann darfst du den starten
 - Bei vom User befohlenen UI-Tests: Prüfen ob Server bereits läuft, nicht blind starten
 - Halte dich an die Design/Layout Regeln, möglicherweise tailwind css klassen, globals.css oder in DESIGN.md reinschauen, falls nicht auffindbar, erzeuge eine bzw nutze hier das beispiel als vorlage: `D:\CODING\React Projects\uniai-chat\uniai-chat-vscode-extension\shared-docs\farbpalette\darkmode.css`
+
+**NIEMALS automatisch CLI-, Terminal- oder PowerShell-Prozesse im Hintergrund starten!**
+- Kein `codex`, `gemini`, `claude`, `opencode`, `cmdc`, `command-code`, `agy`, `qwen`, `kilo`, `powershell`, `cmd.exe` oder Terminalfenster nur für Statusanzeige, App-Start, Notes-Öffnen, Chat-Header, Watcher-Event, Modellselector oder Hover/Popover starten.
+- **CPU-Auslastung & Unsichtbarkeit (Kritisch):** Das automatische oder leichtfertige Starten von CLI-Modellen (z.B. für lokale KI-Chats/Abfragen) erzeugt eine extrem hohe CPU-Auslastung (oft bis zu 100% Core Load). Da diese Hintergrund-Prozesse für den Nutzer völlig unsichtbar laufen, bemerkt er die Ursache des plötzlichen System-Lags gar nicht. CLI-Modellprozesse dürfen daher nur und ausschließlich durch eine explizite, bewusste Aktion des Nutzers (z.B. Absenden einer Nachricht im spezifischen CLI-Chat) initiiert werden.
+- Hintergrundpfade dürfen nur Cache, gespeicherte JSON-Dateien, Env-Signale oder leichte Dateisystem-Metadaten lesen. Das ist wie auf einen Zettel schauen, nicht wie eine Maschine anschalten.
+- Echte CLI-Prozesse sind nur erlaubt bei klarer Nutzeraktion: Chat senden, Terminalprofil starten, Login-Klick, manueller „Aktualisieren/Prüfen“-Button oder ausdrücklich beauftragter CLI-Test.
+- Datei-Watcher dürfen UI-Status melden, aber niemals `forceRefresh`, `refreshAll`, `refreshOne`, Detection mit Versionsprobe oder Account-Usage-Abfragen starten.
+- Codex-/Gemini-/Command-Code-Konten zeigen gespeicherte Daten sofort an; Live-Limits oder Account-Details werden nur manuell aktualisiert.
+- Nach jedem CLI-Start muss der Prozess sauber beendet, abgebrochen oder vom Nutzer bewusst als Terminalfenster weitergeführt werden.
 
 **Nie überspringen:**
 - React Loop-Stopper aus Abschnitt 6 anwenden: idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
 - Orchestrator-Regeln aus Abschnitt 3 anwenden: Phase dokumentieren, Mini-Check, korrekter Endstatus; bei manuellen UI-/Gameplay-Checks immer `ALL_PHASES_COMPLETE`.
 - UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen.
-- Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
+  - Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
+- Bei Browser-/Playwright-Fehlern nicht auf Gedächtnis vertrauen: Findings in Task/Masterplan und bei Wiederverwendung in `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` schreiben.
 - Erkläre nach Abschluss aller Phasen bzw. Todos wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell das ganze testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
+- Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!
+- **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
+- **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
+- **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
+- Stelle keine Fragen!

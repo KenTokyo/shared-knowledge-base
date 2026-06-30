@@ -9,7 +9,7 @@ BITTE NACH FOLGENDEN REGELN WEITERARBEITEN, HALTE DICH DARAN!
 Falls keine Masterplanung/Todo existiert: Tasks/Todo-Datei mit Phasen erstellen. Existiert bereits eine? Nicht überschreiben — diese Datei definiert deinen Workflow, halte dich an diese Regeln!
 
 Danach phasenweise implementieren, was sinnvoll ist — alle Phasen durcharbeiten ohne aufzuhören. 
-
+![alt text](image-3.png)
 **Aber Dokumentiere nach jeder phase und arbeite im Loop weiter!:**
 
 Weil du machst ein Kontext-condensing. Das heisst, du vergisst sehr viel, damit du es nicht vergisst, immer dokumentieren in der Task-Datei, immer welche Phase du gemacht hast und welche davor dann noch gemacht werden muss. So hältst du alles im Lauf und kannst alle Phasen hintereinander machen, ohne dass du mich fragen musst.
@@ -65,4 +65,5 @@ Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen
 
 Analysiere zuerst selbst, worum es geht, welche Expertenrolle passt und welche Struktur der Prompt braucht. Verbessere meinen Rohprompt danach zu einem klaren, vollständigen und gut ausführbaren Zielprompt für dich intern, also im Gedanken aufnehmen.
 Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also den CHAT beendest wird deine Arbeit kontrolliert. 
-Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen in jeder Phase um das maximalste rauszufinden bzw qualität anzubieten
+Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen in jeder Phase um das maximalste rauszufinden bzw qualität anzubieten, wenn es zu probleme kommt also Fehler
+- Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!

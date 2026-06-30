@@ -45,6 +45,19 @@
 
 ---
 
+## 3a. Shrine-Instancing und Dirty-Uploads
+
+**Vorfall-Merkhilfe 2026-05-28:**
+- **Symptom:** `No Shrines` brachte im echten Browser ca. 100 bis 150 FPS zurück; `No Runtime` und `No Text` erklärten den Drop kaum.
+- **Ursache:** Shrine-Visuals waren zwar schon teilweise instanced, aber noch in mehrere Mesh-/Material-Familien und Letter-Materialien gesplittet. Außerdem wurden Matrix-, Farb- und Alpha-Daten breiter hochgeladen als nötig.
+- **Fix:** Torii-Boxen in ein farbiges `InstancedMesh` gebündelt, A/B/C/D-Letter in einen Canvas-Atlas gelegt, Gate/Core/Fill/Letter-Daten mit Dirty-Signaturen geschützt. Ring-Rotation läuft weiter, weil sie sichtbares Shrine-Signal ist.
+- **Messwert aus User-Gate:** Der Nachfix brachte ca. 150 FPS zurück.
+- **Regel:** Nicht nur "InstancedMesh verwenden", sondern Renderer-Familie + Atlas/Texture-Array + Dirty-Signatur zusammen denken.
+- **Nicht tun:** Mehrere fast gleiche Materialien, Mini-Texturen oder Mesh-Familien behalten und nur hoffen, dass Instancing allein reicht.
+- **Task:** `docs/performance/tasks/2026-05-28-shrine-labels-performance-followup.md`
+
+---
+
 ## 4. Voxel-Terrain, Map und Town
 
 - **Terrain-Regel:** Dieses Projekt darf nicht zu Full-Box-Voxel als Default zurückfallen.
@@ -111,7 +124,19 @@
 
 ---
 
-## 10. Slash-Type-ID-Kollision
+## 10. Doppelschwert-Skill-Lag und Sunfall-Culling
+
+**Vorfall-Merkhilfe 2026-06-07:**
+- **Symptom:** Nach Doppelschwert-/DualSword-Skill-Nutzung in oder neben Sunfall fiel die Szene laut User ungefähr von `80 FPS` auf `20 FPS`.
+- **Bestätigung:** Nach Fix-Runde meldete der User, dass die Lags verschwunden sind.
+- **Ursache:** Kein einzelner Jeff-GLB-Fehler, sondern kombinierte Runtime-Last: zu breite Skill-VFX-Spawns, ein Afterimage-`useFrame`, der ohne echte Instanzen weiterlief, und große statische Sunfall-Instanced-Layer ohne Frustum-Culling.
+- **Fix:** Doppelschwert-VFX-Caps für Slashes/Ground-Decals/Partikel, Afterimage-Runtime im Idle schlafen legen, transparente Aura günstiger rendern und Sunfall-Instanced-Layer mit Bounds wieder cullbar machen.
+- **Regel:** Bei "Lag erst nach Skill" immer Skill-VFX-Caps, VFX-Lifecycle, aktive `useFrame`-Runtimes, Hitstop-Lebenszeit und Map-/Arena-Culling zusammen prüfen.
+- **Task:** `docs/dual-sword/tasks/2026-06-07-dual-sword-skill-lag-root-cause.md`
+
+---
+
+## 11. Slash-Type-ID-Kollision
 
 **Vorfall-Merkhilfe 2026-05-19:**
 - Tank-Slash-IDs `50-52` lagen im Mage-Bereich (`29-56`) und wurden dadurch im Slash-Renderer als Mage klassifiziert/gefiltert.
@@ -126,7 +151,7 @@
 
 ---
 
-## 11. Kritische Dateien und interne Referenzen
+## 12. Kritische Dateien und interne Referenzen
 
 **Performance-kritische Komponenten:**
 - `src/components/3d/Effects.tsx`

@@ -89,8 +89,8 @@ notes-vault/                      # Der "Vault" - ein Ordner = eine Sammlung
 
 ```
 # Für datierte Notizen
-YYYY-MM-DD-titel.md
-2024-01-24-meeting-projekt-alpha.md
+title-YYYY-MM-DD.md
+meeting-projekt-alpha-2024-01-24.md
 
 # Für permanente Notizen
 kebab-case-titel.md

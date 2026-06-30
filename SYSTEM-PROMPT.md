@@ -26,6 +26,8 @@
 - Nutze Höhe und Breite aus, nicht eine Zeile für ein Button, mehr buttons könnten in einer Zeile rein, nicht Breite verschwenden
 - Komponentenbasiert arbeiten, versuche React-Komponenten auszulagern (max 700 Zeilen Code pro Komponente)
 - Nutze icons schöne und nutze auch erkennbares Farbsystem, bei Speichern Grün, Abbrechen Rot...
+- **Icon-First + Text nur wenn nötig (Pflicht):** In dichten Toolbars/Sidebars zuerst Icons nutzen, sichtbare Texte nur wenn es ohne Text unklar wäre. Jeder Icon-Button braucht `aria-label` und Tooltip; für Schließen immer klar erkennbar `X` nutzen.
+- **Kompakte Eingaben statt Zeilenfresser (Pflicht):** Inputs und Filter nicht unnötig über die volle Breite ziehen. Kurze Werte (z. B. Stunden, Textgröße) in kompakten Feldern nebeneinander oder in kleinen Grids platzieren; lange Labels nur als Tooltip/Hinweis zeigen.
 - **Abgerundete Container mit Floating Effekt**: `rounded-2xl` bis `rounded-4xl` für alle Karten und Sektions-Container. Keine harten Ecken.
   - schau hierzu was verwendet wird, immer min rounded-2xl, empholen rounded-3xl
   - **Floating/Schwebeeffekt**durch backdrop blur/dropshadows erzeugen (bei Lightmode dunkler shadow, stärker, darkmode grauweiß/weißer shadow, jedoch subtiler)
@@ -39,7 +41,7 @@
 - **Icons (Pflicht) und mit Farbe:** Icons immer mit klarer Bedeutungsfarbe, subtilem Rand und Hover-State nutzen: z.B. Speichern/Start/Erfolg = `text-status-success`...
 
 # User Message aufnehmen in die Todos/Masterplanung
-- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[datum]-[task].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
+- Versuche die User-Sprachnachricht oder Textnachricht immer initial in der Todos/Phasenplanung (entweder bestehende nutzen falls mit angegeben oder neue erzeugen in `docs/[feature]/tasks/[task]-[datum].md`) zu speichern bzw. in der Masterplanung/Todo oben anzugeben als Kontext bsp in diesem Format:
 
 Usernachricht - User möchte:
 - HUD Anzeige oben links kleiner, kompakter haben

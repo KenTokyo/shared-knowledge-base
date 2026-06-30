@@ -4,7 +4,7 @@ Stand: 8. März 2026
 
 ## Was wurde verstanden?
 1. Du willst nicht nur allgemeine KI-Architektur lesen.
-2. Du willst den echten Stand von `notedrill-backend-nextjs` sauber durchleuchten.
+2. Du willst den echten Stand von `notetree-tanstack` sauber durchleuchten.
 3. Danach willst du viele klare Phasen für den Backend-Umbau haben.
 
 ## Wofür dieser neue Ordner da ist
@@ -32,15 +32,15 @@ Lies in dieser Reihenfolge:
 1. `01-ist-zustand-ki-chat-bridge-und-json-vertraege.md`
 2. `02-heute-schon-besser-optimieren-ohne-grossumbau.md`
 3. `04-zukunftsbilder-mcp-kosten-und-server-pro-nutzer.md`
-4. Danach direkt den Ordner `06-agentic-umsetzung-notedrill-backend-nextjs/`
+4. Danach direkt den Ordner `06-agentic-umsetzung-notetree-tanstack/`
 
 ## Empfohlene volle Reihenfolge
 1. `01-ist-zustand-ki-chat-bridge-und-json-vertraege.md`
 2. `02-heute-schon-besser-optimieren-ohne-grossumbau.md`
 3. `03-was-wir-aus-mobile-und-anderen-systemen-lernen-sollten.md`
 4. `04-zukunftsbilder-mcp-kosten-und-server-pro-nutzer.md`
-5. `../06-agentic-umsetzung-notedrill-backend-nextjs/00-start-hier-und-lesereihenfolge.md`
-6. `../06-agentic-umsetzung-notedrill-backend-nextjs/01-master-taskliste-und-status.md`
+5. `../06-agentic-umsetzung-notetree-tanstack/00-start-hier-und-lesereihenfolge.md`
+6. `../06-agentic-umsetzung-notetree-tanstack/01-master-taskliste-und-status.md`
 
 ## Welche Datei für welche Frage?
 
@@ -51,7 +51,7 @@ Lies in dieser Reihenfolge:
 | Was können wir jetzt schon besser machen? | `02-heute-schon-besser-optimieren-ohne-grossumbau.md` |
 | Was macht Mobile heute schon besser? | `03-was-wir-aus-mobile-und-anderen-systemen-lernen-sollten.md` |
 | Ist ein eigener Server pro Nutzer sinnvoll? | `04-zukunftsbilder-mcp-kosten-und-server-pro-nutzer.md` |
-| Wie sieht der eigentliche Umbauplan aus? | `../06-agentic-umsetzung-notedrill-backend-nextjs/01-master-taskliste-und-status.md` |
+| Wie sieht der eigentliche Umbauplan aus? | `../06-agentic-umsetzung-notetree-tanstack/01-master-taskliste-und-status.md` |
 
 ## Mein kurzer Befund
 Das Backend ist nicht kaputt.
@@ -61,6 +61,6 @@ Genau das ist für echte Agent-Läufe zu fragil.
 
 ## Nächster sinnvoller Schritt
 Nach diesem Ordner direkt in:
-`06-agentic-umsetzung-notedrill-backend-nextjs/`
+`06-agentic-umsetzung-notetree-tanstack/`
 
 Dort liegen die eigentlichen Bauphasen.

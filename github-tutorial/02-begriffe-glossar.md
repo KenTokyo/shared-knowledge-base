@@ -216,7 +216,7 @@ git worktree add ../mein-projekt-feature feature/neues-feature
 **Wann nützlich?**
 - Du willst gleichzeitig auf main UND feature arbeiten
 - Du brauchst zwei VS-Code-Fenster für verschiedene Branches
-- **Genau dein Fall!** (notedrill-backend-nextjs + notedrill-tanstack-branch)
+- **Genau dein Fall!** (notetree-tanstack + notedrill-tanstack-branch)
 
 ---
 
