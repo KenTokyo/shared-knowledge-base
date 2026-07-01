@@ -317,3 +317,8 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 
 **Verwandte Cross-Game-Docs:** `shared-docs/design/liquid-glass-guide.md`,
 `shared-docs/design/auto-animate-documentation.md`, `shared-docs/CODING-RULES.md` (React-Loop-Schutz, Frontend-Regeln).
+
+
+Referenzbilder: 
+Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1782919461758.png
+Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1782919507003.png
