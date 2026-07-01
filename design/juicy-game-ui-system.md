@@ -90,11 +90,22 @@ Warm-Schwarz** (`#15100a` → `#1e160d`) liegen — dieselben Komponenten, nur a
 
 **Umsetzung in NoteDrill (SSoT):** Ein gescopetes Token-Override `.warm-stone-console`
 (`app/styles/globals/globals-warm-stone-console.css`) setzt Surfaces + `--primary` +
-`--status-*` für einen Teilbaum neu — **immer mit `dark` gepaart**
-(`class="warm-stone-console dark"`), damit die Konsole in jedem globalen Theme dunkel
-bleibt und Tailwind-`dark:`-Varianten der Kinder auflösen. Weil die Juice-Komponenten
-token-basiert sind, recolort das den kompletten Teilbaum ohne Markup-Umbau. Live:
-Lernkarten-Konsole (Hero + Schnellzugriff). Details: `DESIGN.md → „Juicy Warm-Stone-Konsole"`.
+`--status-*` für einen Teilbaum neu. Weil die Juice-Komponenten token-basiert sind,
+recolort das den kompletten Teilbaum ohne Markup-Umbau.
+
+Die **wiederverwendbaren Bausteine** (JS-Spiegel + Komponenten) liegen zentral in
+`lib/shared/juicy-console/` (SSoT, parallel zu `lib/shared/subjects/`): `juicy-accents.ts`
+(`WARM_STONE`/`ACCENT_HEX`/`accentGlow`/`consoleShadow`), `JuicyHero` (selbst-scopende
+Hero-Konsole), `JuicyConsole`/`JUICY_CONSOLE_SHELL` (Hülle für bestehende Katalog-Wurzeln),
+`JuicyStatPill`, `JuicyShineCta`, `LitLogo`, `DriftMotes`, `useJuicyTilt`. Jeder Hub komponiert
+damit Hero + `warm-stone-console dark`-Scope in wenigen Zeilen statt den Look zu duplizieren.
+`app/learning-cards/(overviewSection)/(juice)/` ist nur noch ein dünnes Re-Export-Shim darauf.
+
+**Theme-adaptiv (Stand 2026-07-01):** Der Scope kann jetzt hell ODER dunkel:
+- `.warm-stone-console` (Basis) → **WARM-HELL**: gesättigtes, aber TIEFES Amber (`hsl(30 90% 45%)`, damit es auf Creme kontrastiert — helles `#ffb347` würde auf Creme verschwinden) auf warmem Creme (`#ede2cc → #fffefb`). Dieselbe Kontrast-Regel, nur invertiert: **tiefer, satter Akzent auf hellem, warmem Grund**.
+- `.dark .warm-stone-console` / `.warm-stone-console.dark` → **WARM-DUNKEL**: helles Amber `#ffb347` auf Warm-Schwarz (die Original-Werte).
+
+**Anwendung:** `class="warm-stone-console"` **ohne** `dark` → folgt dem App-Theme (Hell = Creme-Pop, Dunkel = Warm-Schwarz-Pop). Genutzt für API-Key-Dialog, Friends, Planner. `class="warm-stone-console dark"` → **Force-Dark**, bleibt immer dunkel und aktiviert die Tailwind-`dark:`-Varianten der Kinder (nötig bei Preview-Kacheln wie `bg-white dark:bg-surface-5`). Genutzt für die **4 Hub-Konsolen**: Lernkarten-Dashboard, Quiz (`QuizHubHero` + `QuizCatalogSection`-Wurzel), Kreuzworträtsel (`CrosswordHubHeader` + `CrosswordBrowserSection`-Wurzel) und Spickzettel (ganze `CheatsheetSection`-Wurzel). Details: `DESIGN.md → „Juicy Warm-Stone-Konsole"`.
 
 ---
 
@@ -296,5 +307,18 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 - Tokens: `src/config/constants.ts` (`WARM_STONE`) · Palette-Doku: `crossword-core-breaker/DESIGN.md`
 - Entstehungs-Masterplan: `crossword-core-breaker/docs/v6-ui-overhaul-stepper-floor/masterplan.md`
 
+**NoteDrill — Live in 5 Hubs** (`lib/shared/juicy-console/` = SSoT der Bausteine):
+- `JuicyHero.tsx` — selbst-scopende Warm-Stone-Hero-Konsole (Lit-Logo + Eyebrow/Titel/Subtitle + `actions`/`stats`/`children`-Slots)
+- `JuicyConsole.tsx` / `JUICY_CONSOLE_SHELL` — Warm-Stone-Hülle für bestehende Katalog-/Browser-Wurzeln
+- `JuicyStatPill.tsx` — generische Werte-Pill · `JuicyShineCta.tsx` — Shine-Sweep-CTA (Link ODER Button)
+- `LitLogo.tsx` · `DriftMotes.tsx` · `use-juicy-tilt.ts` · `juicy-accents.ts` (`WARM_STONE`/`consoleShadow`)
+- Genutzt in: `QuizHubHero` (Quiz), `CrosswordHubHeader` (Kreuzworträtsel), `CheatsheetSectionHeader`/`CheatsheetSection` (Spickzettel), Lernkarten-Dashboard-`(overviewSection)` (Blaupause, Shim), `DashboardJuicyHero` (Haupt-Dashboard `/dashboard`, Scope auf `page.tsx` + `src/routes/dashboard.tsx`)
+- Rollout-Masterplan: `docs/design/tasks/2026-07-01-warm-stone-juicy-console-global-rollout-masterplan.md`
+
 **Verwandte Cross-Game-Docs:** `shared-docs/design/liquid-glass-guide.md`,
 `shared-docs/design/auto-animate-documentation.md`, `shared-docs/CODING-RULES.md` (React-Loop-Schutz, Frontend-Regeln).
+
+
+Referenzbilder zum Juicy Game UI System: 
+Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1782919461758.png
+Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1782919507003.png
