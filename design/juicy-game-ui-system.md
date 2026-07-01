@@ -75,6 +75,27 @@ Inset     #0e0a06             ← eingelassene Felder (Banner, Slots, Inputs)
 `` `1px solid ${FRAME}44` `` (ruhig) … `` `${ACCENT}` `` (aktiv/selektiert).
 Alpha-Suffixe sind dein Lautstärkeregler: `22 33 44 55 66 88 aa cc`.
 
+### Farb-Pop — gesättigter Akzent auf tiefem Warm-Schwarz (warum CCB knallt)
+
+Der stärkste Farb-Hebel ist **Kontrast**. Ein Panel wirkt „billig/blass", wenn
+**gedämpfte** Akzente auf **neutralem Grau** sitzen. Es „knallt", wenn **gesättigte**
+Akzente (`AMBER #ffb347`, `EMBER #ff6b2c`, `GOLD #e8b04a`) auf **tiefem, sattem
+Warm-Schwarz** (`#15100a` → `#1e160d`) liegen — dieselben Komponenten, nur andere Tokens.
+
+**Regeln:**
+- **Grund tief & warm, nicht neutral-grau.** Neutrale App-Dark-Tokens (`--surface-2 #111`) sind absichtlich unauffällig und nehmen dem Akzent die Kraft. Für einen Spiel-/Hub-Look die Surface-Skala auf warmes Schwarz umdefinieren.
+- **Akzent voll gesättigt halten.** Ein „mattes" Primär-Gold (viele App-Themes) reicht nicht; der Core-Akzent muss satt sein (`hsl(33 100% 64%)`), sonst kein Pop.
+- **Kontrast ist Pflicht, nicht Deko.** Titel-Gradient `PARCHMENT → AMBER → EMBER`, Glows/Spines/Motes am rohen `--primary`/`--status-*`, Text immer Parchment.
+- **Anti-Pattern:** „muted Token auf Grau" → wirkt tot. Nie erwarten, einen gedämpften Akzent auf neutralem `#111` überhaupt zu sehen.
+
+**Umsetzung in NoteDrill (SSoT):** Ein gescopetes Token-Override `.warm-stone-console`
+(`app/styles/globals/globals-warm-stone-console.css`) setzt Surfaces + `--primary` +
+`--status-*` für einen Teilbaum neu — **immer mit `dark` gepaart**
+(`class="warm-stone-console dark"`), damit die Konsole in jedem globalen Theme dunkel
+bleibt und Tailwind-`dark:`-Varianten der Kinder auflösen. Weil die Juice-Komponenten
+token-basiert sind, recolort das den kompletten Teilbaum ohne Markup-Umbau. Live:
+Lernkarten-Konsole (Hero + Schnellzugriff). Details: `DESIGN.md → „Juicy Warm-Stone-Konsole"`.
+
 ---
 
 ## 3. Motion-System — das „Juice"-Vokabular
