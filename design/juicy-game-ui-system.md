@@ -307,12 +307,12 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 - Tokens: `src/config/constants.ts` (`WARM_STONE`) · Palette-Doku: `crossword-core-breaker/DESIGN.md`
 - Entstehungs-Masterplan: `crossword-core-breaker/docs/v6-ui-overhaul-stepper-floor/masterplan.md`
 
-**NoteDrill — Live in 4 Hubs** (`lib/shared/juicy-console/` = SSoT der Bausteine):
+**NoteDrill — Live in 5 Hubs** (`lib/shared/juicy-console/` = SSoT der Bausteine):
 - `JuicyHero.tsx` — selbst-scopende Warm-Stone-Hero-Konsole (Lit-Logo + Eyebrow/Titel/Subtitle + `actions`/`stats`/`children`-Slots)
 - `JuicyConsole.tsx` / `JUICY_CONSOLE_SHELL` — Warm-Stone-Hülle für bestehende Katalog-/Browser-Wurzeln
 - `JuicyStatPill.tsx` — generische Werte-Pill · `JuicyShineCta.tsx` — Shine-Sweep-CTA (Link ODER Button)
 - `LitLogo.tsx` · `DriftMotes.tsx` · `use-juicy-tilt.ts` · `juicy-accents.ts` (`WARM_STONE`/`consoleShadow`)
-- Genutzt in: `QuizHubHero` (Quiz), `CrosswordHubHeader` (Kreuzworträtsel), `CheatsheetSectionHeader`/`CheatsheetSection` (Spickzettel), Lernkarten-Dashboard-`(overviewSection)` (Blaupause, Shim)
+- Genutzt in: `QuizHubHero` (Quiz), `CrosswordHubHeader` (Kreuzworträtsel), `CheatsheetSectionHeader`/`CheatsheetSection` (Spickzettel), Lernkarten-Dashboard-`(overviewSection)` (Blaupause, Shim), `DashboardJuicyHero` (Haupt-Dashboard `/dashboard`, Scope auf `page.tsx` + `src/routes/dashboard.tsx`)
 - Rollout-Masterplan: `docs/design/tasks/2026-07-01-warm-stone-juicy-console-global-rollout-masterplan.md`
 
 **Verwandte Cross-Game-Docs:** `shared-docs/design/liquid-glass-guide.md`,
