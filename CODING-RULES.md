@@ -97,6 +97,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 - **Nach allen Phasen/Todo:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen und phasenweise verbessern und todos nach jeder Phase abhaken (falls noch nicht behoben)
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
+- **„Komplett neu erzeugen" heißt neu erzeugen (PFLICHT, Userregel 2026-07-02):** Wenn der User verlangt, etwas „komplett neu", „von Grund auf" oder „neu" zu bauen (Skin, Map, Boden, Skill, VFX, Komponente), dann den ALTEN Inhalt der Datei **vollständig ersetzen/entfernen** und frisch von Null schreiben — NICHT nur Parameter/Farben/Zahlen am Bestand drehen. Kein Rest-Legacy stehen lassen. Begründung: Neubauten fallen erfahrungsgemäß deutlich besser aus als am Altbestand herumjustierte Varianten.
 
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten/Todos abhaken + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
