@@ -442,7 +442,33 @@ Praxis-Learnings aus dem First-Person-Quiz-Shooter — gelten für alle Spiel-Ru
 - **Nicht hinter manuellen Gates verstecken:** Wenn bereits ein Screenshot, Log, Preview, Datenexport oder sichtbarer Zustand vorliegt, muss er fachlich bewertet werden. Nur wenn wirklich keine automatische oder eigene Sichtprüfung erlaubt oder möglich ist, als `manuelles Gate` dokumentieren.
 - **Fertig nur bei bestandenem Gate:** Eine Phase darf nicht als `success`, `fertig` oder `completed` dokumentiert werden, solange die sichtbaren Kernkriterien nicht erfüllt sind. Dann ehrlich `partial`, `blocked`, `manual gate` oder `technisch umgesetzt, visuell nicht abgenommen` schreiben.
 - **Allgemeine Beispiele:** UI-Arbeit braucht Lesbarkeit, Layout, leere Zustände und Interaktion. Notizen-/Dokumentarbeit braucht korrekte Struktur, verständlichen Text und keine abgeschnittenen Inhalte. Fitness-/Datenarbeit braucht plausible Werte, Einheiten und Zeiträume. Animation/VFX braucht Pose, Timing, Silhouette, Bewegungspfad, Sound/VFX-Lesbarkeit und Vergleich zum Zielbild.
+- **Partikel dürfen nicht einseitig sein — komplett eskalieren (User-Order 2026-07-03):** Skill-VFX werden gelayert (Hauptform + Vortex/Rays + Debris + Rauch + Linger), mit Gradienten (Kern→Kante, HDR-Ränder) und echter Physik (ballistische Trümmer, Buoyancy, zeitversetzter Rauch) gebaut; eine einzelne Partikelsorte oder dieselbe Einheits-Explosion für alle Strike-Arten ist ein Regelverstoß. Details + harte Regeln: `prompts/vfx-skills-prompt.md` (Harte Regeln, Punkt 9).
 - **Bei wiederholtem visuellen Scheitern:** Nicht weiter einzelne Werte drehen. Erst Root Cause nennen, Vergleichsreferenz prüfen, Editor/Tooling verbessern und dann erneut implementieren. Wenn das Werkzeug schlechte Ergebnisse nicht erkennt, ist das Werkzeug Teil des Bugs.
+
+### 8.3 Denkmodus & Ergebnis-Handwerk (Fable-Modus, PFLICHT — gilt für JEDE Ausgabe)
+
+**Wurzel-Erkenntnis (am Modellvergleich entdeckt, aber überall gültig):** Beim *identischen* Auftrag entsteht „billig/flach/generisch" **nicht aus fehlendem Können**, sondern aus einem falschen Erfolgskriterium. Zwei Arbeitsweisen optimieren still ein anderes, unausgesprochenes Ziel:
+- **Engineering-Modus:** „Habe ich die Anforderung korrekt, sicher und sauber (DRY, Gates grün) erfüllt?" → vereinfacht genau den wertvollen Kern, presst alles in ein System, prüft gegen Tests statt gegen das Erlebnis → **technisch-korrekte Mittelmäßigkeit**.
+- **Craft-Modus (Ziel):** „Würde ein Mensch, der das Ergebnis erlebt, es exzellent nennen?" → gibt dem Wichtigen eigene Sorgfalt, schichtet, geht bewusst über den sicheren Default hinaus, prüft gegen das echte Erlebnis → **premium**.
+
+**Das ist kein 3D-Thema.** Dieselbe Ziel-Differenz macht Texte blass, Dashboards überladen-aber-fokuslos, APIs generisch, Refactors zaghaft. 3D war nur der Test, an dem es am deutlichsten sichtbar wurde. Der Hebel ist **nicht „mehr Regeln"** — eine Checkliste wird im Engineering-Modus genauso pflichtbewusst abgehakt. Zuerst den Denkmodus umschalten, dann folgt das gute Ergebnis fast von allein.
+
+**Denkmodus-Reset (VOR jeder Umsetzung, PFLICHT — domänenübergreifend):**
+- **Erfolgstest = Wirkung, nicht Erfüllung:** Miss dich nicht daran, ob die Anforderung abgehakt ist, sondern ob ein Mensch, der das Ergebnis erlebt, es exzellent nennt. Die Spezifikation ist der Boden, nicht das Ziel — ziele darüber.
+- **An jeder Gabelung die reichere Variante:** Zwischen der einfachen/sicheren und der reicheren/schwierigeren Version von allem, was der Nutzer erlebt, immer die reichere nehmen. Einfachheit nur für das, was der Nutzer nicht erlebt.
+- **Schwieriger, wertvoller Kern = mehr investieren, nicht vereinfachen:** Ein hartes Kern-Element (die zentrale Abstraktion, der Kernabsatz, die Haupt-Interaktion, ein artikuliertes Rig) ist das Signal, dort mehr Aufwand hineinzugeben — nicht, es abzuspecken und `partial` zu markieren.
+- **Aufwand dem Fokus geben, nicht der Wiederverwendung:** Das, was der Nutzer zuerst erlebt (Hauptobjekt, Kernzahl, erster Satz, Held), bekommt eigene, maßgeschneiderte Sorgfalt; nur der Hintergrund wird generalisiert. „DRY über alles" erzeugt uniforme Mittelmäßigkeit.
+- **„Fertig" heißt erlebt-und-geprüft:** Erst fertig, wenn das Ergebnis durch die Augen des echten Nutzers/Betrachters/Lesers gerendert wurde und du „exzellent" wettest — nicht, wenn Tests/Gates grün sind. Ergänzt das Visual Acceptance Gate 8.2.
+
+**Wie sich der Denkmodus konkret zeigt (das Handwerk folgt aus dem Ziel, nicht aus einer Extra-Liste):**
+- **Struktur:** baue den echten Mechanismus, nicht einen sicheren Ersatz dafür. (Code: die richtige Abstraktion für den Hauptpfad statt einer generischen, die überall „irgendwie geht". 3D: artikuliertes Rig statt ein starrer Bone pro Glied.)
+- **Details:** forme die Details, die Qualität tragen; nie den flachen Default stehen lassen. (Text: Rhythmus + ein konkretes Bild statt Aufzählungs-Sachlichkeit. Animation: asymmetrisches Easing statt linearer/symmetrischer Kurve.)
+- **Commitment:** lass die eigentliche Sache wirklich passieren, fake sie nicht auf Distanz. (Ein Beispiel läuft echt durch; Aktoren treffen sich wirklich; ein Empty-State ist real gestaltet, nicht leer.)
+- **Fokus/Komposition:** das Wichtigste vorn, groß, unverdeckt. (Dashboard: Kernzahl ohne Scrollen. Artikel: Kernaussage im ersten Satz. 3D: Held groß im Bild, nicht hinter Architektur.)
+- **Schichten:** über den sicheren Rand hinaus; Qualität = viele kleine gestapelte Schichten (eine Politur-/Korrektur-/Glow-Schicht mehr).
+- **Un-gefordertes Leben:** das Detail, das niemand verlangt, aber jeder spürt (sinnvolle Defaults, ein Micro-Copy-Ton, Sekundärbewegung).
+
+**Kurzbeispiel (3D — eine Domäne von vielen, nicht die Regel):** Das schwächere Ergebnis nutzte einen starren Bone pro Glied (sicherer Ersatz), einen geteilten Shader für alle Figuren (DRY) und flach gebackenes Emissive (Sicherheitsmarge) — alles korrekt, alles wirkt billig. Das stärkere gab dem Helden ein artikuliertes Rig, eigenen Code pro Figur und einen additiven Glow-Pass. Gleicher Auftrag, anderes Ziel. Exakt derselbe Split trennt einen blassen von einem lebendigen Text, ein fokusloses von einem klaren Dashboard, eine generische von einer durchdachten API.
 
 ### 8.1 TypeScript
 - Statische Code-Sicherheitschecks (`pnpm lint`, `pnpm exec tsc --noEmit`) sind nur Kompilier- und Typ-Schutz. Sie beweisen kein Gameplay, keine Werte, kein Kampfgefühl und keine Multiplayer-Lesbarkeit.
