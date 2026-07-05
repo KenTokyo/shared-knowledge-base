@@ -49,7 +49,7 @@ bevor du mit der eigentlichen Planung beginnst, damit du nicht auf falsche Wege 
 
   **NIEMALS Workarounds für Anwender-Fehler bauen!**
 
-- **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅
+- **Architektur-Prüfung (Pflicht bei jedem Problem):** Ist die Architektur dahinter grundsätzlich falsch oder riskant? → Langfristig stabile Lösung finden · Workarounds klar benennen 🛑 · Bewährte Standard-Methoden nutzen ✅ · **Bei wiederholt falschem/kollidierendem Ergebnis die Grundstruktur komplett neu bauen statt patchen** (siehe „🔴 Grundstruktur-First" in Abschnitt 3).
 - **Wirksamkeits-Umfeld prüfen (PFLICHT bei sichtbaren oder verhaltensrelevanten Änderungen):** Wenn Aufgabe A umgesetzt wird, immer prüfen, ob B/C/D/E die Wirkung von A überlagern, verfälschen oder verhindern. Nicht nur deklarierte Werte ändern, sondern den kompletten Wirkungspfad bis zur sichtbaren Ausgabe bzw. Runtime-Wirkung kontrollieren: globale Settings, Theme-/CSS-Variablen, Shader/Tone-Mapping, Material-Overrides, Feature-Flags, Cache, User-Optionen, Render-Modi, Daten-Normalisierung, Runtime-Fallbacks, Server-State oder Persistenz können das Ergebnis anders erscheinen lassen als programmiert. Relevante Edge Cases kurz dokumentieren, bei UI/Visual-Aufgaben gegen die tatsächliche Oberfläche prüfen.
 - **Research-First & Architektur-Vergleich (PFLICHT bei komplexen Problemen):** 
   Bei Problemen (z.B. Performance-Lags, Sync-Fehler, UI-Ruckeln) oder neuen Konzepten darf die KI nicht blind Workarounds im lokalen Code bauen. **Recherche-Pflicht**:
@@ -110,6 +110,13 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
 - **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs- oder Feature-Vorschläge für den nächsten Schritt
 - **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen
 - **„Komplett neu erzeugen" heißt neu erzeugen (PFLICHT, Userregel 2026-07-02):** Wenn der User verlangt, etwas „komplett neu", „von Grund auf" oder „neu" zu bauen (Skin, Map, Boden, Skill, VFX, Komponente), dann den ALTEN Inhalt der Datei **vollständig ersetzen/entfernen** und frisch von Null schreiben — NICHT nur Parameter/Farben/Zahlen am Bestand drehen. Kein Rest-Legacy stehen lassen. Begründung: Neubauten fallen erfahrungsgemäß deutlich besser aus als am Altbestand herumjustierte Varianten.
+
+- **🔴 Grundstruktur-First: NEU BAUEN statt auf schlechtem Code weiterflicken (PFLICHT, User-Order 2026-07-05, MEHRFACH betont):** Wenn dieselbe Sache mehrfach nicht sitzt oder ein Ergebnis wiederholt falsch aussieht/kollidiert, liegt die Ursache fast immer in einer **falschen Grundstruktur** (schlechter Junior-Code, falsches Datenmodell, kollidierende Geometrie, zwei Layer die nichts voneinander wissen) — **nicht** in einem einzelnen Wert. Dann gilt zwingend:
+  1. **Grundstruktur zuerst analysieren, nicht Symptome.** Wo genau ist das Fundament falsch (falsche Achsen/Frames, doppelte Quelle der Wahrheit, unabhängige Schichten, verstecktes Legacy)? Erst verstehen, dann bauen.
+  2. **Komplett neu schreiben.** Die betroffenen Dateien von Null neu — **nicht** Parameter/Farben/Zahlen am kaputten Bestand nachjustieren. Kleine Patches auf falschem Fundament bauen nur weitere Fehler ein, weil man den Überblick verliert und Bestehendes fälschlich für korrekt hält. Nie annehmen, der vorhandene Code sei richtig — die Grundstruktur ausdrücklich prüfen und bei Bedarf ersetzen.
+  3. **Single Source of Truth herstellen.** Wenn zwei Schichten sich widersprechen können (z. B. Körper vs. Rüstung, Daten vs. Anzeige, Basis vs. Overlay), einen gemeinsamen Maßstab bauen, aus dem **beide** ableiten — statt beide unabhängig zu justieren und hinterher Kollisionen zu jagen.
+  4. **Nach dem Neubau aufräumen.** Legacy, verwaiste Importe und Altreferenzen sofort entfernen — kein Rest, auf dem die nächste Iteration wieder aufbaut.
+  **Warum:** Am Altbestand herumzudrehen kostet mehr Zeit und erzeugt neue Regressionen als ein sauberer Neubau. Wiederholtes visuelles/fachliches Scheitern ist das Signal, das Fundament neu zu bauen — nicht weiter am Symptom zu schrauben. Im Zweifel: neu bauen, nicht flicken.
 
 Falls Orchestrator Modus an!
 - **ORCHESTRATOR MODUS:** Nach jeder Phase Plan updaten/Todos abhaken + Status am Ende setzen · Task-Pfad mitgeben · Kleine Summary was gemacht wurde, so kann direkt weitergearbeitet werden von einer anderen KI!
@@ -525,6 +532,7 @@ Praxis-Learnings aus dem First-Person-Quiz-Shooter — gelten für alle Spiel-Ru
 - Keine neuen Tests schreiben oder planen (Unit/Integration/E2E), außer explizit angefordert
 - Keine Test-Konfiguration ändern (z. B. `vitest.config.ts`), außer explizit angefordert
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen
+- **Grundstruktur-First:** Bei wiederholt falschem/kollidierendem Ergebnis die betroffenen Dateien **komplett neu schreiben** (nicht patchen) und eine Single Source of Truth herstellen — siehe „🔴 Grundstruktur-First" in Abschnitt 3
 - Bei großer Datei: in Unterkomponenten/Helpers/Services aufteilen
 - Keine automatischen Multiplayer-Smokes, Serverwert-Beweise oder selbst gebauten Prüfmechanismen
 - Commite nach Abschluss aller Phasen/Todos aus einer Masterplanung mit schöner Commit message
@@ -560,6 +568,7 @@ Praxis-Learnings aus dem First-Person-Quiz-Shooter — gelten für alle Spiel-Ru
 - UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen.
   - Fremde parallele Änderungen nicht revertieren; damit arbeiten oder ignorieren, wenn sie nicht zum Scope gehören.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
+- Grundstruktur-First anwenden (User-Order 2026-07-05): strukturell falschen/kollidierenden Code komplett neu bauen statt kleine Patches zu stapeln; Single Source of Truth statt zwei unabhängiger Schichten (Abschnitt 3).
 - Bei Browser-/Playwright-Fehlern nicht auf Gedächtnis vertrauen: Findings in Task/Masterplan und bei Wiederverwendung in `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` schreiben.
 - Erkläre nach Abschluss aller Phasen bzw. Todos, wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell alles testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
 - Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, dennoch prüfen - PFLICHT!
