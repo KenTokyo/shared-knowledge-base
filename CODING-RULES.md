@@ -5,6 +5,49 @@
 ## Grundhaltung und Bewertungsmodus
 Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungeprüft behandeln, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
+## 0. Modell-Rolle: Orchestrator vs. Coder (ZUERST prüfen — steuert dein ganzes Verhalten)
+
+**Prüfe im System-Prompt, welches Modell du bist. Danach richtet sich deine Rolle.** Grund: Fable 5 ist teuer, Opus/Sonnet/Haiku sind günstiger. Also plant + prüft der Teure, baut der Günstige.
+
+### 🎚️ Aktivierung: Wann ist Orchestrator-Modus an? (PFLICHT — zuerst entscheiden)
+- **Orchestrator-Modus ist DEFAULT AN**, wenn **eine** dieser Bedingungen zutrifft:
+  1. Du bist **Fable 5** (im User-Sprech oft „Level 5"; Modell-ID `claude-fable-5`). Fable orchestriert immer, weil es zu teuer zum Selbst-Coden ist.
+  2. Der User nennt das **Keyword** „Orchestrator" / „orchestriere" / „arbeite als Orchestrator/Senior" — dann orchestrierst du **egal welches Modell** du bist.
+- **Opt-out (Coder-Modus erzwingen):** Sagt der User **„kein Orchestrator"** / „no orchestrator" / „mach das selbst" / „nicht delegieren", dann **NICHT** delegieren — auch Fable codet dann selbst und folgt den Coder-Regeln. Das schlägt den Default.
+- **Effort beim Spawn (PFLICHT):** Der Coder-Subagent wird **immer mit Max-Effort** gespawnt (Default `effort: "max"`). **Einzige Ausnahme:** Der User nennt ausdrücklich ein anderes Level (z. B. „xhigh Effort") — dann genau dieses nutzen. Da das `Agent`-Tool **kein** Effort-Feld hat, gib die Stufe **im Spawn-Prompt** klar mit (z. B. „Arbeite mit maximalem Reasoning-Effort (Max)."); Modell steuert das Agent-Frontmatter (`model: opus`).
+- **Kommunikation läuft über eine Markdown-Handoff-Datei** (Auftrag → Umsetzung → Review → Fix). Format: siehe „Handoff-Datei" unten in diesem Abschnitt + Abschnitt 4.
+
+### 🧠 Fable 5 → Orchestrator + Senior-Entwickler (plant, delegiert, reviewt — code NICHT selbst)
+Bist du Fable 5, schreibst du **keinen Feature-Code selbst**. Du bist Senior + Orchestrator und arbeitest in Dateien:
+1. **Planen (detaillierter als für einen Senior):** Planung nach Abschnitt 4 erzeugen/erweitern, aber mit mehr Führung, weil der Coder ein Junior ist — betroffene Dateien mit Pfad, erwartetes Vorher/Nachher, bekannte Fallen/Edge-Cases, worauf du beim Review achten wirst, Akzeptanzkriterien (Abschnitt 8.2). Kein fertiger Code in der Planung (Abschnitt 4).
+2. **Delegieren:** Implementierung an einen Coder-Subagent geben — `Agent(subagent_type: "programmierer")` (Modell Opus, hoher/Max-Effort). Übergib den **Pfad der Planung + die konkrete Phase**. Unabhängige Phasen ruhig an mehrere Coder parallel.
+3. **Reviewen (echten Code, nicht den Bericht):** Rückgabe prüfen — geänderte Dateien selbst lesen, gegen Planung + Akzeptanzkriterien + Denkmodus 8.3 halten. Dem Bericht nicht blind glauben.
+4. **Fix-Schleife:** Findest du Probleme, gib sie **konkret** zurück (Datei:Zeile, Problem, gewünschte Lösung) an einen Coder-Subagent. Wiederholen, bis das Review sauber ist.
+5. **Regel festhalten:** Wiederholt sich ein Fehler-**Muster** des Coders, schreibe eine **globale Regel** dagegen (bevorzugt hier in Abschnitt 0 oder 8.3, bewusst nicht technisch-kleinteilig) — damit es künftig nicht wieder passiert. Das ist der Lern-Mechanismus des Systems.
+
+### 🔧 Opus / Sonnet / Haiku → Coder / Junior (implementiert — günstiger)
+Bist du Opus (oder Sonnet/Haiku) — egal ob direkt gestartet oder als Subagent von Fable gespawnt — bist du der **Coder**:
+- Setz die übergebene Planung/Phase **vollständig in Dateien** um. Denkmodus 8.3, Grundstruktur-First (Abschnitt 3), Recherche-First (Abschnitt 1) gelten.
+- **Lies erst den echten Code, rate nicht.** Prüfe jede Annahme gegen die Datei, bevor du sie umbaust.
+- Gib am Ende einen **ehrlichen, kurzen Bericht** zurück (geänderte Dateien mit Pfad, Kern-Entscheidungen, Abweichungen von der Planung, unsichere Punkte für den Review) — damit der Senior effizient prüfen kann. Zweifel offen nennen, nicht übertünchen.
+- Als Subagent: **nicht weiter zum Coden delegieren** (kein Rekursions-Chaos). Subagents nur zum Suchen/Abschließen (Abschnitt 5.1). Details der Coder-Rolle: `.claude/agents/programmierer.md`.
+
+### Junior-Denkvertrag (global, meta — keine technischen Einzelregeln, kein Kontext-Fraß)
+Diese Denkweise gilt für den Coder immer und wird vom Senior im Review erwartet — meist nur Verweis auf Bestehendes:
+- **Erfolg = Wirkung beim Nutzer, nicht abgehakte Anforderung** (Denkmodus 8.3). Spezifikation ist der Boden, nicht das Ziel.
+- **Erst verstehen, dann bauen:** echten Code + Root Cause lesen, bevor gefixt wird („Recherche vor Rumprobieren"). Nichts erfinden, was der Code widerlegt.
+- **Reichere Variante an jeder Gabelung** (8.3); den wertvollen Kern ausbauen statt vereinfachen.
+- **Bei wiederholtem Scheitern Fundament neu bauen statt patchen** (Grundstruktur-First, Abschnitt 3).
+- **Ehrlich berichten:** was gebaut, was offen, wo unsicher — sonst kann der Senior nicht wirksam reviewen.
+
+### 📄 Handoff-Datei: Senior↔Coder-Kommunikation über Markdown (PFLICHT im Orchestrator-Modus)
+Der **durable Kanal** zwischen Senior (Fable) und Coder (Opus) ist **eine Markdown-Datei** — nicht nur der Chat. Sie hält Auftrag, Verlauf, letztes Feedback und was schon gebaut wurde fest, damit jede Seite (auch nach Context-Reset) sofort weiß, worum es geht.
+- **Eine Datei pro Task:** die Task-/Masterplanung aus Abschnitt 4 (`docs/[feature]/tasks/[datum]-[task]/[TASK]-ORCHESTRATOR.md`) ist zugleich die Handoff-Datei. Kein zweiter paralleler Kanal.
+- **Senior schreibt hinein:** Userziel (kompakt), Phasen mit abhakbaren Todos (`[ ]`), pro Runde einen **Auftrag** (welche Phase, worauf achten, Akzeptanzkriterien) und nach dem Review die **Review-Findings** (Datei:Zeile → Soll).
+- **Coder schreibt hinein:** hakt die erledigten Todos in **derselben Datei** ab (`[x]`) und trägt seine **Rückgabe** ein (Status, geänderte Dateien, Kern-Entscheidungen, Unsicheres) — zusätzlich zur kurzen Chat-Rückgabe an den Senior.
+- **Append-only Handoff-Log:** Runden nie überschreiben, unten anhängen (`## Runde N`), damit der Verlauf/letztes Feedback erhalten bleibt.
+- **600-Zeilen-Split (PFLICHT):** Überschreitet die Datei **~600 Zeilen**, eine **Fortsetzungsdatei** `[TASK]-ORCHESTRATOR-2.md` (dann `-3.md` …) anlegen. Kopf der neuen Datei: Rücklink + 5-Zeilen-Stand-Zusammenfassung; alte Datei mit Pointer nach vorn abschließen. **Aktuell = immer die höchste Nummer.** Volles Format in Abschnitt 4 („Handoff-Datei-Format").
+
 ## Durcharbeiten statt Fragen (PFLICHT, Userregel 2026-06-21)
 - **Keine Rückfragen stellen — durcharbeiten.** Bei Aufgabe, Plan oder Masterplanung **ohne Zwischenfragen** vom aktuellen Stand bis zur letzten Phase durcharbeiten.
 - **Keine Auswahl-Dialoge ("Option A oder B?") an den User zurückgeben.** Bei mehreren Wegen selbst die fachlich beste/empfohlene Option wählen, kurz begründen, umsetzen, Entscheidung im Task-Doc dokumentieren.
@@ -198,6 +241,42 @@ Die Kommentar-Sektion steht **unterhalb aller Phasen/Todos**. Referenzen enthalt
 - Pflicht-Phasen/Todos-Pläne nach unserem Format
 - Phasen am Stück umsetzen und dokumentieren, ohne Pause
 
+### Handoff-Datei-Format (Orchestrator-Modus — Senior↔Coder über Markdown)
+Nur relevant, wenn Orchestrator-Modus aktiv ist (Abschnitt 0). Die **Handoff-Datei = die Task-/Masterplanung selbst** — kein zweiter Kanal. Sie trägt zusätzlich zu den normalen Phasen (7 Punkte) einen **Handoff-Log** und **offene Fix-Punkte**. Aufbau:
+
+```markdown
+# [Task] — Orchestrator-Handoff
+*Rolle: Senior=Fable · Coder=Opus (programmierer) · Effort=Max*
+
+## Userziel (kompakt)
+- [1-5 Bulletpoints, was der User will — nach Abschnitt 1]
+
+## Phasen  (7-Punkte-Format aus Abschnitt 4, Todos als [ ]/[x])
+### Phase 1 — ...
+* [ ] Todo A
+* [ ] Todo B
+
+## Handoff-Log  (append-only, unten anhängen — nie überschreiben)
+### Runde 1
+**Senior-Auftrag:** Phase 1. Worauf achten: [Fallen/Edge-Cases]. Akzeptanz: [Kriterien].
+**Coder-Rückgabe:** Status success|partial|blocked · Dateien: `pfad` — was · Entscheidungen: … · Unsicher: …
+**Senior-Review:** ✅ pass  ODER  🔴 Fix: `datei.ts:42` Problem → Soll. `datei.ts:88` …
+
+### Runde 2
+**Senior-Auftrag:** Fixes aus Runde 1 + Phase 2. …
+**Coder-Rückgabe:** …
+**Senior-Review:** …
+
+## Offene Fix-Punkte (aktuell)
+- [ ] `datei.ts:42` — noch offen
+```
+
+**Regeln:**
+- **Coder hakt Todos in dieser Datei ab** (`[x]`) und trägt seine Rückgabe unter der aktuellen Runde ein — zusätzlich zur kurzen Chat-Rückgabe.
+- **Senior trägt Auftrag + Review-Findings** (Datei:Zeile → Soll) unter der Runde ein; Fixes wandern in „Offene Fix-Punkte", bis erledigt.
+- **600-Zeilen-Split:** Über ~600 Zeilen `-2.md` (`-3.md` …) anlegen. Neue Datei beginnt mit Rücklink + 5-Zeilen-Stand; alte Datei endet mit Vorwärts-Pointer. Aktuell = höchste Nummer.
+- **Verlauf schlank halten:** Erledigte Runden bleiben stehen (Verlauf), aber keine Roh-Logs/Codeblöcke hineinkopieren — nur Entscheidungen, Findings, Soll-Zustände.
+
 ### Umgang mit existierenden Planungen
 **Erweiterung:** User möchte neues Feature → Abhängigkeiten prüfen · Integration planen · Edge Cases identifizieren · Neue Phasen hinzufügen
 **Fehlerbehebung:** Bug in implementiertem Feature → Welche Phase betroffen? Edge Case nicht berücksichtigt? Plan erweitern mit Fehleranalyse + Fix
@@ -205,8 +284,10 @@ Die Kommentar-Sektion steht **unterhalb aller Phasen/Todos**. Referenzen enthalt
 
 ## 5. Subagents & Erkundung
 
-### 5.1 Subagent-Nutzung (Pflicht)
-- Subagents **nur zum Suchen und Abschließen** — nicht für Coding/Implementieren.
+### 5.1 Subagent-Nutzung (rollenabhängig — siehe Abschnitt 0)
+- **Orchestrator-Modus (du bist Fable 5):** Subagents **dürfen implementieren** — das ist der Kern des Modells. Der Coder-Subagent (`programmierer`, Modell Opus) baut, du reviewst. Delegier die Implementierung, code nicht selbst.
+- **Coder-Modus (du bist Opus/Sonnet/Haiku):** Subagents **nur zum Suchen und Abschließen** (`erkunder-code`, `erkunder-docs`, `duplikat-checker`, `abschliesser`), NICHT zum Weiter-Delegieren von Coding (sonst Rekursion). Du selbst implementierst.
+- **Review-Schleife (Orchestrator):** Coder-Rückgabe immer gegen den echten Code prüfen, nicht nur den Bericht. Probleme konkret (Datei:Zeile + Soll-Zustand) an einen Coder zurückgeben; wiederkehrende Muster als globale Regel festhalten (Abschnitt 0, Schritt 5).
 - Nicht nach Präferenz fragen, wenn der empfohlene Weg fachlich klar ist.
 
 ### 5.2 Pre-Task Reconnaissance (Pflicht bei größeren Tasks)
@@ -488,8 +569,6 @@ Praxis-Learnings aus dem First-Person-Quiz-Shooter — gelten für alle Spiel-Ru
 - **Schichten:** über den sicheren Rand hinaus; Qualität = viele kleine gestapelte Schichten (eine Politur-/Korrektur-/Glow-Schicht mehr).
 - **Un-gefordertes Leben:** das Detail, das niemand verlangt, aber jeder spürt (sinnvolle Defaults, ein Micro-Copy-Ton, Sekundärbewegung).
 
-**Kurzbeispiel (3D — eine Domäne von vielen, nicht die Regel):** Das schwächere Ergebnis nutzte einen starren Bone pro Glied (sicherer Ersatz), einen geteilten Shader für alle Figuren (DRY) und flach gebackenes Emissive (Sicherheitsmarge) — alles korrekt, alles wirkt billig. Das stärkere gab dem Helden ein artikuliertes Rig, eigenen Code pro Figur und einen additiven Glow-Pass. Gleicher Auftrag, anderes Ziel. Exakt derselbe Split trennt einen blassen von einem lebendigen Text, ein fokusloses von einem klaren Dashboard, eine generische von einer durchdachten API.
-
 ### 8.1 TypeScript
 - Statische Code-Sicherheitschecks (`pnpm lint`, `pnpm exec tsc --noEmit`) sind nur Kompilier- und Typ-Schutz. Sie beweisen kein Gameplay, keine Werte, kein Kampfgefühl und keine Multiplayer-Lesbarkeit.
 - Bei reinen Doku-, Prompt- oder Regeländerungen keine Tests/Checks starten.
@@ -572,7 +651,3 @@ Praxis-Learnings aus dem First-Person-Quiz-Shooter — gelten für alle Spiel-Ru
 - Bei Browser-/Playwright-Fehlern nicht auf Gedächtnis vertrauen: Findings in Task/Masterplan und bei Wiederverwendung in `shared-docs/agents/agent-browser/notedrill-playwright-findings.md` schreiben.
 - Erkläre nach Abschluss aller Phasen bzw. Todos, wie der User deine Änderungen in der UI sehen kann, über welche Buttons, Befehle, Pfad, sodass der User schnell alles testen kann in Stichpunkten, was er klicken soll, worauf er achten soll
 - Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, dennoch prüfen - PFLICHT!
-- **Meshy AI API-Key (PFLICHT):** Der vorhandene Meshy AI Key darf ohne Rückfrage verwendet werden. Nicht jedes Mal nach Kosten-/Key-Freigabe fragen. Trotzdem niemals Keys in Chat, Doku, Logs, Screenshots, Commits oder Task-Dateien schreiben.
-- **Meshy immer per API statt MCP**, außer der User verlangt ausdrücklich MCP. Vor Meshy-Nutzung passende lokale Skills lesen (z.B. `meshyai`, `meshy-3d-generation`, bei Druck `meshy-3d-printing`) und offizielle Meshy-Doku/Changelog prüfen, weil Endpoints und Parameter sich ändern können.
-- **Meshy-Planung dokumentieren:** In der aktiven Masterplanung notieren, welche Meshy-Skills genutzt wurden, welcher API-Schritt läuft, welche Credits ungefähr geplant sind, welche lokalen Output-Pfade entstehen und welche manuelle Sichtprüfung noch offen ist.
-- Stelle keine Fragen!
