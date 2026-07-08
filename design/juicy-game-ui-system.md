@@ -250,6 +250,15 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 | **Pause-Konsole** | Overlay-Hero (Lit-Logo + Wortmarke + Motes) + juicy Buttons | `screens/(pause)/PauseHero.tsx`, `PauseButton.tsx` |
 | **Upgrade-Konsole** | Endless-Reward als Tab-Konsole: Lit-Hero + `layoutId`-TabRail + genau *ein* Tab-Body + ein „Weiter"-CTA; distinkter Akzent je Tab | `RewardShopHub.tsx`, `(upgrade)/UpgradeHero.tsx`, `UpgradeTabRail.tsx`, `BoostDraftTab.tsx`, `SkillsTab.tsx` |
 
+### 5.1 Icons, Texte, Badges (Lesbarkeit + Marken-Chip)
+
+Auf tiefem Warm-Schwarz kippt der Look sonst in blass/pastellig/unlesbar. Die drei Bausteine haben feste Regeln:
+
+- **Marken-/Anbieter-Icons = solider Lit-Chip, kein Pastell-Tile.** Das Glyph/Monogramm in **voller Brand-Farbe** auf einer **soliden dunklen Fläche** (`bg-surface-4`) mit klar gefärbtem Brand-Rim + weichem Innen-Glow. In NoteDrill: `<ProviderBrandIcon variant="solid" />` in einem Wrapper, der die Fläche liefert (z. B. `flex h-9 w-9 items-center justify-center rounded-xl border border-strong bg-surface-4`). **Nicht** die alte Akzent-16%-Füllung + heller Rand (`variant="tile"`) — die wirkt wie ein „weißer Kasten mit Ring" und verschwindet im Dark-Theme.
+- **Nur bedeutungstragende Icons.** Kein dekoratives Security-/`ShieldCheck`-Glyph, wo es nichts sichert (ein KI-Anmelde-Dialog braucht kein Schild — eher `KeyRound`). Detail-Icons einer Zeile werden gefärbt (Mail = `text-status-info`, Konten = `text-status-success`), nicht muted-grau.
+- **Textgrößen: Werte lesbar.** Kennzahlen/Status/Namen **≥ `text-xs` (12px)**; `text-[8..10px]` ist verboten für inhaltstragenden Text (nur reine Mikro-Labels über einem großen Wert dürfen `text-[10px]`). Werte in Ton-/Akzentfarbe, Sekundärtext `text-muted-foreground`. Unbekannt = ehrlich „—", nie „0".
+- **Badge = dunkler Chip, Farbe im Rim/Wert — nicht in der Fläche.** Kein weißer/heller Badge-Hintergrund. Status-Leisten sind **eine zusammenhängende dunkle Bar** (`rounded-2xl border border-subtle bg-surface-2`), innen Marken-Solid-Chip + Online-Punkt + Wert(e) mit Mini-Balken; Einträge durch dünnen Divider getrennt (`bg-border`), nicht als lose Einzelkacheln. Plan/Tarif als schlichter Text-Chip (`border-subtle bg-surface-4`), kein Icon-Ballast.
+
 ---
 
 ## 6. Layout-Muster „aufgeräumt"
@@ -271,6 +280,7 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 - „Fake-3D" (Lit-Logo, Halos, Dioramen, Motes) vor echter Canvas.
 - Semantische Akzentfarben; Titel-Gradient; `CornerBrackets` für Konsolen-Feel.
 - `aria-label`+Tooltip an Icon-Buttons; `prefers-reduced-motion` respektieren.
+- Marken-Icons als **soliden Lit-Chip** (volle Brand-Farbe auf `bg-surface-4`, Brand-Rim); Werte **≥ `text-xs`**; Badges als **dunkler Chip** (Farbe im Rim/Wert) — Details §5.1.
 
 ### ❌ Don't
 - Keine `bg-black/40`/`bg-white/10`-Opacity als Haupthintergrund (bricht u. a. unter Capacitor).
@@ -278,6 +288,7 @@ Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 - Kein `Math.random()`/`Date.now()` für Motes/Partikel-Positionen.
 - Keine zweite Live-R3F-Canvas über laufender Spiel-Szene.
 - Keine eckigen Buttons, kein Glow in der Flächenfüllung, kein Neon-Mix im selben Panel.
+- Kein pastelliges Icon-Tile (Akzent-Füllung + heller Rand), kein `text-[8..10px]` für inhaltstragenden Text, kein weißer/heller Badge-Hintergrund, kein dekoratives Sinnlos-Icon (`ShieldCheck` ohne echte Sicherung).
 - Keine Infinite-Loops in Combat-Hotpaths.
 
 ---

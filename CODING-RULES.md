@@ -319,6 +319,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Disabled-Button-Feedback:** MUSS über Tooltip/Hinweis erklären WARUM deaktiviert. User darf nie raten.
 - **Ressourcen-Blocker in HUD/Skill-UI:** Ist ein Skill wegen Mana/Energie nicht nutzbar, den Grund + Bedarf sichtbar zeigen (`Need 18 MP`, Tooltip `18/110`), nicht nur ausgrauen.
 - **Dropdown/Popover Stacking-Check:** Vor UI-Changes overflow/stacking-context, Portal-Rendering, z-index prüfen. Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben.
+- **Stabile Panel-Größe (kein Resize/Sprung beim Wechsel):** Container, deren Inhalt beim Tab-/Item-/Provider-Wechsel variiert (Dialoge mit Anbieter-Rail, Tab-Panels, Master-Detail), bekommen eine **feste oder Mindest-Höhe** und scrollen intern — nicht die Wurzel wachsen/schrumpfen lassen. Dialog: `h-[min(88vh,720px)]` (nicht nur `max-h-…`, das noch mit dem Inhalt springt) + `overflow-hidden` an der Wurzel, `overflow-y-auto` am Body. Karten/Kacheln mit wechselndem Inhalt `min-h-[…]` geben. Der Rahmen darf sich beim Klick nicht bewegen — nur der Inhalt.
 
 ## Code-Sicherheit & manuelle Produktprüfung
 
