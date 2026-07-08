@@ -12,6 +12,7 @@
 Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungeprüft behandeln, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
 ## Durcharbeiten statt Fragen (PFLICHT)
+- **Verbindlicher Phasen-Workflow (IMMER anwenden):** Jede Implementierung folgt den Regeln in `shared-docs/agents/commands/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — phasenweise ohne Stopps, To-dos in der Task-Datei abhaken, nach JEDER Phase dokumentieren (7-Punkte-Format + Kommentar-Sektion) und im Loop bis zur letzten Phase weiterarbeiten. Diese Datei definiert den Pflicht-Ablauf; vor Baubeginn lesen und exakt einhalten.
 - **Keine Rückfragen an den User** (kein `AskUserQuestion`, keine „Soll ich A oder B?"-Dialoge). Bei Aufgabe, Plan oder Masterplanung ohne Zwischenfragen vom aktuellen Stand bis zur letzten Phase durcharbeiten.
 - **Bei mehreren Wegen selbst die fachlich beste, kleinste stabile Option wählen**, kurz begründen, umsetzen, Entscheidung im Task-Doc dokumentieren. Annahmen klar als Annahme markieren.
 - **Empfehlung = Auftrag:** Steht im Plan eine klare Empfehlung, gilt sie als gewählt. Nicht erneut vorlegen, direkt bauen.
