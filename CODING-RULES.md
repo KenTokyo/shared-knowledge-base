@@ -21,6 +21,7 @@ Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungepr
 ## 1. Kontext & Kommunikation
 
 - **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code").
+- **Intent ableiten (selbst mitdenken):** Der User kann sein Ziel oft schwer in Worte fassen. Manchmal nicht am wörtlichen Satz kleben, sondern aktiv ableiten, was gemeint ist: Beispiele/Referenzen des Users heranziehen, das beste rausholen also das maximalste, was dem User vom Look und UX her gefallen würde, auch Edge Cases immer mit betrachten
 - **Usernachricht zuerst notieren:** Die User-Nachricht initial in der Todo-/Phasenplanung (bestehende nutzen oder neue in `docs/[feature]/tasks/[task]-[datum].md`) oben als Kontext festhalten, bevor du planst — damit du nicht auf falsche Wege abdriftest. Format:
 
   ```
@@ -319,6 +320,15 @@ Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards 
 - **„Fertig" heißt erlebt-und-geprüft:** Erst fertig, wenn das Ergebnis durch die Augen des echten Nutzers gerendert wurde und du „exzellent" wettest — nicht, wenn Gates grün sind (ergänzt 8.2).
 
 **Wie sich der Denkmodus zeigt:** echten Mechanismus bauen statt sicheren Ersatz · qualitätstragende Details formen statt flachen Default · die Sache wirklich passieren lassen statt auf Distanz faken · das Wichtigste vorn/groß/unverdeckt · über den sicheren Rand hinaus schichten · un-gefordertes Leben (sinnvolle Defaults, Micro-Copy-Ton, Sekundärbewegung).
+
+**Fokus ohne Regress + Abschluss-Abgleich (PFLICHT — die globale „Check"-Regel vor „fertig"):** Der Craft-Modus hebt den Fokus — genau das erzeugt die häufigste Über-Korrektur: beim Aufwerten des Fokus wird still ein **vorher schon erfülltes** Merkmal an anderer Stelle geopfert (die Wippe kippt, statt dass beides zugleich gut ist). Gegenmittel, gehört zur Definition von „fertig":
+- **Kein Regress:** Fokus-Investment darf **nichts** verschlechtern, das schon gut/richtig war. Qualität ist keine Wippe — ein exzellentes Ergebnis hält **alle** guten Eigenschaften gleichzeitig, es tauscht nicht A gegen B.
+- **„Über dem Boden" heißt addieren, nie darunter fallen:** „Spec ist der Boden, ziele darüber" heißt *mehr obendrauf* — nie eine explizite Vorgabe unterschreiten. Benannte/quantifizierte/superlative Wörter im Auftrag („groß/oversized", „~200 Einheiten", „rund", „3 von X", „beide sichtbar") sind **harte Constraints**; Exzellenz wird **mit** ihnen gemessen, nicht statt ihnen.
+- **Richtiger Hebel statt lokalem Kurzschluss:** Damit der Fokus „gewinnt", den passenden Hebel nutzen (Betonung, Kadrierung, Platzierung, relative Skala) — **nie** den Kontext degradieren (nicht die ganze Welt schrumpfen, damit der Held groß wirkt). Das echte Problem lösen, keine globale Eigenschaft für ein lokales Ziel opfern.
+- **Abschluss-Abgleich (der „Check"):** Vor „fertig" zusätzlich zum Augen-Render **den ganzen Auftrag einmal gegenlesen** — ist jedes explizite Merkmal/Maß/Superlativ *wörtlich* noch wahr, und ist **nichts** vorher Gutes zurückgefallen? Das ist **kein** neuer Abhak-Gate: ein sachkundiger Nutzer sähe ein fallengelassenes „oversized" sofort, „exzellent für ihn wetten" *setzt* den vollständigen Auftrag also schon voraus — der Abgleich ist nur die ehrliche Einlösung dieser Wette.
+- **Physisch/logisch kohärent:** Das Ergebnis muss real Sinn ergeben, nicht nur rendern/laufen (eine Hand ist nicht zugleich gehoben und gesenkt; eine Summe = ihre Teile). Zustände prüfen, nicht nur Ausführung.
+
+_Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" gelöst, aber die zuvor erfüllte, ausdrücklich geforderte „oversized/mehrstöckige" Struktur dabei unter die geforderte Größe geschrumpft — falscher Hebel; richtig wäre, sie groß zu lassen und die Figuren darin hochzuskalieren. Global identisch: einen Absatz aufpolieren und eine geforderte Kernaussage streichen; ein Panel schön machen und eine geforderte Spalte weglassen._
 
 ### 8.1 TypeScript & Tests
 - Statische Checks (`lint`, `tsc --noEmit`) sind nur Kompilier-/Typschutz — kein Beweis für Gameplay, Werte, Kampfgefühl oder Multiplayer-Lesbarkeit. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.

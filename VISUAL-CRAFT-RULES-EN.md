@@ -73,12 +73,46 @@ appendix in `prompts/opus-4-8-fable-mode-visual-craft-prompt.md`.)*
 
 ---
 
+## Focus without regression — and the final reconciliation (the global "check" rule)
+
+Craft mode raises the **focus** (reset points 3–4). That is exactly what produces the most common **over-correction**:
+while lifting the focus, a feature that was **already satisfied** elsewhere gets silently **sacrificed** — the see-saw
+tips instead of both being good at once. This holds across every domain:
+
+- **No regression.** Investing in the focus must **never** worsen something that was already good/correct. An excellent
+  result holds **all** the good properties simultaneously; it does not trade A for B. (The stronger reference delivered
+  both at once — it did not swap one for the other.)
+- **"Above the floor" means add, never fall below it.** "The spec is the floor, aim above it" means *stack more on top* —
+  it **never** licenses dropping below an explicit requirement. Named, quantified or superlative words in the brief
+  ("grand/oversized", "~200 units", "round", "3 of X", "both visible") are **hard constraints**. Excellence is measured
+  **with** them held, not in their place.
+- **Right lever, not a local shortcut.** To make the focus "win", use the right lever (emphasis, framing, placement,
+  relative scale) — **never** degrade the context to hit a local goal cheaply (don't shrink the whole world so the hero
+  looks big). Solve the real problem; don't sacrifice a global property for a local one.
+- **Final reconciliation = part of "done".** Before "done", in addition to rendering it through the user's eyes,
+  **re-read the entire brief once**: is every explicit feature, measure and superlative *literally* still true — and did
+  **nothing** that was already good regress? This is **not** a new tick-box gate (those just get dutifully ticked in
+  engineer mode): a knowledgeable user would spot a dropped "oversized" **instantly** — so "betting excellent for them"
+  *already contains* the full brief. The reconciliation is merely the honest payment of that bet, not a rule on top.
+- **Physically / logically coherent.** The result must make real-world sense, not merely render/run — a hand isn't raised
+  and lowered at once, a sum equals its parts. Sanity-check the states, not just the execution.
+
+**Short example (3D — one of many domains):** the focus "make the characters finally visible/alive" was solved — but the
+previously satisfied, *explicitly required* "oversized, multi-tier" arena was silently shrunk below the required size
+(shallower tiers, smaller radius) so the figures would read big. Wrong lever: "oversized" is the **floor**, not
+negotiable. The right move is to **keep** the arena large and scale/frame the figures up *within* it — both at once, like
+the reference. Globally identical: polishing a paragraph while cutting a required key statement; making a dashboard panel
+pretty while dropping a required column.
+
+---
+
 ## One-liner (usable as a system prefix)
 
 > "Don't measure yourself by whether you met the requirement, but by whether a human would call the result
 > **excellent**. At every fork, take the **richer** variant of anything the user experiences. A hard core means invest
 > *more*, not simplify. It's only done once you've experienced it through the real user's eyes and you'd bet it's
-> excellent."
+> excellent — **while every explicit requirement of the brief is still literally held, without sacrificing anything that
+> was already good.**"
 
 ## Honest limit
 
