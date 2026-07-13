@@ -220,6 +220,21 @@ MOTES.map(m => <motion.span key={m.x} style={{ left:m.x, background:ACCENT }}
   transition={{ duration:3.4, repeat:Infinity, ease:'easeOut', delay:m.d }} />)
 ```
 
+**Wiederverwendbare FX-Atoms (Aeon, `components/ui/aeon/fx/`)** — alle deterministisch
+(Index-Hash statt `Math.random()`), nur `transform`/`opacity`, `useReducedMotion`-fest,
+`memo`, farb-/mengengetrieben per Props:
+- `AeonEmberField` — aufsteigende Glut-Funken (heiße Regionen: Amboss, Hero).
+- `AeonBubbleField` — glasige „Blubberblasen" mit Rim/Spekular (magisch/sprudelnd: Kristalle, Präsentation).
+- `AeonShockwave` — Explosionswelle (konzentrische Ringe + Bloom-Flash), feuert einmal auf `signal`-Änderung (wie `AeonSparkBurst`, kein Akkumulieren). Für Impact-Momente.
+- `AeonLightShafts` — volumetrische God-Rays (feste Winkel, Opacity-Shimmer) → Diorama-Tiefe statt „leer/billig".
+
+**Geteiltes Diorama statt Duplikat:** Zwei ~90 %-gleiche Bühnen (Verstärken/Katalog) leben
+als **eine** SSoT `forge/ForgeDioramaStage` (fill-height, Lichtschächte, Perspektiv-Boden,
+belichteter Amboss/Podest **statt Void-Oval**, Item-Halo + Kontakt-Glow, Vignette,
+Explosions-Layer). Jede Bühne liefert nur Item-Node + `badge`/`caption`/`overlay`. Regel:
+Bühnen füllen die Zelle (`h-full`/`flex min-h-0`), sonst kollabieren sie auf Inhaltshöhe
+(Item klebt oben, darunter „leere schwarze Fläche").
+
 ### 4.5 Corner-Brackets (Tech-Panel-Gefühl)
 Vier kleine L-Winkel in den Ecken einer Karte → „Konsole/HUD"-Anmutung.
 → CCB: `shop/CornerBrackets.tsx` (geteilt, rein präsentativ).
@@ -258,6 +273,7 @@ Auf tiefem Warm-Schwarz kippt der Look sonst in blass/pastellig/unlesbar. Die dr
 - **Nur bedeutungstragende Icons.** Kein dekoratives Security-/`ShieldCheck`-Glyph, wo es nichts sichert (ein KI-Anmelde-Dialog braucht kein Schild — eher `KeyRound`). Detail-Icons einer Zeile werden gefärbt (Mail = `text-status-info`, Konten = `text-status-success`), nicht muted-grau.
 - **Textgrößen: Werte lesbar.** Kennzahlen/Status/Namen **≥ `text-xs` (12px)**; `text-[8..10px]` ist verboten für inhaltstragenden Text (nur reine Mikro-Labels über einem großen Wert dürfen `text-[10px]`). Werte in Ton-/Akzentfarbe, Sekundärtext `text-muted-foreground`. Unbekannt = ehrlich „—", nie „0".
 - **Badge = dunkler Chip, Farbe im Rim/Wert — nicht in der Fläche.** Kein weißer/heller Badge-Hintergrund. Status-Leisten sind **eine zusammenhängende dunkle Bar** (`rounded-2xl border border-subtle bg-surface-2`), innen Marken-Solid-Chip + Online-Punkt + Wert(e) mit Mini-Balken; Einträge durch dünnen Divider getrennt (`bg-border`), nicht als lose Einzelkacheln. Plan/Tarif als schlichter Text-Chip (`border-subtle bg-surface-4`), kein Icon-Ballast.
+- **Generierte Bilder stehen alleinstehend (Standalone-Bild-Regel).** Liegt ein KI-generiertes Art-Layer vor (Gear-Emblem, Gem-Atlas, Klassen-Portrait), rendert es **allein**: **kein** dekoratives Hintergrund-Siegel dahinter, **kein** überlagernder Zweit-Glyph/Slot-Icon davor — sonst kollidieren zwei Motive (Bild hinter Bild). Das Bild wird **groß & zentral** gesetzt; Farbidentität/Tiefe kommen aus **Rim/Glow** (weicher Radial-Halo, Akzent-Rand) statt aus Füll-Deko. Nur wenn die Art fehlt (unbekannter Slot/Tier), greift ein **leiser Fallback-Glyph**. Referenz: `AeonItemEmblem` + `CrystalGem` (Atlas-Pfad), Panel-Halo in `GemInventoryPanel`.
 
 ---
 
@@ -325,6 +341,16 @@ Auf tiefem Warm-Schwarz kippt der Look sonst in blass/pastellig/unlesbar. Die dr
 - `LitLogo.tsx` · `DriftMotes.tsx` · `use-juicy-tilt.ts` · `juicy-accents.ts` (`WARM_STONE`/`consoleShadow`)
 - Genutzt in: `QuizHubHero` (Quiz), `CrosswordHubHeader` (Kreuzworträtsel), `CheatsheetSectionHeader`/`CheatsheetSection` (Spickzettel), Lernkarten-Dashboard-`(overviewSection)` (Blaupause, Shim), `DashboardJuicyHero` (Haupt-Dashboard `/dashboard`, Scope auf `page.tsx` + `src/routes/dashboard.tsx`)
 - Rollout-Masterplan: `docs/design/tasks/2026-07-01-warm-stone-juicy-console-global-rollout-masterplan.md`
+
+**Voxel Samurai Quiz — Skin „Imperiales Asche-Atelier"** (`voxel-samurai-quiz/`):
+- Die Nexus-Variante (`aeon`) trägt seit 2026-07-13 den **Asche-Atelier**-Skin:
+  kühle Kohle-/Asche-Surfaces, Pergament, Altgold `#c5a766`, Granat `#7a1f1f`,
+  Mondsilber `#c0c6cf` — Motion-/Fake-3D-Regeln dieses Dokuments gelten unverändert.
+- Token-SSoT: `voxel-samurai-quiz/src/config/aeonTheme.ts` · verbindliches
+  Zielbild + Board-Index: `voxel-samurai-quiz/DESIGN.md §10` · Konzept-Boards:
+  `voxel-samurai-quiz/assets/concepts/imperiales-asche-atelier-ui/` (00–21).
+- Merke: Dieser Skin ist der seltene Fall eines sanktionierten **Surface-Skala-
+  Wechsels** (warm → kühl) — für normale Reskins gilt weiter §2 (nur Akzente drehen).
 
 **Verwandte Cross-Game-Docs:** `shared-docs/design/liquid-glass-guide.md`,
 `shared-docs/design/auto-animate-documentation.md`, `shared-docs/CODING-RULES.md` (React-Loop-Schutz, Frontend-Regeln).

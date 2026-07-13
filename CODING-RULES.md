@@ -77,6 +77,7 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
 ### Abschluss im Chat
 - **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Code-Sicherheit/Manuelles Gate`.
 - **Pfadpflicht:** Geänderte oder geprüfte Dateien/Komponenten immer mit Pfad nennen.
+- **Erzeugte-Dateien-Pfadpflicht (PFLICHT):** Für **jede neu erzeugte Datei und jedes erzeugte Artefakt** im Abschluss den **vollständigen absoluten Speicherpfad** nennen — insbesondere Bilder, Screenshots, Audio, Videos, PDFs, Exporte und temporär außerhalb des Projektordners gespeicherte Ergebnisse. Bei mehreren Dateien jeden Pfad einzeln aufführen. Diese Pflicht gilt auch bei reinen Generierungsaufträgen wie „nur Bilder erzeugen"; eine knappe Pfadliste ist trotzdem erforderlich.
 - **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
 - **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen.
