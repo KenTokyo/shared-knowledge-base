@@ -1,4 +1,4 @@
-# 🎯 Coding Rules & Development Guidelines
+g# 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Universelle Regeln für konsistenten, performanten, wartbaren Code — projektübergreifend gültig.
 
@@ -99,12 +99,12 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
   4. **Nach dem Neubau aufräumen.** Legacy, verwaiste Importe und Altreferenzen sofort entfernen.
   **Warum:** Am Altbestand herumzudrehen kostet mehr Zeit und erzeugt neue Regressionen als ein sauberer Neubau. Im Zweifel: neu bauen, nicht flicken.
 
-### Orchestrator-Modus (nur wenn aktiv, Abschnitt 0)
-- **Nach jeder Phase** Plan updaten/Todos abhaken + Status setzen · Task-Pfad mitgeben · kleine Summary, damit direkt weitergearbeitet werden kann.
+### Linearer Phasen-Modus (immer aktiv)
+- **Du codest selbst.** Es gibt keinen Orchestrator-/Coder-Rollensplit und kein Delegieren von Implementierung an Subagents es sei denn es wird explizit als Systemprompt mitgegeben.
+- **Nach jeder Phase** Plan updaten/Todos abhaken + Status setzen · kleine Summary, damit direkt weitergearbeitet werden kann.
 - **Tempo-Guard:** Nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration**. Keine Sammel-Implementierung über mehrere große Phasen.
 - **Qualitäts-Gate:** Vor Phasenabschluss Scope gegen Planung abgleichen, Doku aktualisieren, offene manuelle User-Gates notieren.
-- **Handover-Reihenfolge:** 1) Phase dokumentieren, 2) offene Punkte + nächste Phase, 3) Endstatus (`NEXT_PHASE_READY` oder `ALL_PHASES_COMPLETE`) als **letzte Zeile**.
-- **Loop-Stopper:** Sind nur noch manuelle User-Checks offen (UI-Test, Ingame-Run, visueller Check), immer `ALL_PHASES_COMPLETE` — kein `NEXT_PHASE_READY` mehr.
+- **Loop-Stopper:** Sind nur noch manuelle User-Checks offen (UI-Test, Ingame-Run, visueller Check), gilt die Arbeit als fertig — keine Pseudo-Phase mehr anhängen.
 
 ## 4. Erzeugung von Planung
 
@@ -156,13 +156,11 @@ Referenzen enthalten max. 3 Hauptkomponentenpfade pro Phase.
 - Erstellen sobald Umfang/Abhängigkeiten es erfordern oder wenn der User „erzeuge Masterplan" sagt.
 - Phasen am Stück umsetzen und dokumentieren, ohne Pause.
 
-### Handoff-Datei-Format (nur Orchestrator-Modus)
-Die **Handoff-Datei = die Task-/Masterplanung selbst** — kein zweiter Kanal. Sie trägt zusätzlich zu den 7-Punkte-Phasen einen **Handoff-Log** und **offene Fix-Punkte**:
+### Arbeitsprotokoll in der Task-Datei
+Die Task-/Masterplanung ist der **einzige** durable Kanal — kein zweiter Log. Neben den 7-Punkte-Phasen trägt sie ein knappes **Arbeitsprotokoll** und **offene Fix-Punkte**:
 
 ```markdown
-# [Task] — Orchestrator-Handoff
-*Rolle: Senior=Fable · Coder=Opus (programmierer) · Effort=Max*
-
+# [Task]
 ## Userziel (kompakt)
 - [1-5 Bulletpoints]
 
@@ -170,24 +168,23 @@ Die **Handoff-Datei = die Task-/Masterplanung selbst** — kein zweiter Kanal. S
 ### Phase 1 — ...
 * [ ] Todo A
 
-## Handoff-Log  (append-only — nie überschreiben)
-### Runde 1
-**Senior-Auftrag:** Phase 1. Worauf achten: [Fallen]. Akzeptanz: [Kriterien].
-**Coder-Rückgabe:** Status success|partial|blocked · Dateien: `pfad` — was · Entscheidungen · Unsicher
-**Senior-Review:** ✅ pass  ODER  🔴 Fix: `datei.ts:42` Problem → Soll
+## Arbeitsprotokoll  (append-only — nie überschreiben)
+### Phase 1 — Status success|partial|blocked
+**Dateien:** `pfad` — was geändert
+**Entscheidungen:** [1-3 Weichen + Begründung]
+**Unsicher / Risiko:** [ehrliche Zweifelspunkte]
 
 ## Offene Fix-Punkte (aktuell)
 - [ ] `datei.ts:42` — noch offen
 ```
 
-**Regeln:** Coder hakt Todos hier ab (`[x]`) und trägt seine Rückgabe unter der aktuellen Runde ein. Senior trägt Auftrag + Review-Findings ein; Fixes wandern in „Offene Fix-Punkte", bis erledigt. **600-Zeilen-Split:** Über ~600 Zeilen `-2.md` (`-3.md` …) anlegen, mit Rücklink + 5-Zeilen-Stand; alte Datei endet mit Vorwärts-Pointer. Aktuell = höchste Nummer. Keine Roh-Logs/Codeblöcke hineinkopieren — nur Entscheidungen, Findings, Soll-Zustände.
+**Regeln:** Todos direkt hier abhaken (`[x]`), Protokoll append-only (frühere Phasen nie überschreiben, nie Ergebnisse erfinden). Offene Findings wandern in „Offene Fix-Punkte", bis erledigt. **600-Zeilen-Split:** Über ~600 Zeilen `-2.md` (`-3.md` …) anlegen, mit Rücklink + 5-Zeilen-Stand; alte Datei endet mit Vorwärts-Pointer. Aktuell = höchste Nummer. Keine Roh-Logs/Codeblöcke hineinkopieren — nur Entscheidungen, Findings, Soll-Zustände.
 
 ## 5. Subagents & Erkundung
 
-### 5.1 Subagent-Nutzung (rollenabhängig — siehe Abschnitt 0)
-- **Orchestrator-Modus:** Subagents **dürfen implementieren** — das ist der Kern. Der Coder-Subagent (`programmierer`, Opus) baut, du reviewst.
-- **Coder-Modus:** Subagents **nur zum Suchen und Abschließen** (`erkunder-code`, `erkunder-docs`, `duplikat-checker`, `abschliesser`), NICHT zum Weiter-Delegieren von Coding.
-- **Review-Schleife (Orchestrator):** Coder-Rückgabe immer gegen den echten Code prüfen, nicht nur den Bericht. Probleme konkret (Datei:Zeile + Soll) zurückgeben; wiederkehrende Muster als globale Regel festhalten (Abschnitt 0).
+### 5.1 Subagent-Nutzung
+- Planen, Implementieren und Prüfen passiert linear in derselben Session
+- Subagents **ausschließlich zum Suchen und Abschließen**: `erkunder-code`, `erkunder-docs`, `duplikat-checker` (Recherche) · `abschliesser` (`.completed/`-Datei + CLAUDE.md-Check).
 
 ### 5.2 Pre-Task Reconnaissance (Pflicht bei >2 Dateien)
 - Vor Coding parallel: `erkunder-docs` sucht in `docs/`, `.completed/`, History; `erkunder-code` findet betroffene Dateien und Duplikate.
@@ -382,7 +379,7 @@ _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" 
 
 **Nie überspringen:**
 - React Loop-Stopper (Abschnitt 6): idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
-- Orchestrator-Regeln (Abschnitt 3): Phase dokumentieren, Mini-Check, korrekter Endstatus; bei manuellen Checks immer `ALL_PHASES_COMPLETE`.
+- Phasen-Regeln (Abschnitt 3): selbst coden (nicht delegieren), Phase dokumentieren, Todos abhaken, Mini-Check vor „fertig".
 - UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen. Fremde parallele Änderungen nicht revertieren.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
 - Grundstruktur-First anwenden: strukturell falschen/kollidierenden Code komplett neu bauen statt kleine Patches zu stapeln (Abschnitt 3).
