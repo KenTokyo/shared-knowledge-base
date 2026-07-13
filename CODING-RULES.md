@@ -1,4 +1,4 @@
-# 🎯 Coding Rules & Development Guidelines
+g# 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Universelle Regeln für konsistenten, performanten, wartbaren Code — projektübergreifend gültig.
 
@@ -184,9 +184,7 @@ Die **Handoff-Datei = die Task-/Masterplanung selbst** — kein zweiter Kanal. S
 ## 5. Subagents & Erkundung
 
 ### 5.1 Subagent-Nutzung (rollenabhängig — siehe Abschnitt 0)
-- **Orchestrator-Modus:** Subagents **dürfen implementieren** — das ist der Kern. Der Coder-Subagent (`programmierer`, Opus) baut, du reviewst.
-- **Coder-Modus:** Subagents **nur zum Suchen und Abschließen** (`erkunder-code`, `erkunder-docs`, `duplikat-checker`, `abschliesser`), NICHT zum Weiter-Delegieren von Coding.
-- **Review-Schleife (Orchestrator):** Coder-Rückgabe immer gegen den echten Code prüfen, nicht nur den Bericht. Probleme konkret (Datei:Zeile + Soll) zurückgeben; wiederkehrende Muster als globale Regel festhalten (Abschnitt 0).
+- Subagents **nur zum Suchen und Abschließen** (`erkunder-code`, `erkunder-docs`, `duplikat-checker`, `abschliesser`), NICHT zum Weiter-Delegieren von Coding
 
 ### 5.2 Pre-Task Reconnaissance (Pflicht bei >2 Dateien)
 - Vor Coding parallel: `erkunder-docs` sucht in `docs/`, `.completed/`, History; `erkunder-code` findet betroffene Dateien und Duplikate.
