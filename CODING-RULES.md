@@ -32,6 +32,7 @@ Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungepr
   ```
 
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren.
+- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
 - **Verstehen statt Umdeuten (Pflicht):** Lösung A verbessern, nicht still zu B wechseln · Fachwörter nicht eigenmächtig übersetzen wenn die Richtung kippt · vor Umsetzung prüfen „Löst mein Schritt das genannte Problem?" · keine versteckten Nebenwirkungen (z. B. harte Limits) außer explizit gewünscht · bei Effizienz-Themen erwähnen, ob die Architektur umgebaut werden sollte · Zielkonflikte: erst Ergebnisqualität, dann Kosten/Tempo.
 - **Anwender-Fehler vs. Code-Fehler (KRITISCH!):** VOR jedem Fix prüfen, ob es überhaupt ein Code-Fehler ist:
 
