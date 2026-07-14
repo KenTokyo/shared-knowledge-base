@@ -1,4 +1,4 @@
-g# 🎯 Coding Rules & Development Guidelines
+# 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Universelle Regeln für konsistenten, performanten, wartbaren Code — projektübergreifend gültig.
 
@@ -78,6 +78,8 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
 - **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Code-Sicherheit/Manuelles Gate`.
 - **Pfadpflicht:** Geänderte oder geprüfte Dateien/Komponenten immer mit Pfad nennen.
 - **Erzeugte-Dateien-Pfadpflicht (PFLICHT):** Für **jede neu erzeugte Datei und jedes erzeugte Artefakt** im Abschluss den **vollständigen absoluten Speicherpfad** nennen — insbesondere Bilder, Screenshots, Audio, Videos, PDFs, Exporte und temporär außerhalb des Projektordners gespeicherte Ergebnisse. Bei mehreren Dateien jeden Pfad einzeln aufführen. Diese Pflicht gilt auch bei reinen Generierungsaufträgen wie „nur Bilder erzeugen"; eine knappe Pfadliste ist trotzdem erforderlich.
+- **Projektgebundene KI-Bilder immer ins Projekt (PFLICHT):** Jedes finale oder vom User angeforderte generierte Bild, das als Konzept, Referenz, Mockup, Textur oder Baugrundlage für ein Projekt dient, muss **vor Abschluss** unter einem passenden Projektpfad wie `assets/concepts/[feature]/`, `public/assets/[feature]/` oder `docs/[feature]/assets/` gespeichert oder dorthin kopiert werden. Chat-Anhänge, Clipboard-, Temp-, AppData-, `$CODEX_HOME/generated_images`- und andere externe Generatorpfade sind nur Quellen, nie Endablagen. Kein Projekt darf ausschließlich auf externe lokale Bildpfade verweisen. Verwarfene Zwischenvarianten müssen nur gespeichert werden, wenn der User sie als Ergebnis angefordert hat.
+- **Bildbrief und Implementierungsdetails dokumentieren (PFLICHT):** Für jede projektgebundene Bildserie hält die zuständige Task-Doku oder ein kanonisches Asset-Manifest mindestens Zweck, finalen Prompt, Referenz-/Quellbilder, finalen Projektpfad, Format, Pixelmaße und Auswahl/Empfehlung fest; ein nur rekonstruierter Prompt muss ehrlich als rekonstruiert markiert werden. Dient das Bild als KI-Baugrundlage für Map, Szene oder 3D-Modell, zusätzlich Kamera/Komposition und freie Sichtzonen, Module/Formaufbau, relative Größen/Platzierung, Materialien, Boden, Vegetation, Props/Kleinteile, Licht/Wetter, Negativvorgaben und Performance-Bauweise dokumentieren. Bei komplexen Szenen spezialisierte Detail-/Bauplantafeln für Gebäude, Modelle und Umgebung erzeugen, wenn die Hauptansicht diese Angaben nicht eindeutig zeigt. Generativer Bildtext ist nie alleinige Maß- oder Text-SSoT; exakte Angaben stehen in Markdown.
 - **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
 - **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen.
