@@ -208,6 +208,13 @@ Die Task-/Masterplanung ist der **einzige** durable Kanal — kein zweiter Log. 
 - **Shared nur bei echter Wiederverwendung:** `kit.ts`, `builders.ts`, `utils.ts` dürfen neutrale Bausteine enthalten, keine versteckten konkreten Features. Existiert ein Helper nur für ein Ziel, bleibt er in der Ziel-Datei.
 - **Änderungen additiv denken:** Neue Generationen/Modi/Varianten kommen als eigene Dateien/Ordner dazu; bestehende fachliche Dateien werden nicht zusammengeworfen, außer der User fordert genau diese Regeneration.
 
+### Sprechende Namen für Markdown-Dokumente (PFLICHT)
+- **Keine `README.md`-Dateien für fachliche Dokumentation:** Baupläne, Asset-Manifeste, Prompt-Router, Serienindizes, Workflows, Architekturverträge und andere fachliche Single Sources of Truth erhalten immer einen sprechenden Dateinamen.
+- **Benennungsformel:** Fachobjekt plus Dokumentzweck. Gute Beispiele sind `<map-slug>-bauplan-und-asset-manifest.md`, `<serie>-serienindex-und-erweiterungsvertrag.md` und `<thema>-prompt-index-und-arbeitsablauf.md`.
+- **Keine nur scheinbar besseren Ersatznamen:** `info.md`, `doku.md`, `notes.md` oder ein unqualifiziertes `manifest.md` sind ebenfalls zu generisch. Der Dateiname muss auch außerhalb seines Ordners eindeutig verständlich und auffindbar sein.
+- **Bei Berührung migrieren:** Liegt im bearbeiteten Scope noch eine generische fachliche `README.md`, wird sie sprechend umbenannt. Alle Links, Router, Prompts, Tasks und Abschlussnachweise werden im selben Auftrag auf den neuen Namen aktualisiert; es bleibt keine Weiterleitungs-`README.md` zurück.
+- **Technische Fremdvorgaben sind die einzige Ausnahme:** Verlangt ein externes Tool, Paketformat oder Repository-Host zwingend exakt `README.md`, darf diese Datei nur als kurzer technischer Einstieg dienen und niemals die fachliche Single Source of Truth enthalten. Interne Asset-, Feature-, Prompt-, Map- und Komponentenordner fallen nicht unter diese Ausnahme.
+
 ### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — auslagern wenn größer.
 - 🇩🇪 **Deutsch (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`.
