@@ -230,6 +230,7 @@ Seit 2026-06-12 ist das Dungeon-v2-System (bewiesen in Dungeon Ebene 1-4 und Ebe
 ## 10. Gegner, Boss-Slots und Remote-VFX
 
 - **MUSS: Sichtbare Gegnerliste korrekt begrenzen.**
+- **MUSS: Dev-/VFX-Lab-Unterdrückung bleibt transient.** Labs dürfen Gegner-Simulation, Spawning, Modelle oder Animationen temporär ausblenden, aber niemals dafür persistierte Produktions-/Performanceflags überschreiben. Eigener nicht persistierter Lab-Scope; jeder echte Run löst ihn. Nicht abbrechbare asynchrone Warm-ups prüfen vor späten Writes, ob das Lab den Run noch besitzt. Leitsymptom bei Verstoß: Gegner-Entity ist treffbar, Modell bleibt nach dem Lab-Run unsichtbar.
 - **MUSS: `InstancedMesh.count` auf echte sichtbare Runtime setzen.**
 - **MUSS: Gegner-Parts batchen statt pro Part ein Mesh.**
 - **MUSS: Matrix/Farbe nur bei Dirty-Signatur hochladen.**
