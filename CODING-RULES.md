@@ -1,4 +1,4 @@
-g# 🎯 Coding Rules & Development Guidelines
+# 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Universelle Regeln für konsistenten, performanten, wartbaren Code — projektübergreifend gültig.
 
@@ -32,6 +32,7 @@ Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungepr
   ```
 
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren.
+- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
 - **Verstehen statt Umdeuten (Pflicht):** Lösung A verbessern, nicht still zu B wechseln · Fachwörter nicht eigenmächtig übersetzen wenn die Richtung kippt · vor Umsetzung prüfen „Löst mein Schritt das genannte Problem?" · keine versteckten Nebenwirkungen (z. B. harte Limits) außer explizit gewünscht · bei Effizienz-Themen erwähnen, ob die Architektur umgebaut werden sollte · Zielkonflikte: erst Ergebnisqualität, dann Kosten/Tempo.
 - **Anwender-Fehler vs. Code-Fehler (KRITISCH!):** VOR jedem Fix prüfen, ob es überhaupt ein Code-Fehler ist:
 
@@ -77,6 +78,9 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
 ### Abschluss im Chat
 - **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Code-Sicherheit/Manuelles Gate`.
 - **Pfadpflicht:** Geänderte oder geprüfte Dateien/Komponenten immer mit Pfad nennen.
+- **Erzeugte-Dateien-Pfadpflicht (PFLICHT):** Für **jede neu erzeugte Datei und jedes erzeugte Artefakt** im Abschluss den **vollständigen absoluten Speicherpfad** nennen — insbesondere Bilder, Screenshots, Audio, Videos, PDFs, Exporte und temporär außerhalb des Projektordners gespeicherte Ergebnisse. Bei mehreren Dateien jeden Pfad einzeln aufführen. Diese Pflicht gilt auch bei reinen Generierungsaufträgen wie „nur Bilder erzeugen"; eine knappe Pfadliste ist trotzdem erforderlich.
+- **Projektgebundene KI-Bilder immer ins Projekt (PFLICHT):** Jedes finale oder vom User angeforderte generierte Bild, das als Konzept, Referenz, Mockup, Textur oder Baugrundlage für ein Projekt dient, muss **vor Abschluss** unter einem passenden Projektpfad wie `assets/concepts/[feature]/`, `public/assets/[feature]/` oder `docs/[feature]/assets/` gespeichert oder dorthin kopiert werden. Chat-Anhänge, Clipboard-, Temp-, AppData-, `$CODEX_HOME/generated_images`- und andere externe Generatorpfade sind nur Quellen, nie Endablagen. Kein Projekt darf ausschließlich auf externe lokale Bildpfade verweisen. Verwarfene Zwischenvarianten müssen nur gespeichert werden, wenn der User sie als Ergebnis angefordert hat.
+- **Bildbrief und Implementierungsdetails dokumentieren (PFLICHT):** Für jede projektgebundene Bildserie hält die zuständige Task-Doku oder ein kanonisches Asset-Manifest mindestens Zweck, finalen Prompt, Referenz-/Quellbilder, finalen Projektpfad, Format, Pixelmaße und Auswahl/Empfehlung fest; ein nur rekonstruierter Prompt muss ehrlich als rekonstruiert markiert werden. Dient das Bild als KI-Baugrundlage für Map, Szene oder 3D-Modell, zusätzlich Kamera/Komposition und freie Sichtzonen, Module/Formaufbau, relative Größen/Platzierung, Materialien, Boden, Vegetation, Props/Kleinteile, Licht/Wetter, Negativvorgaben und Performance-Bauweise dokumentieren. Bei komplexen Szenen spezialisierte Detail-/Bauplantafeln für Gebäude, Modelle und Umgebung erzeugen, wenn die Hauptansicht diese Angaben nicht eindeutig zeigt. Generativer Bildtext ist nie alleinige Maß- oder Text-SSoT; exakte Angaben stehen in Markdown.
 - **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
 - **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen.
@@ -203,6 +207,13 @@ Die Task-/Masterplanung ist der **einzige** durable Kanal — kein zweiter Log. 
 - **Dateiname muss den Inhalt erklären:** `v3/skyRidge.ts`, `settings/ThemeToggle.tsx` ist gut. `v3Entries.ts`, `misc.ts`, `helpers.ts`, `allAssets.ts` nur für echte kleine Aggregatoren.
 - **Shared nur bei echter Wiederverwendung:** `kit.ts`, `builders.ts`, `utils.ts` dürfen neutrale Bausteine enthalten, keine versteckten konkreten Features. Existiert ein Helper nur für ein Ziel, bleibt er in der Ziel-Datei.
 - **Änderungen additiv denken:** Neue Generationen/Modi/Varianten kommen als eigene Dateien/Ordner dazu; bestehende fachliche Dateien werden nicht zusammengeworfen, außer der User fordert genau diese Regeneration.
+
+### Sprechende Namen für Markdown-Dokumente (PFLICHT)
+- **Keine `README.md`-Dateien für fachliche Dokumentation:** Baupläne, Asset-Manifeste, Prompt-Router, Serienindizes, Workflows, Architekturverträge und andere fachliche Single Sources of Truth erhalten immer einen sprechenden Dateinamen.
+- **Benennungsformel:** Fachobjekt plus Dokumentzweck. Gute Beispiele sind `<map-slug>-bauplan-und-asset-manifest.md`, `<serie>-serienindex-und-erweiterungsvertrag.md` und `<thema>-prompt-index-und-arbeitsablauf.md`.
+- **Keine nur scheinbar besseren Ersatznamen:** `info.md`, `doku.md`, `notes.md` oder ein unqualifiziertes `manifest.md` sind ebenfalls zu generisch. Der Dateiname muss auch außerhalb seines Ordners eindeutig verständlich und auffindbar sein.
+- **Bei Berührung migrieren:** Liegt im bearbeiteten Scope noch eine generische fachliche `README.md`, wird sie sprechend umbenannt. Alle Links, Router, Prompts, Tasks und Abschlussnachweise werden im selben Auftrag auf den neuen Namen aktualisiert; es bleibt keine Weiterleitungs-`README.md` zurück.
+- **Technische Fremdvorgaben sind die einzige Ausnahme:** Verlangt ein externes Tool, Paketformat oder Repository-Host zwingend exakt `README.md`, darf diese Datei nur als kurzer technischer Einstieg dienen und niemals die fachliche Single Source of Truth enthalten. Interne Asset-, Feature-, Prompt-, Map- und Komponentenordner fallen nicht unter diese Ausnahme.
 
 ### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — auslagern wenn größer.
