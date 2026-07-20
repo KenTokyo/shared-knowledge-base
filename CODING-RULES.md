@@ -338,6 +338,21 @@ Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards 
 
 _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" gelöst, aber die zuvor erfüllte, ausdrücklich geforderte „oversized/mehrstöckige" Struktur dabei unter die geforderte Größe geschrumpft — falscher Hebel; richtig wäre, sie groß zu lassen und die Figuren darin hochzuskalieren. Global identisch: einen Absatz aufpolieren und eine geforderte Kernaussage streichen; ein Panel schön machen und eine geforderte Spalte weglassen._
 
+### 8.4 Generative Bau-Prompts — sichtbare Evidenz statt Werkzeuglisten (PFLICHT)
+
+Der Craft-Modus setzt das Qualitätsziel. Ein Generierungs-Prompt gibt dafür **die kürzeste ausreichende Richtung**: so konkret wie für Wirkung und Produkt nötig, so offen wie für eine starke eigene Lösung möglich.
+
+- **Mission und First-Read zuerst:** Ein dichter Absatz benennt Welt-/Objektidee, Fokus, Erlebnis und ein sichtbares Anti-Ziel.
+- **Kurze Designkapsel statt Bauteilkatalog:** wenige tragende Nomen/Adjektive plus ein wichtiger Maßstabs-, Material- oder Lichtkontrast. Keine universelle Box-/Voxel-/Shader-Formensprache aufdrücken.
+- **Invarianten von Freiheit trennen:** Nur User-, Produkt-, Gameplay-, Engine- und Ownership-Grenzen sperren. Silhouette, Architektur, Materiallösung, Choreografie, VFX-Formen und authored Details bleiben frei, sofern der Auftrag sie nicht festlegt.
+- **Kausale Kopplung nur für den Kern:** Zentrale Ereignisse als `Ursache → gemeinsamer Kontakt/Quelle → Reaktion → sichtbare Folge` formulieren. Nicht jedes Nebendetail in eine Matrix zwingen.
+- **Technik-Gate:** Technische Rezepte nur nennen, wenn Engine, Ownership, Performance, Userauftrag oder ein bekannter Wiederholungsfehler sie erzwingen. Ein visueller Qualitätsbrief ist kein vorsorgliches Shader-Tutorial.
+- **Anerkennungsanker proportional einsetzen:** Zwei bis vier Ansichten/Momente reichen. Exakte Sekunden, Objektzahlen, Kamerawerte und Prozent-Rubriken nur bei echter Mechanik oder Vergleichbarkeit.
+- **Keine Prompt-Inflation:** Werkzeug-, Material-, Gebäude-, Partikel- und Dateilisten sind kein Qualitätsbeweis. Keine vollständige Benchmark-Struktur in normale Produktionsprompts kopieren.
+- **Sichtbares Ergebnis bleibt Maßstab:** Konkrete billige Ersatzlösungen ausschließen; Kompilieren, Counts oder grüne Checks verdienen keine sichtbaren Qualitätspunkte.
+
+Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt-SSoT. Im Projekt `voxel-samurai-quiz` gilt dafür `prompts/asset-lab-quality-generation-standard.md`.
+
 ### 8.1 TypeScript & Tests
 - Statische Checks (`lint`, `tsc --noEmit`) sind nur Kompilier-/Typschutz — kein Beweis für Gameplay, Werte, Kampfgefühl oder Multiplayer-Lesbarkeit. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
 - Bei reinen Doku-/Prompt-/Regeländerungen keine Tests/Checks starten.
