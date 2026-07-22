@@ -1,4 +1,4 @@
-g# 🎯 Coding Rules & Development Guidelines
+# 🎯 Coding Rules & Development Guidelines
 
 **Zweck:** Universelle Regeln für konsistenten, performanten, wartbaren Code — projektübergreifend gültig.
 
@@ -11,12 +11,24 @@ g# 🎯 Coding Rules & Development Guidelines
 ## Grundhaltung und Bewertungsmodus
 Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungeprüft behandeln, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
+- KEINE BROWSER PLAYRIGHT TESTS AUßer ES WIRD DIR AUSDRÜCKLICH GESAGT im PROMPT
+- KEINE GIT WORKTREES ÖFFNEN Außer ES WIRD DIR SPEZIELL GESAGT!
 ## Durcharbeiten statt Fragen (PFLICHT)
 - **Verbindlicher Phasen-Workflow (IMMER anwenden):** Jede Implementierung folgt den Regeln in `shared-docs/agents/commands/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — phasenweise ohne Stopps, To-dos in der Task-Datei abhaken, nach JEDER Phase dokumentieren (7-Punkte-Format + Kommentar-Sektion) und im Loop bis zur letzten Phase weiterarbeiten. Diese Datei definiert den Pflicht-Ablauf; vor Baubeginn lesen und exakt einhalten.
 - **Keine Rückfragen an den User** (kein `AskUserQuestion`, keine „Soll ich A oder B?"-Dialoge). Bei Aufgabe, Plan oder Masterplanung ohne Zwischenfragen vom aktuellen Stand bis zur letzten Phase durcharbeiten.
 - **Bei mehreren Wegen selbst die fachlich beste, kleinste stabile Option wählen**, kurz begründen, umsetzen, Entscheidung im Task-Doc dokumentieren. Annahmen klar als Annahme markieren.
 - **Empfehlung = Auftrag:** Steht im Plan eine klare Empfehlung, gilt sie als gewählt. Nicht erneut vorlegen, direkt bauen.
 - **Einziger Ausnahmefall:** Echte externe Blockade (fehlender Secret/Zugang, den nur der User hat; widersprüchliche Pflichtdaten; destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern — als Hinweis, nicht als Multiple-Choice.
+
+### 🔴 Gefundenes Problem = Arbeitsauftrag, nicht Meldung (PFLICHT, User-Order 2026-07-21)
+Der häufigste Abbruchgrund ist nicht ein zu schweres Problem, sondern ein **gemeldetes statt behobenes** Problem. Ein Fund ist kein Ergebnis — er ist der nächste Arbeitsschritt.
+
+- **Finden heißt beheben.** Wer im bearbeiteten Scope einen Fehler entdeckt (Layout, Typecheck, falsche Doku, falsche Annahme, tote Datei, kaputte Rechnung), behebt ihn sofort selbst und arbeitet weiter. Erst danach wird er erwähnt — als erledigt, nicht als Frage.
+- **Nicht wegen eines Problems anhalten.** Ein Fund beendet weder die Phase noch den Auftrag. Das Stoppen selbst ist der teure Fehler: Der User kann am Problem nichts tun, verliert Zeit und muss die KI neu anstoßen. **„Ich habe X gefunden, was soll ich tun?" ist verboten** — richtig ist „X gefunden, so behoben, weiter mit Y".
+- **Auch fremde Blocker im Weg werden geräumt.** Blockiert ein Fehler aus fremder Parallelarbeit den eigenen Fortschritt (roter Typecheck, kaputter Import), wird er **additiv** repariert, damit der Baum wieder grün ist — nie durch Revertieren fremder Arbeit. Kurz im Task-Doc als fremd markieren, nicht liegen lassen.
+- **Keine Problem-Berichte an den User statt Arbeit.** Der Abschlussbericht nennt Funde nur in der Vergangenheitsform mit Fix. Offen bleiben ausschließlich echte externe Blockaden (siehe Ausnahmefall) und manuelle User-Gates (Sichtprüfung, Ingame-Test).
+- **Weiterarbeiten bis wirklich alles steht.** Solange die Masterplanung offene Phasen hat, ist der Auftrag nicht fertig. Nach jeder Phase direkt in die nächste — ohne Zwischenfrage, ohne Zwischenstopp.
+- **Warum:** Der User ist Auftraggeber, nicht Fehlerbehebungs-Instanz. Er hat die KI beauftragt, damit sie Probleme **löst**. Jede an ihn zurückgereichte Fehlermeldung, die die KI selbst hätte beheben können, ist verlorene Arbeit auf beiden Seiten.
 
 ## 1. Kontext & Kommunikation
 
@@ -32,7 +44,12 @@ Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungepr
   ```
 
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren.
-- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
+- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel also CHAT_META::Titel:, der dann von der Harness geparst wird, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
+CHAT_META::Titel: [specific meaningful chat title, 11-20 words]
+- BITTE IMMER Titel erzeugen, sinnvolle, z.B.
+Klasse Schwertkämpfer - Neue Skillpalette, VFX-System, UI Hotbar etc. - Shader Einbau und Aktualisierung der Animationen
+Shop UI - Neue UI-Architektur, 3D-Preview, Voice-Input etc.
+KI-Chat: UI verbesserungen, Einfachere Inputs, Mobile Konformer machen
 - **Verstehen statt Umdeuten (Pflicht):** Lösung A verbessern, nicht still zu B wechseln · Fachwörter nicht eigenmächtig übersetzen wenn die Richtung kippt · vor Umsetzung prüfen „Löst mein Schritt das genannte Problem?" · keine versteckten Nebenwirkungen (z. B. harte Limits) außer explizit gewünscht · bei Effizienz-Themen erwähnen, ob die Architektur umgebaut werden sollte · Zielkonflikte: erst Ergebnisqualität, dann Kosten/Tempo.
 - **Anwender-Fehler vs. Code-Fehler (KRITISCH!):** VOR jedem Fix prüfen, ob es überhaupt ein Code-Fehler ist:
 
@@ -79,6 +96,8 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
 - **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Code-Sicherheit/Manuelles Gate`.
 - **Pfadpflicht:** Geänderte oder geprüfte Dateien/Komponenten immer mit Pfad nennen.
 - **Erzeugte-Dateien-Pfadpflicht (PFLICHT):** Für **jede neu erzeugte Datei und jedes erzeugte Artefakt** im Abschluss den **vollständigen absoluten Speicherpfad** nennen — insbesondere Bilder, Screenshots, Audio, Videos, PDFs, Exporte und temporär außerhalb des Projektordners gespeicherte Ergebnisse. Bei mehreren Dateien jeden Pfad einzeln aufführen. Diese Pflicht gilt auch bei reinen Generierungsaufträgen wie „nur Bilder erzeugen"; eine knappe Pfadliste ist trotzdem erforderlich.
+- **Projektgebundene KI-Bilder immer ins Projekt (PFLICHT):** Jedes finale oder vom User angeforderte generierte Bild, das als Konzept, Referenz, Mockup, Textur oder Baugrundlage für ein Projekt dient, muss **vor Abschluss** unter einem passenden Projektpfad wie `assets/concepts/[feature]/`, `public/assets/[feature]/` oder `docs/[feature]/assets/` gespeichert oder dorthin kopiert werden. Chat-Anhänge, Clipboard-, Temp-, AppData-, `$CODEX_HOME/generated_images`- und andere externe Generatorpfade sind nur Quellen, nie Endablagen. Kein Projekt darf ausschließlich auf externe lokale Bildpfade verweisen. Verwarfene Zwischenvarianten müssen nur gespeichert werden, wenn der User sie als Ergebnis angefordert hat.
+- **Bildbrief und Implementierungsdetails dokumentieren (PFLICHT):** Für jede projektgebundene Bildserie hält die zuständige Task-Doku oder ein kanonisches Asset-Manifest mindestens Zweck, finalen Prompt, Referenz-/Quellbilder, finalen Projektpfad, Format, Pixelmaße und Auswahl/Empfehlung fest; ein nur rekonstruierter Prompt muss ehrlich als rekonstruiert markiert werden. Dient das Bild als KI-Baugrundlage für Map, Szene oder 3D-Modell, zusätzlich Kamera/Komposition und freie Sichtzonen, Module/Formaufbau, relative Größen/Platzierung, Materialien, Boden, Vegetation, Props/Kleinteile, Licht/Wetter, Negativvorgaben und Performance-Bauweise dokumentieren. Bei komplexen Szenen spezialisierte Detail-/Bauplantafeln für Gebäude, Modelle und Umgebung erzeugen, wenn die Hauptansicht diese Angaben nicht eindeutig zeigt. Generativer Bildtext ist nie alleinige Maß- oder Text-SSoT; exakte Angaben stehen in Markdown.
 - **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
 - **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
 - **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen.
@@ -206,6 +225,13 @@ Die Task-/Masterplanung ist der **einzige** durable Kanal — kein zweiter Log. 
 - **Shared nur bei echter Wiederverwendung:** `kit.ts`, `builders.ts`, `utils.ts` dürfen neutrale Bausteine enthalten, keine versteckten konkreten Features. Existiert ein Helper nur für ein Ziel, bleibt er in der Ziel-Datei.
 - **Änderungen additiv denken:** Neue Generationen/Modi/Varianten kommen als eigene Dateien/Ordner dazu; bestehende fachliche Dateien werden nicht zusammengeworfen, außer der User fordert genau diese Regeneration.
 
+### Sprechende Namen für Markdown-Dokumente (PFLICHT)
+- **Keine `README.md`-Dateien für fachliche Dokumentation:** Baupläne, Asset-Manifeste, Prompt-Router, Serienindizes, Workflows, Architekturverträge und andere fachliche Single Sources of Truth erhalten immer einen sprechenden Dateinamen.
+- **Benennungsformel:** Fachobjekt plus Dokumentzweck. Gute Beispiele sind `<map-slug>-bauplan-und-asset-manifest.md`, `<serie>-serienindex-und-erweiterungsvertrag.md` und `<thema>-prompt-index-und-arbeitsablauf.md`.
+- **Keine nur scheinbar besseren Ersatznamen:** `info.md`, `doku.md`, `notes.md` oder ein unqualifiziertes `manifest.md` sind ebenfalls zu generisch. Der Dateiname muss auch außerhalb seines Ordners eindeutig verständlich und auffindbar sein.
+- **Bei Berührung migrieren:** Liegt im bearbeiteten Scope noch eine generische fachliche `README.md`, wird sie sprechend umbenannt. Alle Links, Router, Prompts, Tasks und Abschlussnachweise werden im selben Auftrag auf den neuen Namen aktualisiert; es bleibt keine Weiterleitungs-`README.md` zurück.
+- **Technische Fremdvorgaben sind die einzige Ausnahme:** Verlangt ein externes Tool, Paketformat oder Repository-Host zwingend exakt `README.md`, darf diese Datei nur als kurzer technischer Einstieg dienen und niemals die fachliche Single Source of Truth enthalten. Interne Asset-, Feature-, Prompt-, Map- und Komponentenordner fallen nicht unter diese Ausnahme.
+
 ### Komponenten-Organisation
 - **Maximal 700 Zeilen Code pro Datei** — auslagern wenn größer.
 - 🇩🇪 **Deutsch (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`.
@@ -247,7 +273,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Einweg-Sync statt Ping-Pong:** Synchronisation von der echten Quelle aus triggern (z. B. `entry.updatedAtMs`), nicht von der zurückgeschriebenen Zielrepräsentation.
 - **Custom-Event-Payloads deduplizieren:** Bei `window.dispatchEvent` + Listener-`setState` semantischen Vergleich (Snapshot-Key) nutzen; identische Payload weder erneut dispatchen noch in State schreiben.
 - **Stop-Regel bei Warnungen:** `Maximum update depth exceeded`, `Too many re-renders`, `Cannot update while rendering`, `validateDOMNesting` und Hydration-Warnungen sind Stop-Signale → sofort Root Cause fixen (Update-Kette im Stacktrace bis zur ersten eigenen Datei zurückverfolgen), nicht unterdrücken.
-- **Pflicht-Check nach UI-Änderungen:** Lint auf jede geänderte UI-Datei; bei auffälligem Laufzeitverhalten zusätzlich `tsc --noEmit`.
+- **Pflicht-Check nach UI-Änderungen:** `pnpm typecheck` über den geänderten Scope — Ausführung, Cache und Log-Auswertung strikt nach Abschnitt 8.1.1. (`pnpm lint` ist in diesem Projekt nur ein Alias darauf; ein eigenständiger ESLint-Lauf existiert nicht.)
 
 ### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
 - **Kontrollierte UI-Werte immer validieren** (Allowlist-Prinzip bei `Tabs`, `Select`, `Popover`). Ist ein Wert auf der Plattform nicht erlaubt, sofort auf sicheren Default zurückfallen.
@@ -294,6 +320,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 ## Code-Sicherheit & manuelle Produktprüfung
 
 ### 8.2 Sichtbare Ergebnisqualität / Visual Acceptance Gate
+- **Visuelle Prüfungen sind Opt-in (PFLICHT, User-Order 2026-07-22):** Keine visuelle Abnahme, Browserprüfung, UI-Prüfung, Screenshot-Prüfung, Preview-Prüfung oder Gameplay-Sichtprüfung automatisch ausführen. Diese Prüfungen finden ausschließlich statt, wenn der User sie im aktuellen Auftrag ausdrücklich verlangt; andernfalls bleiben sie als manuelles Gate dokumentiert.
 - **Code-Sicherheit ist kein Produktbeweis:** Lint, TypeScript, gespeicherte Daten, Screenshots, grüne Logs oder ein erfolgreiches Playwright-Skript beweisen nur, dass etwas technisch ausgeführt wurde — nicht, dass das sichtbare Ergebnis gut, lesbar, fachlich richtig oder nutzbar ist.
 - **Akzeptanzkriterien vor Umsetzung ableiten:** Bei jeder sichtbaren Aufgabe zuerst 3-7 konkrete Prüffragen aus dem Userziel notieren (z. B. Sind beide Hände sichtbar? Ist Text lesbar/nicht abgeschnitten? Zeigt das Dashboard die wichtigste Zahl ohne Scrollen?).
 - **Screenshots aktiv beurteilen:** Beauftragt der User Browser/Playwright/Screenshot/Referenzvergleich, das Bild gegen diese Prüffragen bewerten. Ein sichtbar falsches Bild ist ein Fehlerbeweis, nie ein Abschlussbeweis.
@@ -303,6 +330,16 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Nicht hinter manuellen Gates verstecken:** Liegt bereits ein Screenshot/Log/Preview/Export vor, muss er fachlich bewertet werden. Nur wenn wirklich keine Sichtprüfung möglich ist, als `manuelles Gate` dokumentieren.
 - **Fertig nur bei bestandenem Gate:** Keine Phase als `success`/`fertig` dokumentieren, solange die sichtbaren Kernkriterien nicht erfüllt sind — dann ehrlich `partial`, `blocked` oder „technisch umgesetzt, visuell nicht abgenommen".
 - **Bei wiederholtem visuellen Scheitern:** Nicht weiter einzelne Werte drehen. Erst Root Cause nennen, Vergleichsreferenz prüfen, Tooling verbessern, dann erneut implementieren.
+
+#### 8.2.1 Roh-Solid- und Doppeltint-Gate für sichtbare Echtzeitformen
+
+- **Standardprimitiv plus Einfarbenmaterial ist keine fertige Hero-Form:** Box, Plane, Kugel, Kegel oder Polyeder dürfen technische Ausgangsformen sein; als sichtbares Endergebnis brauchen sie eine authored Silhouette oder eine klar maskierte/komponierte Rolle.
+- **Hero-Solids brauchen vier Belege:** charakteristische Silhouette, glaubwürdige Basis bzw. Bodenkontakt, räumliche Tiefe und erkennbare Oberflächenvariation. Fehlt einer davon, ist die Form vor einer Sichtabnahme nicht produktionsreif.
+- **Doppeltint ausdrücklich prüfen:** Effektfarbe ist häufig `material.color × instanceColor`. Dunkel × dunkel erzeugt ungewollt fast schwarzes Material. Entweder die Materialbasis neutral halten oder Primär-/Sekundärfarben als explizite Shaderattribute führen; die resultierende Multiplikation statisch und visuell prüfen.
+- **Masse und Licht trennen:** Solide Materie schreibt Tiefe und trägt Materialkontrast. HDR-Kern, Halo, Funken oder Bloom sind eigene Lichtrollen; eine flächig hochgedrehte Emissivefarbe ersetzt weder Volumen noch Oberfläche.
+- **Bodenreste brauchen eine Maske:** Scars, Risse, Decals und Zonen dürfen ihre Träger-Box/-Plane nicht vollflächig zeigen. UV-Randfalloff plus authored Hauptmaske müssen Geometriekanten in jeder sichtbaren Phase verwerfen; ein Rechteck darf nicht die Silhouette bestimmen.
+- **Statisches Gate vor Sichtprüfung:** Geometrieherkunft, Material-/Instanzfarbpfad, Depth-/Blend-Rollen, HDR-Werte und Alpha-/Discard-Masken sind im Code prüfbar. Die tatsächliche Form- und Lichtqualität bleibt gemäß §8.2 opt-in und ohne aktuelle Userfreigabe ein manuelles Gate.
+
 
 ### 8.3 Denkmodus & Ergebnis-Handwerk (PFLICHT — gilt für JEDE Ausgabe)
 
@@ -330,6 +367,22 @@ Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards 
 
 _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" gelöst, aber die zuvor erfüllte, ausdrücklich geforderte „oversized/mehrstöckige" Struktur dabei unter die geforderte Größe geschrumpft — falscher Hebel; richtig wäre, sie groß zu lassen und die Figuren darin hochzuskalieren. Global identisch: einen Absatz aufpolieren und eine geforderte Kernaussage streichen; ein Panel schön machen und eine geforderte Spalte weglassen._
 
+
+### 8.4 Generative Bau-Prompts — sichtbare Evidenz statt Werkzeuglisten (PFLICHT)
+
+Der Craft-Modus setzt das Qualitätsziel. Ein Generierungs-Prompt gibt dafür **die kürzeste ausreichende Richtung**: so konkret wie für Wirkung und Produkt nötig, so offen wie für eine starke eigene Lösung möglich.
+
+- **Mission und First-Read zuerst:** Ein dichter Absatz benennt Welt-/Objektidee, Fokus, Erlebnis und ein sichtbares Anti-Ziel.
+- **Kurze Designkapsel statt Bauteilkatalog:** wenige tragende Nomen/Adjektive plus ein wichtiger Maßstabs-, Material- oder Lichtkontrast. Keine universelle Box-/Voxel-/Shader-Formensprache aufdrücken.
+- **Invarianten von Freiheit trennen:** Nur User-, Produkt-, Gameplay-, Engine- und Ownership-Grenzen sperren. Silhouette, Architektur, Materiallösung, Choreografie, VFX-Formen und authored Details bleiben frei, sofern der Auftrag sie nicht festlegt.
+- **Kausale Kopplung nur für den Kern:** Zentrale Ereignisse als `Ursache → gemeinsamer Kontakt/Quelle → Reaktion → sichtbare Folge` formulieren. Nicht jedes Nebendetail in eine Matrix zwingen.
+- **Technik-Gate:** Technische Rezepte nur nennen, wenn Engine, Ownership, Performance, Userauftrag oder ein bekannter Wiederholungsfehler sie erzwingen. Ein visueller Qualitätsbrief ist kein vorsorgliches Shader-Tutorial.
+- **Anerkennungsanker proportional einsetzen:** Zwei bis vier Ansichten/Momente reichen. Exakte Sekunden, Objektzahlen, Kamerawerte und Prozent-Rubriken nur bei echter Mechanik oder Vergleichbarkeit.
+- **Keine Prompt-Inflation:** Werkzeug-, Material-, Gebäude-, Partikel- und Dateilisten sind kein Qualitätsbeweis. Keine vollständige Benchmark-Struktur in normale Produktionsprompts kopieren.
+- **Sichtbares Ergebnis bleibt Maßstab:** Konkrete billige Ersatzlösungen ausschließen; Kompilieren, Counts oder grüne Checks verdienen keine sichtbaren Qualitätspunkte.
+
+Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt-SSoT. Im Projekt `voxel-samurai-quiz` gilt dafür `prompts/asset-lab-quality-generation-standard.md`.
+
 ### 8.1 TypeScript & Tests
 - Statische Checks (`lint`, `tsc --noEmit`) sind nur Kompilier-/Typschutz — kein Beweis für Gameplay, Werte, Kampfgefühl oder Multiplayer-Lesbarkeit. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
 - Bei reinen Doku-/Prompt-/Regeländerungen keine Tests/Checks starten.
@@ -337,6 +390,28 @@ _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" 
 - **Fehler direkt mitfixen:** Findest du im bearbeiteten Scope sichtbare Fehler (TS, Lint, Runtime), sofort beheben, nicht „für später" liegen lassen.
 - **Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-/Serverwert-Tests ohne klaren User-Befehl.** Auch reine Frontend-/Layout-/Mock-Abgleiche nur auf ausdrücklichen Befehl. Ohne Befehl: Research + Codeänderung + manuellen User-Blocker dokumentieren. (Playwright/Browser-Details: `shared-docs/agents/agent-browser/*`.)
 - **Keine neuen Tests erstellen und keine Test-Konfiguration ändern** (Unit/Integration/E2E, `vitest.config.ts`), außer der User verlangt es ausdrücklich.
+
+### 8.1.1 Typecheck schnell + zuverlässig ausführen (PFLICHT, User-Order 2026-07-22)
+
+Grosse Repos (`voxel-samurai-quiz`: ~7.000 prüfbare Dateien — `src` 5.229, `apps` 1.648, `scripts` 120, `server` 49) brauchen Minuten für einen Komplettlauf. Der Lauf ist trotzdem nicht verhandelbar — er muss nur **richtig** gestartet werden.
+
+**Der eine Befehl (immer dieser):**
+
+```bash
+pnpm typecheck > .tsc.log 2>&1
+```
+
+`pnpm lint` ist derselbe Befehl (Alias) — es gibt in diesem Projekt **kein ESLint**. Ein separater Lint-Schritt existiert nicht und darf nicht erfunden werden.
+
+**Warum genau so — die drei Fallen, die jeden Lauf teuer machen:**
+
+1. **Cache nicht wegwerfen.** Der Befehl trägt `--incremental --tsBuildInfoFile .tmp/tsconfig.tsbuildinfo`. Diese Datei (mehrere MB) merkt sich das Ergebnis des letzten Laufs; danach prüft TypeScript nur noch geänderte Dateien und deren Abhängige. Ein blankes `tsc --noEmit` **ignoriert den Cache** und erzwingt jedes Mal einen Kaltstart. Wer die Flags weglässt, zahlt jedes Mal den vollen Preis.
+2. **Heap hochsetzen.** `pnpm exec tsc` läuft im Node-Standardheap (~4 GB) und stirbt bei dieser Repo-Grösse mit **Exit 134**. Deshalb ruft das Skript `node --max-old-space-size=10240 node_modules/typescript/lib/tsc.js` direkt auf.
+3. **Exit-Code nicht glauben, Logdatei lesen.** In Hintergrundläufen meldet ein angehängtes `echo TSC_EXIT=$?` regelmässig Erfolg, obwohl Fehler in der Logdatei stehen. **Immer** die Logdatei prüfen: `grep -c "error TS" .tsc.log` (0 = grün). Ein leeres Log bedeutet **nicht** grün — es bedeutet meist, dass der Lauf abgebrochen wurde (Session-Teardown, Timeout, Kill).
+
+**Cache-Verdacht:** Wirkt das Ergebnis unplausibel (Fehler in gerade gelöschten Dateien, Fehler verschwinden ohne Fix), einmal `pnpm typecheck:clean` — das löscht die `tsbuildinfo` und läuft kalt neu. Nicht als Standard verwenden.
+
+**Nicht tun:** Den Scope über `include`/`exclude` verkleinern, um Zeit zu sparen. `apps/*` (asset-lab, monster-lab, sound-lab) hat keine eigene `tsconfig.json` und hängt an der Wurzel-Config — wer es ausschliesst, macht den Lauf schnell und **blind**. Geschwindigkeit kommt aus dem Cache, nie aus weniger Abdeckung.
 
 ## Referenzen & Qualitäts-Checkliste
 
@@ -358,6 +433,7 @@ _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" 
 ### Quick Checklist
 - Keine Rückfragen / kein `AskUserQuestion` — eigenständig die fachlich beste Lösung umsetzen.
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck, nicht als Gameplay-Beweis.
+
 - Mobile-First · Max 700 Zeilen/Datei · bei großer Datei in Unterkomponenten/Helpers/Services aufteilen.
 - **Grundstruktur-First:** Bei wiederholt falschem/kollidierendem Ergebnis die betroffenen Dateien komplett neu schreiben (nicht patchen) und eine Single Source of Truth herstellen (Abschnitt 3).
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen.

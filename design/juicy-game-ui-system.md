@@ -279,6 +279,45 @@ Auf tiefem Warm-Schwarz kippt der Look sonst in blass/pastellig/unlesbar. Die dr
 
 ## 6. Layout-Muster „aufgeräumt"
 
+### 6.0 Der Name gehört auf eine eigene Achse (Anti-Pattern „…"-Karte)
+
+Das häufigste Lesbarkeits-Leck in dichten Auswahl-Rastern: Eine Karte legt
+**Icon, Name, Badge, Statuspunkt und Favoriten-Button in EINE horizontale Zeile**.
+Alle außer dem Namen haben Fixbreiten — also frisst jedes Zusatz-Feature Breite
+**nur vom Namen**. Bei ~190 px Kartenbreite bleiben dem Titel ~45 px: aus
+`Quecksilberbruch` wird `QUE…`. Das ist **kein** Zahlen-, sondern ein
+Achsen-Problem — Padding/Font kleiner drehen verschiebt es nur.
+
+**Regel:** In einer Auswahlkarte bekommt der identifizierende Name eine **eigene
+Zeile über die volle Kartenbreite**. Er wird nie `truncate`, sondern
+`line-clamp-2` + `hyphens-auto` + `[overflow-wrap:anywhere]` als Reißleine
+(plus `lang="de"` o. Ä., sonst findet der Browser keine Trennstellen).
+
+Konkret, in dieser Reihenfolge angewandt:
+1. **Sekundäres aus dem Fluss nehmen.** Favoritenstern/Overflow-Menü als
+   absolutes Eck-Overlay (`absolute bottom-1 right-1`), nicht als Spalte. Ein
+   Eck-Siegel (NEU/UPDATE) belegt die *andere* Ecke — Kollision einplanen.
+   Overlay-Button bleibt **Geschwister**, nie Kind des Auswahl-Buttons
+   (verschachtelte Interaktive sind verboten).
+2. **Meta unter den Titel**, unter der Titelkante eingerückt (`pl-9` bei 28 px
+   Icon + `gap-2`), mit `pr-*`-Freiraum für das Eck-Overlay.
+3. **Icon-Höhe = Titel-Höhe bei 2 Zeilen** wählen (28 px Icon ≈ 2 × 12 px ×
+   `leading-[1.15]`). Dann springt die Kartenhöhe **nicht**, egal ob der Name
+   ein- oder zweizeilig bricht.
+4. **Spaltenzahl per Container-Query, nicht per Media-Query** — geteilt genutzte
+   Listen kennen ihre Einbettungsbreite nicht:
+   `@container` + `grid-cols-1 @min-[19rem]:grid-cols-2`. Lieber eine Spalte
+   weniger als abgeschnittene Namen.
+
+**Falscher Hebel (bewusst nicht tun):** die Panel-Spalte verbreitern, um den Namen
+unterzubringen — das schrumpft die Nachbarregion (3D-Bühne, Detailtafel) und
+tauscht ein gelöstes Problem gegen ein neues (`CODING-RULES.md` §8.3 „Kein Regress").
+
+→ Voxel Samurai Quiz: `src/components/ui/aeon/nexus/classes/AeonClassRosterRow.tsx`
+(+ `AeonClassRoster.tsx` für die Container-Query).
+
+### 6.1 Weitere Muster
+
 - **Eine Karte pro Region.** Werte/Knöpfe nicht lose verstreuen — in *eine* gerundete Leiste/Konsole bündeln.
 - **Stepper statt langem Scroll.** Mehrschritt-Flows (Auswahl → Auto-Advance) statt endlosem vertikalem Stack.
 - **Seltene Optionen verstecken** (Popover/Dialog/Collapsible). Sichtbar bleibt nur das Wichtige.
