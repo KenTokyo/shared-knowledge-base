@@ -44,7 +44,12 @@ Der häufigste Abbruchgrund ist nicht ein zu schweres Problem, sondern ein **gem
   ```
 
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren.
-- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
+- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel also CHAT_META::Titel:, der dann von der Harness geparst wird, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
+CHAT_META::Titel: [specific meaningful chat title, 11-20 words]
+- BITTE IMMER Titel erzeugen, sinnvolle, z.B.
+Klasse Schwertkämpfer - Neue Skillpalette, VFX-System, UI Hotbar etc. - Shader Einbau und Aktualisierung der Animationen
+Shop UI - Neue UI-Architektur, 3D-Preview, Voice-Input etc.
+KI-Chat: UI verbesserungen, Einfachere Inputs, Mobile Konformer machen
 - **Verstehen statt Umdeuten (Pflicht):** Lösung A verbessern, nicht still zu B wechseln · Fachwörter nicht eigenmächtig übersetzen wenn die Richtung kippt · vor Umsetzung prüfen „Löst mein Schritt das genannte Problem?" · keine versteckten Nebenwirkungen (z. B. harte Limits) außer explizit gewünscht · bei Effizienz-Themen erwähnen, ob die Architektur umgebaut werden sollte · Zielkonflikte: erst Ergebnisqualität, dann Kosten/Tempo.
 - **Anwender-Fehler vs. Code-Fehler (KRITISCH!):** VOR jedem Fix prüfen, ob es überhaupt ein Code-Fehler ist:
 
@@ -268,7 +273,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Einweg-Sync statt Ping-Pong:** Synchronisation von der echten Quelle aus triggern (z. B. `entry.updatedAtMs`), nicht von der zurückgeschriebenen Zielrepräsentation.
 - **Custom-Event-Payloads deduplizieren:** Bei `window.dispatchEvent` + Listener-`setState` semantischen Vergleich (Snapshot-Key) nutzen; identische Payload weder erneut dispatchen noch in State schreiben.
 - **Stop-Regel bei Warnungen:** `Maximum update depth exceeded`, `Too many re-renders`, `Cannot update while rendering`, `validateDOMNesting` und Hydration-Warnungen sind Stop-Signale → sofort Root Cause fixen (Update-Kette im Stacktrace bis zur ersten eigenen Datei zurückverfolgen), nicht unterdrücken.
-- **Pflicht-Check nach UI-Änderungen:** Lint auf jede geänderte UI-Datei; bei auffälligem Laufzeitverhalten zusätzlich `tsc --noEmit`.
+- **Pflicht-Check nach UI-Änderungen:** `pnpm typecheck` über den geänderten Scope — Ausführung, Cache und Log-Auswertung strikt nach Abschnitt 8.1.1. (`pnpm lint` ist in diesem Projekt nur ein Alias darauf; ein eigenständiger ESLint-Lauf existiert nicht.)
 
 ### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
 - **Kontrollierte UI-Werte immer validieren** (Allowlist-Prinzip bei `Tabs`, `Select`, `Popover`). Ist ein Wert auf der Plattform nicht erlaubt, sofort auf sicheren Default zurückfallen.
@@ -385,6 +390,28 @@ Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt
 - **Fehler direkt mitfixen:** Findest du im bearbeiteten Scope sichtbare Fehler (TS, Lint, Runtime), sofort beheben, nicht „für später" liegen lassen.
 - **Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-/Serverwert-Tests ohne klaren User-Befehl.** Auch reine Frontend-/Layout-/Mock-Abgleiche nur auf ausdrücklichen Befehl. Ohne Befehl: Research + Codeänderung + manuellen User-Blocker dokumentieren. (Playwright/Browser-Details: `shared-docs/agents/agent-browser/*`.)
 - **Keine neuen Tests erstellen und keine Test-Konfiguration ändern** (Unit/Integration/E2E, `vitest.config.ts`), außer der User verlangt es ausdrücklich.
+
+### 8.1.1 Typecheck schnell + zuverlässig ausführen (PFLICHT, User-Order 2026-07-22)
+
+Grosse Repos (`voxel-samurai-quiz`: ~7.000 prüfbare Dateien — `src` 5.229, `apps` 1.648, `scripts` 120, `server` 49) brauchen Minuten für einen Komplettlauf. Der Lauf ist trotzdem nicht verhandelbar — er muss nur **richtig** gestartet werden.
+
+**Der eine Befehl (immer dieser):**
+
+```bash
+pnpm typecheck > .tsc.log 2>&1
+```
+
+`pnpm lint` ist derselbe Befehl (Alias) — es gibt in diesem Projekt **kein ESLint**. Ein separater Lint-Schritt existiert nicht und darf nicht erfunden werden.
+
+**Warum genau so — die drei Fallen, die jeden Lauf teuer machen:**
+
+1. **Cache nicht wegwerfen.** Der Befehl trägt `--incremental --tsBuildInfoFile .tmp/tsconfig.tsbuildinfo`. Diese Datei (mehrere MB) merkt sich das Ergebnis des letzten Laufs; danach prüft TypeScript nur noch geänderte Dateien und deren Abhängige. Ein blankes `tsc --noEmit` **ignoriert den Cache** und erzwingt jedes Mal einen Kaltstart. Wer die Flags weglässt, zahlt jedes Mal den vollen Preis.
+2. **Heap hochsetzen.** `pnpm exec tsc` läuft im Node-Standardheap (~4 GB) und stirbt bei dieser Repo-Grösse mit **Exit 134**. Deshalb ruft das Skript `node --max-old-space-size=10240 node_modules/typescript/lib/tsc.js` direkt auf.
+3. **Exit-Code nicht glauben, Logdatei lesen.** In Hintergrundläufen meldet ein angehängtes `echo TSC_EXIT=$?` regelmässig Erfolg, obwohl Fehler in der Logdatei stehen. **Immer** die Logdatei prüfen: `grep -c "error TS" .tsc.log` (0 = grün). Ein leeres Log bedeutet **nicht** grün — es bedeutet meist, dass der Lauf abgebrochen wurde (Session-Teardown, Timeout, Kill).
+
+**Cache-Verdacht:** Wirkt das Ergebnis unplausibel (Fehler in gerade gelöschten Dateien, Fehler verschwinden ohne Fix), einmal `pnpm typecheck:clean` — das löscht die `tsbuildinfo` und läuft kalt neu. Nicht als Standard verwenden.
+
+**Nicht tun:** Den Scope über `include`/`exclude` verkleinern, um Zeit zu sparen. `apps/*` (asset-lab, monster-lab, sound-lab) hat keine eigene `tsconfig.json` und hängt an der Wurzel-Config — wer es ausschliesst, macht den Lauf schnell und **blind**. Geschwindigkeit kommt aus dem Cache, nie aus weniger Abdeckung.
 
 ## Referenzen & Qualitäts-Checkliste
 
