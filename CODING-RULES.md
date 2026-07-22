@@ -408,6 +408,13 @@ pnpm typecheck > .tsc.log 2>&1
 1. **Cache nicht wegwerfen.** Der Befehl trägt `--incremental --tsBuildInfoFile .tmp/tsconfig.tsbuildinfo`. Diese Datei (mehrere MB) merkt sich das Ergebnis des letzten Laufs; danach prüft TypeScript nur noch geänderte Dateien und deren Abhängige. Ein blankes `tsc --noEmit` **ignoriert den Cache** und erzwingt jedes Mal einen Kaltstart. Wer die Flags weglässt, zahlt jedes Mal den vollen Preis.
 2. **Heap hochsetzen.** `pnpm exec tsc` läuft im Node-Standardheap (~4 GB) und stirbt bei dieser Repo-Grösse mit **Exit 134**. Deshalb ruft das Skript `node --max-old-space-size=10240 node_modules/typescript/lib/tsc.js` direkt auf.
 3. **Exit-Code nicht glauben, Logdatei lesen.** In Hintergrundläufen meldet ein angehängtes `echo TSC_EXIT=$?` regelmässig Erfolg, obwohl Fehler in der Logdatei stehen. **Immer** die Logdatei prüfen: `grep -c "error TS" .tsc.log` (0 = grün). Ein leeres Log bedeutet **nicht** grün — es bedeutet meist, dass der Lauf abgebrochen wurde (Session-Teardown, Timeout, Kill).
+4. **Log-Encoding prüfen, sonst ist `grep` immer grün (User-Order 2026-07-22).** Je nach Shell landet `.tsc.log` als **UTF-16LE mit BOM** auf der Platte. `grep -c "error TS"` findet darin wegen der Nullbytes zwischen den Buchstaben **niemals** einen Treffer und meldet 0 — auch bei hunderten Fehlern. Vor dem Zählen einmal dekodieren, z. B.:
+
+   ```bash
+   node -e "const b=require('fs').readFileSync('.tsc.log');const t=(b[0]===0xFF&&b[1]===0xFE)?b.toString('utf16le'):b.toString('utf8');console.log('error TS:',(t.match(/error TS/g)||[]).length,'| ELIFECYCLE:',t.includes('ELIFECYCLE'))"
+   ```
+
+   Faustregel: Ein `0`, das aus einer Datei mit BOM `FF FE` kommt, ist kein Ergebnis. Zusätzlich auf `ELIFECYCLE` prüfen — das steht im Log, wenn pnpm den Lauf als fehlgeschlagen beendet hat.
 
 **Cache-Verdacht:** Wirkt das Ergebnis unplausibel (Fehler in gerade gelöschten Dateien, Fehler verschwinden ohne Fix), einmal `pnpm typecheck:clean` — das löscht die `tsbuildinfo` und läuft kalt neu. Nicht als Standard verwenden.
 
