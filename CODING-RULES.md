@@ -11,12 +11,24 @@
 ## Grundhaltung und Bewertungsmodus
 Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungeprüft behandeln, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
+- KEINE BROWSER PLAYRIGHT TESTS AUßer ES WIRD DIR AUSDRÜCKLICH GESAGT im PROMPT
+- KEINE GIT WORKTREES ÖFFNEN Außer ES WIRD DIR SPEZIELL GESAGT!
 ## Durcharbeiten statt Fragen (PFLICHT)
 - **Verbindlicher Phasen-Workflow (IMMER anwenden):** Jede Implementierung folgt den Regeln in `shared-docs/agents/commands/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — phasenweise ohne Stopps, To-dos in der Task-Datei abhaken, nach JEDER Phase dokumentieren (7-Punkte-Format + Kommentar-Sektion) und im Loop bis zur letzten Phase weiterarbeiten. Diese Datei definiert den Pflicht-Ablauf; vor Baubeginn lesen und exakt einhalten.
 - **Keine Rückfragen an den User** (kein `AskUserQuestion`, keine „Soll ich A oder B?"-Dialoge). Bei Aufgabe, Plan oder Masterplanung ohne Zwischenfragen vom aktuellen Stand bis zur letzten Phase durcharbeiten.
 - **Bei mehreren Wegen selbst die fachlich beste, kleinste stabile Option wählen**, kurz begründen, umsetzen, Entscheidung im Task-Doc dokumentieren. Annahmen klar als Annahme markieren.
 - **Empfehlung = Auftrag:** Steht im Plan eine klare Empfehlung, gilt sie als gewählt. Nicht erneut vorlegen, direkt bauen.
 - **Einziger Ausnahmefall:** Echte externe Blockade (fehlender Secret/Zugang, den nur der User hat; widersprüchliche Pflichtdaten; destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern — als Hinweis, nicht als Multiple-Choice.
+
+### 🔴 Gefundenes Problem = Arbeitsauftrag, nicht Meldung (PFLICHT, User-Order 2026-07-21)
+Der häufigste Abbruchgrund ist nicht ein zu schweres Problem, sondern ein **gemeldetes statt behobenes** Problem. Ein Fund ist kein Ergebnis — er ist der nächste Arbeitsschritt.
+
+- **Finden heißt beheben.** Wer im bearbeiteten Scope einen Fehler entdeckt (Layout, Typecheck, falsche Doku, falsche Annahme, tote Datei, kaputte Rechnung), behebt ihn sofort selbst und arbeitet weiter. Erst danach wird er erwähnt — als erledigt, nicht als Frage.
+- **Nicht wegen eines Problems anhalten.** Ein Fund beendet weder die Phase noch den Auftrag. Das Stoppen selbst ist der teure Fehler: Der User kann am Problem nichts tun, verliert Zeit und muss die KI neu anstoßen. **„Ich habe X gefunden, was soll ich tun?" ist verboten** — richtig ist „X gefunden, so behoben, weiter mit Y".
+- **Auch fremde Blocker im Weg werden geräumt.** Blockiert ein Fehler aus fremder Parallelarbeit den eigenen Fortschritt (roter Typecheck, kaputter Import), wird er **additiv** repariert, damit der Baum wieder grün ist — nie durch Revertieren fremder Arbeit. Kurz im Task-Doc als fremd markieren, nicht liegen lassen.
+- **Keine Problem-Berichte an den User statt Arbeit.** Der Abschlussbericht nennt Funde nur in der Vergangenheitsform mit Fix. Offen bleiben ausschließlich echte externe Blockaden (siehe Ausnahmefall) und manuelle User-Gates (Sichtprüfung, Ingame-Test).
+- **Weiterarbeiten bis wirklich alles steht.** Solange die Masterplanung offene Phasen hat, ist der Auftrag nicht fertig. Nach jeder Phase direkt in die nächste — ohne Zwischenfrage, ohne Zwischenstopp.
+- **Warum:** Der User ist Auftraggeber, nicht Fehlerbehebungs-Instanz. Er hat die KI beauftragt, damit sie Probleme **löst**. Jede an ihn zurückgereichte Fehlermeldung, die die KI selbst hätte beheben können, ist verlorene Arbeit auf beiden Seiten.
 
 ## 1. Kontext & Kommunikation
 
@@ -303,6 +315,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 ## Code-Sicherheit & manuelle Produktprüfung
 
 ### 8.2 Sichtbare Ergebnisqualität / Visual Acceptance Gate
+- **Visuelle Prüfungen sind Opt-in (PFLICHT, User-Order 2026-07-22):** Keine visuelle Abnahme, Browserprüfung, UI-Prüfung, Screenshot-Prüfung, Preview-Prüfung oder Gameplay-Sichtprüfung automatisch ausführen. Diese Prüfungen finden ausschließlich statt, wenn der User sie im aktuellen Auftrag ausdrücklich verlangt; andernfalls bleiben sie als manuelles Gate dokumentiert.
 - **Code-Sicherheit ist kein Produktbeweis:** Lint, TypeScript, gespeicherte Daten, Screenshots, grüne Logs oder ein erfolgreiches Playwright-Skript beweisen nur, dass etwas technisch ausgeführt wurde — nicht, dass das sichtbare Ergebnis gut, lesbar, fachlich richtig oder nutzbar ist.
 - **Akzeptanzkriterien vor Umsetzung ableiten:** Bei jeder sichtbaren Aufgabe zuerst 3-7 konkrete Prüffragen aus dem Userziel notieren (z. B. Sind beide Hände sichtbar? Ist Text lesbar/nicht abgeschnitten? Zeigt das Dashboard die wichtigste Zahl ohne Scrollen?).
 - **Screenshots aktiv beurteilen:** Beauftragt der User Browser/Playwright/Screenshot/Referenzvergleich, das Bild gegen diese Prüffragen bewerten. Ein sichtbar falsches Bild ist ein Fehlerbeweis, nie ein Abschlussbeweis.
@@ -312,6 +325,16 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Nicht hinter manuellen Gates verstecken:** Liegt bereits ein Screenshot/Log/Preview/Export vor, muss er fachlich bewertet werden. Nur wenn wirklich keine Sichtprüfung möglich ist, als `manuelles Gate` dokumentieren.
 - **Fertig nur bei bestandenem Gate:** Keine Phase als `success`/`fertig` dokumentieren, solange die sichtbaren Kernkriterien nicht erfüllt sind — dann ehrlich `partial`, `blocked` oder „technisch umgesetzt, visuell nicht abgenommen".
 - **Bei wiederholtem visuellen Scheitern:** Nicht weiter einzelne Werte drehen. Erst Root Cause nennen, Vergleichsreferenz prüfen, Tooling verbessern, dann erneut implementieren.
+
+#### 8.2.1 Roh-Solid- und Doppeltint-Gate für sichtbare Echtzeitformen
+
+- **Standardprimitiv plus Einfarbenmaterial ist keine fertige Hero-Form:** Box, Plane, Kugel, Kegel oder Polyeder dürfen technische Ausgangsformen sein; als sichtbares Endergebnis brauchen sie eine authored Silhouette oder eine klar maskierte/komponierte Rolle.
+- **Hero-Solids brauchen vier Belege:** charakteristische Silhouette, glaubwürdige Basis bzw. Bodenkontakt, räumliche Tiefe und erkennbare Oberflächenvariation. Fehlt einer davon, ist die Form vor einer Sichtabnahme nicht produktionsreif.
+- **Doppeltint ausdrücklich prüfen:** Effektfarbe ist häufig `material.color × instanceColor`. Dunkel × dunkel erzeugt ungewollt fast schwarzes Material. Entweder die Materialbasis neutral halten oder Primär-/Sekundärfarben als explizite Shaderattribute führen; die resultierende Multiplikation statisch und visuell prüfen.
+- **Masse und Licht trennen:** Solide Materie schreibt Tiefe und trägt Materialkontrast. HDR-Kern, Halo, Funken oder Bloom sind eigene Lichtrollen; eine flächig hochgedrehte Emissivefarbe ersetzt weder Volumen noch Oberfläche.
+- **Bodenreste brauchen eine Maske:** Scars, Risse, Decals und Zonen dürfen ihre Träger-Box/-Plane nicht vollflächig zeigen. UV-Randfalloff plus authored Hauptmaske müssen Geometriekanten in jeder sichtbaren Phase verwerfen; ein Rechteck darf nicht die Silhouette bestimmen.
+- **Statisches Gate vor Sichtprüfung:** Geometrieherkunft, Material-/Instanzfarbpfad, Depth-/Blend-Rollen, HDR-Werte und Alpha-/Discard-Masken sind im Code prüfbar. Die tatsächliche Form- und Lichtqualität bleibt gemäß §8.2 opt-in und ohne aktuelle Userfreigabe ein manuelles Gate.
+
 
 ### 8.3 Denkmodus & Ergebnis-Handwerk (PFLICHT — gilt für JEDE Ausgabe)
 
@@ -338,6 +361,7 @@ Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards 
 - **Physisch/logisch kohärent:** Das Ergebnis muss real Sinn ergeben, nicht nur rendern/laufen (eine Hand ist nicht zugleich gehoben und gesenkt; eine Summe = ihre Teile). Zustände prüfen, nicht nur Ausführung.
 
 _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" gelöst, aber die zuvor erfüllte, ausdrücklich geforderte „oversized/mehrstöckige" Struktur dabei unter die geforderte Größe geschrumpft — falscher Hebel; richtig wäre, sie groß zu lassen und die Figuren darin hochzuskalieren. Global identisch: einen Absatz aufpolieren und eine geforderte Kernaussage streichen; ein Panel schön machen und eine geforderte Spalte weglassen._
+
 
 ### 8.4 Generative Bau-Prompts — sichtbare Evidenz statt Werkzeuglisten (PFLICHT)
 
@@ -382,6 +406,7 @@ Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt
 ### Quick Checklist
 - Keine Rückfragen / kein `AskUserQuestion` — eigenständig die fachlich beste Lösung umsetzen.
 - Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck, nicht als Gameplay-Beweis.
+
 - Mobile-First · Max 700 Zeilen/Datei · bei großer Datei in Unterkomponenten/Helpers/Services aufteilen.
 - **Grundstruktur-First:** Bei wiederholt falschem/kollidierendem Ergebnis die betroffenen Dateien komplett neu schreiben (nicht patchen) und eine Single Source of Truth herstellen (Abschnitt 3).
 - Sichtbare Fehler im bearbeiteten Scope sofort mitfixen.
