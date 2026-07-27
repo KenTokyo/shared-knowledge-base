@@ -273,7 +273,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Einweg-Sync statt Ping-Pong:** Synchronisation von der echten Quelle aus triggern (z. B. `entry.updatedAtMs`), nicht von der zurückgeschriebenen Zielrepräsentation.
 - **Custom-Event-Payloads deduplizieren:** Bei `window.dispatchEvent` + Listener-`setState` semantischen Vergleich (Snapshot-Key) nutzen; identische Payload weder erneut dispatchen noch in State schreiben.
 - **Stop-Regel bei Warnungen:** `Maximum update depth exceeded`, `Too many re-renders`, `Cannot update while rendering`, `validateDOMNesting` und Hydration-Warnungen sind Stop-Signale → sofort Root Cause fixen (Update-Kette im Stacktrace bis zur ersten eigenen Datei zurückverfolgen), nicht unterdrücken.
-- **Pflicht-Check nach UI-Änderungen:** `pnpm check --scope=<deinthema>` — Ausführung und Auswertung strikt nach Abschnitt 8.1.1. (`pnpm typecheck`/`pnpm lint` zeigen auf denselben Weg; ein eigenständiger ESLint-Lauf existiert nicht.)
+- **Pflicht-Check nach UI-Änderungen:** Den projektlokalen `pnpm type-check` nach Abschnitt 8.1.1 ausführen. Zusätzliche Wrapper, Scope-Filter und Aliasnamen stehen in der lokalen `AGENTS.md` oder `package.json`; `lint` ist nicht automatisch ein Typecheck.
 
 ### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
 - **Kontrollierte UI-Werte immer validieren** (Allowlist-Prinzip bei `Tabs`, `Select`, `Popover`). Ist ein Wert auf der Plattform nicht erlaubt, sofort auf sicheren Default zurückfallen.
@@ -391,73 +391,55 @@ Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt
 - **Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-/Serverwert-Tests ohne klaren User-Befehl.** Auch reine Frontend-/Layout-/Mock-Abgleiche nur auf ausdrücklichen Befehl. Ohne Befehl: Research + Codeänderung + manuellen User-Blocker dokumentieren. (Playwright/Browser-Details: `shared-docs/agents/agent-browser/*`.)
 - **Keine neuen Tests erstellen und keine Test-Konfiguration ändern** (Unit/Integration/E2E, `vitest.config.ts`), außer der User verlangt es ausdrücklich.
 
-### 8.1.1 Typecheck schnell ausführen (PFLICHT, User-Order 2026-07-22, neu gemessen 2026-07-26)
+### 8.1.1 Typecheck schnell und eindeutig ausführen (PFLICHT, User-Order 2026-07-27)
 
-**Der eine Befehl:**
+**Kanonischer Alltagsbefehl:**
 
 ```bash
-pnpm check --scope=<deinthema>
+pnpm type-check
 ```
 
-Das war's. Kein Heap-Flag, kein Cache-Pfad, keine Umleitung, keine Encoding-Prüfung — das Werkzeug (`scripts/dev/fast-typecheck.mts`) erledigt alles davon und meldet am Ende genau eine Zeile: `GRUEN im Scope`, `ROT — n Fehler im Scope` oder `UNKLAR — <Grund>`.
+Jedes TypeScript-Projekt soll zusätzlich diese zwei Wege anbieten:
 
-`--scope` filtert die **Fehlerliste** auf deine Dateien (Teilstring am Pfad, mehrere per Komma). Geprüft wird trotzdem alles; im geteilten Arbeitsbaum ist nur die Zahl der **eigenen** Fehler ein Abnahmekriterium — die repoweite Zahl schwankt mit fremder Tipparbeit.
+```bash
+pnpm type-check:low-cpu
+pnpm type-check:legacy
+```
 
-**Gemessen auf `voxel-samurai-quiz` (~7.000 prüfbare Dateien, 8 Kerne, 2026-07-26):**
-
-| Weg | erster Lauf (kalter Dateicache) | Folgelauf |
-|---|---|---|
-| `pnpm check` (tsgo 7.0.0-dev) | ~100 s | **6,4 s** |
-| `pnpm check:full` (tsc 5.8.3, inkrementell) | 87,5 s | 62,7 s |
-
-Im Alltagsfall — warmer Rechner, ein paar geänderte Dateien — ist der schnelle Weg **Faktor 10**. Beide Compiler melden auf diesem Repo **dieselbe** Fehlerliste; nachgewiesen am 2026-07-26 mit zwei Läufen, die zeilengleich dieselben neun Fehler fanden.
-
-**Die drei Befehle:**
-
-| Befehl | Wofür |
+| Befehl | Rolle |
 |---|---|
-| `pnpm check` | Alltag. Nach jeder Änderung, so oft du willst. |
-| `pnpm check:watch` | Lange Bausession: bleibt offen, prüft bei jeder Speicherung in Sekunden. Nur im **Vordergrund**, nur auf ausdrücklichen Aufruf — ein unsichtbar mitlaufender Compiler ist genau der Fall, den „NIEMALS automatisch Hintergrundprozesse starten" verbietet. |
-| `pnpm check:full` | Abnahme-Gate. Fährt `tsc` 5.8 — den Compiler, mit dem gebaut wird. Für den Beleg, den du in einer Task-Doku zitierst. |
+| `type-check` | Schneller Standardcheck mit stabilem TypeScript 7 Native. |
+| `type-check:low-cpu` | Derselbe Check mit weniger Checkern, damit der Rechner nebenbei benutzbar bleibt. |
+| `type-check:legacy` | Klassischer TypeScript-5-Compiler für Diagnoseparität, ältere Werkzeuge und Rückfälle. |
 
-`pnpm typecheck` und `pnpm lint` zeigen auf denselben schnellen Weg; `pnpm typecheck:raw` ist der nackte `tsc`-Aufruf für Sonderfälle. Ein eigenständiges ESLint existiert in diesem Projekt **nicht** und darf nicht erfunden werden.
+Die lokale `AGENTS.md` und `package.json` bleiben maßgeblich. Große Projekte dürfen hinter diesen Namen einen eigenen Wrapper für Priorität, Scope-Auswertung, Logs oder sichere Exitcodes verwenden. Bestehende Aliasnamen dürfen kompatibel bleiben.
 
-#### Warum es vorher so lange gedauert hat (Ursachen, nicht Gefühl)
+**`lint` bleibt eine eigene Rolle:** Ein echter ESLint-/Framework-Linter darf nie durch den Typecheck ersetzt werden. Nur Projekte ohne echten Linter dürfen ihren historischen `lint`-Namen ausdrücklich als Typecheck-Alias behalten. Niemals aus den Shared Docs ableiten, dass `pnpm lint` überall TypeScript prüft.
 
-1. **`tsc` ist einkernig.** Die vom User gemeldeten „15 % CPU" sind **ein Kern von acht**. Man macht den Lauf also nicht leichter — nur **kürzer** oder **seltener**. Genau daran setzt der neue Weg an.
-2. **Die Kosten kommen aus dem Importgraphen, nicht aus der Dateiliste.** Ein auf 24 Dateien verkleinerter Lauf kostete gemessen genauso viel wie der Volllauf, weil ein einziger Lab-Einstieg (`VfxLabStudio.tsx`) praktisch die halbe App nachzieht. **„Nur meine Dateien prüfen" beschleunigt in diesem Repo nichts** — es macht nur blind für Folgefehler.
-3. **`tsgo` hat keinen Cache.** Der Unterschied 100 s ⇄ 6,4 s ist reines Datei-Einlesen des Betriebssystems. Nach einem Neustart ist der erste Lauf teuer, jeder weitere billig.
+#### Stabiles TypeScript 7 parallel zu TypeScript 5
 
-#### CPU-Etikette bei parallelen Sessions (der eigentliche Absturzgrund)
+- TypeScript 7 Native gepinnt unter einem eindeutigen Alias installieren, zum Beispiel `"@typescript/native": "npm:typescript@7.0.2"`.
+- Das klassische `typescript`-Paket behalten, wenn `ts-morph`, ESLint, Frameworks, Build-Skripte oder eigene AST-Werkzeuge seine JavaScript-Compiler-API nutzen.
+- Beide Pakete liefern einen Bin namens `tsc`. Deshalb niemals `pnpm exec tsc`, `npx tsc` oder einen bloßen `tsc`-Scriptwert verwenden. Die Auflösung kann nach jeder Installation kippen.
+- Direkte Standardpfade sind `node node_modules/@typescript/native/bin/tsc` für Native und `node node_modules/typescript/bin/tsc` für Legacy. Ein vorhandener robuster Wrapper darf stattdessen den gelieferten `getExePath.js`-Resolver nutzen.
+- Native und Legacy erhalten getrennte `tsbuildinfo`-Dateien. Wenn nur Native inkrementell läuft, Legacy mit `--incremental false` starten.
 
-Nicht der einzelne Lauf hat den Rechner in die Knie gezwungen, sondern **mehrere gleichzeitig**. Deshalb:
+#### Konfiguration vor dem Compilerwechsel pinnen
 
-- Der Compiler läuft standardmäßig mit Priorität **`BelowNormal`**. Das kostet auf einem freien Rechner nichts und tritt sofort zurück, sobald der User arbeitet. `--priority=Idle` geht noch weiter, `--priority=Normal` schaltet ab.
-- `--cores=N` deckelt die Threads (`GOMAXPROCS`), wenn parallel gearbeitet wird.
-- **Keine zwei Vollläufe gleichzeitig starten.** Läuft schon einer, warte auf ihn — zwei Läufe sind nicht doppelt so schnell, sie sind doppelt so teuer.
-- **Eigener Logname pro Thema.** Ohne `--log` leitet ihn `--scope` ab; Logs landen unter `.tmp/tsc/`, nie mehr im Repo-Wurzelverzeichnis.
+TypeScript-Versionen können bei nicht gesetzten Optionen andere Defaults verwenden. Vor dem Vergleich besonders `strict`, `noUncheckedSideEffectImports`, `module`, `moduleResolution`, `noEmit` und `incremental` prüfen. Das bisher beabsichtigte Verhalten ausdrücklich als `true` oder `false` in `tsconfig.json` festhalten; nicht pauschal lockern, nur damit der neue Lauf grün wird.
 
-#### ⚠️ Die Falle, die einen Compilerwechsel wertlos macht
+Neue Diagnosen werden verstanden und im bearbeiteten Scope behoben. Ein Schalter darf nur geändert werden, wenn die Projektarchitektur genau dieses Verhalten verlangt und die Entscheidung in der Task-Datei steht.
 
-**`tsgo` / TypeScript 7 kippt den Default der ganzen `strict`-Familie auf `true`, `tsc` 5.x hat ihn auf `false`.** Ohne explizite Zeile in `tsconfig.json` meldete der schnelle Checker auf diesem Repo erst 201, dann 618 Fehler (TS18048, TS7011, TS7018), die der langsame nicht kennt — kein einziger davon war ein Fund. Behoben durch `"strict": false`, **explizit** und mit Begründung an der Zeile.
+#### CPU- und Prüfvertrag
 
-**Verallgemeinerung, die über TypeScript hinausgeht:** Ein Default, der nicht in der Konfiguration steht, ist keine Einstellung — er ist eine Aussage darüber, welches Werkzeug man zufällig benutzt. Wer ein Werkzeug austauscht, pinnt zuerst die impliziten Defaults und vergleicht **danach** die Ergebnisse. Ein neues Werkzeug, das „strenger" wirkt, ist meistens nur anders eingestellt.
-
-#### Die vier Falsch-Grün-Fallen (das Werkzeug fängt sie ab — kennen musst du sie trotzdem)
-
-Sie gelten für **jeden** Weg, auf dem du selbst einen Compiler aufrufst:
-
-1. **Der Exitcode lügt.** `tsc --noEmit --incremental` liefert Exit 1/2 auch dann, wenn es nichts druckt (gecachte Diagnosen); ein angehängtes `; echo EXIT=$?` hat umgekehrt schon Erfolg gemeldet, während Fehler im Log standen. Maßgeblich ist die **gezählte Fehlerzeile**, nie der Code.
-2. **Ein leeres Log ist kein grünes Log.** Ein abgebrochener Lauf (Timeout, Session-Ende, Kill) sieht aus wie ein sauberer. `0 Fehler` **und** Exitcode ≠ 0 heißt `UNKLAR`, nicht `GRUEN`.
-3. **UTF-16-BOM.** Per Shell umgeleitete Logs landen unter Windows regelmäßig als UTF-16LE. `grep -c "error TS"` findet darin wegen der Nullbytes **niemals** einen Treffer und meldet stur 0 — auch bei hunderten Fehlern. Eine `0`, die aus einer Datei mit BOM `FF FE` kommt, ist kein Ergebnis.
-4. **Geteiltes Log, geteilter Cache.** Mehrere Sessions im selben Arbeitsbaum schreiben sonst dieselbe Datei; unter Windows ist sie während eines fremden Laufs sogar **gesperrt**, die eigene Umleitung scheitert, und zurück bleibt das fremde, harmlos aussehende Log. Ein grünes Ergebnis, dessen Log du nicht selbst geschrieben hast, ist kein Ergebnis.
-
-#### Nicht tun
-
-- **Den Scope über `include`/`exclude` verkleinern.** `apps/*` (asset-lab, monster-lab, sound-lab) hat keine eigene `tsconfig.json` und hängt an der Wurzel-Config — wer es ausschließt, macht den Lauf schnell und **blind**. Geschwindigkeit kommt aus dem Compiler, nie aus weniger Abdeckung.
-- **Bei reinen Doku-/Prompt-/Regeländerungen überhaupt prüfen.** Kein Code, kein Check.
-
-**Cache-Verdacht (nur für `check:full`):** Wirkt das Ergebnis unplausibel (Fehler in gelöschten Dateien, Fehler verschwinden ohne Fix), einmal `pnpm typecheck:clean` — das löscht die `tsbuildinfo` und läuft kalt neu. Nicht als Standard verwenden.
+- Typechecks immer nacheinander ausführen. Mehrere parallele Compilerläufe machen den Rechner langsamer und Ergebnisse schwer zuzuordnen.
+- `type-check:low-cpu` nutzt beim nativen Compiler typischerweise `--checkers 2`; projektspezifische Wrapper dürfen zusätzlich eine niedrige Prozesspriorität setzen.
+- Watch-Modi nur nach ausdrücklichem Nutzerstart im sichtbaren Vordergrund ausführen. Nie automatisch einen dauerhaften Compilerprozess starten.
+- Nach einer Scriptumstellung alle drei Befehle mindestens einmal echt ausführen. Dokumentieren: Compiler-Version, Laufzeit, Exitcode und Zahl der `error TS`-Diagnosen.
+- Erfolg verlangt einen vollständig beendeten Lauf mit Exitcode 0 und null TypeScript-Diagnosen. Startfehler, Signalabbruch oder ein nichtnuller Exitcode mit leerer Ausgabe sind `unklar`, nie grün.
+- PowerShell-Umleitungen können UTF-16LE schreiben. Logs über einen Wrapper direkt als UTF-8 erzeugen oder vor dem Zählen die BOM prüfen.
+- Den Projekt-Scope nicht nur für Geschwindigkeit über `include`/`exclude` verkleinern. Ein schneller blinder Check ist kein Sicherheitsgewinn.
+- Bei reinen Doku-/Prompt-/Regeländerungen keinen Typecheck starten.
 
 ## Referenzen & Qualitäts-Checkliste
 
