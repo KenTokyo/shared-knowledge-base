@@ -12,7 +12,13 @@
 Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungeprüft behandeln, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
 
 - KEINE BROWSER PLAYRIGHT TESTS AUßer ES WIRD DIR AUSDRÜCKLICH GESAGT im PROMPT
-- KEINE GIT WORKTREES ÖFFNEN Außer ES WIRD DIR SPEZIELL GESAGT!
+
+### Git-Arbeitsmodus: ausschließlich `main` (PFLICHT)
+- **Standard ist der vorhandene `main`:** Änderungen und Commits erfolgen direkt auf `main`. Vor Arbeitsbeginn aktiven Branch und `git worktree list` prüfen.
+- **Keine Branches oder Worktrees ohne ausdrückliche aktuelle Userfreigabe:** Niemals selbstständig einen Branch oder Worktree erzeugen, zu einem Nicht-`main`-Branch wechseln oder dort einen parallelen Arbeitsweg beginnen. Das gilt auch für vermeintliche Sicherheits-, Backup-, Test-, Benchmark-, Agenten-, IDE- oder Harness-Branches.
+- **Explizite Freigabe muss im aktuellen Userauftrag stehen:** Alte Pläne, Historien, Handover-Dateien, frühere Freigaben oder eine Tool-Empfehlung gelten nicht als Erlaubnis. Verboten sind ohne Freigabe insbesondere `git switch -c`, `git checkout -b`, `git branch <name>` und `git worktree add`.
+- **Unerwarteten Nicht-`main`-Stand niemals verwerfen:** Kein Hard Reset, kein Löschen ungesicherter Dateien und kein stilles Umschreiben der Historie. Vorhandene getrackte und ungetrackte Änderungen verlustfrei sichern und nur auf ausdrücklichen Userauftrag in `main` integrieren; einen alten Branch oder Worktree erst nach belegter Übernahme und nur mit Löschfreigabe entfernen.
+- **Abschlusszustand:** Auf `main` bleiben. Branch- oder Worktree-Namen in einer IDE sind kein Grund, neue Git-Strukturen anzulegen.
 ## Durcharbeiten statt Fragen (PFLICHT)
 - **Verbindlicher Phasen-Workflow (IMMER anwenden):** Jede Implementierung folgt den Regeln in `shared-docs/agents/commands/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — phasenweise ohne Stopps, To-dos in der Task-Datei abhaken, nach JEDER Phase dokumentieren (7-Punkte-Format + Kommentar-Sektion) und im Loop bis zur letzten Phase weiterarbeiten. Diese Datei definiert den Pflicht-Ablauf; vor Baubeginn lesen und exakt einhalten.
 - **Keine Rückfragen an den User** (kein `AskUserQuestion`, keine „Soll ich A oder B?"-Dialoge). Bei Aufgabe, Plan oder Masterplanung ohne Zwischenfragen vom aktuellen Stand bis zur letzten Phase durcharbeiten.
