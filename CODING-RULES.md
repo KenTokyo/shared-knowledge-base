@@ -46,7 +46,7 @@ Der häufigste Abbruchgrund ist nicht ein zu schweres Problem, sondern ein **gem
 - **Junior-Developer-Feedback:** User beschreibt Probleme oft grob → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren.
 - **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel also CHAT_META::Titel:, der dann von der Harness geparst wird, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
 CHAT_META::Titel: [specific meaningful chat title, 11-20 words]
-- BITTE IMMER Titel erzeugen, sinnvolle, z.B.
+- BITTE IMMER Titel erzeugen, sinnvolle, z.B. Erzeugung/Anpassung/Update 
 Klasse Schwertkämpfer - Neue Skillpalette, VFX-System, UI Hotbar etc. - Shader Einbau und Aktualisierung der Animationen
 Shop UI - Neue UI-Architektur, 3D-Preview, Voice-Input etc.
 KI-Chat: UI verbesserungen, Einfachere Inputs, Mobile Konformer machen
@@ -273,7 +273,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 - **Einweg-Sync statt Ping-Pong:** Synchronisation von der echten Quelle aus triggern (z. B. `entry.updatedAtMs`), nicht von der zurückgeschriebenen Zielrepräsentation.
 - **Custom-Event-Payloads deduplizieren:** Bei `window.dispatchEvent` + Listener-`setState` semantischen Vergleich (Snapshot-Key) nutzen; identische Payload weder erneut dispatchen noch in State schreiben.
 - **Stop-Regel bei Warnungen:** `Maximum update depth exceeded`, `Too many re-renders`, `Cannot update while rendering`, `validateDOMNesting` und Hydration-Warnungen sind Stop-Signale → sofort Root Cause fixen (Update-Kette im Stacktrace bis zur ersten eigenen Datei zurückverfolgen), nicht unterdrücken.
-- **Pflicht-Check nach UI-Änderungen:** `pnpm typecheck` über den geänderten Scope — Ausführung, Cache und Log-Auswertung strikt nach Abschnitt 8.1.1. (`pnpm lint` ist in diesem Projekt nur ein Alias darauf; ein eigenständiger ESLint-Lauf existiert nicht.)
+- **Pflicht-Check nach UI-Änderungen:** `pnpm check --scope=<deinthema>` — Ausführung und Auswertung strikt nach Abschnitt 8.1.1. (`pnpm typecheck`/`pnpm lint` zeigen auf denselben Weg; ein eigenständiger ESLint-Lauf existiert nicht.)
 
 ### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
 - **Kontrollierte UI-Werte immer validieren** (Allowlist-Prinzip bei `Tabs`, `Select`, `Popover`). Ist ein Wert auf der Plattform nicht erlaubt, sofort auf sicheren Default zurückfallen.
@@ -391,34 +391,73 @@ Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt
 - **Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-/Serverwert-Tests ohne klaren User-Befehl.** Auch reine Frontend-/Layout-/Mock-Abgleiche nur auf ausdrücklichen Befehl. Ohne Befehl: Research + Codeänderung + manuellen User-Blocker dokumentieren. (Playwright/Browser-Details: `shared-docs/agents/agent-browser/*`.)
 - **Keine neuen Tests erstellen und keine Test-Konfiguration ändern** (Unit/Integration/E2E, `vitest.config.ts`), außer der User verlangt es ausdrücklich.
 
-### 8.1.1 Typecheck schnell + zuverlässig ausführen (PFLICHT, User-Order 2026-07-22)
+### 8.1.1 Typecheck schnell ausführen (PFLICHT, User-Order 2026-07-22, neu gemessen 2026-07-26)
 
-Grosse Repos (`voxel-samurai-quiz`: ~7.000 prüfbare Dateien — `src` 5.229, `apps` 1.648, `scripts` 120, `server` 49) brauchen Minuten für einen Komplettlauf. Der Lauf ist trotzdem nicht verhandelbar — er muss nur **richtig** gestartet werden.
-
-**Der eine Befehl (immer dieser):**
+**Der eine Befehl:**
 
 ```bash
-pnpm typecheck > .tsc.log 2>&1
+pnpm check --scope=<deinthema>
 ```
 
-`pnpm lint` ist derselbe Befehl (Alias) — es gibt in diesem Projekt **kein ESLint**. Ein separater Lint-Schritt existiert nicht und darf nicht erfunden werden.
+Das war's. Kein Heap-Flag, kein Cache-Pfad, keine Umleitung, keine Encoding-Prüfung — das Werkzeug (`scripts/dev/fast-typecheck.mts`) erledigt alles davon und meldet am Ende genau eine Zeile: `GRUEN im Scope`, `ROT — n Fehler im Scope` oder `UNKLAR — <Grund>`.
 
-**Warum genau so — die drei Fallen, die jeden Lauf teuer machen:**
+`--scope` filtert die **Fehlerliste** auf deine Dateien (Teilstring am Pfad, mehrere per Komma). Geprüft wird trotzdem alles; im geteilten Arbeitsbaum ist nur die Zahl der **eigenen** Fehler ein Abnahmekriterium — die repoweite Zahl schwankt mit fremder Tipparbeit.
 
-1. **Cache nicht wegwerfen.** Der Befehl trägt `--incremental --tsBuildInfoFile .tmp/tsconfig.tsbuildinfo`. Diese Datei (mehrere MB) merkt sich das Ergebnis des letzten Laufs; danach prüft TypeScript nur noch geänderte Dateien und deren Abhängige. Ein blankes `tsc --noEmit` **ignoriert den Cache** und erzwingt jedes Mal einen Kaltstart. Wer die Flags weglässt, zahlt jedes Mal den vollen Preis.
-2. **Heap hochsetzen.** `pnpm exec tsc` läuft im Node-Standardheap (~4 GB) und stirbt bei dieser Repo-Grösse mit **Exit 134**. Deshalb ruft das Skript `node --max-old-space-size=10240 node_modules/typescript/lib/tsc.js` direkt auf.
-3. **Exit-Code nicht glauben, Logdatei lesen.** In Hintergrundläufen meldet ein angehängtes `echo TSC_EXIT=$?` regelmässig Erfolg, obwohl Fehler in der Logdatei stehen. **Immer** die Logdatei prüfen: `grep -c "error TS" .tsc.log` (0 = grün). Ein leeres Log bedeutet **nicht** grün — es bedeutet meist, dass der Lauf abgebrochen wurde (Session-Teardown, Timeout, Kill).
-4. **Log-Encoding prüfen, sonst ist `grep` immer grün (User-Order 2026-07-22).** Je nach Shell landet `.tsc.log` als **UTF-16LE mit BOM** auf der Platte. `grep -c "error TS"` findet darin wegen der Nullbytes zwischen den Buchstaben **niemals** einen Treffer und meldet 0 — auch bei hunderten Fehlern. Vor dem Zählen einmal dekodieren, z. B.:
+**Gemessen auf `voxel-samurai-quiz` (~7.000 prüfbare Dateien, 8 Kerne, 2026-07-26):**
 
-   ```bash
-   node -e "const b=require('fs').readFileSync('.tsc.log');const t=(b[0]===0xFF&&b[1]===0xFE)?b.toString('utf16le'):b.toString('utf8');console.log('error TS:',(t.match(/error TS/g)||[]).length,'| ELIFECYCLE:',t.includes('ELIFECYCLE'))"
-   ```
+| Weg | erster Lauf (kalter Dateicache) | Folgelauf |
+|---|---|---|
+| `pnpm check` (tsgo 7.0.0-dev) | ~100 s | **6,4 s** |
+| `pnpm check:full` (tsc 5.8.3, inkrementell) | 87,5 s | 62,7 s |
 
-   Faustregel: Ein `0`, das aus einer Datei mit BOM `FF FE` kommt, ist kein Ergebnis. Zusätzlich auf `ELIFECYCLE` prüfen — das steht im Log, wenn pnpm den Lauf als fehlgeschlagen beendet hat.
+Im Alltagsfall — warmer Rechner, ein paar geänderte Dateien — ist der schnelle Weg **Faktor 10**. Beide Compiler melden auf diesem Repo **dieselbe** Fehlerliste; nachgewiesen am 2026-07-26 mit zwei Läufen, die zeilengleich dieselben neun Fehler fanden.
 
-**Cache-Verdacht:** Wirkt das Ergebnis unplausibel (Fehler in gerade gelöschten Dateien, Fehler verschwinden ohne Fix), einmal `pnpm typecheck:clean` — das löscht die `tsbuildinfo` und läuft kalt neu. Nicht als Standard verwenden.
+**Die drei Befehle:**
 
-**Nicht tun:** Den Scope über `include`/`exclude` verkleinern, um Zeit zu sparen. `apps/*` (asset-lab, monster-lab, sound-lab) hat keine eigene `tsconfig.json` und hängt an der Wurzel-Config — wer es ausschliesst, macht den Lauf schnell und **blind**. Geschwindigkeit kommt aus dem Cache, nie aus weniger Abdeckung.
+| Befehl | Wofür |
+|---|---|
+| `pnpm check` | Alltag. Nach jeder Änderung, so oft du willst. |
+| `pnpm check:watch` | Lange Bausession: bleibt offen, prüft bei jeder Speicherung in Sekunden. Nur im **Vordergrund**, nur auf ausdrücklichen Aufruf — ein unsichtbar mitlaufender Compiler ist genau der Fall, den „NIEMALS automatisch Hintergrundprozesse starten" verbietet. |
+| `pnpm check:full` | Abnahme-Gate. Fährt `tsc` 5.8 — den Compiler, mit dem gebaut wird. Für den Beleg, den du in einer Task-Doku zitierst. |
+
+`pnpm typecheck` und `pnpm lint` zeigen auf denselben schnellen Weg; `pnpm typecheck:raw` ist der nackte `tsc`-Aufruf für Sonderfälle. Ein eigenständiges ESLint existiert in diesem Projekt **nicht** und darf nicht erfunden werden.
+
+#### Warum es vorher so lange gedauert hat (Ursachen, nicht Gefühl)
+
+1. **`tsc` ist einkernig.** Die vom User gemeldeten „15 % CPU" sind **ein Kern von acht**. Man macht den Lauf also nicht leichter — nur **kürzer** oder **seltener**. Genau daran setzt der neue Weg an.
+2. **Die Kosten kommen aus dem Importgraphen, nicht aus der Dateiliste.** Ein auf 24 Dateien verkleinerter Lauf kostete gemessen genauso viel wie der Volllauf, weil ein einziger Lab-Einstieg (`VfxLabStudio.tsx`) praktisch die halbe App nachzieht. **„Nur meine Dateien prüfen" beschleunigt in diesem Repo nichts** — es macht nur blind für Folgefehler.
+3. **`tsgo` hat keinen Cache.** Der Unterschied 100 s ⇄ 6,4 s ist reines Datei-Einlesen des Betriebssystems. Nach einem Neustart ist der erste Lauf teuer, jeder weitere billig.
+
+#### CPU-Etikette bei parallelen Sessions (der eigentliche Absturzgrund)
+
+Nicht der einzelne Lauf hat den Rechner in die Knie gezwungen, sondern **mehrere gleichzeitig**. Deshalb:
+
+- Der Compiler läuft standardmäßig mit Priorität **`BelowNormal`**. Das kostet auf einem freien Rechner nichts und tritt sofort zurück, sobald der User arbeitet. `--priority=Idle` geht noch weiter, `--priority=Normal` schaltet ab.
+- `--cores=N` deckelt die Threads (`GOMAXPROCS`), wenn parallel gearbeitet wird.
+- **Keine zwei Vollläufe gleichzeitig starten.** Läuft schon einer, warte auf ihn — zwei Läufe sind nicht doppelt so schnell, sie sind doppelt so teuer.
+- **Eigener Logname pro Thema.** Ohne `--log` leitet ihn `--scope` ab; Logs landen unter `.tmp/tsc/`, nie mehr im Repo-Wurzelverzeichnis.
+
+#### ⚠️ Die Falle, die einen Compilerwechsel wertlos macht
+
+**`tsgo` / TypeScript 7 kippt den Default der ganzen `strict`-Familie auf `true`, `tsc` 5.x hat ihn auf `false`.** Ohne explizite Zeile in `tsconfig.json` meldete der schnelle Checker auf diesem Repo erst 201, dann 618 Fehler (TS18048, TS7011, TS7018), die der langsame nicht kennt — kein einziger davon war ein Fund. Behoben durch `"strict": false`, **explizit** und mit Begründung an der Zeile.
+
+**Verallgemeinerung, die über TypeScript hinausgeht:** Ein Default, der nicht in der Konfiguration steht, ist keine Einstellung — er ist eine Aussage darüber, welches Werkzeug man zufällig benutzt. Wer ein Werkzeug austauscht, pinnt zuerst die impliziten Defaults und vergleicht **danach** die Ergebnisse. Ein neues Werkzeug, das „strenger" wirkt, ist meistens nur anders eingestellt.
+
+#### Die vier Falsch-Grün-Fallen (das Werkzeug fängt sie ab — kennen musst du sie trotzdem)
+
+Sie gelten für **jeden** Weg, auf dem du selbst einen Compiler aufrufst:
+
+1. **Der Exitcode lügt.** `tsc --noEmit --incremental` liefert Exit 1/2 auch dann, wenn es nichts druckt (gecachte Diagnosen); ein angehängtes `; echo EXIT=$?` hat umgekehrt schon Erfolg gemeldet, während Fehler im Log standen. Maßgeblich ist die **gezählte Fehlerzeile**, nie der Code.
+2. **Ein leeres Log ist kein grünes Log.** Ein abgebrochener Lauf (Timeout, Session-Ende, Kill) sieht aus wie ein sauberer. `0 Fehler` **und** Exitcode ≠ 0 heißt `UNKLAR`, nicht `GRUEN`.
+3. **UTF-16-BOM.** Per Shell umgeleitete Logs landen unter Windows regelmäßig als UTF-16LE. `grep -c "error TS"` findet darin wegen der Nullbytes **niemals** einen Treffer und meldet stur 0 — auch bei hunderten Fehlern. Eine `0`, die aus einer Datei mit BOM `FF FE` kommt, ist kein Ergebnis.
+4. **Geteiltes Log, geteilter Cache.** Mehrere Sessions im selben Arbeitsbaum schreiben sonst dieselbe Datei; unter Windows ist sie während eines fremden Laufs sogar **gesperrt**, die eigene Umleitung scheitert, und zurück bleibt das fremde, harmlos aussehende Log. Ein grünes Ergebnis, dessen Log du nicht selbst geschrieben hast, ist kein Ergebnis.
+
+#### Nicht tun
+
+- **Den Scope über `include`/`exclude` verkleinern.** `apps/*` (asset-lab, monster-lab, sound-lab) hat keine eigene `tsconfig.json` und hängt an der Wurzel-Config — wer es ausschließt, macht den Lauf schnell und **blind**. Geschwindigkeit kommt aus dem Compiler, nie aus weniger Abdeckung.
+- **Bei reinen Doku-/Prompt-/Regeländerungen überhaupt prüfen.** Kein Code, kein Check.
+
+**Cache-Verdacht (nur für `check:full`):** Wirkt das Ergebnis unplausibel (Fehler in gelöschten Dateien, Fehler verschwinden ohne Fix), einmal `pnpm typecheck:clean` — das löscht die `tsbuildinfo` und läuft kalt neu. Nicht als Standard verwenden.
 
 ## Referenzen & Qualitäts-Checkliste
 
