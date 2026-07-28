@@ -126,7 +126,6 @@ Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** techn
   **Warum:** Am Altbestand herumzudrehen kostet mehr Zeit und erzeugt neue Regressionen als ein sauberer Neubau. Im Zweifel: neu bauen, nicht flicken.
 
 ### Linearer Phasen-Modus (immer aktiv)
-- **Du codest selbst.** Es gibt keinen Orchestrator-/Coder-Rollensplit und kein Delegieren von Implementierung an Subagents es sei denn es wird explizit als Systemprompt mitgegeben.
 - **Nach jeder Phase** Plan updaten/Todos abhaken + Status setzen · kleine Summary, damit direkt weitergearbeitet werden kann.
 - **Tempo-Guard:** Nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration**. Keine Sammel-Implementierung über mehrere große Phasen.
 - **Qualitäts-Gate:** Vor Phasenabschluss Scope gegen Planung abgleichen, Doku aktualisieren, offene manuelle User-Gates notieren.
@@ -206,17 +205,27 @@ Die Task-/Masterplanung ist der **einzige** durable Kanal — kein zweiter Log. 
 
 **Regeln:** Todos direkt hier abhaken (`[x]`), Protokoll append-only (frühere Phasen nie überschreiben, nie Ergebnisse erfinden). Offene Findings wandern in „Offene Fix-Punkte", bis erledigt. **600-Zeilen-Split:** Über ~600 Zeilen `-2.md` (`-3.md` …) anlegen, mit Rücklink + 5-Zeilen-Stand; alte Datei endet mit Vorwärts-Pointer. Aktuell = höchste Nummer. Keine Roh-Logs/Codeblöcke hineinkopieren — nur Entscheidungen, Findings, Soll-Zustände.
 
-## 5. Subagents & Erkundung
+## 5. Recherche & Erkundung
 
-### 5.1 Subagent-Nutzung
-- Planen, Implementieren und Prüfen passiert linear in derselben Session
-- Subagents **ausschließlich zum Suchen und Abschließen**: `erkunder-code`, `erkunder-docs`, `duplikat-checker` (Recherche) · `abschliesser` (`.completed/`-Datei + CLAUDE.md-Check).
+### 5.1 Linearer Standard
+- Planung, Suche, Implementierung und Prüfung passieren in derselben Session mit einem Owner.
+- Keine Subagents, Agentenflotten oder parallele Reconnaissance ohne aktuelle ausdrückliche Freigabe im Userauftrag oder Systemprompt. Historie, Handover und alte Freigaben zählen nicht.
+- Erst vorhandene Planung, Git-Status und relevante SSoTs lesen; danach mit Datei-/Inhaltssuche gezielt betroffene Pfade und Duplikate finden.
+- Bereits belegte Erkenntnisse nicht durch eine zweite parallele Suche wiederholen. Ergebnis der Erkundung ist die kleinste belastbare Arbeitsliste, kein Dateidump.
 
-### 5.2 Pre-Task Reconnaissance (Pflicht bei >2 Dateien)
-- Vor Coding parallel: `erkunder-docs` sucht in `docs/`, `.completed/`, History; `erkunder-code` findet betroffene Dateien und Duplikate.
-- Bei neuen Dateien/Hooks/Stores/Utilities: `duplikat-checker`; 80 %+ vorhandene Funktionalität → bestehendes Modul erweitern.
-- Nach Coding: `abschliesser` erstellt `.completed/` und prüft CLAUDE.md-Relevanz.
-- Falls Subagents fehlen: token-effizient erstellen und User kurz informieren.
+### 5.2 Pre-Task Reconnaissance bei mehr als zwei Dateien
+- Linear in derselben Session: `docs/`, `.completed/`, History und betroffene Code-/Promptpfade nur soweit durchsuchen, wie Scope, Ownership und bestehende Lösungen es verlangen.
+- Bei neuen Hooks, Stores, Utilities, Prompts oder Shared-Modulen vor dem Anlegen nach vorhandener Funktionalität suchen; bei überwiegender Überschneidung das bestehende Modul erweitern.
+- Fremde parallele Änderungen über `git status` abgrenzen und nie revertieren, formatieren oder in den eigenen Scope ziehen.
+- Abschlussprüfung, Task-Dokumentation, `.completed/`-Entscheidung und CLAUDE-/AGENTS-Relevanz übernimmt derselbe Owner im linearen Phasenloop.
+- Subagents sind ein bewusster aktueller Opt-in für klar unabhängige, ausreichend große Tracks, nie eine automatische Dateimengenregel. Implementierungsdelegation folgt zusätzlich Abschnitt 5.3.
+
+### 5.3 Optionales Orchestrierungsprofil (nur aktueller Opt-in)
+- `linear` bleibt Standard. `orchestriert` ist nur zulässig, wenn der aktuelle Userauftrag oder Systemprompt es ausdrücklich erlaubt; Historie, Handover, frühere Freigaben und bloße Dateimenge zählen nicht.
+- Orchestrierung braucht mindestens zwei unabhängige, ausreichend große Tracks, deren parallele Bearbeitung real Zeit spart oder eine benannte Perspektive ergänzt. Bei gekoppelter Architektur, Shared State, überlappenden Dateien oder kleiner Aufgabe bleibt die Arbeit linear.
+- Vor Delegation Mission, disjunkten Scope/Ownership, Rechte, erwartetes Artefakt, prüfbare Evidenz und Rückgabeformat je Track festlegen. Agentenzahl ist kein Qualitätsziel.
+- Ein Integrationsowner behält gekoppelte Entscheidungen, löst Widersprüche, integriert und verantwortet den vollständigen Produkt-, Vertrags- und Regressionsabgleich. Subagents zertifizieren ihre Ausgabe nicht selbst; sie liefern Artefakte, Evidenz und Risiken.
+- Frische Verifier nur für eine benannte Fehlklasse einsetzen, nicht als routinemäßigen Builder-/Critic-Fan-out. Orchestrierungsfreigabe und Browser-/Computer-Use-Freigabe sind getrennt und dürfen nie voneinander abgeleitet werden.
 
 ## 6. Architektur & React Practices
 
@@ -356,11 +365,11 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards fokuslos, APIs generisch. Der Hebel ist **nicht „mehr Regeln"**, sondern zuerst den Denkmodus umzuschalten.
 
 **Denkmodus-Reset (VOR jeder Umsetzung, domänenübergreifend):**
-- **Erfolgstest = Wirkung, nicht Erfüllung:** Miss dich daran, ob ein Mensch das Ergebnis exzellent nennt. Die Spezifikation ist der Boden, nicht das Ziel.
+- **Erfolgstest = belegbare Wirkung, nicht bloße Erfüllung:** Beurteile die stärkste im aktuellen Auftrag erlaubte Evidenz gegen konkrete Produktfragen aus Nutzersicht. Die Spezifikation ist der Boden, nicht das Ziel; Selbstlob ist kein Qualitätsbeweis.
 - **An jeder Gabelung die reichere Variante:** Zwischen einfach/sicher und reicher/schwieriger immer die reichere für alles, was der Nutzer erlebt. Einfachheit nur für Unsichtbares.
 - **Schwieriger Kern = mehr investieren, nicht vereinfachen:** Ein hartes Kern-Element ist das Signal, dort mehr Aufwand hineinzugeben — nicht abzuspecken und `partial` zu markieren.
 - **Aufwand dem Fokus geben, nicht der Wiederverwendung:** Was der Nutzer zuerst erlebt (Hauptobjekt, Kernzahl, erster Satz), bekommt maßgeschneiderte Sorgfalt; nur der Hintergrund wird generalisiert. „DRY über alles" erzeugt uniforme Mittelmäßigkeit.
-- **„Fertig" heißt erlebt-und-geprüft:** Erst fertig, wenn das Ergebnis durch die Augen des echten Nutzers gerendert wurde und du „exzellent" wettest — nicht, wenn Gates grün sind (ergänzt 8.2).
+- **„Fertig" heißt artefaktbasiert geprüft:** Bei aktueller Browser-/Preview-Freigabe das echte Ergebnis aus Nutzersicht rendern und beurteilen; ohne sie alle ehrlichen statischen Belege ausschöpfen und nur das reale manuelle Gate offenlassen. Grüne Technikchecks, ausführliche Selbsterklärung oder Begeisterung genügen nicht (ergänzt 8.2).
 
 **Wie sich der Denkmodus zeigt:** echten Mechanismus bauen statt sicheren Ersatz · qualitätstragende Details formen statt flachen Default · die Sache wirklich passieren lassen statt auf Distanz faken · das Wichtigste vorn/groß/unverdeckt · über den sicheren Rand hinaus schichten · un-gefordertes Leben (sinnvolle Defaults, Micro-Copy-Ton, Sekundärbewegung).
 
@@ -368,26 +377,31 @@ Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards 
 - **Kein Regress:** Fokus-Investment darf **nichts** verschlechtern, das schon gut/richtig war. Qualität ist keine Wippe — ein exzellentes Ergebnis hält **alle** guten Eigenschaften gleichzeitig, es tauscht nicht A gegen B.
 - **„Über dem Boden" heißt addieren, nie darunter fallen:** „Spec ist der Boden, ziele darüber" heißt *mehr obendrauf* — nie eine explizite Vorgabe unterschreiten. Benannte/quantifizierte/superlative Wörter im Auftrag („groß/oversized", „~200 Einheiten", „rund", „3 von X", „beide sichtbar") sind **harte Constraints**; Exzellenz wird **mit** ihnen gemessen, nicht statt ihnen.
 - **Richtiger Hebel statt lokalem Kurzschluss:** Damit der Fokus „gewinnt", den passenden Hebel nutzen (Betonung, Kadrierung, Platzierung, relative Skala) — **nie** den Kontext degradieren (nicht die ganze Welt schrumpfen, damit der Held groß wirkt). Das echte Problem lösen, keine globale Eigenschaft für ein lokales Ziel opfern.
-- **Abschluss-Abgleich (der „Check"):** Vor „fertig" zusätzlich zum Augen-Render **den ganzen Auftrag einmal gegenlesen** — ist jedes explizite Merkmal/Maß/Superlativ *wörtlich* noch wahr, und ist **nichts** vorher Gutes zurückgefallen? Das ist **kein** neuer Abhak-Gate: ein sachkundiger Nutzer sähe ein fallengelassenes „oversized" sofort, „exzellent für ihn wetten" *setzt* den vollständigen Auftrag also schon voraus — der Abgleich ist nur die ehrliche Einlösung dieser Wette.
+- **Abschluss-Abgleich (der „Check"):** Vor „fertig" zusätzlich zur stärksten erlaubten Artefaktevidenz **den ganzen Auftrag einmal gegenlesen** — ist jedes explizite Merkmal/Maß/Superlativ *wörtlich* noch wahr, und ist **nichts** vorher Gutes zurückgefallen? Das ist **kein** Ersatz für sichtbare oder laufende Abnahme und kein neuer Selbstlob-Gate, sondern die ehrliche Sicherung des vollständigen Vertrags.
 - **Physisch/logisch kohärent:** Das Ergebnis muss real Sinn ergeben, nicht nur rendern/laufen (eine Hand ist nicht zugleich gehoben und gesenkt; eine Summe = ihre Teile). Zustände prüfen, nicht nur Ausführung.
 
 _Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" gelöst, aber die zuvor erfüllte, ausdrücklich geforderte „oversized/mehrstöckige" Struktur dabei unter die geforderte Größe geschrumpft — falscher Hebel; richtig wäre, sie groß zu lassen und die Figuren darin hochzuskalieren. Global identisch: einen Absatz aufpolieren und eine geforderte Kernaussage streichen; ein Panel schön machen und eine geforderte Spalte weglassen._
 
 
-### 8.4 Generative Bau-Prompts — sichtbare Evidenz statt Werkzeuglisten (PFLICHT)
+### 8.4 Generative Bau-Prompts — kleinster ausreichender Kontext (PFLICHT)
 
-Der Craft-Modus setzt das Qualitätsziel. Ein Generierungs-Prompt gibt dafür **die kürzeste ausreichende Richtung**: so konkret wie für Wirkung und Produkt nötig, so offen wie für eine starke eigene Lösung möglich.
+Der Craft-Modus setzt das Qualitätsziel. Der ausführbare Prompt trägt nur Information, die Ziel, Produkt, Risiko oder Prüfung wirklich verändert.
 
-- **Mission und First-Read zuerst:** Ein dichter Absatz benennt Welt-/Objektidee, Fokus, Erlebnis und ein sichtbares Anti-Ziel.
-- **Kurze Designkapsel statt Bauteilkatalog:** wenige tragende Nomen/Adjektive plus ein wichtiger Maßstabs-, Material- oder Lichtkontrast. Keine universelle Box-/Voxel-/Shader-Formensprache aufdrücken.
-- **Invarianten von Freiheit trennen:** Nur User-, Produkt-, Gameplay-, Engine- und Ownership-Grenzen sperren. Silhouette, Architektur, Materiallösung, Choreografie, VFX-Formen und authored Details bleiben frei, sofern der Auftrag sie nicht festlegt.
-- **Kausale Kopplung nur für den Kern:** Zentrale Ereignisse als `Ursache → gemeinsamer Kontakt/Quelle → Reaktion → sichtbare Folge` formulieren. Nicht jedes Nebendetail in eine Matrix zwingen.
-- **Technik-Gate:** Technische Rezepte nur nennen, wenn Engine, Ownership, Performance, Userauftrag oder ein bekannter Wiederholungsfehler sie erzwingen. Ein visueller Qualitätsbrief ist kein vorsorgliches Shader-Tutorial.
-- **Anerkennungsanker proportional einsetzen:** Zwei bis vier Ansichten/Momente reichen. Exakte Sekunden, Objektzahlen, Kamerawerte und Prozent-Rubriken nur bei echter Mechanik oder Vergleichbarkeit.
-- **Keine Prompt-Inflation:** Werkzeug-, Material-, Gebäude-, Partikel- und Dateilisten sind kein Qualitätsbeweis. Keine vollständige Benchmark-Struktur in normale Produktionsprompts kopieren.
-- **Sichtbares Ergebnis bleibt Maßstab:** Konkrete billige Ersatzlösungen ausschließen; Kompilieren, Counts oder grüne Checks verdienen keine sichtbaren Qualitätspunkte.
+- **Mission und Bar zuerst:** Ziel, Nutzerwirkung, reale Referenz beziehungsweise Premiumzustand und sichtbares Anti-Ziel in wenigen dichten Sätzen.
+- **Produktdetail ist keine Prompt-Inflation:** Funktionen, Zustände, Gameplay, Maße, Fairness, Sicherheit, Ownership und externe Schnittstellen dürfen ausführlich sein. Inflation sind vorsorgliche Werkzeug-, Datei-, Objekt-, Material- und Rezeptlisten ohne Entscheidungswert.
+- **Short ist Standard:** Short trägt Ziel, Bar, harte Grenzen, Performancehülle, Freiheit und Loop. Medium ergänzt fehlende Zustände/Integrationen; Long bleibt Greenfield-, Benchmark-, Fairness- oder Invarianten-Ausnahme. Wortzahlen sind Diagnosewerte, keine Qualitätswertung.
+- **Invarianten von Freiheit trennen:** User-, Produkt-, Gameplay-, Engine-, Ownership- und Sicherheitsgrenzen sperren. Silhouette, Architektur, Materiallösung, Choreografie und technische Umsetzung bleiben frei, soweit keine Grenze den Weg erzwingt.
+- **Performancehülle bei jedem Runtime-Ergebnis:** Zielhardware oder Projektbaseline, typische reale Last, Ziel/Floor und adaptive Degradation nennen. Ohne Messlauf keine FPS erfinden. Erst unsichtbare Kosten, ferne Details, Auflösung, LOD, Schatten- oder Sekundäreffektdichte reduzieren; First Read, Kernfunktion und Gameplay nicht heimlich streichen.
+- **Progressiv laden:** universeller Router → genau ein Fachrouter → konkreter Brief. Technik erst in der betroffenen Bauphase, Learning/Postmortem nur beim passenden Symptom. Kataloge sind Nachschlagewerke, keine Pflichtlektüre von oben bis unten.
+- **Technik-Gate:** Architektur, Libraries, Shader, Objektzahlen und Codeformen nur vorgeben, wenn Engine, Ownership, Performance, Fairness, aktueller Userauftrag oder ein belegter Wiederholungsfehler sie erzwingen.
+- **Kausale Kopplung nur für den Kern:** `Ursache → gemeinsamer Kontakt/Quelle → Reaktion → sichtbare Folge`; Nebendetails nicht in Pflichtmatrizen aufblasen.
+- **Anerkennungsanker proportional:** zwei bis vier Ansichten/Momente. Exakte Sekunden, Kamerawerte, Counts und Prozent-Rubriken nur bei Mechanik oder Vergleichbarkeit.
+- **Browserprüfung ist aktueller Opt-in:** Ohne ausdrücklichen Auftrag bleiben Pixel-, Gameplay- und FPS-Abnahme manuelle Gates. Statische Checks nie als sichtbaren Beweis ausgeben.
+- **Evidenzbasierter Craft-Loop:** bauen → reales Ergebnis oder ehrliche statische Evidenz gegen konkrete Prüffragen beurteilen → größten belegten Abstand beheben → vollständigen Regressionsabgleich → wiederholen. Keine feste Rundenzahl; Selbsterklärung oder Begeisterung ist kein Beweis.
+- **Ausführungsprofil ist eigener Opt-in:** `linear` bleibt Standard. `orchestriert` nur bei aktueller ausdrücklicher Freigabe und den unabhängigen Track-/Integrationsowner-Gates aus Abschnitt 5.3; Browserfreigabe bleibt davon getrennt.
+- **Learningbudget:** Neues Learning als `Symptom → Ursache → Aktion → Beleg`, standardmäßig höchstens 90 Wörter. Längere Herleitung in Detailreferenz; Router erhält nur Fehlerbild + Link. Vorher deduplizieren und gleiche Ursachen konsolidieren.
 
-Domänenspezifische Zahlen, Rezepte und Prompt-Templates gehören in die Projekt-SSoT. Im Projekt `voxel-samurai-quiz` gilt dafür `prompts/asset-lab-quality-generation-standard.md`.
+Projekt-SSoTs tragen Domänenzahlen, Rezepte und Templates. Im Projekt `voxel-samurai-quiz` beginnt das System bei `prompts/prompt-system/prompt-system-router.md`; sichtbare 3D-Qualität ergänzt `prompts/asset-lab-quality-generation-standard.md`.
 
 ### 8.1 TypeScript & Tests
 - Statische Checks (`lint`, `tsc --noEmit`) sind nur Kompilier-/Typschutz — kein Beweis für Gameplay, Werte, Kampfgefühl oder Multiplayer-Lesbarkeit. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
