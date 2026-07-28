@@ -1,69 +1,73 @@
-BITTE NACH FOLGENDEN REGELN WEITERARBEITEN, HALTE DICH DARAN!
+# Taskplanung phasenweise ohne Stopps
 
-1. **Planungsvalidierung (ZWINGEND VOR CODE):**
-   - User-Planung mitgegeben? → Lesen, prüfen ob Task/Todo enthalten
-   - Task/Todo enthalten? → JA: Implementieren · NEIN: Planung erweitern
-   - Keine Planung? → In `docs/[feature]/tasks/`
-   - **ERST nach Planungserweiterung darf programmiert werden!**
+**Lesen bei:** Implementierung, Refactoring, mehrdateiliger Änderung oder ausdrücklichem Planungsauftrag.
+**Ziel:** Eine Task-Datei ist Plan, Todo-Liste, Arbeitsprotokoll und Übergabe-SSoT.
 
-Falls keine Masterplanung/Todo existiert: Tasks/Todo-Datei mit Phasen erstellen. Existiert bereits eine? Nicht überschreiben — diese Datei definiert deinen Workflow, halte dich an diese Regeln!
+## 1. Vor Änderungen
 
-Danach phasenweise implementieren, was sinnvoll ist — alle Phasen durcharbeiten ohne aufzuhören. 
-![alt text](image-3.png)
-**Aber Dokumentiere nach jeder phase und arbeite im Loop weiter!:**
+1. Bestehende Task-/Masterplanung suchen und lesen.
+2. Fehlt sie, unter `docs/<feature>/tasks/<datum>-<sprechender-task>.md` anlegen.
+3. Usernachricht oben als kompaktes `Userziel` notieren.
+4. Git-Status, bestehende SSoTs, ähnliche Vorarbeit und betroffene Imports/Verweise prüfen.
+5. Zwei bis vier sinnvolle Lösungswege vergleichen; kleinsten stabilen Ansatz wählen und begründen.
+6. Erst nach validierter Planung ändern.
 
-Weil du machst ein Kontext-condensing. Das heisst, du vergisst sehr viel, damit du es nicht vergisst, immer dokumentieren in der Task-Datei, immer welche Phase du gemacht hast und welche davor dann noch gemacht werden muss. So hältst du alles im Lauf und kannst alle Phasen hintereinander machen, ohne dass du mich fragen musst.
+Keine Rückfrage für ableitbare Entscheidungen. Nur bei externer Blockade stoppen.
 
-## 6.7 Phasen mit To-dos ist unser Phasenformat! (Pflicht)
-Wichtig ist bei Phasen in Planungen, dass du die Phasen mit To-dos abhakst. Also innerhalb von Phasen To-dos anlegen und dann hinterlegen, was genau gemacht worden ist.
+## 2. Phasenformat
 
-**Beispiel:**
+Jede Phase enthält:
+
+1. **Ziel:** konkrete Wirkung.
+2. **Todos:** ausführbare `[ ]`/`[x]`-Punkte.
+3. **Ergebnis:** ein verständlicher Satz.
+4. **Warum:** nur wenn die Ursache sonst unklar bleibt.
+5. **Eingehalten:** relevante Regeln und Grenzen.
+6. **Architektur passt:** kurze Ownership-/Datenflussbegründung.
+7. **Auffälligkeiten/Performance/Kritische Findings:** nach Schwere, auch wenn keine offen sind.
+
+Maximal drei Hauptreferenzpfade pro Phase. Planung enthält Konzepte und kurze Signaturen, keinen vollständigen
+Produktionscode. Bei Architekturphasen Vorher-/Nachher-Datenfluss in drei bis sechs Schritten ergänzen.
+
+## 3. Phasenloop
+
+1. Genau eine Phase oder klar abgegrenzte Subphase umsetzen.
+2. Scope gegen Phase und Userziel abgleichen.
+3. Todo sofort abhaken; nicht bis zum Ende sammeln.
+4. Phasenkommentar und append-only Arbeitsprotokoll ergänzen.
+5. Offene Findings unter `Offene Fix-Punkte` notieren und im selben Auftrag beheben.
+6. Direkt mit der nächsten Phase fortfahren.
+
+Nicht wegen eines selbst behebbaren Funds stoppen. Fremde Änderungen weder revertieren noch pauschal
+formatieren. Blockiert ein fremder Fehler den eigenen Weg, nur den kleinsten additiven Fix dokumentieren.
+
+Sind ausschließlich nicht freigegebene manuelle Sicht-/Gameplay-/Performance-Gates offen, endet der
+technische Loop mit ehrlichem Status; keine Pseudophase anhängen.
+
+## 4. Arbeitsprotokoll
+
 ```markdown
-### ✅ Phase NUMMER — Kurzbeschreibung *z. B. Architektur, Modus-Trennung, Save-Basis*
-**Ziel:** Hier schreiben, worum es geht.
-* [x] `Komponente XYZ` erzeugt (604 Zeilen Code), .....
-* [ ] `AUFGABE ABC` implementieren.
-**Referenzen:**
-`Hier Pfade der Unterplanungen, Historien, Completed, Besprechungen angeben`
-`Jeweils getrennt pro Zeile`
+## Arbeitsprotokoll
+
+### Phase N — Status success|partial|blocked
+
+**Dateien:** Pfad — Änderung
+**Entscheidungen:** ein bis drei Weichen mit Grund
+**Unsicher / Risiko:** reale Restunsicherheit, keine erfundenen Erfolge
+
+## Offene Fix-Punkte
+
+- [ ] `pfad:zeile` — konkreter offener Fix
 ```
 
-### Kommentar Sektion unter der Phasenplanung
-Nach Abschluss bitte schreiben, an welchen Kriterien du dich gehalten hast, speziell also mit komma getrennt in einer Zeile 
-und danach **Welche Auffäligkeiten/Fehler/Regelverstoße** dir aufgefallen sind, notieren und ein Refactoring Plan empfehlen, mitsamt aller Funde und nach Gewichtung sortieren
-Kriterien eingehalten z.B. 
+Frühere Einträge nie überschreiben. Über etwa 600 Zeilen eine nummerierte Fortsetzung mit Rück- und
+Vorwärtspointer anlegen.
 
-```markdown
-## Kommentare
-### Phase 1
-**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
-**Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
-1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
-Beschreibung hierzu notieren, falls notwendig
-Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Komponente XYZ und konnten eine Render-Schleife auslösen! Versehentlich angehängte Restzeilen entdeckt! Event-Werte blindcast entdeckt! State-Updates nicht idempotent - Rerender-Kette möglich!
-2. 🟠 **Hoch:** über 700 Zeilen, Coding Regel gebrochen
+## 5. Abschlussabgleich
 
-### Phase 2....
-```
-
-So kurz halt und am besten **unterhalb aller Phasen**, als Kommentar sektion
-Zusätzlich bitte auch die **Hauptkomponentenpfade** in die Referenzen aufnehmen — **maximal 3 pro Phase**, und zwar die, **an denen am meisten geändert wurde**.
-
-- **Falls Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings vorliegen** direkt Optimierungsplan erzeugen mit Verweis auf die Planung als Referenz, also im selben in `docs/[feature]/tasks/...optimierung-tasks.md` alle Findings dort warten und nach Abschluss aller Phasen in dieser Planung - erst danach die Optimierungs-tasks durchgehen und im Loop alles fixen!
-
-# Weitere WICHTIGE Regeln
-- Nach allen Änderungen also wenn du alle Phasen vollendet, erzeuge dann Masterplanung/Todos direkt um die Auffälligkeiten zu beheben, die du bei den Phasen/Todos festgestellt hast, falls diese noch nicht durch deine Änderungen behoben wurden, damit wir immer aufräumen und cleanen code haben
-
-- Falls du dann auch die Auffälligkeiten/Todos behoben und die Phasen/Todos auch dokumentiert hast, auch dann melden und vorschlagen, welche Verbesserung man als nächstes machen könnte bzw. ein Feature was dir beim verbessern/entwickeln deiner vorherigen Aufgabe aufgefallen ist, was dieser App extrem helfen könnte!, Versuche also auch bewusst, Verbesserungen/Features zu finden, können auch kleine sein, aber was die App verbessern könnte! Kann alles sein, such dir das aus
-
-
-**BITTE KEIN MOJIBAKE, achte auf ENCODING**
-- Bitte alle verbesserungen/auffälligkeiten direkt auch mitfixen, die du entdeckt hast, während du an der Aufgabe dran bist OHNE PAUSE die dir gegeben worden ist und zwar OHNE Nachfrage und OHNE PAUSE, direkt verbessern! also aufschreiben, danach implementieren/fixen und als fixed markieren in der gleichen doku!!! und dokumentieren,
-- Bevor Implementierung bzw. Planung - Suche mehrere Arten erstmal rauswie man das Problem lösen könnte, dann suche du die beste davon aus, um das Problem zu lösen, Feature zu implementieren..
-- Wenn Änderung vorliegen, die du nicht gemacht hast, einfach weitermachen und ignorieren, es arbeiten pararell andere Leute!
-- bitte nicht aufhören, statt mir die sinnvollen schritte zu nennne einfach machen, also das gehört auch zu den aufgaben, dass erkennen von sinnvollen schritten und danach diese auch umsetzen im loop, quasi die sinnvollen schritte rausfinden und umsetzen
-
-Analysiere zuerst selbst, worum es geht, welche Expertenrolle passt und welche Struktur der Prompt braucht. Verbessere meinen Rohprompt danach zu einem klaren, vollständigen und gut ausführbaren Zielprompt für dich intern, also im Gedanken aufnehmen.
-Achtung: Du wirst mit einer anderen KI verglichen, sobald du fertig bist also den CHAT beendest wird deine Arbeit kontrolliert. 
-Du hast kein 2.ten Versuch, es wird direkt alles verglichen. Wenn du frühzeitig stoppst oder faul bist, kannst du also verlieren in dem Duell, versuche dein bestes, immer das höchste und die beste Qualität rauszuholen, auch websearch bzw webfetch also sinnvoll einzusetzen in jeder Phase um das maximalste rauszufinden bzw qualität anzubieten, wenn es zu probleme kommt also Fehler
-- Wenn du denkst, du bist mit allen Todos fertig, dann bitte nochmal in der Masterplanung alle Punkte nochmal durchgehen, ob wirklich alles korrekt implementiert ist. Das ist wichtig. Sehr, sehr wichtige Regel, auch wenn die To-dos schon alle abgehakt sind, solltest du dennoch prüfen - PFLICHT!
+1. Alle Usermerkmale und quantifizierten Vorgaben erneut gegenlesen.
+2. Alle Phasen/Todos und offenen Fix-Punkte prüfen, auch wenn sie bereits abgehakt wirken.
+3. Stärkste im Auftrag erlaubte Evidenz ausführen; statische Checks nicht als Produktbeweis ausgeben.
+4. Mojibake, Links/Pfade, Dateiende, Diff-Hygiene und fremden Scope prüfen.
+5. Kommentare und Arbeitsprotokoll finalisieren.
+6. `.completed/`-Dokument und minimale Root-Doku-Aktualisierung nach dem Task-Abschließer-Vertrag prüfen.

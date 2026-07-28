@@ -1,515 +1,128 @@
-# 🎯 Coding Rules & Development Guidelines
-
-**Zweck:** Universelle Regeln für konsistenten, performanten, wartbaren Code — projektübergreifend gültig.
-
-> **Scope-Regel:** Diese Datei enthält nur allgemeine Coding-Regeln. Projekt- oder tech-spezifische Details gehören in ihre eigenen Docs:
-> - Three.js / R3F / WebGPU / Game-Runtime / Juice: `shared-docs/THREEJS-RULES.md`
-> - Multiplayer / State-Sync / Kampfgefühl: `shared-docs/COLYSEUS-RULES.md`
-> - Browser-/Playwright-/Electron-Findings: `shared-docs/agents/agent-browser/*`
-> - Klassen-/VFX-/Sound-/Animation-Learnings: das jeweilige Projekt (`prompts/*`, `docs/*`).
-
-## Grundhaltung und Bewertungsmodus
-Nicht automatisch zustimmen. Jede Behauptung, Diagnose, Annahme, Plan als ungeprüft behandeln, bis Code, Doku, Logik, Fakten oder klare Einschränkungen sie stützen.
-
-- KEINE BROWSER PLAYRIGHT TESTS AUßer ES WIRD DIR AUSDRÜCKLICH GESAGT im PROMPT
-
-### Git-Arbeitsmodus: ausschließlich `main` (PFLICHT)
-- **Standard ist der vorhandene `main`:** Änderungen und Commits erfolgen direkt auf `main`. Vor Arbeitsbeginn aktiven Branch und `git worktree list` prüfen.
-- **Keine Branches oder Worktrees ohne ausdrückliche aktuelle Userfreigabe:** Niemals selbstständig einen Branch oder Worktree erzeugen, zu einem Nicht-`main`-Branch wechseln oder dort einen parallelen Arbeitsweg beginnen. Das gilt auch für vermeintliche Sicherheits-, Backup-, Test-, Benchmark-, Agenten-, IDE- oder Harness-Branches.
-- **Explizite Freigabe muss im aktuellen Userauftrag stehen:** Alte Pläne, Historien, Handover-Dateien, frühere Freigaben oder eine Tool-Empfehlung gelten nicht als Erlaubnis. Verboten sind ohne Freigabe insbesondere `git switch -c`, `git checkout -b`, `git branch <name>` und `git worktree add`.
-- **Unerwarteten Nicht-`main`-Stand niemals verwerfen:** Kein Hard Reset, kein Löschen ungesicherter Dateien und kein stilles Umschreiben der Historie. Vorhandene getrackte und ungetrackte Änderungen verlustfrei sichern und nur auf ausdrücklichen Userauftrag in `main` integrieren; einen alten Branch oder Worktree erst nach belegter Übernahme und nur mit Löschfreigabe entfernen.
-- **Abschlusszustand:** Auf `main` bleiben. Branch- oder Worktree-Namen in einer IDE sind kein Grund, neue Git-Strukturen anzulegen.
-## Durcharbeiten statt Fragen (PFLICHT)
-- **Verbindlicher Phasen-Workflow (IMMER anwenden):** Jede Implementierung folgt den Regeln in `shared-docs/agents/commands/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — phasenweise ohne Stopps, To-dos in der Task-Datei abhaken, nach JEDER Phase dokumentieren (7-Punkte-Format + Kommentar-Sektion) und im Loop bis zur letzten Phase weiterarbeiten. Diese Datei definiert den Pflicht-Ablauf; vor Baubeginn lesen und exakt einhalten.
-- **Keine Rückfragen an den User** (kein `AskUserQuestion`, keine „Soll ich A oder B?"-Dialoge). Bei Aufgabe, Plan oder Masterplanung ohne Zwischenfragen vom aktuellen Stand bis zur letzten Phase durcharbeiten.
-- **Bei mehreren Wegen selbst die fachlich beste, kleinste stabile Option wählen**, kurz begründen, umsetzen, Entscheidung im Task-Doc dokumentieren. Annahmen klar als Annahme markieren.
-- **Empfehlung = Auftrag:** Steht im Plan eine klare Empfehlung, gilt sie als gewählt. Nicht erneut vorlegen, direkt bauen.
-- **Einziger Ausnahmefall:** Echte externe Blockade (fehlender Secret/Zugang, den nur der User hat; widersprüchliche Pflichtdaten; destruktive Aktion ohne Mandat). Dann genau diese eine Info anfordern — als Hinweis, nicht als Multiple-Choice.
-
-### 🔴 Gefundenes Problem = Arbeitsauftrag, nicht Meldung (PFLICHT, User-Order 2026-07-21)
-Der häufigste Abbruchgrund ist nicht ein zu schweres Problem, sondern ein **gemeldetes statt behobenes** Problem. Ein Fund ist kein Ergebnis — er ist der nächste Arbeitsschritt.
-
-- **Finden heißt beheben.** Wer im bearbeiteten Scope einen Fehler entdeckt (Layout, Typecheck, falsche Doku, falsche Annahme, tote Datei, kaputte Rechnung), behebt ihn sofort selbst und arbeitet weiter. Erst danach wird er erwähnt — als erledigt, nicht als Frage.
-- **Nicht wegen eines Problems anhalten.** Ein Fund beendet weder die Phase noch den Auftrag. Das Stoppen selbst ist der teure Fehler: Der User kann am Problem nichts tun, verliert Zeit und muss die KI neu anstoßen. **„Ich habe X gefunden, was soll ich tun?" ist verboten** — richtig ist „X gefunden, so behoben, weiter mit Y".
-- **Auch fremde Blocker im Weg werden geräumt.** Blockiert ein Fehler aus fremder Parallelarbeit den eigenen Fortschritt (roter Typecheck, kaputter Import), wird er **additiv** repariert, damit der Baum wieder grün ist — nie durch Revertieren fremder Arbeit. Kurz im Task-Doc als fremd markieren, nicht liegen lassen.
-- **Keine Problem-Berichte an den User statt Arbeit.** Der Abschlussbericht nennt Funde nur in der Vergangenheitsform mit Fix. Offen bleiben ausschließlich echte externe Blockaden (siehe Ausnahmefall) und manuelle User-Gates (Sichtprüfung, Ingame-Test).
-- **Weiterarbeiten bis wirklich alles steht.** Solange die Masterplanung offene Phasen hat, ist der Auftrag nicht fertig. Nach jeder Phase direkt in die nächste — ohne Zwischenfrage, ohne Zwischenstopp.
-- **Warum:** Der User ist Auftraggeber, nicht Fehlerbehebungs-Instanz. Er hat die KI beauftragt, damit sie Probleme **löst**. Jede an ihn zurückgereichte Fehlermeldung, die die KI selbst hätte beheben können, ist verlorene Arbeit auf beiden Seiten.
-
-## 1. Kontext & Kommunikation
-
-- **Speech-to-Text-Berücksichtigung:** User sendet oft Sprachnachrichten. Begriffe können verfälscht sein → aktiv mitdenken („Cloud Code" ≈ „Claude Code").
-- **Intent ableiten (selbst mitdenken):** Der User kann sein Ziel oft schwer in Worte fassen. Manchmal nicht am wörtlichen Satz kleben, sondern aktiv ableiten, was gemeint ist: Beispiele/Referenzen des Users heranziehen, das beste rausholen also das maximalste, was dem User vom Look und UX her gefallen würde, auch Edge Cases immer mit betrachten
-- **Usernachricht zuerst notieren:** Die User-Nachricht initial in der Todo-/Phasenplanung (bestehende nutzen oder neue in `docs/[feature]/tasks/[task]-[datum].md`) oben als Kontext festhalten, bevor du planst — damit du nicht auf falsche Wege abdriftest. Format:
-
-  ```
-  Usernachricht - User möchte:
-  - HUD oben links kleiner/kompakter
-  - FPS-Anzeige oben rechts, grüne Schrift
-  - ...
-  ```
-
-- **Junior-Developer-Feedback:** User beschreibt Probleme oft grob → klar und freundlich korrigieren · erklären statt nur fixen · Nebenwirkungen prüfen · Backend-Teile selbst recherchieren.
-- **Chat-Titel-Pflicht:** Jeder neue Chat erhält genau einen konkreten, fachlichen Titel also CHAT_META::Titel:, der dann von der Harness geparst wird, sobald das Userziel klar ist. Bevorzugt wird die zentrale Titel-Metadatenzeile der ersten Antwort; fehlt oder scheitert sie, muss die Laufzeit deterministisch aus der ersten echten Usernachricht einen Titel bilden. Systemprompts, Handover-Texte und generische Werte wie „New Chat“ sind keine gültigen Titel. Spätere Saves dürfen einen bestehenden Titel weder leeren noch zufällig umbenennen.
-CHAT_META::Titel: [specific meaningful chat title, 11-20 words]
-- BITTE IMMER Titel erzeugen, sinnvolle, z.B. Erzeugung/Anpassung/Update 
-Klasse Schwertkämpfer - Neue Skillpalette, VFX-System, UI Hotbar etc. - Shader Einbau und Aktualisierung der Animationen
-Shop UI - Neue UI-Architektur, 3D-Preview, Voice-Input etc.
-KI-Chat: UI verbesserungen, Einfachere Inputs, Mobile Konformer machen
-- **Verstehen statt Umdeuten (Pflicht):** Lösung A verbessern, nicht still zu B wechseln · Fachwörter nicht eigenmächtig übersetzen wenn die Richtung kippt · vor Umsetzung prüfen „Löst mein Schritt das genannte Problem?" · keine versteckten Nebenwirkungen (z. B. harte Limits) außer explizit gewünscht · bei Effizienz-Themen erwähnen, ob die Architektur umgebaut werden sollte · Zielkonflikte: erst Ergebnisqualität, dann Kosten/Tempo.
-- **Anwender-Fehler vs. Code-Fehler (KRITISCH!):** VOR jedem Fix prüfen, ob es überhaupt ein Code-Fehler ist:
-
-  | Frage | Wenn JA → |
-  |-------|-----------|
-  | Falsches Verzeichnis ausgeführt? | Kein Code-Fix! Hinweis geben |
-  | Vergessen zu installieren/starten? | Kein Code-Fix! Checklist geben |
-  | Bekanntes Setup-Problem? | Kein Code-Fix! Docs verlinken |
-  | Port-Konflikt? | Kein Code-Fix! Kill-Befehl geben |
-
-  **NIEMALS Workarounds für Anwender-Fehler bauen!**
-
-- **Architektur-Prüfung (bei jedem Problem):** Ist die Architektur grundsätzlich falsch/riskant? → langfristig stabile Lösung · Workarounds klar benennen 🛑 · bewährte Standard-Methoden ✅ · **bei wiederholt falschem/kollidierendem Ergebnis die Grundstruktur komplett neu bauen statt patchen** (siehe „🔴 Grundstruktur-First", Abschnitt 3).
-- **Wirksamkeits-Umfeld prüfen (PFLICHT bei sichtbaren/verhaltensrelevanten Änderungen):** Prüfen, ob andere Faktoren die Wirkung überlagern. Nicht nur deklarierte Werte ändern, sondern den kompletten Wirkungspfad bis zur sichtbaren Ausgabe kontrollieren: globale Settings, Theme-/CSS-Variablen, Shader/Tone-Mapping, Material-Overrides, Feature-Flags, Cache, Render-Modi, Daten-Normalisierung, Runtime-Fallbacks, Persistenz. Bei UI/Visual gegen die tatsächliche Oberfläche prüfen.
-- **Research-First & Architektur-Vergleich (PFLICHT bei komplexen Problemen):** Bei Performance-Lags, Sync-Fehlern, UI-Ruckeln oder neuen Konzepten nicht blind Workarounds bauen:
-  1. **Konzept-Abstraktion:** Symptom auf das Software-Muster abstrahieren (z. B. „Chat ruckelt" → Virtualisierung/Scroll-Dämpfung; „3D laggt" → Instancing/Mesh-Batching).
-  2. **Lokaler Geschwister-Abgleich (Sibling Repos):** Benachbarte Arbeitsverzeichnisse in `D:\CODING\React Projects\` nach funktionierenden Mustern scannen (falls über `docs/RESSOURCES-UNIVERSAL-DOCS.md` verlinkt).
-  3. **Repository-Mining:** GitHub-Repos/Issues durchsuchen (`site:github.com`), lauffähige Snippets und Best Practices finden.
-  4. **Lösungs-Ranking:** 2-3 Lösungswege strukturieren, vergleichen, im Plan dokumentieren; erst nach Auswahl des kleinsten stabilen Ansatzes coden.
-- **Keine automatischen Gameplay-/Werte-Beweise (PFLICHT):** Smoke-Skripte, Debug-Zahlen, Serverwerte, Ingame-Recorder, Browser-Checks oder selbst gebaute Prüfmechanismen gelten nicht als Beweis, dass Gameplay gut ist. Nur bei ausdrücklichem User-Auftrag laufen. Produktgefühl, Lesbarkeit, Trefferfeedback, Sound prüft der User manuell.
-- **Keine UI-Tests ohne User-Befehl (PFLICHT):** Keine Browser-, Playwright-, Screenshot-, DOM-Snapshot-, UI-Smoke- oder manuellen UI-Checks automatisch starten. Auch Frontend-/Layout-/Mock-Abgleiche laufen nur auf klaren Befehl (z. B. „führe einen UI-Test aus"). Ohne Befehl den UI-Check als manuelles Gate dokumentieren. Details zu Browser-/Playwright-Arbeit: `shared-docs/agents/agent-browser/*`.
-
-### Grundton
-- **Kurz, klar, einheitlich:** Ergebnis zuerst. Keine langen Ich-Sätze. Kein unnötiger Fließtext.
-- **8.-Klässler-Verständnis:** Motiviert, einfach, menschlich schreiben mit Alltagswörtern; schwierige Themen mit Alltagsbeispielen. Wenige technische Begriffe auf einmal, oder kurz erklären.
-- **UTF-8 mit echten Umlauten** (ä, ö, ü, ß). Nach Doku-Edits auf Mojibake prüfen.
-- **Deutsch zuerst:** Antworten und UI-nahe Erklärungen auf Deutsch. Englische Begriffe nur als technische Namen.
-- **Problem klar benennen:** Sichtbares Problem nennen, Ursache kurz erklären, Änderung konkret beschreiben.
-- **User-Entlastung:** Keine unnötigen manuellen Schritte · Import, Mapping, Fallbacks, Defaults, Validierung übernehmen · jede Antwort prüfen „Nimmt das dem User Arbeit ab?".
-
-### Caveman-Ausgabemodus (Default AN, Stufe ultra)
-Kompakter Antwortstil, der Fülltext killt und Tokens spart, aber **jede** technische Substanz behält. Zwei Stufen: **full** und **ultra**.
-
-- **Default:** Caveman ist **immer aktiv**, Stufe **ultra**, für jede Chat-Antwort — auch ohne Aktivierungszeile.
-- **Deaktivieren:** Nur `stop caveman` oder `normal mode` schaltet zurück auf normalen Stil.
-- **Stufe wechseln:** `Nutze Caveman full` schaltet weicher; `Nutze Caveman ultra` zurück. Ohne Angabe gilt ultra.
-- **Regeln (beide Stufen):** Weglassen: Artikel, Füllwörter (eigentlich/quasi/just/really), Höflichkeitsfloskeln (klar/gerne/natürlich), Hedging. Satzfragmente OK. Kurze Synonyme. Keine Tool-Erzählung, keine Deko-Tabellen/Emoji, keine langen Roh-Error-Logs (nur die kürzeste entscheidende Zeile). Standard-Akronyme OK (DB/API/HTTP); **keine** erfundenen Abkürzungen (cfg/impl/req/res). Fachbegriffe, Code, API-Namen, CLI-Befehle, Commit-Keywords und exakte Fehlerstrings **immer wortgetreu**. Sprache des Users bleibt (Deutsch → Deutsch-Caveman, nur Stil komprimieren, nicht übersetzen). Kein Selbstbezug/keine Modus-Ansage.
-- **ultra zusätzlich:** Konjunktionen strippen, solange Ursache/Wirkung eindeutig. Ein Wort, wenn ein Wort reicht. Jeden Fakt genau einmal nennen.
-- **Muster:** `[Ding] [Aktion] [Grund]. [nächster Schritt].` — nicht „Klar, gerne! Das Problem liegt vermutlich daran...", sondern „Bug in Auth-Middleware. Ablaufcheck nutzt `<` statt `<=`. Fix:".
-- **Auto-Klarheit (Caveman aussetzen):** Bei Sicherheitswarnungen, Bestätigungen für irreversible/destruktive Aktionen, mehrstufigen Abläufen wo Fragment-Reihenfolge zu Missverständnis führt, oder wenn der User um Klärung bittet → normaler, vollständiger Stil. Danach fortsetzen.
-- **Grenzen (nie komprimieren):** Code, Commit-Messages, PRs, Task-/Masterplanung und Doku werden **normal** geschrieben. Caveman betrifft nur den Chat-/Antworttext.
-
-### Abschluss im Chat
-- **Standardformat nach Änderungen:** Ergebnis zuerst, dann kurz `Problem`, `Ursache`, `Änderung`, `Dateien/Pfade`, `Code-Sicherheit/Manuelles Gate`.
-- **Pfadpflicht:** Geänderte oder geprüfte Dateien/Komponenten immer mit Pfad nennen.
-- **Erzeugte-Dateien-Pfadpflicht (PFLICHT):** Für **jede neu erzeugte Datei und jedes erzeugte Artefakt** im Abschluss den **vollständigen absoluten Speicherpfad** nennen — insbesondere Bilder, Screenshots, Audio, Videos, PDFs, Exporte und temporär außerhalb des Projektordners gespeicherte Ergebnisse. Bei mehreren Dateien jeden Pfad einzeln aufführen. Diese Pflicht gilt auch bei reinen Generierungsaufträgen wie „nur Bilder erzeugen"; eine knappe Pfadliste ist trotzdem erforderlich.
-- **Projektgebundene KI-Bilder immer ins Projekt (PFLICHT):** Jedes finale oder vom User angeforderte generierte Bild, das als Konzept, Referenz, Mockup, Textur oder Baugrundlage für ein Projekt dient, muss **vor Abschluss** unter einem passenden Projektpfad wie `assets/concepts/[feature]/`, `public/assets/[feature]/` oder `docs/[feature]/assets/` gespeichert oder dorthin kopiert werden. Chat-Anhänge, Clipboard-, Temp-, AppData-, `$CODEX_HOME/generated_images`- und andere externe Generatorpfade sind nur Quellen, nie Endablagen. Kein Projekt darf ausschließlich auf externe lokale Bildpfade verweisen. Verwarfene Zwischenvarianten müssen nur gespeichert werden, wenn der User sie als Ergebnis angefordert hat.
-- **Bildbrief und Implementierungsdetails dokumentieren (PFLICHT):** Für jede projektgebundene Bildserie hält die zuständige Task-Doku oder ein kanonisches Asset-Manifest mindestens Zweck, finalen Prompt, Referenz-/Quellbilder, finalen Projektpfad, Format, Pixelmaße und Auswahl/Empfehlung fest; ein nur rekonstruierter Prompt muss ehrlich als rekonstruiert markiert werden. Dient das Bild als KI-Baugrundlage für Map, Szene oder 3D-Modell, zusätzlich Kamera/Komposition und freie Sichtzonen, Module/Formaufbau, relative Größen/Platzierung, Materialien, Boden, Vegetation, Props/Kleinteile, Licht/Wetter, Negativvorgaben und Performance-Bauweise dokumentieren. Bei komplexen Szenen spezialisierte Detail-/Bauplantafeln für Gebäude, Modelle und Umgebung erzeugen, wenn die Hauptansicht diese Angaben nicht eindeutig zeigt. Generativer Bildtext ist nie alleinige Maß- oder Text-SSoT; exakte Angaben stehen in Markdown.
-- **Optional nur bei echtem Nutzen:** `### Performance`, `### Learning`, `### Nächster Schritt`.
-- **Keine Schein-Offenpunkte:** Offene Punkte nur nennen, wenn wirklich etwas offen ist.
-- **Konsolenausgaben (wenn gewünscht):** Hochmodern, farbig, menschenlesbar, kompakt · Server/Client + Methode/Klasse zeigen.
-
-## 3. Workflow & Dokumentation
-- **Vor Programmierung:** Planung/Todo muss existieren (`docs/[feature]/tasks/[task]-[datum].md`), sonst nach Abschnitt 4 erstellen.
-- **Vor Implementierung:** Planung validieren, ob sie Sinn macht und korrekt geplant ist.
-- **Phasenweise ohne Stopps umsetzen** vom aktuellen Stand bis zur letzten Phase (nur bei externem Blocker pausieren), Todos phasenweise abhaken.
-- **Nach jeder Phase/Todo:** Planung updaten, Todo abhaken, nächste Phase direkt weiter.
-- **Nach allen Phasen:** Offene Auffälligkeiten in eine Cleanup-Masterplanung übernehmen, phasenweise verbessern.
-- **Abschluss-Kommunikation:** Kurzer Stand + 1-3 konkrete Verbesserungs-/Feature-Vorschläge für den nächsten Schritt.
-- **Legacy Code:** Nach jeder Änderung SOFORT ungenutzten Code entfernen.
-- **„Komplett neu erzeugen" heißt neu erzeugen:** Verlangt der User etwas „komplett neu"/„von Grund auf", den ALTEN Inhalt der Datei **vollständig ersetzen** und frisch von Null schreiben — NICHT nur Parameter/Farben/Zahlen am Bestand drehen. Neubauten fallen erfahrungsgemäß deutlich besser aus.
-
-- **🔴 Grundstruktur-First: NEU BAUEN statt auf schlechtem Code weiterflicken (PFLICHT):** Wenn dieselbe Sache mehrfach nicht sitzt oder ein Ergebnis wiederholt falsch aussieht/kollidiert, liegt die Ursache fast immer in einer **falschen Grundstruktur** (schlechter Code, falsches Datenmodell, kollidierende Geometrie, zwei Layer die nichts voneinander wissen) — nicht in einem einzelnen Wert. Dann:
-  1. **Grundstruktur zuerst analysieren, nicht Symptome.** Wo genau ist das Fundament falsch (falsche Achsen/Frames, doppelte Quelle der Wahrheit, unabhängige Schichten, verstecktes Legacy)? Erst verstehen, dann bauen.
-  2. **Komplett neu schreiben.** Betroffene Dateien von Null — nicht am kaputten Bestand nachjustieren. Nie annehmen, der vorhandene Code sei richtig.
-  3. **Single Source of Truth herstellen.** Widersprechen sich zwei Schichten (Körper vs. Rüstung, Daten vs. Anzeige, Basis vs. Overlay), einen gemeinsamen Maßstab bauen, aus dem **beide** ableiten.
-  4. **Nach dem Neubau aufräumen.** Legacy, verwaiste Importe und Altreferenzen sofort entfernen.
-  **Warum:** Am Altbestand herumzudrehen kostet mehr Zeit und erzeugt neue Regressionen als ein sauberer Neubau. Im Zweifel: neu bauen, nicht flicken.
-
-### Linearer Phasen-Modus (immer aktiv)
-- **Nach jeder Phase** Plan updaten/Todos abhaken + Status setzen · kleine Summary, damit direkt weitergearbeitet werden kann.
-- **Tempo-Guard:** Nur **eine Phase oder eine klar abgegrenzte Subphase pro Iteration**. Keine Sammel-Implementierung über mehrere große Phasen.
-- **Qualitäts-Gate:** Vor Phasenabschluss Scope gegen Planung abgleichen, Doku aktualisieren, offene manuelle User-Gates notieren.
-- **Loop-Stopper:** Sind nur noch manuelle User-Checks offen (UI-Test, Ingame-Run, visueller Check), gilt die Arbeit als fertig — keine Pseudo-Phase mehr anhängen.
-
-## 4. Erzeugung von Planung
-
-### Dokumentationssystem — Todoformat einhalten
-**Structure:** `docs/OVERVIEW.md` → `docs/[feature]/[feature]-overview.md` → `docs/[feature]/tasks/[task]-[datum].md`
-
-Jede Phase MUSS diese **7 Punkte** enthalten:
-1. **Ziel:** Was ist am Ende sichtbar besser?
-2. **Todos:** Abhakbare Aufgaben.
-3. **Ergebnis-Satz:** Kurzer Satz in einfacher Sprache für Nicht-Entwickler.
-4. **Warum (optional):** Warum löst diese Phase das Kernproblem?
-5. **Eingehalten:** Relevante Regeln (z. B. 700-Zeilen-Limit, Theme-Farben, React-Loop-Schutz, Design-System).
-6. **Architektur passt:** Kurze Begründung.
-7. **Auffälligkeiten/Performance/Kritische Findings:** z. B. unnötiger `useEffect`, harte Farben, falsche Service-Ablage, Render-Loop-Risiko.
-
-**Beispiel:**
-```markdown
-### ✅ Phase NUMMER — Kurzbeschreibung
-**Ziel:** Hier schreiben, worum es geht.
-* [x] `Komponente XYZ` erzeugt (604 Zeilen), .....
-* [ ] `AUFGABE ABC` implementieren.
-**Referenzen:** `Pfade der Unterplanungen/Historien` (je Zeile getrennt)
-**Ergebnis:** Frontend erzeugen für das Dashboard
-```
-
-### Kommentar-Sektion (unterhalb aller Phasen/Todos)
-- Nach Abschluss pro Phase eine kurze Kriterien-Zeile.
-- Auffälligkeiten/Fehler/Regelverstöße nach Schwere sortieren (🔴🟠🟡), bei Bedarf Refactoring-Plan empfehlen.
-
-```markdown
-## Kommentare
-### Phase 1
-**Eingehalten:** unter 700 Zeilen ✅, Architektur ✅, Edge-Cases betrachtet ✅
-**Auffälligkeiten (nach Schwere):**
-1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
-2. 🟠 **Hoch:** über 700 Zeilen, Coding-Regel gebrochen
-```
-
-Referenzen enthalten max. 3 Hauptkomponentenpfade pro Phase.
-
-- **Findings:** Bei echten Auffälligkeiten `docs/[feature]/tasks/...optimierung-tasks.md` mit Referenz anlegen; nach Abschluss aller Phasen abarbeiten.
-- **Planungsgrenzen:** Kein vollständiger Code, keine kompletten React-Komponenten, keine Copy-paste-Blöcke. Erlaubt: Konzepte, API-Signaturen, Dateistrukturen, Pseudo-Code bis 3-5 Zeilen.
-- **Umfang:** Max. ~700 Zeilen pro Planung, 3-4 Komponenten pro Phase, max. ~900-1300 Codezeilen pro Phase.
-- **Vor Code:** Existierende Funktionen suchen, Wiederverwendung vor Redundanz, Edge-Cases dokumentieren.
-- **Architektur-Phasen:** Vorher/Nachher-Datenfluss in 3-6 Schritten ergänzen.
-
-### Masterplan-System
-- Bei großen Systemen: `docs/[feature]/tasks/[thema]-[masterplan].md` referenziert mehrere `[thema]-[task].md`.
-- Erstellen sobald Umfang/Abhängigkeiten es erfordern oder wenn der User „erzeuge Masterplan" sagt.
-- Phasen am Stück umsetzen und dokumentieren, ohne Pause.
-
-### Arbeitsprotokoll in der Task-Datei
-Die Task-/Masterplanung ist der **einzige** durable Kanal — kein zweiter Log. Neben den 7-Punkte-Phasen trägt sie ein knappes **Arbeitsprotokoll** und **offene Fix-Punkte**:
-
-```markdown
-# [Task]
-## Userziel (kompakt)
-- [1-5 Bulletpoints]
-
-## Phasen  (7-Punkte-Format, Todos als [ ]/[x])
-### Phase 1 — ...
-* [ ] Todo A
-
-## Arbeitsprotokoll  (append-only — nie überschreiben)
-### Phase 1 — Status success|partial|blocked
-**Dateien:** `pfad` — was geändert
-**Entscheidungen:** [1-3 Weichen + Begründung]
-**Unsicher / Risiko:** [ehrliche Zweifelspunkte]
-
-## Offene Fix-Punkte (aktuell)
-- [ ] `datei.ts:42` — noch offen
-```
-
-**Regeln:** Todos direkt hier abhaken (`[x]`), Protokoll append-only (frühere Phasen nie überschreiben, nie Ergebnisse erfinden). Offene Findings wandern in „Offene Fix-Punkte", bis erledigt. **600-Zeilen-Split:** Über ~600 Zeilen `-2.md` (`-3.md` …) anlegen, mit Rücklink + 5-Zeilen-Stand; alte Datei endet mit Vorwärts-Pointer. Aktuell = höchste Nummer. Keine Roh-Logs/Codeblöcke hineinkopieren — nur Entscheidungen, Findings, Soll-Zustände.
-
-## 5. Recherche & Erkundung
-
-### 5.1 Linearer Standard
-- Planung, Suche, Implementierung und Prüfung passieren in derselben Session mit einem Owner.
-- Keine Subagents, Agentenflotten oder parallele Reconnaissance ohne aktuelle ausdrückliche Freigabe im Userauftrag oder Systemprompt. Historie, Handover und alte Freigaben zählen nicht.
-- Erst vorhandene Planung, Git-Status und relevante SSoTs lesen; danach mit Datei-/Inhaltssuche gezielt betroffene Pfade und Duplikate finden.
-- Bereits belegte Erkenntnisse nicht durch eine zweite parallele Suche wiederholen. Ergebnis der Erkundung ist die kleinste belastbare Arbeitsliste, kein Dateidump.
-
-### 5.2 Pre-Task Reconnaissance bei mehr als zwei Dateien
-- Linear in derselben Session: `docs/`, `.completed/`, History und betroffene Code-/Promptpfade nur soweit durchsuchen, wie Scope, Ownership und bestehende Lösungen es verlangen.
-- Bei neuen Hooks, Stores, Utilities, Prompts oder Shared-Modulen vor dem Anlegen nach vorhandener Funktionalität suchen; bei überwiegender Überschneidung das bestehende Modul erweitern.
-- Fremde parallele Änderungen über `git status` abgrenzen und nie revertieren, formatieren oder in den eigenen Scope ziehen.
-- Abschlussprüfung, Task-Dokumentation, `.completed/`-Entscheidung und CLAUDE-/AGENTS-Relevanz übernimmt derselbe Owner im linearen Phasenloop.
-- Subagents sind ein bewusster aktueller Opt-in für klar unabhängige, ausreichend große Tracks, nie eine automatische Dateimengenregel. Implementierungsdelegation folgt zusätzlich Abschnitt 5.3.
-
-### 5.3 Optionales Orchestrierungsprofil (nur aktueller Opt-in)
-- `linear` bleibt Standard. `orchestriert` ist nur zulässig, wenn der aktuelle Userauftrag oder Systemprompt es ausdrücklich erlaubt; Historie, Handover, frühere Freigaben und bloße Dateimenge zählen nicht.
-- Orchestrierung braucht mindestens zwei unabhängige, ausreichend große Tracks, deren parallele Bearbeitung real Zeit spart oder eine benannte Perspektive ergänzt. Bei gekoppelter Architektur, Shared State, überlappenden Dateien oder kleiner Aufgabe bleibt die Arbeit linear.
-- Vor Delegation Mission, disjunkten Scope/Ownership, Rechte, erwartetes Artefakt, prüfbare Evidenz und Rückgabeformat je Track festlegen. Agentenzahl ist kein Qualitätsziel.
-- Ein Integrationsowner behält gekoppelte Entscheidungen, löst Widersprüche, integriert und verantwortet den vollständigen Produkt-, Vertrags- und Regressionsabgleich. Subagents zertifizieren ihre Ausgabe nicht selbst; sie liefern Artefakte, Evidenz und Risiken.
-- Frische Verifier nur für eine benannte Fehlklasse einsetzen, nicht als routinemäßigen Builder-/Critic-Fan-out. Orchestrierungsfreigabe und Browser-/Computer-Use-Freigabe sind getrennt und dürfen nie voneinander abgeleitet werden.
-
-## 6. Architektur & React Practices
-
-### Component-Based Architecture (WICHTIGSTE REGEL)
-**NIEMALS Komponenten innerhalb anderer Komponenten definieren!** → Performance-Killer (jedes Render neu erstellt) + State-Verlust. Jede Komponente in separater Datei.
-
-### Fachliche Komponentenstruktur / Clean Code (PFLICHT)
-- **Komponentenbasiert heißt fachlicher Besitz pro Datei**, nicht eine große Sammeldatei. Ein eigenständiges UI-Element, Asset, Map, Datenmodell oder Service-Use-Case bekommt eine eigene Datei/einen eigenen Unterordner.
-- **Keine wachsenden `entries.ts`-/`config.ts`-/`data.ts`-Monster:** Aggregator-Dateien importieren nur und exportieren nur. Keine Build-Logik, keine langen Objektlisten, keine ziel-spezifischen Helper.
-- **Faustregel:** Enthält eine Datei mehrere unabhängige fachliche Ziele, splitte in `zielName.ts` plus kleinen `index.ts`. Bei 20+ (oder erwartbar 100+) Einträgen von Anfang an Unterordner.
-- **Dateiname muss den Inhalt erklären:** `v3/skyRidge.ts`, `settings/ThemeToggle.tsx` ist gut. `v3Entries.ts`, `misc.ts`, `helpers.ts`, `allAssets.ts` nur für echte kleine Aggregatoren.
-- **Shared nur bei echter Wiederverwendung:** `kit.ts`, `builders.ts`, `utils.ts` dürfen neutrale Bausteine enthalten, keine versteckten konkreten Features. Existiert ein Helper nur für ein Ziel, bleibt er in der Ziel-Datei.
-- **Änderungen additiv denken:** Neue Generationen/Modi/Varianten kommen als eigene Dateien/Ordner dazu; bestehende fachliche Dateien werden nicht zusammengeworfen, außer der User fordert genau diese Regeneration.
-
-### Sprechende Namen für Markdown-Dokumente (PFLICHT)
-- **Keine `README.md`-Dateien für fachliche Dokumentation:** Baupläne, Asset-Manifeste, Prompt-Router, Serienindizes, Workflows, Architekturverträge und andere fachliche Single Sources of Truth erhalten immer einen sprechenden Dateinamen.
-- **Benennungsformel:** Fachobjekt plus Dokumentzweck. Gute Beispiele sind `<map-slug>-bauplan-und-asset-manifest.md`, `<serie>-serienindex-und-erweiterungsvertrag.md` und `<thema>-prompt-index-und-arbeitsablauf.md`.
-- **Keine nur scheinbar besseren Ersatznamen:** `info.md`, `doku.md`, `notes.md` oder ein unqualifiziertes `manifest.md` sind ebenfalls zu generisch. Der Dateiname muss auch außerhalb seines Ordners eindeutig verständlich und auffindbar sein.
-- **Bei Berührung migrieren:** Liegt im bearbeiteten Scope noch eine generische fachliche `README.md`, wird sie sprechend umbenannt. Alle Links, Router, Prompts, Tasks und Abschlussnachweise werden im selben Auftrag auf den neuen Namen aktualisiert; es bleibt keine Weiterleitungs-`README.md` zurück.
-- **Technische Fremdvorgaben sind die einzige Ausnahme:** Verlangt ein externes Tool, Paketformat oder Repository-Host zwingend exakt `README.md`, darf diese Datei nur als kurzer technischer Einstieg dienen und niemals die fachliche Single Source of Truth enthalten. Interne Asset-, Feature-, Prompt-, Map- und Komponentenordner fallen nicht unter diese Ausnahme.
-
-### Komponenten-Organisation
-- **Maximal 700 Zeilen Code pro Datei** — auslagern wenn größer.
-- 🇩🇪 **Deutsch (User-facing):** Button, Panel, Dialog → `SpeichernButton.tsx`.
-- 🇺🇸 **Englisch (Technical):** Section, Card, Item → `ReviewSection.tsx`.
-- Ordnerstruktur = UI-Hierarchie · `(sektionsName)/`-Ordner gruppieren verwandte Komponenten · eine Hauptkomponente pro Sektion (ohne Klammern) · max. 7 Verschachtelungsebenen.
-- **Frontend-to-Code-Navigation:** UI-Element-Text = Dateiname (User klickt „Speichern" → `SpeichernButton.tsx`).
-
-### Service- & DB-Ablage (PFLICHT, kompakt)
-- **Service/Helper/Finder/Action in die Sektion, wo er fachlich genutzt wird** (`app/notes/services/*`). `lib/` **nur** für wirklich sektionenübergreifende/Plattform-Module. Sektionsspezifische Fachlogik in `lib/` ist verboten. Entscheidung: 1 Sektion → Sektion, 2+ Sektionen → global.
-- **Import-Regel:** Sektionscode darf globale `lib`-Module nutzen; globale `lib`-Module dürfen **keine** Sektion importieren (kein Inversions-Chaos).
-- **DB-Schicht (falls vorhanden):** Technologie muss am Pfad erkennbar sein (SQLite/Postgres/Browser/Capacitor). **Finder lesen nur** (SELECT), **Actions schreiben** (INSERT/UPDATE/DELETE/Side-Effects); Read-only bleibt im Finder. Dateien unter `finders/*` dürfen keine `actions/*` importieren. Nach Domain gliedern, `*.finder.ts` / `*.action.ts` benennen. Mischdateien (Read+Write) in Finder + Action splitten. Globale DB-Utilities nur in `db/shared/*` (keine Fachlogik).
-
-### React Best Practices
-- **State & Props:** Immutable `setState(prev => ...)` · stabiler unique `key` für `.map()` · `useState` = re-render, `useRef` = kein re-render.
-- **Memoization:** `useMemo` (teure Berechnungen) · `useCallback` (Funktionen als Props) · `React.memo` (Komponenten).
-- **Effects & Lifecycle:** IMMER Cleanup bei subscriptions/timers/listeners · korrekte Dependencies · `[]` = mount only.
-- **Component Communication:** Props down, Callbacks up · 2-3 Ebenen: Lifting State Up · 3+ Ebenen: Context/State Management · Referenz: `shared-docs/react-core-communication-patterns.md`.
-- **Stale Closure:** Callback mit neuen Daten aus dem Updater aufrufen, nicht mit dem alten State:
-  ```typescript
-  // ❌ FALSCH — habits ist noch ALTER State
-  setHabits(prev => prev.map(h => ...));
-  onHabitsUpdate?.(habits);
-  // ✅ RICHTIG — neue Daten im Updater weiterreichen
-  setHabits(prev => { const updated = prev.map(h => ...); onHabitsUpdate?.(updated); return updated; });
-  ```
-
-#### Render-Loop & Hydration Guard (PFLICHT, alle Projekttypen)
-Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaßen.
-- **NIEMALS State im Render-Pfad setzen:** Kein `setState`/`dispatch`/Context-Update im Komponenten-Body, in JSX-Ausdrücken oder in während Render ausgeführten Funktionen.
-- **NIEMALS Setter in Setter-Updater verschachteln:** Kein `setX(prev => { setY(...); return ...; })`. Erst Zielzustand berechnen, dann Updates getrennt außerhalb ausführen.
-- **NIEMALS Parent-State in `useEffect` „korrigieren":** Ein `useEffect`, das denselben Wert im Parent korrigiert, triggert nach jedem Render neu → `Maximum update depth exceeded`. Stattdessen den berechneten Wert direkt nutzen:
-  ```typescript
-  const effectiveTab = allowedTabs.includes(activeTab) ? activeTab : defaultTab; // direkt an <Tabs value={effectiveTab}>
-  ```
-- **NIEMALS interaktive Elemente verschachteln** (Button in Button, Link in Button). Bei klickbaren Zeilen: `div` mit `role="button"` + `tabIndex` + Tastatursteuerung.
-- **Write-Back-Effekte nie ohne Guard:** Ein `useEffect`, das Zustand in Store/DB zurückschreibt, muss deduplizieren (z. B. `signatureRef`) und darf bei semantisch identischen Daten nicht erneut schreiben.
-- **Idempotente Store-Actions als Standard:** Jede `update*`-Action gibt bei No-Op den alten State zurück (`return state`), statt neue Objekte zu erzeugen.
-- **Deterministische Normalisierung:** In Merge-/Normalizer-Pfaden keine zeitbasierten Fallbacks (`Date.now()`) verwenden. Nur stabile Fallbacks (`0`, `null`, feste Defaults) — sonst künstliche „scopeChanged"-Schleifen.
-- **Einweg-Sync statt Ping-Pong:** Synchronisation von der echten Quelle aus triggern (z. B. `entry.updatedAtMs`), nicht von der zurückgeschriebenen Zielrepräsentation.
-- **Custom-Event-Payloads deduplizieren:** Bei `window.dispatchEvent` + Listener-`setState` semantischen Vergleich (Snapshot-Key) nutzen; identische Payload weder erneut dispatchen noch in State schreiben.
-- **Stop-Regel bei Warnungen:** `Maximum update depth exceeded`, `Too many re-renders`, `Cannot update while rendering`, `validateDOMNesting` und Hydration-Warnungen sind Stop-Signale → sofort Root Cause fixen (Update-Kette im Stacktrace bis zur ersten eigenen Datei zurückverfolgen), nicht unterdrücken.
-- **Pflicht-Check nach UI-Änderungen:** Den projektlokalen `pnpm type-check` nach Abschnitt 8.1.1 ausführen. Zusätzliche Wrapper, Scope-Filter und Aliasnamen stehen in der lokalen `AGENTS.md` oder `package.json`; `lint` ist nicht automatisch ein Typecheck.
-
-### Controlled-Value Guard & Patch-Hygiene (PFLICHT)
-- **Kontrollierte UI-Werte immer validieren** (Allowlist-Prinzip bei `Tabs`, `Select`, `Popover`). Ist ein Wert auf der Plattform nicht erlaubt, sofort auf sicheren Default zurückfallen.
-- **Event-Werte nie blind casten:** Kein `onValueChange={v => setState(v as MyType)}` ohne Laufzeitcheck.
-- **State-Updates idempotent halten:** Nur updaten, wenn sich der Wert wirklich geändert hat (`prev === next ? prev : next`).
-- **Patch-Hygiene:** Nach jedem schnellen Edit Dateiende prüfen (keine angehängten JSX-Reste, keine duplizierten Abschlussblöcke).
-
-### Radix/Shadcn Tooltip- & Trigger-Sicherheit (PFLICHT)
-- `TooltipTrigger`/`PopoverTrigger` `asChild` **nur** nutzen, wenn das Child garantiert ref-stabil ist (kein `motion.*`, kein bedingter Mount/Unmount im Subtree, kein verschachteltes `asChild`) — sonst `setRef`-Schleifen und `Maximum update depth exceeded`.
-- Für normale Buttons direkten Trigger nutzen (`<TooltipTrigger type="button" ...>`). Ist ein instabiles Child nötig, in einen ref-stabilen Wrapper (`<span>`) verpacken (defensiver Tooltip-Default).
-
-### Performance: React, Daten & Web
-- Unabhängige Fetches parallel: `Promise.all([...])`.
-- Jeder `useEffect` mit Timern/Subscriptions MUSS Cleanup haben.
-- N+1 vermeiden: Nested Queries in Loops → Batch-Loading mit JOINs oder `inArray()`.
-- **NO-GO Live-Collection-Mutation:** Niemals über `Map.values()`/`Set.values()`/ein Array iterieren und im selben Iterator neue Elemente in dieselbe Collection schreiben (Endloswachstum, weil JS-Iteratoren neue Einträge mitlaufen lassen). Für Nachbarschaften, Flood-Fill, Graphen, Spawn-Ausbreitung immer Snapshot/Queue/Visited-Set mit hartem Limit nutzen.
-
-### 3D, Three.js, Game-Runtime & Multiplayer (Pointer)
-- **3D / R3F / Shaders / WebGL/WebGPU:** Bei Arbeit an Three.js, Mesh-Erstellung, Lichtquellen oder Render-Optionen zwingend `shared-docs/THREEJS-RULES.md` lesen und befolgen (Instancing, Schatten-Budget, Lag-Checks, Partikel, PostFX/Composer, Game-Feel/Juice).
-- **Game-Runtime-Muster** (Two-Stage-Escape, Ref-Runtime für Slide/Dash, Sound-Voice-Limiter, DOM-Overlay-Scope, orthogonale Optik-Achsen): `THREEJS-RULES.md` §21.
-- **Multiplayer / State-Sync / Hitboxen / Schadens-Timing / Network-Visuals:** `shared-docs/COLYSEUS-RULES.md`.
-
-### Frontend-Regeln & Antipatterns
-- **Bestehendes Design zuerst prüfen:** Globale CSS-/Tailwind-Klassen, Theme-Variablen und `DESIGN.md` lesen; dieselbe Farbpalette weiterverwenden.
-- **Solide Hintergrundfarben für Dialoge/Overlays (PFLICHT):** Keine Tailwind-Opacity-Notation (`bg-black/40`, `bg-white/10`) als Haupthintergrund — halbtransparente Flächen machen unter Capacitor Probleme. Stattdessen vorhandene Theme-Variablen/globale CSS-Klassen nutzen ODER volle Opacity (`bg-[#0c0f1a]`). Borders so transparent wie möglich (`border-subtle`, `--border`). Referenz: `shared-docs/farbpalette/minimal-styling-template.css`.
-- **Dialog-Schärfe statt grundlosem Blur:** Dichte Lese-/Einstellungsdialoge nicht mit starkem `backdrop-filter`/`backdrop-blur-*` belegen (unscharfer Text unter Electron). Solide Flächen (`bg-background`, `bg-card`, `bg-surface-*`) nutzen.
-- **Dialog-/Dropdown-Pointer-Lock-Schutz (KRITISCH):** Dialoge nie direkt aus einem noch modal offenen Dropdown/Popover/ContextMenu heraus öffnen. Vorher das Menü schließen oder den Root non-modal halten. Symptom bei Verstoß: App sichtbar, aber nach Schließen nicht mehr anklickbar (`body.style.pointerEvents = "none"` hängt). Niemals per CSS `body { pointer-events: auto !important; }` erzwingen.
-- **Dark/Light-Mode + Surface-Skala:** Hintergründe schwarz/grau (`#000`…`#333`) und im Lightmode sauber spiegeln; Akzent-Themes ändern nur Primary/Secondary, nie die Surface-Skala.
-- **Mobile-First Space Efficiency:** UI kompakt halten, Breite/Höhe nutzen, seltene Optionen in Popover/Dropdown/Collapsible verstecken.
-- **Kompakt-juicy statt textlastig (PFLICHT):** Dichte Chat-, Sidebar- und Tool-UIs zeigen im Grundzustand nur ein aussagekräftiges Icon, ein kurzes 1–3-Wort-Label und bei Bedarf einen Zähler. Erklärung, Suche und seltene Details gehören in Tooltip, Popover oder Collapsible. „Juicy“ bedeutet eine klar gruppierte, runde Form, semantischen Rim/Glow und kurze Transform-/Opacity-Rückmeldung – niemals zusätzliche Erklärabsätze, Kartenstapel, harte Farben oder dekorative Icon-Flut. Vor Abnahme prüfen: Kann Text oder ein Control entfallen, ohne Klarheit zu verlieren?
-- **Wiederverwendbarkeit-First:** Dialoge/Komponenten mit Modi, Callback-Props und vorhandenen Patterns bauen.
-- **Recherche vor Rumprobieren (KRITISCH):** Stacktrace lesen → Docs/GitHub Issues prüfen → Root Cause verstehen → erst dann fixen. Bei demselben Fehler zweimal: 3-5 Lösungswege recherchieren, effizientesten umsetzen.
-- **UI-Library-Defaults respektieren:** Standard-Höhe/Padding von Radix/Shadcn nicht manuell überschreiben → Variants nutzen (`size="sm"`) oder Variant-System erweitern.
-- **Rounded/Floating UI:** Karten/Sektions-Container `rounded-2xl`–`rounded-4xl` (bevorzugt `rounded-3xl`); Floating über subtile Shadows und solide Flächen.
-- **Icons/Farben:** Bedeutungsfarben verwenden (Speichern/Start/Erfolg = Success, Abbrechen/Gefahr = Danger).
-- **Icon-First + Text nur wenn nötig:** In dichten Toolbars primär Icons; jeder Icon-Button braucht `aria-label` + Tooltip; eindeutige Aktions-Icons Pflicht.
-- **Kompakte Control-Layouts:** Inputs/Filter nicht unnötig eine ganze Zeile blockieren (2er-Grid, kurze Felder, Langlabels in Tooltip/Kontext auslagern).
-- **Gruppierte Toolbars:** Zusammengehörige Icon-Aktionen bündeln (`rounded-2xl border border-subtle bg-surface-2 p-1`), innere Buttons `rounded-xl`.
-- **Disabled-Button-Feedback:** MUSS über Tooltip/Hinweis erklären WARUM deaktiviert. User darf nie raten.
-- **Ressourcen-Blocker in HUD/Skill-UI:** Ist ein Skill wegen Mana/Energie nicht nutzbar, den Grund + Bedarf sichtbar zeigen (`Need 18 MP`, Tooltip `18/110`), nicht nur ausgrauen.
-- **Dropdown/Popover Stacking-Check:** Vor UI-Changes overflow/stacking-context, Portal-Rendering, z-index prüfen. Niemals nur höheren z-index als Workaround — erst Ursache im Layout/Portal/Overflow beheben.
-- **Stabile Panel-Größe (kein Resize/Sprung beim Wechsel):** Container, deren Inhalt beim Tab-/Item-/Provider-Wechsel variiert (Dialoge mit Anbieter-Rail, Tab-Panels, Master-Detail), bekommen eine **feste oder Mindest-Höhe** und scrollen intern — nicht die Wurzel wachsen/schrumpfen lassen. Dialog: `h-[min(88vh,720px)]` (nicht nur `max-h-…`, das noch mit dem Inhalt springt) + `overflow-hidden` an der Wurzel, `overflow-y-auto` am Body. Karten/Kacheln mit wechselndem Inhalt `min-h-[…]` geben. Der Rahmen darf sich beim Klick nicht bewegen — nur der Inhalt.
-
-## Code-Sicherheit & manuelle Produktprüfung
-
-### 8.2 Sichtbare Ergebnisqualität / Visual Acceptance Gate
-- **Visuelle Prüfungen sind Opt-in (PFLICHT, User-Order 2026-07-22):** Keine visuelle Abnahme, Browserprüfung, UI-Prüfung, Screenshot-Prüfung, Preview-Prüfung oder Gameplay-Sichtprüfung automatisch ausführen. Diese Prüfungen finden ausschließlich statt, wenn der User sie im aktuellen Auftrag ausdrücklich verlangt; andernfalls bleiben sie als manuelles Gate dokumentiert.
-- **Code-Sicherheit ist kein Produktbeweis:** Lint, TypeScript, gespeicherte Daten, Screenshots, grüne Logs oder ein erfolgreiches Playwright-Skript beweisen nur, dass etwas technisch ausgeführt wurde — nicht, dass das sichtbare Ergebnis gut, lesbar, fachlich richtig oder nutzbar ist.
-- **Akzeptanzkriterien vor Umsetzung ableiten:** Bei jeder sichtbaren Aufgabe zuerst 3-7 konkrete Prüffragen aus dem Userziel notieren (z. B. Sind beide Hände sichtbar? Ist Text lesbar/nicht abgeschnitten? Zeigt das Dashboard die wichtigste Zahl ohne Scrollen?).
-- **Screenshots aktiv beurteilen:** Beauftragt der User Browser/Playwright/Screenshot/Referenzvergleich, das Bild gegen diese Prüffragen bewerten. Ein sichtbar falsches Bild ist ein Fehlerbeweis, nie ein Abschlussbeweis.
-- **Abnahme-Viewport zuerst herstellen:** Vor jedem visuellen Urteil Viewport/Fenster maximieren, störende Overlays ausblenden, Referenz groß anzeigen, Kamera/Zoom aufs Prüfobjekt ausrichten. Ist das Hauptobjekt nicht klar sichtbar, ist der Screenshot ungültig.
-- **Bewegte Objekte aktiv verfolgen:** Bewegt/animiert/scrollt das Objekt, Follow-/Center-/Keep-visible bewusst setzen und die Bewegung messbar machen (Pfad, Distanz, Timeline-Zeit). Läuft das Hauptobjekt aus dem Bild, ist der Screenshot kein gültiges Gate. Bei 3D/Canvas mindestens Front/Side/Back/Top-Perspektiven.
-- **Werkzeug darf Fehler nicht verdecken:** Editor-Hilfen (Joint-Handles, Overlays, Grid) dürfen die Produktansicht nicht überdecken; für Abnahmen braucht es einen Clean-/Gate-Modus. Fehlt er, ist das Tooling Teil des Bugs.
-- **Nicht hinter manuellen Gates verstecken:** Liegt bereits ein Screenshot/Log/Preview/Export vor, muss er fachlich bewertet werden. Nur wenn wirklich keine Sichtprüfung möglich ist, als `manuelles Gate` dokumentieren.
-- **Fertig nur bei bestandenem Gate:** Keine Phase als `success`/`fertig` dokumentieren, solange die sichtbaren Kernkriterien nicht erfüllt sind — dann ehrlich `partial`, `blocked` oder „technisch umgesetzt, visuell nicht abgenommen".
-- **Bei wiederholtem visuellen Scheitern:** Nicht weiter einzelne Werte drehen. Erst Root Cause nennen, Vergleichsreferenz prüfen, Tooling verbessern, dann erneut implementieren.
-
-#### 8.2.1 Roh-Solid- und Doppeltint-Gate für sichtbare Echtzeitformen
-
-- **Standardprimitiv plus Einfarbenmaterial ist keine fertige Hero-Form:** Box, Plane, Kugel, Kegel oder Polyeder dürfen technische Ausgangsformen sein; als sichtbares Endergebnis brauchen sie eine authored Silhouette oder eine klar maskierte/komponierte Rolle.
-- **Hero-Solids brauchen vier Belege:** charakteristische Silhouette, glaubwürdige Basis bzw. Bodenkontakt, räumliche Tiefe und erkennbare Oberflächenvariation. Fehlt einer davon, ist die Form vor einer Sichtabnahme nicht produktionsreif.
-- **Doppeltint ausdrücklich prüfen:** Effektfarbe ist häufig `material.color × instanceColor`. Dunkel × dunkel erzeugt ungewollt fast schwarzes Material. Entweder die Materialbasis neutral halten oder Primär-/Sekundärfarben als explizite Shaderattribute führen; die resultierende Multiplikation statisch und visuell prüfen.
-- **Masse und Licht trennen:** Solide Materie schreibt Tiefe und trägt Materialkontrast. HDR-Kern, Halo, Funken oder Bloom sind eigene Lichtrollen; eine flächig hochgedrehte Emissivefarbe ersetzt weder Volumen noch Oberfläche.
-- **Bodenreste brauchen eine Maske:** Scars, Risse, Decals und Zonen dürfen ihre Träger-Box/-Plane nicht vollflächig zeigen. UV-Randfalloff plus authored Hauptmaske müssen Geometriekanten in jeder sichtbaren Phase verwerfen; ein Rechteck darf nicht die Silhouette bestimmen.
-- **Statisches Gate vor Sichtprüfung:** Geometrieherkunft, Material-/Instanzfarbpfad, Depth-/Blend-Rollen, HDR-Werte und Alpha-/Discard-Masken sind im Code prüfbar. Die tatsächliche Form- und Lichtqualität bleibt gemäß §8.2 opt-in und ohne aktuelle Userfreigabe ein manuelles Gate.
-
-
-### 8.3 Denkmodus & Ergebnis-Handwerk (PFLICHT — gilt für JEDE Ausgabe)
-
-**Wurzel-Erkenntnis:** Beim *identischen* Auftrag entsteht „billig/flach/generisch" **nicht aus fehlendem Können**, sondern aus einem falschen Erfolgskriterium.
-- **Engineering-Modus:** „Habe ich die Anforderung korrekt, sicher, sauber (DRY, Gates grün) erfüllt?" → vereinfacht den wertvollen Kern, prüft gegen Tests statt gegen das Erlebnis → **technisch-korrekte Mittelmäßigkeit**.
-- **Craft-Modus (Ziel):** „Würde ein Mensch, der das Ergebnis erlebt, es exzellent nennen?" → gibt dem Wichtigen eigene Sorgfalt, schichtet, geht über den sicheren Default hinaus → **premium**.
-
-Das ist kein 3D-Thema — dieselbe Ziel-Differenz macht Texte blass, Dashboards fokuslos, APIs generisch. Der Hebel ist **nicht „mehr Regeln"**, sondern zuerst den Denkmodus umzuschalten.
-
-**Denkmodus-Reset (VOR jeder Umsetzung, domänenübergreifend):**
-- **Erfolgstest = belegbare Wirkung, nicht bloße Erfüllung:** Beurteile die stärkste im aktuellen Auftrag erlaubte Evidenz gegen konkrete Produktfragen aus Nutzersicht. Die Spezifikation ist der Boden, nicht das Ziel; Selbstlob ist kein Qualitätsbeweis.
-- **An jeder Gabelung die reichere Variante:** Zwischen einfach/sicher und reicher/schwieriger immer die reichere für alles, was der Nutzer erlebt. Einfachheit nur für Unsichtbares.
-- **Schwieriger Kern = mehr investieren, nicht vereinfachen:** Ein hartes Kern-Element ist das Signal, dort mehr Aufwand hineinzugeben — nicht abzuspecken und `partial` zu markieren.
-- **Aufwand dem Fokus geben, nicht der Wiederverwendung:** Was der Nutzer zuerst erlebt (Hauptobjekt, Kernzahl, erster Satz), bekommt maßgeschneiderte Sorgfalt; nur der Hintergrund wird generalisiert. „DRY über alles" erzeugt uniforme Mittelmäßigkeit.
-- **„Fertig" heißt artefaktbasiert geprüft:** Bei aktueller Browser-/Preview-Freigabe das echte Ergebnis aus Nutzersicht rendern und beurteilen; ohne sie alle ehrlichen statischen Belege ausschöpfen und nur das reale manuelle Gate offenlassen. Grüne Technikchecks, ausführliche Selbsterklärung oder Begeisterung genügen nicht (ergänzt 8.2).
-
-**Wie sich der Denkmodus zeigt:** echten Mechanismus bauen statt sicheren Ersatz · qualitätstragende Details formen statt flachen Default · die Sache wirklich passieren lassen statt auf Distanz faken · das Wichtigste vorn/groß/unverdeckt · über den sicheren Rand hinaus schichten · un-gefordertes Leben (sinnvolle Defaults, Micro-Copy-Ton, Sekundärbewegung).
-
-**Fokus ohne Regress + Abschluss-Abgleich (PFLICHT — die globale „Check"-Regel vor „fertig"):** Der Craft-Modus hebt den Fokus — genau das erzeugt die häufigste Über-Korrektur: beim Aufwerten des Fokus wird still ein **vorher schon erfülltes** Merkmal an anderer Stelle geopfert (die Wippe kippt, statt dass beides zugleich gut ist). Gegenmittel, gehört zur Definition von „fertig":
-- **Kein Regress:** Fokus-Investment darf **nichts** verschlechtern, das schon gut/richtig war. Qualität ist keine Wippe — ein exzellentes Ergebnis hält **alle** guten Eigenschaften gleichzeitig, es tauscht nicht A gegen B.
-- **„Über dem Boden" heißt addieren, nie darunter fallen:** „Spec ist der Boden, ziele darüber" heißt *mehr obendrauf* — nie eine explizite Vorgabe unterschreiten. Benannte/quantifizierte/superlative Wörter im Auftrag („groß/oversized", „~200 Einheiten", „rund", „3 von X", „beide sichtbar") sind **harte Constraints**; Exzellenz wird **mit** ihnen gemessen, nicht statt ihnen.
-- **Richtiger Hebel statt lokalem Kurzschluss:** Damit der Fokus „gewinnt", den passenden Hebel nutzen (Betonung, Kadrierung, Platzierung, relative Skala) — **nie** den Kontext degradieren (nicht die ganze Welt schrumpfen, damit der Held groß wirkt). Das echte Problem lösen, keine globale Eigenschaft für ein lokales Ziel opfern.
-- **Abschluss-Abgleich (der „Check"):** Vor „fertig" zusätzlich zur stärksten erlaubten Artefaktevidenz **den ganzen Auftrag einmal gegenlesen** — ist jedes explizite Merkmal/Maß/Superlativ *wörtlich* noch wahr, und ist **nichts** vorher Gutes zurückgefallen? Das ist **kein** Ersatz für sichtbare oder laufende Abnahme und kein neuer Selbstlob-Gate, sondern die ehrliche Sicherung des vollständigen Vertrags.
-- **Physisch/logisch kohärent:** Das Ergebnis muss real Sinn ergeben, nicht nur rendern/laufen (eine Hand ist nicht zugleich gehoben und gesenkt; eine Summe = ihre Teile). Zustände prüfen, nicht nur Ausführung.
-
-_Beispiel (eine Domäne von vielen): Fokus „Figuren sichtbar/lebendig machen" gelöst, aber die zuvor erfüllte, ausdrücklich geforderte „oversized/mehrstöckige" Struktur dabei unter die geforderte Größe geschrumpft — falscher Hebel; richtig wäre, sie groß zu lassen und die Figuren darin hochzuskalieren. Global identisch: einen Absatz aufpolieren und eine geforderte Kernaussage streichen; ein Panel schön machen und eine geforderte Spalte weglassen._
-
-
-### 8.4 Generative Bau-Prompts — kleinster ausreichender Kontext (PFLICHT)
-
-Der Craft-Modus setzt das Qualitätsziel. Der ausführbare Prompt trägt nur Information, die Ziel, Produkt, Risiko oder Prüfung wirklich verändert.
-
-- **Mission und Bar zuerst:** Ziel, Nutzerwirkung, reale Referenz beziehungsweise Premiumzustand und sichtbares Anti-Ziel in wenigen dichten Sätzen.
-- **Produktdetail ist keine Prompt-Inflation:** Funktionen, Zustände, Gameplay, Maße, Fairness, Sicherheit, Ownership und externe Schnittstellen dürfen ausführlich sein. Inflation sind vorsorgliche Werkzeug-, Datei-, Objekt-, Material- und Rezeptlisten ohne Entscheidungswert.
-- **Short ist Standard:** Short trägt Ziel, Bar, harte Grenzen, Performancehülle, Freiheit und Loop. Medium ergänzt fehlende Zustände/Integrationen; Long bleibt Greenfield-, Benchmark-, Fairness- oder Invarianten-Ausnahme. Wortzahlen sind Diagnosewerte, keine Qualitätswertung.
-- **Invarianten von Freiheit trennen:** User-, Produkt-, Gameplay-, Engine-, Ownership- und Sicherheitsgrenzen sperren. Silhouette, Architektur, Materiallösung, Choreografie und technische Umsetzung bleiben frei, soweit keine Grenze den Weg erzwingt.
-- **Performancehülle bei jedem Runtime-Ergebnis:** Zielhardware oder Projektbaseline, typische reale Last, Ziel/Floor und adaptive Degradation nennen. Ohne Messlauf keine FPS erfinden. Erst unsichtbare Kosten, ferne Details, Auflösung, LOD, Schatten- oder Sekundäreffektdichte reduzieren; First Read, Kernfunktion und Gameplay nicht heimlich streichen.
-- **Progressiv laden:** universeller Router → genau ein Fachrouter → konkreter Brief. Technik erst in der betroffenen Bauphase, Learning/Postmortem nur beim passenden Symptom. Kataloge sind Nachschlagewerke, keine Pflichtlektüre von oben bis unten.
-- **Technik-Gate:** Architektur, Libraries, Shader, Objektzahlen und Codeformen nur vorgeben, wenn Engine, Ownership, Performance, Fairness, aktueller Userauftrag oder ein belegter Wiederholungsfehler sie erzwingen.
-- **Kausale Kopplung nur für den Kern:** `Ursache → gemeinsamer Kontakt/Quelle → Reaktion → sichtbare Folge`; Nebendetails nicht in Pflichtmatrizen aufblasen.
-- **Anerkennungsanker proportional:** zwei bis vier Ansichten/Momente. Exakte Sekunden, Kamerawerte, Counts und Prozent-Rubriken nur bei Mechanik oder Vergleichbarkeit.
-- **Browserprüfung ist aktueller Opt-in:** Ohne ausdrücklichen Auftrag bleiben Pixel-, Gameplay- und FPS-Abnahme manuelle Gates. Statische Checks nie als sichtbaren Beweis ausgeben.
-- **Evidenzbasierter Craft-Loop:** bauen → reales Ergebnis oder ehrliche statische Evidenz gegen konkrete Prüffragen beurteilen → größten belegten Abstand beheben → vollständigen Regressionsabgleich → wiederholen. Keine feste Rundenzahl; Selbsterklärung oder Begeisterung ist kein Beweis.
-- **Ausführungsprofil ist eigener Opt-in:** `linear` bleibt Standard. `orchestriert` nur bei aktueller ausdrücklicher Freigabe und den unabhängigen Track-/Integrationsowner-Gates aus Abschnitt 5.3; Browserfreigabe bleibt davon getrennt.
-- **Learningbudget:** Neues Learning als `Symptom → Ursache → Aktion → Beleg`, standardmäßig höchstens 90 Wörter. Längere Herleitung in Detailreferenz; Router erhält nur Fehlerbild + Link. Vorher deduplizieren und gleiche Ursachen konsolidieren.
-
-Projekt-SSoTs tragen Domänenzahlen, Rezepte und Templates. Im Projekt `voxel-samurai-quiz` beginnt das System bei `prompts/prompt-system/prompt-system-router.md`; sichtbare 3D-Qualität ergänzt `prompts/asset-lab-quality-generation-standard.md`.
-
-### 8.1 TypeScript & Tests
-- Statische Checks (`lint`, `tsc --noEmit`) sind nur Kompilier-/Typschutz — kein Beweis für Gameplay, Werte, Kampfgefühl oder Multiplayer-Lesbarkeit. Ergebnis als Code-Sicherheit dokumentieren, nicht als Produktprüfung.
-- Bei reinen Doku-/Prompt-/Regeländerungen keine Tests/Checks starten.
-- Bei echten Codeänderungen dürfen Lint/TypeScript den geänderten Scope absichern.
-- **Fehler direkt mitfixen:** Findest du im bearbeiteten Scope sichtbare Fehler (TS, Lint, Runtime), sofort beheben, nicht „für später" liegen lassen.
-- **Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-/Serverwert-Tests ohne klaren User-Befehl.** Auch reine Frontend-/Layout-/Mock-Abgleiche nur auf ausdrücklichen Befehl. Ohne Befehl: Research + Codeänderung + manuellen User-Blocker dokumentieren. (Playwright/Browser-Details: `shared-docs/agents/agent-browser/*`.)
-- **Keine neuen Tests erstellen und keine Test-Konfiguration ändern** (Unit/Integration/E2E, `vitest.config.ts`), außer der User verlangt es ausdrücklich.
-
-### 8.1.1 Typecheck schnell und eindeutig ausführen (PFLICHT, User-Order 2026-07-27)
-
-**Kanonischer Alltagsbefehl:**
-
-```bash
-pnpm type-check
-```
-
-Jedes TypeScript-Projekt soll zusätzlich diese zwei Wege anbieten:
-
-```bash
-pnpm type-check:low-cpu
-pnpm type-check:legacy
-```
-
-| Befehl | Rolle |
-|---|---|
-| `type-check` | Schneller Standardcheck mit stabilem TypeScript 7 Native. |
-| `type-check:low-cpu` | Derselbe Check mit weniger Checkern, damit der Rechner nebenbei benutzbar bleibt. |
-| `type-check:legacy` | Klassischer TypeScript-5-Compiler für Diagnoseparität, ältere Werkzeuge und Rückfälle. |
-
-Die lokale `AGENTS.md` und `package.json` bleiben maßgeblich. Große Projekte dürfen hinter diesen Namen einen eigenen Wrapper für Priorität, Scope-Auswertung, Logs oder sichere Exitcodes verwenden. Bestehende Aliasnamen dürfen kompatibel bleiben.
-
-**`lint` bleibt eine eigene Rolle:** Ein echter ESLint-/Framework-Linter darf nie durch den Typecheck ersetzt werden. Nur Projekte ohne echten Linter dürfen ihren historischen `lint`-Namen ausdrücklich als Typecheck-Alias behalten. Niemals aus den Shared Docs ableiten, dass `pnpm lint` überall TypeScript prüft.
-
-#### Stabiles TypeScript 7 parallel zu TypeScript 5
-
-- TypeScript 7 Native gepinnt unter einem eindeutigen Alias installieren, zum Beispiel `"@typescript/native": "npm:typescript@7.0.2"`.
-- Das klassische `typescript`-Paket behalten, wenn `ts-morph`, ESLint, Frameworks, Build-Skripte oder eigene AST-Werkzeuge seine JavaScript-Compiler-API nutzen.
-- Beide Pakete liefern einen Bin namens `tsc`. Deshalb niemals `pnpm exec tsc`, `npx tsc` oder einen bloßen `tsc`-Scriptwert verwenden. Die Auflösung kann nach jeder Installation kippen.
-- Direkte Standardpfade sind `node node_modules/@typescript/native/bin/tsc` für Native und `node node_modules/typescript/bin/tsc` für Legacy. Ein vorhandener robuster Wrapper darf stattdessen den gelieferten `getExePath.js`-Resolver nutzen.
-- Native und Legacy erhalten getrennte `tsbuildinfo`-Dateien. Wenn nur Native inkrementell läuft, Legacy mit `--incremental false` starten.
-
-#### Konfiguration vor dem Compilerwechsel pinnen
-
-TypeScript-Versionen können bei nicht gesetzten Optionen andere Defaults verwenden. Vor dem Vergleich besonders `strict`, `noUncheckedSideEffectImports`, `module`, `moduleResolution`, `noEmit` und `incremental` prüfen. Das bisher beabsichtigte Verhalten ausdrücklich als `true` oder `false` in `tsconfig.json` festhalten; nicht pauschal lockern, nur damit der neue Lauf grün wird.
-
-Neue Diagnosen werden verstanden und im bearbeiteten Scope behoben. Ein Schalter darf nur geändert werden, wenn die Projektarchitektur genau dieses Verhalten verlangt und die Entscheidung in der Task-Datei steht.
-
-#### CPU- und Prüfvertrag
-
-- Typechecks immer nacheinander ausführen. Mehrere parallele Compilerläufe machen den Rechner langsamer und Ergebnisse schwer zuzuordnen.
-- `type-check:low-cpu` nutzt beim nativen Compiler typischerweise `--checkers 2`; projektspezifische Wrapper dürfen zusätzlich eine niedrige Prozesspriorität setzen.
-- Watch-Modi nur nach ausdrücklichem Nutzerstart im sichtbaren Vordergrund ausführen. Nie automatisch einen dauerhaften Compilerprozess starten.
-- Nach einer Scriptumstellung alle drei Befehle mindestens einmal echt ausführen. Dokumentieren: Compiler-Version, Laufzeit, Exitcode und Zahl der `error TS`-Diagnosen.
-- Erfolg verlangt einen vollständig beendeten Lauf mit Exitcode 0 und null TypeScript-Diagnosen. Startfehler, Signalabbruch oder ein nichtnuller Exitcode mit leerer Ausgabe sind `unklar`, nie grün.
-- PowerShell-Umleitungen können UTF-16LE schreiben. Logs über einen Wrapper direkt als UTF-8 erzeugen oder vor dem Zählen die BOM prüfen.
-- Den Projekt-Scope nicht nur für Geschwindigkeit über `include`/`exclude` verkleinern. Ein schneller blinder Check ist kein Sicherheitsgewinn.
-- Bei reinen Doku-/Prompt-/Regeländerungen keinen Typecheck starten.
-
-## Referenzen & Qualitäts-Checkliste
-
-### Framework-Dokumentation
-| Thema | Dokumentation |
-| --- | --- |
-| React Native/Expo | `shared-docs/skills/vercel-react-native-skills/REACT-NATIVE-RULES-SUMMARY.md` |
-| Next.js | `shared-docs/skills/nextjs-rules/NEXTJS-RULES.md` |
-| Capacitor | `shared-docs/performance/capacitor-performance-rules.md` |
-| Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
-| DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
-| Three.js / R3F / Game-Runtime | `shared-docs/THREEJS-RULES.md` |
-| Multiplayer / Colyseus | `shared-docs/COLYSEUS-RULES.md` |
-| Browser-/Playwright-/Electron-Testing | `shared-docs/agents/agent-browser/*` |
-
-### Qualitäts-Kriterien (bei jeder Planung & Implementierung)
-- ✅ Wartbarkeit · Modularität · Helper/Services · klare Trennung von UI/Logik/Daten · gute Architektur · simpel/wiederverwendbar · Performance/Edge-Cases · eigene fachliche Meinung in Planungen.
-
-### Quick Checklist
-- Keine Rückfragen / kein `AskUserQuestion` — eigenständig die fachlich beste Lösung umsetzen.
-- Bei Codeänderungen: Lint/TypeScript nur als Code-Sicherheitscheck, nicht als Gameplay-Beweis.
-
-- Mobile-First · Max 700 Zeilen/Datei · bei großer Datei in Unterkomponenten/Helpers/Services aufteilen.
-- **Grundstruktur-First:** Bei wiederholt falschem/kollidierendem Ergebnis die betroffenen Dateien komplett neu schreiben (nicht patchen) und eine Single Source of Truth herstellen (Abschnitt 3).
-- Sichtbare Fehler im bearbeiteten Scope sofort mitfixen.
-- Keine UI-/Browser-/Playwright-/Screenshot-/Smoke-/Ingame-Tests und keine automatischen Gameplay-/Serverwert-Beweise ohne klaren User-Befehl.
-- Keine neuen Tests schreiben/planen und keine Test-Konfiguration ändern, außer explizit angefordert.
-- **NO-GO Live-Collection-Mutation:** siehe Abschnitt 6 (Performance).
-- Nach jeder Phase Task-Datei aktualisieren: erledigt/offen/nächste Phase + max. 3 Hauptkomponentenpfade.
-- Commit nach Abschluss aller Phasen/Todos einer Masterplanung mit schöner Commit-Message.
-- WebFetch/Websuche sinnvoll nutzen, besonders bei wiederholten Fehlern oder unsicherer externer Doku.
-
-## Wichtige Regeln / Zusammenfassung
-
-**NIEMALS automatisch `pnpm run dev` / `pnpm dev` starten!**
-- Der Dev-Server läuft oft bereits im Hintergrund. Automatisches Starten verursacht Port-Konflikte (EADDRINUSE).
-- Läuft er wirklich nicht, darfst du ihn starten. Bei vom User befohlenen UI-Tests zuerst prüfen, ob der Server läuft.
-
-**NIEMALS automatisch CLI-/Terminal-/PowerShell-Prozesse im Hintergrund starten!**
-- Kein `codex`, `gemini`, `claude`, `opencode`, `powershell`, `cmd.exe` etc. nur für Statusanzeige, App-Start, Watcher-Event oder Hover/Popover.
-- **CPU & Unsichtbarkeit (kritisch):** Automatisch gestartete CLI-Modelle erzeugen extrem hohe CPU-Last (oft ~100 % Core), unsichtbar für den Nutzer → er bemerkt die Lag-Ursache nicht. CLI-Modellprozesse nur durch explizite Nutzeraktion (Nachricht senden, Login-Klick, „Aktualisieren"-Button, beauftragter CLI-Test).
-- Hintergrundpfade dürfen nur Cache, gespeicherte JSON-Dateien, Env-Signale oder leichte Dateisystem-Metadaten lesen — nie einen echten Prozess anschalten. Nach jedem CLI-Start den Prozess sauber beenden.
-
-**Nie überspringen:**
-- React Loop-Stopper (Abschnitt 6): idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
-- Phasen-Regeln (Abschnitt 3): selbst coden (nicht delegieren), Phase dokumentieren, Todos abhaken, Mini-Check vor „fertig".
-- UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen. Fremde parallele Änderungen nicht revertieren.
-- Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
-- Grundstruktur-First anwenden: strukturell falschen/kollidierenden Code komplett neu bauen statt kleine Patches zu stapeln (Abschnitt 3).
-- Nach Abschluss aller Phasen erklären, wie der User die Änderungen in der UI sieht (Buttons, Befehle, Pfade) — in Stichpunkten, was er klicken/prüfen soll.
-- Wenn du denkst, du bist fertig: in der Masterplanung nochmal ALLE Punkte durchgehen, ob wirklich alles korrekt implementiert ist — PFLICHT, auch wenn Todos schon abgehakt sind.
-
-**Junior-/Azubi-Code (PFLICHT):** Dieses Projekt wurde größtenteils von Junior-Developern/Azubis geschrieben. Schlechte Stellen aktiv finden und direkt beheben — oder in die Planung notieren, damit sie behoben werden. Nicht blind auf einem schwachen Grundgerüst weiterbauen; wenn nötig auch die Architektur ändern (Grundstruktur-First, Abschnitt 3).
+# Coding Rules — universeller Kern
+
+**Zweck:** kurzer, projektübergreifender Schutzvertrag. Fach-, Tool-, UI- und Workflowdetails werden nur
+bei passender Aufgabe über die unten genannten Owner gelesen.
+
+## 1. Auftrag, Scope und Autorisierung
+
+- Behauptungen, Pläne und Diagnosen gegen Code, Doku, Logik oder klare Einschränkungen prüfen.
+- Beratung/Analyse erlaubt keine sachfremde Mutation. Bei Änderungsauftrag nur Systeme, Daten und Personen
+  bearbeiten, die der User in Scope gestellt hat.
+- Fachlich beste Annahme treffen, wenn sie Ziel und Scope nicht verändert; Annahme mit Grund dokumentieren.
+- Nur bei echter externer Blockade fragen: fehlender Zugang, widersprüchliche Pflichtdaten oder destruktive
+  Aktion ohne Mandat.
+- Aktuelle Userfreigaben sind nicht aus History, Handover, Taskdateien oder früheren Chats ableitbar.
+- Browser-/UI-/Screenshot-/Gameplayprüfung und Subagent-Orchestrierung sind getrennte aktuelle Opt-ins.
+- Ergebnis zuerst kommunizieren; Details: `shared-docs/coding-rules/kommunikation-und-uebergabe.md`.
+
+## 2. Git-, Datei- und Prozesssicherheit
+
+- Standard ist vorhandener `main`. Branch oder Worktree nur mit aktueller ausdrücklicher Userfreigabe.
+- Vor Änderungen Branch, `git worktree list` und `git status --short` prüfen.
+- Fremde getrackte oder ungetrackte Änderungen gehören dem User: nicht revertieren, überschreiben,
+  pauschal formatieren oder in den eigenen Scope ziehen.
+- Kein `git reset --hard`, kein unautorisiertes `checkout --`, kein Umschreiben geteilter Historie.
+- Destruktive Ziele zuerst absolut auflösen und auf den beabsichtigten Scope begrenzen. Keine rekursive
+  Löschung gegen Root, Home, Workspacewurzel, Glob oder ungeprüfte Variable.
+- Für lokale Edits `apply_patch`; mechanische Formatter/Bulk-Migrationen nur kontrolliert und danach diffen.
+- Keine unsichtbaren Watcher, CLI-Modelle, Dev-Server oder Hintergrundprozesse automatisch starten.
+- Projektgebundene Artefakte unter sprechendem Projektpfad speichern; Temp/AppData ist nie finale Ablage.
+
+## 3. Workflow und Taskdokumentation
+
+- Mehrdateilige Implementierung, Refactoring oder ausdrücklicher Planungsauftrag benötigt vor Änderungen eine
+  Task-Datei.
+- Linearer Integrationsowner bleibt Standard. Orchestrierung nur bei aktueller Freigabe, mindestens zwei
+  unabhängigen großen Tracks, disjunktem Scope und festem Rückgabe-/Evidenzformat.
+- Phasen ohne Zwischenstopp abarbeiten; nach jeder Phase Todos, Kommentar und append-only Arbeitsprotokoll
+  aktualisieren.
+- Gefundene Fehler im bearbeiteten Scope beheben. Fremde Fehler nur additiv anfassen, wenn sie den
+  beauftragten Weg blockieren.
+- Vollständiger Vertrag: userbenannte Maße, Zustände, Superlative und bereits gute Merkmale vor Abschluss
+  erneut prüfen.
+- Ausführbares Format:
+  `shared-docs/agents/commands/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md`.
+
+## 4. Planung und Dokumentation
+
+- Struktur: `docs/OVERVIEW.md` → Feature-Overview → `docs/<feature>/tasks/<task>.md`.
+- Sprechende Dateinamen statt fachlicher `README.md`, `info.md`, `misc.md` oder unqualifiziertem
+  `manifest.md`. Externe Toolvorgaben sind die einzige Ausnahme.
+- Taskplanung enthält Userziel, Akzeptanzkriterien, Phasen-Todos, Entscheidungen, Risiken und offene
+  Fix-Punkte; keinen vollständigen Produktionscode.
+- Über etwa 600 Task-Zeilen nummerierte Fortsetzung anlegen. Code-/Promptdateien bleiben unter 700 Zeilen,
+  sofern keine fachlich begründete SSoT-Ausnahme dokumentiert ist.
+- Nach Abschluss Task-Abschließer anwenden und `.completed/` sowie minimale Root-Doku-Relevanz entscheiden.
+
+## 5. Recherche und Wiederverwendung
+
+- Vor neuen Dateien, Funktionen, Hooks, Stores, Prompts oder Shared-Modulen nach bestehender Funktionalität
+  und verwandter Vorarbeit suchen. Ab etwa 80 Prozent Überschneidung bestehenden Owner erweitern.
+- Bei komplexem oder wiederholtem Fehler zuerst Muster abstrahieren, lokale Geschwister/SSoTs prüfen und
+  aktuelle Primärdokumentation nutzen; danach kleinsten stabilen Ansatz wählen.
+- Keine vorsorgliche Volllektüre großer Kataloge, Fachguides oder Postmortems. Router → konkreter Brief →
+  Technik/Learning nur nach Phase oder Symptom.
+
+## 6. Architektur und Code
+
+- Fachliche Ownership pro Datei. Aggregatoren importieren/exportieren nur; keine wachsenden
+  `entries.ts`-/`config.ts`-/`data.ts`-Monster.
+- Shared nur bei echter neutraler Wiederverwendung. Globale Module importieren keine Fachsektion.
+- Eine Quelle der Wahrheit für Werte und Zustände; UI, VFX, Audio und Persistenz bleiben dünne Leser.
+- Grundstruktur zuerst: Bei wiederholtem kollidierendem Ergebnis Ursache und Ownership neu ordnen statt
+  Wertpatches zu stapeln. Bereits gute Eigenschaften bleiben erhalten.
+- Keine live iterierte Collection im selben Iterator erweitern; Queue/Snapshot/Visited-Set mit Limit nutzen.
+- React/UI/DB-Regeln: `shared-docs/coding-rules/react-ui-und-daten.md`.
+- Three.js/R3F: `shared-docs/THREEJS-RULES.md`; Multiplayer/Sync: `shared-docs/COLYSEUS-RULES.md`.
+
+## 7. Projekt- und Technikowner
+
+- Lokale `AGENTS.md`, `CLAUDE.md`, `DESIGN.md`, Feature-SSoTs und `package.json` sind für projektspezifische
+  Architektur, Theme, Build und Befehle maßgeblich.
+- Externe API-/Library-Details aus aktueller Primärdokumentation beziehen.
+- Projektregeln nicht in diesen universellen Kern kopieren.
+
+## 8.1 Statische Checks und Tests
+
+- Checks proportional zur Änderung. Typecheck/Lint sind Code-Sicherheit, kein Produktbeweis.
+- Reine Prompt-/Doku-/Regeländerung: kein Typecheck.
+- Keine neuen Tests oder Testkonfiguration ohne ausdrücklichen Userauftrag.
+- TypeScript-/Checkdetails: `shared-docs/coding-rules/typescript-und-statische-checks.md`.
+
+### 8.1.1 Typecheck
+
+Kanonische Namen: `pnpm type-check`, `pnpm type-check:low-cpu`, `pnpm type-check:legacy`. Projektlokale
+Wrapper sind maßgeblich; parallele Compilerläufe und unsichtbare Watcher bleiben verboten.
+
+## 8.2 Sichtbare Ergebnisqualität
+
+- Vor sichtbarer Umsetzung drei bis sieben konkrete Prüffragen aus dem Userziel notieren.
+- Ohne aktuelle ausdrückliche Freigabe keinen Browser-, Playwright-, Screenshot-, Preview-, UI-, Gameplay-
+  oder FPS-Lauf starten; sichtbares Ergebnis bleibt manuelles Gate.
+- Liegt bereits ein sichtbares Artefakt vor, fachlich beurteilen. Falsches Bild ist Fehlerbeweis.
+- `success` nur bei stärkster erlaubter Evidenz; sonst ehrlich `partial` oder manuelles Gate.
+- Vollvertrag: `shared-docs/coding-rules/browser-und-sichtbare-abnahme.md`.
+
+### 8.2.1 Echtzeitformen
+
+Hero-Solids brauchen authored Silhouette, Bodenkontakt, Tiefe und Oberfläche. Materie und Licht trennen,
+Material-/Instanz-Doppeltint prüfen und Bodenträger durch Maske/Randfalloff unsichtbar machen.
+
+## 8.3 Craft und Abschlussabgleich
+
+- Erfolg ist belegbare Nutzerwirkung, nicht bloße Anforderungserfüllung oder Selbsterklärung.
+- Schwierigen, nutzerprägenden Kern maßgeschneidert ausarbeiten; Hintergrund und Infrastruktur dürfen
+  generalisieren.
+- Qualität addiert: Fokus verbessern, ohne explizite Vorgaben oder bereits gute Merkmale zu opfern.
+- Vor „fertig“ gesamten Auftrag gegenlesen und physische/logische Kohärenz prüfen.
+
+## 8.4 Generative Prompts
+
+- Kleinster ausreichender Kontext: Ziel, Qualitätsbar, Produktvertrag, Performancehülle, harte Grenzen,
+  Lösungsfreiheit und evidenzbasierter Loop.
+- Short ist Standard; Medium/Long nur wegen konkret fehlender Produktinformation.
+- Runtime-Prompt nennt Baseline, typische reale Last, Ziel/Floor und adaptive Degradation. Ohne Messung keine
+  FPS behaupten.
+- Learning als `Symptom → Ursache → Aktion → Beleg`, standardmäßig höchstens 90 Wörter; vor Eintrag
+  deduplizieren. Fachpostmortems bleiben aus Initialprompts.
+- Universalrouter: `prompts/prompt-system/prompt-system-router.md` im jeweiligen Projekt.
