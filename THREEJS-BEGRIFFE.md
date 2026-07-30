@@ -187,3 +187,22 @@ A/B-Messung bedeutet: Zwei Varianten werden unter gleichen Bedingungen vergliche
 ## Visuelle Parität
 
 Visuelle Parität bedeutet: Zwei Varianten sehen gleich genug aus. Ein Performance-Fix zählt nicht als fertig, wenn dadurch Skill-Hitboxen, Gegner, Terrain oder wichtige Effekte verschwinden.
+
+## Worldbuilding-Kurzbegriffe
+
+| Begriff | Kurz erklärt |
+| --- | --- |
+| **Weltbrief** | Userwunsch in Alltagssprache: Gefühl, erster Blick, Schichten, Bewegung, Licht, Orte, Anti-Ziele. |
+| **Weltvertrag** | Technische Kurzfassung daraus: Meter, Weltfelder, Kontakte, Budgets, Kameras und Gates. |
+| **First Read** | Hauptmotiv, das innerhalb etwa einer Sekunde erkennbar ist. |
+| **Tiefenstaffelung** | Klarer Vorder-, Mittel- und Hintergrund. |
+| **Weltfeld** | Geteilte Raumdaten wie Höhe, Steigung, Wasser, Biom, Weg oder Belegung. |
+| **Occupancy/Clearing** | Harte Belegung bzw. weicher Vegetationsausschluss um Bauflächen und Wege. |
+| **Integrationsvertrag** | Regel für die Berührung zweier Systeme, z. B. Gebäude↔Terrain. |
+| **Footprint Sampling** | Boden unter dem ganzen Grundriss statt nur am Mittelpunkt messen. |
+| **Impact-Queue** | `fehlt > kaputt > Maßstab/Komposition > Integration > Licht/Material > Politur`. |
+| **Stage/Completeness Gate** | Nächste Detailstufe erst, wenn die grobe sichtbare Welt vollständig besteht. |
+| **Größenanker** | Bekanntes Maß wie Augen-, Tür- oder Geschosshöhe. |
+| **Applied-Value-Check** | Testwert unmittelbar vor Draw am echten Ziel zurücklesen. |
+| **Datenprovenienz** | Kamera, Auflösung, Renderstufe, Farbraum, Motiv, Tiefe, Zustand und Runtime-Wert einer Messung. |
+| **Raw/HDR/LDR** | Materialkanal → beleuchtete Szene → finales Bild mit Tonemap/PostFX. |

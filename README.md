@@ -2,6 +2,14 @@
 
 This repository serves as a central "Single Source of Truth" for shared documentation, such as `agents` configurations and `refactoring-docs`. It is designed to be integrated into multiple projects as a Git Submodule.
 
+## Core documents
+
+- [`CODING-RULES.md`](CODING-RULES.md) — universal coding, workflow and validation rules
+- [`SYSTEM-PROMPT.md`](SYSTEM-PROMPT.md) — shared assistant behavior
+- [`THREEJS-RULES.md`](THREEJS-RULES.md) — Three.js/R3F runtime and performance rules
+- [`THREEJS-WORLDBUILDING-RULES.md`](THREEJS-WORLDBUILDING-RULES.md) — compact router to task-specific worldbuilding rules
+- [`THREEJS-BEGRIFFE.md`](THREEJS-BEGRIFFE.md) — plain-language Three.js glossary
+
 ---
 
 ## 🚀 How to Integrate into a Project
@@ -68,3 +76,4 @@ This will fetch the latest commit from the submodule. This change (the new submo
 ```bash
 git add shared/docs
 git commit -m "docs: Sync latest knowledge base"
+```

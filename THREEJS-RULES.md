@@ -12,6 +12,8 @@
 
 **Projekt-History:** Alte Projektfälle, Root-Cause-Muster und Vorfall-Merkhilfen liegen in `shared-docs/THREEJS-PERFORMANCE-HISTORY.md`.
 
+**Worldbuilding:** `shared-docs/THREEJS-WORLDBUILDING-RULES.md` ist der Router; daraus nur die zur Aufgabe passenden kurzen Fachdateien laden.
+
 ---
 
 ## 1. MMO-Performance-Grundsatz
@@ -56,6 +58,8 @@ Denke bei jeder Three.js/R3F/VFX/Game-Änderung wie ein MMO-Performance-Engineer
 ---
 
 ## 3. Scope-Lesepfade
+
+**Welt/Map/Terrain/Wasser/Vegetation/Architektur:** Router `THREEJS-WORLDBUILDING-RULES.md` plus dort genannte Fachdateien; hier nur passende Runtime-/Performance-Abschnitte.
 
 **VFX, Skills, Klassen-Effekte:** Abschnitt 1, 2, 4, 6, 7, 8 lesen. Dann `THREEJS-PERFORMANCE-HISTORY.md` zu Effects, Lai-LMB, Fight-Runtime, Slash-ID-Kollision prüfen.
 
@@ -373,6 +377,8 @@ Seit 2026-06-12 ist das Dungeon-v2-System (bewiesen in Dungeon Ebene 1-4 und Ebe
 ---
 
 ## 18. Map-/Biom-Design (optional, NUR EIN BEISPIEL - Inspiration, nicht kopieren!)
+
+Dieser Beispielabschnitt ersetzt nicht den verbindlichen Prozess in `THREEJS-WORLDBUILDING-RULES.md`. Vor Übernahme einzelner Rezepte müssen Weltbrief, Completeness Gate, gemeinsame Weltfelder, Integrationsverträge, Maßstab und Prüfkameras stehen.
 
 Maps werden non-voxel gebaut, wie ein Open-World-RPG (Black Desert / Chrono Odyssey / Valheim). Referenz-Implementierung: Level 5 "Blutwald" (`CrimsonForestDecor.tsx`, `ArenaFloor.tsx`, `dungeonCaveHelpers.ts`).
 

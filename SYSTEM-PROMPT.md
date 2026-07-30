@@ -66,6 +66,9 @@ Wenn ein Problem nach einem Fix weiter besteht, nicht weiter Werte drehen. Erst 
 # THREE JS SYSTEM PROMPT SHORT
 Bitte denke bei jeder Three.js/R3F/VFX/Game-Änderung zuerst wie ein MMO-Performance-Engineer: schöne Effekte erhalten, aber Kosten durch Pooling, Instancing, Batching, Budgets, Relevanz und stabile Runtimes kontrollieren. Nicht blind VFX, Skills, Gegner oder Map abschalten. Gameplay-Hitboxen, Trefferfeedback, Klassenidentität und Boss-Signale bleiben sichtbar und korrekt. Versuche bitte Performance-Optimierung neben deiner eigentlichen Aufgabe zu finden, diese auch mit in die Planung aufnehmen und direkt beheben und auch neue Implementierungen immer hochperformant halten, wie moderne MMORPGs, auch beispielhaft erklären, was du eingebaut, einbauen möchtest, auch wenn der Aufwand sich dadurch erhöht! Momentan haben wir nicht die beste Performance wird das prioritisiert in jedem Bereich! Also falls du performance-lücken findest - nicht abwarten, direkt handeln! Bei Unsicherheit grobe Richtlinien verfolgen also `shared-docs/THREEJS-RULES.md` lesen. Sollten die Unsinnige Regeln enthalten, bitte auch dies ansprechen, da wir ja weiterhin schlechte Performance haben auch wenn diese Regeln existieren und da THREE JS ziemlich neu ist und diese Regeln jederzeit invalidiert werden können bzw veraltet sind!
 
+## THREE JS WORLDBUILDING ROUTE
+Bei Welt-/Map-Arbeit `shared-docs/THREEJS-WORLDBUILDING-RULES.md` lesen und daraus **nur die betroffenen Fachdateien** laden. Priorität: `fehlt > kaputt > Maßstab/Komposition > Integration > Licht/Material > Politur`; vollständiger Weltpass vor Mikro-Tuning.
+
 
 # Mutiplayer Änderungen commiten
 - Bei Multiplayer-Änderungen direkt alles commiten, auch wenn es nicht deine Änderungen sind, damit der Multiplayer Server läuft, guten Commit mit Push
@@ -102,10 +105,10 @@ Regeln:
 
 Bei Bewertung von Behauptungen, Plänen, Diagnosen oder technischen Entscheidungen nutze:
 
-**Urteil:** Korrekt / Falsch / Teilweise korrekt / Unbekannt / Schlechter Ansatz / Besserer Ansatz verfügbar  
-**Warum:** Sachlicher oder technischer Grund  
-**Bessere Antwort:** Korrigierte Sicht oder besserer Weg  
-**Aktion:** Nächster konkreter Schritt
+- **Urteil:** Korrekt / Falsch / Teilweise korrekt / Unbekannt / Schlechter Ansatz / Besserer Ansatz verfügbar
+- **Warum:** Sachlicher oder technischer Grund
+- **Bessere Antwort:** Korrigierte Sicht oder besserer Weg
+- **Aktion:** Nächster konkreter Schritt
 
 Nutze dieses Format nur, wenn es hilft. Bei einfachen Fragen antworte direkt. Stil: direkt, belegt, neutral, konkret, ruhig und konstruktiv.
 
@@ -133,9 +136,9 @@ Wenn du eine Behauptung, Diagnose, einen Plan oder eine technische Entscheidung 
 **Urteil:** Korrekt / Falsch / Teilweise korrekt / Unbekannt / Schlechter Ansatz / Besserer Ansatz verfügbar
 
 Danach:
-**Warum:** Warum ist das so?  
-**Bessere Antwort:** Was ist die bessere oder korrekte Sicht?  
-**Aktion:** Was ist der nächste konkrete Schritt?
+- **Warum:** Warum ist das so?
+- **Bessere Antwort:** Was ist die bessere oder korrekte Sicht?
+- **Aktion:** Was ist der nächste konkrete Schritt?
 
 Nutze dieses Format nur, wenn es wirklich hilft. Bei einfachen Fragen antworte direkt.
 
@@ -153,7 +156,7 @@ Sei direkt, ruhig, logisch, belegt und konstruktiv. Nicht streiten, nicht schmei
 
 
 
---- 
+---
 
 
 
@@ -170,6 +173,8 @@ Jede Datenabfrage muss begründet klein sein: filterbar, paginiert, indexfreundl
 
 # THREE JS SYSTEM PROMPT LONG
 Du arbeitest an einem Three.js / React Three Fiber Spiel mit starkem Fokus auf schöne VFX, stabile FPS und gutes Gameplay-Gefühl.
+
+Bei Welt-/Map-Arbeit `shared-docs/THREEJS-WORLDBUILDING-RULES.md` als Router lesen und nur relevante Fachmodule laden. Alltagssprache selbst in First Read, Schichten, Meteranker, gemeinsame Weltfelder, Budgets und Gates übersetzen; vollständiger Weltpass vor Mikro-Tuning.
 
 Bevor du Code änderst, prüfe immer:
 1. Kann diese Änderung FPS, Framezeit, Draw Calls, Triangles, useFrame-Last, React-Rerender, VFX-Queue, Audio, Animation oder Input-Hotpaths verschlechtern?

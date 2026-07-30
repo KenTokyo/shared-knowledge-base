@@ -4,6 +4,7 @@
 
 > **Scope-Regel:** Diese Datei enthält nur allgemeine Coding-Regeln. Projekt- oder tech-spezifische Details gehören in ihre eigenen Docs:
 > - Three.js / R3F / WebGPU / Game-Runtime / Juice: `shared-docs/THREEJS-RULES.md`
+> - Three.js-Welten / Maps: Router `shared-docs/THREEJS-WORLDBUILDING-RULES.md`
 > - Multiplayer / State-Sync / Kampfgefühl: `shared-docs/COLYSEUS-RULES.md`
 > - Browser-/Playwright-/Electron-Findings: `shared-docs/agents/agent-browser/*`
 > - Klassen-/VFX-/Sound-/Animation-Learnings: das jeweilige Projekt (`prompts/*`, `docs/*`).
@@ -293,6 +294,7 @@ Gilt für Web-Apps, Spiele-UIs/HUDs, Mobile- und Desktop-Frontends gleichermaße
 
 ### 3D, Three.js, Game-Runtime & Multiplayer (Pointer)
 - **3D / R3F / Shaders / WebGL/WebGPU:** Bei Arbeit an Three.js, Mesh-Erstellung, Lichtquellen oder Render-Optionen zwingend `shared-docs/THREEJS-RULES.md` lesen und befolgen (Instancing, Schatten-Budget, Lag-Checks, Partikel, PostFX/Composer, Game-Feel/Juice).
+- **Worldbuilding / Maps:** `shared-docs/THREEJS-WORLDBUILDING-RULES.md` öffnen und nur die dort gerouteten Fachdateien lesen.
 - **Game-Runtime-Muster** (Two-Stage-Escape, Ref-Runtime für Slide/Dash, Sound-Voice-Limiter, DOM-Overlay-Scope, orthogonale Optik-Achsen): `THREEJS-RULES.md` §21.
 - **Multiplayer / State-Sync / Hitboxen / Schadens-Timing / Network-Visuals:** `shared-docs/COLYSEUS-RULES.md`.
 
@@ -431,6 +433,7 @@ pnpm typecheck > .tsc.log 2>&1
 | Liquid Glass (Tailwind) | `shared-docs/design/liquid-glass-guide.md` |
 | DB Live Testing (Postgres) | `shared-docs/database-testing-guide.md` |
 | Three.js / R3F / Game-Runtime | `shared-docs/THREEJS-RULES.md` |
+| Three.js-Worldbuilding / Maps | `shared-docs/THREEJS-WORLDBUILDING-RULES.md` |
 | Multiplayer / Colyseus | `shared-docs/COLYSEUS-RULES.md` |
 | Browser-/Playwright-/Electron-Testing | `shared-docs/agents/agent-browser/*` |
 
@@ -465,7 +468,7 @@ pnpm typecheck > .tsc.log 2>&1
 **Nie überspringen:**
 - React Loop-Stopper (Abschnitt 6): idempotente Updates, Dedupe-Guards, keine `Date.now()`-Fallbacks in Normalizern, Root Cause bei Loop-Fehlern verfolgen.
 - Phasen-Regeln (Abschnitt 3): selbst coden (nicht delegieren), Phase dokumentieren, Todos abhaken, Mini-Check vor „fertig".
-- UTF-8 sauber halten: nach Doku-Edits auf Mojibake (`Ã`, `â`, `ðŸ`) prüfen. Fremde parallele Änderungen nicht revertieren.
+- UTF-8 sauber halten: nach Doku-Edits auf fehlerhafte Zeichenkodierung prüfen. Fremde parallele Änderungen nicht revertieren.
 - Bei wiederholtem Fehler nicht kämpfen: recherchieren, 3-5 Lösungswege vergleichen, kleinste stabile Lösung umsetzen.
 - Grundstruktur-First anwenden: strukturell falschen/kollidierenden Code komplett neu bauen statt kleine Patches zu stapeln (Abschnitt 3).
 - Nach Abschluss aller Phasen erklären, wie der User die Änderungen in der UI sieht (Buttons, Befehle, Pfade) — in Stichpunkten, was er klicken/prüfen soll.
