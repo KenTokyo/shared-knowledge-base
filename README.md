@@ -2,6 +2,10 @@
 
 Dieses Repository ist die gemeinsame Wissensbasis für Arbeitsregeln, Agenten-Dokumente und projektübergreifende technische Leitfäden. Es wird als Git-Submodul eingebunden.
 
+## Projektübergreifende Leitfäden
+
+- [OALab-Kundenprojekte: Accounts, Mail und Produktionstests](OALab/CUSTOMER-PROJECT-OPERATIONS.md)
+
 ## Einmalig einbinden
 
 Im Eltern-Repository:
