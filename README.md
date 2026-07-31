@@ -4,8 +4,12 @@ Dieses Repository ist die gemeinsame Wissensbasis für Arbeitsregeln, Agenten-Do
 
 ## Projektübergreifende Leitfäden
 
-- [OALab-Kundenprojekte: Accounts, Mail und Produktionstests](OALab/CUSTOMER-PROJECT-OPERATIONS.md)
+- [OALab-Kundenprojekte: Operations-Regeln](OALab/CUSTOMER-PROJECT-OPERATIONS.md)
 - [Vercel CLI: Login, Projektanlage und Betrieb](OALab/VERCEL-CLI-WORKFLOW.md)
+
+## Kundenverläufe
+
+- [Lindner KFZ – Customer Notes](OALab/Projects/Lindner-KFZ-CUSTOMER-NOTES.md)
 
 ## Einmalig einbinden
 
