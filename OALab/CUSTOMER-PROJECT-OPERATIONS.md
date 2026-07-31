@@ -29,6 +29,8 @@ vercel env ls
 
 Secrets werden ausschließlich in ignorierten lokalen Env-Dateien und im richtigen Vercel-Projekt gespeichert. Passwörter, Tokens und vollständige Zugangsdaten gehören nie in Beispiele, Logs, Commits oder diese Wissensbasis.
 
+Der vollständige Ablauf für Login, Scope-Auswahl, Projektanlage, Verlinkung, Env-Variablen, Deployment und Runtime-Logs steht in [VERCEL-CLI-WORKFLOW.md](VERCEL-CLI-WORKFLOW.md).
+
 ## Mailprovider
 
 Bei Kundenprojekten ist Netcup häufig der Mailprovider, aber kein verbindlicher Standard. Die vom Kunden gelieferten Daten sind maßgeblich. Vor dem Rollout prüfen:
