@@ -107,3 +107,36 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
   geprüften Gegenstand benennen, nicht seine Gattung: „Spielerkamera über Grund" hätte die Lücke
   beim Lesen sichtbar gemacht.
   *`tools/smoke.mjs:216` · 2026-08-02*
+
+- **Eine Kennzahl aus einem einzelnen Bild trennt Effekt und Motiv nicht** — die Spalte „Vignette"
+  war Außenring durch Mittelscheibe und lief über die vierzehn Kameras von 0,83 bis 1,17. Drei
+  lagen über 1,0, also Rand heller als Mitte — was eine abdunkelnde Vignette nicht erzeugen kann.
+  Gemessen wurde zur Hälfte, was zufällig in den Ecken stand. → Den Effekt gegen sich selbst
+  messen: dieselbe Kamera zusätzlich mit dem Effekt auf null, dann die beiden Verhältnisse teilen.
+  Der Bildinhalt kürzt sich heraus, weil er in beiden Bildern an derselben Stelle steht. Und die
+  Messung braucht eine Schranke aus Geometrie oder Shader-Arithmetik, gegen die sie falsch sein
+  kann — hier: der Shader multipliziert im Ring im Mittel 0,888 auf *lineares* Licht, der Readback
+  ist sRGB-kodiert und sRGB ist stauchend, also muss das Ergebnis in [0,888; 1,000] liegen.
+  *Nach der Trennung 0,947–0,948 auf allen vierzehn, Spanne 0,001; `wave-peak` misst ohne Vignette
+  1,235 und mit 1,171 · `tools/capture.mjs --vig` · 2026-08-02*
+
+- **Eine absolute Streuung kann zwei Belichtungen nicht vergleichen** — der lokale Kontrast war die
+  Standardabweichung der Luma in 8×8-Kacheln. Die halbiert sich, wenn man das Licht halbiert, ganz
+  ohne dass eine Kante weicher geworden wäre. Die Spezifikation verlangte „dunkler" **und** „nicht
+  plattgemacht"; unter dieser Kennzahl schließen sich beide konstruktionsbedingt aus. Eine
+  Kennzahl, unter der die Spezifikation unerfüllbar ist, ist die kaputte Seite. → Streuung durch
+  Kachelmittel teilen: dimensionslos, eine globale Lichtänderung fällt heraus. Und über **alle**
+  Kacheln mitteln statt je Helligkeitsband — die Bänder sind nach Kachelhelligkeit besetzt, ein
+  dunkleres Bild schiebt Kacheln von hell nach mittel nach dunkel, und ein Bandmittel vergleicht
+  danach zwei verschiedene Populationen.
+  *Exposure 1,00 → 0,70 bei Fill 1,15: Luma ×0,862, absoluter Kontrast ×0,906 — das Bild wurde
+  relativ schärfer, während die Zahl fiel · `tools/frame.mjs` · 2026-08-02*
+
+- **Der zweite Regler war nie angeschlossen** — `uExposure` stand seit zwei Phasen im
+  Grade-Material, `_syncGrade` schrieb es nie, und in der Parametertabelle fehlte es. Es lag also
+  auf dem Material-Default und sah in jedem Sweep aus wie ein Parameter ohne Wirkung. Dieselbe
+  Sitzung fand denselben Fall bei Key und Fill, die als Literale in der Lichtfunktion standen.
+  → Beim Anlegen eines Uniforms sofort die Schreibstelle mit anlegen, auch wenn der Wert erstmal
+  der Default ist. Ein Parameter, den ein Sweep nicht schreiben kann, ist kein Parameter — und er
+  fällt nicht auf, weil ein nicht bedienter Regler exakt aussieht wie ein wirkungsloser.
+  *`src/render/index.js:_syncGrade` gegen `src/render/grade.glsl.js:uExposure` · 2026-08-02*
