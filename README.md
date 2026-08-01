@@ -2,6 +2,15 @@
 
 Dieses Repository ist die gemeinsame Wissensbasis für Arbeitsregeln, Agenten-Dokumente und projektübergreifende technische Leitfäden. Es wird als Git-Submodul eingebunden.
 
+## Projektübergreifende Leitfäden
+
+- [OALab-Kundenprojekte: Operations-Regeln](OALab/CUSTOMER-PROJECT-OPERATIONS.md)
+- [Vercel CLI: Login, Projektanlage und Betrieb](OALab/VERCEL-CLI-WORKFLOW.md)
+
+## Kundenverläufe
+
+- [Lindner KFZ – Customer Notes](OALab/Projects/Lindner-KFZ-CUSTOMER-NOTES.md)
+
 ## Einmalig einbinden
 
 Im Eltern-Repository:
