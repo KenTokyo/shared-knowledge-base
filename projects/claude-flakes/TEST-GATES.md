@@ -16,7 +16,7 @@
   *Ohne Logs 86 statt 124 Checks; nach Härtung FAIL 92/134 ohne Stacktrace statt ENOENT · 2026-08-01*
 
 - **Zwei Mutationen zählen als zwei Experimente** — gleiche `find/replace`-Ausgabe oder zwei getrennte Closures mit denselben `editCell`-Argumenten liefen doppelt. → Eindeutigkeit auf Zielpfad plus **erzeugtem Dateiinhalt** prüfen, nicht auf Name, Closure-Identität oder Quellstring.
-  *Vier Klon-Paare über mehrere Audits gefunden; zwei Closures waren textuell und objektseitig verschieden, Ergebnis identisch · 2026-08-01*
+  *Drei Klon-Paare über mehrere Audits gefunden; zwei Closures waren textuell und objektseitig verschieden, Ergebnis identisch · 2026-08-01*
 
 - **`kills:` ist erfüllt, obwohl ein Präfix zwei Checks trifft** — Substring-Matching lässt den zufällig roten Nachbarn als erwarteten Kill gelten. → Jeder Erwartungseintrag muss genau einen aktuellen Checknamen treffen; Präfixtreffer und Orphans separat melden.
   *108 Einträge gegen 121 Namen: 0 mehrdeutig, aber 7 nur Präfix; Kontrollpräfix traf zwei Namen und machte die Stufe rot · 2026-08-01*

@@ -22,7 +22,7 @@
   *Spieler auf Welle 5 bekam zuvor Welle 6; `_replay` hielt Anzeige und nächste Welle konsistent · 2026-07-31*
 
 - **Boss ersetzt fünf Körper, wird aber wie einer bezahlt** — Bosswelle wurde vier Körper kürzer und Welle 5 zahlte 170 statt Welle 4s 192. → Einkommen und EHP gegen die verdrängte Wellenmischung rechnen; Boss-Flag bis zur Auszahlung tragen.
-  *Boss-Essence 3,1× ergab Wellen 5/10/15 = 223/393/449; Boss-HP 2,60→2,20 entfernte den Squeeze-Cliff · 2026-08-01*
+  *Boss-Essence 3,1× ergab Wellen 5/10/15 = 222–223/392–395/449–450; Boss-HP 2,60→2,20 entfernte den Squeeze-Cliff · 2026-08-01*
 
 - **Feste Bossgröße gegen wandernden Nenner beschrieben** — „5,45 Körper“ galt nur in Welle 5; Mischung änderte sich später. → Yardstick-Wight und verdrängte Wellenmischung als zwei getrennte Nenner ausweisen.
   *Boss = 4,92 Yardstick-Wights, aber 5,45/5,06/4,85 Mischkörper in Welle 5/10/15 · 2026-08-01*
