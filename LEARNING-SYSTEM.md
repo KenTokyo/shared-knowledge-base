@@ -120,5 +120,8 @@ Schritt 4 ist der einzige, der das System am Leben hält. Er kostet zwei Zeilen.
 # <Thema> — <Projekt oder „global">
 
 **Lesen wenn:** <ein Satz, der den Trigger benennt>
-**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](<relativer Pfad>)
 ```
+
+`<relativer Pfad>` ist `../LEARNING-SYSTEM.md` in `threejs/` und `../../LEARNING-SYSTEM.md` in
+`projects/<repo>/`.
