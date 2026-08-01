@@ -49,8 +49,27 @@ Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
   *Herkunft: voxel-samurai-quiz · 2026-08-01*
 
 - **Schattenwurf als „kleiner Schalter"** — eine dichte Vegetationsschicht verdoppelt beinahe die Dreiecke.
-  → Vor dem Anschalten zählen, nicht danach messen.
+  → Vor dem Anschalten zählen, nicht danach messen. **Und danach getrennt zählen:** die Schattenhälfte kostet
+  weit weniger Zeit als ihr Dreiecksanteil, also überschätzt jede Dreiecksdifferenz den erreichbaren Gewinn
+  um rund den Faktor zwei — Culling und LOD erreichen nur den Beauty-Pass, das Schattenfrustum gehört dem
+  Licht.
   *+2 980 800 Dreiecke (+90 %) für Grascasting · Herkunft: voxel-samurai-quiz · 2026-08-01*
+  *zweiter Beleg: Schicht gesamt −1.65 … −2.20 ms, davon Schattenpass nur −0.25 … −0.65 ms, bei exakt
+  hälftigem Dreiecksanteil; ein LOD, das 558 168 Dreiecke „entfernt", verkauft davon 279 084 und lässt die
+  andere Hälfte als Schatten ohne Baum im Bild · Herkunft: claude-tower-defense · 2026-08-01*
+
+- **„Grober Stellvertreter im Schattenpass, feine Geometrie im Bild" — geht in three nicht** — der
+  naheliegendste Schattenhebel überhaupt, und er ist im Renderer verschlossen. `WebGLShadowMap.render` ruft
+  **dieselbe** `renderObject`-Funktion wie der Beauty-Pass und übergibt ihr die **Hauptkamera**; darin steht
+  `object.layers.test( camera.layers )`. Die Layer des Schattenkamera-Objekts werden beim Filtern **nie
+  gelesen** — ein Caster auf eigenem Layer ist damit auch für den Schattenpass unsichtbar. `visible === false`
+  kehrt aus demselben Grund vorher zurück, und der Vor-Schatten-Haken feuert erst **nach** beiden Tests, ist
+  also zu spät, um Sichtbarkeit umzuschalten. → Vor dem Planen eines Proxy-Casters die drei Stellen im
+  Renderer-Quelltext lesen, nicht die API-Namen. Wer den Weg trotzdem will, zahlt einen **zweiten Draw im
+  Beauty-Pass** — das ist ein Aufschlag, kein Sparweg; der verbleibende Hebel ist die **Auflösung** der
+  Schattenkarte, nicht die Objektmenge.
+  *r180, im Quelltext nachgelesen statt aus der API geschlossen; die Annahme hatte eine ganze Phase getragen
+  · Herkunft: claude-tower-defense · 2026-08-01*
 
 ## Handoffs
 
