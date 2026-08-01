@@ -25,10 +25,18 @@
 - Shader, PBR, Renderpässe → [Shader und PBR](threejs/SHADERS.md)
 - Chunks, LOD, Frametime → [Performance](threejs/PERFORMANCE.md)
 - Capture, A/A, A/B, Review → [Debug und Review](threejs/DEBUG-REVIEW.md)
+- Sweep, Ranking, Referenzvergleich, „ist das besser?" → [Messhandwerk](threejs/MEASURING.md)
+
+## Projektebene
+
+Was **nur in einem Repository** Zeit gekostet hat, steht in dessen eigenem Ordner unter
+[`projects/<repo-name>/`](projects/) — dort auch die Trigger-Tabelle des Projekts. Wie Tipps geschrieben,
+geändert, gestürzt und nach oben promotet werden: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).
 
 ## Quellenprofil
 
 - **Claude of Tsushima:** Weltkomposition; Weltfelder; gelöste Kameras; interne Captures
 - **Claude Flakes:** Fußspuren; Wake; gemeinsame Runtime-Deformation; lebendige Welt
 - **Claude Desert:** VFX-Isolation; Shader-/PBR-Gegenproben; Runtime-Readbacks
+- **Voxel Samurai Quiz:** AEON-Weltengine; Messkette gegen Referenzbilder; Third-Person-Rig
 - **Gemeinsam:** Form → Kontakt → Lesbarkeit → Material → Licht → Detail

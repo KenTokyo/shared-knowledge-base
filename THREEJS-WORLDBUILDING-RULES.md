@@ -1,22 +1,31 @@
-# Three.js-Worldbuilding – kompakter Router
+# Three.js-Worldbuilding — kompakter Router
 
 **Zweck:** Nur die Regeln laden, die zur aktuellen 3D-Aufgabe gehören. Keine lange Sammel-Prompt lesen.
 
-**Immer zusätzlich:** [`THREEJS-RULES.md`](THREEJS-RULES.md) für allgemeine Three.js-, R3F- und Runtime-Regeln.
+**Immer zusätzlich:** [`THREEJS-RULES.md`](THREEJS-RULES.md) für allgemeine Three.js-, R3F- und
+Runtime-Regeln. **Und der Ordner des eigenen Repos** unter [`projects/<repo-name>/`](projects/) — dort steht,
+was in *diesem* Projekt Zeit gekostet hat.
 
 ## Lesepfad nach Aufgabe
 
 | Aufgabe | Lesen |
 | --- | --- |
-| Neue Welt, Terrain, Biome, Wege | [`worldbuilding/MAP-CREATION.md`](worldbuilding/MAP-CREATION.md) + [`worldbuilding/PERFORMANCE.md`](worldbuilding/PERFORMANCE.md) |
-| Gras, Bäume, Blumen, Ambient Life | [`worldbuilding/VEGETATION.md`](worldbuilding/VEGETATION.md) + [`worldbuilding/PERFORMANCE.md`](worldbuilding/PERFORMANCE.md) |
-| Fluss, Meer, Teich, Wasserfall | [`worldbuilding/WATER.md`](worldbuilding/WATER.md) + [`worldbuilding/DEBUG-REVIEW.md`](worldbuilding/DEBUG-REVIEW.md) |
-| Häuser, Schreine, Ruinen, Brücken | [`worldbuilding/BUILDINGS.md`](worldbuilding/BUILDINGS.md) + [`worldbuilding/PERFORMANCE.md`](worldbuilding/PERFORMANCE.md) |
-| Licht, Kamera, Referenz, PostFX | [`worldbuilding/LIGHT-CAMERA.md`](worldbuilding/LIGHT-CAMERA.md) + [`worldbuilding/DEBUG-REVIEW.md`](worldbuilding/DEBUG-REVIEW.md) |
-| Partikel, Trails, Treffer-, Umwelt- oder Audio-VFX | [`worldbuilding/VFX.md`](worldbuilding/VFX.md) + [`worldbuilding/PERFORMANCE.md`](worldbuilding/PERFORMANCE.md) |
-| Capture, Messung, Regression, unklare Ursache | [`worldbuilding/DEBUG-REVIEW.md`](worldbuilding/DEBUG-REVIEW.md) |
+| Neue Welt, Terrain, Biome, Wege | [`threejs/MAP-GENERATION.md`](threejs/MAP-GENERATION.md) + [`threejs/PERFORMANCE.md`](threejs/PERFORMANCE.md) |
+| Gras, Bäume, Blumen, Ambient Life | [`threejs/VEGETATION.md`](threejs/VEGETATION.md) + [`threejs/PERFORMANCE.md`](threejs/PERFORMANCE.md) |
+| Fluss, Meer, Teich, Wasserfall | [`threejs/WATER.md`](threejs/WATER.md) + [`threejs/DEBUG-REVIEW.md`](threejs/DEBUG-REVIEW.md) |
+| Häuser, Schreine, Ruinen, Brücken | [`threejs/BUILDINGS.md`](threejs/BUILDINGS.md) + [`threejs/PERFORMANCE.md`](threejs/PERFORMANCE.md) |
+| Licht, Kamera, Referenz, PostFX | [`threejs/LIGHT-CAMERA.md`](threejs/LIGHT-CAMERA.md) + [`threejs/DEBUG-REVIEW.md`](threejs/DEBUG-REVIEW.md) |
+| Partikel, Trails, Treffer-, Umwelt- oder Audio-VFX | [`threejs/VFX.md`](threejs/VFX.md) + [`threejs/PERFORMANCE.md`](threejs/PERFORMANCE.md) |
+| Spuren, Wake, Deformation zur Laufzeit | [`threejs/WORLD-INTERACTION.md`](threejs/WORLD-INTERACTION.md) |
+| Capture, Messung, Regression, unklare Ursache | [`threejs/DEBUG-REVIEW.md`](threejs/DEBUG-REVIEW.md) |
+| Sweep auswerten, ranken, gegen eine Referenz vergleichen | [`threejs/MEASURING.md`](threejs/MEASURING.md) |
 
-Bei einer vollständigen neuen Welt zuerst **Map Creation**, **Performance** und danach nur die betroffenen Fachdateien lesen.
+Bei einer vollständigen neuen Welt zuerst **Map-Generierung**, **Performance** und danach nur die betroffenen
+Fachdateien lesen.
+
+*Die frühere Parallelfassung dieser Owner unter `worldbuilding/` liegt in
+[`old-deprecated/worldbuilding/`](old-deprecated/worldbuilding/). Zwei Taxonomien über dieselbe Sache waren
+genau der Fehler, den diese Regeln selbst verbieten (Regel 4).*
 
 ## Acht Regeln, die immer gelten
 
@@ -42,3 +51,8 @@ Bei einer vollständigen neuen Welt zuerst **Map Creation**, **Performance** und
 **Stop-Regel:** Solange eine Hauptschicht fehlt oder sichtbar kaputt ist, höchstens zwei lokale Material-, Noise-, Schaum-, Bloom- oder Grade-Pässe.
 
 **Fertig heißt:** Hero-Shot, Gegenrichtung und Laufweg funktionieren; Systeme stimmen an ihren Übergängen; Rohkanäle, HDR-Szene und LDR-Finalbild sind plausibel; Performance ist gebaut und nicht nur versprochen.
+
+## Danach
+
+Hat in dieser Schicht etwas Zeit gekostet, das ein Tipp verhindert hätte, gehört es in zwei Zeilen in den
+Projektordner — Format und Änderungsrecht: [`LEARNING-SYSTEM.md`](LEARNING-SYSTEM.md).

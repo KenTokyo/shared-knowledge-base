@@ -29,7 +29,19 @@
   - stummer Test ändert Bild → RNG-Streams zählen
   - Contract grün, Boot rot → echtes Szenario + Console + Pixel
 
+## Belegte Tipps
+
+Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
+
+- **Gameplay liest die Kamerarichtung** — Trefferbogen, Zielhilfe oder Aufsammeln brechen, sobald ein neuer
+  Kameramodus die Peilung dreht, und niemand sucht die Ursache in der Kamera. → Gameplay peilt aus dem
+  **Spielerzustand** (`pitch`/`yaw`), nicht aus `camera.getWorldDirection()`. Vor jedem Rig-Umbau danach
+  greppen; legitim sind nur Messobjekte und Billboards (`camera.quaternion`).
+  *Bei 39 ° Schwenk lag die Schwingebene 1,26 m unter der Peilung, unter dem Fuß des Ziels; der 54°-Bogen zog
+  sich auf 41° · Herkunft: voxel-samurai-quiz · 2026-08-01*
+
 ## Handoffs
 
 - Kosten → [Performance](PERFORMANCE.md)
 - Capture → [Debug/Review](DEBUG-REVIEW.md)
+- Zahlen, auf die eine Entscheidung folgt → [Messhandwerk](MEASURING.md)
