@@ -7,9 +7,11 @@
 - **1 · Gesamtframe könnte zuerst zeigen:**
   - Terrain; Wasser; Route; Vegetation; Landmarke; Himmel; Licht
   - Reihenfolge: fehlende Schicht → kaputte Schicht → Komposition → Kontakt → Material → Detail
-- **2 · Weltvertrag könnte bündeln:**
+  - vorhandene sichtbare Stärke könnte Untergrenze bleiben; neue Technik nur mit belegter Parität ersetzen
+- **2 · Weltvertrag/Auftrag könnte bündeln:**
   - Einheiten; Achsen; Höhe; Normale; Steigung; Wasser; Wege; Pads; Biome; Occupancy
   - gemeinsame Daten: Render; Kollision; Navigation; Scatter; Kamera; Gameplay
+  - Auftrags-Keywords: `realistic PBR materials`; `realistic lighting`; `reflections`; `shadows`
   - Makroform → Täler/Horizonte; Mesoform → Wege/Ufer; Mikroform → Oberflächenbruch
 - **3 · Modifierfluss könnte sichtbar bleiben:**
   - Ausgangsfeld → Makroform → Wege/Wasser/Bauten → Glättung → Upsampling → Masken/Bakes

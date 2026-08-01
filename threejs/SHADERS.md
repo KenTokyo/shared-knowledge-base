@@ -17,6 +17,8 @@
   - Albedo; Roughness; Metalness; Normal; AO; Emission
   - Farbtextur: sRGB; ORM/Normal/Höhe/Maske: linear
   - Map → Wert/Detail; Tint → Hue
+  - Reflexionsleiter: IBL/Environment Map/PMREM → Screen-Space oder Planar Reflections nur für passende Flächen
+  - SSR/Probe: Roughness; Specular-/Materialmaske; Rand-/Miss-Fallback; Zusatzkosten
   - Metallprüfung: gültige PMREM + Neutrallicht
   - Normalmap-Ferne: Specular-AA/Toksvig
 - **4 · Geometrie/Transparenz könnte prüfen:**

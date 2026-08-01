@@ -12,6 +12,7 @@
   - `DoubleSide` → nur Diagnose
 - **3 · Fluss/Teich könnten Terrain-plus-Render sein:**
   - gemeinsame Stationen: Bett; Gefälle; Geometrie; Richtung; Schaum; Kollision
+  - Wellenrollen: Spine/Geometrie → Silhouette/Surface Wake; Flow-map Ripples → Normaldetail
   - Carves: gesammelte Beiträge oder klare Zell-Ownership
   - Teich: Ringminimum; Blocker; Wasserlinie; Tiefe; Bankreserve; Randluft
 - **4 · Reflexion/Transparenz könnten klare Owner besitzen:**

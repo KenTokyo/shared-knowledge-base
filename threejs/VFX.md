@@ -6,7 +6,8 @@
 
 - **1 · Lebenskurve könnte gemeinsam sein:**
   - Cast → Aufbau → Release → Kontakt → Peak → Aktiv → Nachleben → Dissipation
-  - Consumer: Pose; Emission; Licht; Kamera; Schaden; Terrain; Audio
+  - Scale-over-lifetime: Grow-in → Hold → Shrink/Sublimation → aus
+  - gekoppelte Envelopes: Geometrie; Emission; Licht; Audio; Terrain; Übergänge synchron, Nachleben getrennt
   - Eventzähler statt Endzustand oder Dateiname
 - **2 · Hauptform könnte vor Glow kommen:**
   - Bloom/Partikel null → Silhouette bleibt

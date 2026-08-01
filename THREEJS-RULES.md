@@ -8,6 +8,8 @@
 - **Diagnosewechsel könnte:** Daten → Geometrie → Material → Licht → PostFX → Kamera → Instrument
 - **Gemeinsame Wahrheit könnte:** Render, Kollision, Navigation, Effekte
 - **Produktbeleg könnte:** echtes Artefakt statt Build oder Datei
+- **Ownerwahl könnte:** nur engster Owner für konkrete Lücke; lokaler Auftrag → Vorrang
+- **Tipp könnte Diagnose bleiben:** keine kumulative Zweit-Checkliste, kein fremdes Zahlenrezept ohne gleichen Stack und Maßstab
 
 ## Fachowner
 
