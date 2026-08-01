@@ -14,6 +14,7 @@ Vorschriften: eine gemessen bessere lokale Lösung hat immer Vorrang und darf de
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
 | [`CODING-RULES.md`](CODING-RULES.md) | Arbeitsweise, Loop, Critic — stackneutral |
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Muster für ein CLI-Capture-System (headless Wirt, Render-Target, kein `page.screenshot()`) |
+| [`PORTLISTE.md`](PORTLISTE.md) | Lokale Dev-Ports und direkte Links aller Projekte mit Shared Docs |
 | [`CREATE-PROMPT-GUIDE.md`](CREATE-PROMPT-GUIDE.md) | Prompts bauen |
 | [`agents/`](agents/) | Arbeitsmodi (Loop ohne Rückfragen, Phasen abhaken) und das [Juicy-Game-UI-System](agents/juicy-game-ui-system.md) |
 | [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
