@@ -180,3 +180,39 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
   *Die ersten drei Fill-Schritte kauften 42 Milli-Luma für 1,5 Milli-Prozent Bodenanteil, die letzten
   drei 17 für 22,6 — 0,036 gegen 1,33 je Milli-Luma, Faktor 37, Knick zwischen 0,30 und 0,15 statt am
   Rasterrand · `tools/grade.mjs` · 2026-08-02*
+
+- **Eine Gültigkeitsaussage darf man nicht mitteln** — ein Tor prüfte „höchstens 1 % des Bildes auf
+  dem Boden" gegen den **Mittelwert** über vierzehn Kameras. Der stand auf 0,70 % und ließ das
+  ausgelieferte Bild durch, während die Spalte je Kamera von 0,00 % bis 2,88 % lief und **fünf von
+  vierzehn** über der Schranke lagen. Auf diesen fünf war die Fehlerbedingung des Tores bereits
+  eingetreten. Der Unterschied ist nicht Statistik, sondern Grammatik: neun der zehn Spalten sagen,
+  **wie gut** ein Look ist, und ein Mittel ist die richtige Zusammenfassung davon. Diese eine sagt,
+  **ob** eine andere Kennzahl auf einem Bild noch bedeutet, was sie behauptet. Ein Mittel darüber
+  fragt, ob der Deskriptor im Durchschnitt gültig ist. → Vor dem Mitteln einer Spalte fragen, ob sie
+  *wie gut* misst oder *ob es gilt*. Das Zweite je Messobjekt prüfen und die Verletzer **namentlich**
+  drucken — der Name sagt, was die Zahl nicht sagt: ob es der Regler war oder das Motiv.
+  *Mittel 0,70 %, Spanne 0,00–2,88 %; `terrace-waterline` 2,88 · `material-closeup` 1,97 ·
+  `wave-peak` 1,55 · `shrine-question` 1,05 · `burnt-slope` 1,00 · `tools/grade.mjs` · 2026-08-02*
+
+- **Der Worst Case war ein Verbot, und der Grund dafür war die eigentliche Erkenntnis** — nachdem
+  der Mittelwert als Aggregation durchgefallen war, lag „keine einzige Kamera auf dem Boden" nahe.
+  Bepreist statt angenommen: **0 von 25** Paaren bestehen das, das Minimum über das ganze Raster ist
+  **1**, auch beim hellsten Paar. Als Tor wäre es das dritte Verbot in derselben Datei. Der Grund
+  ist mehr wert als das Tor: **eine Kamera liegt bei jedem Paar auf dem Boden, auch beim hellsten** —
+  ihre Bodenpixel sind kein Grade-Problem, dort ist schlicht kein Licht, und keine Belichtung legt
+  welches hin. → Wenn eine strengere Aggregation alles ablehnt, ist die Frage nicht „welche Schranke
+  passt", sondern „welche Messobjekte scheitern **unabhängig** vom geprüften Regler". Die gehören auf
+  eine andere Rechnung. Und jede Schranke, die das gerade Ausgelieferte durchließe und das nächste
+  nicht, ist eine Zahl, die den aktuellen Lauf passend macht — Geschmack in Zahlenform.
+  *`material-closeup` auf dem Boden bei Exposure 1,00 / Fill 0,50 wie bei 0,80 / 0,15 ·
+  `tools/grade.mjs` · 2026-08-02*
+
+- **Zwei Aussagen, die dasselbe behaupten, sind gegeneinander prüfbar** — die Schranke „Bodenanteil
+  ≥ 1 %" wurde damit begründet, dass darüber das 1. Perzentil den Boden beschreibt statt die
+  Schatten. Das ist keine Analogie, sondern per Definition des Perzentils dieselbe Aussage von zwei
+  Seiten, also **muss** sie auf jedem Messobjekt übereinstimmen. → Wo eine Begründung und ihre
+  Schranke identisch sein sollen, beide Prädikate getrennt auswerten und die **Widerspruchszahl**
+  drucken. Steht sie auf null, ist die Schranke ihr Zweck und nicht sein Stellvertreter; wird sie je
+  ungleich null, ist die Begründung von der Schranke abgerückt und der Lauf sagt es, statt dass es
+  jemand merken muss.
+  *0 Widersprüche auf 350 Kamera-Messungen (25 Paare × 14) · `tools/grade.mjs` · 2026-08-02*
