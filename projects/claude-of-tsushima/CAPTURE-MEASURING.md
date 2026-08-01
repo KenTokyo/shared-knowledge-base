@@ -37,3 +37,9 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
 
 - **Raw-Rate bewertet fremde GPU-Last** — dieselbe Kampfszene springt je nach paralleler Chrome-Last in ein anderes Regime. → Renderer, Fremdlast und warme Quantile protokollieren; Entscheidungen gepaart treffen und `slowdownToFlip` statt einer Einzelrate lesen.
   *Eine Tier-Spalte schwankte 0,2–14,7 % = Faktor 74, obwohl GPU-Takt/Temperatur sauber waren; robuste Flip-Schranke blieb 1,4×–3,3× · `review/ph72-framecost.txt` · 2026-07-30*
+
+- **Zielzahl aus der Übergabe statt aus dem Instrument** — eine weitergereichte Referenzzahl ohne Rechteck ist nicht prüfbar, und `stops`/`p99-med` hängen vollständig am gewählten Kasten. → Zielwerte nur aus dem Probe-Lauf zitieren, der sie druckt; wer eine Zahl übergibt, gibt Datei **und** Rechteck mit.
+  *„1.97 Blenden / p99-med 5.64" reiste durch drei Übergaben und existiert nirgends: `foreground.mjs` druckt seit jeher `stops 1.75`, unser Stand las 1.54 statt der behaupteten 1.17. Auf denselben Refs schwankt dieselbe Metrik je nach Kasten 1,21–2,24 stops und 2,40–14,95 p99/med · `review/ph30/foreground.txt`, `hist-ref.txt`, `hist-ref2.txt` · 2026-08-01*
+
+- **JPEG-Referenzen sind für die Messkette unsichtbar** — alles geht über `pngstat.mjs`'s `loadPng`, das nur PNG kann; ein `refs/*.jpg` liegt da, ist aber für `hist`, `hue`, `rect` und `crop` nicht existent. → `node tools/jpg2png.mjs refs/x.jpg` davorschalten; das Tool nennt vorher die ICC-Lage der Datei und prüft den Roundtrip gegen `loadPng`.
+  *Drei Referenzen lagen zwei Schichten lang unmessbar im Repo, darunter der einzige Third-Person-Grasvergleich; alle drei ohne ICC-Profil, also ist die Farbraumfrage hier gegenstandslos · `review/ph30/jpg2png.txt` · 2026-08-01*
