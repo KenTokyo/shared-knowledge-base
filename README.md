@@ -16,7 +16,7 @@ Vorschriften: eine gemessen bessere lokale Lösung hat immer Vorrang und darf de
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Muster für ein CLI-Capture-System (headless Wirt, Render-Target, kein `page.screenshot()`) |
 | [`CREATE-PROMPT-GUIDE.md`](CREATE-PROMPT-GUIDE.md) | Prompts bauen |
 | [`agents/`](agents/) | Arbeitsmodi (Loop ohne Rückfragen, Phasen abhaken) und das [Juicy-Game-UI-System](agents/juicy-game-ui-system.md) |
-| [`OALab/`](OALab/), [`requirements/`](requirements/) | Kundenprojekt-Betrieb, Kalkulationsvorlagen |
+| [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
 | [`playwright-cli/`](playwright-cli/) | Playwright-CLI-Notizen |
 | [`old-deprecated/`](old-deprecated/) | Abgelöste Fassungen. Nur zum Nachschlagen, nicht mehr verlinken |
 
