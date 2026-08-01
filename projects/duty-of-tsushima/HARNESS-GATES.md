@@ -142,17 +142,20 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
   *`src/render/index.js:_syncGrade` gegen `src/render/grade.glsl.js:uExposure` · 2026-08-02*
 
 - **„Nicht schlechter als heute" verbietet die Aufgabe, wenn heute am Rand steht** — ein Tor
-  verglich den Anteil Pixel auf dem Boden des Grades gegen den heutigen Wert und lehnte 11 von 12
-  Kandidaten ab. Nicht weil sie schlecht waren: die Spalte stand heute auf **exakt 0,00 %**, die
-  Wiederholbarkeit ebenfalls auf exakt 0, und die Suchrichtung zeigte genau auf diesen Rand. Ein
-  relatives Tor mit Basiswert am Rand seines Wertebereichs erlaubt keinen ersten Schritt.
+  verglich den Anteil Pixel auf dem Boden des Grades gegen den heutigen Wert und lehnte **34 von 35**
+  Kandidaten ab — alles außer der Baseline im Vergleich mit sich selbst. Nicht weil sie schlecht
+  waren: die Spalte stand heute auf 0,07 % bei einer Wiederholbarkeit von exakt 0,00000, das Tor las
+  sich also als „höchstens 0,07 %, plus nichts", und die Suchrichtung zeigte genau auf diesen Rand.
+  Ein relatives Tor mit Basiswert am Rand seines Wertebereichs erlaubt keinen ersten Schritt.
   → Vor jedem relativen Tor den heutigen Wert im Wertebereich der Kennzahl verorten. Steht er am
   Rand und läuft die Suche dorthin, braucht das Tor eine absolute Schranke — und die aus einer
   Größe ableiten, die das Projekt schon gewählt hat, nicht aus Geschmack. Hier: 1 %, weil der
   Schattendeskriptor das 1. Perzentil ist und oberhalb davon das Perzentil den Boden beschreibt
-  statt die Schatten.
-  *`p01` 0,263 gegen einen Boden von 0,134 — das dunkelste Prozent lag ein Drittel des Wertebereichs
-  über Schwarz · `tools/grade.mjs`, Tor 1 · 2026-08-02*
+  statt die Schatten. Die Ablehnungszahl der relativen Formulierung wird weiter in jedem Lauf
+  mitgerechnet und gedruckt — sobald sie aufhört, „fast alle" zu sein, darf das Tor wieder relativ
+  werden. Eine Begründung, die sich selbst nachrechnet, überlebt die nächste Änderung.
+  *`p01` 0,230 gegen einen Boden von 0,134 — das dunkelste Prozent lag 96 Milli-Luma über Schwarz,
+  während 0,07 % des Bildes schon aufsaßen · `tools/grade.mjs`, Tor 1 · 2026-08-02*
 
 - **Eine Schwelle aus der Spezifikation zitieren statt aus der Pipeline messen** — die Spezifikation
   prüfte Tiefschatten als „Anteil unter Luma 0,030". Der Lift läuft nach dem Tonemapper, also
@@ -174,5 +177,6 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
   Antwort als **Zulässigkeit** kodieren, nicht als Tor: der Guard fragt `requestEnvMap()` und hebt
   sich selbst auf, sobald ein IBL existiert. Die Zeile bleibt in der Tabelle stehen — einen Wert aus
   der Entscheidung nehmen ist kein Grund, ihn nicht mehr zu messen.
-  *Der letzte Fill-Schritt kaufte 8 Milli-Luma für 5,8 Milli-Prozent Bodenanteil, der davor 50 für
-  1,7 — Faktor 21 · `tools/grade.mjs` · 2026-08-02*
+  *Die ersten drei Fill-Schritte kauften 42 Milli-Luma für 1,5 Milli-Prozent Bodenanteil, die letzten
+  drei 17 für 22,6 — 0,036 gegen 1,33 je Milli-Luma, Faktor 37, Knick zwischen 0,30 und 0,15 statt am
+  Rasterrand · `tools/grade.mjs` · 2026-08-02*
