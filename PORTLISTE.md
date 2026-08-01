@@ -1,72 +1,70 @@
-# Portliste
+# Portliste — lokale Projekte mit Shared Docs
 
-Lokale Entwicklungsports aller Projekte unter `D:/CODING/React Projects`, die das Submodule
-`shared-knowledge-base` als `shared-docs` oder `shared/docs` eingebaut haben.
+Zentrale Übersicht der lokalen Startlinks für alle Repositories, die unter
+`/Users/kentoky/Documents` das Submodul `KenTokyo/shared-knowledge-base` verwenden.
 
-**Stand:** 2026-08-01, 19:25 Uhr · 39 Repositories geprüft. `✅ läuft` bedeutet: Der Port war beim Scan
-belegt, der Node-Prozess gehörte zum genannten Repository und der HTTP-Aufruf antwortete mit Status 200.
-Alle anderen Einträge sind konfigurierte Standardports; sie bedeuten nicht, dass der Server gerade läuft.
-CLI-Portargumente haben Vorrang vor abweichenden Vite-Config-Werten.
+**Stand:** 2026-08-01, 23:20 Uhr · 18 Repositories gefunden · 36 fest vergebene Ports geprüft ·
+**keine Überschneidung**. Dev- und Preview-Ports sind getrennt. `✅ läuft` bedeutet: Listener,
+Prozesspfad und HTTP-Status 200 wurden geprüft. Ein konfigurierter Link bedeutet nicht automatisch, dass
+der Server gerade läuft.
 
-## Projekte und direkte Links
+## Direkte Startlinks
 
-| Bereich | Repository | Dev-Port(s) und direkte Links | Status beim Scan |
-|---|---|---|---|
-| AI-BENCHMARK-TESTS | `note-driller-emtyNote-Test` | 3001 — [App](http://localhost:3001) | aus |
-| AI-BENCHMARK-TESTS | `claude-code-chat-4f76…` | kein eigener Webserver (VS-Code-Erweiterung) | — |
-| React Projects | `ai-cutting-uniaichat` | 3002 — [App](http://localhost:3002) | aus |
-| CursorProjects | `CursorJeff` | 1421 — [App](http://localhost:1421) | aus |
-| React Projects | `demoai-portfolio` | 3000 — [App](http://localhost:3000) | aus |
-| games | `crossword-core-breaker` | 3060 — [App](http://localhost:3060) | aus |
-| games | `quiz-blaster-arena` | 3035 — [App](http://localhost:3035) | aus |
-| games | `voxel-samurai-quiz` | 3070 — [Spiel](http://localhost:3070); 3071 — [Asset-Lab](http://localhost:3071); 3072 — [Sound-Lab](http://localhost:3072); 3073 — [Monster-Lab](http://localhost:3073); 3074 — [Aeon](http://localhost:3074); 2567 — Multiplayer | **✅ 3070 und 3074 laufen** |
-| github-repos-examples | `claude-desert` | 5173 — [App](http://localhost:5173) | aus |
-| github-repos-examples | `Claude-Flakes` | 5173 — [App](http://localhost:5173) | aus |
-| github-repos-examples | `Claude-of-Duty` | 5178 — [App](http://localhost:5178) | aus |
-| github-repos-examples | `Claude-of-tsushima` | 5173 — [Dev](http://localhost:5173); 4173 — [Preview](http://localhost:4173) | **✅ 5173 läuft** |
-| github-repos-examples | `claude-tower-defense` | 5173 — [App](http://localhost:5173) | aus |
-| github-repos-examples | `quiz-arena-space` | 5173 — [App](http://localhost:5173) | aus |
-| github-repos-examples | `quizshoot` | 5173 — [App](http://localhost:5173) | aus |
-| Kundenprojekte | `automaker-oalab` | 3007 — [UI](http://localhost:3007); 3008 — [API](http://localhost:3008/api/health) | aus |
-| Kundenprojekte | `ecommerce-printshop` | 3009 — [App](http://localhost:3009) | aus |
-| Kundenprojekte | `lindner-kfz-1` | 3140 — [App](http://localhost:3140) | **✅ 3140 läuft** |
-| Kundenprojekte | `nalbach-und-hinkel-2` | 3000 — [App](http://localhost:3000) | aus |
-| React Projects | `Learning` | kein eigener Webserver | — |
-| React Projects | `linearleads` | 3010 — [App](http://localhost:3010) | aus |
-| React Projects | `localbench-benchmarks` | 3009 — [App](http://localhost:3009) | aus |
-| notetree | `notetree-mobile-react-native-expo` | Expo/Metro standardmäßig 8081 — [Metro](http://localhost:8081) (kann dynamisch ausweichen) | aus |
-| notetree | `notetree-quiz-crossword-creator` | 5173 — [App](http://localhost:5173) | aus |
-| notetree | `notetree-tanstack` | 3005 — [App](http://localhost:3005); 3015 — [Notes](http://localhost:3015/notes); 3006 — [LAN-Modus](http://localhost:3006) | aus |
-| old-stuff-but-useful-maybe | `14-quiz-blaster-arena` | 3030 — [App](http://localhost:3030) | aus |
-| old-stuff-but-useful-maybe | `14-quiz-blaster-arena-godot` | kein HTTP-Dev-Port (Godot-Projekt) | — |
-| old-stuff-but-useful-maybe | `14-quiz-blaster-arena-unity` | kein HTTP-Dev-Port (Unity-Projekt) | — |
-| old-stuff-but-useful-maybe | `7-3D-Voxel-Samurai-Quiz-codex-5-3-xhigh` | 3070 — [Spiel](http://localhost:3070); 2567 — Multiplayer | aus |
-| old-stuff-but-useful-maybe | `coding-guide` | 3005 — [App](http://localhost:3005) | aus |
-| React Projects | `openscreen` | 5173 — [App](http://localhost:5173) | aus |
-| React Projects | `Perfumetrics-v3` | 3000 — [App](http://localhost:3000) | aus |
-| track-me-ai | `trackme-ai-backend` | 3000 — [App/API](http://localhost:3000) | aus |
-| track-me-ai | `trackme-ai-mobile` | Expo/Metro standardmäßig 8081 — [Metro](http://localhost:8081) (kann dynamisch ausweichen) | aus |
-| uniai-chat | `uniai-chat` | kein eigener Webserver (Container-Repository) | — |
-| uniai-chat | `automaker` | 3007 — [UI](http://localhost:3007); 3008 — [API](http://localhost:3008/api/health); 3009 — [Chat](http://localhost:3009); 3010 — [Kanban](http://localhost:3010) | aus |
-| uniai-chat | `openchamber` | 5173 — [Dev-UI](http://127.0.0.1:5173); 3001 — [Dev-API](http://127.0.0.1:3001); 3000 — [Web-CLI](http://localhost:3000) | aus |
-| uniai-chat | `uniai-chat-desktop` | 5173 — [Vite-UI](http://localhost:5173) | aus |
-| uniai-chat | `uniai-chat-vscode-extension` | kein eigener Webserver (VS-Code-Erweiterung) | — |
+| Repository | Anwendung | Feste lokale Links | Start | Status beim Scan |
+|---|---|---|---|---|
+| `track-me-ai` | TrackMe-Webapp | 3000 — [App](http://localhost:3000) | `pnpm dev` | aus |
+| `ai-cutting-automaker` | Electron-Videoeditor | 3001 — [API](http://localhost:3001/api); 5190 — [Renderer](http://localhost:5190) | `npm run dev` | aus · Dependencies fehlen lokal |
+| `rapid-ai-cut` | Next-/Electron-Videoeditor | 3002 — [App](http://localhost:3002) | `npm run dev` | aus |
+| `notetree-tanstack` | NoteDrill | 3005 — [App](http://localhost:3005); 3006 — [LAN](http://localhost:3006); 3015 — [Notes](http://localhost:3015/notes) | `pnpm dev` | aus |
+| `automaker` | Automaker | 3007 — [UI](http://localhost:3007); 3008 — [API](http://localhost:3008/api/health) | `npm run dev` | aus |
+| `Perfumetrics-new` | Perfumetrics | 3020 — [App](http://localhost:3020) | `npm run dev` | Port startet · App benötigt lokale Auth-/Supabase-Secrets |
+| `nalbach-und-hinkel-2` | Kundenwebseite | 3021 — [App](http://localhost:3021) | `npm run dev` | aus |
+| `coding-guide` | Coding Guide | 3022 — [App](http://localhost:3022) | `npm run dev` | aus |
+| `vibe-kanban` | Kanban-Webapp | 3023 — [Frontend](http://localhost:3023); 3024 — Backend | `pnpm dev` | aus · Frontend-Dependencies fehlen lokal |
+| `quiz-blaster-arena` | Quiz-Spiel | 3030 — [Spiel](http://localhost:3030); 3031 — Socket.IO | `pnpm dev` | aus |
+| `voxel-samurai-quiz` | Spiel und Labore | 3070 — [Spiel](http://localhost:3070); 3071 — [Asset-Lab](http://localhost:3071); 3072 — [Sound-Lab](http://localhost:3072); 3073 — [Monster-Lab](http://localhost:3073); 3074 — [Aeon](http://localhost:3074); 2567 — Multiplayer | `pnpm dev` bzw. `pnpm dev:<labor>` | aus |
+| `claude-desert` | Ashen Desert | 5173 — [Spiel](http://127.0.0.1:5173); 4173 — [Preview](http://127.0.0.1:4173) | `npm run dev` | **✅ 5173 läuft** |
+| `Claude-of-Duty` | Overwatch / Claude of Duty | 5178 — [Spiel](http://127.0.0.1:5178); 4178 — [Preview](http://127.0.0.1:4178) | `pnpm dev` | **✅ alter Preview-Prozess auf [8080](http://127.0.0.1:8080)** |
+| `Claude-of-tsushima` | Open-World-Spiel | 5180 — [Spiel](http://localhost:5180); 4180 — [Preview](http://localhost:4180) | `pnpm dev` | aus · Dependencies fehlen lokal |
+| `claude-tower-defense` | Bastion of the Emberveil | 5183 — [Spiel](http://127.0.0.1:5183); 4183 — [Preview](http://127.0.0.1:4183) | `pnpm dev` | **✅ 5183 läuft** |
+| `quiz-arena-space` | Starforge Arena | 5184 — [Spiel](http://127.0.0.1:5184); 4184 — [Preview](http://127.0.0.1:4184) | `npm run dev` | **✅ alter Prozess auf [4173](http://127.0.0.1:4173)** |
+| `duty-of-tsushima` | noch leeres Projektgerüst | kein Webserver | — | — |
+| `uniai-chat-vscode-extension` | VS-Code-Erweiterung | kein eigener Spiel-/Webserver; Proxy-Ports werden von der Erweiterung verwaltet | `pnpm compile` | — |
 
-## Bekannte Portüberschneidungen
+## Weitere feste Preview-Ports
 
-Mehrere Projekte verwenden absichtlich Framework-Defaults. Sie können daher nicht gleichzeitig auf ihrem
-Standardport starten:
+Voxel Samurai nutzt zusätzlich 4174 für das Asset-Lab-Preview, 4175 für das Sound-Lab-Preview,
+4176 für das Monster-Lab-Preview und 4177 für das Aeon-Preview. Damit bleiben auch alle Preview-Ports
+untereinander eindeutig.
 
-- **3000:** `demoai-portfolio`, `nalbach-und-hinkel-2`, `Perfumetrics-v3`, `trackme-ai-backend`, OpenChamber Web-CLI
-- **3005:** `notetree-tanstack`, `coding-guide`
-- **3009:** `ecommerce-printshop`, `localbench-benchmarks`, Automaker Chat
-- **3010:** `linearleads`, Automaker Kanban
-- **3070:** beide Voxel-Samurai-Repositories
-- **5173:** `claude-desert`, `Claude-Flakes`, `Claude-of-tsushima`, `claude-tower-defense`, `quiz-arena-space`, `quizshoot`, `notetree-quiz-crossword-creator`, `openscreen`, OpenChamber Dev-UI, `uniai-chat-desktop`
-- **8081:** beide Expo-Projekte, sofern Expo nicht automatisch ausweicht
+## Portregeln
+
+1. Jeder feste Port gehört genau einem Repository bzw. einem klar benannten Unterdienst.
+2. Vite-Projekte verwenden `strictPort`, damit ein belegter Port nicht still auf eine andere Nummer springt.
+3. CLI-Portargumente haben Vorrang vor Vite-Konfigurationen.
+4. Automaker darf für von ihm gestartete, temporäre Fremdprojekte dynamische Ports ab 3001 suchen; diese
+   temporären Ports gehören nicht zur festen Projektbelegung.
+5. Vibe Kanban startet bei 3023/3024 und sucht nur dann weiter, wenn einer dieser Ports bereits extern belegt ist.
+6. Bereits laufende Prozesse wurden nicht beendet. Deshalb verwenden Claude of Duty und Quiz Arena Space
+   bis zum nächsten normalen Neustart noch ihre oben ausgewiesenen alten Override-Ports.
+
+## Warum ein `shared-docs`-Ordner leer aussehen kann
+
+`shared-docs` ist ein Git-Submodul. Der Eintrag kann bereits im Git-Index existieren, obwohl sein Inhalt noch
+nicht ausgecheckt wurde. Darum scheitert `git submodule add ... shared-docs` mit
+`'shared-docs' already exists in the index`.
+
+Im jeweiligen Projekt stattdessen ausführen:
+
+```bash
+git submodule update --init shared-docs
+git submodule update --remote shared-docs
+```
+
+Für Repositories mit dem alternativen Pfad `shared/docs` gilt derselbe Befehl mit diesem Pfad.
 
 ## Pflege
 
-Bei einem neuen Shared-Docs-Submodule oder einer Portänderung diese Datei aktualisieren. Für den tatsächlichen
-Laufstatus unter Windows zählen Listener plus Prozesspfad; ein belegter Port allein reicht nicht. Anschließend
-den direkten HTTP-Link einmal aufrufen.
+Bei einem neuen Shared-Docs-Submodul oder einer Portänderung diese Datei aktualisieren. Für den Laufstatus
+immer Listener **plus Prozess-Arbeitsverzeichnis plus HTTP-Antwort** prüfen; ein belegter Port allein ist
+kein Beleg für das richtige Projekt.
