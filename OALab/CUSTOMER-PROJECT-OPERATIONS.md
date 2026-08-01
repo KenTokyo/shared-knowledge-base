@@ -98,6 +98,25 @@ Bei Kundenprojekten ist Netcup häufig der Mailprovider, aber kein verbindlicher
 
 Die Formularadresse gehört als `Reply-To` in die interne Nachricht. Als `From` soll grundsätzlich das authentifizierte Postfach verwendet werden; eine fremde Absenderdomain kann SPF/DMARC verletzen. Eigene DKIM-Konfiguration nur einbauen, wenn sie ausdrücklich bereitgestellt und verlangt wurde.
 
+### SMTP-Versand und Posteingang getrennt prüfen
+
+Ein erfolgreicher SMTP-Login oder SMTP-Status `250` bestätigt nur die Annahme für den ausgehenden Versand. Für den tatsächlichen Posteingang zusätzlich den MX-Eintrag der Empfängerdomain prüfen:
+
+```bash
+nslookup -type=mx example.de
+```
+
+Wichtige Regeln:
+
+- Der MX-Eintrag bestimmt, zu welchem Provider eingehende Nachrichten gelangen.
+- Ein gleichnamiges IONOS-Postfach empfängt nicht automatisch, wenn der MX-Eintrag der Domain auf Microsoft 365 oder einen anderen Provider zeigt.
+- Ein SMTP-Versand aus einer Serverless Function legt normalerweise keine Kopie im Webmail-Ordner „Gesendet“ ab.
+- Bei gemischten Providern interne Benachrichtigungen an ein bestätigtes Postfach beim MX-Provider senden.
+- Soll ein Postfach beim anderen Provider empfangen, muss der Domain-/Mailadministrator eine Alias-, Weiterleitungs-, Connector- oder Split-Domain-Regel einrichten.
+- MX-Einträge niemals isoliert für ein Website-Formular umstellen; dadurch kann der Empfang aller übrigen Domainpostfächer ausfallen.
+
+SMTP-Annahme, MX-Routing und vom Kunden bestätigter Postfacheingang in Tests und Customer Notes immer als drei getrennte Zustände dokumentieren.
+
 ## Kontrollierte Produktionstests mit Playwright CLI
 
 Playwright CLI darf für klar begrenzte Abnahmetests auf echten Kundenseiten eingesetzt werden. Dabei gelten folgende Regeln:
