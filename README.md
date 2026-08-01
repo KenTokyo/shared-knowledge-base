@@ -25,6 +25,7 @@ Vorschriften: eine gemessen bessere lokale Lösung hat immer Vorrang und darf de
 | Repository | Ordner |
 |---|---|
 | `voxel-samurai-quiz` | [`projects/voxel-samurai-quiz/`](projects/voxel-samurai-quiz/) |
+| `Claude-Flakes` | [`projects/claude-flakes/`](projects/claude-flakes/) |
 
 Weitere Repos legen ihren Ordner selbst an: `projects/<repo-name>/README.md` mit der Trigger-Tabelle,
 daneben die Tippdateien. Vorlage ist der Ordner oben.
