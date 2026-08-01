@@ -16,7 +16,7 @@ Vorschriften: eine gemessen bessere lokale Lösung hat immer Vorrang und darf de
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Muster für ein CLI-Capture-System (headless Wirt, Render-Target, kein `page.screenshot()`) |
 | [`PORTLISTE.md`](PORTLISTE.md) | Lokale Dev-Ports und direkte Links aller Projekte mit Shared Docs |
 | [`CREATE-PROMPT-GUIDE.md`](CREATE-PROMPT-GUIDE.md) | Prompts bauen |
-| [`agents/`](agents/) | Arbeitsmodi (Loop ohne Rückfragen, Phasen abhaken) und das [Juicy-Game-UI-System](agents/juicy-game-ui-system.md) |
+| [`agents/`](agents/) | Arbeitsmodi (Loop ohne Rückfragen, Phasen abhaken), der [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md) und das [Juicy-Game-UI-System](agents/juicy-game-ui-system.md) |
 | [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
 | [`playwright-cli/`](playwright-cli/) | Playwright-CLI-Notizen |
 | [`old-deprecated/`](old-deprecated/) | Abgelöste Fassungen. Nur zum Nachschlagen, nicht mehr verlinken |
@@ -38,6 +38,8 @@ daneben die Tippdateien. Vorlage ist der Ordner oben.
 2. Arbeiten.
 3. Hat etwas Zeit gekostet, das ein Tipp verhindert hätte → Tipp anlegen. Zwei Zeilen, mit Beleg.
 4. Hat ein Tipp nicht gestimmt → stürzen, mit Gegenbeleg. Das ist ausdrücklich erlaubt und erwünscht.
+5. Nach **3–5 Verbesserungen an derselben Achse**: Achse schließen, Deltas festhalten, weiter an etwas
+   Neuem → [`agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md`](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md).
 
 ## Grenzen, die das System klein halten
 

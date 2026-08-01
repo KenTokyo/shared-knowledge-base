@@ -1,3 +1,5 @@
+**Deckel dazu: [3–5 Verbesserungen pro Achse, dann etwas Neues](MAX-5-VERBESSERUNGEN-DANN-WEITER.md).** „Ohne Stopps" gilt für die Arbeit, nicht für die Achse: nach 3–5 Verbesserungen an derselben Sache wird die Achse geschlossen und dokumentiert, und die nächste Phase ist etwas Neues. Ein Audit der eigenen letzten Verbesserung zählt nicht als Verbesserung.
+
 BITTE NACH FOLGENDEN REGELN WEITERARBEITEN, HALTE DICH DARAN!
 
 1. **Planungsvalidierung (ZWINGEND VOR CODE):**
@@ -8,8 +10,8 @@ BITTE NACH FOLGENDEN REGELN WEITERARBEITEN, HALTE DICH DARAN!
 
 Falls keine Masterplanung/Todo existiert: Tasks/Todo-Datei mit Phasen erstellen. Existiert bereits eine? Nicht überschreiben — diese Datei definiert deinen Workflow, halte dich an diese Regeln!
 
-Danach phasenweise implementieren, was sinnvoll ist — alle Phasen durcharbeiten ohne aufzuhören. 
-![alt text](image-3.png)
+Danach phasenweise implementieren, was sinnvoll ist — alle Phasen durcharbeiten ohne aufzuhören.
+
 **Aber Dokumentiere nach jeder phase und arbeite im Loop weiter!:**
 
 Weil du machst ein Kontext-condensing. Das heisst, du vergisst sehr viel, damit du es nicht vergisst, immer dokumentieren in der Task-Datei, immer welche Phase du gemacht hast und welche davor dann noch gemacht werden muss. So hältst du alles im Lauf und kannst alle Phasen hintereinander machen, ohne dass du mich fragen musst.
