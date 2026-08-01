@@ -14,23 +14,13 @@ Dinge, die man in keiner Architekturkarte sucht, weil man nicht weiß, dass man 
 | Woran du arbeitest | Lies zuerst |
 |---|---|
 | Gras, Laub, Terrain, Dichte, Draw Calls, Framezeit | [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md) |
-| Sweeps, Rankings, Referenzvergleich, Blindreview, „ist das besser?" | [`MEASURING.md`](MEASURING.md) |
+| AEON-Bildmaße, Layer-A/B, Sondenmetrik, Probe-vs.-Shipping | [`MEASURING.md`](MEASURING.md) |
+| Rauschboden, Lauf-Flags, Zustandsdrift, Zeitverhalten, Sondenspalten | [`RUNTIME-MEASURING.md`](RUNTIME-MEASURING.md) |
 | `CameraRig`, Third Person, Spielpose, Waffe, Gegnerpeilung | [`CAMERA-CHARACTER.md`](CAMERA-CHARACTER.md) |
 | CLI aufrufen, Sonde schreiben, Datei schreiben, committen | [`TOOLING-TRAPS.md`](TOOLING-TRAPS.md) |
 
-Zusätzlich global, wenn das Thema stackübergreifend ist: [`../../THREEJS-RULES.md`](../../THREEJS-RULES.md).
+Allgemeine Sweeps, Rankings und Reviews: [`../../threejs/MEASURING.md`](../../threejs/MEASURING.md). Stackübergreifender Router: [`../../THREEJS-RULES.md`](../../THREEJS-RULES.md).
 
-## Das teuerste Muster dieses Projekts
+## Teuerster Befund
 
-Über P14 bis P15 hat **eine** Fehlerform mehr Zeit gekostet als alle anderen zusammen:
-
-> **Die Messung war richtig, die Einheit oder das Fenster nicht — und die Schlussfolgerung stand trotzdem
-> vier Schichten lang.**
-
-Vier belegte Fälle: Pixel über zwei Auflösungen verglichen (P14p → P14q), Messfenster im Teich statt im Gras
-(`R.far`/`R.toe`), Rauschboden zweimal zu eng geschätzt (0,006 → 0,077), Aufwärm-fps als Kostenmaß zitiert
-(83,5 gegen 44,3 auf identischem Code).
-
-**Gegenmittel, das in allen vier Fällen funktioniert hätte:** vor der ersten Schlussfolgerung *einmal*
-prüfen, was das Instrument tatsächlich zählt — Einheit, Fenster, Nenner, Rauschboden. Das kostet einen Lauf.
-Eine falsche Schlussfolgerung kostet eine Schicht.
+Der wiederholt belegte Mechanismus „richtige Messung, falsche Einheit oder falsches Fenster“ hat seinen einzigen operativen Owner im globalen [`../../threejs/MEASURING.md`](../../threejs/MEASURING.md). Die Dateien hier ergänzen ausschließlich AEON-spezifische Instrumente, Kalibrierwerte und Bedeutungen.

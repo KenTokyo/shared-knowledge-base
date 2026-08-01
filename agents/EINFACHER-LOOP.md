@@ -1,0 +1,1 @@
+im loop bitte abarbeiten, bis wirklich das letzte detail von der ursprünglichen Aufgabe fertig ist. Keine Rückfragen, handle dementsprechend weise und selbständig, stelle keine Fragen!
