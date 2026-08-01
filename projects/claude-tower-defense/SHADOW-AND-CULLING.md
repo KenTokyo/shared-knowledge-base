@@ -77,6 +77,19 @@ verkleinern willst — oder wenn du eine Dreieckszahl aus einem Log zitieren wil
   „weniger Geometrie"-Vorschlag den Quotienten Merkmal/Texel je Sorte ausrechnen. Er braucht keine Uhr und
   keinen gezeichneten Frame, nur die gebauten Puffer und die Lichtmatrizen — und er entscheidet die Frage,
   bevor ein Kandidat gebaut wird.
+  ⚠⚠ **Und derselbe Texel entscheidet die FORM des PCF-Kerns — aber erst NACH einer zweiten Projektion.**
+  `texel_x` 7,62 gegen `texel_y` 5,91 cm macht den Kern im **Raster** oval (16,00 gegen 12,41 cm, 1,29 : 1),
+  und genau das stand als „der einzige Preis, den der y-Fit nicht beziffert hat" in der Akte. Auf dem
+  **Boden** ist es umgekehrt: light-space y wird um **1/sin(26,1°) = 2,273** gestreckt, also **16,00 gegen
+  28,21 cm** (1,76 : 1) — und die **quadratische** Box las dort **2,273 : 1**. → Der y-Fit hat den Kern dort,
+  wo er gesehen wird, um **22,4 % runder** gemacht, **bei identischer Texelzahl**; der Preis war ein Guthaben.
+  ⚠⚠ **Der naheliegende „Fix", `mapSize.x` auf 2641 zu heben, um das RASTER zu quadrieren, kostet +29,0 %
+  Texel und macht das Bodenverhältnis WIEDER SCHLECHTER** — er schärft die Achse, die auf dem Boden schon die
+  feine war. ⚠ **`shadow.radius` ist EIN Float und skaliert beide Achsen** — er verkleinert das Oval, rundet
+  es aber nie.
+  *aus dem gelinkten GL-Programm gelesen (`SHADOWMAP_TYPE_PCF` in 12 von 30, Uniform 2,0999999046325684); der
+  Bodenwert zweiwegig belegt: Matrix-Rundlauf 2,21e-17 und Live-Kamera 1,764 : 1 gegen analytisch 1,763 : 1 ·
+  2026-08-01*
   *die Flächenspalte allein las „Blätter sind Splitter"; erst die Dickenspalte drehte das Urteil um ·
   2026-08-01*
 
@@ -100,4 +113,19 @@ verkleinern willst — oder wenn du eine Dreieckszahl aus einem Log zitieren wil
   ein Weld würde das Bild ändern. → Vor dem Verschmelzen die drei Attribute einzeln durchgehen; und die
   Behauptung „verlustfrei" mit einem **Bild** belegen, nicht mit dem Argument.
   *derselbe Mesher emittiert an anderer Stelle weiter vier frische Vertices je Face und hat recht damit ·
+  2026-08-01*
+
+- **Ein Pixeldiff kann eine Boxänderung nicht bewerten** — `pxdiff` meldet für die gebaute Variante
+  **38/38 Posen verändert, bis 19.50 %** und für die verworfene **38/38, bis 21.20 %**: zwei Zahlen, die
+  gleich groß sind und **entgegengesetzt** wirken. Ursache: jede Änderung an der Sonnen-Ortho-Box verschiebt
+  das **Texelraster**, also wandert **jede** Schattenkante im Bild — ein Prozentwert misst hier „hat sich
+  bewegt", nicht „ist besser". → Bei Rasteränderungen **nicht** über den Diff entscheiden: die
+  **Belegungszahlen** entscheiden (Span gegen Union je Achse), und das Bild wird **angesehen** — zwei
+  Ausschnitte nebeneinander, an einer Kante, die das Motiv trägt. ⚠ Und danach ist der alte Referenzordner
+  für Posen **mit** Schatten **kein** Vergleichsstand mehr; wer weiter „bit-identisch" prüfen will, nimmt den
+  neuen Stand als Referenz.
+  ⚠⚠ **Und in D73 hat dieselbe Frage sich ein zweites Mal gestellt und war OHNE Bild zu entscheiden:** wenn
+  jede Alternative auf **ihren eigenen Zahlen** fällt und die gewählte **keine Zeile Code** ändert, ist die
+  Bildfrage gegenstandslos — „nicht angesehen" ist dann kein Versäumnis, sondern das Ergebnis.
+  *der verworfene Arm sah in der zweiten Logzeile kleiner aus als der gebaute und war in der ersten größer ·
   2026-08-01*

@@ -55,6 +55,18 @@ per Skript bearbeitest.
   nicht erst unter `/tmp` anlegen.
   *2026-08-01*
 
+- **Ein Review-Werkzeug, dessen Selektoren ins Leere greifen, meldet PASS** — der Report druckt Zeilen, die
+  Felder darin sind leer oder `-`, und der Lauf endet grün. Ursache: das Produkt hat seine Klassen umbenannt
+  (hier `.hud-gate*` → `.hud-quiz*`, weil das Quiz in die Bildmitte gezogen ist), das Werkzeug fragt weiter
+  die alten ab, `querySelector` gibt `null`, und ein `null` **hat keinen Fehlerwert** — es fällt durch jede
+  Formatierung als Leerstring durch. Ein DOM-Report ist damit genau so lange wahr wie das Markup, gegen das
+  er geschrieben wurde. → Jeder Selektorblock bekommt eine **Existenzprüfung**: kommt der Container `null`
+  zurück, ist das ein **benannter Fehler** („`.hud-quiz.on` nicht gefunden"), kein leeres Feld. Und nach
+  jedem Umbau am Markup das Review-Werkzeug einmal gegen ein Szenario fahren, in dem das Element **da sein
+  muss** — grün über nichts sieht aus wie grün.
+  *`tools/hud.mjs` las nach dem Umzug jedes Quizfeld als `null` und meldete über alle 17 Szenarien
+  `RESULT: PASS`; erst der Blick ins Bild zeigte, dass der Report ein anderes HUD beschrieb · 2026-08-02*
+
 - **Die Uhr dieser Maschine trägt kleine Effekte nicht** — der Rauschboden las am **unveränderten** Build
   11.90 … 24.60 ms (Faktor 2.07) bei einem gesuchten Effekt von 0.3–1.0 ms. → Entscheidungen auf
   **deterministische Spalten** stellen (Dreiecke, Calls, Instanzen) und auf **Bilder**; den Rauschboden vor

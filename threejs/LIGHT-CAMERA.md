@@ -45,6 +45,44 @@ Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
   *Motiv mittig, dafür Gegner über der Bildkante, Sichtbarkeit −76 %, Pitch −51° · Herkunft:
   voxel-samurai-quiz · 2026-08-01*
 
+- **Quadratische Schattenbox über einer Szene, die im Lichtraum nicht quadratisch ist** — die Schatten sind
+  überall gleich grob, und jede Abhilfe klingt nach „mehr Auflösung". Ursache: die Ortho-Box des
+  Richtungslichts wird in **Weltmetern** gewählt („die Karte ist 156 m breit"), aufgelöst wird aber die
+  **Projektion der Kaster in die Lichtachsen** — und eine **streifende** Sonne streckt die eine Achse und
+  staucht die andere, also überzahlt ein Quadrat die eine und hungert die andere **gleichzeitig** aus.
+  → Die Kastervertices durch die **Viewmatrix des Lichts** laufen lassen und die Belegung **je Achse** messen;
+  `texel_x = (right − left) / mapSize` und `texel_y` sind **getrennte Zahlen**, und **nur der Span ist
+  gratis** — `mapSize` kostet Speicher und Füllrate, ein engerer Span kostet nichts.
+  ⚠ **Die Schranke ist der BODEN, nicht die Deko:** an die vorhandenen Kaster zu fitten ist zu eng, weil
+  Figuren, Gegner und später Gebautes **auf** dem Terrain stehen und beim Boot noch gar nicht existieren. Die
+  Bodenebene plus Kopfraum ist die ehrliche Schranke — und den Umrechnungsfaktor Welt-Höhe → Lichtraum-y
+  **aus der Viewmatrix lesen**, nicht aus dem Sonnenwinkel rechnen.
+  ⚠ **Und der scheinbare Preis — „ungleiche Texel machen den PCF-Kern oval" — ist auf dem Boden ein GEWINN,**
+  siehe den nächsten Tipp: das Oval im Raster steht **quer** zu dem, das die Kamera sieht.
+  *eine quadratische Box las auf x 123 % Belegung (überzogen) und auf y 60 %; nur die y-Achse zu fitten
+  schärfte das halbe Bild um 22 % zu Kosten von null, die x-Heilung hätte jeden Schatten 24 % gröber gemacht ·
+  Herkunft: claude-tower-defense (Mechanismus ohne Projektbezug, zweiter Beleg steht aus) · 2026-08-01*
+
+- **Ein Maß aus dem Schattenraster als Bildgröße gelesen** — Kernweite, Penumbra oder Bias werden in
+  Lichtraum-Metern ausgerechnet, in Bildschirmpixel umgerechnet und entschieden; das Urteil kann **im
+  Vorzeichen** falsch sein. Ursache: ein PCF-Tap ist ein Versatz in der **Ebene der Schattenmap**, ein
+  Schatten liegt aber auf einem **EMPFÄNGER**, und beide sind nur für einen Empfänger gleich, der **senkrecht
+  zur Lichtrichtung** steht. → Den Fußabdruck auf die Empfängerfläche **projizieren**, bevor irgendeine Zahl
+  daraus wird: gesucht ist das Δ mit `Δ·ax = δx`, `Δ·ay = δy`, `Δ·n = 0` — ein **2×2-System**, **keine zwei
+  unabhängigen Streckungen** (die Achsen entkoppeln nur, wenn eine davon schon in der Fläche liegt). Auf dem
+  Boden streckt das die lichtraum-y-Achse um **1 / sin(Sonnenelevation)**.
+  ⚠ **Gegenprobe, die den Fehler nicht überleben lässt:** denselben Δ durch `projectionMatrix ·
+  matrixWorldInverse` der **Schattenkamera** zurückschieben — der NDC-Versatz muss **exakt der Tap** sein
+  (`2h/span` auf einer Achse, **null** auf der anderen).
+  ⚠⚠ **Und die Streckung ist kein Fehler, den man wegdrehen sollte:** eine physikalische Penumbra ist eine
+  isotrope Streuung senkrecht zum Licht, auf den Empfänger projiziert — **dieselbe Projektion**. Ein auf dem
+  Boden **runder** Kern beleuchtet eine streifende Sonne wie eine Mittagssonne. Wählbar ist die **Größe** des
+  Kerns, nicht seine Form auf der Fläche.
+  *im Raster 16,00 gegen 12,41 cm (1,29 : 1, x breit), auf dem Boden 16,00 gegen 28,21 cm (1,76 : 1, **y**
+  breit) bei 26,1° Sonne; die erste, unprojizierte Antwort nannte die falsche Achse und eine Differenz von
+  11 px mit falschem Vorzeichen — der Streckfaktor 0,440 war darin bereits berechnet und gedruckt, nur nicht
+  benutzt · Herkunft: claude-tower-defense · 2026-08-01*
+
 ## Handoffs
 
 - PBR → [Shader/PBR](SHADERS.md)
