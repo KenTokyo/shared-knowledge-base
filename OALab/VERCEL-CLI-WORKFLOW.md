@@ -82,7 +82,17 @@ Wichtig:
 - `.env.local`, `.env` und `.vercel/` müssen ignoriert sein.
 - Keine Tokens oder Passwörter in `vercel deploy -e ...`, Commits oder Dokumentation schreiben.
 - Sensitive Preview-/Production-Werte können beim Pull leer oder geschützt erscheinen. Ihre Funktion wird über einen kontrollierten Runtime-Test geprüft, nicht durch Ausgabe des Secrets.
+- Der aktuelle CLI-Stand erlaubt `--sensitive` nicht für `development`; dort die Variable ohne dieses Flag anlegen.
+- Werte über `stdin` ohne abschließenden Zeilenumbruch übergeben. `echo` oder `printf '%s\n'` kann den Zeilenumbruch als Teil des Werts speichern und beispielsweise einen SMTP-Host in `smtp.example.de\n` verfälschen.
 - Nach Änderungen an Runtime-Variablen ein neues Deployment erzeugen.
+
+Sichere Aktualisierung eines bereits vorhandenen geschützten Werts, wobei `VALUE` zuvor aus einer ignorierten lokalen Env-Datei gelesen wurde:
+
+```bash
+printf '%s' "$VALUE" | vercel env add <NAME> production --force --sensitive --yes
+```
+
+Anschließend nicht dem angezeigten Erstellungsalter vertrauen: `vercel env ls` kann beim Überschreiben den ursprünglichen Zeitpunkt beibehalten. Stattdessen neu deployen und den exakten Runtime-Pfad kontrolliert testen.
 
 ## 5. Deployment beobachten und prüfen
 
