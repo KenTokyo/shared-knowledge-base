@@ -69,3 +69,41 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
   Toolflakiness und ist keine. → Inline-SVG-Favicon im `<head>`, keine Datei; das Projekt lädt
   ohnehin keine externen Assets.
   *`index.html` · 2026-08-01*
+
+- **Eine Kennzahl, die über jede Variante konstant bleibt, misst das Instrument** — `capture.mjs`
+  zählte Pixel unter Luma 0,10 und meldete 0,0 % auf allen vierzehn Kameras; der Masterplan las das
+  als „nichts im Bild ist dunkel" und leitete eine Kritik an der Beleuchtung daraus ab. Die Zahl
+  konnte arithmetisch nichts anderes sein: der Lift `[0.012, 0.014, 0.019]` wirkt **nach** dem
+  Tonemapper, also verlässt ein reines Schwarz den Grade bei sRGB-Luma 0,135 — der Boden des Bildes
+  liegt über der Schwelle. → Schattenende als **Perzentil** messen, nicht als feste Schwelle: ein
+  Perzentil wandert mit der Verteilung und lässt sich nicht anpinnen. Und den Wertebereich einer
+  neuen Schwelle einmal von Hand durch die Post-Chain rechnen, bevor man ihr glaubt.
+  *Gegenprobe: `uExposure` 1,00 → 0,12 gefahren, mittlere Luma fällt 0,623 → 0,212, „Tiefschatten"
+  bleibt exakt 0,0 %. Nach dem Umbau auf `p01`: 0,138–0,419 über die vierzehn Kameras · 2026-08-02*
+
+- **Abgeleitete Daten scheitern nicht, sie antworten falsch** — die vierzehn Benchmark-Kameras waren
+  von Hand geschriebene Koordinaten auf einer Insel, die aus einem Seed entsteht. Sieben lagen mit
+  dem Auge unter Grund, `material-closeup` 19,8 m tief. Nichts warf, nichts wurde schwarz: eine
+  vergrabene Kamera liefert ein plausibles graues Bild vom Inneren eines Hügels, und graue Pixel sind
+  grau, ob sie Nebel, Hang oder Polygonrückseite sind. Daraus stammte eine committete Baseline **und**
+  der Fehlverdacht, die Materialschicht sei ein stiller No-Op. → Abgeleitetes beim Bake aus der
+  Quelle lösen, nicht in eine Datei schreiben. Eine committete Lösung veraltet still, sobald Seed
+  oder Feld sich bewegen; ein Solver, der die Quelle liest, kann nicht veralten. Liegt das Ziel in
+  einem gitignorierten Verzeichnis, ist die Dateivariante ohnehin eine Abhängigkeit, die kein
+  Checkout hat.
+  *Nach dem Fix alle 14 mit ≥ 1,8 m Freiraum, `material-closeup` bei 99 % Boden statt 0 % · 2026-08-02*
+
+- **Eine Prüfung, die den Code unter Test wiederverwendet, bestätigt ihn** — der Kamera-Solver
+  rankt sein Framing über ein 11×7-Raster; das Gate `tools/aim.mjs` marschiert 32×18. Teilten sie
+  sich die Funktion, würde das Gate einen kaputten Solver genauso bereitwillig bestätigen wie einen
+  richtigen, weil beide Seiten denselben Fehler machen. → Gate und Erzeuger unabhängig
+  implementieren, auch wenn das ein paar Zeilen dupliziert. Der Zweck einer Prüfung ist
+  Widerspruch, nicht Wiederverwendung.
+  *`src/world/cameras.js` gegen `tools/aim.mjs` · 2026-08-02*
+
+- **Das Gate prüfte eine gleichnamige, andere Sache** — `smoke.mjs` trägt eine Zusicherung „Kamera
+  über dem Terrain" und war 34 von 34 grün, während sieben Benchmark-Kameras im Berg standen. Die
+  Zusicherung prüft `engine.camera`, die Spielerkamera. → Beim Formulieren einer Zusicherung den
+  geprüften Gegenstand benennen, nicht seine Gattung: „Spielerkamera über Grund" hätte die Lücke
+  beim Lesen sichtbar gemacht.
+  *`tools/smoke.mjs:216` · 2026-08-02*

@@ -20,14 +20,23 @@ Zeit gekostet hat. Globale Three.js-Tipps beginnen bei [`../../THREEJS-RULES.md`
 
 > **Der Lauf war grün, weil er die falsche Frage gestellt hat.**
 
-Vier belegte Fälle aus Phase 1: `pnpm check` war `vite build` und hat damit bestätigt, dass ein
+Sechs belegte Fälle. Aus Phase 1: `pnpm check` war `vite build` und hat damit bestätigt, dass ein
 Bundler bündelt, während ~2500 Zeilen Spielcode nie gebootet waren. Headless Chromium rasterte auf
 SwiftShader und lieferte plausible Zahlen. Ein Gefälle-Gate hätte je nach Fenster 50° oder 25° auf
 demselben Terrain gemeldet. Und die erste Fassung des Lane-Gates verglich Höhen statt Design-Zusagen
 und meldete drei Fehler, von denen zwei Absicht waren.
 
-Das Gegenmittel ist in allen vier Fällen dasselbe: **die Prüfung muss die Zusage prüfen, nicht ihre
-Nebenwirkung** — und das Messfenster gehört zur Zahl, nicht in den Kommentar.
+Aus Phase 2 zwei weitere, und es sind die teuersten: sieben von vierzehn Benchmark-Kameras standen
+im Berg, während alle 34 Prüfungen grün blieben — die Zusicherung „Kamera über dem Terrain" prüft
+die *Spieler*kamera. Und die Kennzahl „Tiefschatten" war 0,0 % auf allen vierzehn, nicht weil das
+Bild hell war, sondern weil der Lift nach dem Tonemapper einen Boden bei sRGB-Luma 0,135 zieht und
+die Schwelle bei 0,10 lag. Beide Befunde haben eine committete Baseline erzeugt, und beide haben
+danach eine funktionierende Materialschicht als „stillen No-Op" verdächtigt.
+
+Das Gegenmittel ist in allen sechs Fällen dasselbe: **die Prüfung muss die Zusage prüfen, nicht ihre
+Nebenwirkung** — und das Messfenster gehört zur Zahl, nicht in den Kommentar. Dazu zwei Schärfungen
+aus Phase 2: eine Kennzahl, die über jede Variante konstant bleibt, misst das Instrument und nicht
+die Szene; und abgeleitete Daten scheitern nicht, sie antworten falsch.
 
 ## Kanonische lokale Owner
 
