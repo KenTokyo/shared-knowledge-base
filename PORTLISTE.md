@@ -8,6 +8,13 @@ Zentrale Übersicht der lokalen Startlinks für alle Repositories, die unter
 Prozesspfad und HTTP-Status 200 wurden geprüft. Ein konfigurierter Link bedeutet nicht automatisch, dass
 der Server gerade läuft.
 
+**Nachtrag 2026-08-02 — `duty-of-tsushima` von 5180/4180 auf 5185/4185 verschoben.** Der Eintrag
+kommt aus `vite.config.js`, nicht aus einem Scan. Das Projekt hatte 5180/4180 gewählt, als eine
+ältere Fassung dieser Liste `Claude-of-tsushima` noch auf 5173/4173 führte; tatsächlich stehen dort
+`server.port = 5180` und `preview.port = 4180`, beide `strictPort`. Zwei `strictPort`-Projekte auf
+derselben Nummer heißt: wer zweitens startet, bricht ab — und ausgerechnet diese beiden Repos laufen
+beim Ernten nebeneinander. Regel 1 unten ist genau dafür da.
+
 ## Direkte Startlinks
 
 | Repository | Anwendung | Feste lokale Links | Start | Status beim Scan |
@@ -28,7 +35,7 @@ der Server gerade läuft.
 | `Claude-of-tsushima` | Open-World-Spiel | 5180 — [Spiel](http://localhost:5180); 4180 — [Preview](http://localhost:4180) | `pnpm dev` | aus · Dependencies fehlen lokal |
 | `claude-tower-defense` | Bastion of the Emberveil | 5183 — [Spiel](http://127.0.0.1:5183); 4183 — [Preview](http://127.0.0.1:4183) | `pnpm dev` | **✅ 5183 läuft** |
 | `quiz-arena-space` | Starforge Arena | 5184 — [Spiel](http://127.0.0.1:5184); 4184 — [Preview](http://127.0.0.1:4184) | `npm run dev` | **✅ alter Prozess auf [4173](http://127.0.0.1:4173)** |
-| `duty-of-tsushima` | noch leeres Projektgerüst | kein Webserver | — | — |
+| `duty-of-tsushima` | Duty of Tsushima | 5185 — [Spiel](http://127.0.0.1:5185); 4185 — [Preview](http://127.0.0.1:4185) | `pnpm dev` | aus |
 | `uniai-chat-vscode-extension` | VS-Code-Erweiterung | kein eigener Spiel-/Webserver; Proxy-Ports werden von der Erweiterung verwaltet | `pnpm compile` | — |
 
 ## Weitere feste Preview-Ports
