@@ -107,3 +107,30 @@ oder wenn eine Sonde über eine Oberfläche „0 Fehler" meldet.
   den Input über seinem eigenen `over`-Return liest — beides von derselben Sonde, deren Kontrastvorgängerin über
   dieselben Zustände „0 Fehler" meldete. Der Shrine (`E`) macht denselben Griff seit je richtig und stand als
   Vorlage im Quelltext · 2026-08-02*
+
+- **Eine Sonde, die ihre Prüfliste tippt, misst nur, woran ihr Autor gedacht hat** — die Farbsonde las die
+  *Werte* der Palette korrekt aus `:root` (damit sie nach einer Stylesheet-Änderung nicht stumm weiterläuft),
+  hielt die *Namen* aber in einem Array in der Sonde. Das ist derselbe Fehler eine Ebene höher: sie bleibt
+  grün, wenn jemand eine Farbe **hinzufügt**. Der schärfste Befund der ganzen Achse — ein Salmon, das
+  „unbezahlbar" bedeutet und für Deuteranopen **ΔE 5.3 von `--gold` und 6.7 von `--danger`** entfernt liegt —
+  stand als Literal in einer Regel, tauchte in **keiner** Paartabelle auf und wurde von Hand gefunden.
+  → **Die Prüfliste entdecken, nicht führen:** alle Custom Properties der `:root`-Regeln aus
+  `document.styleSheets` einsammeln, die durchsichtigen verwerfen (eine Fläche ist keine Marke) und Zugehörigkeit
+  über die **Namenskonvention** statt über eine zweite Liste entscheiden (`ink*` ist Betonung, nicht Kategorie).
+  Und die Restliste **namentlich drucken** — „N Marken in undeklarierter Farbe" ist die Zeile, an der die eigene
+  blinde Stelle sichtbar wird.
+  *81 von 413 Marken standen in undeklarierten Farben; nach `--poor`, `--parchment` und `--ink-inverse` waren es
+  **8**, und die Sonde fand das Paar `gold/poor` selbst, das sie vorher strukturell nicht sehen konnte · 2026-08-02*
+
+- **Ein Nullwert, der noch nie ungleich Null war, ist kein Beleg, sondern eine unbewiesene Behauptung** — eine
+  neue Spalte, die sofort „0 Fehler" meldet, sieht wie eine bestandene Prüfung aus und ist bis dahin nur
+  ununterscheidbar von einer Spalte, die immer 0 rechnet. Beim Bau dieser einen Spalte steckten **drei**
+  Modellfehler nacheinander drin, jeder mit plausibler Ausgabe: erst kollidierte „ich *bin* eine Flamme" mit
+  „neben mir steht eine Flamme" im selben Namensraum, dann wurde eine Marke gegen das *ganze Vokabular* der
+  Gegenseite verglichen statt gegen deren *Marken*, dann zählte ein Nachbar, der nur eine Zahl ist, gar nicht —
+  was ausgerechnet den frisch gebauten Fix als Loch meldete.
+  → **Den eigenen Fix wegnehmen und nachmessen.** Ein `display: none` auf die Regel, die den zweiten Kanal
+  trägt, ein Lauf, zurücksetzen — und den Ausschlag **in den Sondenkopf schreiben**, damit die Null danach
+  überprüfbar bleibt statt geglaubt werden zu müssen.
+  *`.hud-card-short` versteckt: `gold/poor` sprang von 0 auf **8 + 16 nackte Marken**, benannt bis auf Stage und
+  Klasse; Regel zurück, wieder 0 · 2026-08-02*
