@@ -61,6 +61,30 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   `render 4526 ms in 896 Aufrufen, laengster 3808 ms endet bei 17663 ms` — 5 ms vor `p:start`. Widerlegt die
   vorherige Fassung dieses Tipps („Commit 11774→17849 ms") · 2026-08-02*
 
+- **Produktionsbuild als „dreimal schneller" gelesen — er verschiebt den GPU-Posten, er senkt ihn nicht** —
+  Prod meldete `Stage 5266 ms` statt 17811 ms und `render 7 ms in 336 Aufrufen (+0 Programme)`. Beides stimmt und
+  beides täuscht: Der Wrapper zählte nur bis zum Mount, und in Prod liegt der Mount **vor** dem teuren Zeichnen.
+  Misst man auch danach, steht dieselbe Arbeit da wie im Dev — bis auf ein paar Geometrien deckungsgleich.
+  Der Prod-Gewinn ist ausschließlich **React-Churn und Dev-Modulauswertung**, nicht GPU-Arbeit. → Ein Messfenster,
+  das an einem Ereignis endet, das der Vergleichslauf **verschiebt**, vergleicht zwei verschiedene Fenster; Posten
+  immer über die ganze Phase führen, nie bis zu einer Marke, die die Gegenseite bewegt. Zweitens: In Prod gibt es
+  keine StrictMode-Verdopplung — `xN` sind dort **echte** Versuche, im Dev halbieren.
+  *Etage 12, `.tmp/prod2-l12.json` gegen `.tmp/render1-l12.json`: Dev `render 5436 ms in 924 Aufrufen
+  (+19 Programme, +127 Geometrien, +5 Texturen), laengster 3941 ms [+16 Programme, +15 Geometrien, +0 Texturen,
+  171 Draws]` — Prod nach dem Mount `6192 ms in 84 Aufrufen (+24, +128, +5), laengster 3568 ms [+16, +15, +0,
+  165 Draws]`. Settle 20,0 s → 11,6 s, Renderaufrufe 924 → 84, Teilbaumversuche 5 → 4 · 2026-08-02*
+
+- **`numPointLights` driftet über die Sitzung und linkt die halbe Szene im Spiel neu** — im Produktionsbuild
+  brechen einzelne Spielframes auf 340–1060 ms ein, `compile.msTotal` liegt bei 1,9–8,4 s **nach** dem Reveal.
+  Ursache: Die Lichtzahl steckt im Programm-Cache-Key, und sie steht nie still — Menü-Warmup 7, Gate-Compile 10,
+  Spiel 13. Jeder Apex-Jäger bringt sein eigenes `<pointLight>` mit (`KrustenGraeberModel.tsx:488`,
+  `ZenitSeglerModel.tsx:504`, u. a. je eins) und hebt die Zahl beim Spawn. Im Dev fiel das nie auf: Dort dauert
+  der Mount 17,8 s, die Jäger stehen längst, wenn das Gate kompiliert — **null** solcher Relinks in den
+  Spielblöcken. → Lichtzahl als Cache-Key-Achse behandeln: Was das Warmup sehen soll, muss beim Warmup **sichtbar**
+  sein (`visible = false` nimmt three in `projectObject` aus der Lichtsammlung, `intensity = 0` nicht).
+  *Etage 12, zwei Prod-Läufe: `numPointLights (7→13)` 13+2+1 = 16 bzw. 10+1+0 = 11 Relinks, dagegen Dev 0 in drei
+  Blöcken; Gate meldet `pointLights 10 beim Compile` · 2026-08-02*
+
 - **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
   ~186 ms/Frame, gelesen als blockierter Hauptthread, der auf den Dev-Server wartet. Real ist die Verteilung
   bimodal: acht Blöcke tragen 18,5 s, die 65 Ticks laufen in den ~0,8 s dazwischen zu **~12 ms**. Ein Mittelwert
@@ -96,8 +120,15 @@ Rumpfmarken als Wasserfall (`erste Zeit`, `+Spannweite`, `xAnzahl`), dahinter Ti
 statt der einen größten Lücke die **Blockliste** `dauer@ende markeVorher>markeNachher` (ab `BLOCK_GAP_MS` 500 ms,
 gedeckelt mit sichtbarem `ABGESCHNITTEN`), seit `7306a8ac` zusätzlich `render … laengster … endet bei …` aus einem
 Wrapper um `gl.render`. Produktionsrelevant ist der lange `gl.render`-Aufruf; der StrictMode-Nachlauf ist
-Dev-Artefakt. Ob die ~11,3 s Sturmdauer davor Dev-Modulauswertung oder echte Rechenzeit sind, ist **nicht
-entschieden** — der Gegencheck wäre ein Produktionsbuild. Das Instrument ist ohne laufendes Settle-Fenster ein No-op.
+Dev-Artefakt. Seit `3ad4369d` führt der Wrapper **zwei** Abschnitte (`render vor Mount` / `render nach Mount`,
+beide immer gedruckt) und meldet `pointLights N beim Compile` — die alte Fassung stieg beim Mount aus und ließ den
+Produktionsbuild kostenlos aussehen. Das Instrument ist ohne laufendes Settle-Fenster ein No-op.
+
+Der Produktionsbuild-Gegencheck ist damit **entschieden**: `pnpm build:measure` → `dist-measure/` (Messbrücke über
+`SVQ_BRIDGE=1` als `define`, Bündelmarker `enterSoloDungeon`, niemals deployen), `pnpm preview:measure` auf 4180.
+Die ~11,3 s Sturmdauer sind überwiegend Dev-Modulauswertung und React-Churn; die GPU-Arbeit darunter ist in beiden
+Builds dieselbe und wandert in Prod hinter den Mount. Offen ist damit nicht mehr „Dev-Artefakt oder echt", sondern
+die Lichtzahl-Drift und die eine Suspense-Grenze in `GameWorldSoloModeRuntime.tsx`.
 
 Das Instrument benennt seit `c4a1b837` das `cacheKey`-Feld, in dem ein neues Programm vom ähnlichsten
 vorhandenen abweicht, und druckt eine rohe Schlüsselprobe mit erkannter Kopflänge (`probe`-Zeile). Rumpf ist
