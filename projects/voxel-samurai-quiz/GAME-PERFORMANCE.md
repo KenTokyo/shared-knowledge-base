@@ -46,17 +46,29 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   *`Effects.tsx`, 4 Gegnergeschoss-Layer × 11 InstancedMesh: 9 Thrash-Schlüssel → 0 (drei Vorher-Läufe identisch),
   Kompilate 50→5 / 65→2, `msTotal` 2467→1210 / 2398→684 ms, Frames je 15 s 1065→1532 · 2026-08-02*
 
-- **Stage-Mount ist Render-Sturm plus ein Commit-Block, nicht Chunkladen** — `scene` meldete 18–20 s Mount ohne
-  Adresse. Marken in den Komponentenrümpfen (`markPostStartSceneSettlePhase`) plus Tickdichte trennen die Posten:
-  Der Stage-Chunk ist warm (`runtime` rendert bei 154 ms), aber der Teilbaum wird **fünfmal komplett verworfen
-  und neu gerendert**, weil alles an EINER Suspense-Grenze hängt — ein suspendierendes Kind entsorgt den ganzen
-  Baum. Die Abbruchstelle liest man an den Zählern ab: gleiche Zahl = Versuch kam vorbei, kleinere Zahl = hier
-  brach er ab. Danach committet React in **einem** Block ohne einen einzigen Frame.
-  → Erst die Tickdichte lesen, dann urteilen: laufende Frames heißen „wartet auf Chunk", eine Lücke ohne Frame
-  heißt „rechnet". Wall-Zeit allein verwechselt beides.
-  *Etage 12: Sturm 101→11774 ms (65 Ticks, ~186 ms/Frame → Dev-Server-Warten), Commit 11774→17849 ms mit einer
-  Lücke von 5767 ms ohne Frame (echte CPU-Zeit, auch in Produktion), Rest StrictMode. Zwei Läufe:
-  `.tmp/split2-l12.json`, `.tmp/split3-l12.json` · 2026-08-02*
+- **Stage-Mount ist Render-Sturm plus ein `gl.render`-Aufruf — nicht der React-Commit** — `scene` meldete 18–20 s
+  Mount ohne Adresse. Marken in den Komponentenrümpfen (`markPostStartSceneSettlePhase`) plus `c:`/`p:`-Marken aus
+  `StageCommitMark.tsx` (Layout- bzw. passive Effekte, als **Geschwister** zwischen den Schichten, nie als Hülle)
+  trennen die Posten: Der Stage-Chunk ist warm (`runtime` rendert bei 163 ms), aber der Teilbaum wird **fünfmal
+  komplett verworfen und neu gerendert**, weil alles an EINER Suspense-Grenze hängt — ein suspendierendes Kind
+  entsorgt den ganzen Baum. Die Abbruchstelle liest man an den Zählern ab: gleiche Zahl = Versuch kam vorbei,
+  kleinere Zahl = hier brach er ab. Der **Commit selbst kostet 71–76 ms**; die Sekunden danach stehen in **einem
+  einzigen `gl.render`**, das die neue Szene zum ersten Mal zeichnet (Three initialisiert dort GPU-Ressourcen).
+  → Kein Posten wird einer Phase zugeschrieben, bevor auf **beiden** Seiten der Lücke eine Marke sitzt. „Großer
+  Block direkt hinter dem Renderende" heißt nicht „React committet".
+  *Etage 12, drei Läufe `.tmp/commit1..3-l12.json`: Renderphase 163→12049 ms; Commit `c:start`→`c:subtree`
+  76/71/74 ms; danach **5494 ms ohne jede React-Marke**; passive Effekte `p:start`→`effect` 651 ms. In der Lücke
+  `render 4526 ms in 896 Aufrufen, laengster 3808 ms endet bei 17663 ms` — 5 ms vor `p:start`. Widerlegt die
+  vorherige Fassung dieses Tipps („Commit 11774→17849 ms") · 2026-08-02*
+
+- **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
+  ~186 ms/Frame, gelesen als blockierter Hauptthread, der auf den Dev-Server wartet. Real ist die Verteilung
+  bimodal: acht Blöcke tragen 18,5 s, die 65 Ticks laufen in den ~0,8 s dazwischen zu **~12 ms**. Ein Mittelwert
+  über Frames mischt beide Moden und beschreibt keinen. → Blockliste lesen (`blockGaps`, Schwelle `BLOCK_GAP_MS`),
+  nicht die Tickdichte. Marken an beiden Blockenden geben jedem Block seine Adresse; eine Lücke, in der **keine**
+  Marke fällt, ist selbst der Befund — sie grenzt den Posten ein, statt ihn zu verstecken.
+  *Etage 12, `.tmp/commit3-l12.json`: Blöcke 2224/2135/1019/2920/2359/695/1671/5469 ms = 18,5 s von 19,3 s
+  Mountfenster, Rest 823 ms auf 65 Ticks · 2026-08-02*
 
 - **StrictMode verdoppelt jede Rumpfmarke — Zählwerte halbieren** — die Marken meldeten „10 Renderversuche",
   real waren es 5. `src/main.tsx:169` rendert unter `<StrictMode>`; React ruft Renderfunktionen doppelt auf und
@@ -80,9 +92,12 @@ Wo die Ladezeit steht, sagt das Settle selbst: seine `done`-Zeile im `entry.time
 der Mount trägt 91 %.
 
 Seit `edf902e7` teilt dieselbe `done`-Zeile den Mount selbst auf: `Stage-Aufteilung [...]` listet die
-Rumpfmarken als Wasserfall (`erste Zeit`, `+Spannweite`, `xAnzahl`), dahinter Tickdichte und die größte
-Frame-Lücke **mit ihrem Ende**. Produktionsrelevant ist davon nur der Commit-Block; Sturmdauer und der
-StrictMode-Nachlauf sind Dev-Artefakte. Das Instrument ist ohne laufendes Settle-Fenster ein No-op.
+Rumpfmarken als Wasserfall (`erste Zeit`, `+Spannweite`, `xAnzahl`), dahinter Tickdichte. Seit `0338519a` folgt
+statt der einen größten Lücke die **Blockliste** `dauer@ende markeVorher>markeNachher` (ab `BLOCK_GAP_MS` 500 ms,
+gedeckelt mit sichtbarem `ABGESCHNITTEN`), seit `7306a8ac` zusätzlich `render … laengster … endet bei …` aus einem
+Wrapper um `gl.render`. Produktionsrelevant ist der lange `gl.render`-Aufruf; der StrictMode-Nachlauf ist
+Dev-Artefakt. Ob die ~11,3 s Sturmdauer davor Dev-Modulauswertung oder echte Rechenzeit sind, ist **nicht
+entschieden** — der Gegencheck wäre ein Produktionsbuild. Das Instrument ist ohne laufendes Settle-Fenster ein No-op.
 
 Das Instrument benennt seit `c4a1b837` das `cacheKey`-Feld, in dem ein neues Programm vom ähnlichsten
 vorhandenen abweicht, und druckt eine rohe Schlüsselprobe mit erkannter Kopflänge (`probe`-Zeile). Rumpf ist
