@@ -6,6 +6,9 @@
 Global: [`threejs/MEASURING.md`](../../threejs/MEASURING.md). Laufvarianz/Zeit/Spalten:
 [`RUNTIME-MEASURING.md`](RUNTIME-MEASURING.md).
 
+Terrain-Höhencaches sind in Codeform beantwortet — `pnpm terrain:anchor-probe` prüft Feldmarke im Schlüssel,
+Treffer/Fehltreffer und alle drei Mutatoren; kein Tipp nötig.
+
 ## Tipps
 
 - **Bild-Featurebreite als Halmmaß** — normiertes Bildaggregat aus Dichte, Haltung, Überlagerung ≠ physische Breite. → Vor Geometrieänderung Bild- und Weltmaß trennen.
@@ -22,3 +25,6 @@ Global: [`threejs/MEASURING.md`](../../threejs/MEASURING.md). Laufvarianz/Zeit/S
 
 - **Probe driftet vom Shipping-Pfad** — Defaults, FreeCam, alte Pose oder nachgebaute Invariante liefern plausible Fremdzahlen. → Kandidatenflags, Produktions-Poser und veröffentlichte Runtime-Werte nutzen.
   *`camwall` ignorierte `--liftMode`/`--liftBodY`, Armformel veraltet; FreeCam verfehlte `groundLift`; alte Pose +1,009 vs. Shipping +0,083 · 2026-08-01*
+
+- **Sonde misst dort, wo Fehler- und Sollwert zusammenfallen** — `sunkBy 0.00` liest sich als Beleg; am Zielanker ist der Boden selbst 0.00, eine fälschlich gelatchte 0 nicht von der richtigen unterscheidbar. → Vor dem Lauf prüfen, ob der Fehlerfall an dieser Stelle einen **anderen** Wert liefert als der Sollfall; sonst Ort wechseln oder offline nachstellen.
+  *Zwei Diag-Läufe L11/L12 (~6 min) belegten nichts — Spot 0 ist auf jeder Etage der auf 0 planierte Arena-Kern; `pnpm terrain:anchor-probe` zeigte den Befund in Sekunden (alter ortsbasierter Schlüssel 0 bei Boden 16,6) · 2026-08-02*
