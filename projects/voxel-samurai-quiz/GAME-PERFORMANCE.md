@@ -16,9 +16,10 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   erneut kompilieren. Symptom ist tückisch: `rebuiltKeys: 0`, jeder Besitzer `×1`, Materialflags sichtbar
   identisch. → Vor `compile()` das Ziel des echten Szenenrenders binden und danach zurückbinden; ohne Postkette
   `null` lassen. Gleiches Fenster gilt für `toneMapping` (`:177`).
-  *Etage 12: B1 34/31 Kompilate 8269/7911 ms → 15/15 mit 1009/999 ms, B2 5/7 mit 1210/1919 ms → 0, wall p99 B1
-  335/333 → 34/42 ms, cpu max B2 666/1368 → 17/26 ms; 14 der 15 Restkompilate sind Erstauftritte. Zwei Läufe je
-  Seite, Median unverändert 5,2–5,9 ms · 2026-08-02*
+  *Etage 12: Ladeschritt `scene` (Settle) 26552/26752 → 20157/20433 ms, also **−6,3 s Ladebildschirm** bei
+  gleichen `map`/`encounter`-Schritten. B1 34/31 Kompilate 8269/7911 ms → 15/15 mit 1009/999 ms, B2 5/7 mit
+  1210/1919 ms → 0, wall p99 B1 335/333 → 34/42 ms, cpu max B2 666/1368 → 17/26 ms; 14 der 15 Restkompilate
+  sind Erstauftritte. Zwei Läufe je Seite, Median unverändert 5,2–5,9 ms · 2026-08-02*
 
 - **Wandernde Programm-Absolutzahl als Rauschen abgetan** — sie war das Symptom. Der Doppelcompile hängt am
   Timing: die zweite Kompilatwelle sieht andere Lichtzahlen als die erste (`numPointLights` 10→13), also
