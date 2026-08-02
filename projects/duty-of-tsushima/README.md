@@ -14,6 +14,8 @@ Zeit gekostet hat. Globale Three.js-Tipps beginnen bei [`../../THREEJS-RULES.md`
 | Woran du arbeitest | Lies zuerst |
 |---|---|
 | Werkzeug in `tools/`, headless Browser, Frames pumpen, Zahl aus dem Spiel lesen | [`HARNESS-GATES.md`](HARNESS-GATES.md) |
+| Kennzahl definieren, Schwelle setzen, Tor formulieren, Sweep ranken | [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) |
+| Frametime, GPU-Zeit, Submissionszeit, Quantile, Rauschboden — alles in ms | [`FRAME-TIMING.md`](FRAME-TIMING.md) |
 | Heightfield, Lane, Grat, Terrasse, Spawnpunkt, Begehbarkeit | [`WORLD-LANES.md`](WORLD-LANES.md) |
 
 ## Das teuerste Muster dieses Projekts
@@ -42,6 +44,9 @@ die Szene; und abgeleitete Daten scheitern nicht, sie antworten falsch.
 
 - Boot-Gate und alle Schwellen: `tools/smoke.mjs` — die Prüfungen sind als Design-Zusagen formuliert.
 - Browser-Harness, GPU-Abbruchbedingung und die Messtabelle dahinter: Dateikopf von `tools/browser.mjs`.
+- Warum eine Zeitmessung so aufgebaut ist, wie sie aufgebaut ist: Dateikopf von `tools/perf.mjs`.
+  Er trägt die Gegenmessungen zu `gl.finish()`, `clientWaitSync` und der Auflösung von
+  `performance.now()` — jede davon im Lauf nachgemessen statt zitiert.
 - Weltfeld-API und die `laneSpine`-Begründung: `ARCHITECTURE.md`.
 - Warum eine Zahl in der Welt-Spec so lautet, wie sie lautet: Kommentar an der Konstanten in
   `src/world/spec.js`. Ausführbarer Code schlägt Prosa.
