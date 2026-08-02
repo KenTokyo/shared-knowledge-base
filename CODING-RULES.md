@@ -78,3 +78,6 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 - Nur ein Learning lesen, das vor der konkreten Arbeit hilft.
 - Belegt teure Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) als kurzen Projekttipp zurückgeben;
   Duplikate vermeiden.
+
+Nach diesem Schema arbeiten:
+shared-docs/agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md
