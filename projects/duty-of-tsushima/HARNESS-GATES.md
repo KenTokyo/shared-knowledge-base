@@ -44,3 +44,12 @@ Kennzahlen: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) · Millisekunden: [`F
 
 - **Posierte Kamera verschwindet beim Step** — `frame.mjs` setzt `ctx.camera` ohne Step; Performance muss steppen, Rig überschreibt Pose. → Spieler auf `height(x,z)` versetzen, `prevPosition`, `rig.yaw/pitch` aus `eye→look`; Freiraum selftesten.
   *`terrace-waterline` vs. Spawn: 110 vs. 89 Calls, 59.972 vs. 54.052 Tris; ohne Spielerpose identisch · 2026-08-02*
+
+- **Ein Ausschluss versteckt genau die Defekte an seiner Grenze** — wer eine Zone aus dem Messband nimmt („Lanes nur außerhalb `radius + rimFalloff`"), macht deren Rand blind. Der Rand ist aber die wahrscheinlichste Defektstelle, weil dort zwei Formeln aufeinandertreffen. → Jeden Ausschluss im Gate mit der Zahl benennen, die ihn definiert, und prüfen, ob genau diese Zahl auch im Erzeuger steht; steht sie dort zweimal, ist der Rand ein Kandidat, kein Randfall.
+  *`smoke.mjs` schließt `>= 69` aus; die 72°-Wand stand auf exakt 69 m, auf allen vier Lanes, über Wochen grün · `smoke.mjs:76-120` · 2026-08-02*
+
+- **Ein gelesenes Feld ist damit noch nicht geschrieben** — geerntete Subsysteme bringen ihre Hörer mit, und jeder Hörer ist eine stille Zusage an einen Sender, den es in diesem Repo vielleicht nie gab. Vier Fälle in drei Schichten: `weapon:fire.empty` (Klang gebaut, kein Sender), `ai:bark` (Klang gebaut, weder Schema noch Sender), `damage:dealt.armour` (aus der Doku entstanden, nie gesendet), Killfeed-Zeile an `e.killed` (Sender setzt es immer auf `false`). → Für jedes `p.<feld>` im Empfänger einmal `grep` über die Sender, bevor ein Subsystem als fertig gilt; ein grünes Gate über die Stimme beweist die Stimme, nicht den Pfad dorthin.
+  *`registry.js:EVENT_SCHEMA` als Ort der Wahrheit; `physics/index.js:835` sendet `killed: false`, weil der Schuss nicht weiß, ob er tötet · 2026-08-02*
+
+- **Ein handgeschriebener Payload prüft den Ereignisbegriff des Gates, nicht den des Senders** — das HUD-Gate schrieb `target: 'ashigaru', killed: true` und meldete jahrelang grün, was kein Sender erzeugt: der echte Sender schickt den **Datensatz** als `target` und `killed: false`. Der Fallback `TABELLE[obj] ?? obj` landete damit in `String()`. → Die Payloadform aus dem Sender ableiten, nicht aus der Lesbarkeit des Tests; der zweite Konsument desselben Ereignisses ist der billigste Fuzzer, den es gibt.
+  *Killfeed schrieb „[OBJECT OBJECT]"; Gate 31 → 35 Prüfungen, davon eine auf den Text im DOM · `tools/hud.mjs` · 2026-08-02*
