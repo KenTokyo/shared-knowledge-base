@@ -16,6 +16,7 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Frametime, GPU-/Submission-Zeit, Quantil, Rauschboden | [`FRAME-TIMING.md`](FRAME-TIMING.md) |
 | Heightfield, Lane, Grat, Terrasse, Spawn, Begehbarkeit | [`WORLD-LANES.md`](WORLD-LANES.md) |
 | Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Bildkontrast | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
+| Pflanze streuen, Dichte, LOD-Stufe, Blatt-/Kronenform | [`VEGETATION-SCATTER.md`](VEGETATION-SCATTER.md) |
 
 ## Teuerstes Muster
 

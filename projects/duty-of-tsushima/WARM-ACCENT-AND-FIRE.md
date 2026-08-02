@@ -10,6 +10,17 @@ Wie man den Warmanteil **misst**, steht in [`METRICS-AND-GATES.md`](METRICS-AND-
 diese Zahl **bewegt** und wo sie lügt. Die ausführliche Fassung mit Nachrechnung liegt im Dateikopf
 von `src/world/structures.js` und in `tools/warm.mjs`.
 
+- **Die Warm-Spalte ist eine Halbebene, kein Farbtonfenster — und ab Vegetation lügt sie** — zwei
+  Kameras sprangen von 0,5 auf 14,3 % und von 0,7 auf 16,4 %, ohne dass ein einziges Pixel wärmer
+  wurde. Die Bedingung lautet `r − b > 0,06 ∧ chroma ≥ 0,04` und sagt über **Grün** nichts: ein
+  beleuchteter Bambushalm hat mehr Rot als Blau und zählt deshalb mit, obwohl er grün-dominant ist.
+  Solange nur Feuer im Bild war, fiel das nicht auf — Flammen sind auch rot-dominant. → Die
+  Zusatzbedingung `r ≥ g` mitmessen und **beide** Spalten führen, sobald Vegetation im Bild steht;
+  die Spalte aus `capture.mjs` allein ist ab Phase 4 keine Aussage über §3 mehr.
+  *`bamboo-cut` 14,30 % gegen **0,29 %** rot-dominant, `ability-dash` 16,45 % gegen **0,65 %**. Die
+  Differenzpixel mitteln (90, 98, 72), also Laub. Auf den zwölf übrigen Kameras trennen die beiden
+  Spalten um höchstens 0,21 Prozentpunkte · 2026-08-02*
+
 - **Der Ort ist eine eigene Sweep-Achse, und er schlägt die Dosis** — zwei Sweeps über Helligkeit und
   Reichweite waren für zehn von vierzehn Kameras gesättigt. Nicht weil die Welt es nicht zulässt,
   sondern weil an den fotografierten Stellen nichts stand; eine Dosisachse kann eine leere Stelle
