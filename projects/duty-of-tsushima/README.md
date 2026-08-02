@@ -17,6 +17,7 @@ Zeit gekostet hat. Globale Three.js-Tipps beginnen bei [`../../THREEJS-RULES.md`
 | Kennzahl definieren, Schwelle setzen, Tor formulieren, Sweep ranken | [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) |
 | Frametime, GPU-Zeit, Submissionszeit, Quantile, Rauschboden — alles in ms | [`FRAME-TIMING.md`](FRAME-TIMING.md) |
 | Heightfield, Lane, Grat, Terrasse, Spawnpunkt, Begehbarkeit | [`WORLD-LANES.md`](WORLD-LANES.md) |
+| Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Kontrast im Bild | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
 
 ## Das teuerste Muster dieses Projekts
 
