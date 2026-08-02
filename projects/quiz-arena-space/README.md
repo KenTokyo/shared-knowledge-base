@@ -11,6 +11,7 @@ Quelltext). Hier steht nur, was in **diesem** Repository wiederholt Zeit gekoste
 | Woran du arbeitest | Lies zuerst |
 |---|---|
 | Klausel, `--poison=`, `--only=`-Arm oder Schwelle in `tools/sim.mjs` | [`SIM-GATES.md`](SIM-GATES.md) |
+| Ein Stub, ein Wrapper, ein Antrieb oder ein Parser, der die Zahl für eine Klausel herstellt | [`MEASURING-RIGS.md`](MEASURING-RIGS.md) |
 | `tools/selftest.mjs`, ein `want`, eine Treibung, eine Zahl oder ein Quellzitat in einer Notiz | [`SELFTEST-NOTES.md`](SELFTEST-NOTES.md) |
 | Szenario in `tools/shoot.mjs` / `src/core/Diagnostics.ts`, eine `PROBLEM:`-Zeile, ein grünes Ergebnis als Beleg | [`BENCH-SCENARIOS.md`](BENCH-SCENARIOS.md) |
 | `tools/cdp.mjs`, `tools/serve.mjs`, `src/capture/`, zwei Läufe vergleichen | [`CAPTURE-DETERMINISM.md`](CAPTURE-DETERMINISM.md) |
