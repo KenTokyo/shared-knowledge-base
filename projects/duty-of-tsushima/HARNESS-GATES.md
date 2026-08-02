@@ -206,6 +206,38 @@ Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASUR
   nicht, ist eine Zahl, die den aktuellen Lauf passend macht — Geschmack in Zahlenform.
   *`material-closeup` auf dem Boden bei Exposure 1,00 / Fill 0,50 wie bei 0,80 / 0,15 ·
   `tools/grade.mjs` · 2026-08-02*
+  **↑ GESTÜRZT am selben Tag, siehe nächster Tipp — der zweite Halbsatz war eine Aussage über den
+  Rand meines Rasters, nicht über die Welt.**
+
+- **„Keine Einstellung kann das beheben" ist nur so stark wie das durchsuchte Raster** — der Tipp
+  darüber schloss aus „`material-closeup` liegt bei jedem Paar auf dem Boden, auch beim hellsten",
+  die Kamera sei inhaltsgebunden und gehöre in die Weltphase. Das hellste Paar **dieses Rasters** war
+  Exposure 1,00 / Fill 0,50. Nimmt man den Fill bis 1,15 dazu — den Wert, der vor jedem Ranking in
+  der Konfiguration stand —, **kommt die Kamera vom Boden herunter**, und über 26 Paare liegt dann
+  keine einzige Kamera immer auf dem Boden. An der Kamera war nichts inhaltsgebunden; dem Raster
+  fehlte das helle Ende. → Bevor man einen Befund von der geprüften Größe auf die Welt umbucht, den
+  **Rand des Rasters** ansehen: liegt der Befund am Rand, ist er eine Aussage über den Rand. Und die
+  Menge der „scheitert bei **jedem** Kandidaten"-Objekte in jedem Lauf mitdrucken, dann überlebt die
+  Behauptung ihr Raster nicht. Die Preisfrage bleibt, in schärferer Form: über das breite Raster
+  bestehen **2 von 26**, das dunkelste davon gibt **89 der 107 gewonnenen Milli-Luma** zurück — die
+  strenge Formulierung verlangt keinen besseren Regler, sondern fast keinen.
+  *Gegenmessung am selben Tag, gleicher Prozess: auf dem Boden bei 1,00/0,50, nicht mehr bei
+  1,00/1,15 · `tools/grade.mjs` · 2026-08-02*
+
+- **Wer eine Ratsche an einem Tor repariert, muss alle Tore derselben Datei durchgehen** — ein Tor
+  war absolut gemacht worden, damit es nicht nach jedem Ausliefern auf das zuletzt Ausgelieferte neu
+  gesetzt wird. **Zwei weitere Tore derselben Datei taten genau das weiter**, unbemerkt, weil ihre
+  Zahl noch nicht wehgetan hatte. Dann tat sie es: beide lehnten ein Paar ab, das vier von fünf
+  kaputten Kameras repariert hätte, mit Abständen **unter einem Zähler der gedruckten Genauigkeit**
+  (0,0239 gegen 0,0249 und 0,0081 gegen 0,0082) bei einer Wiederholbarkeit von exakt 0,00000. Sie
+  lehnten kein schlechteres Bild ab, sondern einen früheren Commit. → „Nicht schlechter als heute"
+  auf einen **Punkt im Designdokument** festnageln statt auf die laufende Konfiguration, und ihn **in
+  jedem Lauf neu messen** statt die Zahl zu zitieren — sonst veraltet die Referenz beim ersten echten
+  Fortschritt. Und: ob die Verankerung den Sieger bewegt, ist eine **andere Frage** als ob sie richtig
+  ist. Beide Formulierungen auswerten und die Sieger nebeneinander drucken, dann rechnet sich die
+  Änderung keinen Erfolg an, den sie nicht hatte.
+  *Verankert auf Exposure 1,00 / Fill 1,15, beide Zahlen stehen wörtlich in der Spezifikation:
+  13 statt 5 bestehende Paare, derselbe Sieger · `tools/grade.mjs` · 2026-08-02*
 
 - **Zwei Aussagen, die dasselbe behaupten, sind gegeneinander prüfbar** — die Schranke „Bodenanteil
   ≥ 1 %" wurde damit begründet, dass darüber das 1. Perzentil den Boden beschreibt statt die
