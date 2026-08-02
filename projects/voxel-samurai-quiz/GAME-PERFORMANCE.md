@@ -54,6 +54,12 @@ Zielspalten `compile.msTotal`, `wall.p99Ms` und `cpu.maxMs` je Block, immer `pnp
 bei 5,2–5,9 ms. `msTotal` ist eine Obergrenze — es summiert die ganze CPU-Zeit der Frames, in denen ein Programm
 entstand. Ein einzelner Lauf trägt in der Kompilatspalte nicht; zwei je Seite sind das Minimum.
 
+Wo die Ladezeit steht, sagt das Settle selbst: seine `done`-Zeile im `entry.timeline` trägt
+`Stage … / Compile … / ruhig nach …`. Nach dem Fix sind das 18,3–18,9 s Stage-Mount, 1,4–2,1 s Compile und
+47–93 ms Ruhefenster. Die Gate-Konstanten `CALM_FRAME_MS`/`REQUIRED_CALM_FRAMES` in
+`src/lib/loading/postStartSceneSettle.ts` steuern nur den letzten Posten — dort zu tunen bringt Millisekunden,
+der Mount trägt 91 %.
+
 Das Instrument benennt seit `c4a1b837` das `cacheKey`-Feld, in dem ein neues Programm vom ähnlichsten
 vorhandenen abweicht, und druckt eine rohe Schlüsselprobe mit erkannter Kopflänge (`probe`-Zeile). Rumpf ist
 **51** Felder lang: 48 Parameter, **zwei** Boolean-Masken (`WebGLPrograms.js:539`/`:589`), dann
