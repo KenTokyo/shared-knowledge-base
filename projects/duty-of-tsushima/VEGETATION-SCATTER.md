@@ -1,7 +1,8 @@
 # Vegetation, Streuung und Fern-LOD — duty-of-tsushima
 
 **Lesen wenn:** du eine Pflanzenart streust, eine Dichte einstellst, eine LOD-Stufe schreibst, eine
-Blatt- und Kronenform aus Primitiven baust — oder Schattenwurf auf einer Vegetationsschicht anschaltest.
+Blatt- und Kronenform aus Primitiven baust, Schattenwurf auf einer Vegetationsschicht anschaltest —
+oder eine Fläche als „zu dunkel" gemeldet bekommst und die Farbe anfassen willst.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Der Bau selbst steht in `src/world/foliage.js` — Wuchsrechte in `SPECIES`, der Ein-Gitter-Scan in
@@ -76,3 +77,43 @@ Globale Vegetationstipps beginnen bei [`../../threejs/VEGETATION.md`](../../thre
   gegen das **gezeichnete** Gitter messen statt gegen das Höhenfeld — und den Verdacht erst danach
   formulieren.
   *`/tmp/kz-float.mjs` gegen `tools/browser.mjs`; die Jagd hätte eine Schicht gekostet · 2026-08-02*
+
+- **„Zu dunkel" ist fast nie die Albedo — erst den Sockel messen, dann die Farbe** — zwei Phasen sind
+  in „hebe die Grasluma" gelaufen, bevor jemand die Gegenprobe machte. Der additive `lift` des Grades
+  landet in Linear, und die sRGB-Kurve ist nahe Schwarz so steil, dass derselbe Summand eine dunkle
+  Fläche um 32 von 255 hebt und eine helle nur um 5–10. Eine dunkle Fläche wird dadurch **flach**,
+  nicht dunkel: ihr Eigenkontrast erstickt unter einem Sockel, der überall gleich hoch ist. Wer
+  daraufhin die Albedo anhebt, verschiebt die kleine Zahl über der grossen. → Vor jeder Farbänderung
+  den Sockel messen: Albedo auf 0 und lesen, was übrig bleibt. Bleibt dort mehr als ein paar Einheiten
+  stehen, gehört das Problem dem Grade und nicht dem Material.
+  *Albedo 0 las 33,3–34,6; mit `grade.lift = 0` fielen dieselben Pixel auf 1,3–1,5. sRGB(0,015) =
+  0,128 → 32,7, die Rechnung trifft die Messung auf 0,6 · 2026-08-02*
+
+- **`material.color` sweept die Albedo ohne eine Zeile Quelltext** — sie multipliziert `diffuseColor`,
+  also lässt sich die Frage „wie viel vom Material kommt überhaupt im Bild an" in **einem** Prozess
+  beantworten, ohne Neubau, Neustart und ohne den Shader anzufassen. Zwei Schüsse (Albedo 0 und 1) auf
+  einer **einmal festgehaltenen** Pixelmenge geben Sockel und Steigung getrennt; die Steigung ist das,
+  was das Material beiträgt. → Die Pixelmenge bei vollem Material bestimmen und über alle Faktoren
+  halten, sonst wandert sie mit und misst sich selbst. Die Technik trägt für jedes Material, nicht nur
+  für Vegetation.
+  *Die Steigung schwankte über fünf Kameras um Faktor 11 (bamboo-cut +20,7, ability-fireball +1,9) —
+  damit war belegt, dass eine einzige Farbänderung sie unmöglich alle heben kann · 2026-08-02*
+
+- **`receiveShadow` und `material.fog` sind Programm-Cache-Schlüssel** — ohne
+  `material.needsUpdate = true` passiert beim Umschalten nichts, und die Messung liest sich dann als
+  „kein Effekt". Das ist die teuerste Art von Fehlmessung: sie lässt eine **echte** Ursache als
+  widerlegt erscheinen und schickt die nächste Schicht in die falsche Richtung. → Beim Isolieren
+  ausserdem den per-Material-Schalter nehmen, nicht den globalen: `material.fog = false` verliert nur
+  das geprüfte Material den Nebel und der Rest der Szene behält ihn, während `scene.fog = null` die
+  anderen Materialien mit gecachtem Programm und veralteten Uniformen stehen lässt.
+  *So getrennt: Nebel bewegte über fünf Kameras 0,0–0,1 und war erledigt, `receiveShadow = false` hob
+  die Steigung von 19,3 auf 36,8 — Halm plus Sockel landeten damit auf 1,01x der Bodenluma · 2026-08-02*
+
+- **Zwei Vollbilder als JSON durch die CDP-Brücke sind kein Messwert, sondern ein Hänger** — je Kamera
+  sind das 16 Mio. Zahlen zu serialisieren; ein Lauf stand nach 7 Minuten ohne eine einzige Zeile
+  Ausgabe. → Den Pixelvergleich **in der Seite** rechnen und zwanzig Zahlen zurückgeben. Derselbe Lauf
+  dauert danach rund 3 Minuten. Zurückgeben heisst dabei: nur Pixel mit deutlichem Delta werten
+  (hier ≥ 40 über RGB), denn ein halb gedecktes Pixel ist eine Mischung aus Objekt und Grund und zieht
+  jedes Verhältnis nach 1,0. → Und diese Kernmenge trägt nur, solange das Objekt ein volles Pixel
+  füllt; auf fernen Kameras ist auch sie noch verdünnt und **nicht** gegen den Grund vergleichbar.
+  *Dieselben Bilder lasen 0,80x über alle Pixel und 0,73x über die Kernmenge · 2026-08-02*
