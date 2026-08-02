@@ -44,22 +44,27 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 
 ## Validierung und Echtzeit-3D
 
-- Nach Codeänderungen das kanonische statische Projekt-Gate aus `AGENTS.md` ausführen. Automatische UI- oder
-  Gameplay-Tests nur auf ausdrücklichen Userbefehl; eine erforderliche visuelle Prüfung ist davon unberührt.
+- **Prüfbudget:** kanonisches statisches Gate einmal pro zusammenhängendem Schnitt; nach Fehlerbehebung
+  normalerweise ein Kontrolllauf. Gleiche Prüfung ohne neue Änderung oder Frage nicht wiederholen; erneutes
+  Scheitern heißt Ursache/Umsetzung prüfen statt weiter rerunnen. CI bleibt Liefergate, keine Mikroedit-Schleife.
+- Automatische UI- oder Gameplay-Tests nur auf ausdrücklichen Userbefehl; erforderliche Sichtprüfung bleibt davon
+  unberührt.
 - Bei Echtzeit-3D gilt für visuelle Prüfungen ausschließlich das projekteigene CLI-Capture-System. Fehlt es, nach
   [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) zuerst bauen: ein headless Chromium per Playwright, eine Sitzung für
   alle Messungen, Software-Renderer als Fehler und PNG direkt aus dem Engine-Post-Target (in Three.js per
   `readRenderTargetPixels()`), niemals `page.screenshot()` und niemals einen sichtbaren Browser.
 - Zahlen zuerst: relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen. Bilder nur, wenn sie eine
-  Entscheidung tragen; normalerweise Gewinner/Verlierer oder Vorher/Nachher, nicht eine komplette Sweep-Reihe.
+  Entscheidung tragen; normalerweise Gewinner/Verlierer oder Vorher/Nachher, nicht komplette Sweep-Reihe. Sobald
+  Entscheidung stabil ist, stoppen; kein weiterer Capture ohne geänderten Kandidaten oder neue Frage.
 - Für 3D-Facharbeit über [THREEJS-RULES.md](THREEJS-RULES.md) genau den engsten passenden Owner und gegebenenfalls
   genau eine projektspezifische Tippdatei öffnen — nicht die ganze Wissensbasis.
 
 ## Git und Lieferung
 
 - Nur eigene Dateien stagen, nie pauschal `git add -A`. Fremde offene Änderungen unangetastet lassen.
-- Keine Branches oder Worktrees anlegen, außer der User verlangt es in der aktuellen Nachricht ausdrücklich.
-  Direkt auf den in `AGENTS.md` genannten Zielbranch liefern.
+- Zielbranch grundsätzlich `main`, auch für Shared-Docs. Nennt lokale `AGENTS.md` ausnahmsweise einen anderen
+  Zielbranch, auf genau diesem bleiben. Nie eigenmächtig Branch oder Worktree anlegen beziehungsweise wechseln;
+  nur aktueller Userauftrag darf das verlangen.
 - Commit-Titel einzeilig und konkret: `typ(bereich): was`. Jede kompilierfähige Einheit eigenständig committen
   und pushen. Bei Submodulen zuerst dort committen und pushen, danach nur den Pointer im Elternrepo committen.
 - Commit-/Push-Fehler nicht delegieren. Bei abgelehntem Push synchronisieren, bei Bedarf `git pull --rebase`,
