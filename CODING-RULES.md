@@ -9,7 +9,7 @@ Arbeitsweise wird hier einmal gepflegt.
 Vor einem größeren Leseblock im Arbeitskontext notieren und dort kurz fortschreiben:
 
 - **Auftrag:** ein Satz zum Userziel und zum Fertigkriterium.
-- **Leseliste:** benötigte Pfade mit je einem Grund; neue Pfade nur ergänzen, wenn eine konkrete Frage sie erfordert.
+- **Leseliste:** `offen/gelesen · Pfad · Grund`; neue Pfade nur ergänzen, wenn eine konkrete Frage sie erfordert.
 - **Befund:** pro gelesener Datei höchstens ein auftragsrelevanter Satz.
 - **Nächster Schritt:** nach jedem Leseblock zum Auftrag zurückkehren; ein Link allein ist kein Leseauftrag.
 
