@@ -33,6 +33,23 @@
   - transparente Zähne → Flat Color + Cullrichtungen
   - Block mit festen Kanten → Finite-Sonde je Downsamplepass
 
+## Belegte Tipps
+
+Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
+
+- **Warmup lief durch, die Erstauftritte stehen trotzdem noch da** — `compile()` meldet keinen Fehler, und beim
+  Spawn kompiliert dieselbe Menge Programme wie ohne Warmup. Ursache: `compile()` sammelt **zwei** Mengen mit
+  **zwei verschiedenen Traversierungen** — Lichter per `traverseVisible` (unsichtbare fallen heraus),
+  Materialien per `traverse` (unsichtbare zählen mit). Beide sehen nur, was **zur Compile-Zeit im Baum hängt**.
+  Wird beim Spawn ein Teilbaum gegen eine **andere Variante** getauscht (Profil, LOD, Skin), war dessen
+  Material beim Warmup gar nicht montiert — jedes vorgewärmte Programm gehört der falschen Variante und der
+  Warmup verhindert **null**. → Vor dem Warmup die Varianten montieren, die später wirklich erscheinen, oder
+  gegen die Kandidatenliste vorcompilieren; und den Erfolg am **Erstauftritts-Zähler des Spawns** messen, nie
+  am fehlerfreien Durchlauf von `compile()`.
+  *Ein Warmup montierte ein Bossprofil, gespawnt wurde ein anderes: 10 `(Erstauftritt)`-Programme vorher wie
+  nachher, unverändert über einen Fix, der die Lichtzahl vollständig stillstellte · Herkunft:
+  voxel-samurai-quiz (Mechanismus ohne Projektbezug, zweiter Beleg steht aus) · 2026-08-02*
+
 ## Handoffs
 
 - Licht/Grade → [Licht/Kamera](LIGHT-CAMERA.md)

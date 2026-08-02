@@ -59,10 +59,24 @@ Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
   ⚠ **Der Vorrat lohnt sich mit großem Abstand, auch wenn Plätze leer bleiben:** ein Platz kostet je Fragment
   eine Schleifenrunde, ein Relink kostet einen ganzen Frame. Wer den Vorrat aus Sparsamkeit schrumpft, tauscht
   Zehntelmillisekunden gegen Hunderte.
+  ⚠ **Der Vorrat muss seine Lichter in der LAYOUT-Phase einsammeln, nicht im passiven Effekt.** Kommt ein Licht
+  mit einem **getauschten Teilbaum** neu in den Baum (Profil-, LOD-, Skinwechsel beim Spawn), steht es dort im
+  Default auf `visible = true`. Ein passiver Effekt läuft erst **nach** dem Commit — dazwischen liegt
+  mindestens ein gerenderter Frame, und genau der linkt. → Einsammeln und Anmelden in dieselbe Layout-Phase
+  legen; der Rescan darf keinen gerenderten Frame erreichen.
+  ⚠⚠ **Und dieser Fehler versteckt sich selbst:** bis eine Stichprobe „Lichtzahl vorher/nachher" misst, ist der
+  Rescan gelaufen — die Zahl steht **still**, während der Relink längst bezahlt ist. Stillstand ist
+  **notwendig, nicht hinreichend**. → Nicht die Lichtzahl zählen, sondern `numPointLights` **aus dem Cache-Key
+  der neu entstandenen Programme** lesen; nur dieses Feld nennt den Schuldigen.
   *Ein dauerhaftes Punktlicht kostete gemessen 0,1–0,2 ms je Frame (1080p, Forward, ~330 Draws); die Relinks,
   die es verhinderte, kosteten 11–16 Einzelframes von 340–1060 ms je Lauf. Drei Plätze = 0,2–0,7 ms gegen bis zu
   16 s Ruckeln · Herkunft: voxel-samurai-quiz (Mechanismus ohne Projektbezug, zweiter Beleg steht aus) ·
   2026-08-02*
+  *Zweite Instanz desselben Mechanismus im **selben** Repo — zählt nicht als zweiter Beleg: ein Bossspawn
+  tauscht den Modell-Teilbaum, das mitgebrachte Punktlicht hebt die Zahl 15→16 und linkt **55 von 68**
+  Spawn-Programmen neu, teuerster Frame 21,8 s. Die Stichprobe daneben meldete `18 → 18 → 18`. Nach dem Umzug
+  in die Layout-Phase: Punktlichtzahl über alle Spawnframes unverändert, 19 Programme (Kontrolle 2), teuerster
+  Frame 3,9 s · 2026-08-02*
 
 - **Quadratische Schattenbox über einer Szene, die im Lichtraum nicht quadratisch ist** — die Schatten sind
   überall gleich grob, und jede Abhilfe klingt nach „mehr Auflösung". Ursache: die Ortho-Box des

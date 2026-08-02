@@ -85,12 +85,25 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   fester Lichtvorrat außerhalb der Kreaturen (`ApexAccentLightPool.tsx`), leere Plätze auf `intensity = 0`, Wunsch
   pro Frame neu anmelden. **Den Vorrat nicht kleinrechnen** — die Plätze sind zu billig, als dass eine etagen- oder
   qualitätsabhängige Zahl sich lohnte, und jede Änderung zur Laufzeit löst genau den Relink aus, den er verhindert.
+  ⚠ **Zweiter Fundort: der Bosspfad — und er braucht ein eigenes Werkzeug.** `Enemies.tsx` mountet über
+  `resolveBossModelComponent(profileId)` immer nur **ein** Profil; beim Spawn tauscht es den Teilbaum, und das
+  `<pointLight>` des neuen Rigs kommt mit `visible = true` herein. `BossAccentLightPool.tsx` fängt es — aber nur,
+  weil alle drei Effekte in der **Layout**-Phase liegen. Mit `useEffect` läuft der Rescan erst nach dem Commit,
+  three rendert dazwischen einen Frame, und der linkt. → Bosslichtwechsel mit `pnpm game:boss-relink -- --url …
+  --level 12` messen, **nicht** mit `game:perf`: nur dieses Werkzeug liest `numPointLights` aus dem `cacheKey` der
+  neu entstandenen Spawn-Programme. Die Zeile `Punktlicht:` ist das Urteil; `Lichtzahl:` ist bloß eine Stichprobe
+  vor/nach dem Fenster und stand im Fehlerfall auf `18 → 18 → 18`.
   *Etage 12, zwei Prod-Läufe: `numPointLights (7→13)` 13+2+1 = 16 bzw. 10+1+0 = 11 Relinks, dagegen Dev 0 in drei
   Blöcken; Gate meldet `pointLights 10 beim Compile` · 2026-08-02*
   *Preis der Plätze per Ablation `?apexAccentSlots=N` aus **einem** Bündel und **einer** Sitzung, zwei Laufpaare in
   umgekehrter Reihenfolge: 10 Lichter 5,80/5,90 ms gegen 13 Lichter 6,00/6,30 ms cpu-Median — drei Plätze 0,2–0,7 ms
   je Frame, ~0,1–0,2 ms je Licht, auf/unter dem Rauschboden (3,4 %/4,8 %). Die Vermutung „~0,55 ms je Punktlicht" ist
   damit widerlegt · 2026-08-02*
+  *Bosspfad, Etage 12, Prodbuild: vorher `numPointLights ×55 (10→14)`, 67 Programme beim Spawn, teuerster Frame
+  21.820,7 ms — nachher `Punktlicht: unverändert über alle Spawnframes`, `Programme: Kontrolle 2 · Spawn 19 ·
+  Ende 0`, teuerster Frame 3.922,1 ms (`.tmp/boss-relink-l12.txt` gegen `.tmp/boss-relink-l12-fix2.txt`).
+  Die verbliebenen 19 sind ein eigener Posten (`(Erstauftritt) ×10`, `customProgramCacheKey ×8`, Boolean-Maske ×1),
+  keine Regression des Vorrats · 2026-08-02*
 
 - **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
   ~186 ms/Frame, gelesen als blockierter Hauptthread, der auf den Dev-Server wartet. Real ist die Verteilung
