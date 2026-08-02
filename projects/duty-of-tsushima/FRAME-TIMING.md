@@ -23,3 +23,6 @@ Ausführbarer Owner: `tools/perf.mjs` samt Begründung im Dateikopf.
 
 - **In-Run-Rauschen ≠ Prozess-Rauschen** — Blockwiederholung 0,12–0,36 ms, neue Prozesse 4,88 vs. 3,72 ms (31 %). → Regression braucht Prozessabstand plus dokumentierte Fremdlast; beide Böden getrennt.
   *loadavg 3,7 auf 10 Kernen, sonst gleicher Aufruf · 2026-08-02*
+
+- **Eine Änderung unter 31 % ist nur verschränkt messbar** — Vorher/Nachher über zwei `perf`-Läufe kann eine Schicht, die 0,1 % kostet, nicht sehen; sie verschwindet im Prozessboden. → Alle Konfigurationen in EINEM Prozess, VERSCHRÄNKT und mehrfach (A B C A B C …), Median je Konfiguration, Streuung als mittlere Hälfte statt voller Spanne — Fremdlast schlägt nach oben aus, nie nach unten, und ein einziger Ausreisser beschreibt sonst nur sich selbst.
+  *Schattenwurf je Art: verschränkt trennten sich 0,008 und 0,152 ms gegen einen Boden von 0,032 ms; unverschränkt lag derselbe Block einmal bei 11,75 statt 6,3 ms und riss die Spanne auf 5,4 ms · 2026-08-02*

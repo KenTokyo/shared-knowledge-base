@@ -1,7 +1,7 @@
 # Vegetation, Streuung und Fern-LOD — duty-of-tsushima
 
-**Lesen wenn:** du eine Pflanzenart streust, eine Dichte einstellst, eine LOD-Stufe schreibst oder
-eine Blatt- und Kronenform aus Primitiven baust.
+**Lesen wenn:** du eine Pflanzenart streust, eine Dichte einstellst, eine LOD-Stufe schreibst, eine
+Blatt- und Kronenform aus Primitiven baust — oder Schattenwurf auf einer Vegetationsschicht anschaltest.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Der Bau selbst steht in `src/world/foliage.js` — Wuchsrechte in `SPECIES`, der Ein-Gitter-Scan in
@@ -44,6 +44,29 @@ Globale Vegetationstipps beginnen bei [`../../threejs/VEGETATION.md`](../../thre
   Höhenversatz gibt der Krone Ober- und Unterseite, und erst dann fängt sie Licht von oben.
   *Ahornkrone über 1,3 m Höhe statt auf einer Ebene, `flat` von 0,42 auf 0,54–0,62 bei der Kiefer ·
   2026-08-02*
+
+- **Der Schattenpass ist keine Teilmenge des Bildes, und die gerechnete Dreieckszahl ist zu klein** —
+  §8 warnt, eine Dreiecksdifferenz überschätze den Gewinn um Faktor zwei; gemessen war es andersherum.
+  Ursache sind zwei verschiedene Frusta: die Schattenkamera ist eine achsenparallele Box um den
+  **Spieler**, das Bild ein Kegel in **Blickrichtung**. Beide wählen andere Chunks aus, und der
+  Bestand hinter dem Rücken zahlt in den Schatten ein, ohne je im Bild zu erscheinen. Dazu stehen die
+  Chunks auf verschiedenen LOD-Stufen, was jede „Instanzen × Dreiecke"-Rechnung zusätzlich verfehlt.
+  → Die Dreiecke des Schattenpasses mit `renderer.info` **zählen** statt sie zu rechnen:
+  `info.autoReset = false`, `reset()`, einen Frame stepen, ablesen. Ohne `autoReset = false` steht am
+  Ende nur der letzte von mehreren `render()`-Aufrufen da.
+  *Bambus gerechnet 176k, gezählt **264k** — 50 % daneben. Erst die gezählte Zahl erklärte, warum
+  `nur bamboo` mehr Dreiecke zog, als der sichtbare Bestand überhaupt hergab · 2026-08-02*
+
+- **Ein dokumentierter Schalter ist noch kein implementierter Schalter** — `ARCHITECTURE.md` nennt
+  `userData.kzNoShadow` den „einzigen Schalter" für Schattenwurf und sagt, die Kaskaden läsen
+  `mesh.castShadow` nie. In `src/render/` gibt es diesen Pfad nicht: dort steht threes eingebaute
+  Shadow Map mit **einem** DirectionalLight, und die liest genau `castShadow`. Zwei Subsysteme setzen
+  das Flag seit Phasen und verlassen sich auf einen Mechanismus, den niemand ausführt. → Bevor ein
+  Flag aus dem Vertrag gesetzt wird, **einmal greppen, wer es liest**. Findet der Grep nur
+  Schreibstellen, ist das Flag Dekoration — und der Effekt, den man ihm zuschreibt, kommt von woanders
+  oder gar nicht.
+  *`grep -rn kzNoShadow src/` → 3 Treffer, alle schreibend; `render._collect` und `kzNoPrepass`
+  existieren nicht, einen Tiefen-Prepass auch nicht · 2026-08-02*
 
 - **Was wie ein Schwebefehler aussieht, ist meistens Verdeckung** — im Bild endeten Bambushalme
   sichtbar in der Luft, und der naheliegende Verdacht war die Höhenabfrage. Gemessen stand kein

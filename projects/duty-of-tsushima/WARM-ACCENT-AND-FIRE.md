@@ -20,6 +20,11 @@ von `src/world/structures.js` und in `tools/warm.mjs`.
   *`bamboo-cut` 14,30 % gegen **0,29 %** rot-dominant, `ability-dash` 16,45 % gegen **0,65 %**. Die
   Differenzpixel mitteln (90, 98, 72), also Laub. Auf den zwölf übrigen Kameras trennen die beiden
   Spalten um höchstens 0,21 Prozentpunkte · 2026-08-02*
+  *Gegenprobe aus einer Änderung, die mit Farbe nichts zu tun hat: Schattenwurf auf der Vegetation
+  drückte dieselbe Spalte auf `bamboo-cut` von 14,30 auf **6,96 %** und auf `ability-dash` von 16,45
+  auf 1,77 %, während die rot-dominante bei 0,29 bzw. 0,51 % stehen blieb. Eine Spalte, die auf
+  Beleuchtung um acht Prozentpunkte reagiert und auf den Akzent gar nicht, misst die Beleuchtung ·
+  2026-08-02*
 
 - **Der Ort ist eine eigene Sweep-Achse, und er schlägt die Dosis** — zwei Sweeps über Helligkeit und
   Reichweite waren für zehn von vierzehn Kameras gesättigt. Nicht weil die Welt es nicht zulässt,
