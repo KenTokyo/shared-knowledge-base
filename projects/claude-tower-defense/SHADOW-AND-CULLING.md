@@ -1,131 +1,41 @@
-# Schattenpass, Culling und was sie wirklich kosten — claude-tower-defense
+# Schattenpass, Culling und Kosten — claude-tower-defense
 
-**Lesen wenn:** du eine Schicht cullen, ein LOD bauen, `castShadow` umlegen oder die Schatten-Cascade
-verkleinern willst — oder wenn du eine Dreieckszahl aus einem Log zitieren willst.
-**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe
-[LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
+**Lesen wenn:** Culling, LOD, `castShadow`, Cascade oder Dreieckszahl.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-- **Schattenkosten pro Schicht gemessen statt pro Sorte** — „die Props kosten 2 ms" ist wahr und führt zu
-  nichts: der Posten zerfällt in Sorten mit völlig verschiedenen Hebeln. Erst die Aufschlüsselung zeigte,
-  dass **eine** Sorte 55 % des Postens trägt und eine zweite 33 % aus nur **130** Instanzen. → Den Schattenpass
-  **Sorte für Sorte** zählen, bevor irgendein Kandidat gebaut wird; die Sonde braucht keine Uhr, nur
-  `renderer.info` um einen handgezeichneten Frame.
-  *809 944 Dreiecke im Pass, davon eine Schicht 93.4 % — Ziffer für Ziffer die Zahl, die eine frühere Phase
-  auf einem völlig anderen Weg gefunden hatte · 2026-08-01*
+- **Schattenkosten nur pro Schicht** — „Props 2 ms“ verdeckt Sortenhebel. → Per Sorte mit `renderer.info` in handgezeichnetem Frame, vor Kandidat.
+  *809.944 Tris; eine Schicht 93,4 %, darin Sorte 55 %, zweite 33 % aus 130 Instanzen; bestätigte unabhängigen Befund · 2026-08-01*
 
-- **`frustumCulled = false` macht jede Cascade-Verkleinerung wirkungslos** — die Schattenbox von ±78 m auf
-  ±50 m zu ziehen entfernte **−0 Dreiecke / −0 Calls**. Ursache: `WebGLShadowMap.renderObject` prüft
-  `!frustumCulled || intersectsObject`; ist der linke Operand wahr, wird der rechte **nie ausgewertet**, und
-  keine Boxgröße erreicht das Objekt. → Vor jeder Cascade-Arbeit `frustumCulled` der beteiligten Meshes lesen,
-  und die Gegenprobe mit einer **absurd kleinen** Box fahren: entfernt auch die nichts, ist der Schalter tot.
-  *Gegenprobe `--box 10` entfernte −105 / −1 — genau das einzige Mesh mit `frustumCulled` an · 2026-08-01*
+- **`frustumCulled=false` neutralisiert Cascade** — Box ±78→±50 m: 0 Tris/Calls, weil ShadowMap Frustumtest kurzschließt. → Flags lesen; absurd kleine Box als Gegenprobe.
+  *`--box 10`: −105 Tris/−1 Call, einziges Mesh mit Culling · 2026-08-01*
 
-- **Instanziierte Schicht wird zweimal gezeichnet und nur einmal gecullt** — die Dreiecksdifferenz beim
-  Abschalten war **exakt 2 ×** die Zahl aus der Schichtentabelle, die Call-Differenz exakt 2 × die Meshzahl.
-  Der Faktor zwei ist der Schattenpass, dessen Frustum dem **Licht** gehört und sich nicht mit der Kamera
-  dreht. → Kamera-Culling erreicht **höchstens die Beauty-Hälfte**; die Kostenseite einer Partition skaliert
-  mit der Kachelzahl K, die Gewinnseite nur mit dem Beauty-Anteil.
-  *Kandidat cullte 12.8 … 25.0 % und bezahlte +50 … 63 Draw-Calls an jedem Azimut ⇒ nicht gebaut · 2026-08-01*
+- **Instanzschicht zweimal gezeichnet, einmal gecullt** — Abschalten ergibt exakt 2× Tris/Calls; Lichtfrustum dreht nicht mit Kamera. → Kamera-Culling erreicht höchstens Beauty-Hälfte; Partition kostet K Kacheln, gewinnt nur Beauty-Anteil.
+  *12,8–25,0 % Cull bei +50–63 Calls je Azimut ⇒ verworfen · 2026-08-01*
 
-- **Die halben Dreiecke kosten ein Viertel des Preises** — „halbe Geometrie, halbe Millisekunden" ist
-  widerlegt: die ganze Schicht kostete −1.65 … −2.20 ms, davon der Schattenpass nur −0.25 … −0.65 ms.
-  → **Unerreichbar ist die billige Hälfte.** Wer nach Millisekunden greift, greift nach dem Beauty-Pass; wer
-  Dreiecke zählt, zählt beide und überschätzt den Gewinn um den Faktor zwei.
-  *zehn Klammern über drei Boots; Kontrolle: Pixel ×4 → Frame ×1.97, die Schicht ×1.08, also nicht
-  fill-gebunden · 2026-08-01*
+- **Halbe Tris kosten Viertel Preis** — Gesamtschicht −1,65…−2,20 ms, Schattenhälfte nur −0,25…−0,65. → Millisekunden stecken im Beauty-Pass; Tris über beide Pässe überschätzen Gewinn ~2×.
+  *10 Klammern/3 Boots; Pixel×4 → Frame×1,97, Schicht×1,08, nicht fill-bound · 2026-08-01*
 
-- **LOD verkauft nur die sichtbare Hälfte und lässt die andere im Bild stehen** — ein Distanz-Cull entfernte
-  558 168 Dreiecke, aber **über beide Pässe**; verkäuflich war die Beauty-Hälfte = 10.7 % des Frames. Die
-  andere Hälfte verschwindet nicht, sie bleibt als **Schatten ohne Baum** stehen, weil das Schattenfrustum
-  dem Licht gehört. → Das ist **aus den deterministischen Spalten ablesbar**, bevor ein Bild entsteht:
-  `beauty tris` fällt, `shadow tris` nicht.
-  *40/60/80 m geklammert; der einzige Weg, der die großen Posten wirklich erreicht, ist weniger Geometrie
-  **je Instanz** · 2026-08-01*
+- **LOD entfernt Beauty, lässt Geisterschatten** — Distanz-Cull −558.168 Tris über beide Pässe; verkäuflich nur 10,7 % Frame, Shadow bleibt. → Vor Bild aus Spalten: Beauty fällt, Shadow nicht; echter Hebel = weniger Geometrie je Instanz.
+  *40/60/80 m geklammert · 2026-08-01*
 
-- **„Kein sichtbarer Schatten" ist eine Bildfrage, keine Rechenfrage** — die Vermutung, eine Sorte werfe
-  Schatten, die niemand sieht, ließ sich in einer Stunde erledigen: Schicht aus der Schattenkarte nehmen,
-  38 Posen photographieren, gegen den Auslieferungsstand diffen. Ergebnis 38/38 bzw. 33/38 abweichend.
-  → **Zuerst die Nullkontrolle** — zwei frische Boots desselben Standes gegeneinander. Ohne ihre 38/38
-  bit-identisch ist keiner der anderen Diffs etwas wert.
-  *und genau diese Nullkontrolle war die einzige der vier, deren Log später fehlte · 2026-08-01*
+- **„Schatten unsichtbar“ braucht Bild-Nullkontrolle** — Layer aus Shadowmap, 38 Posen diffen; 38/38 bzw. 33/38 verändert. → Zuerst zwei frische Boots desselben Stands; nur bei 38/38 bitgleich sind Diffs gültig.
+  *Ausgerechnet Nullkontroll-Log fehlte später · 2026-08-01*
 
-- **Eine Kostennotiz im Quelltext altert schlechter als der Code** — der Kommentar an einer Geometrie nannte
-  „268k of a 2.69M frame" und „draw calls are the metric"; gemessen waren es 532 480 über beide Pässe = 20.5 %
-  des Frames, und die Call-Metrik war zwei Befunde vorher überholt. → Kostenkommentare beim Messen mitlesen
-  und **entweder korrigieren oder datieren**; die Konstante daneben kann trotzdem richtig sein und einen
-  eigenen, älteren Beleg haben.
-  *korrigiert: 130 statt 131 Instanzen, 532 480 statt 268k, 20.5 % statt „draw calls are the metric" — die
-  Konstante daneben blieb unangetastet, sie ruht auf einer eigenen, gemessenen Akte · 2026-08-01*
+- **Kostenkommentar veraltet** — „268k von 2,69M; Calls sind Metrik“ vs. 532.480/20,5 % und überholter Call-Befund. → Beim Messen Kommentare korrigieren oder datieren; benachbarte Konstanten separat belegen.
+  *130 statt 131 Instanzen; 532.480 statt 268k; 20,5 % · 2026-08-01*
 
-- **Eine Dreieckszahl kann eine ganze Klasse von Verschwendung nicht sehen** — die Reihe hatte fünf
-  Instrumente für den Schattenpass und alle fünf zählten **Dreiecke**; `renderer.info.render` hat gar keinen
-  Vertex-Zähler. Eine Geometrie, die drei frische Vertices **je Dreieck** schreibt, liefert das 6-fache an
-  Vertexarbeit aus und **bewegt dabei keine einzige Zahl in irgendeinem dieser Logs**. Gefunden wurden 6 144
-  ausgelieferte Vertices für 1 026 unterscheidbare — 83 % der Vertexarbeit dieses Meshes war Kopie, und weil
-  der Indexpuffer dann `0,1,2,3,…` liest, kann der Post-Transform-Cache **nie** treffen. → Wenn „weniger
-  Geometrie je Instanz" die Frage ist, **die Puffer lesen statt die Frames zählen**: ausgeliefert gegen
-  unterscheidbar, je Geometrie. Braucht keine Uhr und keinen gezeichneten Frame.
-  *104 von 110 statischen Geometrien waren schon geweldet — die eine, die es nicht war, trug 99.99 % des
-  Befundes; Bildbeleg danach 38/38 bit-identisch · 2026-08-01*
+- **Dreieckszahl sieht Vertexkopien nicht** — 5 Instrumente zählen Tris; ungeweldete Geometrie emittiert 6× Vertices ohne Logänderung, Cache trifft nie. → Puffer je Geometrie: ausgeliefert vs. unterscheidbar.
+  *6.144 vs. 1.026 Vertices, 83 % Kopie; 104/110 statische Geometrien bereits geweldet, eine trug 99,99 %; Bild 38/38 bitgleich · 2026-08-01*
 
-- **Alle Instrumente zählten die EINGEREICHTE Seite; keins fragte, was ankommt** — fünf Sonden für den
-  Schattenpass, und sie zählen Dreiecke, Vertices, Schichten und Pixel im fertigen Bild. **Keine fragte, wie
-  fein die Schattenkarte an dieser Stelle überhaupt noch aufzeichnet.** Die Zahl ist billig: Sonnenbox geteilt
-  durch Kartenauflösung = **ein Texel**, hier 156 m / 2048 = **7.62 cm**. Dagegen gehören **zwei** Maße je
-  Sorte, und **eines allein zeigt in die falsche Richtung**: die Seite des flächengleichen Quadrats
-  (**Deckung**) und die mediane kleinste Höhe `2·Fläche / längste Kante` (**Auflösung**). → Vor jedem
-  „weniger Geometrie"-Vorschlag den Quotienten Merkmal/Texel je Sorte ausrechnen. Er braucht keine Uhr und
-  keinen gezeichneten Frame, nur die gebauten Puffer und die Lichtmatrizen — und er entscheidet die Frage,
-  bevor ein Kandidat gebaut wird.
-  ⚠⚠ **Und derselbe Texel entscheidet die FORM des PCF-Kerns — aber erst NACH einer zweiten Projektion.**
-  `texel_x` 7,62 gegen `texel_y` 5,91 cm macht den Kern im **Raster** oval (16,00 gegen 12,41 cm, 1,29 : 1),
-  und genau das stand als „der einzige Preis, den der y-Fit nicht beziffert hat" in der Akte. Auf dem
-  **Boden** ist es umgekehrt: light-space y wird um **1/sin(26,1°) = 2,273** gestreckt, also **16,00 gegen
-  28,21 cm** (1,76 : 1) — und die **quadratische** Box las dort **2,273 : 1**. → Der y-Fit hat den Kern dort,
-  wo er gesehen wird, um **22,4 % runder** gemacht, **bei identischer Texelzahl**; der Preis war ein Guthaben.
-  ⚠⚠ **Der naheliegende „Fix", `mapSize.x` auf 2641 zu heben, um das RASTER zu quadrieren, kostet +29,0 %
-  Texel und macht das Bodenverhältnis WIEDER SCHLECHTER** — er schärft die Achse, die auf dem Boden schon die
-  feine war. ⚠ **`shadow.radius` ist EIN Float und skaliert beide Achsen** — er verkleinert das Oval, rundet
-  es aber nie.
-  *aus dem gelinkten GL-Programm gelesen (`SHADOWMAP_TYPE_PCF` in 12 von 30, Uniform 2,0999999046325684); der
-  Bodenwert zweiwegig belegt: Matrix-Rundlauf 2,21e-17 und Live-Kamera 1,764 : 1 gegen analytisch 1,763 : 1 ·
-  2026-08-01*
-  *die Flächenspalte allein las „Blätter sind Splitter"; erst die Dickenspalte drehte das Urteil um ·
-  2026-08-01*
+- **Einreichung gemessen, Schatten-Abtastung nicht** — Texel = Lichtbox/Map: 156/2048=7,62 cm. → Je Sorte Deckungsseite und mediane Mindesthöhe `2·Fläche/längste Kante`; Merkmal/Texel vor Vereinfachung.
+  **PCF-Falle:** Raster 7,62×5,91 cm ergibt Kern 16,00×12,41 (1,29:1); Bodenprojektion streckt y um `1/sin(26,1°)=2,273` zu 16,00×28,21 (1,76:1). y-Fit macht Boden 22,4 % runder ohne Texelmehrung; `mapSize.x=2641` kostet +29 % und verschlechtert Boden durch Schärfung bereits feiner x-Achse. `shadow.radius` skaliert beide Achsen, rundet nie.
+  *GL-Programm: PCF 12/30, radius 2,0999999; Matrix-Rundlauf 2,21e−17, Live 1,764:1 vs. analytisch 1,763:1. Flächenspalte allein sagte „Splitter“, Dickenspalte drehte Urteil · 2026-08-01*
 
-- **Weniger Dreiecke können den Schatten SCHLECHTER machen, und man sieht es an einer Zahl vorher** — die
-  größte Sorte des Passes (55.1 %) galt drei Phasen lang als „der einzig verbliebene Hebel: weniger Dreiecke
-  je Cluster". Gemessen liegt ihr Blatt bei **1.103x Deckung und 1.281x Dicke** — **auf beiden Achsen über**
-  der Abtastrate. Es wird also bereits aufgezeichnet; gröber machen heißt **unter** den Raster fallen, und
-  genau das hatte eine frühere Bildreihe schon fotografiert (33 von 38 Posen abweichend, bis 27.71 % Pixel),
-  ohne dass jemand den Zusammenhang benennen konnte. Der einzige echte Kopfraum lag bei der **kleineren**
-  Sorte: 0.382x / 0.387x und **6.7 Dreiecke je Texel** — und der war durch eine ältere, ebenfalls gemessene
-  Akte verstellt (die Unterteilung ist dort eine **Abtastrate** für die Verdrängung, keine Qualitätsstufe).
-  → **Unter 1.0x liegt Kopfraum, über 1.0x liegt das Motiv.** Wer eine Sorte über der Abtastrate vereinfacht,
-  kauft keinen Gewinn, sondern verkauft Bild. Und: ein vorhandener Kopfraum ist noch kein verfügbarer —
-  **erst nachsehen, welche ältere Messung auf derselben Konstante sitzt.**
-  *die Annahme hatte eine ganze Übergabe getragen und fiel an zwei Spalten · 2026-08-01*
+- **Weniger Tris können Schatten verschlechtern** — größte Sorte (55,1 %) liegt bei 1,103× Deckung/1,281× Dicke über Abtastrate; Vereinfachung fällt unter Raster. Kleinere Sorte 0,382×/0,387× und 6,7 Tris/Texel hat Kopfraum, aber Unterteilung ist Displacement-Abtastrate. → <1× möglicher Kopfraum, >1× Motiv; ältere Messung derselben Konstante prüfen.
+  *Frühere Bildreihe 33/38 verändert, bis 27,71 %; Übergabeannahme fiel an zwei Spalten · 2026-08-01*
 
-- **Ein verlustfreier Weld ist an drei Bedingungen gebunden, und die gehören benannt** — Position, Normale
-  und UV müssen Funktionen **allein des Vertex-Index** sein. Bei geglätteten Normalen und einer UV, die aus
-  der Position gerechnet wird, sind die Kopien bit-gleich und das Verschmelzen kostet nichts. Bei
-  **flach schattierter** Geometrie trägt jede Ecke ihre eigene Face-Normale — dort sind die Kopien nötig, und
-  ein Weld würde das Bild ändern. → Vor dem Verschmelzen die drei Attribute einzeln durchgehen; und die
-  Behauptung „verlustfrei" mit einem **Bild** belegen, nicht mit dem Argument.
-  *derselbe Mesher emittiert an anderer Stelle weiter vier frische Vertices je Face und hat recht damit ·
-  2026-08-01*
+- **Verlustfreier Weld braucht drei Bedingungen** — Position, Normale, UV nur vom Vertexindex; Flat-Normalen brauchen Face-Kopien. → Attribute einzeln prüfen; Verlustfreiheit per Bild.
+  *Gleicher Mesher emittiert andernorts korrekt 4 frische Vertices je Face · 2026-08-01*
 
-- **Ein Pixeldiff kann eine Boxänderung nicht bewerten** — `pxdiff` meldet für die gebaute Variante
-  **38/38 Posen verändert, bis 19.50 %** und für die verworfene **38/38, bis 21.20 %**: zwei Zahlen, die
-  gleich groß sind und **entgegengesetzt** wirken. Ursache: jede Änderung an der Sonnen-Ortho-Box verschiebt
-  das **Texelraster**, also wandert **jede** Schattenkante im Bild — ein Prozentwert misst hier „hat sich
-  bewegt", nicht „ist besser". → Bei Rasteränderungen **nicht** über den Diff entscheiden: die
-  **Belegungszahlen** entscheiden (Span gegen Union je Achse), und das Bild wird **angesehen** — zwei
-  Ausschnitte nebeneinander, an einer Kante, die das Motiv trägt. ⚠ Und danach ist der alte Referenzordner
-  für Posen **mit** Schatten **kein** Vergleichsstand mehr; wer weiter „bit-identisch" prüfen will, nimmt den
-  neuen Stand als Referenz.
-  ⚠⚠ **Und in D73 hat dieselbe Frage sich ein zweites Mal gestellt und war OHNE Bild zu entscheiden:** wenn
-  jede Alternative auf **ihren eigenen Zahlen** fällt und die gewählte **keine Zeile Code** ändert, ist die
-  Bildfrage gegenstandslos — „nicht angesehen" ist dann kein Versäumnis, sondern das Ergebnis.
-  *der verworfene Arm sah in der zweiten Logzeile kleiner aus als der gebaute und war in der ersten größer ·
-  2026-08-01*
+- **Pixeldiff bewertet Boxänderung nicht** — gewählte Variante 38/38 bis 19,50 %, verworfene 38/38 bis 21,20 %; Texelraster verschiebt jede Kante. → Belegung (Span vs. Union je Achse) entscheidet, Bild an Motivkante ansehen; danach neue Schattenreferenz. Wenn alle Alternativen numerisch fallen und Gewinner keinen Code ändert, Bildfrage entfällt.
+  *D73: „nicht angesehen“ war Ergebnis; verworfener Arm in Logzeile 2 kleiner, in Zeile 1 größer · 2026-08-01*

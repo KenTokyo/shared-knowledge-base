@@ -67,6 +67,9 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 
 ## Wissen klein halten
 
-Technische Tipps bleiben freiwillig und widerlegbar; eine gemessen bessere Lösung gewinnt. Nur ein Learning
-lesen, das vor der konkreten Arbeit helfen kann. Hat etwas belegbar Zeit gekostet, nach
-[LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) als kurzen projektspezifischen Tipp zurückgeben; Duplikate vermeiden.
+- Technische Tipps bleiben freiwillig und widerlegbar; gemessen bessere Lösung gewinnt.
+- **Maximale Informationsdichte:** Fehlerbild, Ursache, Handlung und Beleg erhalten; Füllwörter, entbehrliche
+  Artikel, Einleitungen, Wiederholungen und Synonymketten streichen. Telegrammstil vor Fließtext.
+- Nur ein Learning lesen, das vor der konkreten Arbeit hilft.
+- Belegt teure Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) als kurzen Projekttipp zurückgeben;
+  Duplikate vermeiden.

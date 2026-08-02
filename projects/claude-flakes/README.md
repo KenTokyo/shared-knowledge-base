@@ -1,28 +1,28 @@
 # claude-flakes — Projekt-Learnings
 
-**Lesen wenn:** du in SNOWFLOW an Capture, VFX, Runtime, Performance, Gameplay oder den Prüf-Gates arbeitest.
+**Lesen wenn:** SNOWFLOW-Capture, VFX, Runtime, Performance, Gameplay oder Gates.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-Architektur und Produktstand bleiben im Repository: `README.md`, `ROADMAP.md` und die Messberichte unter `.completed/`. Hier steht nur, was in diesem Repository wiederholt Zeit gekostet hat.
+Architektur/Stand: Repo-`README.md`, `ROADMAP.md`, `.completed/`. Hier nur belegte Projektfallen.
 
-## Trigger-Tabelle
+## Trigger
 
-| Woran du arbeitest | Lies zuerst |
+| Arbeit | Zuerst lesen |
 |---|---|
-| `tools/shoot.mjs`, `src/capture/`, A/A, A/B, Presets, Crops | [`CAPTURE-MEASURING.md`](CAPTURE-MEASURING.md) |
+| `shoot.mjs`, Capture, A/A, A/B, Presets, Crops | [`CAPTURE-MEASURING.md`](CAPTURE-MEASURING.md) |
 | Kristalle, Wasser, Vapor, Partikel, PostFX, WGSL | [`VFX-SHADERS.md`](VFX-SHADERS.md) |
-| Uhren, RNG, Reset, Audio, Cloth, Allokationen, Warm-up | [`RUNTIME-PERFORMANCE.md`](RUNTIME-PERFORMANCE.md) |
+| Uhren, RNG, Reset, Audio, Cloth, Allokation, Warm-up | [`RUNTIME-PERFORMANCE.md`](RUNTIME-PERFORMANCE.md) |
 | Waves, Wights, Essence, Boons, Cairn, Balance | [`GAMEPLAY-BALANCE.md`](GAMEPLAY-BALANCE.md) |
-| `progression-test.mjs`, `mutation-test.mjs`, neue Assertions | [`TEST-GATES.md`](TEST-GATES.md) |
+| `progression-test.mjs`, `mutation-test.mjs`, Assertions | [`TEST-GATES.md`](TEST-GATES.md) |
 
-Zusätzlich global, wenn das Thema stackübergreifend ist: [`../../THREEJS-RULES.md`](../../THREEJS-RULES.md).
+Stackübergreifend: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 
-## Ersteinrichtung — Belegumfang
+## Belegumfang
 
-Für diese erste Fassung wurden **alle 100 Dateien** unter `History/` in chronologischen Siebenergruppen gelesen: 8.972 Zeilen / 1.756.286 Bytes. Gegengeprüft wurden die elf Berichte unter `.completed/`, README, ROADMAP, Quellcode und die Review-Verteilung; allein die bildstärksten Phasen PH18/PH28/PH23 erzeugten 240/188/178 PNGs.
+100 `History/`-Dateien chronologisch gelesen: 8.972 Zeilen/1.756.286 Bytes; gegengeprüft mit 11 `.completed/`-Berichten, README, ROADMAP, Code, Reviews. PNG-stärkste Phasen: PH18 240, PH28 188, PH23 178.
 
-## Die zwei teuersten Muster
+## Teuerste Muster
 
-> **Ein plausibles Bild war häufig ein ungültiger Vergleich.** Freilaufende Frames, nicht zurückgesetzte Bruchschulden, geerbte Kamera, TAA-History oder ein verschobener RNG-Strom erzeugten jeweils plausible PNGs vom falschen Zustand.
+> **Plausibles Bild, ungültiger Vergleich:** freie Frames, Restschulden, geerbte Kamera, TAA-History, verschobener RNG.
 
-> **Ein grüner Check war häufig nur ungeprüft.** Erst Mutationen, Fresh-Clone-Läufe, Crash-Guards und das Rücklesen der roten Detailzeile zeigten, ob Bedingung und Diagnose wirklich scheitern können.
+> **Grüner Check, ungeprüfte Bedingung:** erst Mutanten, Fresh Clone, Crash-Guards und rote Detailzeile belegten Gates.

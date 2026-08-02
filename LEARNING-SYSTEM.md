@@ -34,8 +34,9 @@ Zwei Zeilen. Nicht mehr.
 - **Fehlerbild** — woran man es merkt. Von außen sichtbar, nicht innerlich.
 - **Ursache** — warum es passiert. Ohne sie ist der Tipp nicht übertragbar und nicht widerlegbar.
 - **→ Handlung** — was man stattdessen tut. Ein Befehl, ein Werkzeug, eine Reihenfolge.
-- **Beleg** — was es gekostet hat oder welche Messung es zeigt. **Der Beleg ist der wichtigste Teil**: er ist
-  das, woran eine spätere, klügere KI entscheidet, ob der Tipp noch gilt.
+- **Beleg** — Kosten oder Messung; wichtigste Grundlage für spätere Gültigkeitsprüfung.
+- **Sprache** — maximale Informationsdichte: technische Begriffe, Zahlen, Negationen und Bedingungen behalten;
+  Füllwörter, entbehrliche Artikel, Einleitungen, Wiederholungen und Synonymketten streichen. Telegrammstil.
 
 Beispiel:
 

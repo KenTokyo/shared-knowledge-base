@@ -1,105 +1,43 @@
 # Harness und Gates — duty-of-tsushima
 
-**Lesen wenn:** du ein Werkzeug unter `tools/` schreibst, den headless Browser fährst, Frames pumpst
-oder eine Zahl aus dem laufenden Spiel liest.
+**Lesen wenn:** Tool unter `tools/`, headless Browser, Frame-Pump oder Laufzeitzahl.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-Globale Grundlagen stehen in [`../../threejs/MEASURING.md`](../../threejs/MEASURING.md) und
-[`../../threejs/DEBUG-REVIEW.md`](../../threejs/DEBUG-REVIEW.md). Hier stehen nur die lokalen Fallen.
-Kennzahlen, Schwellen und Tore haben eine eigene Datei: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md).
-Alles, was in Millisekunden gemessen wird: [`FRAME-TIMING.md`](FRAME-TIMING.md).
+Global: [Messhandwerk](../../threejs/MEASURING.md) · [Debug/Review](../../threejs/DEBUG-REVIEW.md).
+Kennzahlen: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) · Millisekunden: [`FRAME-TIMING.md`](FRAME-TIMING.md).
 
-- **Grünes `check`, ungebootetes Spiel** — das Skript war `vite build`; ein Bundler, der erfolgreich
-  bündelt, hat nichts über Laufzeit gesagt, und die Vertragsregel „`pnpm check` muss grün sein" war
-  erfüllbar, ohne dass eine Zeile Spielcode je lief. → `check` ist Build **und** headless Boot-Probe,
-  die Zahlen aus dem laufenden Frame liest.
-  *~2500 Zeilen Subsystemcode lagen ungetestet im Repo; der erste Gate-Lauf fand sofort drei echte
-  Weltbefunde, darunter einen Wellen-Spawn auf 42,1 m hinter einer 79°-Wand · 2026-08-01*
+- **Grünes `check`, ungebootetes Spiel** — `check` war nur `vite build`; Runtime blieb unberührt. → Build plus headless Boot-Probe mit Framewerten.
+  *~2.500 Subsystemzeilen ungeprüft; erstes Gate fand 3 Weltdefekte, darunter Spawn 42,1 m hinter 79°-Wand · 2026-08-01*
 
-- **Headless Chromium rastert still auf der CPU** — der GPU-Prozess ist headless standardmäßig aus;
-  der Lauf sieht erfolgreich aus, und SwiftShader-Zahlen sind plausibel und wertlos. → Kennung über
-  `WEBGL_debug_renderer_info` lesen, gegen `swiftshader|llvmpipe|software|warp|angle \(google`
-  matchen und **mit Fehlercode abbrechen**, nicht warnen. `--enable-gpu` genügt und ist
-  plattformneutral; kein weiteres GPU-Flag ohne eigene Messung.
-  *Ohne Flags `ANGLE (Google, Vulkan … SwiftShader driver)`, mit `--enable-gpu`
-  `ANGLE (Apple, ANGLE Metal Renderer: Apple M5)`; `--use-angle=metal` und `headless:false` liefern
-  dasselbe. Playwright 1.62.1, macOS 25.4 · Tabelle im Kopf von `tools/browser.mjs` · 2026-08-01*
+- **Headless rastert still auf CPU** — SwiftShader liefert plausible wertlose Zahlen. → `WEBGL_debug_renderer_info`; bei `swiftshader|llvmpipe|software|warp|angle \(google` Exit. `--enable-gpu` genügt; keine ungemessenen Flags.
+  *Ohne Flag SwiftShader; mit `--enable-gpu` ANGLE Metal Apple M5; `--use-angle=metal`/sichtbar gleich · Playwright 1.62.1, macOS 25.4 · 2026-08-01*
 
-- **Die GPU-Kennung stiehlt dem Renderer seine Kontext-Attribute** — ein Canvas hat genau **einen**
-  Kontext: wer zuerst `canvas.getContext('webgl2')` für die Kennung ruft, legt dessen Attribute fest,
-  und three bekommt später denselben Kontext zurück, während `powerPreference`, `antialias:false`
-  und `stencil:false` still verworfen werden. Man misst dann eine Konfiguration, die das Spiel nie
-  benutzt. → Kennung auf einem `document.createElement('canvas')` holen und den Kontext mit
-  `WEBGL_lose_context` sofort wieder freigeben.
+- **GPU-Kennung verändert Renderer-Kontext** — erster `canvas.getContext('webgl2')` fixiert Attribute; Three verliert `powerPreference`, `antialias:false`, `stencil:false`. → Kennung auf separatem Canvas; per `WEBGL_lose_context` freigeben.
   *`src/main.js:probeGpu` · 2026-08-01*
 
-- **Die Sonde rechnet mit `undefined` weiter** — der `page.evaluate`-Callback wird serialisiert und
-  läuft im Browser; eine Closure über eine Modul-Konstante aus `tools/` existiert dort nicht, und
-  arithmetisch stirbt das nicht, es liefert nur stumm Unsinn. → Jede Konstante explizit als Argument
-  übergeben: `page.evaluate(fn, WINDOW_M)`.
-  *Traf `WINDOW_M` im Lane-Gate; dieselbe Falle trifft jede neue Konstante in jeder neuen Probe · 2026-08-01*
+- **Sonde rechnet mit `undefined`** — `page.evaluate` serialisiert Callback; Tool-Closure-Konstante fehlt im Browser. → Konstanten als Argument: `page.evaluate(fn, WINDOW_M)`.
+  *`WINDOW_M` im Lane-Gate; gilt für jede Probe-Konstante · 2026-08-01*
 
-- **Zwei Uhren auf demselben Frame** — wer Frames manuell pumpt, ohne vorher `engine.stop()` zu
-  rufen, lässt rAF weiterlaufen; die Simulation läuft doppelt und der gemessene Laufweg ist zu lang.
-  → Erst `engine.stop()`, dann pumpen. `pumpFrames()` macht das; handgeschriebene Proben müssen es auch.
+- **Zwei Uhren pro Frame** — manuelles Pumpen bei laufendem rAF verdoppelt Simulation. → `engine.stop()` vor Pump; `pumpFrames()` nutzen.
   *`tools/browser.mjs` · 2026-08-01*
 
-- **Ein Pump-Schritt über dem Substep-Budget verkürzt still die Simulation** — der Fixstep-Loop wirft
-  Rückstand ab, statt ihn aufzuholen (Spiral-of-Death-Guard, `MAX_SUBSTEPS = 8` × 1/120 s). Wer mit
-  mehr als 1/15 s pro Frame pumpt, misst eine Simulation, die Zeit verloren hat, ohne dass irgendwo
-  ein Fehler steht. → 1/15 s ist die Obergrenze; wer sie anhebt, muss `MAX_SUBSTEPS` mit anheben.
-  *`src/core/engine.js`, Laufweg-Gate in `tools/smoke.mjs` · 2026-08-01*
+- **Pump-Schritt über Substep-Budget** — Fixstep wirft Rückstand ab (`8×1/120 s`), Simulation verliert still Zeit. → Maximal 1/15 s; sonst `MAX_SUBSTEPS` mit erhöhen.
+  *`src/core/engine.js`, Laufweg-Gate `smoke.mjs` · 2026-08-01*
 
-- **Der freie Port war belegt, weil die Liste älter war als die Datei** — die Portwahl 5180/4180 fiel
-  gegen eine Fassung von `PORTLISTE.md`, die `Claude-of-tsushima` noch auf 5173/4173 führte; in
-  dessen `vite.config.js` stehen aber `server.port = 5180` und `preview.port = 4180`, beide
-  `strictPort`. Zwei `strictPort`-Projekte auf derselben Nummer heißt: wer zweitens startet, bricht
-  ab — und beim Ernten laufen genau diese beiden nebeneinander. → Vor der Portwahl `git pull` im
-  Submodule **und** `grep -n "port" ../<nachbarrepo>/vite.config.js`. Die Liste ist eine Momentaufnahme,
-  die Konfigurationsdatei ist die Wahrheit.
-  *Kollision blieb zwei Schichten unbemerkt, weil beide Server nie gleichzeitig liefen; jetzt
-  5185/4185 · 2026-08-02*
+- **Portliste älter als Konfiguration** — Nachbarrepo war bereits 5180/4180 `strictPort`; zwei Projekte kollidieren erst parallel. → Submodule pull plus `grep "port" ../repo/vite.config.js`; Konfig ist Wahrheit.
+  *Kollision 2 Schichten unbemerkt; jetzt 5185/4185 · 2026-08-02*
 
-- **Ein fehlendes Favicon reißt das Gate ein** — `requestfailed` gehört in den Exit-Code, und ein
-  404 auf `/favicon.ico` ist ein fehlgeschlagener Request wie jeder andere. Das sieht aus wie
-  Toolflakiness und ist keine. → Inline-SVG-Favicon im `<head>`, keine Datei; das Projekt lädt
-  ohnehin keine externen Assets.
+- **Favicon-404 kippt Gate** — `requestfailed` zählt auch `/favicon.ico`. → Inline-SVG-Favicon im `<head>`.
   *`index.html` · 2026-08-01*
 
-- **Abgeleitete Daten scheitern nicht, sie antworten falsch** — die vierzehn Benchmark-Kameras waren
-  von Hand geschriebene Koordinaten auf einer Insel, die aus einem Seed entsteht. Sieben lagen mit
-  dem Auge unter Grund, `material-closeup` 19,8 m tief. Nichts warf, nichts wurde schwarz: eine
-  vergrabene Kamera liefert ein plausibles graues Bild vom Inneren eines Hügels, und graue Pixel sind
-  grau, ob sie Nebel, Hang oder Polygonrückseite sind. Daraus stammte eine committete Baseline **und**
-  der Fehlverdacht, die Materialschicht sei ein stiller No-Op. → Abgeleitetes beim Bake aus der
-  Quelle lösen, nicht in eine Datei schreiben. Eine committete Lösung veraltet still, sobald Seed
-  oder Feld sich bewegen; ein Solver, der die Quelle liest, kann nicht veralten. Liegt das Ziel in
-  einem gitignorierten Verzeichnis, ist die Dateivariante ohnehin eine Abhängigkeit, die kein
-  Checkout hat.
-  *Nach dem Fix alle 14 mit ≥ 1,8 m Freiraum, `material-closeup` bei 99 % Boden statt 0 % · 2026-08-02*
+- **Abgeleitete Kamera antwortet falsch** — handgeschriebene Seed-Koordinaten veralten; 7/14 Augen unter Grund, dennoch plausible graue Frames. → Beim Bake aus Quelle lösen, nicht Datei; gitignored Ziel nie Voraussetzung.
+  *`material-closeup` 19,8 m tief; nach Fix 14/14 ≥1,8 m Freiraum, 99 % Boden statt 0 % · 2026-08-02*
 
-- **Eine Prüfung, die den Code unter Test wiederverwendet, bestätigt ihn** — der Kamera-Solver
-  rankt sein Framing über ein 11×7-Raster; das Gate `tools/aim.mjs` marschiert 32×18. Teilten sie
-  sich die Funktion, würde das Gate einen kaputten Solver genauso bereitwillig bestätigen wie einen
-  richtigen, weil beide Seiten denselben Fehler machen. → Gate und Erzeuger unabhängig
-  implementieren, auch wenn das ein paar Zeilen dupliziert. Der Zweck einer Prüfung ist
-  Widerspruch, nicht Wiederverwendung.
-  *`src/world/cameras.js` gegen `tools/aim.mjs` · 2026-08-02*
+- **Gate wiederverwendet Code unter Test** — gleicher Framingfehler bestätigt sich selbst. → Erzeuger und Gate unabhängig implementieren; Widerspruch vor DRY.
+  *Kamera-Solver 11×7 vs. `aim.mjs` 32×18 · 2026-08-02*
 
-- **Das Gate prüfte eine gleichnamige, andere Sache** — `smoke.mjs` trägt eine Zusicherung „Kamera
-  über dem Terrain" und war 34 von 34 grün, während sieben Benchmark-Kameras im Berg standen. Die
-  Zusicherung prüft `engine.camera`, die Spielerkamera. → Beim Formulieren einer Zusicherung den
-  geprüften Gegenstand benennen, nicht seine Gattung: „Spielerkamera über Grund" hätte die Lücke
-  beim Lesen sichtbar gemacht.
-  *`tools/smoke.mjs:216` · 2026-08-02*
+- **Gate prüft gleichnamigen Fremdgegenstand** — „Kamera über Terrain“ prüfte Spielerkamera, nicht 14 Benchmarks. → Gegenstand im Zusicherungsnamen: „Spielerkamera über Grund“.
+  *34/34 grün bei 7 Benchmark-Kameras im Berg · `smoke.mjs:216` · 2026-08-02*
 
-- **Die posierte Kamera ist einen halben Frame später wieder weg** — `frame.mjs` posiert `ctx.camera`
-  und ruft bewusst **kein** `engine.step()`, weil das Spielersystem die Kamera jeden Frame aus seinem
-  Rig neu schreibt. Ein Werkzeug, das eine Framezeit misst, **muss** aber `step()` fahren — sonst
-  misst es nicht den Frame, den das Spiel zeichnet. Beides zusammen heisst: die posierte Kamera ist
-  beim Messen wirkungslos, und die Zahl beschreibt still den Spawn-Blickpunkt statt den gewählten.
-  → Nicht die Kamera setzen, sondern den **Spieler versetzen**: Füsse auf `world.height(x, z)` unter
-  dem Benchmark-Auge, `prevPosition` mitziehen, `rig.yaw`/`rig.pitch` aus `eye → look` rechnen. Dann
-  überlebt der Blickpunkt jeden `step()`, und der Freiraum über Grund ist als Selbstprobe messbar.
-  *`terrace-waterline` gegen den Spawn: 110 statt 89 Draw Calls und 59 972 statt 54 052 Dreiecke —
-  ohne den Umweg hätte beides identisch gelesen · `tools/perf.mjs` gegen `tools/frame.mjs` · 2026-08-02*
+- **Posierte Kamera verschwindet beim Step** — `frame.mjs` setzt `ctx.camera` ohne Step; Performance muss steppen, Rig überschreibt Pose. → Spieler auf `height(x,z)` versetzen, `prevPosition`, `rig.yaw/pitch` aus `eye→look`; Freiraum selftesten.
+  *`terrace-waterline` vs. Spawn: 110 vs. 89 Calls, 59.972 vs. 54.052 Tris; ohne Spielerpose identisch · 2026-08-02*
