@@ -24,6 +24,9 @@ Ausführbarer Owner: `tools/perf.mjs` samt Begründung im Dateikopf.
 - **Blockgröße folgt der Zielauflösung, nicht dem Bauchgefühl** — der 0,1-ms-Tick quantisiert auch den *Median* aus vielen Runden: bei zu kleinen Blöcken sortiert man Stufen, nicht Messwerte, und die Streuung sieht trotzdem plausibel aus. → Block so wählen, dass er ≥ 20 Ticks (2 ms) dauert; Quantisierung erkennt man daran, dass alle Zeilen dieselben zwei bis drei Werte tragen.
   *Kapselkollision: 200 Züge/Block → 13 Orte trugen nur 1,50/2,00/0,50 µs und ein Mittel von 1,69; 4 000 Züge/Block → 1,00–1,60 µs, Mittel 1,22, IQR ±0,15 · 2026-08-02*
 
+- **„Kostet nichts" ohne Gegenprobe belegt die Blindheit der Sonde** — ein Pre-Warm-Beleg der Form „erster echter Auslöser zeigt keinen Ausschlag" meldet auch dann grün, wenn das Instrument einen Shaderkompilat gar nicht auflösen kann. → Im selben Block einen Lauf fahren, in dem die Sache **sichtbar** kostet: dasselbe Material mit **einem** zusätzlichen Cache-Schlüssel (`flatShading`) ist ein Programm, das three nie übersetzt hat. Erst dessen Zahl macht die erste zu einem Beleg.
+  *Hülsen-Pre-Warm: erster `weapon:shell` +0,40 ms gegen Nachbarmax bei Rauschboden ±9,40 ms; Gegenprobe +268,60 ms in EINEM Frame = 16 Framebudgets, Faktor 670. ANGLE/Metal M5, `high`, 960×540 · 2026-08-02*
+
 - **In-Run-Rauschen ≠ Prozess-Rauschen** — Blockwiederholung 0,12–0,36 ms, neue Prozesse 4,88 vs. 3,72 ms (31 %). → Regression braucht Prozessabstand plus dokumentierte Fremdlast; beide Böden getrennt.
   *loadavg 3,7 auf 10 Kernen, sonst gleicher Aufruf · 2026-08-02*
 

@@ -39,5 +39,8 @@ Kennzahlen: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) · Millisekunden: [`F
 - **Gate prüft gleichnamigen Fremdgegenstand** — „Kamera über Terrain“ prüfte Spielerkamera, nicht 14 Benchmarks. → Gegenstand im Zusicherungsnamen: „Spielerkamera über Grund“.
   *34/34 grün bei 7 Benchmark-Kameras im Berg · `smoke.mjs:216` · 2026-08-02*
 
+- **Boot-Fenster ist zu, wenn `__kaze.ready` ankommt** — Self-Warm läuft in `init()`, der Warm-Platz lebt 0,25 s Spielzeit, `ready` folgt erst nach `engine.start()` plus einem rAF. Wer über die Playwright-Brücke danach hakt, misst ein geschlossenes Fenster und liest „nie passiert" statt „längst passiert". → `page.addInitScript` mit `defineProperty`-Falle auf `globalThis.__kaze`, darin rAF-Poll auf `ctx.peek('<system>')`; Haken sitzt vor dem ersten gerenderten Frame. Draw Call selbst über `onBeforeRender` beobachten — three ruft es genau einmal je ausgegebenem Call, mit Instanzzahl und gebundenem Target.
+  *Haken sass in Frame 0, Warm-Draw beider Hülsenringe in Frame 1: je 1 Instanz, Skalierung 0, Ziel 960×540 (Post-Target, nicht Canvas); `hadProgram` false nur beim ersten der beiden · 2026-08-02*
+
 - **Posierte Kamera verschwindet beim Step** — `frame.mjs` setzt `ctx.camera` ohne Step; Performance muss steppen, Rig überschreibt Pose. → Spieler auf `height(x,z)` versetzen, `prevPosition`, `rig.yaw/pitch` aus `eye→look`; Freiraum selftesten.
   *`terrace-waterline` vs. Spawn: 110 vs. 89 Calls, 59.972 vs. 54.052 Tris; ohne Spielerpose identisch · 2026-08-02*

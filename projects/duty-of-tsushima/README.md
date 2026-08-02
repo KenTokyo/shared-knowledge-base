@@ -17,6 +17,7 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Heightfield, Lane, Grat, Terrasse, Spawn, Begehbarkeit | [`WORLD-LANES.md`](WORLD-LANES.md) |
 | Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Bildkontrast | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
 | Pflanze streuen, Dichte, LOD-Stufe, Blatt-/Kronenform | [`VEGETATION-SCATTER.md`](VEGETATION-SCATTER.md) |
+| Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
 
 ## Teuerstes Muster
 
