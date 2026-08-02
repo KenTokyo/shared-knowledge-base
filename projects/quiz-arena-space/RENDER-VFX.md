@@ -51,12 +51,17 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   *25,7 % mit Bloom gegen 0,311 % ohne — Faktor 82; die Restverletzungen waren 162 Läufe mit mittlerer
   Lauflänge 1,3 px · 2026-07-31*
 
-- **Drei „bestätigende" Läufe zeigten auf die falsche Stellschraube** — Läufe 1–3 wiesen konsistent auf die
-  Bloom-Stärke; der Gegenlauf mit exakt den **alten** Bloom-Werten zeigte denselben Blow-out, also war
-  Bloom nie die Ursache. → Vor dem Fix einen Lauf mit den alten Werten der Verdächtigen fahren; drei
-  konsistente Läufe sind kein Kausalbeleg, ein Gegenlauf ist einer.
-  *Rekonstruierte alte Bloom-Werte lieferten unverändert `BLOWN:t28(+6%)`; die beiden Stärken waren auf
-  beiden Metriken ununterscheidbar. Ursache war ein Damper-Wert zwei Systeme weiter · 2026-07-29*
+- **Der benannte Verdächtige war nie im Bild** — einmal wiesen drei „bestätigende" Läufe auf die
+  Bloom-Stärke, einmal benannte eine Übergabe den Schuss-Trail als bildfüllendes Band und lieferte die
+  Zielwerte gleich mit; beide Verdächtigen waren unschuldig, beide Male sagte es erst ein Gegenlauf.
+  → **Null-Lauf vor Fix**: den Frame einmal fahren, in dem der Verdächtige *nichts* erzeugt — nicht mit
+  alten Werten, die sind der Ausgangszustand. Steht das Bild dann noch, ist jede Parameterarbeit daran
+  verloren, und die Suche gehört eine Ebene höher.
+  *Band unverändert bei `charges=0`, durch alle zwölf `?fxoff=`-Schichten und `bloom=0` hindurch, weg erst
+  bei `?deckpulse=0` — der Deck-Puls des Bretts, Ring bei Radius ~64 zu t=0,86 unter einer Kamera auf
+  Radius 62. Die vorgeschlagenen Breiten 0,42/0,9 → 0,2/0,45 bewegten den Frame-Mittelwert um 0,0002.
+  Zuvor: rekonstruierte alte Bloom-Werte lieferten unverändert `BLOWN:t28(+6%)`, Ursache war ein
+  Damper-Wert zwei Systeme weiter · 2026-07-29, 2026-08-02*
 
 - **Ein schwarzer Verdecker ist im Differenzbild unsichtbar** — drei Phasen drehten an Licht, Becken und
   Shader-Rändern; es war die Deckelkappe eines Kragens (`openEnded: false` → massive Scheibe), die die
