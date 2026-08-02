@@ -15,6 +15,7 @@ Zeit gekostet hat. Globale Three.js-Tipps beginnen bei [`../../THREEJS-RULES.md`
 |---|---|
 | Werkzeug in `tools/`, headless Browser, Frames pumpen, Zahl aus dem Spiel lesen | [`HARNESS-GATES.md`](HARNESS-GATES.md) |
 | Kennzahl definieren, Schwelle setzen, Tor formulieren, Sweep ranken | [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) |
+| Warme Lichtquelle, Feuerstelle, emissive Farbe, Punktlicht-Slots, §3s Warmanteil | [`WARM-ACCENT-AND-FIRE.md`](WARM-ACCENT-AND-FIRE.md) |
 | Frametime, GPU-Zeit, Submissionszeit, Quantile, Rauschboden — alles in ms | [`FRAME-TIMING.md`](FRAME-TIMING.md) |
 | Heightfield, Lane, Grat, Terrasse, Spawnpunkt, Begehbarkeit | [`WORLD-LANES.md`](WORLD-LANES.md) |
 | Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Kontrast im Bild | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
