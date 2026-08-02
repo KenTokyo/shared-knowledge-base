@@ -1,7 +1,8 @@
 # Shared Docs — gemeinsame Wissensbasis
 
-Ein Submodule (`shared-knowledge-base`), das in jedem Projekt liegt. Es trägt **freiwillige Tipps**, keine
-Vorschriften: eine gemessen bessere lokale Lösung hat immer Vorrang und darf den Tipp überschreiben.
+Ein Submodule (`shared-knowledge-base`), das in jedem Projekt liegt. Technische Learnings bleiben **freiwillige
+Tipps**: eine gemessen bessere lokale Lösung hat Vorrang. Daneben stehen zentral gepflegte Arbeitsregeln, die
+verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 
 **Wie das System wächst und wer was ändern darf: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).**
 
@@ -12,8 +13,8 @@ Vorschriften: eine gemessen bessere lokale Lösung hat immer Vorrang und darf de
 | [`LEARNING-SYSTEM.md`](LEARNING-SYSTEM.md) | Die Verfassung: Tippformat, Änderungsrecht, Promotion, Größenbudget |
 | [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
-| [`CODING-RULES.md`](CODING-RULES.md) | Arbeitsweise, Loop, Critic — stackneutral |
-| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Muster für ein CLI-Capture-System (headless Wirt, Render-Target, kein `page.screenshot()`) |
+| [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche gemeinsame Orchestrierung: Wirkung, Validierung, Git und Routing |
+| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für CLI-Capture (headless Wirt, Render-Target, kein `page.screenshot()`) |
 | [`PORTLISTE.md`](PORTLISTE.md) | Lokale Dev-Ports und direkte Links aller Projekte mit Shared Docs |
 | [`CREATE-PROMPT-GUIDE.md`](CREATE-PROMPT-GUIDE.md) | Prompts bauen |
 | [`agents/`](agents/) | Arbeitsmodi (Loop ohne Rückfragen, Phasen abhaken), der [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md) und das [Juicy-Game-UI-System](agents/juicy-game-ui-system.md) |
