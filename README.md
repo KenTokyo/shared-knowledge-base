@@ -16,8 +16,8 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 | [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Kontextanker, Umsetzung, Echtzeit-3D, Validierung und Git |
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für CLI-Capture (headless Wirt, Render-Target, kein `page.screenshot()`) |
 | [`PORTLISTE.md`](PORTLISTE.md) | Lokale Dev-Ports und direkte Links aller Projekte mit Shared Docs |
-| [`CREATE-PROMPT-GUIDE.md`](CREATE-PROMPT-GUIDE.md) | Prompts bauen |
-| [`agents/`](agents/) | Arbeitsmodi (Loop ohne Rückfragen, Phasen abhaken), der [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md) und das [Juicy-Game-UI-System](agents/juicy-game-ui-system.md) |
+| [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |
+| [`agents/`](agents/) | Nur per Trigger: [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md), [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md), [Juicy-Game-UI](agents/juicy-game-ui-system.md) |
 | [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
 | [`playwright-cli/`](playwright-cli/) | Playwright-CLI-Notizen |
 | [`old-deprecated/`](old-deprecated/) | Abgelöste Fassungen. Nur zum Nachschlagen, nicht mehr verlinken |
@@ -35,7 +35,7 @@ daneben die Tippdateien. Vorlage ist der Ordner oben.
 
 ## Der Ablauf in einer Arbeitsschicht
 
-1. Thema erkennen → **eine** passende Tippdatei lesen (Trigger-Tabelle in der `AGENTS.md` des Repos).
+1. Lesepfad aus [`CODING-RULES.md`](CODING-RULES.md) folgen; nur bei belegtem Projekttrigger **eine** passende Tippdatei lesen.
 2. Arbeiten.
 3. Hat etwas Zeit gekostet, das ein Tipp verhindert hätte → Tipp anlegen. Zwei Zeilen, mit Beleg.
 4. Hat ein Tipp nicht gestimmt → stürzen, mit Gegenbeleg. Das ist ausdrücklich erlaubt und erwünscht.

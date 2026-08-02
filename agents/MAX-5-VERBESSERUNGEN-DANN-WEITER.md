@@ -3,11 +3,9 @@
 **Lesen wenn:** du an derselben Sache die dritte Verbesserung misst — und bevor du eine Loop-Schicht startest.
 **Status:** Deckel, kein Tipp · überschreiben nur über den Preisvergleich unten · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-**Der Deckel stoppt nicht die Arbeit, er stoppt die Wiederholung.**
-[ARBEITE-IM-LOOP-KEINE-RUECKFRAGEN.md](ARBEITE-IM-LOOP-KEINE-RUECKFRAGEN.md) und
-[TODOS-PHASENWEISE-…](TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md) bleiben unverändert
-gültig: nicht aufhören, nicht fragen, im Loop weiter — nur ab der sechsten Verbesserung **an etwas
-anderem**. Die beiden Dateien sagen, dass man weitermacht; diese sagt, woran.
+**Der Deckel stoppt nicht die Arbeit, er stoppt die Wiederholung.** Im
+[Phasenworkflow](TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md) weiterarbeiten — ab sechster
+Verbesserung jedoch an anderer Phase/Achse. Phasenworkflow sagt, dass Arbeit weitergeht; diese Datei sagt, woran.
 
 ## Die Regel
 

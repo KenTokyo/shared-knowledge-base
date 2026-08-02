@@ -4,14 +4,23 @@
 projektspezifische Regeln haben Vorrang. Die `AGENTS.md` hält nur Kernpflichten und lokale Fakten; gemeinsame
 Arbeitsweise wird hier einmal gepflegt.
 
-## Kontextanker statt Lesekette
+## Lesepfad und Kontextanker
 
-Vor einem größeren Leseblock im Arbeitskontext notieren und dort kurz fortschreiben:
+Pflichtpfad: lokale `AGENTS.md` vollständig → diese Datei vollständig. Danach nur per konkretem Trigger:
 
-- **Auftrag:** ein Satz zum Userziel und zum Fertigkriterium.
-- **Leseliste:** `offen/gelesen · Pfad · Grund`; neue Pfade nur ergänzen, wenn eine konkrete Frage sie erfordert.
+- vorhandener User-/Projektplan → genau diesen Plan lesen und fortführen;
+- mehrere zusammenhängende Lieferabschnitte → einmal den
+  [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md) lesen;
+- Echtzeit-3D-Facharbeit → [THREEJS-RULES.md](THREEJS-RULES.md), dort engsten Owner wählen;
+- belegter Projekttrigger → höchstens eine passende Tippdatei.
+
+Querverweis allein ist kein Leseauftrag; keine Linkkette vorsorglich öffnen. Vor größerem Leseblock im
+Arbeitskontext notieren und kurz fortschreiben:
+
+- **Auftrag:** ein Satz zu Userziel und Fertigkriterium.
+- **Leseliste:** `offen/gelesen · Pfad · Grund`; neue Pfade nur bei konkreter Frage ergänzen.
 - **Befund:** pro gelesener Datei höchstens ein auftragsrelevanter Satz.
-- **Nächster Schritt:** nach jedem Leseblock zum Auftrag zurückkehren; ein Link allein ist kein Leseauftrag.
+- **Nächster Schritt:** nach jedem Leseblock zum Auftrag zurückkehren.
 
 Keine zusätzliche Protokolldatei anlegen, sofern das Projekt sie nicht verlangt. Lesen endet, sobald die nächste
 Änderung sicher entschieden werden kann.
@@ -34,8 +43,10 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 
 - Vor Änderungen Architektur, Single Source of Truth, aktuelle Git-Differenzen und vorhandene Werkzeuge prüfen.
   Bestehende Systeme erweitern statt parallele Zustände, Renderpfade oder Konfigurationen einzuführen.
-- Große Änderungen als zusammenhängende, kompilierfähige Schnitte liefern. Jeder Schnitt muss für sich kohärent,
-  reversibel und integrierbar sein; halbfertige Parallelarchitekturen sind kein Fortschritt.
+- **System vor Feinschliff:** zuerst Struktur, SSoT, Integration und vollständigen Hauptpfad aufbauen; danach Werte,
+  Optik und Mikrooptimierungen justieren. Kein isoliertes Detail polieren, während umgebender Ablauf fehlt.
+- Große Änderungen als zusammenhängende, kompilierfähige Phasen liefern. Pro Phase alle eng gekoppelten Todos
+  ausimplementieren; jeder Schnitt bleibt kohärent, reversibel und integrierbar. Keine halbfertige Parallelarchitektur.
 - Performance ist Akzeptanzkriterium, kein Vorwand für Wirkungslosigkeit. Zusätzliche Layer müssen ihren
   sichtbaren oder spielerischen Wert gegen Framezeit, Draw Calls, Speicher, Update-Kosten und Komplexität bezahlen.
   Teure Arbeit bündeln, instanzieren, poolen oder vorbacken, wo es zum konkreten Pfad passt.
@@ -44,9 +55,10 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 
 ## Validierung und Echtzeit-3D
 
-- **Prüfbudget:** kanonisches statisches Gate einmal pro zusammenhängendem Schnitt; nach Fehlerbehebung
-  normalerweise ein Kontrolllauf. Gleiche Prüfung ohne neue Änderung oder Frage nicht wiederholen; erneutes
-  Scheitern heißt Ursache/Umsetzung prüfen statt weiter rerunnen. CI bleibt Liefergate, keine Mikroedit-Schleife.
+- **Gebündeltes Prüfbudget:** zusammenhängenden Schnitt zuerst ausimplementieren, danach kanonisches statisches
+  Gate einmal für alle Änderungen. Funde gemeinsam beheben, normalerweise ein Kontrolllauf. Gleiche Prüfung ohne
+  neue Änderung oder Frage nicht wiederholen; erneutes Scheitern heißt Ursache/Umsetzung prüfen statt rerunnen.
+  CI bleibt Liefergate, keine Mikroedit-Schleife.
 - Automatische UI- oder Gameplay-Tests nur auf ausdrücklichen Userbefehl; erforderliche Sichtprüfung bleibt davon
   unberührt.
 - Bei Echtzeit-3D gilt für visuelle Prüfungen ausschließlich das projekteigene CLI-Capture-System. Fehlt es, nach
@@ -56,8 +68,6 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 - Zahlen zuerst: relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen. Bilder nur, wenn sie eine
   Entscheidung tragen; normalerweise Gewinner/Verlierer oder Vorher/Nachher, nicht komplette Sweep-Reihe. Sobald
   Entscheidung stabil ist, stoppen; kein weiterer Capture ohne geänderten Kandidaten oder neue Frage.
-- Für 3D-Facharbeit über [THREEJS-RULES.md](THREEJS-RULES.md) genau den engsten passenden Owner und gegebenenfalls
-  genau eine projektspezifische Tippdatei öffnen — nicht die ganze Wissensbasis.
 
 ## Git und Lieferung
 
