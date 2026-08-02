@@ -1,6 +1,6 @@
 # voxel-samurai-quiz — Projekt-Learnings
 
-**Lesen wenn:** AEON-Weltengine (`src/engine/`, Port 3074) oder Welt-Tooling (`scripts/world/`).
+**Lesen wenn:** AEON-Weltengine (`src/engine/`, Port 3074), Welt-Tooling (`scripts/world/`) oder Spielperformance (Port 3070).
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Architektur: `docs/aeon-engine/aeon-engine-overview.md` (SSoT). Messhandwerk:
@@ -11,6 +11,7 @@ Architektur: `docs/aeon-engine/aeon-engine-overview.md` (SSoT). Messhandwerk:
 | Arbeit | Zuerst lesen |
 |---|---|
 | Gras, Laub, Terrain, Dichte, Draw Calls, Framezeit | [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md) |
+| Shader-Kompilate, VFX-Layer, Render-Hüllen, `game:perf` | [`GAME-PERFORMANCE.md`](GAME-PERFORMANCE.md) |
 | AEON-Bildmaße, Layer-A/B, Sondenmetrik, Probe-vs.-Shipping | [`MEASURING.md`](MEASURING.md) |
 | Rauschboden, Lauf-Flags, Zustandsdrift, Zeit, Sondenspalten | [`RUNTIME-MEASURING.md`](RUNTIME-MEASURING.md) |
 | `CameraRig`, Third Person, Spielpose, Waffe, Gegnerpeilung | [`CAMERA-CHARACTER.md`](CAMERA-CHARACTER.md) |
