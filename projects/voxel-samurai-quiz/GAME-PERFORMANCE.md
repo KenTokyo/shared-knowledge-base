@@ -123,19 +123,30 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   `BossRosterWarmMount.tsx`; Wirkung noch ungemessen — die Mechanik ist aus `three.cjs:77015-77068` belegt,
   nicht die Ersparnis · 2026-08-02*
 
-- **Einen Einzelframe von Sekunden als stabile Zahl behandelt** — `boss-relink.mjs` meldete 19 neue Programme
-  beim Bossspawn, ein Fix wurde dagegen gebaut, gemessen und für wirksam gehalten (19 → 12). Der gepaarte A/B
-  über einen Ablationsschalter (`?bossRosterWarm=0/1`, ein Bündel, zwei Läufe je Seite) widerlegt beides:
-  **dieselbe Konfiguration liefert 19 und 12**, die Gegenseite 12 und 14, und der Etageneinstieg schwankt bei
-  identischem Code zwischen 12,3 s und 21,3 s. Die Streuung innerhalb einer Seite ist so groß wie der
-  Unterschied zwischen den Seiten. Ursache ist die Natur der Größe: Ein Relink ist EIN Frame, der Block enthält
-  fünf bis fünfundvierzig davon, und welche Programme gerade fehlen, hängt daran, was der Lauf vorher zufällig
-  gezeichnet hat. → Ein Ereigniszähler mit einstelligem Erwartungswert braucht **erst den Rauschboden aus zwei
-  Läufen derselben Seite**, dann den A/B. Zwei Läufe je Seite sind hier nicht Sorgfalt, sondern die Bedingung
-  dafür, dass die Zahl überhaupt etwas heißt. Und: Ein Ablationsschalter im Messbuild ist billiger als ein
-  zweites Bündel — er ist der einzige Weg, Vorher und Nachher in **eine** Sitzung zu bekommen.
+- **Auf dem Delta entschieden, wo der Bestand die stabile Größe ist** — `boss-relink.mjs` meldete 19 neue
+  Programme beim Bossspawn; ein Warmvorrat wurde dagegen gebaut, gemessen und auf `created` 19 → 12 für
+  wirksam gehalten. Beides falsch, und der Fehler steckt in der **Spaltenwahl**. Über Wiederholungen sind
+  `compile.atStart`/`atEnd` (der **Bestand**) exakt gleich, `created` und `slowestFrameMs` (das **Delta** und
+  seine Kosten) streuen um mehr, als der ganze Effekt groß ist:
+
+  ```
+  Seite   Einstieg    nach Spawn   created
+  aus     178 · 178   200 · 193    19 · 12
+  an      193 · 193   208 · 208    12 · 14
+  ```
+
+  Auf `created` gelesen ist das ein Gewinn; auf dem Bestand gelesen ist es **+15 Programme am Etageneinstieg
+  und keines gespart** — der Endstand steigt mit, also war kein vorkompiliertes Programm eines, das der Spawn
+  braucht. Ursache der Streuung ist die Natur des Deltas: Ein Relink ist EIN Frame, welcher Frame ihn trägt
+  hängt daran, was der Lauf vorher zufällig gezeichnet hat, und der Block enthält fünf bis fünfundvierzig
+  Frames. → **Bei einem Ereigniszähler mit einstelligem Erwartungswert auf den Bestand entscheiden, nicht auf
+  das Delta.** Der Bestand ist über Läufe reproduzierbar, das Delta ist es nicht. Zwei Läufe je Seite sind
+  dabei nicht Sorgfalt, sondern die Bedingung dafür, dass man den Unterschied überhaupt sieht — und ein
+  Ablationsschalter im Messbuild ist billiger als ein zweites Bündel, weil er Vorher und Nachher in **eine**
+  Sitzung holt.
   *Etage 12, Prodbuild, vier Läufe `.tmp/boss-relink-l12-ab{1,2}-warm{0,1}.json`; die vermeintliche Baseline
-  `-fix2.json` war ein einzelner Lauf. Der Lichtvorrat-Gewinn davor (21.820 → ~4.000 ms) ist unberührt — eine
+  `-fix2.json` war ein einzelner Lauf, und ihr `customProgramCacheKey ×8` gehört `zenitSegler` — einem
+  Apex-Jäger, nicht einem Boss. Der Lichtvorrat-Gewinn davor (21.820 → ~4.000 ms) ist unberührt: eine
   Größenordnung liegt über jeder gemessenen Streuung · 2026-08-02*
 
 - **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
