@@ -45,6 +45,25 @@ Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
   *Motiv mittig, dafür Gegner über der Bildkante, Sichtbarkeit −76 %, Pitch −51° · Herkunft:
   voxel-samurai-quiz · 2026-08-01*
 
+- **Einzelne Spielframes brechen auf Hunderte Millisekunden ein, sobald Lichter kommen und gehen** — mitten im
+  Spiel, ohne neuen Inhalt, ohne neues Material. Ursache: Die **Anzahl** der Lichter je Typ steht im
+  Programm-Cache-Key (`numPointLights`, `numDirLights`, …). Jede Änderung linkt **jedes** betroffene Material
+  neu, nicht nur das beleuchtete. Der Auslöser ist meist unsichtbar gemacht statt entfernt: `projectObject`
+  steigt bei `visible === false` gar nicht erst in den Teilbaum ab, ein verstecktes Licht **fällt aus der
+  Zählung** — `intensity = 0` dagegen zählt voll mit und liefert nichts. Ein Licht als Kind einer Kreatur, die
+  spawnt, stirbt oder ausgeblendet wird, ist damit ein Relink pro Ereignis.
+  → Lichtzahl als **feste Achse** behandeln, nicht als Folge des Spielzustands: konstanter Vorrat außerhalb der
+  Objekte, ab dem ersten Frame gemountet, leere Plätze auf `intensity = 0`. Die Zahl an nichts koppeln, das zur
+  Laufzeit wechselt (Qualitätsstufe, Etage, Spawnzahl) — sonst kauft man den Relink zurück, den der Vorrat
+  verhindert.
+  ⚠ **Der Vorrat lohnt sich mit großem Abstand, auch wenn Plätze leer bleiben:** ein Platz kostet je Fragment
+  eine Schleifenrunde, ein Relink kostet einen ganzen Frame. Wer den Vorrat aus Sparsamkeit schrumpft, tauscht
+  Zehntelmillisekunden gegen Hunderte.
+  *Ein dauerhaftes Punktlicht kostete gemessen 0,1–0,2 ms je Frame (1080p, Forward, ~330 Draws); die Relinks,
+  die es verhinderte, kosteten 11–16 Einzelframes von 340–1060 ms je Lauf. Drei Plätze = 0,2–0,7 ms gegen bis zu
+  16 s Ruckeln · Herkunft: voxel-samurai-quiz (Mechanismus ohne Projektbezug, zweiter Beleg steht aus) ·
+  2026-08-02*
+
 - **Quadratische Schattenbox über einer Szene, die im Lichtraum nicht quadratisch ist** — die Schatten sind
   überall gleich grob, und jede Abhilfe klingt nach „mehr Auflösung". Ursache: die Ortho-Box des
   Richtungslichts wird in **Weltmetern** gewählt („die Karte ist 156 m breit"), aufgelöst wird aber die

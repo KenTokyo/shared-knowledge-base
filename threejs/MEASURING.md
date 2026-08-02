@@ -12,7 +12,7 @@ Diese Datei existiert, weil **eine** Fehlerform in Echtzeit-3D teurer ist als je
 
 Ein Renderfehler wird gesehen. Ein Messfehler wird zitiert.
 
-## Die neun Tipps
+## Die zehn Tipps
 
 - **Pixelmaße über zwei Auflösungen verglichen** — „Referenz 12 px, wir 11 px, passt". → Jede Länge,
   Fläche, Lauflänge und Ortsfrequenz in **Anteilen der Bildbreite**, nie in nativen Pixeln. Gilt auch für
@@ -32,6 +32,21 @@ Ein Renderfehler wird gesehen. Ein Messfehler wird zitiert.
   Größe gestaffelt: Geometrie exakt, Deckungen und Verteilungen deutlich lockerer.
   *Zweimal zu eng geschätzt, korrekt erst aus sechs Läufen — Faktor 13 daneben; auch die Zuordnung „welcher
   Ort driftet" war falsch · Herkunft: voxel-samurai-quiz · 2026-08-01*
+
+- **Vorher und Nachher aus zwei verschiedenen Stunden** — die Framezeit steigt nach dem Commit klar und
+  **reproduzierbar**, drei Wiederholungen des neuen Codes liegen eng beieinander, und die Regression ist
+  trotzdem nicht im Code. Ursache: Wiederholungen innerhalb einer Stunde messen den Rauschboden **der
+  Stunde**. Fremdlast (zweiter Browser, Editor, fremder Dev-Server, Thermik) verschiebt das ganze Niveau
+  zwischen Stunden um Zehnerprozente und ist in keiner Wiederholung sichtbar — sie bestätigt nur sich selbst.
+  → **A/B nur unmittelbar nacheinander, aus einem Bündel und einer Sitzung**, und das Wiederholungspaar in
+  **umgekehrter Reihenfolge**; kehrt sich die Differenz um oder schrumpft sie unter den Boden, war es Drift.
+  Wenn beide Seiten verschiedenen Code brauchen, gehört der Schalter **ins Bündel** (Abfragewert, einmal beim
+  Modulstart gelesen), statt zweimal zu bauen — zwei Bündel sind zwei Sitzungen. Fremdlast **vor und nach** dem
+  Lauf als Zahl festhalten, nicht als Eindruck.
+  *Bei identischer Lichtzahl 13 las derselbe Fall 4,3/4,4 ms um 07:14 und 6,0/6,3 ms um 14:20; drei Läufe
+  innerhalb 20 min stimmten auf 6,0–6,2 überein und sahen wie ein Beweis aus. Während des ersten Paares lief ein
+  fremder Chrome mit ~230 % CPU (GPU-Prozess allein 110 %). Zwei Schichten jagten eine Regression, die im Code
+  nicht existierte · Herkunft: voxel-samurai-quiz · 2026-08-02*
 
 - **Konstante einseitig geschifft** — ein Wert sieht besser aus als sein Vorgänger und wird geschifft. →
   **Beidseitig einklammern** und den Wendepunkt zeigen; überzeugend ist er erst, wenn mehrere **verschieden

@@ -81,9 +81,16 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   `ZenitSeglerModel.tsx:504`, u. a. je eins) und hebt die Zahl beim Spawn. Im Dev fiel das nie auf: Dort dauert
   der Mount 17,8 s, die Jäger stehen längst, wenn das Gate kompiliert — **null** solcher Relinks in den
   Spielblöcken. → Lichtzahl als Cache-Key-Achse behandeln: Was das Warmup sehen soll, muss beim Warmup **sichtbar**
-  sein (`visible = false` nimmt three in `projectObject` aus der Lichtsammlung, `intensity = 0` nicht).
+  sein (`visible = false` nimmt three in `projectObject` aus der Lichtsammlung, `intensity = 0` nicht). Umsetzung:
+  fester Lichtvorrat außerhalb der Kreaturen (`ApexAccentLightPool.tsx`), leere Plätze auf `intensity = 0`, Wunsch
+  pro Frame neu anmelden. **Den Vorrat nicht kleinrechnen** — die Plätze sind zu billig, als dass eine etagen- oder
+  qualitätsabhängige Zahl sich lohnte, und jede Änderung zur Laufzeit löst genau den Relink aus, den er verhindert.
   *Etage 12, zwei Prod-Läufe: `numPointLights (7→13)` 13+2+1 = 16 bzw. 10+1+0 = 11 Relinks, dagegen Dev 0 in drei
   Blöcken; Gate meldet `pointLights 10 beim Compile` · 2026-08-02*
+  *Preis der Plätze per Ablation `?apexAccentSlots=N` aus **einem** Bündel und **einer** Sitzung, zwei Laufpaare in
+  umgekehrter Reihenfolge: 10 Lichter 5,80/5,90 ms gegen 13 Lichter 6,00/6,30 ms cpu-Median — drei Plätze 0,2–0,7 ms
+  je Frame, ~0,1–0,2 ms je Licht, auf/unter dem Rauschboden (3,4 %/4,8 %). Die Vermutung „~0,55 ms je Punktlicht" ist
+  damit widerlegt · 2026-08-02*
 
 - **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
   ~186 ms/Frame, gelesen als blockierter Hauptthread, der auf den Dev-Server wartet. Real ist die Verteilung
