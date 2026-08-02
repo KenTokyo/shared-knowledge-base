@@ -70,15 +70,24 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   *`POOL_TOTAL`/`PER_KEY`/`LIVE_CAP` werden aus `src/systems/WaveDirector.ts` gelesen; die
   Sektor-Flottenlisten kommen per Regex aus `src/world/Sectors.ts`, nicht aus einer zweiten Liste · 2026-08-02*
 
-- **Eine Schwelle, die auf dem Ist-Wert sitzt, hat nie gebunden** — ein Grenzwert exakt am gemessenen
-  Shipping-Wert geht beim ersten ehrlichen Retune rot und wird dann *nachgezogen*, womit er endgültig
-  nichts mehr behauptet. → Entweder mit **Abstand** zum Ist-Wert setzen und den Abstand in den Kommentar
-  schreiben — oder **beide Seiten aus der Quelle parsen**, dann retunt die Schwelle sich selbst mit. Was
-  nicht geht: eine handgeschriebene Policy-Zahl auf der Gleichheit.
+- **Eine Schwelle, die auf dem Ist-Wert sitzt, hat nie gebunden — eine mit Luft über einer Menge ist eine
+  Erlaubnis** — ein Grenzwert exakt am gemessenen Shipping-Wert geht beim ersten ehrlichen Retune rot und
+  wird dann *nachgezogen*, womit er endgültig nichts mehr behauptet. Die Spiegelseite ist teurer, weil sie
+  wie Vorsicht aussieht: Luft ist die richtige Antwort nur über einer **gemessenen Größe**, deren Wert
+  schwanken darf. Über einer **hergeleiteten Menge** buchstabiert derselbe Abstand aus, wie viele
+  Mitglieder lautlos verschwinden dürfen — `>= 6` gegen 7 hergeleitete Cases heißt „genau ein Screen darf
+  weg", und niemand liest die Zahl je wieder so. → Erst entscheiden, welche der beiden Größen dasteht.
+  Gemessene Größe: **Abstand** setzen und ihn in den Kommentar schreiben, oder **beide Seiten aus der
+  Quelle parsen**, dann retunt die Schwelle sich selbst mit. Hergeleitete Menge: **Gleichung**, denn eine
+  Menge bringt ihre eigene Sollgröße mit (`dispatched.size === cases.length`), und was sie doch verlassen
+  darf, wird **namentlich entschuldigt** statt weggerundet. Was nie geht: eine handgeschriebene
+  Policy-Zahl auf der Gleichheit.
   *Mit Luft: `SEP = 0.12` gegen einen gemessenen Worst Case von 21,7 % — Faktor 1,8, und das Gift erzeugt
   0 %. Selbst-retunend: `held === POOL_TOTAL` (180 === 180), beide Seiten aus `WaveDirector.ts`.
   Ohne beides: `POOL_TOTAL <= LIVE_CAP * 2` (180 <= 180) — eine Erhöhung auf 181 fährt rot, und der Term
-  hat keinen Fehlerzweig · 2026-08-02*
+  hat keinen Fehlerzweig. Falsche Luft: unter `dispatched.size >= 6` verloren **5 von 5** gewöhnlichen
+  Codeformen genau einen Screen und blieben grün (`options` fiel jedes Mal aus der Menge); als Gleichung
+  sind beide Gifte rot, `bracedscreen` über `cases=8`, `mutescreen` über `rendererless=[options]` · 2026-08-02*
 
 - **Der Gipfel war eine Ablesung des Deckels, nicht der Last** — eine Klausel urteilte über den
   Belegungsgipfel (`hi >= cap`) einer Ressource, deren Gipfel die geprüfte Regel **selbst setzt**; sie konnte
@@ -99,15 +108,23 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   *Die Klausel urteilt über 0 und druckt 4494 von 5494 gefragten Brocken als Auslegungsverlust; ohne die
   Trennung wäre sie über eine 260-Records-Grenze rot, die das Spiel absichtlich hat · 2026-08-02*
 
-- **Eine handgeschriebene Liste im Prüfterm ist blind gegen alles, was nicht darauf steht — und zwar
-  still** — der fehlende Fall fällt nicht rot aus, er fällt aus der **Menge**, und die grüne Meldung zählt
-  danach die Restmenge und nennt sie vollständig. Drei Formen desselben Fehlers: eine Selektor-Alternation
-  ohne `b`, eine Screen-Liste ohne die zwei Screens, die niemand erwähnt hatte, ein Term, der Klassennamen
-  und Custom Properties abglich und damit strukturell jeden Tag-Selektor, jedes `*` und jede Vererbung
-  übersah — alles, was auf ein Element wirkt, **ohne es zu nennen**; das ist nicht selten, das ist die
-  Reset-Schicht. → **Die Menge aus der einen Stelle herleiten, die sie entscheidet**, statt sie zu tippen:
-  `onStateChanged` für die Screens, die `const`-Bindungen der Methode für die Empfänger, die Ahnenkette für
-  CSS. Speziell bei Stylesheets ist die Einheit ein **(Element, Property)-Paar**, nicht ein Selektor:
+- **Jedes Muster, das über Zugehörigkeit entscheidet, verliert still — die getippte Liste ist nur seine
+  auffälligste Form** — der fehlende Fall fällt nicht rot aus, er fällt aus der **Menge**, und die grüne
+  Meldung zählt danach die Restmenge und nennt sie vollständig. Sechs Kleider desselben Fehlers: eine
+  Selektor-Alternation ohne `b`, eine Screen-Liste ohne die zwei Screens, die niemand erwähnt hatte, ein
+  Term, der Klassennamen und Custom Properties abglich und damit strukturell jeden Tag-Selektor, jedes `*`
+  und jede Vererbung übersah — alles, was auf ein Element wirkt, **ohne es zu nennen**; das ist nicht
+  selten, das ist die Reset-Schicht — dazu ein **Präfix-Test** (`hud-slot[^"]*` nahm die Leiste
+  `hud-slotbar` als Slot und verschluckte damit die echten), ein **zeilenförmiges Regex** über `case` und
+  ein **Empfängerschwanz mit Mindestlänge** (`(?:\.\w+)+` verlangt eine Property, also signiert
+  `const c = game.run.combo`, als `${c}` gedruckt, als *nichts* — dieselbe Ablesung ausgeschrieben signiert
+  als `game.run.combo`, und ein Duplikat über die zwei Formen ist nicht übersehen, sondern nicht findbar).
+  → **Die Menge aus der einen Stelle herleiten, die sie entscheidet**, statt sie zu tippen:
+  `onStateChanged` für die Screens, die `const`-Bindungen der Methode für die Empfänger, den **Baum** für
+  die Schale (Klassen als ganze Tokens, Nachfahren per Walk abgezogen — kein Textschnitt entscheidet mehr
+  über Mitgliedschaft), die Ahnenkette für CSS. Ein Muster, das noch matchen *muss*, gehört an seinen
+  Rändern verankert: `\b` am Ende, `includes` auf dem Token, nie ein offener Schwanz.
+  Speziell bei Stylesheets ist die Einheit ein **(Element, Property)-Paar**, nicht ein Selektor:
   erster Vorfahr-oder-selbst mit einer Meinung gewinnt, dann ist „erreicht dieses Stylesheet jenes Element"
   eine Rechnung statt einer Namensgleichheit. Und der Wächter darüber ist eine **Gleichung** (jeder
   hergeleitete Fall gefahren **oder namentlich entschuldigt**), keine Schwelle — eine Schwelle bemerkt eine
@@ -120,4 +137,7 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   gemessene Anzeigen (`b` fehlte in der Alternation, also hatte `this.bossName` drei Schreiber und null
   Anzeigen, während „no reading drawn twice" grün stand) und 41 → 48 Controls aus 7 Buttons in zwei
   Screens, die in `sim.mjs` nirgends vorkamen — der alte Wächter `tiles > 20` konnte 4 Screens nicht von
-  7 unterscheiden, weil die Armory allein 32 bringt · 2026-08-02*
+  7 unterscheiden, weil die Armory allein 32 bringt. Präfix-Test: vergiftet stand die alte Rechnung bei
+  `shell=10 live=18` GRÜN, die Baumrechnung bei `shell=11 live=19` ROT. Empfängerschwanz: 9 von 23 Writes
+  = 39 % waren gar nicht beurteilt; mit `((?:\.\w+)*)\b` sind es 8, readings 14 → 15, und das Duplikat
+  `game.run.combo -> this.texts.scrap + this.texts.combo` ist alt grün, neu rot · 2026-08-02*

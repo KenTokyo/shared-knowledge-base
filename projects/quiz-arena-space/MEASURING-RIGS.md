@@ -64,3 +64,29 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   → Einem frisch geschriebenen Parser keine Fundmeldung glauben, bevor er gegen **handgeschriebene Fälle
   mit danebenstehendem Sollwert** grün ist. Sie gehören ins Rig, nicht in den Kopf.
   *16 Matcher-Fälle als Selbsttest, 16/16 grün, danach waren die 9 Toten 0 · 2026-08-02*
+
+- **Das Gift patchte eine andere Quellkopie als die, die die Klausel inzwischen liest** — ein Gift ist nur
+  so gut wie die Kopie, in die es schreibt: legt ein Umbau die Klausel auf eine frische Quellvariable, wird
+  jedes Gift, das noch die alte patcht, **still wirkungslos**. Es fällt nicht aus, es meldet nichts, und in
+  einem einzelnen `--poison=`-Lauf sieht ein blindes Gift genau wie ein bestandenes aus — nur der
+  vollständige Durchlauf zählt es. → Nach jedem Umbau, der die Quelle einer Klausel wechselt, **jedes Gift
+  dieser Klausel neu zuordnen** (Markup-Gift in die Template-Kopie, Code-Gift in die Code-Kopie) und den
+  Sweep über *alle* Gifte fahren. Und vor dem Verschieben prüfen, ob das Gift an der neuen Stelle eine
+  **zweite** Klausel trifft: ein Gift, das zwei Klauseln rot macht, kann nicht mehr sagen, welche den
+  Defekt sah.
+  *`fatstrip` schrieb weiter in `hud` (die Kopie einer anderen Klausel), während seine Klausel seit dem
+  Umbau aus `hudSrc` liest — der Sweep stand bei 88/89, jede Einzelmeldung war grün. Auf die Template-Kopie
+  verschoben färbte die verbatim zurückgegebene Auszeichnung zusätzlich eine dritte Klausel rot
+  (`no font size could be resolved for .hud-strip-wave b`: das zugehörige CSS war mit der Auszeichnung
+  verschwunden); ein Attribut weniger im Gift löste es, gemessen statt geraten · 2026-08-02*
+
+- **Ein Referenzwert ohne seinen Strom ist nicht nachfahrbar** — ein Hash über die Ausgabe eines Laufs
+  steht in der Übergabe, die nächste Schicht fährt dasselbe Kommando mit `2>&1` und bekommt eine andere
+  Zahl. Beide Läufe sind korrekt und deterministisch; verglichen wurden zwei verschiedene Messungen, weil
+  eine Warnung auf stderr zum Strom gehört und nicht zum Ergebnis. Die Suche geht danach im Produktivcode
+  nach einer Nichtdeterminismus-Quelle, die es nicht gibt. → Einen Sollwert **nie ohne seine
+  Erzeugungszeile** notieren: Kommando, Strom (`2>/dev/null` oder `2>&1`), Trunkierung, Werkzeug. Wer nur
+  die Zahl notiert, notiert eine Zahl, die niemand nachfahren kann — und ein Sollwert, den niemand
+  nachfahren kann, ist kein Tor, sondern eine Behauptung.
+  *`--only=core` ergibt `21339511c682` über stdout und `bb9dbb80d963` mit stderr (eine
+  THREE-Doppelimport-Warnung); beide sind echt, zwei Schichten haben sich an dem Unterschied verrannt · 2026-08-02*
