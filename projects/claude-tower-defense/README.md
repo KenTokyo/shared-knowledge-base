@@ -16,6 +16,7 @@ Die Architekturkarte ist **nicht hier**, sondern im Repo: `Notes/TASKS.md` (Quel
 | Ein Gate, ein Wächter, ein `--bad`-Arm, eine A/B-Klammer, „der Test ist grün" | [`INSTRUMENT-TRAPS.md`](INSTRUMENT-TRAPS.md) |
 | Schattenpass, `castShadow`, Cascade, LOD, Culling, Draw Calls, Framezeit | [`SHADOW-AND-CULLING.md`](SHADOW-AND-CULLING.md) |
 | CLI aufrufen, Prüfreihe schreiben, Datei schreiben, Beleg ablegen | [`TOOLING-TRAPS.md`](TOOLING-TRAPS.md) |
+| HUD, Weltlabel, Lesbarkeit, Kontrast, Schriftgröße, `z-index`, „die Oberfläche ist grün" | [`UI-MEASURING.md`](UI-MEASURING.md) |
 
 Zusätzlich global, wenn das Thema stackübergreifend ist: [`../../THREEJS-RULES.md`](../../THREEJS-RULES.md),
 [`../../threejs/PERFORMANCE.md`](../../threejs/PERFORMANCE.md),
@@ -50,6 +51,15 @@ abgeschaltet und nimmt die echten Funde mit** — sie ist genauso wertlos wie ei
 selben Werkzeug stand beides nebeneinander. **Damit lautet die Frage an jede neue Prüfung nicht „ist sie
 grün?", sondern: in welchem der drei Zustände ist sie — feuert nie, feuert immer, oder feuert genau dann?**
 Beantwortbar ist das nur, indem man sie **einmal rot sieht**.
+
+⚠⚠ **Und die HUD-Lesbarkeitsschicht (2026-08-02) hat die Bewegung ein drittes Mal bestätigt, diesmal an einer
+Sonde, die es SCHON GAB.** Die Kontrastsonde meldete *„218 Zeilen, 0 unter dem Boden"* — wahr, und über vier
+ruhige Bilder gemessen, weil ihre Stageliste nach **Klassenabdeckung** gewählt war. Nach Zuständen gewählt
+(Alarm, Endzustand, ausgegraut, dichteste Oberfläche) las dieselbe Sonde **678 Zeilen und 17 unter dem Boden**,
+und die schlimmste war ein Produktdefekt: der Lesbarkeits-Wash des HUD lag **über** der Weltlabel-Ebene und zog
+ein Label auf **1.27:1**. **Die Frage, die kein Instrument beantworten konnte, muss also nicht immer ein neues
+Instrument sein — hier war es dasselbe Instrument mit einer anderen Stichprobe.** Details in
+[`UI-MEASURING.md`](UI-MEASURING.md).
 
 ⚠⚠ **Und PH100/PH101 hat den zweiten Produktbefund gebracht — durch dieselbe Bewegung wie D70: eine Frage,
 die kein vorhandenes Instrument beantworten konnte.** Alle Sonden zählten die **eingereichte** Seite; keine
