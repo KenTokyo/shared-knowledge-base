@@ -46,6 +46,25 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   *`Effects.tsx`, 4 Gegnergeschoss-Layer × 11 InstancedMesh: 9 Thrash-Schlüssel → 0 (drei Vorher-Läufe identisch),
   Kompilate 50→5 / 65→2, `msTotal` 2467→1210 / 2398→684 ms, Frames je 15 s 1065→1532 · 2026-08-02*
 
+- **Stage-Mount ist Render-Sturm plus ein Commit-Block, nicht Chunkladen** — `scene` meldete 18–20 s Mount ohne
+  Adresse. Marken in den Komponentenrümpfen (`markPostStartSceneSettlePhase`) plus Tickdichte trennen die Posten:
+  Der Stage-Chunk ist warm (`runtime` rendert bei 154 ms), aber der Teilbaum wird **fünfmal komplett verworfen
+  und neu gerendert**, weil alles an EINER Suspense-Grenze hängt — ein suspendierendes Kind entsorgt den ganzen
+  Baum. Die Abbruchstelle liest man an den Zählern ab: gleiche Zahl = Versuch kam vorbei, kleinere Zahl = hier
+  brach er ab. Danach committet React in **einem** Block ohne einen einzigen Frame.
+  → Erst die Tickdichte lesen, dann urteilen: laufende Frames heißen „wartet auf Chunk", eine Lücke ohne Frame
+  heißt „rechnet". Wall-Zeit allein verwechselt beides.
+  *Etage 12: Sturm 101→11774 ms (65 Ticks, ~186 ms/Frame → Dev-Server-Warten), Commit 11774→17849 ms mit einer
+  Lücke von 5767 ms ohne Frame (echte CPU-Zeit, auch in Produktion), Rest StrictMode. Zwei Läufe:
+  `.tmp/split2-l12.json`, `.tmp/split3-l12.json` · 2026-08-02*
+
+- **StrictMode verdoppelt jede Rumpfmarke — Zählwerte halbieren** — die Marken meldeten „10 Renderversuche",
+  real waren es 5. `src/main.tsx:169` rendert unter `<StrictMode>`; React ruft Renderfunktionen doppelt auf und
+  fährt Effekte mount→unmount→mount. Der scheinbare „Stage-Wechsel" am Ende des Ladens (`stage-unmount` nach dem
+  ersten `effect`) ist genau dieser Zyklus, kein Moduswechsel — er re-armiert das Settle-Gate und kostet 1,5 s,
+  **nur im Dev**. → Zählmarken in Rümpfen immer halbieren, Effektpaare nie als echten Remount lesen.
+  *`effect 17849 x2` + `stage-unmount 17865` bei unverändertem `effectiveModeId` · 2026-08-02*
+
 ## Vorher-Stand
 
 A/B ab Commit `545d5133` gegen `.tmp/rt2-l12.json`; davor liegt der Doppelcompile, noch davor der Thrash.
@@ -59,6 +78,11 @@ Wo die Ladezeit steht, sagt das Settle selbst: seine `done`-Zeile im `entry.time
 47–93 ms Ruhefenster. Die Gate-Konstanten `CALM_FRAME_MS`/`REQUIRED_CALM_FRAMES` in
 `src/lib/loading/postStartSceneSettle.ts` steuern nur den letzten Posten — dort zu tunen bringt Millisekunden,
 der Mount trägt 91 %.
+
+Seit `edf902e7` teilt dieselbe `done`-Zeile den Mount selbst auf: `Stage-Aufteilung [...]` listet die
+Rumpfmarken als Wasserfall (`erste Zeit`, `+Spannweite`, `xAnzahl`), dahinter Tickdichte und die größte
+Frame-Lücke **mit ihrem Ende**. Produktionsrelevant ist davon nur der Commit-Block; Sturmdauer und der
+StrictMode-Nachlauf sind Dev-Artefakte. Das Instrument ist ohne laufendes Settle-Fenster ein No-op.
 
 Das Instrument benennt seit `c4a1b837` das `cacheKey`-Feld, in dem ein neues Programm vom ähnlichsten
 vorhandenen abweicht, und druckt eine rohe Schlüsselprobe mit erkannter Kopflänge (`probe`-Zeile). Rumpf ist
