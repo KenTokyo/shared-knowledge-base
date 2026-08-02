@@ -66,7 +66,11 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   gegen denselben `?deckpulse=0`-Frame gediffed: Eigenfläche des Rings 13,4 % des Frames, alles darüber ist
   Spill; Knick zwischen R=18 (13,56 %) und R=22,5 (20,68 %), und R=18 ist zugleich der kontraststärkste
   Kandidat — |d| 109,4 gegen 89,8 der waschenden Fassung, dieselbe Lichtmenge konzentriert statt verteilt.
-  `mean` trennt hier nicht: 0,1343 gegen Boden 0,1023. `src/world/Arena.ts:45`, Commit `2718601` · 2026-08-03*
+  `mean` trennt hier nicht: 0,1343 gegen Boden 0,1023. Der Deckel gilt **pro Aufrufstelle**: die Schwelle
+  kreuzt `pu.w * spread`, also ist ein Gain auf `strength` derselbe wie einer auf `spread`, und dieselbe
+  Sweep-Tabelle bepreist damit auch die lauten Aufrufer — 10 von 20 liegen über der getunten 1,4, die zwei
+  lautesten (3,2 und 3,5) auf Gain 2,29 und 2,50, also jenseits der letzten gemessenen Zeile vor dem Wash.
+  `PULSE_SPREAD_R` in `src/world/Arena.ts`, Commit `2718601` · 2026-08-03*
 
 - **Flächiger Wash auf jeder waagerechten Platte — Intensität ist der falsche Hebel** — als
   Specular-Blowout diagnostiziert, war aber `blown=0.00 %` und eine Entsättigung: Rim-Elevation 19,6° gegen
