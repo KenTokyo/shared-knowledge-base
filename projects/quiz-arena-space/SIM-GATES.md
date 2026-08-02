@@ -99,15 +99,25 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   *Die Klausel urteilt über 0 und druckt 4494 von 5494 gefragten Brocken als Auslegungsverlust; ohne die
   Trennung wäre sie über eine 260-Records-Grenze rot, die das Spiel absichtlich hat · 2026-08-02*
 
-- **Eine Klausel, die über Namen prüft, ist blind gegen jede Regel, die ihr Ziel nicht benennt** — der
-  Term glich Klassennamen, Custom Properties und Familien ab und übersah damit strukturell jeden
-  Tag-Selektor, jedes `*` und jede Vererbung: alles, was auf ein Element wirkt, **ohne es zu nennen**.
-  Solche Regeln sind nicht selten, sie sind die Reset-Schicht. → Die Einheit der Klausel ist ein
-  **(Element, Property)-Paar**, nicht ein Selektor: Ahnenkette hoch, erster Vorfahr-oder-selbst mit einer
-  Meinung gewinnt. Dann ist „erreicht dieses Stylesheet jenes Element" eine Rechnung statt einer
-  Namensgleichheit — und die Klausel kann Vererbung von Nicht-Vererbung unterscheiden.
+- **Eine handgeschriebene Liste im Prüfterm ist blind gegen alles, was nicht darauf steht — und zwar
+  still** — der fehlende Fall fällt nicht rot aus, er fällt aus der **Menge**, und die grüne Meldung zählt
+  danach die Restmenge und nennt sie vollständig. Drei Formen desselben Fehlers: eine Selektor-Alternation
+  ohne `b`, eine Screen-Liste ohne die zwei Screens, die niemand erwähnt hatte, ein Term, der Klassennamen
+  und Custom Properties abglich und damit strukturell jeden Tag-Selektor, jedes `*` und jede Vererbung
+  übersah — alles, was auf ein Element wirkt, **ohne es zu nennen**; das ist nicht selten, das ist die
+  Reset-Schicht. → **Die Menge aus der einen Stelle herleiten, die sie entscheidet**, statt sie zu tippen:
+  `onStateChanged` für die Screens, die `const`-Bindungen der Methode für die Empfänger, die Ahnenkette für
+  CSS. Speziell bei Stylesheets ist die Einheit ein **(Element, Property)-Paar**, nicht ein Selektor:
+  erster Vorfahr-oder-selbst mit einer Meinung gewinnt, dann ist „erreicht dieses Stylesheet jenes Element"
+  eine Rechnung statt einer Namensgleichheit. Und der Wächter darüber ist eine **Gleichung** (jeder
+  hergeleitete Fall gefahren **oder namentlich entschuldigt**), keine Schwelle — eine Schwelle bemerkt eine
+  fehlende Hälfte nie.
   *3 von 307 Selektoren aus `styles.css`+`screens.css` erreichen das Boot-Overlay (`*`, `html`, `body`)
   und brachten `box-sizing`, `-webkit-font-smoothing` und `user-select` mit, die `boot.css` nicht
   deklarierte: 30 (Element, Property)-Paare wechselten am Bundle-Handover das Antialiasing, der Ring um
   die Marke sprang 86px→84px. `boot.css` begründete genau diese Doktrin im eigenen Kommentar seit jeher
-  für `background` — und wandte sie auf eins von vier Feldern an · 2026-08-02*
+  für `background` — und wandte sie auf eins von vier Feldern an. Hergeleitet statt getippt: 12 → 14
+  gemessene Anzeigen (`b` fehlte in der Alternation, also hatte `this.bossName` drei Schreiber und null
+  Anzeigen, während „no reading drawn twice" grün stand) und 41 → 48 Controls aus 7 Buttons in zwei
+  Screens, die in `sim.mjs` nirgends vorkamen — der alte Wächter `tiles > 20` konnte 4 Screens nicht von
+  7 unterscheiden, weil die Armory allein 32 bringt · 2026-08-02*

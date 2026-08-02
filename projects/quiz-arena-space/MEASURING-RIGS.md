@@ -44,6 +44,18 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   *„targets with no reader: none" bei 24 von 41 stillschweigend fallengelassenen Karten
   (`apply: (s) => (…)` ohne Klammer) · 2026-08-01*
 
+- **Die Auszeichnung war der Zustand vor dem ersten Frame** — eine Klausel las `.hud-strip` im TEMPLATE
+  und meldete „12 Elemente, down from 24, cap 14", während der Streifen auf dem Schirm 22 trug. Ursache:
+  `_slot` ersetzt beide Slots per `innerHTML`, sobald etwas drinliegt; was im Markup steht, sieht der
+  Spieler nur, bevor er das erste Mal aufsammelt. Ein Markup-Read ist deshalb kein Read des Produkts,
+  sondern eines Anfangszustands — und er meldet die harmlose Zahl. → Vor jeder Textlesung von Markup
+  **jeden Schreiber derselben Knoten suchen** (`innerHTML`, `textContent`, `appendChild`, `replaceChildren`).
+  Findet sich einer, wird die Zahl **getrieben statt geparst**: das echte Verfahren gegen einen Knoten-Stub,
+  und gezählt wird in dem String, den es erzeugt hat. Nur was niemand überschreibt, darf Text bleiben.
+  *8 (Schale) + 2 × (4 + `MAX_CHARGES`) = 22 gegen einen Deckel von 14, drei Phasen lang grün. Getrieben
+  über 112 (index, skill, charge, pending)-Zustände; das Gift, das den Defekt zurückgibt, misst exakt die
+  22, die ein unabhängiges Wegwerf-Rig vorher gemessen hatte · 2026-08-02*
+
 - **Die neun Funde waren der Parser, nicht der Befund** — das Gegenstück zum Tipp darüber, und teurer:
   ein frisch geschriebener Selektor-Matcher meldete 9 tote Selektoren in einer 300-Zeilen-CSS, alle neun
   falsch. `selParts` erhöhte die Klammertiefe für `[`, **bevor** es entschied, ob dort eine Trennstelle
