@@ -43,3 +43,12 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   selbst eine geprüfte Zeile sein.
   *„targets with no reader: none" bei 24 von 41 stillschweigend fallengelassenen Karten
   (`apply: (s) => (…)` ohne Klammer) · 2026-08-01*
+
+- **Die neun Funde waren der Parser, nicht der Befund** — das Gegenstück zum Tipp darüber, und teurer:
+  ein frisch geschriebener Selektor-Matcher meldete 9 tote Selektoren in einer 300-Zeilen-CSS, alle neun
+  falsch. `selParts` erhöhte die Klammertiefe für `[`, **bevor** es entschied, ob dort eine Trennstelle
+  liegt, las `.boot[data-stage='fetch']` also als *einen* Klassennamen, den kein Element trägt. Ein
+  Nullbefund lädt zum Nachprüfen ein, eine Fundliste zum Reparieren — deshalb kostet diese Richtung mehr.
+  → Einem frisch geschriebenen Parser keine Fundmeldung glauben, bevor er gegen **handgeschriebene Fälle
+  mit danebenstehendem Sollwert** grün ist. Sie gehören ins Rig, nicht in den Kopf.
+  *16 Matcher-Fälle als Selbsttest, 16/16 grün, danach waren die 9 Toten 0 · 2026-08-02*

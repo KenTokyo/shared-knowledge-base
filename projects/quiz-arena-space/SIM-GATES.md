@@ -98,3 +98,16 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   verworfen".
   *Die Klausel urteilt über 0 und druckt 4494 von 5494 gefragten Brocken als Auslegungsverlust; ohne die
   Trennung wäre sie über eine 260-Records-Grenze rot, die das Spiel absichtlich hat · 2026-08-02*
+
+- **Eine Klausel, die über Namen prüft, ist blind gegen jede Regel, die ihr Ziel nicht benennt** — der
+  Term glich Klassennamen, Custom Properties und Familien ab und übersah damit strukturell jeden
+  Tag-Selektor, jedes `*` und jede Vererbung: alles, was auf ein Element wirkt, **ohne es zu nennen**.
+  Solche Regeln sind nicht selten, sie sind die Reset-Schicht. → Die Einheit der Klausel ist ein
+  **(Element, Property)-Paar**, nicht ein Selektor: Ahnenkette hoch, erster Vorfahr-oder-selbst mit einer
+  Meinung gewinnt. Dann ist „erreicht dieses Stylesheet jenes Element" eine Rechnung statt einer
+  Namensgleichheit — und die Klausel kann Vererbung von Nicht-Vererbung unterscheiden.
+  *3 von 307 Selektoren aus `styles.css`+`screens.css` erreichen das Boot-Overlay (`*`, `html`, `body`)
+  und brachten `box-sizing`, `-webkit-font-smoothing` und `user-select` mit, die `boot.css` nicht
+  deklarierte: 30 (Element, Property)-Paare wechselten am Bundle-Handover das Antialiasing, der Ring um
+  die Marke sprang 86px→84px. `boot.css` begründete genau diese Doktrin im eigenen Kommentar seit jeher
+  für `background` — und wandte sie auf eins von vier Feldern an · 2026-08-02*
