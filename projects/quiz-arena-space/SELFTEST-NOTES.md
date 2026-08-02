@@ -10,10 +10,15 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   Code, und der naheliegende Reflex („alles unterhalb um N schieben") repariert die Hälfte und bricht die
   andere. Innerhalb *einer* Zieldatei laufen die Versätze auseinander, weil oberhalb jeder Zitatstelle
   unterschiedlich viel eingefügt wurde. → Jede Stelle über den **Inhalt** neu bestimmen (Symbolname +
-  zitierter Ausdruck), nie per Offset schieben.
+  zitierter Ausdruck), nie per Offset schieben — und die Fundliste **case-insensitiv** erheben, sonst fehlen
+  Zitate, die niemand als Zitat geschrieben hat.
   *Der Kern-Bruch verschob `Crossword.ts` um ~80 bis ~180 Zeilen; 13 Zitate zeigten außerhalb ihres Symbols,
   eines auf eine Leerzeile. Gemessene Versätze in derselben Datei: `BOARD_TEX` +42, `begin` +66,
   `_place`/`_scorePlacement` +79, `_drawPanel` +141. Bench 58/60 → 60/60, Commit `6258e20` · 2026-08-02*
+  *Eine Schicht später, bei einem Versatz von nur +5: zwei Zitate lagen ~570 Zeilen daneben, ein Schieben um
+  5 hätte sie zementiert. Ein drittes log über die eigene Herkunft und war für jeden `Crossword.ts:`-Grep
+  unsichtbar, weil `.shots/_board.mjs:590` es als Bildunterschrift `PORTED CROSSWORD.TS:1900-1917` ins
+  Diagramm zeichnet — alle sieben mixed-case-Zitate derselben Datei waren sauber. Commit `8a7326f` · 2026-08-03*
 
 - **Ein `want`, das der Check-Titel schon trägt, ist von jedem Fehlschlag erfüllt** — das Verdikt wird auf
   `<Check-Titel>: <Meldung>` gematcht, das Tor war also rot, ohne den benannten Defekt getroffen zu haben.
@@ -21,6 +26,17 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   das erzwingt, gehört in dieselbe Bench.
   *`want: 'the board is'` gegen den Titel `the picture says how many puzzles the board is in`; die Sonde
   meldet nach der Reparatur `0 of 82 drives demand a fragment their own check title already carries` · 2026-08-01*
+
+- **Ein roter Treiber, der auf den *reparierten* Wert ankert, stirbt an der nächsten Reparatur** — er trieb
+  die Zitierung *von* `1900-1917` weg; eine spätere Zitatreparatur nahm genau diesen Anker mit, der Patch
+  fand nichts mehr, und der Treiber kam `refused` zurück — ein **unbeurteilter Wächter**, während die Bench
+  grün blieb. Dieselbe Stille erzeugt ein `file:`, das auf das falsche Blatt zeigt: das Zitat stand in
+  `NOTES`, der Treiber patchte `VIS`. → `edit: [[lebender Wert, toter Wert]]` schreiben, nie umgekehrt —
+  diese Richtung überlebt eine Reparatur; und das `file:` gegen das Blatt prüfen, das das Zitat **trägt**.
+  Beides sagt nur ein voller Treiberlauf, `selftest` nie.
+  *Beide Defekte standen über Schichten unsichtbar, keiner war von der Schicht gebrochen, die sie fand;
+  2 von 87 → 1 von 87. Beim Umhängen fiel `selftest` prompt auf die Verteilungszahlen, die es verschob —
+  eine Kaskade, siehe Tipp unten. Commit `8a7326f` · 2026-08-03*
 
 - **Eine Zahlen-Kaskade lässt Treibungsanker still `refused` zurück** — wird eine Zahl in der Prosa
   nachgezogen, zitieren die Anker die alte Prosa und werden ungeprüft übersprungen; die Bench bleibt dabei

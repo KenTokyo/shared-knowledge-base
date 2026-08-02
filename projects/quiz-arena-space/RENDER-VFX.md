@@ -53,6 +53,21 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   18,2 → 28,0 %, Verdikt blieb `emissive-restrained`. Die Gegenrichtung war schon einmal verworfen worden:
   Schwelle 1,05 → 0,95 „damit beleuchtetes Metall glüht" · 2026-08-02*
 
+- **Ein Band fester Breite auf wachsendem Radius wird heller, nicht dunkler** — der Schockwellenring wusch
+  den Frame weiß, obwohl er gedämpft war: die beleuchtete Fläche ist `2πr·w` und wächst linear mit dem
+  Radius, eine lineare `life`-Dämpfung zahlt das nicht. Weil `age` hier *der* Radius ist, stand die Dämpfung
+  bei r=64 noch auf 0,57 — Fläche 6,4x hoch, Helligkeit 1,6x runter, also fast **viermal** mehr Gesamtlicht
+  am Arenarand als am eigenen Ursprung. Über der Bloom-Schwelle 1,05 (Tipp oben) verteilt der Pass den
+  Überschuss auf den ganzen Frame. → Erhaltung auf der expandierenden Kreislinie ansetzen:
+  `spread = min(1, R/max(0.001, r))`, also flach solange der Ring sich noch bildet, danach `~1/r`. R
+  **oberhalb der Bandbreite** halten — darunter ist der „Ring" eine gefüllte Scheibe, und die Division dimmt
+  nur den Blitz in seinem eigenen Epizentrum, den jede Aufrufstelle genau dort will.
+  *Ein einziger Bodenring änderte 99,97 % aller Pixel. Sweep über sieben R per `?pulsespread=`, jeder Schuss
+  gegen denselben `?deckpulse=0`-Frame gediffed: Eigenfläche des Rings 13,4 % des Frames, alles darüber ist
+  Spill; Knick zwischen R=18 (13,56 %) und R=22,5 (20,68 %), und R=18 ist zugleich der kontraststärkste
+  Kandidat — |d| 109,4 gegen 89,8 der waschenden Fassung, dieselbe Lichtmenge konzentriert statt verteilt.
+  `mean` trennt hier nicht: 0,1343 gegen Boden 0,1023. `src/world/Arena.ts:45`, Commit `2718601` · 2026-08-03*
+
 - **Flächiger Wash auf jeder waagerechten Platte — Intensität ist der falsche Hebel** — als
   Specular-Blowout diagnostiziert, war aber `blown=0.00 %` und eine Entsättigung: Rim-Elevation 19,6° gegen
   Kamera-Elevation 25° bei entgegengesetztem Azimut lässt den Halbvektor senkrecht nach oben zeigen, womit
