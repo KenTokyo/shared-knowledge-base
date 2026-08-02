@@ -10,13 +10,14 @@
    Seite hinein. Eine Sitzung bedient alle Messungen und Parametersweeps; nie ein Browser pro Bild oder Wert.
    Browserstart, Welt-Bake und Shaderaufbau kosten oft mehr als die eigentliche Messung.
 
-3. **Pixel direkt aus dem Render-Target.** `renderer.readRenderTargetPixels()` auf dem tatsächlichen Post-Target
-   verwenden und das PNG in Node schreiben. `page.screenshot()` und `fullPage` sind verboten: Sie laufen über
-   den Compositor, kosten unnötig und belegen nicht exakt den Renderer-Output.
+3. **Pixel direkt aus dem Render-Target.** Den engineeigenen GPU-Readback auf dem tatsächlichen Post-Target
+   verwenden und das PNG in Node schreiben; in Three.js ist das `renderer.readRenderTargetPixels()`. Bei anderen
+   Engines das entsprechende Render-Target-/Texture-Readback nutzen. `page.screenshot()` und `fullPage` sind
+   verboten: Sie laufen über den Compositor, kosten unnötig und belegen nicht exakt den Engine-Output.
 
-4. **Software-Rendering ist ein Fehler.** Die echte Kennung über `WEBGL_debug_renderer_info` lesen. Matcht sie
-   `/swiftshader|llvmpipe|software|microsoft basic|warp|angle \(google/i`, mit Fehlercode abbrechen — niemals nur
-   warnen oder den Lauf ranken.
+4. **Software-Rendering ist ein Fehler.** Die echte Kennung über `WEBGL_debug_renderer_info`, bei WebGPU über die
+   Adapterinformationen lesen. Matcht sie `/swiftshader|llvmpipe|software|microsoft basic|warp|angle \(google/i`,
+   mit Fehlercode abbrechen — niemals nur warnen oder den Lauf ranken.
 
 5. **Zahlen vor Bildern.** Zuerst die entscheidende Größe messen, etwa Deckung, Luminanz, NDC-Position, Abstand,
    Kontrast oder Framezeit. Sweeps als Tabelle ausgeben. Ein Bild nur erzeugen, wenn Zahlen die Entscheidung

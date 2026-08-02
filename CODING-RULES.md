@@ -42,8 +42,8 @@ Arbeitsweise wird hier einmal gepflegt.
   Gameplay-Tests nur auf ausdrücklichen Userbefehl; eine erforderliche visuelle Prüfung ist davon unberührt.
 - Bei Echtzeit-3D gilt für visuelle Prüfungen ausschließlich das projekteigene CLI-Capture-System. Fehlt es, nach
   [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) zuerst bauen: ein headless Chromium per Playwright, eine Sitzung für
-  alle Messungen, Software-Renderer als Fehler, PNG direkt per `readRenderTargetPixels()` aus dem Post-Target,
-  niemals `page.screenshot()` und niemals einen sichtbaren Browser.
+  alle Messungen, Software-Renderer als Fehler und PNG direkt aus dem Engine-Post-Target (in Three.js per
+  `readRenderTargetPixels()`), niemals `page.screenshot()` und niemals einen sichtbaren Browser.
 - Zahlen zuerst: relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen. Bilder nur, wenn sie eine
   Entscheidung tragen; normalerweise Gewinner/Verlierer oder Vorher/Nachher, nicht eine komplette Sweep-Reihe.
 - Für 3D-Facharbeit über [THREEJS-RULES.md](THREEJS-RULES.md) genau den engsten passenden Owner und gegebenenfalls
