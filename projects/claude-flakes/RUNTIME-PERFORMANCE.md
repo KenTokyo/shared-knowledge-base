@@ -33,8 +33,8 @@
 - **Kein `new`, trotzdem 127 KB/Frame** — variadisches `Math.hypot`/Double-Argumente erzeugen HeapNumbers. → Warm isolieren; `sqrt(sum squares)`; Array+Smi-Flag gegenmessen.
   *Cloth 126.982→131 B/Update (×967); Gesamt 86.148→6.709 B/Frame · 2026-07-31*
 
-- **Restallokation zulasten Mathematik** — 6 Doubles als `Float64Array` sparen 1,9 KB/Frame, verschleiern Paralleltransport. → Absolute Rate plus Wartungskosten.
-  *~400 KB/s Rest vs. 7,6 MB/s vorher; Optimierung verworfen · 2026-07-31*
+- **Profiler-Fund wird ohne Gegenbenchmark optimiert** — Typed Array verschleiert Mathematik; handgeschriebener Newline-Loop wirkt billiger als nativer Split. → Echten Korpus A/B-messen; absolute Rate, Gesamtlauf und Wartungskosten entscheiden.
+  *Typed Array sparte nur 1,9 KB/Frame; Newline-Loop 2,050 statt 1,065 ms — beide Umbauten verworfen · 2026-07-31/08-02*
 
 - **Erster teurer Shot als First-Cast-Stutter** — 11,2 ms folgt Laufposition; Crystallise als erster 7,0 ms. → Position rotieren, Pipelines auditieren; 19 Materialien/9 Postpässe eager mit echter Geometrie.
   *Kein Ability-Lazy-Pfad; nur Debug-`wireframe` lazy · 2026-07-31*

@@ -1,6 +1,6 @@
 # Test- und Mutations-Gates — claude-flakes
 
-**Lesen wenn:** `progression-test.mjs`, `mutation-test.mjs`, Assertion, Diagnose, Probe oder Fresh Clone.
+**Lesen wenn:** `progression-test.mjs`, `mutation-test.mjs`, Assertion, Mutant, Diagnose oder Fresh Clone.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 - **Grün, obwohl Assertion nie rot** — 7 Checks überleben passende Defekte; `buy()` darf Börse nullen. → Je wichtige Klausel benannten Mutanten rot sehen; Coverage = „schon gescheitert“.

@@ -9,8 +9,8 @@
 - **Test liest unsichtbares HUD** — nach Game Over kein Paint, Vorwert bleibt; Check vergleicht weiter Lives. → Sichtbarkeits-/Zustandsvorbedingung; verstecktes DOM ≠ Liveanzeige.
   *Fehlalarm „1 Pip vs 0 Lives“ nach `!over` weg; 120 s 55/55 · 2026-07-31*
 
-- **Langer Botlauf als Balancebeleg** — Bot levelt durch Tod, räumt keine Wave, sieht Cairn/Elite/Warden nicht. → Balance offline gegen echten `Combat`; Playtest nur erreichbare Runtimepfade.
-  *120 s: 0 Käufe, 0 späte Archetypen trotz Wave 3 · 2026-07-31*
+- **Messwerkzeug umgeht Shipping-Integration** — `balance.mjs` ruft `onKill` direkt; Live-Callback verschluckt Boss-Argument 4 und zahlt 1,00×. → Modellmessung mit Runtime-Gate über echte Callback-Signatur paaren.
+  *Alle Balance-Invarianten grün; `play.mjs` belegte nach Arity-Fix 78,99 Essence bzw. 3,10× · 2026-08-02*
 
 - **Offline-Sweep liest Cache ohne `update()`** — `wights.liveCount=0`, leere Waves wirken plausibel. → Autoritative Arrays oder vollständiger Updatevertrag.
   *Erster `balance.mjs`: 3/11 Invarianten, Körper 0, Essence nur Bounty · 2026-07-31*
