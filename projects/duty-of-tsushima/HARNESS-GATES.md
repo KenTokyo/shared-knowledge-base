@@ -30,8 +30,8 @@ Kennzahlen: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) · Millisekunden: [`F
 - **Favicon-404 kippt Gate** — `requestfailed` zählt auch `/favicon.ico`. → Inline-SVG-Favicon im `<head>`.
   *`index.html` · 2026-08-01*
 
-- **Abgeleitete Kamera antwortet falsch** — handgeschriebene Seed-Koordinaten veralten; 7/14 Augen unter Grund, dennoch plausible graue Frames. → Beim Bake aus Quelle lösen, nicht Datei; gitignored Ziel nie Voraussetzung.
-  *`material-closeup` 19,8 m tief; nach Fix 14/14 ≥1,8 m Freiraum, 99 % Boden statt 0 % · 2026-08-02*
+- **Abgeleitete Kamera antwortet falsch** — handgeschriebene Seed-Koordinaten veralten; 7/14 Augen unter Grund, dennoch plausible graue Frames. Derselbe Solver hebt auch **frisch eingetragene** Posen auf Mindestfreiraum, also misst kein Werkzeug die Pose, die im Sweep gewonnen hat: `frame.mjs` liest `world.cameras`, nicht `spec.CAMERAS`. → Beim Bake aus Quelle lösen, nicht Datei; gitignored Ziel nie Voraussetzung. Gemessene Pose **ungerundet** eintragen und danach gelöst gegen spezifiziert drucken.
+  *`material-closeup` 19,8 m tief; nach Fix 14/14 ≥1,8 m Freiraum, 99 % Boden statt 0 %. `terrace-paddy` eingetragen y=11,63, gelöst 11,75 — 12 cm, die denselben Messwert von 0,063 auf 0,026 % drückten; 7/15 Kameras stehen exakt auf 1,80 m über Grund · 2026-08-02*
 
 - **Gate wiederverwendet Code unter Test** — gleicher Framingfehler bestätigt sich selbst. → Erzeuger und Gate unabhängig implementieren; Widerspruch vor DRY.
   *Kamera-Solver 11×7 vs. `aim.mjs` 32×18 · 2026-08-02*

@@ -42,3 +42,6 @@ Ausführliche Nachrechnung: Köpfe von `tools/grade.mjs` und `tools/capture.mjs`
 
 - **Äquivalente Aussagen als Widerspruchsprobe** — „Bodenanteil ≥1 %“ und „p01 beschreibt Boden“ sollen definitionsgleich sein. → Beide Prädikate getrennt; Widerspruchszahl drucken.
   *0 Widersprüche auf 350 Messungen (25 Paare×14 Kameras) · `grade.mjs` · 2026-08-02*
+
+- **Bildanteil aus einer Kamera mitten in der Schicht ist eine Stichprobe, keine Eigenschaft** — Sweep kürt eine Dichte, die nur an einem Los gewinnt: bei kamerazentrierten Partikelgittern setzt die nächste Instanz den Anteil, und ihre Distanz ist Zufall, nicht Dichte. Anteil fällt mit 1/d², ein Korn 33 cm vor der Linse schlägt tausend in 20 m. → Längste zusammenhängende Zeile geänderter Pixel („Fleck“) mitdrucken — ein Fleck ≫ Rest verrät das Los ohne Segmentierung; Sieger erst rangieren, wenn er Kameraversatz im Zentimeterbereich übersteht.
+  *0,450 % / 69-px-Fleck aus **einem** Korn bei Auge `[147.03, 11.63, 7.58]`, 0,063 % / 16 px bei `[147, 11.63, 7.6]` — 3 cm Versatz, Faktor 7. Vier Erklärungen vorher gemessen widerlegt (TAA und Schussreihenfolge identisch über 1–40 Settle-Frames, Augenhöhe Faktor 2,4, Seitenversatz 1,1 über 0,5 m, Auflösung identisch) · 2026-08-02*
