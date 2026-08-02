@@ -1,6 +1,6 @@
 # duty-of-tsushima — Projekt-Learnings
 
-**Lesen wenn:** Werkzeug unter `tools/`, Heightfield, Lane oder Spawnpunkt.
+**Lesen wenn:** Werkzeug unter `tools/`, Heightfield, Lane, Spawnpunkt, Weltmaßstab oder Waffe im Bild.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Engine-Vertrag: Repo-`ARCHITECTURE.md`; Pflicht/Messregeln: `AGENTS.md`. Hier nur belegte Projektfallen.
@@ -15,9 +15,17 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | warme Lichtquelle, Feuerstelle, Emissive, Punktlicht-Slots, §3s Warmanteil | [`WARM-ACCENT-AND-FIRE.md`](WARM-ACCENT-AND-FIRE.md) |
 | Frametime, GPU-/Submission-Zeit, Quantil, Rauschboden | [`FRAME-TIMING.md`](FRAME-TIMING.md) |
 | Heightfield, Lane, Grat, Terrasse, Spawn, Begehbarkeit | [`WORLD-LANES.md`](WORLD-LANES.md) |
+| Weltzahl mit einem Faktor multiplizieren, Kartengröße, Gitterauflösung, Bake-Wechsel | [`WORLD-SCALE.md`](WORLD-SCALE.md) |
+| Viewmodel-Lage, Optik, Bauteil aus `PartSet`, Zielpunkt, Shaderquelle in `src/weapons/` | [`WEAPON-VIEWMODEL.md`](WEAPON-VIEWMODEL.md) |
 | Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Bildkontrast | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
 | Pflanze streuen, Dichte, LOD-Stufe, Blatt-/Kronenform | [`VEGETATION-SCATTER.md`](VEGETATION-SCATTER.md) |
 | Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
+
+**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (18 Tipps), `HARNESS-GATES.md` (17) und
+`VEGETATION-SCATTER.md` (15) liegen über den ~12 aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md);
+ein ungelesener Tipp wirkt nicht. Die Teilung läuft entlang der Trigger, nicht der Menge — bei den
+beiden Gate-Dateien trennt sich *Harness-Mechanik* (Browser, Pump, Boot-Fenster, Port) von
+*Gate-Entwurf* (was eine Prüfung behauptet, wer die Eingabe erzeugt, welcher Ausschluss blind macht).
 
 ## Teuerstes Muster
 
@@ -30,6 +38,17 @@ verdächtigten funktionierende Materialien.
 
 Gegenmittel: **Prüfung misst Zusage, Messfenster gehört zur Zahl.** Konstante Kennzahl misst Instrument;
 abgeleitete Daten scheitern nicht, sondern antworten falsch.
+
+## Zweitteuerstes Muster
+
+> **Der Rückfall — eine aufgeschriebene Regel handelt nicht.**
+
+Zwei Fälle in einer Schicht: Backtick im eingebetteten Shader (die Regel stand seit `ui/style.js` im
+Plan), `ring()` als gedeckelter Zylinder (die Falle war beim Karabiner gefunden und mit `hoop()`
+beantwortet). Beide fand eine Maschine — der Bundler und das Viewmodel-Gate —, keine Erinnerung.
+
+Gegenmittel: **was mechanisch prüfbar ist, gehört in den `check`, und die Regel gehört an die Stelle
+im Code, an der getippt wird.** Eine zweite Notiz derselben Regel ist kein Gegenmittel.
 
 ## Lokale Owner
 
