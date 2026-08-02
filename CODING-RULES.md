@@ -57,7 +57,7 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 
 ## Git und Lieferung
 
-- Nur eigene Dateien stagen, nie pauschal `git add -A`. Fremde offene Änderungen unangetastet lassen.
+- Nur eigene Dateien stagen, nie pauschal `git add -A`. Fremde offene Änderungen können mitgegeben werden.
 - Keine Branches oder Worktrees anlegen, außer der User verlangt es in der aktuellen Nachricht ausdrücklich.
   Direkt auf den in `AGENTS.md` genannten Zielbranch liefern.
 - Commit-Titel einzeilig und konkret: `typ(bereich): was`. Jede kompilierfähige Einheit eigenständig committen
