@@ -105,6 +105,24 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   Die verbliebenen 19 sind ein eigener Posten (`(Erstauftritt) ×10`, `customProgramCacheKey ×8`, Boolean-Maske ×1),
   keine Regression des Vorrats · 2026-08-02*
 
+- **Warmup gegen ein Profil gewärmt, das gar nicht im Baum hängt** — nach dem Lichtvorrat blieben `(Erstauftritt)
+  ×10` beim Bossspawn exakt stehen, obwohl die Lichtzahl stillstand; erwartet war 0. Ursache: `compile` fasst
+  **zwei** Szenen unterschiedlich an (`WebGLRenderer.compile`, three r184): Materialien kommen aus
+  `scene.traverse` (Sichtbarkeit egal), Lichter aus `targetScene.traverseVisible` **plus** `scene.traverseVisible`,
+  wenn beide verschieden sind. `Enemies.tsx` mountet über `resolveBossModelComponent(profileId)` immer nur EIN
+  Profil — beim Warmup steht der Engine-Default im Baum, gespawnt wird das Rosterprofil der Etage, und dessen
+  ~200 Knoten existieren zur Compile-Zeit nirgends. Sichtbar machen hilft hier nichts; **anwesend** ist die
+  Bedingung, nicht sichtbar. → Wer einen Teilbaum wärmen will, der noch nicht existiert, mountet ihn in eine
+  eigene, nie gerenderte `Scene` und ruft `compile(warmScene, camera, echteSzene)` — Materialien von dort,
+  Lichter/Nebel von hier. Zwei Fäden halten das: jede Warmwurzel `visible = false` (sonst wandern ihre
+  `<pointLight>` in den Compile-Lichtstand und jedes vorkompilierte Programm trägt eine Lichtzahl, die kein
+  echter Frame hat), und die Warmmodelle bleiben **gemountet** (Unmount disposed Material → `usedTimes` 0 →
+  three gibt genau das Programm frei, das der Warmup anlegen wollte).
+  *Etage 12, Prodbuild: `(Erstauftritt) ×10` vor wie nach dem Lichtvorrat (`.tmp/boss-relink-l12.json` gegen
+  `-fix2.json`), also 55 von 67 Programmen am Licht und der Rest an der Abwesenheit. Umsetzung
+  `BossRosterWarmMount.tsx`; Wirkung noch ungemessen — die Mechanik ist aus `three.cjs:77015-77068` belegt,
+  nicht die Ersparnis · 2026-08-02*
+
 - **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
   ~186 ms/Frame, gelesen als blockierter Hauptthread, der auf den Dev-Server wartet. Real ist die Verteilung
   bimodal: acht Blöcke tragen 18,5 s, die 65 Ticks laufen in den ~0,8 s dazwischen zu **~12 ms**. Ein Mittelwert
