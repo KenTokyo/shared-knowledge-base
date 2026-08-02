@@ -4,25 +4,31 @@
 projektspezifische Regeln haben Vorrang. Die `AGENTS.md` hält nur Kernpflichten und lokale Fakten; gemeinsame
 Arbeitsweise wird hier einmal gepflegt.
 
-## Wirkung vor Feinschliff
+## Kontextanker statt Lesekette
 
-- **Änderungsmaß = Lückenmaß.** Eine kleine, klar begrenzte Lücke bekommt einen kleinen Fix. Fehlt dem Produkt
-  dagegen spürbar Maßstab, Tiefe, Identität, Spielwert oder Inszenierung, ist eine entsprechend große,
-  zusammenhängende Änderung richtig — nicht die zwölfte Justage derselben Konstante.
-- **Makro vor Mikro.** Erst Richtung, Komposition, Mechanik, Weltstruktur, Timing und Layering beurteilen;
-  Details erst polieren, wenn diese Ebene trägt. Eine bereits fein abgestimmte Achse nicht weiter bearbeiten,
-  nur weil dort leicht noch ein Prozent zu finden ist.
-- **Alternativen müssen wirklich anders sein.** Ist die Richtung unklar, zwei bis drei deutlich verschiedene
-  Hypothesen formulieren und den stärksten reversiblen Kandidaten weit genug als kohärenten Vertical Slice
-  umsetzen, dass sein Wert beurteilbar ist. Vergleichen, die beste Richtung behalten, Verlierer sauber entfernen.
-- **Spiele größer machen, nicht bloß den Code.** Neue Mechanik-, Welt- oder VFX-Schichten sollen gemeinsam
-  erlebbare Tiefe erzeugen. Bei VFX etwa Form, Bewegung, Material/Licht, Timing, Reaktion und Audio als bewusstes
-  System schichten statt nur mehr Partikel derselben Art anzuhängen.
-- **Kontrolle ist ein Entscheidungs-Gate, keine Mikroskop-Pflicht.** Statische Gates laufend nutzen; visuell oder
-  messtechnisch nach einem aussagekräftigen Kandidaten prüfen, nicht nach jedem Mikroedit. Messungen entscheiden,
-  ob eine Richtung bleibt, wechselt oder endet — sie erzwingen keine kleinen Änderungen.
-- **Nach 3–5 Verbesserungen derselben Messachse wechseln.** Der Deckel beendet nicht den Loop, sondern die
-  Wiederholung: [MAX-5-VERBESSERUNGEN-DANN-WEITER.md](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md).
+Vor einem größeren Leseblock im Arbeitskontext notieren und dort kurz fortschreiben:
+
+- **Auftrag:** ein Satz zum Userziel und zum Fertigkriterium.
+- **Leseliste:** benötigte Pfade mit je einem Grund; neue Pfade nur ergänzen, wenn eine konkrete Frage sie erfordert.
+- **Befund:** pro gelesener Datei höchstens ein auftragsrelevanter Satz.
+- **Nächster Schritt:** nach jedem Leseblock zum Auftrag zurückkehren; ein Link allein ist kein Leseauftrag.
+
+Keine zusätzliche Protokolldatei anlegen, sofern das Projekt sie nicht verlangt. Lesen endet, sobald die nächste
+Änderung sicher entschieden werden kann.
+
+## Echtzeit-3D — große Schritte vor Sichtprüfungen
+
+Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
+
+- **Makro zuerst:** Richtung, Komposition, Mechanik, Weltstruktur, Timing und Layering vor Detailwerten.
+- **Änderungsmaß = Lückenmaß:** kleine Lücke → kleiner Fix; fehlender Maßstab, Tiefe, Identität oder Spielwert →
+  großer, zusammenhängender und reversibler Schnitt.
+- **Bei unklarer Richtung:** 2–3 klar verschiedene Richtungen festlegen; stärksten reversiblen Kandidaten als
+  Vertical Slice bauen; anhand der Messung behalten oder wechseln.
+- **VFX als System:** Form, Bewegung, Material/Licht, Timing, Reaktion und Audio schichten; nicht nur mehr Partikel.
+- **Sichtprüfung nach Kandidaten:** nicht nach jedem Mikroedit messen oder Bilder erzeugen.
+- **Messachse nach 3–5 Verbesserungen schließen:** an einer anderen 3D-Achse weiterarbeiten;
+  [Deckel-Regel](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md).
 
 ## Umsetzung und Performance
 
