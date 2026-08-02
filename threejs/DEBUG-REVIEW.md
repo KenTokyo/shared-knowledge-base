@@ -2,6 +2,13 @@
 
 - **Status:** optionale „könnte“-Tipps; lokale Hosts, Baselines, Latten → Vorrang
 
+## Bildreview-Budget
+
+Agentische Bildprüfung ist kein Standardgate und aus Zeitgründen ungern gesehen; direkte Abnahme durch den User
+hat Vorrang. Nur eine nach statischen/numerischen Checks ungelöste Look-Frage rechtfertigt ein Vergleichsbild,
+absolut höchstens zwei Sichtprüfungen im gesamten Userauftrag. Die technischen Tipps unten schreiben kein Capture
+vor; falls die Ausnahme gewählt wird, gilt zusätzlich [`SCREENSHOT-GUIDE.md`](../SCREENSHOT-GUIDE.md).
+
 ## Fünf Tipps
 
 - **1 · Beleg könnte enthalten:**
@@ -26,7 +33,7 @@
   - Population; Nenner; Schwelle; Messboden; Kamera; Tiefe; Raw/HDR/LDR; Maske; Mindestpixel
   - Erasure statt Overlap; geclippte Pixel separat; Messfarbraum benennen
   - Baseline: Source/Bake; Sequenz; Seed; Target; Toolversion; Gatezahl
-  - visueller Critic: Hero; Gegenrichtung; Laufweg; ungewöhnliche Winkel
+  - falls Bildausnahme gewählt: stärkste relevante Ansichten in **einem** Vergleichsbild statt Einzelreview je Winkel
 
 ## Gegenbeispiele
 

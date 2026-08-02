@@ -9,13 +9,13 @@
 > Tipps hier bleiben stehen, weil sie auf einer Maschine gelten, die den Harness fahren darf — und weil der
 > erste von ihnen erklärt, *warum* der Rechner damals stehenblieb.
 
-- **Jeder Screenshot legt den Rechner minutenlang lahm** — die Seite rastert unter dem Software-Renderer
-  **jeden** Warm-up-Frame mit Normalpriorität auf allen Kernen, angesehen wird nur der letzte; dazu laufen
-  verwaiste Headless-Bäume abgebrochener Läufe weiter. → Nur den exportierten Frame rastern
-  (`Renderer.skipRaster`, `src/render/Renderer.ts:810`), Prozessbäume **vor** dem Lauf killen, den
-  laufenden Capture herabpriorisieren und zwei Kerne frei lassen.
-  *8 verwaiste Chrome-Prozesse mit zusammen 384 CPU-Sekunden; bei `capture=14` sind das ~840 gerasterte
-  Frames für einen. Danach 9,7 s statt Minuten bei unverändertem `p95=0.722` und identischer Chroma · 2026-07-28*
+- **Jeder Screenshot legte den Rechner minutenlang lahm** — die Seite rasterte unter dem Software-Renderer
+  **jeden** Warm-up-Frame mit Normalpriorität auf allen Kernen; dazu liefen verwaiste Headless-Bäume weiter. → Vor
+  jeder optionalen Capture-Ausnahme Rendererkennung prüfen und bei Software sofort abbrechen; nicht
+  herabpriorisieren, nicht ranken, nicht durch Workarounds fortsetzen. Auf erlaubter Hardware nur den exportierten
+  Frame rastern (`Renderer.skipRaster`, `src/render/Renderer.ts:810`) und Prozessbäume zuverlässig beenden.
+  *8 verwaiste Chrome-Prozesse mit zusammen 384 CPU-Sekunden; bei `capture=14` waren das ~840 gerasterte Frames für
+  einen — Beleg für Fail-fast statt Software-Capture · 2026-07-28*
 
 - **Mit stillgelegtem Rasterizer verhungert die Renderschleife sofort** — `requestAnimationFrame` wird vom
   Compositor getrieben, und der liefert keine Frames für eine Seite, die nicht zeichnet. → Capture-Schleifen
@@ -68,12 +68,12 @@
   5 byte-identischen Läufen desselben Szenarios · 2026-07-29*
 
 - **DOM-Overlays sind über den GL-Puffer strukturell unfotografierbar** — der Screenshot ist `readPixels`
-  auf dem Default-Framebuffer, DOM wird vom Browser **darüber** komponiert und berührt den Puffer nie; vier
-  bit-identische Menü-Captures galten deshalb als Kuriosum statt als Deckungslücke. → Zweiter Pfad über den
-  Compositor (`Page.captureScreenshot`, `fromSurface:true`) und GL- **und** Compositor-Frame immer als Paar
-  aufheben — das Paar ist der Beweis, nicht das DOM-Bild allein.
-  *Ein-Variablen-Beweis über eine reine DOM-Änderung: GL-Frames byte-identisch (imgdiff 0/891120),
-  Compositor-Frames 34,235 % auseinander · 2026-07-31*
+  auf dem Render-Target, DOM wird vom Browser **darüber** komponiert und berührt den Puffer nie; vier bit-identische
+  Menü-Captures galten deshalb als Kuriosum statt als Deckungslücke. → Kein zweiter Compositor-Bildpfad:
+  DOM-Geometrie, Text, Sichtbarkeit und Kontrast numerisch in einer Seitenauswertung prüfen; die visuelle UI-Abnahme
+  dem User überlassen. `Page.captureScreenshot`/`page.screenshot()` bleiben verboten.
+  *Ein-Variablen-Beweis über eine reine DOM-Änderung: GL-Frames byte-identisch (imgdiff 0/891120), damalige
+  Compositor-Frames 34,235 % auseinander — Beleg für getrennte DOM-Metrik statt Browserbild · 2026-07-31*
 
 - **Nach falschem Content-Type ist jede Folgemessung plausibel und falsch** — der In-Memory-Server leitete
   den MIME-Typ aus dem **Request-Pfad** ab; bei `/?capture=2` ist der Pfad `/`, die Extension-Suche

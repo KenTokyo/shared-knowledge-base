@@ -24,7 +24,7 @@
 - Reihenfolge, Uhren, Audio-Runtime → [Runtime-Integration](threejs/RUNTIME-INTEGRATION.md)
 - Shader, PBR, Renderpässe → [Shader und PBR](threejs/SHADERS.md)
 - Chunks, LOD, Frametime → [Performance](threejs/PERFORMANCE.md)
-- Capture, A/A, A/B, Review → [Debug und Review](threejs/DEBUG-REVIEW.md)
+- Nur nach freiwilligem Sichtprüfungs-Entscheidungsgate: Capture, A/A, A/B, Review → [Debug und Review](threejs/DEBUG-REVIEW.md)
 - Sweep, Ranking, Referenzvergleich, „ist das besser?" → [Messhandwerk](threejs/MEASURING.md)
 
 ## Projektebene

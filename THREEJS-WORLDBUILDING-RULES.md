@@ -6,6 +6,9 @@
 Runtime-Regeln. **Und der Ordner des eigenen Repos** unter [`projects/<repo-name>/`](projects/) — dort steht,
 was in *diesem* Projekt Zeit gekostet hat.
 
+**Sichtprüfung ist kein Standardgate:** User-Abnahme bevorzugen. Nur ungelöste Look-Unsicherheit erlaubt eine,
+im gesamten Userauftrag absolut höchstens zwei agentische Sichtprüfungen nach `CODING-RULES.md`; keine Bildschleife.
+
 ## Lesepfad nach Aufgabe
 
 | Aufgabe | Lesen |
@@ -35,7 +38,8 @@ genau der Fehler, den diese Regeln selbst verbieten (Regel 4).*
 4. **Eine Weltwahrheit:** Höhe, Steigung, Wasser, Biome, Wege und Belegung werden geteilt; keine Systemkopien.
 5. **Meter vor Reglern:** Hauptformen in Weltmetern und an mindestens zwei bekannten Größenankern prüfen.
 6. **Eine Ursache pro Versuch:** Nach zwei erfolglosen Varianten Layer wechseln statt weiter Werte zu drehen.
-7. **Bild und Zahl trennen:** Form, Silhouette und Komposition visuell; Energie, Verteilungen, Kosten und Regressionen numerisch.
+7. **Bild und Zahl trennen:** Energie, Verteilungen, Kosten und Regressionen numerisch; Form, Silhouette und
+   Komposition bevorzugt durch den User, agentisch nur im begrenzten Ausnahmefall visuell.
 8. **Abgeleitete Daten erneuern:** Terrain-/Bake-Änderungen invalidieren Kameras, Spawns, Vegetation und Messregionen.
 
 ## Minimaler Weltvertrag vor Code
@@ -50,7 +54,9 @@ genau der Fehler, den diese Regeln selbst verbieten (Regel 4).*
 
 **Stop-Regel:** Solange eine Hauptschicht fehlt oder sichtbar kaputt ist, höchstens zwei lokale Material-, Noise-, Schaum-, Bloom- oder Grade-Pässe.
 
-**Fertig heißt:** Hero-Shot, Gegenrichtung und Laufweg funktionieren; Systeme stimmen an ihren Übergängen; Rohkanäle, HDR-Szene und LDR-Finalbild sind plausibel; Performance ist gebaut und nicht nur versprochen.
+**Fertig heißt:** Hero-Shot, Gegenrichtung und Laufweg sind als Produktziele umgesetzt; Systeme stimmen an ihren
+Übergängen; Rohkanäle, HDR-Szene und LDR-Finalbild sind numerisch plausibel; Performance ist gebaut und nicht nur
+versprochen. Die finale visuelle Oberflächenabnahme darf beim User bleiben.
 
 ## Danach
 

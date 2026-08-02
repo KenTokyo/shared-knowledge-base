@@ -14,7 +14,7 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 | [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
 | [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Kontextanker, Umsetzung, Echtzeit-3D, Validierung und Git |
-| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für CLI-Capture (headless Wirt, Render-Target, kein `page.screenshot()`) |
+| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner nur für die freiwillige, auf 1–2 Sichtprüfungen begrenzte CLI-Capture-Ausnahme |
 | [`PORTLISTE.md`](PORTLISTE.md) | Lokale Dev-Ports und direkte Links aller Projekte mit Shared Docs |
 | [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |
 | [`agents/`](agents/) | Nur per Trigger: [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md), [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md), [Juicy-Game-UI](agents/juicy-game-ui-system.md) |

@@ -2,14 +2,25 @@
 
 Dieser Leitfaden kombiniert die stärksten Elemente der drei Referenzprompts. Kein Prompt muss vollständig kopiert werden; entscheidend ist ein sinnvoller Mix für das jeweilige Projekt.
 
+## Aktuelle Sichtprüfungsregel
+
+Die zitierten Originalprompts unten sind Quellenmaterial, keine aktuelle Arbeitsanweisung. Eigene Prompts sollen
+zusammenhängende Änderungen one-shotten, statisch und numerisch prüfen und die direkte visuelle Abnahme bevorzugt
+dem User überlassen. Agentische Sichtprüfung ist freiwillig und aus Zeitgründen ungern gesehen: nur bei danach
+ungelöster Look-Unsicherheit **eine**, im gesamten Userauftrag absolut höchstens **zwei** Sichtprüfungen; niemals
+eine Screenshot-Schleife. Wird diese Ausnahme gewählt, gilt [`../SCREENSHOT-GUIDE.md`](../SCREENSHOT-GUIDE.md).
+
 ## Empfohlener Mix
 
-- **Prompt 1 als Grundlage:** klares Qualitätsvorbild, spezialisierte Sub-Agenten, unabhängige Kritik und konsequente Iterationsschleifen.
+- **Prompt 1 als Grundlage:** klares Qualitätsvorbild, spezialisierte Sub-Agenten und unabhängige fachliche Kritik;
+  keine automatische visuelle Iterationsschleife übernehmen.
 - **Prompt 2 für kreative Freiheit:** Ziel und Spielgefühl benennen, ohne jede Lösung technisch vorzuschreiben.
-- **Prompt 3 für Tiefe und Performance:** konkrete Anforderungen an Weltqualität, Messbarkeit, reproduzierbare Screenshots, GPU-Prüfung, LOD, Culling, Instancing und stabile Laufzeit übernehmen.
+- **Prompt 3 für Tiefe und Performance:** konkrete Anforderungen an Weltqualität, numerische Messbarkeit,
+  GPU-Prüfung, LOD, Culling, Instancing und stabile Laufzeit übernehmen; Screenshot-Technik nur für die begrenzte
+  freiwillige Ausnahme.
 - **Gesamtziel:** ambitionierte Qualitätsansprüche mit klaren technischen Leitplanken und überprüfbaren Ergebnissen verbinden.
 
-> **Wichtig:** Prompt 3 ist bewusst sehr lang und detailliert. Er eignet sich besonders als Baukasten für umfangreiche Projekte; relevante Abschnitte können gezielt übernommen werden.
+> **Wichtig:** Prompt 3 ist bewusst sehr lang und detailliert. Er eignet sich besonders als Baukasten für umfangreiche Projekte; relevante Abschnitte können gezielt übernommen werden. Seine wiederholten visuellen Loops sind durch die aktuelle Sichtprüfungsregel oben ersetzt.
 
 ## Kernprinzip aus Prompt 1
 
@@ -30,32 +41,40 @@ Don't stop until each sub-agent is utterly wowed with the quality when compared 
 - **Konkrete Referenz statt vager Qualität:** Ein reales Vorbild definiert Atmosphäre, Detailgrad und Qualitätsniveau besser als Wörter wie „professionell“ oder „poliert“.
 - **Beispiele mit offenem Umfang:** Zwei konkrete Bereiche geben den Maßstab vor; „anything you could think of“ überträgt dem Modell die Verantwortung, fehlende Arbeitsbereiche zu ergänzen.
 - **Sub-Agenten als Fachbereiche:** Große Aufgaben werden in klar getrennte Verantwortungsbereiche zerlegt.
-- **Unabhängige, harte Kritik:** Der Reviewer bewertet das sichtbare Ergebnis und nicht die Absicht oder den Aufwand des Erstellers.
-- **Vergleich statt Selbstbewertung:** Ein blinder Side-by-Side-Vergleich liefert klarere Entscheidungen als eine abstrakte Punktzahl.
-- **Iteration bis zur objektiven Grenze:** Fehlgeschlagene Vergleiche führen zu einer weiteren gezielten Verbesserungsschleife.
+- **Unabhängige, harte Kritik:** Der Reviewer bewertet Architektur, Funktion, Zahlen und echtes Produktartefakt statt
+  Absicht oder Aufwand; Bildprüfung bleibt die begrenzte Ausnahme.
+- **Vergleich statt Selbstbewertung:** Reproduzierbare Zahlen, Referenzmerkmale und Gegenbeweise liefern zuerst die
+  Entscheidung; ein visueller Side-by-Side-Vergleich ist nicht das Standardgate.
+- **Iteration bis zur objektiven Grenze:** Konkrete Funde führen zu einer gezielten Änderung; kein weiterer Prüfloop
+  ohne geänderten Kandidaten oder neue Frage.
 
 ### Empfohlener Aufbau eigener Prompts
 
 1. **Brief:** Was soll entstehen und welches reale Vorbild setzt den Qualitätsmaßstab?
 2. **Qualitätsmerkmale:** Welche zwei bis fünf Bereiche zeigen konkret, was „gut“ bedeutet?
 3. **Orchestrierung:** Welche Fachbereiche bearbeiten spezialisierte Sub-Agenten?
-4. **Qualitätskontrolle:** Wer prüft das Ergebnis unabhängig, anhand welcher Artefakte und mit welchem Vergleich?
-5. **Performance und Messung:** Welche Budgets, Messwerte, reproduzierbaren Kameras oder Tests sichern die technische Qualität?
-6. **Iterationsregel:** Was geschieht bei einem schwachen Ergebnis, und welche reale Ressourcen- oder Zeitgrenze beendet den Loop?
+4. **Qualitätskontrolle:** Wer prüft Architektur, Funktion, Zahlen und Gegenbeweise unabhängig? Visuelle Abnahme
+   bevorzugt durch den User; agentisch nur bei ungelöster Unsicherheit.
+5. **Performance und Messung:** Welche Budgets, Messwerte oder Tests sichern die technische Qualität?
+6. **Iterationsregel:** Nur ein konkreter Fund oder eine geänderte Frage öffnet eine weitere Umsetzungsschleife;
+   Sichtprüfung bleibt über den gesamten Auftrag auf eine, absolut höchstens zwei begrenzt.
 
 **Hinweis:** Nutze `/goal` in Codex und `/loop` in Claude oder Cursor, sofern die jeweilige Umgebung diese Befehle unterstützt. Ein absichtlich sehr hoher Qualitätsmaßstab fördert Verbesserungen; die tatsächliche Grenze bilden Zeit, Budget und technische Machbarkeit.
 
 ### Wiederverwendbare Vorlage
 
 ```text
-I want you to build [what you want] at the level of [the best known example of it]. It should be utterly perfect, [what good looks like], 
-with every single thing done at [top tier] quality, from [example area] to [example area] to anything you could think of.
+I want you to build [what you want] at the level of [the best known example of it]. It should be utterly perfect,
+[what good looks like], with every single thing done at [top tier] quality, from [example area] to [example area]
+to anything you could think of.
 
-Fan out sub-agents and have sub-agents tackle each one individually so that the [thing] is utterly perfect. 
-You should /loop on each item and have a separate sub-agent check it to ensure it is [top tier]. That separate sub-agent should be a really harsh critic, and if it isn't [top tier], it should keep going.
+Fan out sub-agents by specialty. Build each coherent area completely before the reviewer checks architecture,
+functionality, performance numbers and the strongest counterexample. Fix concrete findings and continue until the
+user goal or an objective technical limit is reached.
 
-Don't stop until each sub-agent is utterly wowed with the quality when compared with [the real example]. 
-It should literally compare them side by side blind and say which one looks better. Do this in [your tool or stack]. /loop until it's utterly perfect. Fan out sub-agents and ultracode.
+Do not run screenshot reviews by default; the user should test the surface directly. Only if a material visual
+uncertainty remains after implementation and numeric checks may you perform one visual review, at the absolute
+maximum two across the entire task. Never create a screenshot-review loop. Do this in [your tool or stack].
 ```
 
 Die Vorlage funktioniert nicht nur für Spiele, sondern auch für Websites, Berichte, Präsentationen, Designs und andere kreative oder technische Ergebnisse.
@@ -66,7 +85,8 @@ Die Vorlage funktioniert nicht nur für Spiele, sondern auch für Websites, Beri
 
 ### Prompt 1: Call-of-Duty-inspirierter FPS
 
-Kurzer Grundprompt mit maximalem Qualitätsanspruch, Sub-Agenten und unabhängiger visueller Prüfung.
+Historischer Originaltext mit maximalem Qualitätsanspruch. Seine visuelle Dauerschleife nicht übernehmen; für neue
+Prompts gilt ausschließlich die aktuelle 1–2-Ausnahmeregel oben.
 
 ```text
 I want you to build a first-person shooter at the level of the most recent Call of Duty games. It should be utterly perfect, visually beautiful, with every single thing done at AAA quality—from textures to physics to anything you could think of.
@@ -94,7 +114,7 @@ I want you to make me a game for the web. You can use ThreeJS, and it's gonna be
 
 ### Prompt 3: Ghost-of-Tsushima-inspirierte 3D-Welt
 
-> **Hinweis: sehr langer Prompt.** Er verbindet visuelle Zielvorgaben mit detaillierter Screenshot-Automation, Messbarkeit, Agenten-Orchestrierung und Performance-Optimierung.
+> **Hinweis: sehr langer Referenzprompt.** Die Screenshot-Automation darin ist nur ein technischer Baukasten für den freiwilligen Ausnahmefall; automatische visuelle Loops sind gestrichen.
 
 ```text
 Create Claude of Tsushima Game Task
@@ -158,17 +178,24 @@ Enemies must never walk through rocks, trees, buildings, cliffs or other solid o
 
 Use hit reactions, stagger animations, basic death animations, weapon trails, dust, sparks and satisfying sound effects. Combat should look polished but remain secondary to the world itself.
 
-## In-game screenshot and visual-review system
+## Optional in-game screenshot and visual-review system
 
-Build a dedicated screenshot system directly into the game.
+Do not build or run a screenshot system by default. Implement the coherent product slice first, use static and
+numeric checks, and let the user perform the direct visual surface/gameplay acceptance. Only when a material Look
+question remains unresolved may one visual review be used, at the absolute maximum two across the entire task. No
+review per camera, phase or candidate and no screenshot loop.
 
-Screenshots must not be produced by taking screenshots of the browser window, the webpage or the DOM, and must not use `page.screenshot()`, `canvas.toDataURL()`, the OS screen grabber or any other external capture path. A browser capture hands back whatever the compositor decided to show at some unspecified moment, at device pixel ratio, possibly colour-managed by the OS, and gives no way to render above the display resolution.
+If this optional exception is selected and no project CLI capture exists, build it first. Start headless Chromium
+once through Playwright and keep the same session for every measurement and permitted image. Reject software
+renderers. Screenshots must not be produced by taking screenshots of the browser window, the webpage or the DOM,
+and must not use `page.screenshot()`, `canvas.toDataURL()`, the OS screen grabber or any other external capture
+path.
 
-The game itself must render and export screenshots directly from the active Three.js renderer or render target.
+The game itself must render and export the PNG directly from the active Three.js render target via
+`readRenderTargetPixels()`. Playwright is **only a host**: it launches the browser, points it at the game and calls
+into the game's own capture API. It never takes the picture itself.
 
-A browser automation tool such as Playwright may be used, but **only as a host**: it launches the browser, points it at the game and calls into the game's own capture API. It never takes the picture itself.
-
-The screenshot system must:
+When the optional exception is selected, the screenshot system must:
 
 * capture the actual rendered game frame at high resolution
 * hide the HUD and development overlays automatically
@@ -226,7 +253,7 @@ The host that drives the browser must:
 * collect page console errors and exceptions and propagate them into its exit code
 * expose the game's capture API through a single small, versioned global object rather than reaching into engine internals from the outside
 
-Create several predefined benchmark viewpoints:
+Benchmark viewpoints may be stored as reusable camera data for numeric probes:
 
 * wide grassland vista
 * dense forest interior
@@ -237,9 +264,11 @@ Create several predefined benchmark viewpoints:
 * close-up vegetation and material shot
 * combat encounter in the environment
 
-The CLI or automation system should be able to launch the game, load a benchmark viewpoint, configure the scene and trigger an in-game screenshot without manually using the browser.
+Do not capture all viewpoints. If the optional visual exception is needed, select only the single most decisive
+viewpoint, or combine necessary views into one comparison image. The CLI host should configure and trigger that
+engine-owned capture without manually using the browser.
 
-Example workflow:
+Conditional exception workflow:
 
 1. Start the game headless and confirm a hardware renderer.
 2. Wait for the game's own readiness flag.
@@ -251,10 +280,11 @@ Example workflow:
 8. Run the settle frames until LOD, vegetation and shadows have stopped moving.
 9. Render at a multiple of the output resolution and read the pixels back out of the render target.
 10. Resolve down to the output size in linear light and encode a PNG, without touching the page compositor.
-11. Save the PNG into a per-pass review folder, with the capture settings written into the file's metadata.
-12. Pass that image to the visual-review agent.
+11. Save the PNG into a run-scoped review folder, with the capture settings written into the file's metadata.
+12. Pass the single decision-carrying comparison image to the reviewer; a second only after a relevant change or new
+    concrete uncertainty, never a third.
 
-Do not let the review process rely on random browser screenshots with inconsistent camera placement, UI elements, browser scaling or compression.
+Never use random browser screenshots with inconsistent camera placement, UI elements, browser scaling or compression.
 
 ## Sub-agent orchestration
 
@@ -272,63 +302,38 @@ Fan out specialized sub-agents and assign each major visual area to a separate a
 * VFX and environmental particles
 * audio
 * performance optimization
-* screenshot and benchmark tooling
+* optional capture tooling only if the bounded exception is selected
 
-Each sub-agent should repeatedly inspect and improve its assigned area rather than implementing it once and stopping.
+Each sub-agent should complete its coherent area, then use the cheapest relevant static/numeric countercheck. Iterate
+only on a concrete finding, not on ritual review.
 
-Use separate visual-review agents that did not build the feature they are reviewing.
+If the optional visual exception is selected, use a reviewer that did not build the feature. Across all sub-agents,
+that still permits only one, absolutely at most two visual reviews for the entire task.
 
-These review agents must be extremely harsh. They must judge only the captured visual output, not the implementation effort, code complexity or original intention.
+## Optional Ghost of Tsushima comparison
 
-## Ghost of Tsushima comparison
+Do not automatically capture every benchmark viewpoint. Use the supplied references first to define composition,
+lighting, density, terrain, atmosphere, material, scale and performance goals; verify everything numerically or
+structurally that can be verified that way.
 
-For every major benchmark viewpoint, capture a clean in-game screenshot using the internal screenshot system.
+Only if a material visual uncertainty remains, capture the single most decisive in-game comparison through the
+internal render-target pipeline. A blind side-by-side may then randomize left/right, hide labels and ask which frame
+is more convincing and why. The reviewer should return one specific actionable finding, not generic polish feedback.
 
-Compare those screenshots directly against the provided Ghost of Tsushima reference screenshots.
+Apply the finding as one coherent change. A second comparison is allowed only when that changed candidate or a new
+concrete uncertainty requires it; never a third and never a loop across viewpoints. Walking coverage, collision,
+biome transitions and combat remain product/runtime concerns, not a hero-screenshot sweep. Final direct visual
+acceptance belongs preferably to the user.
 
-The comparison should be side by side and blind:
-
-* randomize which image appears on the left and right
-* hide filenames and labels
-* do not tell the reviewer which image belongs to this project
-* ask the reviewer which frame looks more visually convincing and why
-
-The reviewer must compare:
-
-* overall composition
-* lighting quality
-* vegetation density
-* grass and foliage variation
-* terrain realism
-* environmental layering
-* atmospheric depth
-* material quality
-* distant scenery
-* color grading
-* scale
-* visual coherence
-* signs of procedural repetition
-* signs of primitive geometry
-* whether the environment looks handcrafted
-* whether the image resembles a finished AAA game or a prototype
-
-The reviewer must produce specific actionable criticism. It should identify exact weak regions of the screenshot and explain what must change.
-
-Generic feedback such as “looks good,” “solid progress” or “could use more polish” is not acceptable.
-
-If the generated frame is obviously worse than the Ghost of Tsushima reference, send the criticism back to the responsible sub-agents, improve the world and capture the exact same benchmark viewpoint again.
-
-Continue the visual loop across all benchmark viewpoints.
-
-Do not optimize only one hero screenshot. The world must remain convincing while walking through it, viewing it from unusual angles, moving between biomes and fighting enemies.
-
-Use Ghost of Tsushima as an intentionally difficult and possibly unreachable quality bar. Do not lower the benchmark just so the review agents can declare success.
+Use Ghost of Tsushima as an intentionally difficult and possibly unreachable quality bar. Do not lower the benchmark just so a reviewer can declare success.
 
 The final result should not feel like a Three.js demonstration. It should feel like a playable first-person slice of a modern AAA open-world game where the landscape itself is the main attraction.
 
 Use instancing, LOD systems, culling, optimized shadows, reusable materials, object pooling, adaptive vegetation density and intelligent world streaming to maintain stable performance without making the environment feel empty.
 
-Fan out sub-agents, use the internal screenshot pipeline, compare every important scene against the provided Ghost of Tsushima references and /loop until the visual quality has been pushed as far as technically possible.
+Fan out sub-agents, build the strongest coherent slice one-shot, validate architecture and numbers, and reserve the
+internal screenshot pipeline for one unresolved Look question, absolutely at most two visual reviews across the
+entire task.
 
 Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249477528-g5umsca3.png
 Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249510257-2fgbc1vu.png

@@ -17,7 +17,8 @@ mehrere Systeme integriert. **Nicht lesen:** kleiner Fix, einzelne Datei, reine 
 1. Relevante Architektur und aktuellen Git-Scope prüfen.
 2. Alle eng gekoppelten Todos der Phase ausimplementieren; nicht nach jedem Mikroedit testen oder dokumentieren.
 3. Danach Gates gebündelt ausführen: kanonisches statisches Gate, nur ausdrücklich verlangte UI-/Gameplay-Tests,
-   nur entscheidungstragende Sichtprüfung.
+   standardmäßig keine agentische Sichtprüfung. Nur bei ungelöster Look-Unsicherheit greift freiwillig das globale
+   Budget aus `CODING-RULES.md`: eine, absolut höchstens zwei im gesamten Userauftrag.
 4. Funde gemeinsam beheben; normalerweise ein Kontrolllauf. Scheitert gleiche Aussage erneut, Ursache oder
    Umsetzung ändern statt Prüfung zu wiederholen.
 5. Phase einmal aktualisieren: Todos abhaken, Ergebnis/Beleg/Rest knapp notieren, höchstens drei Hauptpfade nennen.

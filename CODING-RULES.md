@@ -25,7 +25,7 @@ Arbeitskontext notieren und kurz fortschreiben:
 Keine zusätzliche Protokolldatei anlegen, sofern das Projekt sie nicht verlangt. Lesen endet, sobald die nächste
 Änderung sicher entschieden werden kann.
 
-## Echtzeit-3D — große Schritte vor Sichtprüfungen
+## Echtzeit-3D — große Schritte, Sichtprüfung nur als Ausnahme
 
 Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 
@@ -33,9 +33,15 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
 - **Änderungsmaß = Lückenmaß:** kleine Lücke → kleiner Fix; fehlender Maßstab, Tiefe, Identität oder Spielwert →
   großer, zusammenhängender und reversibler Schnitt.
 - **Bei unklarer Richtung:** 2–3 klar verschiedene Richtungen festlegen; stärksten reversiblen Kandidaten als
-  Vertical Slice bauen; anhand der Messung behalten oder wechseln.
+  Vertical Slice bauen; anhand von Architektur, Zahlen und Produktziel behalten oder wechseln.
 - **VFX als System:** Form, Bewegung, Material/Licht, Timing, Reaktion und Audio schichten; nicht nur mehr Partikel.
-- **Sichtprüfung nach Kandidaten:** nicht nach jedem Mikroedit messen oder Bilder erzeugen.
+- **One-shot statt Bildschleife:** zusammenhängenden Kandidaten vollständig bauen. Agentische Sichtprüfung ist aus
+  Zeitgründen ausdrücklich ungern gesehen und standardmäßig aus; die direkte Oberflächen-/Gameplay-Abnahme macht
+  bevorzugt der User.
+- **Freiwillige Ausnahme:** Bleibt nach statischen und numerischen Gegenchecks echte Unsicherheit, ob der Look trägt,
+  darf eine Sichtprüfung stattfinden, ausnahmsweise eine zweite nach einer relevanten Änderung oder neuen Frage.
+  Pro gesamtem Userauftrag sind **eine, absolut höchstens zwei Sichtprüfungen** erlaubt; niemals pro Phase, Kamera,
+  Kandidat oder Mikroedit. Ein montiertes Vergleichsbild zählt als eine Sichtprüfung.
 - **Messachse nach 3–5 Verbesserungen schließen:** an einer anderen 3D-Achse weiterarbeiten;
   [Deckel-Regel](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md).
 
@@ -59,15 +65,17 @@ Nur für visuelle oder spielerische Arbeit an Echtzeit-3D:
   Gate einmal für alle Änderungen. Funde gemeinsam beheben, normalerweise ein Kontrolllauf. Gleiche Prüfung ohne
   neue Änderung oder Frage nicht wiederholen; erneutes Scheitern heißt Ursache/Umsetzung prüfen statt rerunnen.
   CI bleibt Liefergate, keine Mikroedit-Schleife.
-- Automatische UI- oder Gameplay-Tests nur auf ausdrücklichen Userbefehl; erforderliche Sichtprüfung bleibt davon
-  unberührt.
-- Bei Echtzeit-3D gilt für visuelle Prüfungen ausschließlich das projekteigene CLI-Capture-System. Fehlt es, nach
-  [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) zuerst bauen: ein headless Chromium per Playwright, eine Sitzung für
-  alle Messungen, Software-Renderer als Fehler und PNG direkt aus dem Engine-Post-Target (in Three.js per
-  `readRenderTargetPixels()`), niemals `page.screenshot()` und niemals einen sichtbaren Browser.
-- Zahlen zuerst: relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen. Bilder nur, wenn sie eine
-  Entscheidung tragen; normalerweise Gewinner/Verlierer oder Vorher/Nachher, nicht komplette Sweep-Reihe. Sobald
-  Entscheidung stabil ist, stoppen; kein weiterer Capture ohne geänderten Kandidaten oder neue Frage.
+- Automatische UI- oder Gameplay-Tests nur auf ausdrücklichen Userbefehl. Eine agentische Sichtprüfung ist kein
+  Liefergate: standardmäßig entfällt sie; direkte Oberflächen-/Gameplay-Abnahme durch den User hat Vorrang.
+- Nur wenn die freiwillige Ausnahme oben gewählt wurde, gilt ausschließlich das projekteigene CLI-Capture-System.
+  Fehlt es, nach [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) zuerst bauen: Playwright startet einmalig headless
+  Chromium, dieselbe Sitzung bedient alle Messungen, Software-Renderer brechen den Lauf ab und PNGs entstehen direkt
+  aus dem Engine-Post-Target (in Three.js per `readRenderTargetPixels()`), niemals per `page.screenshot()` oder
+  sichtbarem Browser.
+- Zahlen zuerst: relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen. Kein PNG erzeugen oder
+  ansehen, wenn Zahlen die Frage beantworten. Sonst genau das stärkste Vorher/Nachher- oder Gewinner/Verlierer-
+  Vergleichsbild prüfen; eine zweite Sichtprüfung nur nach relevant geändertem Kandidaten oder neuer konkreter
+  Frage, niemals eine dritte.
 
 ## Git und Lieferung
 

@@ -5,7 +5,9 @@
 
 Global: [Animation/Charakter](../../threejs/ANIMATION-CHARACTER.md) · [Licht/Kamera](../../threejs/LIGHT-CAMERA.md).
 
-- **Lock-on-Plate zeigt keinen Kampf** — Schulterkamera, Held, Gegner kollinear; Körper verdeckt Kontakt. → Visuell ungelockt fotografieren, Kontakt numerisch; `--lock` nur für eigene Rahmung.
+- **Lock-on-Plate zeigt keinen Kampf** — Schulterkamera, Held, Gegner kollinear; Körper verdeckt Kontakt. → Kontakt
+  numerisch prüfen; nur falls die globale freiwillige Bildausnahme gewählt wurde, den ungelockten Frame in das eine
+  erlaubte Vergleichsbild montieren. `--lock` nur für eigene Rahmung.
   *0,62-m-Schulter bei 3,45/5,30 m trennt 3,6° vs. ~10° Körperbreite; Gegner vollständig verdeckt · PH2/PH21 · 2026-08-01*
 
 - **Kamera vergrößert durch abgeschnittene Füße** — Fill-Scores belohnen `feet=1,000`. → `feet≤0,97` hart; Shot-Deltas nur auf eigene Pitch/FOV/Distanz.

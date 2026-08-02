@@ -1,10 +1,16 @@
 # CLI-Capture für visuelle Prüfungen
 
-**Lesen wenn:** eine visuelle Prüfung in einem Echtzeit-3D-Projekt nötig ist oder dessen Capture-System fehlt.
-**Geltung:** verbindlicher technischer Owner für den Capture-Pfad; lokale CLI-Namen stehen in der `AGENTS.md`.
+**Lesen wenn:** nach vollständiger Umsetzung eine visuelle Unsicherheit übrig bleibt und die freiwillige
+Capture-Ausnahme gewählt wird.
+**Geltung:** verbindlicher technischer Owner nur für diesen Ausnahmefall; lokale CLI-Namen stehen in der `AGENTS.md`.
 
-1. **Nur das projekteigene CLI-Capture-System.** Existiert keines, zuerst eines nach diesem Muster bauen. Kein
-   sichtbares Browserfenster und keine manuelle Browserprüfung.
+**Default:** Keine agentische Sichtprüfung und kein vorsorglicher Bau des Capture-Systems. Sie ist aus Zeitgründen
+bewusst ungern gesehen; die direkte Oberflächen-/Gameplay-Abnahme durch den User ist vorzuziehen. Nur wenn statische
+und numerische Gegenchecks die relevante Look-Frage nicht beantworten, darf **eine** Sichtprüfung stattfinden,
+absolut höchstens **zwei im gesamten Userauftrag**. Keine Screenshot- oder Review-Schleife.
+
+1. **Nur nach diesem Entscheidungsgate das projekteigene CLI-Capture-System nutzen.** Existiert dann keines, zuerst
+   eines nach diesem Muster bauen. Kein sichtbares Browserfenster und keine manuelle Browserprüfung.
 
 2. **Ein headless Chromium als reiner Wirt.** Playwright startet den Browser einmal, lädt die App und ruft in die
    Seite hinein. Eine Sitzung bedient alle Messungen und Parametersweeps; nie ein Browser pro Bild oder Wert.
@@ -20,16 +26,18 @@
    mit Fehlercode abbrechen — niemals nur warnen oder den Lauf ranken.
 
 5. **Zahlen vor Bildern.** Zuerst die entscheidende Größe messen, etwa Deckung, Luminanz, NDC-Position, Abstand,
-   Kontrast oder Framezeit. Sweeps als Tabelle ausgeben. Ein Bild nur erzeugen, wenn Zahlen die Entscheidung
-   nicht beantworten; typischerweise Gewinner/Verlierer oder Vorher/Nachher, nicht alle Kandidaten.
+   Kontrast oder Framezeit. Sweeps als Tabelle ausgeben und dafür kein PNG erzeugen. Ein Bild nur erzeugen und
+   ansehen, wenn Zahlen die Look-Entscheidung nicht beantworten; dann das stärkste Gewinner/Verlierer- oder
+   Vorher/Nachher-Vergleichsbild, nie alle Kandidaten.
 
 6. **Vergleiche normalisieren.** Über verschiedene Auflösungen relative Maße statt nativer Pixel verwenden. Vor
    Rankings den Rauschboden bestimmen und prüfen, worauf das Messfenster tatsächlich zeigt; ein präziser Wert aus
    dem falschen Fenster ist kein Beleg.
 
-7. **Nur entscheidungstragende Bilder ansehen.** Mehrere notwendige Frames in ein Vergleichsbild montieren und
-   lokale Fragen als Ausschnitt prüfen. Keine vollständigen Passes durchblättern, wenn ein Pass-Diff die
-   auffälligen Kameras vorsortieren kann.
+7. **Review-Budget hart schließen.** Mehrere notwendige Frames in genau ein Vergleichsbild montieren; dessen
+   einmalige Auswertung ist eine Sichtprüfung. Eine zweite ist nur nach einer relevanten Änderung oder neuen
+   konkreten Unsicherheit zulässig. Niemals eine dritte, keine vollständigen Passes und kein Durchblättern von
+   Kameras oder Sweeps.
 
 8. **GPU-Flags nicht erraten.** Flags wie `--use-angle=vulkan`, `--enable-features=Vulkan` oder
    `--disable-vulkan-surface` nur nach eigener Messung einsetzen; sie waren auf NVIDIA bereits messbar schädlich.

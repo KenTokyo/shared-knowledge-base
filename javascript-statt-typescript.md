@@ -21,7 +21,9 @@ Als Sicherheitsnetz statt eines Compilers:
 - JSDoc-`@typedef` auf den **Verträgen**, nicht überall: `ctx`, die Eventtabelle, die
   Quality-Presets, die Weltfelder. Das sind die Stellen, an denen ein Missverständnis zwischen zwei
   parallel arbeitenden Agenten entsteht.
-- `pnpm check` = `glslcheck && build && capture` — die Gates, die diesen Stack wirklich brechen.
+- `pnpm check` = `glslcheck && build` plus passende numerische Probes — die Gates, die diesen Stack wirklich
+  brechen. CLI-Capture ist kein Standardgate; nur bei ungelöster Look-Unsicherheit freiwillig eine, im gesamten
+  Userauftrag absolut höchstens zwei Sichtprüfungen.
 
 ## Warum
 
