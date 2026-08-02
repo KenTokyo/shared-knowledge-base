@@ -92,3 +92,18 @@ oder wenn eine Sonde über eine Oberfläche „0 Fehler" meldet.
   unterhalb einer Deckkraftschwelle liegen (0.9 — darüber ist es eine Distanzrampe, keine Entscheidung) und wie
   viele der Stylesheet wirklich besitzt. Das berichtet **mehr** als vorher, nicht weniger.
   *5 Zeilen unter dem Boden, davon 4 gewollt ausgeblendet und 1 echt · 2026-08-02*
+
+- **Eine Taste hat mehr als einen Besitzer, und der Verlierer wirbt weiter** — die Scheibe ist dann **richtig
+  über die Taste** und **falsch über die Wirkung**: `1` steht neben dem Frostobelisken, und Drücken beantwortet
+  die Wissensfrage. Das ist eine andere Fehlerklasse als ein unbenanntes Verb, weil genaueres Hinsehen sie nicht
+  auflöst — der Hinweis stimmt ja. Ursache: ein modaler Leser nimmt die Taste per `takePress`, bevor der
+  eigentliche Besitzer drankommt, oder ein Guard beendet das Verb ohne die Anzeige; beide Seiten sind je für
+  sich richtig gebaut und keine Kontrastsonde sieht etwas.
+  → Nicht Tasten zählen, sondern **zwei Listen pro Instant gegeneinander**: was `_readInput` mit dem Druck täte
+  (über **dieselben** Aufrufe aufgelöst, nicht nachgebaut) gegen das, was auf der Scheibe benannt ist. ⚠ Und
+  einen **Endzustand** in die Stageliste nehmen: der fehlende Guard sitzt am ehesten dort, wo die Oberfläche
+  sich längst abgeschaltet hat und niemand mehr hinsieht.
+  *`1–4` unter offener Frage: 224 von 224 Ständen; `R`/`X` nach Spielende: 432 Instanzen, weil `Director.update`
+  den Input über seinem eigenen `over`-Return liest — beides von derselben Sonde, deren Kontrastvorgängerin über
+  dieselben Zustände „0 Fehler" meldete. Der Shrine (`E`) macht denselben Griff seit je richtig und stand als
+  Vorlage im Quelltext · 2026-08-02*
