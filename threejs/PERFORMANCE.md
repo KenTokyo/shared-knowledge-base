@@ -71,6 +71,18 @@ Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
   *r180, im Quelltext nachgelesen statt aus der API geschlossen; die Annahme hatte eine ganze Phase getragen
   · Herkunft: claude-tower-defense · 2026-08-01*
 
+- **`frustumCulled = false` als Freibrief für eine fehlende Hülle** — Frame bricht mitten in der Traversierung
+  ab, alles hinter dem Mesh fehlt im Bild, `TypeError … reading 'center'`, kein einziger Draw Call schlägt fehl.
+  `WebGLRenderer.projectObject` holt den Sortierschlüssel **innerhalb** von
+  `if (!object.frustumCulled || _frustum.intersectsObject(object))`: erst `object.boundingSphere`, und weil
+  `Mesh` keine eigene führt (`undefined`), über den Zweig `geometry.boundingSphere.center`. Abgeschaltetes
+  Culling überspringt den Frustumtest per Kurzschluss und führt damit **gerade in** diesen Zugriff — es schützt
+  nicht, es garantiert ihn. → Wer `computeBoundingSphere` aushebelt, weil im `position`-Attribut Gitterindizes
+  oder ein Einheitsprimitiv stehen, muss die Hülle danach **setzen**; `null` ist kein „egal".
+  *r184 im Quelltext gegengelesen statt aus `frustumCulled` geschlossen: 1524 Fehler je Lauf über drei Karten,
+  und das Prüfwerkzeug meldete „keine riskanten Meshes", weil es dieselbe Annahme trug wie der Code
+  · Herkunft: voxel-samurai-quiz · 2026-08-02*
+
 ## Handoffs
 
 - Shaderpässe → [Shader/PBR](SHADERS.md)
