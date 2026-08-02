@@ -119,9 +119,13 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   echter Frame hat), und die Warmmodelle bleiben **gemountet** (Unmount disposed Material → `usedTimes` 0 →
   three gibt genau das Programm frei, das der Warmup anlegen wollte).
   *Etage 12, Prodbuild: `(Erstauftritt) ×10` vor wie nach dem Lichtvorrat (`.tmp/boss-relink-l12.json` gegen
-  `-fix2.json`), also 55 von 67 Programmen am Licht und der Rest an der Abwesenheit. Umsetzung
-  `BossRosterWarmMount.tsx`; Wirkung noch ungemessen — die Mechanik ist aus `three.cjs:77015-77068` belegt,
-  nicht die Ersparnis · 2026-08-02*
+  `-fix2.json`), also 55 von 67 Programmen am Licht und der Rest an der Abwesenheit · 2026-08-02*
+  **Nachtrag: Die Mechanik stimmt, der Schluss daraus nicht.** Genau so gebaut (`BossRosterWarmMount.tsx`) und
+  gemessen, kostete der Vorrat +15 Programme am Etageneinstieg und sparte am Spawn keines — ausgebaut in
+  `141e9704`, Rechnung im nächsten Eintrag. Die `(Erstauftritt) ×10` gehören **nicht** dem Bossmodell, sondern
+  VFX, die mit dem Boss aktiv werden (Telegraphen, Partikel). → Vor dem Bau eines Warmvorrats erst den
+  **Besitzer** der Programme belegen (`byOwner` in `boss-relink.mjs`), nicht nur ihre Abwesenheit im Baum;
+  sonst wärmt man beweisbar korrekt das Falsche · 2026-08-02*
 
 - **Auf dem Delta entschieden, wo der Bestand die stabile Größe ist** — `boss-relink.mjs` meldete 19 neue
   Programme beim Bossspawn; ein Warmvorrat wurde dagegen gebaut, gemessen und auf `created` 19 → 12 für
