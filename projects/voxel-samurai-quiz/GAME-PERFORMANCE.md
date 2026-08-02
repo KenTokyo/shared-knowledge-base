@@ -123,6 +123,21 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   `BossRosterWarmMount.tsx`; Wirkung noch ungemessen — die Mechanik ist aus `three.cjs:77015-77068` belegt,
   nicht die Ersparnis · 2026-08-02*
 
+- **Einen Einzelframe von Sekunden als stabile Zahl behandelt** — `boss-relink.mjs` meldete 19 neue Programme
+  beim Bossspawn, ein Fix wurde dagegen gebaut, gemessen und für wirksam gehalten (19 → 12). Der gepaarte A/B
+  über einen Ablationsschalter (`?bossRosterWarm=0/1`, ein Bündel, zwei Läufe je Seite) widerlegt beides:
+  **dieselbe Konfiguration liefert 19 und 12**, die Gegenseite 12 und 14, und der Etageneinstieg schwankt bei
+  identischem Code zwischen 12,3 s und 21,3 s. Die Streuung innerhalb einer Seite ist so groß wie der
+  Unterschied zwischen den Seiten. Ursache ist die Natur der Größe: Ein Relink ist EIN Frame, der Block enthält
+  fünf bis fünfundvierzig davon, und welche Programme gerade fehlen, hängt daran, was der Lauf vorher zufällig
+  gezeichnet hat. → Ein Ereigniszähler mit einstelligem Erwartungswert braucht **erst den Rauschboden aus zwei
+  Läufen derselben Seite**, dann den A/B. Zwei Läufe je Seite sind hier nicht Sorgfalt, sondern die Bedingung
+  dafür, dass die Zahl überhaupt etwas heißt. Und: Ein Ablationsschalter im Messbuild ist billiger als ein
+  zweites Bündel — er ist der einzige Weg, Vorher und Nachher in **eine** Sitzung zu bekommen.
+  *Etage 12, Prodbuild, vier Läufe `.tmp/boss-relink-l12-ab{1,2}-warm{0,1}.json`; die vermeintliche Baseline
+  `-fix2.json` war ein einzelner Lauf. Der Lichtvorrat-Gewinn davor (21.820 → ~4.000 ms) ist unberührt — eine
+  Größenordnung liegt über jeder gemessenen Streuung · 2026-08-02*
+
 - **Tickzahl durch Wallzeit geteilt und daraus auf „wartet" geschlossen** — 65 Ticks über 19,3 s ergeben
   ~186 ms/Frame, gelesen als blockierter Hauptthread, der auf den Dev-Server wartet. Real ist die Verteilung
   bimodal: acht Blöcke tragen 18,5 s, die 65 Ticks laufen in den ~0,8 s dazwischen zu **~12 ms**. Ein Mittelwert
