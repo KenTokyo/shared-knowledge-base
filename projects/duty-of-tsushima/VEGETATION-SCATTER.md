@@ -117,3 +117,50 @@ Globale Vegetationstipps beginnen bei [`../../threejs/VEGETATION.md`](../../thre
   jedes Verhältnis nach 1,0. → Und diese Kernmenge trägt nur, solange das Objekt ein volles Pixel
   füllt; auf fernen Kameras ist auch sie noch verdünnt und **nicht** gegen den Grund vergleichbar.
   *Dieselben Bilder lasen 0,80x über alle Pixel und 0,73x über die Kernmenge · 2026-08-02*
+
+- **Wind gehört als Biegewinkel in die vorhandene Bogenrechnung, nicht als Versatz auf die Position**
+  — der naheliegende Weg ist, die fertige Halmspitze seitlich zu schieben. Dann wächst der Halm
+  in der Böe: die Strecke von der Wurzel zur Spitze wird länger, und die Normale, die aus der
+  ungebogenen Form stammt, zeigt weiter dorthin, wo der Halm ohne Wind stand. Beleuchtung und
+  Silhouette laufen auseinander, und zwar am stärksten genau im Böenmaximum, wo man hinsieht.
+  → Den Wind auf den **Winkel** legen, den die Biegung ohnehin schon rechnet, und Position **und**
+  Normale aus demselben Winkel ableiten. Das kostet keine zusätzliche Rechnung — die Bogenformel
+  steht bereits da — und hält die Länge konstant.
+  *Ein Wind für Gras und Bestand: bewegter Bildanteil `bamboo-cut` 45,7 %, Böe auf `ability-dash`
+  40,2 % über 0,35 s gegen 60,6 % über 2,60 s · 2026-08-02*
+
+- **`customDepthMaterial` ist Pflicht, sobald ein Caster sich im Vertexshader bewegt — und der
+  Fehlermodus ist leise** — three zeichnet die Schattenkaskade mit seinem eigenen
+  `MeshDepthMaterial`, das den Vertexshader des Objekts nicht kennt. Das Objekt weht also im Bild,
+  während sein Schatten am Boden klebt. Nichts wirft, nichts loggt, das statische Gate bleibt grün;
+  auffallen kann es nur jemandem, der den Schatten getrennt misst. → Bei jedem im Vertexshader
+  bewegten Caster dieselbe Verschiebung ein zweites Mal in ein `customDepthMaterial` hängen, und
+  danach den **Schatten** messen und nicht das Objekt: A/B über die Uhrzeit mit ausgeblendetem
+  Caster, sonst misst man die Bewegung, die man ohnehin schon sieht.
+  *Mit gegen ohne: 37,35 % gegen 27,01 % bewegter Bildanteil — 10,34 Punkte, die vorher
+  ausschliesslich am Boden fehlten · 2026-08-02*
+
+- **Ein Objekt, das im Frustum steht und trotzdem 0,00 % misst, ist fast immer zu klein — und der
+  Test dafür ist eine Skalierung, keine Sichtprüfung** — zwei Phasen lang wurde die Verteilung von
+  Vögeln umgebaut, weil „man sieht sie nicht" als Platzierungsfehler gelesen wurde. Drei Ursachen
+  kommen infrage und verlangen entgegengesetzte Handlungen: Culling, Bildausschnitt, Winkelgrösse.
+  → Alle drei in **einem** Lauf trennen: `frustumCulled = false` setzen (ändert sich der Bildanteil
+  nicht, war es nie die Hülle), die Instanzpositionen in JS auf NDC projizieren und zählen (steht
+  etwas im Bild?), und die Skalierung künstlich hochdrehen (zeichnet es dann, ist es die Grösse).
+  Die Skalierungsprobe ist die schärfste: geht der Anteil mit dem **Quadrat** des Faktors hoch, ist
+  der Renderpfad nachweislich in Ordnung und die Frage ist nur noch die Entfernung.
+  *Culling: identisch auf drei Nachkommastellen über 14 Kameras. Im Frustum: 7 bis 27 Instanzen.
+  Skalierung x5 → Anteil x25 (`boss-4` 0,012 → 0,296 %). Gemessene Spannweite 2,3–7,1 px · 2026-08-02*
+
+- **Gleichmässige Streuung über die ganze Karte ist für kleine Objekte die teuerste Verteilung mit
+  der geringsten Wirkung** — der Bildanteil eines Objekts fällt mit 1/d², die Zahl der Objekte in
+  einer Sichtkeule wächst mit d². Jede Entfernungsschale liefert also gleich viel Bild, und bei
+  gleichmässiger Streuung liegt fast der ganze Bestand in den fernen Schalen: 34 Krähen über 178 m
+  Radius hiessen **eine** in Reichweite und dreissig, die ihren Vertexdurchlauf für zwei Pixel
+  bezahlen. → An **Orte** streuen, an denen der Spieler steht (Wegspinnen, Landmarken, Plateaufuss),
+  und dort in Gruppen statt einzeln — ein Schwarm ist als Schwarm lesbar, dieselbe Zahl verteilt ist
+  Bildrauschen. Die Maße des Objekts dabei nicht anfassen: eine Möwe mit zwei Metern Spannweite ist
+  kein gelöstes Sichtbarkeitsproblem, sondern eine Lüge.
+  *Dieselbe Vogelzahl, nur anders platziert: `cliff-path` Möwen 0,000 → 0,035 % Bildanteil, nächste
+  Instanz 170 → 20 m, projizierte Spannweite 6,1 → 45,8 px. Krähen lesen danach auf 13 von 14
+  Kameras mit 10,9–52,1 px statt 7,0–19,8 · 2026-08-02*
