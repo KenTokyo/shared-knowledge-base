@@ -21,6 +21,9 @@ Ausführbarer Owner: `tools/perf.mjs` samt Begründung im Dateikopf.
 - **Browseruhr gröber als CPU-Halbframe** — `performance.now()` tickt 0,100 ms; CPU 0,15–0,45 ms, einzelne Frames teils 0. → Tick messen; CPU aus N-Frame-Blockmittel; Sub-Tick-Frames zählen.
   *`render.stats().cpuMs` nur 0,1-ms-Vielfache; 7/120 `high`-Frames unter einem Tick · 2026-08-02*
 
+- **Blockgröße folgt der Zielauflösung, nicht dem Bauchgefühl** — der 0,1-ms-Tick quantisiert auch den *Median* aus vielen Runden: bei zu kleinen Blöcken sortiert man Stufen, nicht Messwerte, und die Streuung sieht trotzdem plausibel aus. → Block so wählen, dass er ≥ 20 Ticks (2 ms) dauert; Quantisierung erkennt man daran, dass alle Zeilen dieselben zwei bis drei Werte tragen.
+  *Kapselkollision: 200 Züge/Block → 13 Orte trugen nur 1,50/2,00/0,50 µs und ein Mittel von 1,69; 4 000 Züge/Block → 1,00–1,60 µs, Mittel 1,22, IQR ±0,15 · 2026-08-02*
+
 - **In-Run-Rauschen ≠ Prozess-Rauschen** — Blockwiederholung 0,12–0,36 ms, neue Prozesse 4,88 vs. 3,72 ms (31 %). → Regression braucht Prozessabstand plus dokumentierte Fremdlast; beide Böden getrennt.
   *loadavg 3,7 auf 10 Kernen, sonst gleicher Aufruf · 2026-08-02*
 

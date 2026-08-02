@@ -19,3 +19,15 @@ Global: [Map-Generierung](../../threejs/MAP-GENERATION.md) · [Wasser](../../thr
 
 - **Höhengate meldet Absicht als Fehler** — „Lane unter Plateau“ markiert Sattel als Bug. → Verteidigbare Design-Zusagen: Sichtlinie, Begehbarkeit bis Spawn, freier Spawn; keine meist gültige Höhenrelation.
   *Erstes Gate: 3 Fehler, davon 2 by design · `tools/smoke.mjs` · 2026-08-01*
+
+- **Belegungsfeld beantwortet die falsche Frage** — `occupied()` sagt, was *gebaut* ist, `water()`, was nass ist; was frei bleiben *muss*, sagt keins. Platzierungsregeln setzen dann Volumen auf die Lane-Achse, und das bleibt folgenlos, bis laterale Kollision dazukommt. → Freizuhaltendes als eigenes Feld führen (`laneClearance(x,z)`), nicht aus Belegung ableiten; Ausweichen als Regel im Bau, nicht als Handkoordinate.
+  *Vier Regeln betroffen: Halle + Hof auf x=0, alle vier Antworttafeln per `head*0.46`, Brandnest „entlang des Südwegs“ mit 2,86 m Überlapp. bamboo 37 m von 224, burnt 71 m von 172 · `structures.js` · 2026-08-02*
+
+- **Eine Lane hat zwei Linien, nicht eine** — die getretene Spine (mit Wobble) und die Sehne, die ein blind vorwärts laufender Sprinter oder eine Welle ohne Ausweichgrund nimmt. Sie liegen bis zu 9 m auseinander; eine freizuräumen räumt nichts frei. → Beide als Route führen und beide prüfen.
+  *Halle nach Spine-Freiräumung immer noch auf der Sehne · `heightfield.js:_bakeRoutes` · 2026-08-02*
+
+- **Ausweichender wird von sich selbst blockiert** — `_bakeOccupancy` beansprucht den Spec-Grund vor dem Bau, also fand die 12-m-Scheibe der Halle jeden Kandidaten besetzt: 19,7 m Abstand von sich selbst nötig, Suchradius 18 m, kein Versatz und keine Fehlermeldung. → `exceptId` beim Suchen; wer weicht, verschiebt seine Scheibe (`relocate`) statt eine zweite anzulegen.
+  *Halle blieb still auf [0,−22] stehen, obwohl die Regel griff · `heightfield.js:occupied` · 2026-08-02*
+
+- **Gradientenabstieg versagt genau am Problemort** — eine Distanzfunktion hat auf ihrer Mittellinie ein Minimum, ihr Gradient verschwindet dort. Wer *auf* dem Weg steht (der Regelfall bei zentrierter Komposition), bekommt „keine Richtung“. → Ringsuche mit fester Winkelreihenfolge: funktioniert auf dem Minimum und bleibt deterministisch.
+  *Halle exakt auf x=0 der bamboo-Sehne x=0 · `structures.js:offLane` · 2026-08-02*
