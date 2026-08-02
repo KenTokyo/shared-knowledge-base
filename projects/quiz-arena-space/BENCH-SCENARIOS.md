@@ -20,11 +20,20 @@ in [`TIMING-GATES.md`](TIMING-GATES.md) und global in [`../../threejs/MEASURING.
   *Ein Lauf mit `PROBLEM: HIDDEN:t42.8(33%)` endete mit `all clean` und Exit 0 — jede grüne Suite des
   Projekts bis dahin war grün, weil jemand 16 Zeilen mit dem Auge gelesen hatte; `tools/shoot.mjs:374` · 2026-07-30*
 
-- **Benches mit eigenem Verdikt, die kein einziges Mal gelaufen sind** — drei Szenarien standen nicht in
-  der getippten Suite-Liste, `--list` nannte sie nicht, ihre `PROBLEM:`-Zweige waren nie erreicht. Eine
-  zweite Namensliste neben der Tabelle driftet immer. → `--all` fährt die **Tabelle**, damit ein Eintrag in
-  `SCENARIOS` genügt.
-  *`--list` sprang von der getippten 16er-Suite auf 24 Szenarien; acht davon hatte nie jemand gefahren · 2026-07-30*
+- **Benches mit eigenem Verdikt, die kein einziges Mal gelaufen sind** — in Codeform beantwortet: `--all`
+  und `--list` fahren `Object.keys(SCENARIOS)` (`tools/shoot.mjs:361`/`:380`), eine zweite Namensliste
+  neben der Tabelle gibt es nicht mehr.
+
+- **Ein Szenario-Stub, der die geprüfte Eigenschaft selbst abschaltet, fotografiert einen Zustand, den das
+  Spiel nie hat** — `?cwtower=1` setzte `_puzzleFocus` auf leer, damit die Kamera beim Zielen nicht zur
+  Brettmitte zieht; also lief jeder Kadrierungsbeleg ohne den ausgelieferten Kamerazug, und genau der war
+  der Defekt. Den Stub bedingt zu machen reicht nicht von selbst: `diagScale` unterscheidet „Schalter auf
+  seinem Default übergeben" nicht von „Schalter fehlt", beide liefern dieselbe Zahl. → Stub an einen
+  **explizit übergebenen** Schalter binden (`diagHas`) und vor jeder Kadrierungsaussage aufzählen, welche
+  Shipping-Pfade das Szenario stummschaltet.
+  *Erster Lauf mit lebendem Zug, nach zwei Schichten „belegter" Kadrierung: Schiff komplett außerhalb des
+  Bildes, gelockte Plate in der Ecke angeschnitten. Nach dem Fix Zielplate 35°→12° von der Linsenachse,
+  `cam=(18,49,6)`→`(51,47,-14)` · 2026-08-03*
 
 - **Szenarien messen still die falsche Arena** — `save.data.lastSector` liegt im localStorage und überlebt
   den Seitenwechsel, also erben in einem `--all`-Lauf alle Szenarien nach `sectors` deren Sektor;
