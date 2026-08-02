@@ -16,7 +16,8 @@ Quelltext). Hier steht nur, was in **diesem** Repository wiederholt Zeit gekoste
 | Szenario in `tools/shoot.mjs` / `src/core/Diagnostics.ts`, eine `PROBLEM:`-Zeile, ein grünes Ergebnis als Beleg | [`BENCH-SCENARIOS.md`](BENCH-SCENARIOS.md) |
 | `tools/cdp.mjs`, `tools/serve.mjs`, `src/capture/`, zwei Läufe vergleichen | [`CAPTURE-DETERMINISM.md`](CAPTURE-DETERMINISM.md) |
 | Ein Tor über Frame-Zeit, Ruckler oder Laufzeit | [`TIMING-GATES.md`](TIMING-GATES.md) |
-| `src/render/`, `src/fx/VFX.ts`, `src/fx/Particles.ts`, Shader, Bloom, Licht, „sieht man das?" | [`RENDER-VFX.md`](RENDER-VFX.md) |
+| `src/render/`, `src/fx/VFX.ts`, `src/fx/Particles.ts`, Shader, Bloom, Licht, Partikel **bauen** | [`RENDER-VFX.md`](RENDER-VFX.md) |
+| „Sieht man das?" — Differenzbild, Pixel-Gate, Crop, Kontrollframe, Verdikt über Sichtbarkeit | [`EFFECT-VISIBILITY.md`](EFFECT-VISIBILITY.md) |
 | Bewegung, Abklingzeiten, Waffenzahlen, Kameraklemmen, Audio-Pegel, HUD-Anzeige | [`GAMEPLAY-SYSTEMS.md`](GAMEPLAY-SYSTEMS.md) |
 | `src/systems/Crossword.ts`, `.shots/_grid.mjs`, `.shots/_board.mjs` | [`CROSSWORD-BOARD.md`](CROSSWORD-BOARD.md) |
 

@@ -1,8 +1,9 @@
-# Render, PostFX und Effektlesbarkeit — quiz-arena-space
+# Render, PostFX und Effektaufbau — quiz-arena-space
 
-**Lesen wenn:** du in `src/render/`, `src/fx/VFX.ts`, `src/fx/Particles.ts` an Shadern, Bloom, Licht oder Partikeln arbeitest — oder beurteilen sollst, ob ein Effekt sichtbar ist.
+**Lesen wenn:** du in `src/render/`, `src/fx/VFX.ts`, `src/fx/Particles.ts` an Shadern, Bloom, Licht oder Partikeln arbeitest.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
+Sollst du beurteilen, **ob man einen Effekt sieht**, statt ihn zu bauen: [`EFFECT-VISIBILITY.md`](EFFECT-VISIBILITY.md).
 Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
 [`../../threejs/LIGHT-CAMERA.md`](../../threejs/LIGHT-CAMERA.md).
 
@@ -11,7 +12,8 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   pro Effekt schaltet, lässt jede neue *sichtbare Lichtzahl* jedes belichtete Material neu bauen. → Die
   Lichtzahl **pinnen**: alle Slots dauerhaft sichtbar halten und nur `intensity` auf 0 fahren.
   *Ungepinnt `prog=135` mit 11 Kaltpfaden, gepinnt `prog=35` und kein einziger Kaltpfad — 135 − 35 = 100
-  exakt. Bildlich inert: 0 von 891.120 Pixeln geändert. `src/fx/VFX.ts:979-1011` · 2026-07-30*
+  exakt. Bildlich inert: 0 von 891.120 Pixeln geändert. `src/fx/VFX.ts:979-1011`; das Symptom fängt heute
+  `COLD-PATHS` in `src/main.ts:7398`, die Ursache steht nur hier · 2026-07-30*
 
 - **Partikel leben, kosten Draw-Calls und ändern null Pixel** — der Bench meldete einen vollen Pool, das
   Bild blieb bit-identisch: die Billboard-Basis landete in vertauschten Matrix-Spalten
@@ -21,14 +23,6 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   *176/176 Quads mit Bildschirmfläche 0, Skalarprodukt Breitenachse·Sehstrahl −0,980; Zurücktauschen
   0 → 2745 Pixel bei byte-gleichen Pool-Zahlen. Vorher „die Trails überleben alle" über eine Schicht von
   3 px · 2026-07-31*
-
-- **Ein Verdikt sagt *ob*, nie *welche*** — der Kontrollframe blendet die ganze Effektschicht auf einmal
-  aus und benennt deshalb keinen Täter; zwei Schichten dämpften daraufhin den falschen Effekt. → Das
-  **zuordnende** Instrument (Gruppen einzeln ausblenden) bauen, *bevor* der erste Fix versucht wird, nicht
-  nachdem er versagt hat.
-  *Impacts um 45 % und dann um 99 % gedämpft = 3 Pixel Unterschied von ~1600; die Gruppenauflösung
-  entschied es in einem Lauf — schuldig war der Kill-Explosionsblitz zwei Funktionen weiter. Danach
-  weiß geblasene Pixel 1236 → 358 · 2026-07-29*
 
 - **Ein Term, der bei jedem Merge kompoundiert, hat keinen Ruhezustand** — der Scar-Term multiplizierte
   sich pro Merge, setzte dabei `age` zurück (Füllstand bleibt 0 = permanent heiß) und addierte Emissive pro
@@ -45,30 +39,19 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   *`p50` 0,62 → 0,138, `p95` 0,995 → 0,703; mit ausgeschaltetem Bloom fiel `p50` auf 0,114 und isolierte
   damit den Rohanteil · 2026-07-28*
 
-- **Ein Pixel-Gate misst PostFX mit, das nach dem geprüften Pass läuft** — 25,7 % der „geschützten" Pixel
-  schienen vom Verzerrungs-Pass bewegt; Bloom trägt Nachbaränderungen auf unberührte Pixel. → Jedes
-  Pixel-Gate **nur mit ausgeschaltetem Bloom** lesen, auf allen Armen.
-  *25,7 % mit Bloom gegen 0,311 % ohne — Faktor 82; die Restverletzungen waren 162 Läufe mit mittlerer
-  Lauflänge 1,3 px · 2026-07-31*
-
-- **Der benannte Verdächtige war nie im Bild** — einmal wiesen drei „bestätigende" Läufe auf die
-  Bloom-Stärke, einmal benannte eine Übergabe den Schuss-Trail als bildfüllendes Band und lieferte die
-  Zielwerte gleich mit; beide Verdächtigen waren unschuldig, beide Male sagte es erst ein Gegenlauf.
-  → **Null-Lauf vor Fix**: den Frame einmal fahren, in dem der Verdächtige *nichts* erzeugt — nicht mit
-  alten Werten, die sind der Ausgangszustand. Steht das Bild dann noch, ist jede Parameterarbeit daran
-  verloren, und die Suche gehört eine Ebene höher.
-  *Band unverändert bei `charges=0`, durch alle zwölf `?fxoff=`-Schichten und `bloom=0` hindurch, weg erst
-  bei `?deckpulse=0` — der Deck-Puls des Bretts, Ring bei Radius ~64 zu t=0,86 unter einer Kamera auf
-  Radius 62. Die vorgeschlagenen Breiten 0,42/0,9 → 0,2/0,45 bewegten den Frame-Mittelwert um 0,0002.
-  Zuvor: rekonstruierte alte Bloom-Werte lieferten unverändert `BLOWN:t28(+6%)`, Ursache war ein
-  Damper-Wert zwei Systeme weiter · 2026-07-29, 2026-08-02*
-
-- **Ein schwarzer Verdecker ist im Differenzbild unsichtbar** — drei Phasen drehten an Licht, Becken und
-  Shader-Rändern; es war die Deckelkappe eines Kragens (`openEnded: false` → massive Scheibe), die die
-  additive, tiefengetestete Säule mitten im Schaft beschnitt. Ein „Effekt aus"-Bild kann den Verdecker nie
-  entlasten, weil eine schwarze Kappe gegen ein unbeleuchtetes Inneres nichts ändert. → Verdächtige
-  Verdecker mit `depthTest: false` oder einem opaken Debug-Pass prüfen, nicht per Differenzbild.
-  *Säulen-Rechteck `p50` 0,461 → 0,349 bei unverändertem Ganzbild · 2026-07-28*
+- **Ein Akzent unter der Bloom-Schwelle kann nicht leuchten, egal welche Farbe** — eine
+  `MeshBasicMaterial`-Farbe aus einem Hex deckelt bei 1,0 pro Kanal, und die Luminanz eines *Farbtons* liegt
+  weit darunter: Fraktionsrot `0xff4a2c` misst linear 0,342 gegen die Bloom-Schwelle 1,05. Jede Farbdrehung
+  bleibt damit unter dem Tor, der Akzent wirkt stumpf, und die Suche wandert ins PostFX. → Vor dem
+  Farbdrehen **Luminanz gegen die Schwelle rechnen** und per HDR-Gain auf einen Zielwert über der Schwelle
+  normalisieren (`color.multiplyScalar(gain)`, `toneMapped: false`), nicht die Schwelle senken — die hebt
+  jedes andere helle Pixel mit. Der Gain gehört **pro Farbe** gerechnet und geklemmt, sonst trägt die
+  Schieflage des Luminanzvektors in die Kunst: dasselbe Grün misst 0,68, dasselbe Rot 0,33, ein globaler
+  Faktor macht daraus doppelt so helle Unterstützerschiffe ohne gestalterischen Grund.
+  *`ENEMY_GLOW_LUMA = 1.35` gegen Schwelle 1,05 (`src/render/Renderer.ts:676`), Gain
+  `1.35 / max(0.08, luma)` auf [1, 8] geklemmt; emissiver Anteil swarmling 4,8 → 10,5 %, kamikaze
+  18,2 → 28,0 %, Verdikt blieb `emissive-restrained`. Die Gegenrichtung war schon einmal verworfen worden:
+  Schwelle 1,05 → 0,95 „damit beleuchtetes Metall glüht" · 2026-08-02*
 
 - **Flächiger Wash auf jeder waagerechten Platte — Intensität ist der falsche Hebel** — als
   Specular-Blowout diagnostiziert, war aber `blown=0.00 %` und eine Entsättigung: Rim-Elevation 19,6° gegen
@@ -78,13 +61,6 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   *Bei gesenkter Intensität bleibt das Deck magenta-dominant (sat 0,60); Höhe 52° → 18° bringt Deck
   `p50` 0,420 → 0,235 und `sat` 0,44 → 0,72, bei zahlengleicher Kampfszene · 2026-07-28*
 
-- **Ein Effekt bedeckte 43 % des Bildes und war trotzdem unsichtbar** — „geänderte Fläche" wurde als
-  Sichtbarkeit gelesen; der Rauch lag auf derselben Luminanz wie der Boden, 92 % seiner Pixel im
-  ±0,04-Band. → Für „sieht man das" **Kontrastfläche** messen (Körper ab |Δ| ≥ 0,10, Kern ab 0,20), nie
-  `changed %`.
-  *Körper 0,392 % → 5,794 % (14,8×), Kern 0,005 % → 2,402 % (480×); die publizierte Aussage „im einen
-  Sektor sichtbar, im anderen fast nichts" war dabei rückwärts · 2026-07-31*
-
 - **Der Warm-up-Detektor schwieg neun Schichten lang über eine lebende Verletzung** — die
   Allokationsmeldung ritt innerhalb einer zu engen Bedingung; unter dem Licht-Pin brachte der Effekt weder
   Programm noch Textur, also wurde die Mesh-Allokation komplett verschwiegen. → Die Bedingung eines
@@ -92,10 +68,3 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   Giftfall vier Läufe fahren (schweigt falsch → feuert → feuert zu Recht → schweigt echt).
   *Ursache war eine faul wachsende Free-Liste; nach dem Fix `draws=302`, `prog=35`, `tris=69991` identisch,
   also null Draw-Kosten · 2026-07-30*
-
-- **Vergrößerte Crops erzeugen Defekte, die es nicht gibt** — im ×2-Crop schien ein Bauteil ~10 px
-  gewandert, im ×3-Crop wirkte der Rumpf zerrissen; Vergrößerung überzeichnet Ein-Pixel-Kanten und das Auge
-  liest daraus Struktur. → Nur bei 1:1 urteilen, ×N ausschließlich zum **Auffinden**, jede behauptete
-  Verschiebung per Schwerpunkt oder Block-Matching nachmessen.
-  *Behauptete ~10 px gegen gemessene 1,3 px = Faktor 8; vierter dokumentierter Fehlalarm derselben Art auf
-  derselben Zeile · 2026-07-31*

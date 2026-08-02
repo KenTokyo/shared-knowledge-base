@@ -77,21 +77,26 @@ in [`TIMING-GATES.md`](TIMING-GATES.md) und global in [`../../threejs/MEASURING.
   *5 gesunde + 1 unlesbarer Lauf, den unlesbaren zuletzt → grünes Verdikt, Exit 0, Laufzahl weiterhin 6;
   derselbe Defekt mit dem kaputten Lauf zuerst wurde korrekt gefangen · 2026-08-01*
 
-- **Ein Bench-Check, der gegen kein HUD bestehen kann** — die Zeile hielt eine Taste und erwartete
-  Verbrauch, aber der zugehörige Verbraucher war entfernt worden und der Tank wird beim Armieren auf
-  Maximum gesetzt: der Messwert war arithmetisch auf exakt 0 festgenagelt. → Von den **echten**
-  Verbrauchern treiben und die Schwelle an einer Spielgröße begründen; die Vorhersage vor dem Lauf
-  notieren.
-  *Vorhersage 57 von 110 = 0,518 vor dem Lauf notiert, gemessen `peak=0.52`; in dieser Phase waren fünf von
-  sechs Fehlschlägen Harness-Fehler, nicht Spielfehler · 2026-07-30*
-
 - **Eine Sonde ohne Kontrollsonde misst „nichts drückt zurück" und „die Sonde ist kaputt" gleich** — der
   19,5u-Kern stand in jedem Run kollisionslos in der Arenamitte, weil der Konstruktor nach dem Einfügen die
-  Hindernisliste leerte. Aufgefallen ist es nur, weil die Hindernisanzahl **vor** dem Lauf ausgesprochen
-  war. → Die erwartete Zahl vor dem Lauf notieren, und jede Sonde bekommt eine Kontrollsonde an einem
-  Objekt, das garantiert drückt.
-  *Vorhergesagt 10/19/15/21, gemessen 9/18/14/20 — genau eins fehlend in allen vier Sektoren;
-  Sonde am Kern `0.00push` gegen Kontrollsonde am Monolithen `9.30` · 2026-07-29*
+  Hindernisliste leerte; im selben Muster war ein HUD-Check arithmetisch auf exakt 0 genagelt, weil sein
+  Verbraucher entfernt worden war und der Tank beim Armieren auf Maximum springt. Beide Male sieht die 0 wie
+  ein Befund aus. → Die erwartete Zahl **vor** dem Lauf aussprechen, von den **echten** Verbrauchern treiben,
+  und jede Sonde bekommt eine Kontrollsonde an einem Objekt, das garantiert antwortet.
+  *Vorhergesagt 10/19/15/21, gemessen 9/18/14/20 — genau eins fehlend in allen vier Sektoren; Sonde am Kern
+  `0.00push` gegen Kontrollsonde am Monolithen `9.30`. Beim HUD-Check Vorhersage 57 von 110 = 0,518 vor dem
+  Lauf notiert, gemessen `peak=0.52`; in jener Phase waren fünf von sechs Fehlschlägen Harness-Fehler ·
+  2026-07-29, 2026-07-30*
+
+- **Zwei Läufe von `readable` widersprechen vier Läufen desselben Bundles mit p = 0,025** — auf byte-gleichem
+  Code reicht die Spanne eines Einzellaufs von 0,00 % bis 11,11 % lost; welche Läufe man zieht, entscheidet
+  das Ergebnis, nicht die Änderung. Ein Zwei-Lauf-Spotcheck kann deshalb nichts überführen. Dazu zählt ein
+  Pool-Parser, der das ganze Report-JSON scannt, jede Sonde dreifach (`result.summary`, `.info`, `.parts`) —
+  die *Rate* überlebt das, `n` verdreifacht sich, und jedes z wird um √3 = 1,73 zu groß. → Vier Läufe je Arm
+  **und** ein Gegenlauf, der die eigene Änderung isoliert; den z-Test allein auf `result.summary` rechnen.
+  *Bundle `index-BsDNItSo.js`, identischer Code: 2 Läufe 18/241 = 7,47 % gegen 4 Läufe 17/469 = 3,62 %,
+  z = 2,24 — ein Falsch-Positiv gegen sich selbst, das eine Übergabe lang als offener Befund galt. Der
+  isolierende Gegenlauf (Arena vor/nach) gab 3,62 % gegen 2,80 %, z = 0,72, p = 0,47 · 2026-08-03*
 
 - **`npx tsc --noEmit` grün, Methode auf dem falschen Objekt gerufen** — beide Felder sind
   `declare …: any`, durch die kann der Typecheck nicht hindurchsehen; der geerbte, angeblich fertige Fix
