@@ -4,6 +4,7 @@
 - `AGENTS.md` und den verbindlichen Phasenworkflow einhalten.
 - `CODING-RULES.md` wieder am ausführlichen, praxisnahen Aufbau von `CODING-RULES_old.md` ausrichten.
 - Die stärkeren Regeln der kompakten neuen Fassung erhalten und Widersprüche, Dopplungen sowie veraltete Pfade beseitigen.
+- Folgeauftrag: `AGENTS.md` um eine kompakte Projektarchitektur ergänzen und 1.600 LOC als harte Pflichtgrenze in allen aktiven Regelstellen verankern.
 
 ## Lösungsvergleich
 1. **Alte Datei unverändert zurückkopieren:** schnell, verliert aber neue Regeln zu Lesepfad, Änderungsmaß, Prüfbudget und Git-Lieferung.
@@ -56,6 +57,23 @@
 - `shared-docs/CODING-RULES.md`
 - `shared-docs/agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md`
 
+### Phase 4 — Kompakte Projektarchitektur und harte LOC-Grenze
+**Ziel:** Agenten finden zentrale Projektbereiche direkt in `AGENTS.md`; handgepflegte Codedateien bleiben verpflichtend unter 1.600 LOC.
+- [x] `AGENTS.md` ohne Wiederholung der Coding Rules um eine kompakte Pfadarchitektur ergänzt.
+- [x] 1.600 LOC als vierte lokale Pflichtregel und harte universelle Codegrenze formuliert.
+- [x] Veraltete 700-Zeilen-Beispiele im verbindlichen Phasenworkflow auf 1.600 LOC umgestellt.
+- [x] Regelstellen, Diff, Links, Architekturpfade und UTF-8 geprüft; reine Dokuänderung benötigt keinen Typecheck.
+- [ ] Shared-Docs committen und pushen, danach `AGENTS.md` plus finalen Submodule-Pointer im Elternrepo liefern.
+**Ergebnis-Satz:** Dateibesitz ist sofort auffindbar und übergroße handgepflegte Codedateien sind verbindlich verboten.
+**Warum:** Eine weiche Split-Empfehlung setzt kein belastbares Maximum; die lokale Architektur spart unnötige Suche.
+**Eingehalten:** kompakte AGENTS-Datei, keine Wiederholung allgemeiner Coding Rules, bestehende Fremdänderungen bleiben erhalten.
+**Architektur passt:** Projektpfade stehen lokal; universelle Grenzdefinition bleibt in `CODING-RULES.md`; Workflow-Beispiele verwenden denselben Wert.
+**Auffälligkeiten/Performance/Kritische Findings:** Parallele Fremdänderungen in `AGENTS.md` und `CODING-RULES.md` müssen beim selektiven Staging unangetastet bleiben.
+**Referenzen:**
+- `AGENTS.md`
+- `shared-docs/CODING-RULES.md`
+- `shared-docs/agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md`
+
 ## Kommentare
 
 ### Phase 1
@@ -69,6 +87,10 @@
 ### Phase 3
 **Eingehalten:** vollständiger Wiederholungscheck ✅, alle Markdown-Links vorhanden ✅, UTF-8 ohne BOM/Mojibake ✅, `git diff --check` grün ✅, Shared-Docs gepusht ✅
 **Auffälligkeiten (nach Schwere):** Keine offenen Inhalts-, Encoding- oder Lieferfehler.
+
+### Phase 4
+**Eingehalten:** kompakte Pfadkarte ✅, vier lokale Pflichtregeln ✅, harte 1.600-LOC-Grenze ✅, Workflow-Werte konsistent ✅, Links/Pfade/UTF-8 ✅
+**Auffälligkeiten (nach Schwere):** 🟡 29 bestehende handgepflegte oder skriptartige Dateien liegen bereits über 1.600 Zeilen; die neue Regel verlangt ihre fachliche Aufteilung, sobald sie in einem Auftrag berührt werden. Parallele Fremdänderungen wurden nicht gestagt.
 
 ## Arbeitsprotokoll
 
@@ -91,6 +113,11 @@
 **Dateien:** `CODING-RULES.md`, `agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md` — Shared-Docs als Commit `93698c0` auf `main` geliefert.
 **Entscheidungen:** Append-only-Protokoll bewahrt den vorherigen Partial-Stand; Elternrepo erhält anschließend nur den finalen Submodule-Pointer.
 **Unsicher / Risiko:** keines.
+
+### Phase 4 — Status partial
+**Dateien:** `AGENTS.md`, `CODING-RULES.md`, `agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — Pfadarchitektur und LOC-Grenze umgesetzt und statisch geprüft.
+**Entscheidungen:** 1.600 ist ein hartes Limit für neue/geänderte handgepflegte Dateien; Generatorausgaben und unveränderter Vendor-Code bleiben ausgenommen. Bestehende Überschreitungen werden bei Berührung geteilt statt ungefragt als Großrefactoring eröffnet.
+**Unsicher / Risiko:** Nur selektive Commit-/Push-Lieferung steht aus; parallele Fremdhunks in denselben Dateien bleiben außerhalb des Commits.
 
 ## Offene Fix-Punkte
 - [x] Finale Regeldatei auf redundante oder widersprüchliche Muss-Regeln geprüft.

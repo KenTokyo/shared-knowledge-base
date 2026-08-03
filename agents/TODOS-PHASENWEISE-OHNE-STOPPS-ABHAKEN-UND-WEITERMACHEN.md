@@ -38,12 +38,12 @@ Kriterien eingehalten z.B.
 ```markdown
 ## Kommentare
 ### Phase 1
-**Eingehalten**: unter 700 Zeilen ✅, architektur ✅, Edge-Cases betrachtet ✅, ...
+**Eingehalten**: maximal 1.600 LOC ✅, Architektur ✅, Edge-Cases betrachtet ✅, ...
 **Auffäligkeiten/Performance-Issues/Probleme/Kritische Findings (nach Schwere):**: 
 1. 🔴 **Kritisch:** Start-Crash durch fehlerhafte QuizPack-Umwandlung
 Beschreibung hierzu notieren, falls notwendig
 Refactoring, Zeilenlimit überschrieben, Ungültige Tab-Werte entdeckt in Komponente XYZ und konnten eine Render-Schleife auslösen! Versehentlich angehängte Restzeilen entdeckt! Event-Werte blindcast entdeckt! State-Updates nicht idempotent - Rerender-Kette möglich!
-2. 🟠 **Hoch:** über 700 Zeilen, Coding Regel gebrochen
+2. 🟠 **Hoch:** über 1.600 LOC, harte Coding-Regel gebrochen
 
 ### Phase 2....
 ```

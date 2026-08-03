@@ -164,8 +164,9 @@ Parameter des Altbestands drehen.
 - Shared-Module nur bei echter Wiederverwendung. Ein nur lokal benötigter Helper bleibt beim fachlichen Besitzer.
 - Dateiname erklärt den Inhalt. Fachliche Dokumente erhalten sprechende Namen statt generischer `README.md`,
   `info.md` oder `notes.md`; technische Fremdvorgaben sind die Ausnahme.
-- Lokale Dateigrößenregel beachten; ohne strengere Projektregel gelten ungefähr 700 Codezeilen pro Datei als
-  Split-Signal, nicht als Zielwert.
+- **Harte LOC-Grenze:** Handgepflegte Codedateien dürfen maximal 1.600 physische Zeilen besitzen. Keine neue oder
+  geänderte Datei oberhalb des Limits liefern; berührte Altdateien darüber im selben Auftrag fachlich aufteilen.
+  Klar erzeugte Generatorausgaben und unveränderter Vendor-Code sind ausgenommen, solange niemand sie manuell pflegt.
 - Ungenutzten Legacy-Code nach der Änderung entfernen.
 
 ### Komponenten- und Service-Regeln
@@ -431,6 +432,7 @@ Performance-Bauweise als Markdown-SSoT festhalten.
 - Auftrag und lokale `AGENTS.md` vollständig erfüllt?
 - Bestehenden Plan fortgeführt und alle eigenen Todos korrekt abgehakt?
 - Richtige Grundstruktur und eine SSoT statt Patch- oder Parallelarchitektur?
+- Jede neue oder berührte handgepflegte Codedatei bei höchstens 1.600 LOC?
 - Explizite Eigenschaften erhalten, keine Regression eingeführt?
 - Eigene Funde im Scope behoben, fremde Änderungen unangetastet?
 - Keine unerlaubten UI-/Gameplay-Tests, Worktrees, Dev-Server oder Hintergrundprozesse gestartet?
