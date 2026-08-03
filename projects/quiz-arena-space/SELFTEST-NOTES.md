@@ -89,9 +89,21 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   nach jeder Kaskade zwingend ein voller Lauf, kein gefilterter. **Preis dieser Regel:** die Transkriptzeile
   zitiert die *ganze* Meldung samt lebender Zahl und altert daher weiter — `selftest` matcht per
   `q.includes(want)` (`selftest.mjs:1998`) und sieht alles hinter dem `want` nie. Nur die
-  Transkript-Prüfung des Volllaufs nennt solche Zeilen, und zwar als `not in run`.
+  Transkript-Prüfung des Volllaufs nennt solche Zeilen, und zwar als `not in run`. **Zweiter Preis: genau
+  dieser Pflichtlauf ist die verwundbarste Prüfung der Bench** — er läuft ~5 min, und ein Schichtwechsel
+  killt die von `reddrive` gespawnten `selftest`-Kinder, während der `node`-Elternprozess weiterläuft und
+  das Log zu Ende schreibt. Der Treiber, der gerade dran war, kommt als `crashed - the bench did not reach
+  a verdict - syntax` zurück: ein echt aussehender Fehlschlag ohne Defekt dahinter. → Den Pflichtlauf **im
+  Vordergrund** fahren, damit der Turn die vollen 5 min offen bleibt; ein Hintergrundlauf über ein Turn-Ende
+  hinweg stirbt nicht, sondern schreibt ein **vergiftetes** Log. Und jedes `crashed … did not reach a
+  verdict` erst mit `node tools/reddrive.mjs "<Namensfragment>"` (Sekunden statt 5 min) gegenprüfen, bevor
+  man es glaubt.
   *Erster Volllauf nach der Kaskade 55→60: Exit 1, drei `wrong`, fünf `not in run` — ein gefilterter Lauf
   und die Bench selbst sehen das per Konstruktion nie · 2026-08-01*
+  *Viermal in Folge getroffen, jedes Mal ein anderer Treiber — der, der beim Abräumen gerade lief:
+  `the group tally is reworded away` (Zeile 39), `the group tally drifts` (37), `a sheet miscounts the
+  verdicts it lists` (69), `the verdict count is reworded out of a sheet` (71). Alle vier gefiltert sofort
+  `red`; der ununterbrochene Vordergrundlauf meldete `1 of 87`, 86 `red` + 1 `wrong`, 0 `crashed` · 2026-08-03*
   *Nach dem Crossword-Schnitt zitierten zwei Transkriptzeilen tote Dateienden: `Crossword.ts` „stops at
   line 2109" (lebend 1408) und `Diagnostics.ts` „480" (lebend 492, ohne jeden Schnitt gewachsen).
   `selftest` meldete davor wie danach 1 von 60 · 2026-08-03*
@@ -119,7 +131,17 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   nennt in seinem `want` weiter die alte Datei. → Nach jedem Schnitt jede Fortsetzung gegen die **Datei**
   neu bestimmen, nicht nur gegen die Zeile, und den Dateinamen im `want` mitziehen; beim Leerzeilen-Treiber
   **beide** Seiten des `edit`-Paars neu erheben — der tote Wert muss eine echte Leerzeile treffen, der
-  lebende darf keine sein.
+  lebende darf keine sein. **Und die nummernlose Form mitziehen:** der Check `every Crossword.ts citation
+  still lands in its symbol` sammelt nur `File.ts:\d+ (symbol)` ein, also sieht er weder ein nacktes
+  `` `_place` `` noch ein „Ported verbatim from `src/systems/X.ts`" — die Prosa um ein Zitat herum altert
+  ungeprüft weiter, auch wenn das Zitat selbst nachgezogen wurde. Nach jedem Schnitt zusätzlich per
+  Symbolgrep über die zitierenden Dateien gehen, nicht nur den Check fahren.
   *`Crossword.ts` 2.882 → 1.408 in drei Schnitten. `:681` zeigte in beiden Blättern nach dem Umzug von
   `park` nach `CrosswordGrid.ts` auf `_unregister` und blieb grün; umgehängt auf `` `:55` ``/`CrosswordGrid.ts`,
   Leerzeilen-Treiber von `1780→1769` auf `1205→1206` · 2026-08-03*
+  *Zwei Schichten später: derselbe Schnitt hatte die **Rümpfe** beider Simulatoren korrekt zurückgelassen
+  und ihre **Kopfblöcke** nicht — 14 tote Symbolnennungen (`_place`, `_scorePlacement`, `_nextEntry`,
+  `_drawPanel`; alle vier leben ohne Unterstrich in `CrosswordGrid.ts`/`CrosswordBoard.ts`) und zwei
+  Hausregelsätze, die auf `src/systems/Crossword.ts` zeigten, wo der geportete Code nicht mehr liegt.
+  `selftest` meldete davor wie danach 1 von 60. Mitgewandert war auch die Aussage: `place` parkt nicht
+  mehr selbst, sondern fällt auf `park` durch · 2026-08-03*
