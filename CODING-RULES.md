@@ -25,6 +25,9 @@ Pflichtpfad: lokale `AGENTS.md` vollständig lesen → diese Datei vollständig 
   [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md) lesen;
 - Echtzeit-3D-Facharbeit → `THREEJS-RULES.md` lesen und dort den engsten passenden Owner wählen;
 - belegter Projekttrigger → höchstens eine passende Tippdatei lesen;
+- Windows-Projektpfad, Nachbarrepo oder lokaler Port →
+  [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) lesen; auf macOS eine getrennte Plattformdatei nutzen und
+  Windows-Pfade nie übertragen;
 - externe API oder Bibliothek → aktuelle Primärdokumentation nur für die konkrete offene Frage lesen.
 
 Querverweis allein ist kein Leseauftrag. Keine Linkketten vorsorglich öffnen. Vor größerem Leseblock im
