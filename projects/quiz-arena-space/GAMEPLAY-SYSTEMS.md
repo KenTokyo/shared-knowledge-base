@@ -78,3 +78,15 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   Gruppe auf einer **gemeinsamen rechten Kante** enden lassen (leere Zahlenspalten als `—`), und solche
   Befunde am Zoom-Crop suchen — Codelesen findet sie nicht.
   *46 px Spaltenbreiten-Differenz · 2026-07-28*
+
+- **Ein „flaches Tal" aus zwei Messreihen ist der schwächste Ausgang, den ein Sweep haben kann** — zwei
+  Sektoren lasen den Korridor [0.4, 0.8] als gleichwertig („jeder Wert darin ergibt dasselbe Bild"); bei
+  fünf legen zwei ihre Böden auf **entgegengesetzte** Enden genau dieses Korridors und lesen am Boden des
+  anderen je rund dreimal schlechter. Ein Plateau ist die Form, die Uneinigkeit annimmt, solange zu wenige
+  Reihen da sind — zwei Minima an verschiedenen Stellen sehen zusammen flach aus. → Plateau- und
+  Korridoraussagen erst ab der **dritten unabhängigen Reihe** veröffentlichen; Wert und Begründung getrennt
+  führen, denn die Konstante darf überleben, während ihre Begründung stürzt.
+  *`cwaimpull` über fünf Sektoren: verdant Boden 0.75 (4) liest 12 bei 0.50, voidscar Boden 0.50 (4) liest
+  11 bei 0.75 — 3,0× und 2,75×. 0.5 blieb stehen, getragen jetzt vom Mittelpunkt-Argument statt vom flachen
+  Tal: innerhalb von 8° jedes eigenen Bodens, von 0.00 (23–31) nirgends geschlagen. Tabelle im Doc-Block von
+  `CW_AIM_PULL` in `src/core/Game.ts` — per Symbol zitiert, nicht per Zeile · 2026-08-03*
