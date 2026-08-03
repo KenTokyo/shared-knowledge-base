@@ -396,7 +396,9 @@ bei klarem Themenwechsel erzeugen.
 
 ### Grundton
 
-- Deutsch zuerst, kurz, klar, freundlich und verständlich schreiben.
+- Deutsch zuerst; kurz, klar, freundlich und verständlich mit Alltagswörtern schreiben.
+- Icons dürfen die Gliederung unterstützen.
+- Stichpunkte bevorzugen; Kommas und Pfeile sind für knappe Abläufe willkommen.
 - UTF-8 mit echten Umlauten verwenden; nach Dokuänderungen auf Mojibake prüfen.
 - Ergebnis zuerst; Problem, Ursache und Änderung konkret statt langer Ich-Erzählung.
 - Schwierige Begriffe kurz erklären, keine erfundenen Abkürzungen.

@@ -74,6 +74,21 @@
 - `shared-docs/CODING-RULES.md`
 - `shared-docs/agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md`
 
+### ⏳ Phase 5 — Nachlauf-Audit des lokalen Folge-Commits
+**Ziel:** Die neuen Grundton-Vorgaben bleiben erhalten, ohne bereits zusammengeführte Pflichtregeln wieder zu verlieren.
+- [x] Entfernte Regeln zu Geltung/Priorität, Capture-Owner und Chat-Titel wiederherstellen.
+- [x] Neue Grundton-Punkte sprachlich verbindlich und konsistent einordnen.
+- [x] Gesamtdiff, Links, UTF-8/Mojibake und alle Phasenpunkte erneut prüfen.
+- [ ] Shared-Docs zuerst liefern; danach ausschließlich den Eltern-Pointer nachziehen.
+**Ergebnis-Satz:** Der redaktionelle Nachlauf ergänzt den gewünschten Grundton, ohne die abgeschlossene Regelzusammenführung zurückzudrehen.
+**Warum:** Die lokale Folgebearbeitung ergänzte den gewünschten Grundton, entfernte dabei aber drei bereits auditierte Vorgaben und beschädigte die Owner-Aufzählung.
+**Eingehalten:** append-only Arbeitsnachweis, keine Fachowner-Duplikate, reine Dokuänderung ohne Typecheck.
+**Architektur passt:** `CODING-RULES.md` bleibt die eine gemeinsame Regelquelle; der bestehende Task dokumentiert auch den Nachlauf.
+**Auffälligkeiten/Performance/Kritische Findings:** Keine Code- oder Laufzeitänderung; Lieferstatus noch offen.
+**Referenzen:**
+- `shared-docs/CODING-RULES.md`
+- `shared-docs/agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md`
+
 ## Kommentare
 
 ### Phase 1
@@ -91,6 +106,10 @@
 ### Phase 4
 **Eingehalten:** kompakte Pfadkarte ✅, vier lokale Pflichtregeln ✅, harte 1.600-LOC-Grenze ✅, Workflow-Werte konsistent ✅, Links/Pfade/UTF-8 ✅, Shared-Docs gepusht ✅
 **Auffälligkeiten (nach Schwere):** 🟡 29 bestehende handgepflegte oder skriptartige Dateien liegen bereits über 1.600 Zeilen; die neue Regel verlangt ihre fachliche Aufteilung, sobald sie in einem Auftrag berührt werden. Parallele Fremdänderungen wurden nicht gestagt.
+
+### Phase 5
+**Eingehalten:** wichtige Altregeln erhalten ✅, neuer Grundton ✅, Linkziele ✅, UTF-8 ohne BOM/Mojibake ✅, `git diff --check` grün ✅
+**Auffälligkeiten (nach Schwere):** Der lokale Folgediff hatte Geltung/Priorität, Capture-Owner und Chat-Titel entfernt; vor der Lieferung vollständig korrigiert.
 
 ## Arbeitsprotokoll
 
@@ -123,6 +142,11 @@
 **Dateien:** `CODING-RULES.md`, `agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md`, `AGENTS.md` — Shared-Docs unter `6aa831c` geliefert; lokale AGENTS-Änderung selektiv gestagt.
 **Entscheidungen:** Fremde Hunks in `AGENTS.md` und `CODING-RULES.md` bleiben unstaged; nur eigene Regel- und Architekturänderungen werden geliefert.
 **Unsicher / Risiko:** keines; Elternrepo-Lieferung folgt unmittelbar.
+
+### Phase 5 — Status partial
+**Dateien:** `CODING-RULES.md`, `agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md` — entfernte Pflichtregeln wiederhergestellt, Grundton ergänzt und Gesamtdiff statisch geprüft.
+**Entscheidungen:** Der geprüfte Stand von Phase 4 bleibt vollständig erhalten; neu hinzu kommen nur Alltagswörter, Icons und stichpunktartige Schreibweise.
+**Unsicher / Risiko:** Nur Lieferung in Shared-Docs und Elternrepo steht noch aus.
 
 ## Offene Fix-Punkte
 - [x] Finale Regeldatei auf redundante oder widersprüchliche Muss-Regeln geprüft.
