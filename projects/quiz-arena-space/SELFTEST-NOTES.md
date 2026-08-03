@@ -86,9 +86,15 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
 - **Nach der Kaskade fällt das Tor rot aus dem richtigen Grund und sagt es falsch** — die Kaskade zog das
   `edit` nach, weil dessen Suchtext in den Notizen stand, und ließ das `want` daneben mit der alten Torzahl
   stehen. → `want` hört **vor** der lebenden Zahl auf und zitiert nur, was sein eigener Patch schreibt;
-  nach jeder Kaskade zwingend ein voller Lauf, kein gefilterter.
+  nach jeder Kaskade zwingend ein voller Lauf, kein gefilterter. **Preis dieser Regel:** die Transkriptzeile
+  zitiert die *ganze* Meldung samt lebender Zahl und altert daher weiter — `selftest` matcht per
+  `q.includes(want)` (`selftest.mjs:1998`) und sieht alles hinter dem `want` nie. Nur die
+  Transkript-Prüfung des Volllaufs nennt solche Zeilen, und zwar als `not in run`.
   *Erster Volllauf nach der Kaskade 55→60: Exit 1, drei `wrong`, fünf `not in run` — ein gefilterter Lauf
   und die Bench selbst sehen das per Konstruktion nie · 2026-08-01*
+  *Nach dem Crossword-Schnitt zitierten zwei Transkriptzeilen tote Dateienden: `Crossword.ts` „stops at
+  line 2109" (lebend 1408) und `Diagnostics.ts` „480" (lebend 492, ohne jeden Schnitt gewachsen).
+  `selftest` meldete davor wie danach 1 von 60 · 2026-08-03*
 
 - **`grep` meldet stillschweigend null Treffer, weil ein NUL-Byte die Datei als binär markiert** — ein
   Steuerzeichen landet beim Schreiben im Quelltext; die Datei parst, `node` läuft, das PNG kommt heraus —
@@ -105,3 +111,15 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   *Verworfen: Zahlwort+Substantiv 10 Treffer gemischt, gebacktickter `--flag` 1/1 falsch, gebacktickte
   Datei 6/11 falsch, doppelt-gequotete Spanne 9/9 falsch. Umgedreht: 16 Spannen, 0 falsch, 0 mehrdeutig,
   2 echte Drifts gefunden · 2026-08-01*
+
+- **Ein Dateisplit verschiebt nicht nur Nummern, sondern die Datei, die ein Zitat meint** — eine
+  Fortsetzung wie `` `:681` `` nennt keinen Dateinamen und löst gegen die zuletzt genannte Datei des
+  Satzes auf. Zieht das Symbol davor in eine neue Datei, zeigt die Fortsetzung lautlos in ein anderes
+  File, landet dort auf einer **echten** Zeile und bleibt grün — und der Treiber, der auf ihr ankert,
+  nennt in seinem `want` weiter die alte Datei. → Nach jedem Schnitt jede Fortsetzung gegen die **Datei**
+  neu bestimmen, nicht nur gegen die Zeile, und den Dateinamen im `want` mitziehen; beim Leerzeilen-Treiber
+  **beide** Seiten des `edit`-Paars neu erheben — der tote Wert muss eine echte Leerzeile treffen, der
+  lebende darf keine sein.
+  *`Crossword.ts` 2.882 → 1.408 in drei Schnitten. `:681` zeigte in beiden Blättern nach dem Umzug von
+  `park` nach `CrosswordGrid.ts` auf `_unregister` und blieb grün; umgehängt auf `` `:55` ``/`CrosswordGrid.ts`,
+  Leerzeilen-Treiber von `1780→1769` auf `1205→1206` · 2026-08-03*
