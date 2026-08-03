@@ -21,8 +21,8 @@
 - **Archiv wird gegen heutigen Artefaktstand gegatet** — datierte History-Zahlen werden nach späteren Log-Neuschriften zwangsläufig falsch. → Nur aktuelle Root-/`docs/`-Claims live halten; historische Aussagen datieren, nicht umschreiben.
   *4/10 lesbare Claims zweier History-Dateien widersprachen später korrekt der Platte · 2026-08-01*
 
-- **Commit dreht Präsensansprüche ohne Codefehler um** — Trackingstatus ändert sich, „untracked“ bleibt in Prosa und Gate-Ausgabe stehen. → Präsens gegen `git ls-files` prüfen; ehemals wahre Aussage als datierten Zustand klassifizieren.
-  *Ein Commit widerlegte 28 Claims an 13 Stellen; Sonde endete mit 0 widersprochenen und 19 datierten Sites · 2026-08-02*
+- **Commit dreht Präsensansprüche ohne Codefehler um** — Trackingstatus oder Tastenbelegung ändert sich, die Prosa bleibt stehen; ein Doku-Nachtrag findet es nicht, weil er nach seinem *eigenen* neuen Thema grept statt nach dem, was das Dokument behauptet. → Präsens gegen `git ls-files` bzw. die Quelle prüfen; beim Anfassen eines Bestandsdokuments zusätzlich dessen Absolutaussagen greppen (`nur|kein|einzige|fünf|niemals`) — genau die dreht ein Feature-Commit um, und sie stehen nie dort, wo man das neue Feature einträgt. Ehemals wahre Aussage datieren, nicht umschreiben.
+  *Ein Commit widerlegte 28 Claims an 13 Stellen; Sonde endete mit 0 widersprochenen und 19 datierten Sites · 2026-08-02. `b91652b` drehte drei Tastenzeilen um (Shift=Sprint→Surf, RMB=Surf→Platzierung, LMB fehlte ganz): README-Startseite, ROADMAP §7 und `gameplay-state.md` §7 blieben falsch — quer durch einen Doku-Nachtrag, der dieselbe Datei fürs Münzfeld auf die Konstante gemessen hatte; §1 verneinte zugleich den Wellen-Event, den §5 zwei Bildschirme tiefer beschreibt · 2026-08-03*
 
 - **Überschriebener Beleg macht Transition unfalsifizierbar** — derselbe Logname ersetzt den 222-Zeilen-Vorgänger; Diff-Prosa zeigt auf kein existierendes Artefakt. → Beide Enden dauerhaft benennen oder nur reproduzierbaren Fixpunkt behaupten.
   *Frischer Lauf war bytegleich zum 224-Zeilen-Fixpunkt; verschwundener 222-Zeilen-Vergleich wurde zurückgezogen · 2026-08-02*
