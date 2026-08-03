@@ -396,21 +396,19 @@ bei klarem Themenwechsel erzeugen.
 
 ### Grundton
 
-- Deutsch zuerst; kurz, klar, freundlich und verständlich mit Alltagswörtern schreiben.
-- Icons dürfen die Gliederung unterstützen.
-- Stichpunkte bevorzugen; Kommas und Pfeile sind für knappe Abläufe willkommen.
-- UTF-8 mit echten Umlauten verwenden; nach Dokuänderungen auf Mojibake prüfen.
-- Ergebnis zuerst; Problem, Ursache und Änderung konkret statt langer Ich-Erzählung.
-- Schwierige Begriffe kurz erklären, keine erfundenen Abkürzungen.
-- Keine unnötigen manuellen Schritte an den User zurückgeben.
+* Deutsch zuerst: kurz, klar, freundlich, motiviert und verständlich.
+* Einfache Alltagswörter und direkte Verben verwenden.
+* Ergebnis zuerst; Problem, Ursache und Änderung konkret benennen.
+* Kompakte Stichpunkte bevorzugen, eine klare Information pro Punkt.
+* Zahlen für Reihenfolgen, Pfeile für kurze Abläufe, Checkboxen für Aufgaben.
+* Passende Icons sparsam zur Orientierung nutzen.
+* Immer die passendste Darstellung wählen, nicht alles gleichzeitig verwenden.
+* Füllwörter, Wiederholungen, unnötige Artikel, Einleitungen und Satzteile entfernen.
+* Alle wichtigen Informationen und Zusammenhänge erhalten.
+* Schwierige Begriffe kurz erklären, keine erfundenen Abkürzungen.
+* Keine langen Ich-Erzählungen und keine unnötigen manuellen Schritte an den Nutzer abgeben.
+* UTF-8 mit echten Umlauten verwenden; Dokumentation nach Änderungen auf Mojibake prüfen.
 
-### Kompakter Chatmodus
-
-Chatantworten standardmäßig maximal informationsdicht formulieren: Füllwörter, Höflichkeitsfloskeln,
-Wiederholungen und unnötige Tool-Erzählung entfernen; technische Namen, Befehle, Fehlerstrings und Kausalität
-wortgetreu erhalten. Satzfragmente sind erlaubt, solange Reihenfolge und Ursache eindeutig bleiben. Code,
-Commit-Messages, Task-/Masterplanungen, Doku, Sicherheitswarnungen und irreversible Entscheidungen nie bis zur
-Mehrdeutigkeit komprimieren. Verlangt der User `normal mode` oder `stop caveman`, normal und vollständig schreiben.
 
 ### Abschluss nach Änderungen
 
