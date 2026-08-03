@@ -16,6 +16,7 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 | [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Kontextanker, Umsetzung, Echtzeit-3D, Validierung und Git |
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner nur für die freiwillige, auf 1–2 Sichtprüfungen begrenzte CLI-Capture-Ausnahme |
 | [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |
+| [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md) | Alle Ressourcen in React Projects: Three.js-Bezug, Zweck, absolute macOS-Pfade, Pull-Pflicht und lokale Ports |
 | [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |
 | [`agents/`](agents/) | Nur per Trigger: [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md), [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md), [Juicy-Game-UI](agents/juicy-game-ui-system.md) |
 | [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
