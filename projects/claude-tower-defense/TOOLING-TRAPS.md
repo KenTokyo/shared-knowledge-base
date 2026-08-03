@@ -32,3 +32,6 @@
 
 - **Maschinenuhr kleiner als gesuchter Effekt** — Nullbuild 11,90–24,60 ms (×2,07), Ziel 0,3–1,0 ms. → Deterministische Tris/Calls/Instanzen plus Bilder; Rauschboden vor Ranking.
   *6/8 Klammern über eigener Driftgrenze · 2026-08-01*
+
+- **Urteil fällt aus dem behaltenen Fenster** — Prüfreihe behält je Sonde nur die letzten N Zeilen, das Detail steht am **Kopf** der Ausgabe; archiviert wird `regel 0` ohne die Zahl, die es belegt — ununterscheidbar von genau dem Defekt, den die Regel verbietet. → Vor dem Eintrag `head -$N | tail -N` gegen die echte Ausgabe fahren; kritische Reconciliation **über** der Zählzeile wiederholen; Platz durch Trennleerzeilen zwischen Bahnen derselben Regel holen, nie durch Inhalt.
+  *D111: `_d106` druckte 26 Zeilen bei KEEP=20, Phasennachweis und `cadence`-Detail fielen heraus · 2026-08-03*
