@@ -47,3 +47,6 @@
 
 - **Klemmender Sampler hat kein Bereichsende** — außerhalb Welt liefert Kantenhöhe; Objekt steht neben Mesh bei plausibler Höhe/Bodenabstand 0. → Für Messung `tools/lib/heights.mjs` mit `null`; Abstand zur Kachelgrenze ausgeben.
   *`Terrain.heightAt` clamp; D74: alle 3 Lane-Mündungen außerhalb |84| (−58/86, 9/86, 86/47), 9 Kandidaten, 0/27 sichtbar · 2026-08-02*
+
+- **Zustand gesetzt ist nicht Zustand aktiv** — Sonde schreibt `phase='combat'` und druckt „in combat"; der Messcode läuft **vor** dem Besitzer im selben Step und die Phase verlässt sich bei leerer Queue selbst, also maß 5 von 6 Öffnungen die falsche Phase und der rote Arm kam **grün** zurück. → Bei jedem Messaufruf den **tatsächlich gesehenen** Zustand mitschreiben und judgen, nie den angeforderten; dem Zustand seine fehlende **Bedingung** geben (nie fälliger Queue-Sentinel) statt ihn pro Step neu zu pinnen — ein Re-Pin zahlt Nebenwirkungen in dieselbe Börse, die eine Nachbarregel liest.
+  *D111: `--bad frozen` exit 0 = PASS mit Zahlen identisch zum gesunden Lauf; Ursache `Game.js:273` + `Director.js:664` · 2026-08-03*
