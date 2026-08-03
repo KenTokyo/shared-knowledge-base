@@ -43,7 +43,10 @@ Die Blindvergleichsschicht vom 2026-08-04 hat aus drei Befunden **zwei** Tipps g
 Messfehler teilen sich Ursache und Gegenmittel (ein Fall, dessen Antwort vorher feststeht) und stehen
 darum als ein Tipp mit zwei Gestalten bei den Kennzahlen, der Entwurf des referenzlosen Vergleichs
 bei der Harness — die Trennlinie ist dieselbe wie oben: *was eine Zahl behaupten darf* gegen *wie ein
-Werkzeug gebaut wird*.
+Werkzeug gebaut wird*. Der Durchgang durch alle Masterplanphasen am selben Tag hat **nichts Neues
+angelegt**: sein einziger übertragbarer Befund (die Erklärung, die den ohnehin eingebauten Effekt
+beschuldigt) ist die dritte Gestalt des A/B-Tipps *„Ein Bild trennt Effekt und Motiv nicht"* und steht
+dort.
 
 ## Teuerstes Muster
 
