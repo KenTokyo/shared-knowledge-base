@@ -38,3 +38,6 @@
 
 - **Meta-Gate prüft nicht eigene Verdicts** — Gruppen, Details, Stagezahl, Offset driften bei grünen Mutationen. → Jede Stufe mit Unterkontrolle; eigene Verdicts zählen/lesen/gegen `STAGE_GROUPS`.
   *Gruppendefekt bei gleicher Summe unsichtbar; danach 16/16 Diagnosen, Selbst-Gate 141/141 · 2026-08-01*
+
+- **Reparatur am ungeseedeten Lauf trifft nur die gesehene Hälfte** — `play.mjs` ist ungeseedet; Welle, Kills und Tafelplatzierung sind jedes Mal anders. Ein aus *einem* roten Lauf abgeleiteter Fix beschreibt diesen Lauf, nicht die Zustandsmenge: `coinsLive > 0` verpasst die zu schnell eingesammelte Münze, `coinsTaken > 0` die nie eingesammelte. → Vor dem Fix alle legitimen Endzustände aufzählen und veroderen; fehlt die Vorbedingung ganz (0 Kills → 0 Münzen), `skip` statt rot. Nie zwei ungeseedete Läufe diffen.
+  *Ein Check, drei Läufe, drei verschiedene Hälften: live 1/taken 0 rot, 0 felled rot, dann peak live 0/1 taken — grün allein durch den ODER-Zweig · 2026-08-03*
