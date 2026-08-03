@@ -23,7 +23,7 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Datensatz aus einem Pool wiederverwenden, Instanzring dimensionieren, Referenz auf einen Poolplatz | [`ACTOR-POOLS.md`](ACTOR-POOLS.md) |
 | Zustandsmaschine eines Gegners, Abstandsband, Halteregel, Ansturm, Standplatz | [`ENEMY-BEHAVIOUR.md`](ENEMY-BEHAVIOUR.md) |
 
-**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (21 Tipps), `HARNESS-GATES.md` (20) und
+**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (22 Tipps), `HARNESS-GATES.md` (21) und
 `VEGETATION-SCATTER.md` (15) liegen über den ~12 aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md);
 ein ungelesener Tipp wirkt nicht. Die Teilung läuft entlang der Trigger, nicht der Menge — bei den
 beiden Gate-Dateien trennt sich *Harness-Mechanik* (Browser, Pump, Boot-Fenster, Port) von
@@ -39,6 +39,11 @@ selbst gesendet"* trägt jetzt die dritte Gestalt **Vorgabe** (das Gate setzt de
 welchen das System selbst wählt), die projizierte Fläche steht als neuer Tipp bei den Kennzahlen, und
 zwei Verhaltensbefunde haben mit `ENEMY-BEHAVIOUR.md` eine eigene Datei bekommen — Halteband und
 Ansturm sind eine Frage an die Zustandsmaschine, nicht an ein Werkzeug.
+Die Blindvergleichsschicht vom 2026-08-04 hat aus drei Befunden **zwei** Tipps gemacht: die beiden
+Messfehler teilen sich Ursache und Gegenmittel (ein Fall, dessen Antwort vorher feststeht) und stehen
+darum als ein Tipp mit zwei Gestalten bei den Kennzahlen, der Entwurf des referenzlosen Vergleichs
+bei der Harness — die Trennlinie ist dieselbe wie oben: *was eine Zahl behaupten darf* gegen *wie ein
+Werkzeug gebaut wird*.
 
 ## Teuerstes Muster
 
