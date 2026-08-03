@@ -38,3 +38,6 @@
 
 - **Lichtkanal ohne Lücke, harter Cut** — Afterglow überbrückt Präsenz; Peak-Prozent beschuldigt Ribbon. → Größten absoluten Framefall bei 60/120 fps; Fade halbiert, Branch-Cut gleich.
   *Legitim 0,50–0,60; echter Cut 0,987; Schwelle 0,75 · 2026-07-31*
+
+- **WGSL/JS-Doppelkonstante driftet lautlos zu Rauschen** — WGSL kann nicht importieren, also steht die Layoutzahl beidseitig als Literal; driftet sie, adressiert der Indexbuffer verschobene Vertexgruppen. Kein Wurf, keine Konsolenzeile, `npm run build` und `node --check` blind — sichtbar nur im Bild, in einem Projekt mit 1–2 erlaubten Sichtprüfungen. → Explizite Paarungstabelle in `tools/const-parity.mjs`, verdrahtet als Vite-Plugin (`buildStart`) in `vite.config.js`; deckt `dev`, `build` und jedes Capture-Werkzeug ab, weil alle über `serve.mjs` dieselbe Config hochziehen. Fehlender Name, doppelter Name und Nicht-Literal sind Fehler, nie Skip. Blanke Kehrwerte (`* 0.25`) vorher benennen — ungenannt nicht prüfbar.
+  *Namens-Sweep verworfen: 4 Kollisionen, nur 2 echte Paare — `REACH` 0.82 (Shafts) vs. 1.9 m (Wights), `SINK` 3.7 m vs. 0.9 s. Alle drei Fehlermodi absichtlich gebaut: Skript und Build je Exit 1 · 2026-08-03*
