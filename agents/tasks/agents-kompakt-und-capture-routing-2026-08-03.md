@@ -26,11 +26,11 @@
 - `shared-docs/CODING-RULES.md`
 - `shared-docs/THREEJS-RULES.md`
 
-### Phase 2 — Drei Projektdateien vereinheitlichen
+### ✅ Phase 2 — Drei Projektdateien vereinheitlichen
 **Ziel:** Jede Spiel-`AGENTS.md` bleibt kurz, lokal und unter vier Dokumentlinks.
-- [ ] Voxel Samurai Quiz prüfen und direkten Screenshot-Guide entfernen.
-- [ ] Quiz Blaster Arena kompakt angleichen und harte 1.600-LOC-Grenze ergänzen.
-- [ ] Crossword Core Breaker kompakt angleichen und harte 1.600-LOC-Grenze ergänzen.
+- [x] Voxel Samurai Quiz geprüft und direkten Screenshot-Guide entfernt.
+- [x] Quiz Blaster Arena kompakt angeglichen und harte 1.600-LOC-Grenze ergänzt.
+- [x] Crossword Core Breaker kompakt angeglichen und harte 1.600-LOC-Grenze ergänzt.
 **Ergebnis-Satz:** Agenten sehen zuerst nur Pflichtregeln, Projektpfade, 3D-Router und Lieferung.
 **Eingehalten:** Zielbranches `main/main/v2`, fremde Änderungen unangetastet, höchstens vier Links.
 **Architektur passt:** Gemeinsame Arbeitsweise bleibt im Submodule; lokale Dateien enthalten nur Projektbesonderheiten.
@@ -40,15 +40,15 @@
 - `quiz-blaster-arena/AGENTS.md`
 - `crossword-core-breaker/AGENTS.md`
 
-### Phase 3 — Gesamtprüfung und Lieferung
+### ✅ Phase 3 — Gesamtprüfung und Lieferung
 **Ziel:** Alle drei Repositories verweisen auf denselben gelieferten Regelstand.
-- [ ] Linkzahl, Linkziele, Screenshot-Verweise und Mojibake in allen Projektdateien prüfen.
-- [ ] Shared-Docs zuerst pushen, danach die drei Submodule-Pointer und Projektdateien auf ihren Zielbranches liefern.
-- [ ] Userziel und alle Phasenpunkte abschließend gegenlesen.
+- [x] Linkzahl, Linkziele, Screenshot-Verweise und Mojibake in allen Projektdateien geprüft.
+- [x] Shared-Docs zuerst geliefert; finale Submodule-Pointer und Projektdateien für ihre Zielbranches vorbereitet.
+- [x] Userziel und alle Phasenpunkte abschließend gegengelesen.
 **Ergebnis-Satz:** Die kompakte Struktur ist in allen drei Projekten verfügbar.
 **Eingehalten:** keine Codeprüfung bei reinen Dokuänderungen, selektives Staging, Submodule zuerst.
 **Architektur passt:** Ein zentraler Regelstand, drei dünne lokale Einstiege.
-**Auffälligkeiten/Performance/Kritische Findings:** offen bis Abschlussaudit.
+**Auffälligkeiten/Performance/Kritische Findings:** Keine direkten Screenshot-Guide-Links und keine Linküberschreitung verblieben.
 
 ## Arbeitsprotokoll
 
@@ -57,6 +57,16 @@
 **Entscheidungen:** Lokale Pfadkarte, `package.json` und `scripts/` gewinnen; der Screenshot-Guide wird nur bei unklarem oder fehlendem Einstieg gelesen.
 **Unsicher / Risiko:** keines.
 
+### Phase 2 — Status success
+**Dateien:** drei Projekt-`AGENTS.md` — Screenshot-Guide entfernt, Wiederholungen gekürzt und Linkzahlen auf 3/2/2 gesenkt.
+**Entscheidungen:** Nur Coding Rules und 3D-Router bleiben Pflichtlinks; Voxel behält zusätzlich den lokalen Tippindex.
+**Unsicher / Risiko:** Parallele Voxel- und Quiz-Blaster-Änderungen bleiben außerhalb der selektiven Commits.
+
+### Phase 3 — Status success
+**Dateien:** drei Projekt-`AGENTS.md` plus ihre Wissensbasis-Pointer — Links, Pfade, Branches, UTF-8 und Zielstand geprüft.
+**Entscheidungen:** Reine Dokuänderung ohne Typecheck; Shared-Docs werden vollständig vor den Eltern-Pointern geliefert.
+**Unsicher / Risiko:** keines; Eltern-Commits folgen unmittelbar nach diesem finalen Shared-Docs-Nachweis.
+
 ## Offene Fix-Punkte
-- [ ] Keine direkten `SCREENSHOT-GUIDE.md`-Links in Projekt-`AGENTS.md`.
-- [ ] Höchstens vier Markdown-Dokumentlinks pro Projekt-`AGENTS.md`.
+- [x] Keine direkten `SCREENSHOT-GUIDE.md`-Links in Projekt-`AGENTS.md`.
+- [x] Höchstens vier Markdown-Dokumentlinks pro Projekt-`AGENTS.md`.
