@@ -9,9 +9,13 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
 - **Zeilennummern-Zitate rotten mit nicht konstantem Versatz** — nach einem Umbau zeigen sie auf fremden
   Code, und der naheliegende Reflex („alles unterhalb um N schieben") repariert die Hälfte und bricht die
   andere. Innerhalb *einer* Zieldatei laufen die Versätze auseinander, weil oberhalb jeder Zitatstelle
-  unterschiedlich viel eingefügt wurde. → Jede Stelle über den **Inhalt** neu bestimmen (Symbolname +
-  zitierter Ausdruck), nie per Offset schieben — und die Fundliste **case-insensitiv** erheben, sonst fehlen
-  Zitate, die niemand als Zitat geschrieben hat.
+  unterschiedlich viel eingefügt wurde. Teuer ist nicht die kaputte, sondern die **plausible** Nummer: die
+  verschobene Zeile existiert, liegt im richtigen Symbol und liest sich wie gemeint — „die Zeile ist da" ist
+  deshalb kein Test, und genau daran prüft der Check `a citation in the notes points at a line that is there`
+  vorbei. → Jede Stelle über den **Inhalt** neu bestimmen (Symbolname + zitierter Ausdruck), nie per Offset
+  schieben; ein Paar, das **zweimal** brach, ganz auf Symbole umstellen — und die Fundliste
+  **case-insensitiv** erheben, sonst fehlen Zitate, die niemand als Zitat geschrieben hat. Symbole heilen
+  aber nur die Drift, nicht die **Aussage**: die Positionsprosa beim Umstellen gegen den Code mitmessen.
   *Der Kern-Bruch verschob `Crossword.ts` um ~80 bis ~180 Zeilen; 13 Zitate zeigten außerhalb ihres Symbols,
   eines auf eine Leerzeile. Gemessene Versätze in derselben Datei: `BOARD_TEX` +42, `begin` +66,
   `_place`/`_scorePlacement` +79, `_drawPanel` +141. Bench 58/60 → 60/60, Commit `6258e20` · 2026-08-02*
@@ -19,6 +23,12 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   5 hätte sie zementiert. Ein drittes log über die eigene Herkunft und war für jeden `Crossword.ts:`-Grep
   unsichtbar, weil `.shots/_board.mjs:590` es als Bildunterschrift `PORTED CROSSWORD.TS:1900-1917` ins
   Diagramm zeichnet — alle sieben mixed-case-Zitate derselben Datei waren sauber. Commit `8a7326f` · 2026-08-03*
+  *Dasselbe Paar in `main.ts` stand über vier Stellungen: `Game.ts:725`/`:743`, `786`/`804`, `806`/`824`,
+  heute `809`/`827` — zweimal repariert, dreimal gebrochen. Beim mittleren Bruch wuchs der Doc-Block darüber
+  um 20 Zeilen, und `simulate(dt) {` rutschte von 766 auf **exakt die zitierte 786**, während der gemeinte
+  `debugSim`-Aufruf auf 806 weiterzog: das Zitat zeigte auf eine echte Zeile im richtigen Symbol, die sich
+  wie gemeint las. Die Symbolfassung behauptete danach, `simulate` rufe `debugSim` „on its first line" —
+  der Aufruf steht 20 Zeilen und ein `if (run.ended) return;` tief. Commit `fb5d0eb` · 2026-08-03*
 
 - **Ein `want`, das der Check-Titel schon trägt, ist von jedem Fehlschlag erfüllt** — das Verdikt wird auf
   `<Check-Titel>: <Meldung>` gematcht, das Tor war also rot, ohne den benannten Defekt getroffen zu haben.
