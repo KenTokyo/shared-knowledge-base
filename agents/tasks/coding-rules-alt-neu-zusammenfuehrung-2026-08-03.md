@@ -74,12 +74,12 @@
 - `shared-docs/CODING-RULES.md`
 - `shared-docs/agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md`
 
-### ⏳ Phase 5 — Nachlauf-Audit des lokalen Folge-Commits
+### ✅ Phase 5 — Nachlauf-Audit des lokalen Folge-Commits
 **Ziel:** Die neuen Grundton-Vorgaben bleiben erhalten, ohne bereits zusammengeführte Pflichtregeln wieder zu verlieren.
 - [x] Entfernte Regeln zu Geltung/Priorität, Capture-Owner und Chat-Titel wiederherstellen.
 - [x] Neue Grundton-Punkte sprachlich verbindlich und konsistent einordnen.
 - [x] Gesamtdiff, Links, UTF-8/Mojibake und alle Phasenpunkte erneut prüfen.
-- [ ] Shared-Docs zuerst liefern; danach ausschließlich den Eltern-Pointer nachziehen.
+- [x] Shared-Docs zuerst liefern; danach ausschließlich den vorbereiteten Eltern-Pointer nachziehen.
 **Ergebnis-Satz:** Der redaktionelle Nachlauf ergänzt den gewünschten Grundton, ohne die abgeschlossene Regelzusammenführung zurückzudrehen.
 **Warum:** Die lokale Folgebearbeitung ergänzte den gewünschten Grundton, entfernte dabei aber drei bereits auditierte Vorgaben und beschädigte die Owner-Aufzählung.
 **Eingehalten:** append-only Arbeitsnachweis, keine Fachowner-Duplikate, reine Dokuänderung ohne Typecheck.
@@ -147,6 +147,11 @@
 **Dateien:** `CODING-RULES.md`, `agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md` — entfernte Pflichtregeln wiederhergestellt, Grundton ergänzt und Gesamtdiff statisch geprüft.
 **Entscheidungen:** Der geprüfte Stand von Phase 4 bleibt vollständig erhalten; neu hinzu kommen nur Alltagswörter, Icons und stichpunktartige Schreibweise.
 **Unsicher / Risiko:** Nur Lieferung in Shared-Docs und Elternrepo steht noch aus.
+
+### Phase 5 — Status success (Fortsetzung)
+**Dateien:** `CODING-RULES.md`, `agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md` — Regelstand unter `b4ad718` zuerst in Shared-Docs geliefert; Abschlussnachweis und finaler Eltern-Pointer folgen in dieser Reihenfolge.
+**Entscheidungen:** Reine Dokuänderung bleibt ohne Typecheck; der Eltern-Commit enthält ausschließlich den Submodule-Pointer und keine parallelen Hauptrepo-Änderungen.
+**Unsicher / Risiko:** keines.
 
 ## Offene Fix-Punkte
 - [x] Finale Regeldatei auf redundante oder widersprüchliche Muss-Regeln geprüft.
