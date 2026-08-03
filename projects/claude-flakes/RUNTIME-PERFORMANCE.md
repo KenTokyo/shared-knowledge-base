@@ -38,3 +38,6 @@
 
 - **Erster teurer Shot als First-Cast-Stutter** — 11,2 ms folgt Laufposition; Crystallise als erster 7,0 ms. → Position rotieren, Pipelines auditieren; 19 Materialien/9 Postpässe eager mit echter Geometrie.
   *Kein Ability-Lazy-Pfad; nur Debug-`wireframe` lazy · 2026-07-31*
+
+- **Generisches Szenario-Fenster verfehlt die kurze Ability** — Abbruch bei 0,9 s ist mid-flight für Spells, die Sekunden hängen; ein Projektil liegt nach ~0,30 s, `cancel()` schrubbt leeren Pool und nimmt den Early-Return. Grün, und das Aufruf-Tally ist **identisch** zum ungestörten Lauf — Mindestpopulation und Nennerprüfung greifen nicht, es werden ja Aufrufe gescreent. → Jedes Szenario mit generischem Parameter per `--verbose` gegen den ungestörten Lauf diffen; Gleichheit heißt „behauptet nichts“. Fenster je Ability aus ihrer eigenen Flugzeit ableiten und die tragenden Konstanten am Parameter benennen.
+  *`bolt/steady/cancel` las 49 `spray.emit` wie `bolt/steady`; mit `cancelAt: 0.20` 18, ohne `combat.hit`/`deform.brush` · 2026-08-03*
