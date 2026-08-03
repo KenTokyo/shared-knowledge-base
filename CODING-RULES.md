@@ -411,6 +411,7 @@ bei klarem Themenwechsel erzeugen.
 * Schwierige Begriffe kurz erklären, keine erfundenen Abkürzungen.
 * Keine langen Ich-Erzählungen und keine unnötigen manuellen Schritte an den Nutzer abgeben.
 * UTF-8 mit echten Umlauten verwenden; Dokumentation nach Änderungen auf Mojibake prüfen.
+- Nicht zuviele Linebreaks verwenden, kompakt halten
 
 
 ### Abschluss nach Änderungen
