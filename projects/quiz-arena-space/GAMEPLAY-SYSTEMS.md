@@ -70,8 +70,19 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   Schadens- oder Projektiländerung verschiebt, und der grüne Wert war ein gewonnenes Rennen zwischen zwei
   Angriffsarten. → **Struktur erzwingen** (die anderen Angreifer entwaffnen), nicht den Wert nachjustieren.
   Ein Codekommentar „gemessen, nicht angenommen" ist damit widerlegbar — und wurde widerlegt.
+  Dieselbe Verwechslung mit vertauschten Rollen: **ein Maximum über N Züge ist ein Maximum über Glück.**
+  Ein Pegel-Vergleich, der die lauteste Frame der Waffe gegen die lauteste eines Höhepunkts stellt, zieht
+  auf der einen Seite viele Male und auf der anderen wenige — der Abstand, der dabei herauskommt, ist zum
+  großen Teil die Zugzahl. → Beide Seiten aus **demselben Zustand** und mit **gleicher Zugzahl** rechnen,
+  oder die Rivalin als Kontrafaktisches aus der Spur des Höhepunkts herleiten und die Zugzahlen mitdrucken;
+  ein Maximum aus ungleich großen Ziehungsmengen nie als Rangfolge veröffentlichen.
   *0,67 s → 0,03 s ohne eine Zeile Änderung an diesem Gegner; danach strukturell stabil auf dem
   Melee-Windup 0,45/0,63/0,70 s · 2026-07-29*
+  *Die Kanone zieht 16-mal, die drei Landmarken je einmal: ihr bester Zug 0,5977 steht gegen 0,4000 aus
+  ihrer lautesten echten Frame. Deshalb ist sie nicht die Rivalin — die Klausel rechnet jede Landmarke
+  gegen das, was die Waffe **vom selben Pegelstand aus** gekauft hätte (Stufe 0,06→0,404/0,204,
+  0,75→0,433/0,433, Kill 0,72→0,489/0,489), und das Modell dahinter reproduziert alle 36 echten Rufe ans
+  Rig · 2026-08-03*
 
 - **Ein voller Balken sah aus wie 78 %** — verdächtigt wurde die Rechnung der Vitalanzeige; die Zeile war
   die einzige mit Zahlenspalte, ihr Track dadurch kürzer als die der beiden Nachbarn. → Balken derselben
@@ -88,8 +99,13 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   führen, denn die Konstante darf überleben, während ihre Begründung stürzt.
   *`cwaimpull` über fünf Sektoren: verdant Boden 0.75 (4) liest 12 bei 0.50, voidscar Boden 0.50 (4) liest
   11 bei 0.75 — 3,0× und 2,75×. 0.5 blieb stehen, getragen jetzt vom Mittelpunkt-Argument statt vom flachen
-  Tal: innerhalb von 8° jedes eigenen Bodens, von 0.00 (23–31) nirgends geschlagen. Tabelle im Doc-Block von
-  `CW_AIM_PULL` in `src/core/Game.ts` — per Symbol zitiert, nicht per Zeile · 2026-08-03*
+  Tal: innerhalb von 8° jedes eigenen Bodens, von 0.00 (23–31) nirgends geschlagen · 2026-08-03*
+  *Eine Schicht später ist auch das Mittelpunkt-Argument gefallen, und zwar ohne eine einzige neue Reihe:
+  der Sweep maß `plateOff` gegen vier zusammenstehende Buchstabentürme, die der Frage-Runner gelöscht hat.
+  Eine Frage läuft jetzt in der lebenden Welle, Zentrierung ist nicht mehr die Größe, gegen die diese Zahl
+  handelt — `CW_AIM_PULL` steht auf **0.35** (`src/core/Game.ts`, per Symbol zitiert), und die Tabelle ist
+  mit ihrer Phase aus dem Doc-Block heraus. Der Tipp selbst hält damit zweimal: der Wert überlebte den
+  Sturz seiner ersten Begründung und starb am Wegfall seines Messobjekts · 2026-08-03*
 
 - **Der Beat mit dem größten Gewicht war der einzige ohne Kamerastoß** — Juice verteilt sich über
   unabhängige Kanäle (Trauma, Flash, Hitstop, Licht, Ring, Audio), und ein Beat kann auf fünf davon
