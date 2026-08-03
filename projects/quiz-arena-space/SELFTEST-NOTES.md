@@ -119,7 +119,17 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   nennt in seinem `want` weiter die alte Datei. → Nach jedem Schnitt jede Fortsetzung gegen die **Datei**
   neu bestimmen, nicht nur gegen die Zeile, und den Dateinamen im `want` mitziehen; beim Leerzeilen-Treiber
   **beide** Seiten des `edit`-Paars neu erheben — der tote Wert muss eine echte Leerzeile treffen, der
-  lebende darf keine sein.
+  lebende darf keine sein. **Und die nummernlose Form mitziehen:** der Check `every Crossword.ts citation
+  still lands in its symbol` sammelt nur `File.ts:\d+ (symbol)` ein, also sieht er weder ein nacktes
+  `` `_place` `` noch ein „Ported verbatim from `src/systems/X.ts`" — die Prosa um ein Zitat herum altert
+  ungeprüft weiter, auch wenn das Zitat selbst nachgezogen wurde. Nach jedem Schnitt zusätzlich per
+  Symbolgrep über die zitierenden Dateien gehen, nicht nur den Check fahren.
   *`Crossword.ts` 2.882 → 1.408 in drei Schnitten. `:681` zeigte in beiden Blättern nach dem Umzug von
   `park` nach `CrosswordGrid.ts` auf `_unregister` und blieb grün; umgehängt auf `` `:55` ``/`CrosswordGrid.ts`,
   Leerzeilen-Treiber von `1780→1769` auf `1205→1206` · 2026-08-03*
+  *Zwei Schichten später: derselbe Schnitt hatte die **Rümpfe** beider Simulatoren korrekt zurückgelassen
+  und ihre **Kopfblöcke** nicht — 14 tote Symbolnennungen (`_place`, `_scorePlacement`, `_nextEntry`,
+  `_drawPanel`; alle vier leben ohne Unterstrich in `CrosswordGrid.ts`/`CrosswordBoard.ts`) und zwei
+  Hausregelsätze, die auf `src/systems/Crossword.ts` zeigten, wo der geportete Code nicht mehr liegt.
+  `selftest` meldete davor wie danach 1 von 60. Mitgewandert war auch die Aussage: `place` parkt nicht
+  mehr selbst, sondern fällt auf `park` durch · 2026-08-03*
