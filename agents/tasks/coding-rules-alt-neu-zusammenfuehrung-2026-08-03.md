@@ -42,11 +42,11 @@
 - `shared-docs/THREEJS-RULES.md`
 - `shared-docs/SCREENSHOT-GUIDE.md`
 
-### Phase 3 — Abschlussaudit und Lieferung
+### ✅ Phase 3 — Abschlussaudit und Lieferung
 **Ziel:** Alle Useranforderungen, Links, Encoding- und Git-Regeln sind geprüft und die Änderung ist sauber geliefert.
 - [x] Alle Phasenpunkte gegen die finale Datei erneut geprüft.
 - [x] Links, Überschriften, Widersprüche, UTF-8/Mojibake und Diff kontrolliert.
-- [ ] Reine Dokuänderung ohne Typecheck begründet liefern; Submodule zuerst committen und pushen, danach Eltern-Pointer.
+- [x] Reine Dokuänderung ohne Typecheck begründet geliefert; Shared-Docs-Commit `93698c0` gepusht, Eltern-Pointer folgt regelkonform.
 **Ergebnis-Satz:** Die gemischte Coding-Rules-Fassung ist nachvollziehbar geprüft und im Zielbranch verfügbar.
 **Warum:** Die Abschlussprüfung verhindert ausgelassene Regeln und beschädigte Referenzen.
 **Eingehalten:** Dokuänderung ohne unnötige Codeprüfung, Main-Branch, präzise Commits.
@@ -67,8 +67,8 @@
 **Auffälligkeiten (nach Schwere):** Commit-Regel konfliktfrei auf die aktuelle strengere Lieferung jeder konsistenten Einheit vereinheitlicht.
 
 ### Phase 3
-**Eingehalten:** vollständiger Wiederholungscheck ✅, alle Markdown-Links vorhanden ✅, UTF-8 ohne BOM/Mojibake ✅, `git diff --check` grün ✅
-**Auffälligkeiten (nach Schwere):** Keine offenen Inhalts- oder Encodingfehler; Lieferung läuft als letzter Schritt.
+**Eingehalten:** vollständiger Wiederholungscheck ✅, alle Markdown-Links vorhanden ✅, UTF-8 ohne BOM/Mojibake ✅, `git diff --check` grün ✅, Shared-Docs gepusht ✅
+**Auffälligkeiten (nach Schwere):** Keine offenen Inhalts-, Encoding- oder Lieferfehler.
 
 ## Arbeitsprotokoll
 
@@ -86,6 +86,11 @@
 **Dateien:** `CODING-RULES.md`, `agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md` — Abschlussaudit und Arbeitsnachweis geprüft.
 **Entscheidungen:** Kein Typecheck, weil ausschließlich Markdown geändert wurde; Link-, Encoding- und Diff-Prüfung sind das relevante Gate.
 **Unsicher / Risiko:** Nur Commit-/Push-Lieferung steht noch aus.
+
+### Phase 3 — Status success (Fortsetzung)
+**Dateien:** `CODING-RULES.md`, `agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md` — Shared-Docs als Commit `93698c0` auf `main` geliefert.
+**Entscheidungen:** Append-only-Protokoll bewahrt den vorherigen Partial-Stand; Elternrepo erhält anschließend nur den finalen Submodule-Pointer.
+**Unsicher / Risiko:** keines.
 
 ## Offene Fix-Punkte
 - [x] Finale Regeldatei auf redundante oder widersprüchliche Muss-Regeln geprüft.
