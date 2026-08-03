@@ -164,3 +164,26 @@ Globale Vegetationstipps beginnen bei [`../../threejs/VEGETATION.md`](../../thre
   *Dieselbe Vogelzahl, nur anders platziert: `cliff-path` Möwen 0,000 → 0,035 % Bildanteil, nächste
   Instanz 170 → 20 m, projizierte Spannweite 6,1 → 45,8 px. Krähen lesen danach auf 13 von 14
   Kameras mit 10,9–52,1 px statt 7,0–19,8 · 2026-08-02*
+
+- **Die Sichtweite als Verdächtiger für ein strukturloses Bild** — die dichteste Kamera ist die
+  schlechteste des Blindvergleichs, ihre Skalenleiter **fällt** als einzige, und das offene Todo
+  daneben heisst „die Sichtweite reguliert die dominante Art nicht". Beides betrifft dasselbe
+  Objekt, also liest es sich wie eine Ursache. Ist es nicht: ein Regler, der eine **Instanzzahl**
+  hebt, hebt den Pixelkontrast, und Struktur entsteht daraus erst, wenn die Instanzen sich zu
+  Massen zusammenlegen. Ein Halm von 8,8 cm steht ab rund 100 m unter einem Pixel breit — tausend
+  davon sind kein Hain, sondern Rauschen. → Den Regler über **alle** Presets sweepen und die
+  Bildzahl daneben legen, bevor irgendetwas gebaut wird. Steigt der Pixelkontrast und bleibt die
+  Skalenzahl liegen, ist der Regler widerlegt und der Befund gehört auf eine andere Achse.
+  *`rel` 0,1337 → 0,1406 → 0,1506 → 0,1582 (+18 %) über `low`..`ultra`, `H` dabei −0,082 / −0,107 /
+  −0,089 / −0,098: negativ auf allen vier und nicht einmal monoton · 2026-08-04*
+
+- **Instanz-LOD ist ein Präfix, aber nur auf einer gemischten Liste** — `mesh.count` zu senken ist
+  die billigste Ausdünnung, die es gibt (eine ganzzahlige Zuweisung je Chunkwechsel, kein Neubau
+  der Matrizen). Ungemischt schneidet sie den zuletzt geschriebenen Streifen ab, und weil ein
+  Gitterlauf zeilenweise schreibt, ist das im Bild eine **gerade Kante** quer durch den Bestand. →
+  Die Instanzliste beim Bau nach einem **eigenen** Hash sortieren — nicht nach dem, der Farbe oder
+  Schlankheit fährt, sonst ist die gezeichnete Teilmenge genau die helle oder genau die schlanke
+  Hälfte. Und die Ausdünnung masseerhaltend fahren: weniger Halme, dafür breitere, sonst wird aus
+  dem Hain ein Zaun.
+  *`thin = [1, 0,72, 0,48]` mit `CULM_W = [1, 1,28, 1,75]`: −7,1 % Dreiecke auf `low`, −4,8 % auf
+  `medium`, −2,5 % auf `high`, Draw Calls unverändert, `rel` +0,0002 bis +0,0007 · 2026-08-04*
