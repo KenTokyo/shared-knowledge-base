@@ -57,13 +57,13 @@
 - `shared-docs/CODING-RULES.md`
 - `shared-docs/agents/tasks/coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md`
 
-### Phase 4 — Kompakte Projektarchitektur und harte LOC-Grenze
+### ✅ Phase 4 — Kompakte Projektarchitektur und harte LOC-Grenze
 **Ziel:** Agenten finden zentrale Projektbereiche direkt in `AGENTS.md`; handgepflegte Codedateien bleiben verpflichtend unter 1.600 LOC.
 - [x] `AGENTS.md` ohne Wiederholung der Coding Rules um eine kompakte Pfadarchitektur ergänzt.
 - [x] 1.600 LOC als vierte lokale Pflichtregel und harte universelle Codegrenze formuliert.
 - [x] Veraltete 700-Zeilen-Beispiele im verbindlichen Phasenworkflow auf 1.600 LOC umgestellt.
 - [x] Regelstellen, Diff, Links, Architekturpfade und UTF-8 geprüft; reine Dokuänderung benötigt keinen Typecheck.
-- [ ] Shared-Docs committen und pushen, danach `AGENTS.md` plus finalen Submodule-Pointer im Elternrepo liefern.
+- [x] Shared-Docs als Commit `6aa831c` gepusht; `AGENTS.md` und finaler Submodule-Pointer für die direkte Elternrepo-Lieferung vorbereitet.
 **Ergebnis-Satz:** Dateibesitz ist sofort auffindbar und übergroße handgepflegte Codedateien sind verbindlich verboten.
 **Warum:** Eine weiche Split-Empfehlung setzt kein belastbares Maximum; die lokale Architektur spart unnötige Suche.
 **Eingehalten:** kompakte AGENTS-Datei, keine Wiederholung allgemeiner Coding Rules, bestehende Fremdänderungen bleiben erhalten.
@@ -89,7 +89,7 @@
 **Auffälligkeiten (nach Schwere):** Keine offenen Inhalts-, Encoding- oder Lieferfehler.
 
 ### Phase 4
-**Eingehalten:** kompakte Pfadkarte ✅, vier lokale Pflichtregeln ✅, harte 1.600-LOC-Grenze ✅, Workflow-Werte konsistent ✅, Links/Pfade/UTF-8 ✅
+**Eingehalten:** kompakte Pfadkarte ✅, vier lokale Pflichtregeln ✅, harte 1.600-LOC-Grenze ✅, Workflow-Werte konsistent ✅, Links/Pfade/UTF-8 ✅, Shared-Docs gepusht ✅
 **Auffälligkeiten (nach Schwere):** 🟡 29 bestehende handgepflegte oder skriptartige Dateien liegen bereits über 1.600 Zeilen; die neue Regel verlangt ihre fachliche Aufteilung, sobald sie in einem Auftrag berührt werden. Parallele Fremdänderungen wurden nicht gestagt.
 
 ## Arbeitsprotokoll
@@ -118,6 +118,11 @@
 **Dateien:** `AGENTS.md`, `CODING-RULES.md`, `agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md` — Pfadarchitektur und LOC-Grenze umgesetzt und statisch geprüft.
 **Entscheidungen:** 1.600 ist ein hartes Limit für neue/geänderte handgepflegte Dateien; Generatorausgaben und unveränderter Vendor-Code bleiben ausgenommen. Bestehende Überschreitungen werden bei Berührung geteilt statt ungefragt als Großrefactoring eröffnet.
 **Unsicher / Risiko:** Nur selektive Commit-/Push-Lieferung steht aus; parallele Fremdhunks in denselben Dateien bleiben außerhalb des Commits.
+
+### Phase 4 — Status success (Fortsetzung)
+**Dateien:** `CODING-RULES.md`, `agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md`, `AGENTS.md` — Shared-Docs unter `6aa831c` geliefert; lokale AGENTS-Änderung selektiv gestagt.
+**Entscheidungen:** Fremde Hunks in `AGENTS.md` und `CODING-RULES.md` bleiben unstaged; nur eigene Regel- und Architekturänderungen werden geliefert.
+**Unsicher / Risiko:** keines; Elternrepo-Lieferung folgt unmittelbar.
 
 ## Offene Fix-Punkte
 - [x] Finale Regeldatei auf redundante oder widersprüchliche Muss-Regeln geprüft.
