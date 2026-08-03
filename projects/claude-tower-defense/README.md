@@ -9,7 +9,8 @@ Architektur/SSoT: `Notes/TASKS.md`, Einstieg `TASKS-2.md`, Akten `DEFECTS.md`. H
 
 | Arbeit | Zuerst lesen |
 |---|---|
-| Gate, Wächter, `--bad`, A/B-Klammer, grüner Test | [`INSTRUMENT-TRAPS.md`](INSTRUMENT-TRAPS.md) |
+| Zahl oder Grün einer Sonde deuten, A/B-Klammer, Sampler | [`INSTRUMENT-TRAPS.md`](INSTRUMENT-TRAPS.md) |
+| `--bad`-Arm, Exit-Code, Selbstprüfung bauen oder abnehmen | [`RED-ARM-TRAPS.md`](RED-ARM-TRAPS.md) |
 | Schatten, Cascade, LOD, Culling, Calls, Framezeit | [`SHADOW-AND-CULLING.md`](SHADOW-AND-CULLING.md) |
 | CLI, Prüfreihe, Datei, Beleg | [`TOOLING-TRAPS.md`](TOOLING-TRAPS.md) |
 | HUD, Weltlabel, Lesbarkeit, Kontrast, Schriftgröße, `z-index`, grüne Oberfläche | [`UI-MEASURING.md`](UI-MEASURING.md) |
