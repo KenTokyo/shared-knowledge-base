@@ -13,8 +13,8 @@ Lieferregeln der neueren Fassung.
 
 Projekt- oder technologiespezifische Details bleiben bei ihren Ownern, besonders Echtzeit-3D in
 [THREEJS-RULES.md](THREEJS-RULES.md), Worldbuilding in
-[THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md), Capture in
-[SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) und Learnings in [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).
+[THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md) und Learnings in
+[LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).
 
 ## 1. Lesepfad und Kontextanker
 
@@ -318,8 +318,11 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
 
 Nur wenn §8 die freiwillige Ausnahme erlaubt:
 
-- ausschließlich projekteigenes CLI-Capture-System verwenden;
-- fehlt es, nach `SCREENSHOT-GUIDE.md` zuerst regelkonform bauen;
+- ausschließlich das projekteigene CLI-Capture-System verwenden;
+- den lokalen Einstieg zuerst in der Projekt-Pfadkarte, den `package.json`-Scripts und passenden `scripts/`-
+  Ordnern suchen;
+- den [Screenshot-Guide](SCREENSHOT-GUIDE.md) nur lesen, wenn der Einstieg danach unklar bleibt oder das System
+  wirklich fehlt; ein fehlendes System anschließend nach diesem Vertrag bauen;
 - Playwright startet einmalig headless Chromium, dieselbe Sitzung bedient alle Messungen;
 - Software-Renderer brechen den Lauf ab;
 - PNG direkt aus dem Engine-Post-Target erzeugen, in Three.js per `readRenderTargetPixels()`, niemals per
