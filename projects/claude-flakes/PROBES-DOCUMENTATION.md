@@ -9,8 +9,8 @@
 - **`process.exit()` umgeht Cleanup** — Exit im `try` beendet Node vor `finally`; Mutationskopien bleiben als nächste Baseline liegen. → Exit-Code sammeln, Cleanup im `finally`, erst danach `process.exitCode` setzen.
   *Ein Refusal hinterließ 6 `_ph52-*`-Kopien; tabellengetriebener Umbau räumte alle Pfade auf · 2026-08-02*
 
-- **Dokumentzahl bleibt bei grünen Gates frei erfunden** — Suite liest nur Kurventabelle, ROADMAP gar nicht. → Claims aus aktuellem Dokument parsen, Artefakt live lesen, falschen Wert und fehlendes Artefakt separat röten.
-  *README 141/118→777/555: Mutation-Gate 141/141 und Suite 124/124 weiter PASS; danach 255-vs-257-Fehler gefunden · 2026-08-01*
+- **Dokumentzahl bleibt bei grünen Gates frei erfunden** — Suite liest nur Kurventabelle, ROADMAP gar nicht. Auch mit Doku-Gate bleibt eine Lücke: `FIGURE_SHAPES` erkennt ausschließlich „`review/x.log` + N lines". Ein Verdikt-Block (`all 16 checks passed`, `58/58 checks passed`) nennt weder Logdatei noch Zeilenzahl, fällt damit durch jede Shape und driftet unbemerkt weiter — ausgerechnet in dem Dokument, das „eine Zahl in Prosa ist ein Anspruch" als eigene Regel führt. → Claims aus aktuellem Dokument parsen, Artefakt live lesen, falschen Wert und fehlendes Artefakt separat röten; Verdikt-Zahlen beim Anfassen **neu messen statt abschreiben** — `consts`+`wgsl`+`progression`+`mutation`+`build` kosten zusammen unter einer Minute und keinen Browser, nur `play.mjs` kostet einen Chromium-Start.
+  *README 141/118→777/555: Mutation-Gate 141/141 und Suite 124/124 weiter PASS; danach 255-vs-257-Fehler gefunden · 2026-08-01. Erneut in `docs/test-status.md` selbst: wgsl stand auf 16 (gemessen 18), play.mjs auf 58/58 (gemessen 140/140) — Gate blieb bei beiden 145/145 grün · 2026-08-03*
 
 - **Hartumbruch verkleinert Claim-Nenner** — Parser erwartet Literalspaces und überspringt umbrochene Prosa; kleinerer Nenner wirkt sauber. → Zwischen Tokens `\s+`; zusätzlich jede unverbrauchte `N lines`-Phrase mit Pfad/Zeile melden.
   *3/10 README-Claims fielen zunächst still weg; Residuum fand sofort 3 weitere übersehene Stellen · 2026-08-01*
