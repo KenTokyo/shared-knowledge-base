@@ -21,11 +21,14 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Pflanze streuen, Dichte, LOD-Stufe, Blatt-/Kronenform | [`VEGETATION-SCATTER.md`](VEGETATION-SCATTER.md) |
 | Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
 
-**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (18 Tipps), `HARNESS-GATES.md` (17) und
+**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (18 Tipps), `HARNESS-GATES.md` (18) und
 `VEGETATION-SCATTER.md` (15) liegen über den ~12 aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md);
 ein ungelesener Tipp wirkt nicht. Die Teilung läuft entlang der Trigger, nicht der Menge — bei den
 beiden Gate-Dateien trennt sich *Harness-Mechanik* (Browser, Pump, Boot-Fenster, Port) von
 *Gate-Entwurf* (was eine Prüfung behauptet, wer die Eingabe erzeugt, welcher Ausschluss blind macht).
+Die Schicht vom 2026-08-03 hat deshalb **drei bestehende Tipps geschärft statt drei neue angelegt**
+(Gegenstand *und* Bedingung eines Gates · A/B gegen dieselbe Szene ohne das Objekt · der `grep` vor
+einem Maßstabsdreh findet nur, was schon steht) und genau zwei neue geschrieben.
 
 ## Teuerstes Muster
 
@@ -49,6 +52,14 @@ beantwortet). Beide fand eine Maschine — der Bundler und das Viewmodel-Gate �
 
 Gegenmittel: **was mechanisch prüfbar ist, gehört in den `check`, und die Regel gehört an die Stelle
 im Code, an der getippt wird.** Eine zweite Notiz derselben Regel ist kein Gegenmittel.
+
+**Dritter Fall, eine Schicht später, und er schärft die Regel:** drei getippte Weltkoordinaten in
+`shrines/index.js` überlebten den Maßstabsdreh nicht — getippt 00:07, Maßstab gedreht 01:15
+desselben Tages. Hier hätte auch das beste Gedächtnis nichts ausgerichtet, weil die Stelle zum
+Tippzeitpunkt **richtig war**; gefunden hat sie ein Gate, das eine Woche später entstand. Daraus
+folgt der Zusatz: gegen Rückfälle hilft eine Prüfung, gegen *Alterung* hilft nur eine Prüfung, die
+das **Ergebnis** misst statt der Konstanten — und die entsteht erfahrungsgemäß erst, wenn jemand
+die Zusage einmal ausschreibt.
 
 ## Lokale Owner
 

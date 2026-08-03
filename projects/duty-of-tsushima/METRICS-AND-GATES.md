@@ -11,6 +11,8 @@ Ausführliche Nachrechnung: Köpfe von `tools/grade.mjs` und `tools/capture.mjs`
 
 - **Ein Bild trennt Effekt und Motiv nicht** — Außenring/Mitte („Vignette“) 0,83–1,17; Motiv dominiert. → Gleiche Kamera mit Effekt=0; Verhältnisse teilen; Schranke aus Shaderarithmetik. Hier linearer Ringfaktor 0,888 und sRGB-Kompression ⇒ [0,888;1].
   *Getrennt 0,947–0,948, Spanne 0,001; `wave-peak` 1,235 ohne vs. 1,171 mit Vignette · `capture.mjs --vig` · 2026-08-02*
+  **Dasselbe A/B trennt auch „gar nicht da“ von „schwach“:** ein verdecktes Objekt misst sich nicht als Fehler, sondern als kleiner Kontrast (dunkel 0,133 gegen hell 0,138 liest sich als „0,018“) und verschwindet in jedem Mittelwert; ein Absolutwert kann die beiden Fälle grundsätzlich nicht trennen, weil beide dieselbe Zahl erzeugen. → Zwei Aufnahmen derselben Szene, einmal mit und einmal ohne das Objekt (`group.visible`), RMS-Delta im selben Rechteck — die Differenz stellt die Frage direkt und kennt keine Grauzone.
+  *Sichtbare Tafeln 0,159–0,357, verdeckte exakt 0,000; damit belegt, dass die Verdeckung auf 40 m (4/4) und 60 m (3/4) der Plateaurand ist und kein Messfehler · `tools/boards.mjs` · `023d378` · 2026-08-03*
 
 - **Absolute Streuung vergleicht Belichtungen falsch** — Luma-Standardabweichung sinkt mit Licht, auch bei schärferen Kanten; Spezifikation „dunkler und nicht flach“ wird unerfüllbar. → Kachelstreuung/Kachelmittel; über alle Kacheln statt wandernde Helligkeitsbänder.
   *Exposure 1→0,70, Fill 1,15: Luma ×0,862, absoluter Kontrast ×0,906 trotz relativ schärferem Bild · 2026-08-02*
