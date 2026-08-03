@@ -22,7 +22,7 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
 | Datensatz aus einem Pool wiederverwenden, Instanzring dimensionieren, Referenz auf einen Poolplatz | [`ACTOR-POOLS.md`](ACTOR-POOLS.md) |
 
-**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (18 Tipps), `HARNESS-GATES.md` (18) und
+**Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (20 Tipps), `HARNESS-GATES.md` (20) und
 `VEGETATION-SCATTER.md` (15) liegen über den ~12 aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md);
 ein ungelesener Tipp wirkt nicht. Die Teilung läuft entlang der Trigger, nicht der Menge — bei den
 beiden Gate-Dateien trennt sich *Harness-Mechanik* (Browser, Pump, Boot-Fenster, Port) von

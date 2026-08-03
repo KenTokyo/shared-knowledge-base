@@ -82,3 +82,18 @@ von `src/world/structures.js` und in `tools/warm.mjs`.
   eine Rangfolge, die nur auf `high` geprüft ist, ist auf `medium` eine Vermutung.
   *4 mast + 4 brazier + 6 lantern = 14 = das ganze `medium`-Budget (16 − 2 Reserve). Kameras im Band
   2–6 %: high 6, medium 3, low 0 · 2026-08-02*
+
+- **Der Akzent misst den Grundton, sobald drei Lichtterme dazwischen gebaut wurden** — §3s Warmanteil
+  stand auf 10,21 % gegen ein Band von 2–6 %, zehn von fünfzehn Kameras darüber, und der einzige
+  Regler, der „warm" heißt, ist die Feuerdosis. Er ist der falsche: mit **allen acht Feuerarten auf
+  Dosis null** stehen immer noch 8,16 % und neun Kameras über der Schranke. Welt (4,76), Env-Map
+  (+1,69), Blattdurchlicht (+1,93) und Feuer (+2,05) stapeln sich, und jeder Beitrag wurde gegen
+  die Zahl *vor* dem jeweils nächsten Bau geprüft — vier Zahlen altern gegeneinander statt eine mit
+  der Welt. → Vor dem Griff zum namensgleichen Regler die **Herkunft** messen: jeden Term einzeln
+  auf null und den Rest in **einem** Prozess ablesen (`--sources`). Gegriffen wird dann dort, wo die
+  Masse liegt — hier der Blauanteil des **Lifts**, der einzige Regler, der die dunkle Hälfte trifft
+  (den gelbgrünen Bewuchs) und nicht den Flammenkern. Ein Akzent, der über der Schranke steht,
+  während seine Quelle abgeschaltet ist, ist per Definition kein Akzentproblem.
+  *10,21 % → 4,01 % über 15 Kameras, 9 statt 5 im Band, 3 statt 10 darüber; Preis Chroma 0,0395 →
+  0,046 und drei Kameras unter 2 %. `tools/warm.mjs --sources`/`--rank`, 24 Kombinationen ·
+  `93bf3f4` `f0370b4` · 2026-08-03*
