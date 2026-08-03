@@ -23,6 +23,14 @@ Jeder Tipp kostete mindestens einen Durchgang.
 
 - **Shader-Kommentar beendet Template-Literal** — Backtick in `GrassField.js`-Kommentar schließt Shader; Meldung nur `Unexpected identifier`. → Shader-Kommentare ohne Backticks; nach Edit `node --check`.
   *P14n/P14o/P14q: gleiche Falle je ein Durchgang · 2026-08-01*
+  **Schlimmer bei geradem Backtickpaar:** `` `.a` `` im Kommentar schließt das Literal und macht aus dem Rest ein
+  **Tagged Template** — gültiges JS. `node --check` und `pnpm type-check` bleiben grün, der Bruch kommt erst beim
+  Laden als `TypeError: "…".a is not a function`, reißt die R3F-Canvas mit und löscht `__svq`; jedes Messwerkzeug
+  meldet danach nur die Folge (`worldReady=false`, `__svq undefined`). → Backticks in Shader-Kommentaren nicht
+  „ausbalancieren", sondern weglassen; Erklärungen in JS-Blockkommentare **vor** das Literal. Statische Gates
+  taugen hier nicht als Beleg — eine Seitenkonsole (`pageErrors`) beantwortet die Frage in einem Lauf.
+  *`dungeonGrass.js` `VERT_BODY`: zwei Durchgänge verloren, weil beide Fehlerbilder auf einen GLSL-Compile-Fehler
+  zeigten · 2026-08-03*
 
 - **`CameraRig.js`-Grep verfälscht Kommentarzeichen** — Ausgabe stellt `//` als `\` dar. → Aussagen per direktem Read prüfen.
   *Grep und Read unterschieden sich an Kommentarzeichen · 2026-08-01*
