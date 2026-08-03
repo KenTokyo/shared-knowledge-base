@@ -169,6 +169,13 @@ Weltseite (AEON, Port 3074): [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md). Ins
   **nur im Dev**. → Zählmarken in Rümpfen immer halbieren, Effektpaare nie als echten Remount lesen.
   *`effect 17849 x2` + `stage-unmount 17865` bei unverändertem `effectiveModeId` · 2026-08-02*
 
+- **Zwei Läufe verglichen, die nicht vergleichbar sind** — Vorher/Nachher zeigt einen Sprung, der nicht aus dem
+  Code kommt. Zwei Ursachen, beide im JSON und keine in der Tabelle: **verschiedene Bündel** (`url` 3070 Dev
+  gegen 4180 Prod) oder **verschieden belastete Maschine**. → Vor jedem Vergleich `url` beider Läufe gleichsetzen
+  **und** die `settle`-Zeile lesen; braucht derselbe Ladepfad ein Vielfaches, ist der Lauf verworfen, nicht der Code.
+  *`base-l12` (3070) gegen `ballast1-l12` (4180) las sich als p99 78,5 → 12,5 ms, Dev gegen Dev blieb bei 65 ms;
+  Etage 28 „p99 69,8 ms, Floor verfehlt" stammte aus einem Lauf mit 26 193 ms Ladeteil gegen 4 956 ms heute — real 9,1 ms · 2026-08-03*
+
 ## Vorher-Stand
 
 A/B ab Commit `545d5133` gegen `.tmp/rt2-l12.json`; davor liegt der Doppelcompile, noch davor der Thrash.
