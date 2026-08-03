@@ -15,6 +15,7 @@ Architektur/Stand: Repo-`README.md`, `ROADMAP.md`, `.completed/`. Hier nur beleg
 | Waves, Wights, Essence, Boons, Cairn, Balance | [`GAMEPLAY-BALANCE.md`](GAMEPLAY-BALANCE.md) |
 | `progression-test.mjs`, `mutation-test.mjs`, Assertions | [`TEST-GATES.md`](TEST-GATES.md) |
 | `review/*.mjs`, Selbsttests, Dokumentzahlen, Beleglogs | [`PROBES-DOCUMENTATION.md`](PROBES-DOCUMENTATION.md) |
+| `evaluate`-Strings, `RAIL_CSS`, HUD-Markup — alles in Backticks | [`TEMPLATE-LITERALS.md`](TEMPLATE-LITERALS.md) |
 
 Stackübergreifend: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 
