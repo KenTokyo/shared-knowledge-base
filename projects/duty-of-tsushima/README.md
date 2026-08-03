@@ -20,6 +20,7 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Bildkontrast | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
 | Pflanze streuen, Dichte, LOD-Stufe, Blatt-/Kronenform | [`VEGETATION-SCATTER.md`](VEGETATION-SCATTER.md) |
 | Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
+| Datensatz aus einem Pool wiederverwenden, Instanzring dimensionieren, Referenz auf einen Poolplatz | [`ACTOR-POOLS.md`](ACTOR-POOLS.md) |
 
 **Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (18 Tipps), `HARNESS-GATES.md` (18) und
 `VEGETATION-SCATTER.md` (15) liegen über den ~12 aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md);
@@ -28,7 +29,10 @@ beiden Gate-Dateien trennt sich *Harness-Mechanik* (Browser, Pump, Boot-Fenster,
 *Gate-Entwurf* (was eine Prüfung behauptet, wer die Eingabe erzeugt, welcher Ausschluss blind macht).
 Die Schicht vom 2026-08-03 hat deshalb **drei bestehende Tipps geschärft statt drei neue angelegt**
 (Gegenstand *und* Bedingung eines Gates · A/B gegen dieselbe Szene ohne das Objekt · der `grep` vor
-einem Maßstabsdreh findet nur, was schon steht) und genau zwei neue geschrieben.
+einem Maßstabsdreh findet nur, was schon steht) und genau zwei neue geschrieben. Die Bossschicht
+desselben Tages hat zwei weitere **geschärft** — der Gate-Tipp trägt jetzt die dritte Gestalt
+*Umgebung*, der Sender/Hörer-Tipp beide Richtungen — und für die Pool-Findings eine neue Datei
+angelegt, weil `ACTOR-POOLS.md` einen eigenen Trigger hat und in keine der bestehenden gehört.
 
 ## Teuerstes Muster
 
