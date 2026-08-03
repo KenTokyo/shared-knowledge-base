@@ -90,3 +90,14 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   11 bei 0.75 — 3,0× und 2,75×. 0.5 blieb stehen, getragen jetzt vom Mittelpunkt-Argument statt vom flachen
   Tal: innerhalb von 8° jedes eigenen Bodens, von 0.00 (23–31) nirgends geschlagen. Tabelle im Doc-Block von
   `CW_AIM_PULL` in `src/core/Game.ts` — per Symbol zitiert, nicht per Zeile · 2026-08-03*
+
+- **Der Beat mit dem größten Gewicht war der einzige ohne Kamerastoß** — Juice verteilt sich über
+  unabhängige Kanäle (Trauma, Flash, Hitstop, Licht, Ring, Audio), und ein Beat kann auf fünf davon
+  vollständig sein und auf dem sechsten leer. Im Spiel fällt das nicht auf, weil das abklingende Trauma des
+  vorigen Beats die Lücke maskiert; im Code fällt es nicht auf, weil der Beat sichtbar *etwas* tut. → Beats
+  gegen Kanäle auftragen und die **Spalte** lesen, nicht die Zeile — ein Höhepunkt muss seine eigenen
+  Teilschritte auf **jedem** Kanal überbieten, nicht auf den meisten.
+  *Der Wort-Solve trug Flash 0.25 (1,56× des Turm-Bursts 0.16) und Ring 26 (1,44× dessen 18), aber Trauma
+  **0** gegen 0.24 — während eine *falsche* Antwort mit 0.16 stieß. Trauma klingt linear mit 1.35/s ab: die
+  0.40 des letzten Buchstabens waren bei 0,30 s aufgebraucht, der Solve feuert bei 0,50 s. Nachweislich
+  stille Kamera im lautesten Moment der Phase, gesetzt auf 0.35 · 2026-08-03*
