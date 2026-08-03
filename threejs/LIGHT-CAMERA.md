@@ -92,9 +92,37 @@ Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
   **aus der Viewmatrix lesen**, nicht aus dem Sonnenwinkel rechnen.
   ⚠ **Und der scheinbare Preis — „ungleiche Texel machen den PCF-Kern oval" — ist auf dem Boden ein GEWINN,**
   siehe den nächsten Tipp: das Oval im Raster steht **quer** zu dem, das die Kamera sieht.
+  ⚠ **Die MITTE ist dieselbe Frage wie der Span:** `top = -bottom` behauptet, über und unter dem Blickpunkt
+  stehe gleich viel Welt. Hängt die Box am Meeresspiegel, während das Gelände darüber liegt, ist die untere
+  Hälfte leer und die obere zu kurz — und das kostet **beides gleichzeitig**, wie das Quadrat. Erst
+  `top`/`bottom` **getrennt** aus dem lokalen Relief setzen, dann über den Span reden.
   *eine quadratische Box las auf x 123 % Belegung (überzogen) und auf y 60 %; nur die y-Achse zu fitten
   schärfte das halbe Bild um 22 % zu Kosten von null, die x-Heilung hätte jeden Schatten 24 % gröber gemacht ·
-  Herkunft: claude-tower-defense (Mechanismus ohne Projektbezug, zweiter Beleg steht aus) · 2026-08-01*
+  Herkunft: claude-tower-defense · 2026-08-01 · **zweiter Beleg** duty-of-tsushima: dieselbe Box, symmetrisch
+  um den Meeresspiegel unter einer Insel — Oberkante schnitt auf `low` an 100 % von 1 230 begehbaren
+  Standorten ab, Unterkante an 0; asymmetrisch aus dem lokalen Relief braucht sie im Median 76 % der alten
+  Spanne, und relK stieg auf 15 von 15 Kameras · 2026-08-04*
+
+- **Belegungszahl einer Schattenbox aus getippten Weltgrenzen** — die Sonde meldet „y ist zu 67 % belegt, ein
+  Fit schärft um 33 %", der Fit wird gebaut, und die Richtung war umgekehrt: nicht der Span war falsch,
+  sondern die Mitte. Ursache: die Sonde trug ihre eigene Höhenschranke als Konstante im Kopf und misst damit
+  **die Schranke, nicht die Welt** — jede Belegung ist nur so wahr wie das Band, gegen das sie teilt.
+  → Jede Schranke einer Sonde aus dem **gebauten** Bestand holen, bevor eine Prozentzahl daraus wird:
+  `Box3.setFromObject` über die Szene für den Kopfraum, Feldabtastung über begehbare Punkte für den Boden.
+  Kostet zwei Zeilen und ist der einzige Unterschied zwischen einer Messung und einer Meinung mit Nachkommastellen.
+  *getippt −2/+32 m gegen gebaut gemessen −17,70/+43,71 m; aus „33 % Reserve auf einer Achse" wurde
+  „Oberkante schneidet an 100 % von 1 230 Standorten ab, Unterkante an 0" · Herkunft: duty-of-tsushima ·
+  2026-08-04*
+
+- **Kasterwahl gegen eine selbst gerechnete Reichweite** — Ringe, Chunks oder Instanzen schalten ihren
+  Schattenwurf gegen `shadowDistance × Faktor` und zeichnen jenseits einer Distanz jeden Frame Geometrie in
+  die Karte, die kein Pixel setzt; im Profiler sieht es aus wie Kasterkosten, die niemand sieht. Ursache: die
+  Ortho-Box ist quer zur Sonne **hart** beschnitten (`right − left`) — was dahinter steht, rendert three gar
+  nicht, egal wohin sein Schatten fiele; ein Faktor auf die Sichtweite beschreibt die Reichweite **längs** des
+  Strahls und schneidet keine Box. → Die halbe Bodenspanne der **gebauten** Box als Getter veröffentlichen und
+  je Frame lesen; und waagerecht messen, nicht schräg — die Box ist ein Grundriss.
+  *`SHADOW_MARGIN = 1,15` traf 0,5 / sin 25,8° = 1,149, also die Sonnenreichweite, abgelesen ohne benannt zu
+  werden: Kaster bis 149,5 m in eine Box, die bei 65 m endet · Herkunft: duty-of-tsushima · 2026-08-04*
 
 - **Ein Maß aus dem Schattenraster als Bildgröße gelesen** — Kernweite, Penumbra oder Bias werden in
   Lichtraum-Metern ausgerechnet, in Bildschirmpixel umgerechnet und entschieden; das Urteil kann **im
