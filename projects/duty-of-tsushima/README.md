@@ -18,6 +18,7 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Weltzahl mit einem Faktor multiplizieren, Kartengröße, Gitterauflösung, Bake-Wechsel | [`WORLD-SCALE.md`](WORLD-SCALE.md) |
 | Viewmodel-Lage, Optik, Bauteil aus `PartSet`, Zielpunkt, Shaderquelle in `src/weapons/` | [`WEAPON-VIEWMODEL.md`](WEAPON-VIEWMODEL.md) |
 | Terrain-Oberfläche, `splat.js`, Vertexattribut, Maske, lokaler Bildkontrast | [`TERRAIN-SURFACE.md`](TERRAIN-SURFACE.md) |
+| Tageszeit, Wetter, Nebel, Sonnenstand, Kartenidentität, zwei Varianten sehen gleich aus | [`WORLD-LOOK.md`](WORLD-LOOK.md) |
 | Pflanze streuen, Dichte, LOD-Stufe, Blatt-/Kronenform | [`VEGETATION-SCATTER.md`](VEGETATION-SCATTER.md) |
 | Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
 | Datensatz aus einem Pool wiederverwenden, Instanzring dimensionieren, Referenz auf einen Poolplatz | [`ACTOR-POOLS.md`](ACTOR-POOLS.md) |
