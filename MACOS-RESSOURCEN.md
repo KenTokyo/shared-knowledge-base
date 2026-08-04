@@ -3,7 +3,9 @@
 Zentrale Übersicht der lokalen Ressourcen unter `/Users/kentoky/Documents/React Projects`.
 Sie ordnet Projekte nach Three.js-Bezug, nennt geeignete Einsatzfelder und hält die konfigurierten lokalen Ports fest.
 
-**Stand:** 2026-08-03 · **Scan:** 20 direkte Verzeichnisse · **Aufgenommen:** 13 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse
+**Stand:** 2026-08-04 · **Scan:** 20 direkte Verzeichnisse · **Aufgenommen:** 14 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse
+
+**Trigger-Wörter:** „Avatar“ → `AvatarCastingAbilitiesThreeJS` (Abschnitt 1). Die Arbeitskopie dieses Repos liegt derzeit unter Windows; der macOS-Pfad ist die Erwartung, nicht ein geprüfter Stand. Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
 
 ## Pflicht vor jeder Ressourcennutzung
 
@@ -35,6 +37,7 @@ git -C "$RESOURCE" submodule update --init --recursive
 | `Claude-of-Duty` | Aktiv · Prozeduraler WebGL2-FPS; gut für eigene Render-, Physik-, Waffen-, Audio-, KI- und Performance-Systeme. | JavaScript, GLSL, HTML, CSS · Three.js r180, Vite 7 | `/Users/kentoky/Documents/React Projects/Claude-of-Duty` |
 | `3-crossword-core-breaker` | **Leicht deprecated** · „Crossword Core Breaker“; weiter nützlich für Kreuzwort-/Vokabel-Gameplay, Tippen, Bossphasen und dauerhafte Upgrades. | TypeScript, TSX, CSS, JSON · React 19, Three.js 0.183, React Three Fiber, Vite 6 | `/Users/kentoky/Documents/React Projects/3-crossword-core-breaker` |
 | `claude-desert` | Aktiv · Third-Person-Fantasy- und VFX-Showcase; gut für Shader, hochwertige Kampfeffekte und prozedurale Hero-Inszenierung. | JavaScript, GLSL, HTML, CSS · Three.js 0.185, Vite 8 | `/Users/kentoky/Documents/React Projects/claude-desert` |
+| `AvatarCastingAbilitiesThreeJS` | Aktiv · **Trigger-Wort „Avatar“ meint dieses Projekt.** Elementar-Sandbox: Pfad auf den Boden zeichnen, loslassen, Feuer-/Wasser-/Erde-/Luft-Fähigkeit läuft die Spline ab und detoniert. Stärkste Referenz für **Layering von Fähigkeiten**, Laufzeit-VFX-Editor und Presetbedienung. | JavaScript, GLSL, HTML, CSS · Three.js 0.185, lil-gui, Vite 8 | Arbeitskopie liegt heute unter Windows: `D:\CODING\React Projects\github-repos-examples\AvatarCastingAbilitiesThreeJS` · macOS-Erwartung: `/Users/kentoky/Documents/React Projects/AvatarCastingAbilitiesThreeJS` (vor Nutzung auf Existenz prüfen) |
 | `claude-tower-defense` | Aktiv · Action-Tower-Defense mit Held, Arena und Türmen; gut für Baufluss, Gegnerwellen, Kamera, prozedurale Welt und HUD. | JavaScript, GLSL, HTML, CSS · Three.js r180, Vite 6 | `/Users/kentoky/Documents/React Projects/claude-tower-defense` |
 
 ## 2. Three.js als Teil eines größeren Produktstacks

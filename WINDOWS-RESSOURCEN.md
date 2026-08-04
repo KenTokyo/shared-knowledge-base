@@ -3,7 +3,7 @@
 Kompakte Pfadkarte für häufig genutzte lokale Projekte unter Windows. macOS erhält eine eigene Datei; diese absoluten
 Windows-Pfade dort nicht übernehmen.
 
-**Stand:** 2026-08-03 · Ports stammen aus Projektkonfigurationen, nicht aus laufenden Prozessen.
+**Stand:** 2026-08-04 · Ports stammen aus Projektkonfigurationen, nicht aus laufenden Prozessen.
 `Standard` bedeutet: Vite-Default ohne feste Reservierung.
 
 ## Kernprojekte
@@ -23,6 +23,7 @@ Windows-Pfade dort nicht übernehmen.
 | **Claude of Duty Quiz** (`quizshoot`) | `D:\CODING\React Projects\github-repos-examples\quizshoot` | React-Ego-Shooter in einer Container-Arena mit Gegner-KI, vier Waffen und HUD. Three.js r128 bleibt für das bestehende Renderverhalten festgesetzt. | React · Three.js · Vite | TypeScript | [5173](http://localhost:5173) Standard / [4173](http://localhost:4173) Standard |
 | **Ashen Desert** (`claude-desert`) | `D:\CODING\React Projects\github-repos-examples\claude-desert` | Third-Person-Fantasy-Kampf und VFX-Schaukasten. Dient als kompakte Three.js-Referenz für prozedurale Szenen und Effekte. | Three.js · Vite | JavaScript | [5173](http://localhost:5173) / [4173](http://localhost:4173) |
 | **Claude of Tsushima** | `D:\CODING\React Projects\github-repos-examples\Claude-of-tsushima` | Third-Person-Open-World-Vertical-Slice auf einer prozeduralen Insel. Fokus: Weltbau, Samurai-Kampf, VFX und Messwerkzeuge. | Three.js · Vite | JavaScript | [5180](http://localhost:5180) / [4180](http://localhost:4180) |
+| **Bending Sandbox** (`AvatarCastingAbilitiesThreeJS`) | `D:\CODING\React Projects\github-repos-examples\AvatarCastingAbilitiesThreeJS` | Avatar-inspirierte Elementar-Sandbox: Pfad auf den Boden zeichnen, loslassen, Feuer-/Wasser-/Erde-/Luft-Fähigkeit läuft die Spline ab und detoniert. Referenz für **Layering von Fähigkeiten**, den Look des VFX-Editors und Preset-Bedienung. **Trigger: sagt der Nutzer „Avatar“, ist dieses Projekt gemeint.** | Three.js 0.185 · lil-gui · GLSL · Vite 8 | JavaScript | [5173](http://127.0.0.1:5173) fest auf `127.0.0.1` / [4173](http://localhost:4173) Standard |
 | **Snowflow** (`Claude-Flakes`) | `D:\CODING\React Projects\github-repos-examples\Claude-Flakes` | Wave-Survival-Spiel auf einem Echtzeit-Schneerenderer. Wichtige Babylon-/WebGPU-Referenz, ausdrücklich kein Three.js-Projekt. | Babylon.js · WebGPU · WGSL | JavaScript / WGSL | [5173](http://localhost:5173) / [4173](http://localhost:4173) Standard |
 | **Starforge Arena** (`quiz-arena-space`) | `D:\CODING\React Projects\github-repos-examples\quiz-arena-space` | Browserbasiertes 3D-Weltraum-Action-Roguelite. Dient als schlanke Three.js-Spielreferenz. | Three.js · Vite | TypeScript | [5184](http://localhost:5184) / [4184](http://localhost:4184) |
 
@@ -36,6 +37,6 @@ Windows-Pfade dort nicht übernehmen.
 ## Portregeln
 
 1. Konfiguration ist die Wahrheit; diese Übersicht nach Pfad-, Status- oder Portänderungen mitpflegen.
-2. Port 5173 kollidiert zwischen `claude-desert`, `Claude-Flakes` und dem Vite-Standard von `quizshoot`.
+2. Port 5173 kollidiert zwischen `claude-desert`, `Claude-Flakes`, `AvatarCastingAbilitiesThreeJS` und dem Vite-Standard von `quizshoot`. Die Bending Sandbox bindet zusätzlich fest an `127.0.0.1`, `localhost` kann dort je nach IPv6-Auflösung ins Leere zeigen.
 3. Port 4173 ist bei mehreren Projekten Preview-Standard. Kollidierende Projekte nur einzeln starten oder per CLI-Port trennen.
 4. Ein belegter Port beweist nicht, dass das richtige Projekt läuft; Prozess-Arbeitsverzeichnis und HTTP-Antwort mitprüfen.
