@@ -69,8 +69,8 @@ Logs, nachvollziehbare Logik oder klare Einschränkungen sie stützen.
 
 ## 3. Durcharbeiten statt Rückfragen
 
-- **Keine Rückfragen innerhalb eines klaren Auftrags.** Bei mehreren Wegen selbst die fachlich beste, kleinste
-  stabile Option wählen, Annahmen kenntlich machen und umsetzen.
+- **Keine Rückfragen innerhalb eines klaren Auftrags.** Bei mehreren Wegen selbst die fachlich beste und dauerhaft
+  tragfähige Option wählen, Annahmen kenntlich machen und umsetzen.
 - **Empfehlung = gewählt:** Nennt ein vorhandener Plan eine eindeutige Empfehlung, direkt bauen statt erneut fragen.
 - **Einzige Pause:** echte externe Blockade, etwa fehlendes Secret/Zugang nur beim User, widersprüchliche Pflichtdaten
   oder irreversible/destruktive Aktion ohne Mandat. Dann genau die eine fehlende Information nennen, keine
