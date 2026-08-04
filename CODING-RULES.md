@@ -54,8 +54,11 @@ Logs, nachvollziehbare Logik oder klare Einschränkungen sie stützen.
   „Löst dieser Schritt das genannte Problem?“
 - **Spezifikation = Boden, nicht Decke:** explizite Maße, Superlative und Eigenschaften bleiben harte Constraints;
   Qualität wird darüber aufgebaut, nie durch ihren Tausch gegen andere Stärken.
-- **Nicht blind am Bestand festhalten:** Architektur, Datenfluss und Wirkungspfad zuerst prüfen. Wiederholte
-  Kollisionen oder falsche Ergebnisse verlangen eine bessere Grundstruktur statt weiterer Werte-Patches.
+- **Qualität vor kleinster Lösung:** Die kleinste Änderung ist nicht automatisch die beste. Die fachlich beste,
+  dauerhaft tragfähige Lösung wählen; ihr Umfang folgt der tatsächlichen Lücke statt einem möglichst kleinen Diff.
+- **Nicht blind am Bestand festhalten:** Architektur, Datenfluss und Wirkungspfad zuerst prüfen. Eine ungeeignete oder
+  kaputte Architektur nicht aus Bequemlichkeit weiter ausbauen, sondern im betroffenen Scope zuerst korrigieren.
+  Wiederholte Kollisionen oder falsche Ergebnisse verlangen eine bessere Grundstruktur statt weiterer Werte-Patches.
 - **Wirkungsumfeld prüfen:** Bei sichtbaren oder verhaltensrelevanten Änderungen den vollständigen Pfad bis zur
   Ausgabe kontrollieren: globale Settings, Theme/CSS, Shader/Tone-Mapping, Material-Overrides, Feature-Flags,
   Cache, Normalisierung, Fallbacks und Persistenz.
@@ -139,11 +142,13 @@ relevanten Dimension arbeiten. Ein Audit zählt nicht als weitere Verbesserung.
 ### System vor Feinschliff
 
 - Vor Änderungen Architektur, Single Source of Truth, aktuellen Git-Scope und vorhandene Werkzeuge prüfen.
-- Bestehende Systeme erweitern statt parallele Zustände, Renderpfade oder Konfigurationen einzuführen.
+- Bestehende Systeme nur erweitern, wenn Architektur, Besitz und Datenfluss für das Ziel tragfähig sind. Ist das
+  Fundament ungeeignet oder kaputt, die betroffene Architektur zuerst anpassen statt Fehler und Altlasten auszubauen.
 - Erst Struktur, Besitz, Datenfluss, Integration und vollständigen Hauptpfad bauen; danach Werte, Optik und
   Mikrooptimierungen justieren.
 - **Änderungsmaß = Lückenmaß:** kleine lokale Lücke → kleiner Fix; fehlende Grundstruktur, Identität, Lesbarkeit,
-  Maßstab oder Spielwert → großer, zusammenhängender und reversibler Schnitt.
+  Maßstab oder Spielwert → großer, zusammenhängender und reversibler Schnitt. Nicht den kleinsten Eingriff optimieren,
+  sondern die beste Lösung innerhalb des nötigen Scopes.
 - Keine versteckten harten Limits oder Qualitätsverluste als „Performance-Fix“ einführen.
 
 ### Grundstruktur-First
@@ -354,9 +359,10 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
 
 ## 10. Sichtbare Ergebnisqualität und Craft-Modus
 
-**Erfolgstest = Wirkung, nicht nur Erfüllung.** Technisch korrekte Mittelmäßigkeit entsteht, wenn nur Häkchen und
-Gates optimiert werden. Nutzererlebte Kernbereiche erhalten maßgeschneiderte Sorgfalt; unsichtbare Infrastruktur
-bleibt möglichst simpel.
+**Erfolgstest = Wirkung, nicht nur Erfüllung.** Die kleinste Lösung und der kleinste Diff sind kein Qualitätsmaßstab.
+Technisch korrekte Mittelmäßigkeit entsteht, wenn nur Häkchen und Gates optimiert werden. Nutzererlebte Kernbereiche
+erhalten maßgeschneiderte Sorgfalt; unsichtbare Infrastruktur bleibt so einfach wie möglich, aber strukturell
+tragfähig.
 
 - An wichtigen Gabelungen reichere, kohärente Variante für das Nutzererlebnis wählen; Komplexität nicht wahllos im
   Hintergrund erhöhen.
@@ -477,7 +483,9 @@ Performance-Bauweise als Markdown-SSoT festhalten.
 
 - Auftrag und lokale `AGENTS.md` vollständig erfüllt?
 - Bestehenden Plan fortgeführt und alle eigenen Todos korrekt abgehakt?
-- Richtige Grundstruktur und eine SSoT statt Patch- oder Parallelarchitektur?
+- Beste Lösung im nötigen Scope statt nur kleinster Änderung gewählt?
+- Ungeeignete oder kaputte Architektur korrigiert; richtige Grundstruktur und eine SSoT statt Patch- oder
+  Parallelarchitektur?
 - Jede neue oder berührte handgepflegte Codedatei bei höchstens 1.600 LOC?
 - Explizite Eigenschaften erhalten, keine Regression eingeführt?
 - Eigene Funde im Scope behoben, fremde Änderungen unangetastet?
