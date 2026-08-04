@@ -390,14 +390,23 @@ bleibt möglichst simpel.
 - Maximale Informationsdichte: Fehlerbild, Ursache, Handlung und Beleg erhalten; Füllwörter, Einleitungen,
   Wiederholungen und Synonymketten streichen.
 
-### Übergabedateien kurz halten
+### Übergabedateien und Übergabe-Startprompts knapp halten
 
 Eine Übergabe ist ein Startbefehl, kein Arbeitsbericht. Gleiche Dichte wie oben, zusätzlich hart gedeckelt:
 
+- **Pflichtformat:** Jede neu erzeugte oder aktualisierte Übergabedatei nutzt ausschließlich kompakte
+  Markdown-Stichpunkte. Das gilt auch für automatisch erzeugte Fallbacks und den enthaltenen Übergabe-Startprompt.
+- **Kein Fließtext:** Überschriften sind erlaubt; darunter steht jede eigenständige Information in genau einem
+  Stichpunkt. Auch der Startprompt besteht nur aus direkt ausführbaren Anweisungsstichpunkten.
+- **Sprachschnitt:** Füllwörter, Wiederholungen und unnötige Artikel entfernen, wenn die Formulierung natürlich und
+  eindeutig bleibt — etwa `Intensität` statt `die Intensität`. Notwendige Grammatik und technische Substanz bleiben.
 - **Deckel:** höchstens sechs Abschnitte, je höchstens acht Zeilen; Gesamtlänge unter einer Bildschirmseite.
-- **Diese sechs:** Auftrag · Stand · nächster Schritt · Fallen · Dateien mit Zeilennummer · Startbefehl.
+- **Diese sechs:** Auftrag · Stand · nächster Schritt · Fallen · Dateien mit Zeilennummer, sofern bekannt ·
+  Startbefehl.
 - **Zahl statt Prosa:** Messwert, Pfad, Commit-Hash. Herleitungen, Sweeps und widerlegte Hypothesen gehören in
   die Task-Datei, nicht in die Übergabe; dort steht nur der Verweis darauf.
+- **Vollständigkeit vor Telegrammstil:** Ursachen, Grenzen, Abhängigkeiten, offene Entscheidungen, Zahlen, Pfade und
+  Befehle nie für Kürze verlieren.
 - **Nichts wiederholen,** was schon in Task-Datei, Commit-Nachricht oder Code-Kommentar steht.
 - **Kein Rückblick:** was erledigt und dokumentiert ist, ist Erledigtes und kein Übergabeinhalt.
 
