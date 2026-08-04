@@ -18,7 +18,7 @@
   *claude-of-tsushima: Dämmerungshimmel lag bei 1,3–2,7 linear, sonnennah 7–20 · claude-flakes: ein NaN-Texel wurde als 16-px-PostFX-Block vergrößert · 2026-07-30–31*
 
 - **Lichtsysteme stimmen einzeln, gemeinsam nicht** — Sonne, Nebel, Wasser, Vegetation und Grade lesen unterschiedliche Tageszustände. → Eine Environment-SSoT liefert Richtung, Farbe, Intensität, Atmosphäre und Grade; Materialien hängen über einen legalen Hookpfad daran statt eigene Sonne zu addieren.
-  *claude-of-tsushima: `Environment` plus `engine.lit()` verhindern doppelte CSM-Sonne; Gras war sonst etwa 8× zu hell · claude-flakes: Spell-Lights werden an alle sichtbaren Materialconsumer derselben Szene übertragen · 2026-07-28–08-04*
+  *claude-of-tsushima: `Environment` schreibt gemeinsamen Uniformblock und CSM; ohne `engine.lit()` beleuchteten alle Kaskadenlichter ein Standardmaterial N-fach · claude-flakes: Spell-Lights werden vor der Consumer-Schleife an alle sichtbaren Materialconsumer übertragen · 2026-07-28–08-04*
 
 ## Handoffs
 

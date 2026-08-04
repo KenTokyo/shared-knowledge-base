@@ -24,13 +24,13 @@
 **Ziel:** Aktive Owner, Projekte, Roadmaps, Taskdateien und History-Korpora sind inventarisiert; Dopplungen und Widersprüche sind belegt.
 - [x] `AGENTS.md`, `CODING-RULES.md`, 3D-Router, Learning-System und Usernotiz vollständig gelesen.
 - [x] Alle 13 globalen 3D-Owner und 21 vorhandenen Tipps der drei Kernprojekte gelesen.
-- [ ] Vier Quellpläne gegen aktive Tasks, Histories und Code abschließen.
-- [ ] Behalten, schärfen, verschieben oder entfernen je Owner entscheiden.
+- [x] Vier Quellpläne gegen aktive Tasks, Histories und Code abschließen.
+- [x] Behalten, schärfen, verschieben oder entfernen je Owner entscheiden.
 **Ergebnis-Satz:** Jede geplante Änderung hat einen engen Trigger und eine nachvollziehbare Quelle.
 **Warum:** Neue Regeln ohne Herkunft würden genau die Überladung fortsetzen, die der Auftrag abbauen soll.
 **Eingehalten:** eine Wissens-SSoT, keine Quellrepo-Änderung, kein Browser-/Gameplay-Test.
 **Architektur passt:** Der Router routet; Fachowner tragen globale Mechanismen; Projektordner behalten lokale Werkzeuge und Konstanten.
-**Auffälligkeiten/Performance/Kritische Findings:** `DEBUG-REVIEW.md`, `THREEJS-WORLDBUILDING-RULES.md` und `README.md` nennen noch ein Zwei-Bilder-Limit, während `CODING-RULES.md` maximal sechs freigegebene Sichtprüfungen erlaubt.
+**Auffälligkeiten/Performance/Kritische Findings:** Der Zwei-Bilder-Widerspruch wurde in den zentralen Dokus beseitigt; Fachdateien verweisen nur noch auf Freigabe und Gesamtbudget aus `CODING-RULES.md`.
 **Referenzen:**
 - `shared-docs/THREEJS-RULES.md`
 - `shared-docs/threejs/`
@@ -38,10 +38,10 @@
 
 ### Phase 2 — Animation und VFX
 **Ziel:** Animation und VFX liefern vor dem ersten Edit konkrete, belegte Fehlersuchen statt allgemeiner Wunschlisten.
-- [ ] Animations-Tipps aus Voxel-Rig, Tsushima-Kontakt und Flakes-Cloth/Timing neu schneiden.
-- [ ] VFX-Tipps aus Avatar-Layering/Pooling, Voxel-Runtime und Flakes-Effektparametrisierung zusammenführen.
-- [ ] VFX-Audio, Lebenskurve, Hauptform, Kontakt, Poolreset und Parametrisierung ohne Zahlenrezepte trennen.
-- [ ] Quellenbelege in jedem neuen oder geschärften Tipp nennen.
+- [x] Animations-Tipps aus Voxel-Rig, Tsushima-Kontakt und Flakes-Cloth/Timing neu schneiden.
+- [x] VFX-Tipps aus Avatar-Layering, Voxel-Runtime und Flakes-Effektparametrisierung zusammenführen.
+- [x] VFX-Audio, Lebenskurve, Hauptform, Kontakt, Poolreset und Parametrisierung ohne Zahlenrezepte trennen.
+- [x] Quellenbelege in jedem neuen oder geschärften Tipp nennen.
 **Ergebnis-Satz:** Charakterbewegung und Effekte lassen sich anhand sichtbarer Fehler schneller zur Ursache führen.
 **Eingehalten:** maximal etwa zwölf Tipps je Datei, freiwilliger Status, keine doppelte Projektkopie.
 **Architektur passt:** Animation besitzt Pose/Kontakt; VFX besitzt Effektform; Runtime besitzt Reihenfolge/Uhren.
@@ -53,10 +53,10 @@
 
 ### Phase 3 — Welt, Licht, Shader und Performance
 **Ziel:** Die stärksten übertragbaren Mechanismen aus Tsushima und Flakes schärfen Weltkomposition, Licht/Kamera, Shader und Kostenpfade.
-- [ ] Map-Generierung gegen Tsushima-Weltfelder, Relief, Bakes und Kompositionsprozess prüfen.
-- [ ] Licht/Kamera auf kurze Trigger reduzieren; lange Spezialfälle bei enger Herkunft belassen oder schärfen.
-- [ ] Shader-, Performance- und Weltinteraktions-Tipps gegen echte Pipeline- und Snowflow-Muster prüfen.
-- [ ] `RUNTIME-INTEGRATION.md` nur behalten, wenn sein eigener Trigger gegenüber Animation/VFX/Performance klar bleibt.
+- [x] Map-Generierung gegen Tsushima-Weltfelder, Relief, Bakes und Kompositionsprozess prüfen.
+- [x] Licht/Kamera auf kurze Trigger reduzieren; lange Spezialfälle bei enger Herkunft belassen oder schärfen.
+- [x] Shader-, Performance- und Weltinteraktions-Tipps gegen echte Pipeline- und Snowflow-Muster prüfen.
+- [x] `RUNTIME-INTEGRATION.md` mit eigenem Trigger für Reihenfolge, Uhren und Lifecycle behalten.
 **Ergebnis-Satz:** Welt- und Renderprobleme führen vom sichtbaren Symptom zum billigsten Gegenbeweis.
 **Eingehalten:** Qualität nicht durch versteckte Limits senken, stackfremde Konstanten nicht globalisieren.
 **Architektur passt:** Weltfelder bleiben bei Map/Weltinteraktion; Renderarithmetik bei Shader; Kosten bei Performance.
@@ -68,10 +68,10 @@
 
 ### Phase 4 — Routing, Regelwidersprüche und Herkunft
 **Ziel:** Router, Capture-Grenzen, Quellprofile und Projekttrigger stimmen mit Coding Rules und Learning-System überein.
-- [ ] Sichtprüfungsgrenzen überall auf zentrale Freigabe und zentralen Gesamtdeckel verweisen lassen.
-- [ ] Router-Quellprofile um Avatar ergänzen und „Regeln“ klar als freiwillige Tipps benennen.
-- [ ] Projekttrigger und neue Quellenpfade ergänzen, ohne vorsorgliche Leseketten zu erzeugen.
-- [ ] Veraltete, doppelte oder unbelegte Aussagen entfernen.
+- [x] Sichtprüfungsgrenzen überall auf zentrale Freigabe und zentralen Gesamtdeckel verweisen lassen.
+- [x] Router-Quellprofile um Avatar ergänzen und „Regeln“ klar als freiwillige Tipps benennen.
+- [x] Projekttrigger und neue Quellenpfade prüfen, ohne vorsorgliche Leseketten zu erzeugen.
+- [x] Veraltete, doppelte oder unbelegte Aussagen entfernen.
 **Ergebnis-Satz:** Eine Regelquelle entscheidet Freigaben; Fachdateien liefern nur Diagnosewissen.
 **Eingehalten:** keine Parallelregel, Links relativ, echte Umlaute, kompakte Sprache.
 **Architektur passt:** `CODING-RULES.md` besitzt Arbeitsgates; `THREEJS-RULES.md` besitzt 3D-Routing; Owner besitzen Tipps.
@@ -83,14 +83,14 @@
 
 ### Phase 5 — Abschlussaudit und Lieferung
 **Ziel:** Alle Usermerkmale, Tippbudgets, Links, Quellen und Git-Einheiten sind vollständig geprüft und geliefert.
-- [ ] Master- und Quellenpläne vollständig abhaken; offene Findings direkt beheben.
-- [ ] Zeilen-/Tippbudgets, Links, Mojibake, Widersprüche und Diff statisch prüfen.
-- [ ] Reine Dokuänderung ohne Typecheck begründen.
+- [x] Master- und Quellenpläne vollständig abhaken; offene Findings direkt beheben.
+- [x] Zeilen-/Tippbudgets, Links, Mojibake, Widersprüche und Diff statisch prüfen.
+- [x] Reine Dokuänderung ohne Typecheck begründen.
 - [ ] Shared-Docs zuerst committen/pushen, danach ausschließlich Eltern-Pointer liefern.
 **Ergebnis-Satz:** Die Wissensbasis ist kleiner im Zwang, stärker in der Diagnose und nachvollziehbar belegt.
 **Eingehalten:** selektives Staging, Zielbranch `main`, kein Test ohne Auftrag.
 **Architektur passt:** Neue dauerhafte Dateien sind nur die verlangten Planungsnachweise; Fachwissen bleibt in bestehenden Ownern.
-**Auffälligkeiten/Performance/Kritische Findings:** offen bis Gesamtaudit.
+**Auffälligkeiten/Performance/Kritische Findings:** Alle 13 globalen Owner liegen bei 3–8 Tipps. Zwei zu stark verdichtete 8×-Lichtbelege wurden auf den tatsächlich belegten N-fach-/Verdopplungsmechanismus korrigiert; Avatar bleibt ausdrücklich Codegegenprobe ohne Kostenbeleg.
 **Referenzen:**
 - `shared-docs/agents/tasks/threejs-tipps-neuschnitt-2026-08-04/`
 - `shared-docs/threejs/`
@@ -99,17 +99,37 @@
 ## Kommentare
 
 ### Phase 1
-**Eingehalten:** Pflichtlesepfad ✅, bestehende Planung geprüft ✅, keine Quellrepo-Änderung ✅, Sichtprüfungsverbot ✅
-**Auffälligkeiten (nach Schwere):** 🟠 Drei Dokus widersprechen dem zentralen Sichtprüfungsdeckel; 🟡 mehrere globale Owner nutzen noch unbelegte „könnte“-Checklisten statt Tippformat.
+**Eingehalten:** Pflichtlesepfad ✅, vier Korpora inventarisiert ✅, keine Quellrepo-Änderung ✅, Sichtprüfungsverbot ✅
+**Auffälligkeiten (nach Schwere):** 🟠 Capture-Widerspruch gefunden und in der zentralen Regelkette beseitigt; 🟡 alte Korpuszahlen 119/165 waren auf 165/246 angewachsen.
+
+### Phasen 2–4
+**Eingehalten:** 13 enge Owner ✅, 3–8 Tipps je globalem Owner ✅, stackneutrale Promotion ✅, Herkunft sichtbar ✅
+**Auffälligkeiten (nach Schwere):** 🟠 Avatar besitzt keinen Erfahrungsbeleg und bleibt Codegegenprobe; 🟡 Claude Flakes ist Babylon.js/WebGPU und liefert keine API-Rezepte; 🟡 zwei 8×-Lichtzitate waren stärker als ihre Quellen.
+
+### Phase 5
+**Eingehalten:** keine Browser-/Capture-/Gameplaytests ✅, reine Dokuänderung ✅, statische Abschlussgates ✅
+**Auffälligkeiten (nach Schwere):** Keine offenen fachlichen Findings. Der Typecheck entfällt, weil ausschließlich Markdown im Wissens-Submodul geändert wurde.
 
 ## Arbeitsprotokoll
 
-### Phase 1 — Status partial
-**Dateien:** Masterplan und vier Quellenpläne angelegt; globale Owner sowie vorhandene Projekt-Learnings vollständig gelesen.
-**Entscheidungen:** 13 Owner bleiben zunächst bestehen; Dateizahl wird nur bei belegter Triggerüberschneidung gesenkt. Generierte Chats/Caches zählen nicht als fachliche Tasks.
-**Unsicher / Risiko:** Quellenkorpora und aktuelle Codepfade müssen noch vollständig gegen die vorhandenen Zusammenfassungen geprüft werden.
+### Phase 1 — abgeschlossen
+**Dateien:** Vier Quellenpläne, 13 globale Owner und 21 Projektdateien geprüft; Histories 165/246, Voxel-Abschlüsse und Avatar-Source inventarisiert.
+**Entscheidungen:** Alle 13 Owner behalten, weil Trigger nicht kollidieren. Generierte Chats/Caches zählen nicht als fachliche Tasks.
+**Unsicher / Risiko:** Referenzrepos verändern sich parallel; Korpuszahlen sind Auditstand, keine Verträge.
+
+### Phasen 2–3 — abgeschlossen
+**Dateien:** Owner für Animation, VFX, Runtime, Welt, Licht/Kamera, Shader, Performance und Interaktion neu geschnitten; 22 Dokumente in Commit `60c1d4d` um 763 Zeilen verkürzt.
+**Entscheidungen:** Global bleibt der Fehlermechanismus, lokal bleiben Tool, Messlatte und Konstante. Avatar ergänzt zwei VFX-Codegegenproben; sein wachsender `ObjectPool` wurde nicht als harter Budgetbeleg übernommen.
+**Unsicher / Risiko:** Keine sichtbare Qualitätsaussage aus Avatar ohne History oder Laufzeitartefakt.
+
+### Phasen 4–5 — abgeschlossen
+**Dateien:** Router/Worldbuilding/Capture-Hinweise zentralisiert; vier Quellenaudits abgeschlossen; Lichtquellen präzisiert.
+**Entscheidungen:** `CODING-RULES.md` allein besitzt Sichtfreigabe und Gesamtbudget. Reine Markdown-Änderung, daher kein `pnpm type-check`; stattdessen Links, Encoding, Budgets und Diff statisch geprüft.
+**Unsicher / Risiko:** Lieferung bleibt bis zum Commit/Push und Eltern-Pointer offen.
 
 ## Offene Fix-Punkte
-- [ ] Zwei-Bilder-Widerspruch in drei Dokus beheben.
-- [ ] Unbelegte globale Checklisten in belegte Such-Tipps umformen oder entfernen.
-- [ ] Avatar als Codequelle korrekt und ohne erfundenen Kostenbeleg einordnen.
+- [x] Zwei-Bilder-Widerspruch in drei Dokus beheben.
+- [x] Unbelegte globale Checklisten in belegte Such-Tipps umformen oder entfernen.
+- [x] Avatar als Codequelle korrekt und ohne erfundenen Kostenbeleg einordnen.
+- [x] Zu stark verdichtete Lichtbelege gegen Originalquelle korrigieren.
+- [ ] Shared-Docs committen/pushen und Eltern-Pointer separat liefern.

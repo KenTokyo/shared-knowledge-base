@@ -18,7 +18,7 @@
   *claude-of-tsushima: Rinde 0,0059 statt 0,0671, Faktor 11,4 · voxel-samurai-quiz: Shader-/Texturpfade trennen Farb- von Datenrollen und gatten Reserved/NaN statisch · 2026-07-29–08-04*
 
 - **Custom-Material addiert eine zweite Sonne** — Framework-Licht, CSM und eigener Uniformpfad beleuchten denselben Term; Regler wirken unvorhersagbar. → Einen legalen Material-/Hookowner definieren, Applied Uniforms zurücklesen und andere Lichtquellen aus dem Shader entfernen.
-  *claude-of-tsushima: eigene Sonne plus CSM machte Gras etwa 8× zu hell; `engine.lit()` zentralisierte den Pfad · voxel-samurai-quiz: CSM-, Boss- und Weltshader besitzen zentrale Compile-/Materialbrücken statt ad-hoc Lichtkopien · 2026-07-28–08-04*
+  *claude-of-tsushima: ungepatchte Standardmaterialien erhielten alle CSM-Kaskadenlichter und wurden N-fach überbelichtet; ein zusätzlicher Transmissionsterm nahe 1,0 verdoppelte die Sonne · voxel-samurai-quiz: CSM-, Boss- und Weltshader besitzen zentrale Compile-/Materialbrücken statt ad-hoc Lichtkopien · 2026-07-28–08-04*
 
 ## Handoffs
 
