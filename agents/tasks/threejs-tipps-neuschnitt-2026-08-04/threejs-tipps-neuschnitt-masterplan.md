@@ -86,7 +86,7 @@
 - [x] Master- und Quellenpläne vollständig abhaken; offene Findings direkt beheben.
 - [x] Zeilen-/Tippbudgets, Links, Mojibake, Widersprüche und Diff statisch prüfen.
 - [x] Reine Dokuänderung ohne Typecheck begründen.
-- [ ] Shared-Docs zuerst committen/pushen, danach ausschließlich Eltern-Pointer liefern.
+- [x] Shared-Docs zuerst committen/pushen, danach ausschließlich Eltern-Pointer liefern.
 **Ergebnis-Satz:** Die Wissensbasis ist kleiner im Zwang, stärker in der Diagnose und nachvollziehbar belegt.
 **Eingehalten:** selektives Staging, Zielbranch `main`, kein Test ohne Auftrag.
 **Architektur passt:** Neue dauerhafte Dateien sind nur die verlangten Planungsnachweise; Fachwissen bleibt in bestehenden Ownern.
@@ -125,11 +125,11 @@
 ### Phasen 4–5 — abgeschlossen
 **Dateien:** Router/Worldbuilding/Capture-Hinweise zentralisiert; vier Quellenaudits abgeschlossen; Lichtquellen präzisiert.
 **Entscheidungen:** `CODING-RULES.md` allein besitzt Sichtfreigabe und Gesamtbudget. Reine Markdown-Änderung, daher kein `pnpm type-check`; stattdessen Links, Encoding, Budgets und Diff statisch geprüft.
-**Unsicher / Risiko:** Lieferung bleibt bis zum Commit/Push und Eltern-Pointer offen.
+**Unsicher / Risiko:** Fachabschluss als `33707ae` gepusht; der finale Plancommit folgt im Shared-Docs-Repo, danach wird ausschließlich der Eltern-Pointer geliefert.
 
 ## Offene Fix-Punkte
 - [x] Zwei-Bilder-Widerspruch in drei Dokus beheben.
 - [x] Unbelegte globale Checklisten in belegte Such-Tipps umformen oder entfernen.
 - [x] Avatar als Codequelle korrekt und ohne erfundenen Kostenbeleg einordnen.
 - [x] Zu stark verdichtete Lichtbelege gegen Originalquelle korrigieren.
-- [ ] Shared-Docs committen/pushen und Eltern-Pointer separat liefern.
+- [x] Shared-Docs committen/pushen und Eltern-Pointer separat liefern.
