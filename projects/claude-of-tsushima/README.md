@@ -14,6 +14,7 @@ Nur belegte Projektfallen; Architektur/Verträge bleiben bei Repo-Ownern. Global
 | Terrain, Wasser, Vegetation, Material, Licht, Bake | [`WORLD-RENDERING.md`](WORLD-RENDERING.md) |
 | Trail, Funken, Hit-Stop, Impact, Timing | [`COMBAT-VFX.md`](COMBAT-VFX.md), dann `docs/ai-rules/VFX.md` |
 | Hero-Rig, Pose, IK, Kontakt, Third-Person-Kamera | [`CHARACTER-CAMERA.md`](CHARACTER-CAMERA.md) |
+| Ausstattung, Outfit oder Figur nach Referenzfoto | [`COSTUME-REFERENCE.md`](COSTUME-REFERENCE.md) |
 
 ## Belegumfang
 
