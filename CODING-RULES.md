@@ -251,7 +251,7 @@ Parameter des Altbestands drehen.
 - Automatische Browser-, DOM-, Screenshot-, UI-Smoke- oder manuelle UI-Prüfungen bleiben ohne ausdrücklichen
   Userbefehl verboten.
 
-## 8. Echtzeit-3D — große Schritte, Sichtprüfung nur als Ausnahme
+## 8. Echtzeit-3D — große Schritte, Sichtprüfung nur als Ausnahme wenn es gesagt wird
 
 Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-RULES.md`:
 
@@ -266,7 +266,7 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
   Zeitgründen ungern gesehen und standardmäßig aus; direkte Oberflächen-/Gameplay-Abnahme macht bevorzugt der User.
 - **Freiwillige Ausnahme:** Bleibt nach statischen und numerischen Gegenchecks echte Unsicherheit, ob der Look trägt,
   darf eine Sichtprüfung stattfinden, ausnahmsweise eine zweite nach relevanter Änderung oder neuer Frage. Pro
-  gesamtem Userauftrag gelten **eine, absolut höchstens zwei Sichtprüfungen** — niemals pro Phase, Kamera, Kandidat
+  gesamtem Userauftrag gelten **eine, absolut höchstens zwei Sichtprüfungen oder mehr falls User dir es erlaubt** — niemals pro Phase, Kamera, Kandidat
   oder Mikroedit. Ein montiertes Vergleichsbild zählt als eine Sichtprüfung.
 - Nach 3–5 Verbesserungen derselben Messachse an einer anderen 3D-Achse weiterarbeiten.
 
@@ -401,7 +401,8 @@ CHAT_META::Titel: [konkreter fachlicher Titel, 11–20 Wörter]
 Keine generischen Titel, Phasenpräfixe, Description-Zeile oder spätere zufällige Umbenennung. Einen neuen Titel nur
 bei klarem Themenwechsel erzeugen.
 
-### Grundton
+### Grundton, Antworten Output und Denkweise, Prompt-Dateien, Tasks
+- Alles muss in diesem Format ausgegeben werden! Auch bestehende Sachen anpassen direkt nach diesem Schema, tokenkompakt!
 
 * Deutsch zuerst: kurz, klar, freundlich, motiviert und verständlich.
 * Einfache Alltagswörter und direkte Verben verwenden.
