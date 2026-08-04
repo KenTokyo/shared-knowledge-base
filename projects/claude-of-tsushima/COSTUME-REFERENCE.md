@@ -61,3 +61,18 @@ Rig, Pose und Kamera bleiben bei [`CHARACTER-CAMERA.md`](CHARACTER-CAMERA.md).
   `stance`, `marks`, `torsoClip`, `note()`, Fenster, Schwellen), die Probe bleibt Instrument; ein neues Blatt
   ist ein Eintrag plus PNG.
   *`_ronin-targets.mjs`; `--ziel roh|ronin|alle` ohne Änderung an `measure()` · PH7 · 2026-08-04*
+
+- **Gelenk in Breitenrichtung gebaut, weil die Breite gemessen wird** — zwölf Gelenke bekamen drei fast gleiche
+  Radien, damit kein Band wandert; im Bild saß an jedem Ellbogen eine **Kugel** neben dem Arm statt einer
+  Beuge darin. Eine Kugel auf einem Zylinder bleibt eine Kugel, egal wie klein — was aus ihr ein Gelenk macht,
+  ist die Länge *in Knochenrichtung*, weil erst die Überlappung beider Röhren die drei Silhouetten zu einer
+  verschmilzt. → Nur die Achse längen, die kein Band misst: `ry` wächst, `rx`/`rz` bleiben die fotografierte
+  Breite. Das ist bandneutral **gebaut** statt hinterher geprüft — die stärkere Aussage von beiden.
+  *jElbow ry 0,045 → 0,062, jKnee 0,060 → 0,082; 16 Bänder und alle 6 Gliedmaßenmaße unverändert · PH10 · 2026-08-04*
+
+- **Nur die fotografierten Gelenke gebaut** — sichtbar sind an dieser Vorlage allein Schulter und Ellbogen; die
+  anderen zehn liegen unter Wickel, Hose und Sandale. Wer nur die sichtbaren baut, hat beim nächsten Outfit
+  wieder eine Röhrenkette. → Alle Gelenke als Tabelleneinträge anlegen, jeden Radius **unter** dem
+  Kleidungsstück darüber; ein zu großes Hautgelenk ist ein heller Fleck mitten auf dunklem Stoff, und das
+  kostet mehr als die Rundung wert ist. Sichtbarkeit ehrlich dokumentieren statt sie zu behaupten.
+  *14 Slots, nur im Outfit `roh` getragen; `skin` 0xa58b7b gegen Hose 0x2a2d33 · PH10 · 2026-08-04*
