@@ -54,11 +54,11 @@ Logs, nachvollziehbare Logik oder klare Einschränkungen sie stützen.
   „Löst dieser Schritt das genannte Problem?“
 - **Spezifikation = Boden, nicht Decke:** explizite Maße, Superlative und Eigenschaften bleiben harte Constraints;
   Qualität wird darüber aufgebaut, nie durch ihren Tausch gegen andere Stärken.
-- **Qualität vor kleinster Lösung:** Die kleinste Änderung ist nicht automatisch die beste. Die fachlich beste,
-  dauerhaft tragfähige Lösung wählen; ihr Umfang folgt der tatsächlichen Lücke statt einem möglichst kleinen Diff.
-- **Nicht blind am Bestand festhalten:** Architektur, Datenfluss und Wirkungspfad zuerst prüfen. Eine ungeeignete oder
-  kaputte Architektur nicht aus Bequemlichkeit weiter ausbauen, sondern im betroffenen Scope zuerst korrigieren.
-  Wiederholte Kollisionen oder falsche Ergebnisse verlangen eine bessere Grundstruktur statt weiterer Werte-Patches.
+- **Qualität vor kleinen Änderungen:** Eine kleine Änderung ist nur gut, wenn sie das Problem vollständig und sauber
+  löst. Reicht sie nicht, eine größere Änderung planen und umsetzen. Wenige geänderte Zeilen sind kein Ziel.
+- **Der Bestand ist nur der Ausgangspunkt:** Diese Apps wurden zu großen Teilen von Junior-Entwicklern aufgebaut.
+  Vorhandener Code kann deshalb eine schwache oder falsche Grundlage haben. Nicht einfach darauf weiterbauen: erst
+  prüfen, dann die betroffene Grundlage reparieren oder passend umbauen.
 - **Wirkungsumfeld prüfen:** Bei sichtbaren oder verhaltensrelevanten Änderungen den vollständigen Pfad bis zur
   Ausgabe kontrollieren: globale Settings, Theme/CSS, Shader/Tone-Mapping, Material-Overrides, Feature-Flags,
   Cache, Normalisierung, Fallbacks und Persistenz.
@@ -100,9 +100,10 @@ Ein Fund im bearbeiteten Scope ist kein Abschlussbericht, sondern Arbeit:
 1. Vorhandenen User-/Projektplan weiterführen.
 2. Kleinen Fix oder reine, klar begrenzte Ein-Datei-Änderung direkt umsetzen, sofern der Auftrag keine Taskdatei
    verlangt.
-3. Bei echter Mehrphasigkeit genau eine Task-/Masterplanung nach lokaler Projektkonvention anlegen. Oben das
-   Userziel in 1–5 konkreten Stichpunkten festhalten, damit Kontextverdichtung den Auftrag nicht verschiebt.
-4. Reihenfolge: Grundstruktur/SSoT/Hauptpfad → Integration/Edge-Cases → Feinschliff → Abschlussabgleich.
+3. Braucht die beste Lösung mehrere Schritte oder einen größeren Umbau, genau eine Task-/Masterplanung nach lokaler
+   Projektkonvention anlegen. Große Änderungen sind ausdrücklich erlaubt. Oben das Userziel in 1–5 konkreten
+   Stichpunkten festhalten, damit es während der Arbeit nicht verloren geht.
+4. Reihenfolge: Grundlage und Hauptquelle → vollständiger Hauptweg → Sonderfälle → Feinschliff → Abschlussabgleich.
 5. Keine halbfertige Parallelarchitektur als „Phase“ liefern. Jede Phase ist ein kohärenter, reversibler,
    integrierbarer und möglichst kompilierfähiger Schnitt.
 
@@ -139,26 +140,33 @@ relevanten Dimension arbeiten. Ein Audit zählt nicht als weitere Verbesserung.
 
 ## 5. Umsetzung und Architektur
 
+### Gilt für alle Bereiche
+
+Diese Regel gilt für die ganze App: Architektur, Code, Daten, Server, Werkzeuge, Benutzeroberfläche, Gameplay, 3D,
+Audio und Dokumentation. Kein Bereich muss eine schlechte Lösung behalten, nur damit die Änderung klein bleibt. Ziel
+ist, die Apps deutlich zu verbessern, nicht jeden Teil des vorhandenen Stands zu schützen.
+
 ### System vor Feinschliff
 
-- Vor Änderungen Architektur, Single Source of Truth, aktuellen Git-Scope und vorhandene Werkzeuge prüfen.
-- Bestehende Systeme nur erweitern, wenn Architektur, Besitz und Datenfluss für das Ziel tragfähig sind. Ist das
-  Fundament ungeeignet oder kaputt, die betroffene Architektur zuerst anpassen statt Fehler und Altlasten auszubauen.
-- Erst Struktur, Besitz, Datenfluss, Integration und vollständigen Hauptpfad bauen; danach Werte, Optik und
-  Mikrooptimierungen justieren.
-- **Änderungsmaß = Lückenmaß:** kleine lokale Lücke → kleiner Fix; fehlende Grundstruktur, Identität, Lesbarkeit,
-  Maßstab oder Spielwert → großer, zusammenhängender und reversibler Schnitt. Nicht den kleinsten Eingriff optimieren,
-  sondern die beste Lösung innerhalb des nötigen Scopes.
-- Keine versteckten harten Limits oder Qualitätsverluste als „Performance-Fix“ einführen.
+- Vor einer Änderung verstehen, woher Daten kommen, welcher Teil verantwortlich ist und wie alles zusammenspielt.
+- Nur auf einem bestehenden System weiterbauen, wenn seine Grundlage für das Ziel geeignet ist.
+- Ist die Grundlage ungeeignet oder kaputt, sie zuerst reparieren oder passend umbauen. Fehler und Altlasten nicht
+  weiter ausbauen.
+- Erst Struktur, Verantwortung, Datenfluss und den vollständigen Hauptweg bauen; danach Werte, Optik und kleine
+  Verbesserungen einstellen.
+- **Die Lösung darf groß sein:** Kleine Lücke → kleiner Fix. Schwache Grundlage oder viele verbundene Probleme →
+  größerer, zusammenhängender Umbau. Die nötige Qualität bestimmt die Größe der Änderung.
+- Keine versteckten harten Grenzen oder Qualitätsverluste als „Performance-Fix“ einführen.
 
-### Grundstruktur-First
+### Erst die Grundlage reparieren
 
-Wenn dieselbe Sache wiederholt falsch, kollidierend oder instabil bleibt:
+Wenn dieselbe Sache wiederholt falsch, widersprüchlich oder instabil bleibt:
 
-1. Fundament analysieren: Achsen/Frames, doppelte Wahrheiten, unabhängige Layer, verstecktes Legacy.
-2. Betroffenen Scope sauber neu strukturieren statt Patchstapel fortzuführen.
-3. Eine gemeinsame SSoT herstellen, aus der alle betroffenen Schichten ableiten.
-4. Legacy, verwaiste Importe, tote Zustände und Altreferenzen im selben Schnitt entfernen.
+1. Grundlage prüfen: Koordinatensysteme, mehrere Quellen für dieselbe Information, getrennte Schichten und
+   versteckten Altcode.
+2. Betroffenen Bereich sauber umbauen statt weitere kleine Reparaturen aufeinanderzustapeln.
+3. Eine verlässliche Hauptquelle schaffen, aus der alle betroffenen Teile ihre Informationen beziehen.
+4. Nicht mehr genutzten Altcode, Importe, Zustände und Verweise beim Umbau entfernen.
 
 „Komplett neu“ im Userauftrag bedeutet den betroffenen Inhalt wirklich neu aufbauen, nicht nur Farben, Zahlen oder
 Parameter des Altbestands drehen.
@@ -260,8 +268,8 @@ Parameter des Altbestands drehen.
 Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-RULES.md`:
 
 - **Makro zuerst:** Richtung, Komposition, Mechanik, Weltstruktur, Timing und Layering vor Detailwerten.
-- **Änderungsmaß = Lückenmaß:** kleine Lücke klein beheben; fehlender Maßstab, Tiefe, Identität oder Spielwert verlangt
-  einen großen, zusammenhängenden, reversiblen Schnitt.
+- **Auch 3D darf groß umgebaut werden:** Eine kleine sichtbare Lücke klein beheben. Fehlen Maßstab, Tiefe, eigener
+  Charakter oder Spielwert, einen großen, zusammenhängenden und rückgängig machbaren Umbau planen und bauen.
 - **Bei unklarer Richtung:** 2–3 klar verschiedene Richtungen festlegen; stärksten reversiblen Kandidaten als
   Vertical Slice bauen; anhand von Architektur, Zahlen und Produktziel behalten oder wechseln.
 - **VFX als System:** Form, Bewegung, Material/Licht, Timing, Reaktion und Audio schichten; nicht nur Partikelzahl
@@ -359,10 +367,9 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
 
 ## 10. Sichtbare Ergebnisqualität und Craft-Modus
 
-**Erfolgstest = Wirkung, nicht nur Erfüllung.** Die kleinste Lösung und der kleinste Diff sind kein Qualitätsmaßstab.
-Technisch korrekte Mittelmäßigkeit entsteht, wenn nur Häkchen und Gates optimiert werden. Nutzererlebte Kernbereiche
-erhalten maßgeschneiderte Sorgfalt; unsichtbare Infrastruktur bleibt so einfach wie möglich, aber strukturell
-tragfähig.
+**Erfolgstest = Wirkung, nicht nur Erfüllung.** Wenige geänderte Zeilen sind kein Qualitätsmaßstab. Nur Häkchen
+abzuarbeiten und technische Prüfungen zu bestehen, reicht nicht. Das Ergebnis muss die App wirklich verbessern.
+Wichtige Bereiche für Nutzer erhalten besondere Sorgfalt; unsichtbare Technik bleibt einfach, aber zuverlässig.
 
 - An wichtigen Gabelungen reichere, kohärente Variante für das Nutzererlebnis wählen; Komplexität nicht wahllos im
   Hintergrund erhöhen.
@@ -483,9 +490,9 @@ Performance-Bauweise als Markdown-SSoT festhalten.
 
 - Auftrag und lokale `AGENTS.md` vollständig erfüllt?
 - Bestehenden Plan fortgeführt und alle eigenen Todos korrekt abgehakt?
-- Beste Lösung im nötigen Scope statt nur kleinster Änderung gewählt?
-- Ungeeignete oder kaputte Architektur korrigiert; richtige Grundstruktur und eine SSoT statt Patch- oder
-  Parallelarchitektur?
+- Kleine Lösung nur gewählt, wenn sie das Problem vollständig und sauber löst?
+- Falls nötig einen größeren Umbau geplant und vollständig umgesetzt?
+- Ungeeignete oder kaputte Grundlage repariert statt weitere kleine Reparaturen daraufzustapeln?
 - Jede neue oder berührte handgepflegte Codedatei bei höchstens 1.600 LOC?
 - Explizite Eigenschaften erhalten, keine Regression eingeführt?
 - Eigene Funde im Scope behoben, fremde Änderungen unangetastet?
