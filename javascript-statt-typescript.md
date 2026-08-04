@@ -22,8 +22,8 @@ Als Sicherheitsnetz statt eines Compilers:
   Quality-Presets, die Weltfelder. Das sind die Stellen, an denen ein Missverständnis zwischen zwei
   parallel arbeitenden Agenten entsteht.
 - `pnpm check` = `glslcheck && build` plus passende numerische Probes — die Gates, die diesen Stack wirklich
-  brechen. CLI-Capture ist kein Standardgate; nur bei ungelöster Look-Unsicherheit freiwillig eine, im gesamten
-  Userauftrag absolut höchstens zwei Sichtprüfungen.
+  brechen. CLI-Capture ist kein Standardgate; agentische Sichtprüfung nur nach ausdrücklicher aktueller Freigabe
+  und innerhalb von Reihenfolge und Gesamtbudget aus `CODING-RULES.md` §8–9.
 
 ## Warum
 

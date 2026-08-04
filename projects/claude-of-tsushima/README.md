@@ -17,8 +17,7 @@ Nur belegte Projektfallen; Architektur/Verträge bleiben bei Repo-Ownern. Global
 
 ## Belegumfang
 
-Audit: 165 History-Dateien in 24×7 Batches, später dedupliziert; `review/`: 1.537 Bilder. Teure Schleifen:
-`spark` 176, `streak` 92, `sliv` 53, `hitstop` 40, `pass-*` 238, `crop` 250, `probe` 130 Treffer (Überlappung möglich). Messung schlägt Bildzahl.
+Auditstand 2026-08-04: 245 `History/`-Dateien vollständig als Textkorpus gelesen (22.088 Zeilen/4.344.210 Bytes); gegengeprüft mit acht Teilroadmaps, fünf aktiven Taskdateien, aktuellen Codeowner-Pfaden und 1.551 Reviewbildern. Das Referenzrepo änderte sich während des Audits read-only weiter; frühere Angaben mit 165 oder 244 Dateien sind überholt.
 
 ## Teuerstes Muster
 

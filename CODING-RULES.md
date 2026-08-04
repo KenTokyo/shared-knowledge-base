@@ -60,8 +60,7 @@ Logs, nachvollziehbare Logik oder klare Einschränkungen sie stützen.
   Ausgabe kontrollieren: globale Settings, Theme/CSS, Shader/Tone-Mapping, Material-Overrides, Feature-Flags,
   Cache, Normalisierung, Fallbacks und Persistenz.
 - **Research-First bei echter Unsicherheit:** Stacktrace oder Symptom abstrahieren, lokale Geschwistermuster und
-  Primärdokumentation prüfen, 2–3 tragfähige Wege vergleichen, kleinste stabile Lösung wählen. Keine Websuche als
-  Ritual bei bekannten lokalen Aufgaben.
+  Primärdokumentation prüfen, 2–3 tragfähige Wege vergleichen
 - **Anwenderfehler vor Codefehler prüfen:** falsches Verzeichnis, fehlende Installation, bekannter Setup-Schritt oder
   Portkonflikt nicht mit einem Produkt-Workaround „reparieren“.
 
@@ -325,6 +324,8 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
 
 ### Sichtprüfung und Capture nur nach ausdrücklicher Userfreigabe
 
+- **Referenz zuerst verstehen:** Vor jeder freigegebenen Screenshot-Nachbildung das Bild in eigenen Worten nach Zielwirkung, Motiv, Komposition, Licht, Material, Maßstab und wahrscheinlicher Entstehung beschreiben; offene Ursachen gezielt mit passenden Primärquellen oder hochwertigen Fachreferenzen klären.
+- Danach einen Bauplan formulieren, der Ziel und Entstehungsprinzipien auch ohne Referenzbild erklärt; erst vollständig umsetzen, dann den Screenshot als Prüfmaßstab nutzen — nie blind Werte durchprobieren.
 - Fehlt im aktuellen Userauftrag die ausdrückliche Erlaubnis, keine Sichtprüfung und kein Capture starten. Frühere
   Freigaben, ein sichtbarer Scope, eigene Unsicherheit oder ein laufender Dev-Server ersetzen sie nicht.
 - Freigabe macht die Sichtprüfung im genannten Scope zum Pflichtschritt. Reihenfolge: alle fachlichen Todos und

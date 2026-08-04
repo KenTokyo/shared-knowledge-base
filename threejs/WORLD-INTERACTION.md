@@ -1,34 +1,21 @@
-# Weltinteraktion, Spuren und Runtime-Deformation
+# Weltinteraktion, Spuren und Runtime-Deformation — global
 
-- **Status:** optionale „könnte“-Tipps; lokale Datenformate, Persistenz, APIs → Vorrang
-- **Quellprofil:** Claude Flakes → gemeinsamer Pfad für Fußspuren, Wake, Spells
+**Lesen wenn:** Fußspur, Wake, Decal, Terrainreaktion oder persistente Weltspur driftet oder wächst.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-## Fünf Tipps
+## Tipps
 
-- **1 · Kontaktereignis könnte enthalten:**
-  - Welt-ID; Position; Richtung; Footprint; Intensität; Material; Zeit
-  - gemeinsame Consumer: Deformation; Partikel; Decal; Audio; Gameplay
-- **2 · Deformations-/Kontaktfeld könnte gemeinsam sein:**
-  - Zustand: Depression; verdrängte Masse/Berm; Kompression; Eis/Nässe
-  - Writer: Footprints; Tracks/Trails; Surface Wake; Krater/Spells
-  - Consumer: Vertex-Displacement; Normalen; Beauty-/Shadow-Pass; Kollision/Gameplay
-- **3 · Pfadspur/Wake könnte distanzbasiert sein:**
-  - Samples nach Weltweg statt Frame; Footprints getrennt von kontinuierlichem Track/Trail
-  - Surface Wake: Swept Mesh entlang einer Spine statt bloß Partikel
-  - gleiche Spine: Kamm; Schatten; Spray; Terrainbrush
-- **4 · Streaming/Reset könnte enthalten:**
-  - persistenter Layer: Chunkversion; Eviction; Restore; Relaxation
-  - Fensterfeld: Render-Target-Ping-Pong; toroidale World-UV; texelgesnapptes Scrollzentrum
-  - neu sichtbare Texel nullen; Diffusion/Decay; beide Targets deterministisch zurücksetzen
-- **5 · Gegenbeweis könnte Diagnose wählen:**
-  - Abdruck neben Fuß → Plant-Frame + sichtbare Fußposition
-  - Spur am Hang falsch → finale Höhe + Normale + Footprint
-  - Render/Gameplayspur driftet → gleicher Weltpunkt
-  - Reloadfehler → Chunkversion + Restore
-  - Kosten wachsen mit Strecke → Kapazität + aktive Samples + Draws
+- **Spur und sichtbarer Kontakt liegen an verschiedenen Orten** — jeder Consumer rekonstruiert Fuß-, Waffen- oder Wakepunkt selbst. → Ein Kontaktereignis mit Welt-ID, finaler Position/Normale, Richtung, Footprint, Stärke und Zeit veröffentlichen; Render, Audio, Deformation und Gameplay lesen denselben Punkt.
+  *claude-flakes: SnowContact/Deformation teilen den ausgewerteten Weltkontakt · voxel-samurai-quiz: Grounding-, Decal- und VFX-Composer verwenden gemeldete Kontakt-/Zielpunkte statt Spielerproxy · 2026-07-27–08-04*
+
+- **Wake besteht aus Partikeln, aber nicht aus verdrängter Oberfläche** — Spray liest Bewegung, Terrainreaktion eine andere Bahn; Form zerfällt. → Distanzbasiert eine Spine sampeln und daraus Swept Mesh, Kamm, Spray und Brush ableiten; Frames nur als Zeitgeber, nicht als Wegmaß verwenden.
+  *claude-flakes: Surf-Wake nutzt eine gemeinsame Spine für Mesh/Spray/Deformation · claude-of-tsushima: Trail-Unterteilung aus realem Klingenweg; voxel-samurai-quiz: klassenlokale Trail-Source-Busse teilen die Bahn · 2026-07-31–08-04*
+
+- **Spurkosten wachsen mit zurückgelegter Strecke** — Historie wird als ungebundene Objektliste geführt. → Feste Kapazität oder weltgesnapptes Fensterfeld verwenden; Scroll/Recycle nullt neu sichtbare Zellen und Reset räumt beide Ping-Pong-Seiten.
+  *claude-flakes: toroidales, texelgesnapptes Ping-Pong-Deformationsfeld · voxel-samurai-quiz: Decal-/Trail-/Partikelpfade laufen über gecappte Pools mit explizitem Clear · 2026-07-27–08-04*
 
 ## Handoffs
 
-- Terrain → [Map-Generierung](MAP-GENERATION.md)
-- Wasser → [Wasser](WATER.md)
-- VFX → [VFX](VFX.md)
+- Weltfelder → [Map-Generierung](MAP-GENERATION.md)
+- Effektform → [VFX](VFX.md)
+- Kapazität → [Performance](PERFORMANCE.md)

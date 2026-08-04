@@ -1,56 +1,27 @@
-# Shader, PBR-Materialien und Renderstabilität
+# Shader, PBR-Materialien und Renderstabilität — global
 
-- **Status:** optionale „könnte“-Tipps; lokale APIs, Limits, Tools → Vorrang
+**Lesen wenn:** Shaderterm, Material, Transparenz, Farbraum oder Pipelinevariante falsch rendert.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-## Fünf Tipps
+## Tipps
 
-- **1 · Echter Pipelinepfad könnte prüfen:**
-  - Geometrie; Attribute; Bindings; Defines; Cull; Blend; Depth; Targetformat
-  - CPU-/Buffer-/Shaderlayout: Stride; Typ; Einheit; Koordinatenraum; Reset
-  - aktives Target nie gleichzeitig samplen → Copy/Ping-Pong
-- **2 · Mathematikprüfung könnte enthalten:**
-  - Guards vor Division; Normalize; Sqrt; Pow; Log
-  - NaN und Infinity getrennt
-  - Applied Value; Rohterm-Min/Max; Rotkontrolle
-  - CPU-Modell → nur Kandidat; echter Frame → Entscheidung
-- **3 · PBR-Rollen könnten getrennt sein:**
-  - Albedo; Roughness; Metalness; Normal; AO; Emission
-  - Farbtextur: sRGB; ORM/Normal/Höhe/Maske: linear
-  - Map → Wert/Detail; Tint → Hue
-  - Reflexionsleiter: IBL/Environment Map/PMREM → Screen-Space oder Planar Reflections nur für passende Flächen
-  - SSR/Probe: Roughness; Specular-/Materialmaske; Rand-/Miss-Fallback; Zusatzkosten
-  - Metallprüfung: gültige PMREM + Neutrallicht
-  - Normalmap-Ferne: Specular-AA/Toksvig
-- **4 · Geometrie/Transparenz könnte prüfen:**
-  - Winding; Tangenten; Deformationsnormalen
-  - Pixelmaß; Mips; Nyquist
-  - Alpha; Depth-Test/-Write; Cullseite; Sortierung
-  - Volumen: Rückwandpass → Vorderwandpass
-- **5 · Gegenbeweis könnte Diagnose wählen:**
-  - CPU aktiv, Pixel leer → GPU-Konsole + Targetbesitz
-  - Material schwarz → PMREM + Rohkanäle + Vertexfarben
-  - Regler wirkungslos → Applied Value + Rotkontrolle
-  - transparente Zähne → Flat Color + Cullrichtungen
-  - Block mit festen Kanten → Finite-Sonde je Downsamplepass
+- **Detail existiert mathematisch, aber nicht im Bild** — Riss, Noise oder Muster liegt unter einem Pixel und wird durch Mips/TAA zu Wash oder Speckle. → Weltfeature in projizierte Pixel umrechnen; Frequenz und Breite gemeinsam sweepen; Fernwirkung auf gröberen Träger verschieben.
+  *claude-flakes: 0,13–0,25-px-Risse überlebten TAA nur zu 54 %, ~3-px-Einschlüsse zu 81 % · claude-of-tsushima: ±150 % Fernalbedo blieb nahezu wirkungslos · 2026-07-29–31*
 
-## Belegte Tipps
+- **„Noise aus“ löscht den ganzen Effekt** — Detailterm trägt zugleich Alpha/Geometrie; ein Tuningregler kann nur zwischen Körnung und Unsichtbarkeit wählen. → Detail gegen seinen neutralen Mittelwert blenden, Grate/Fissuren gegen null; analytische Silhouette und Deckung separat führen.
+  *voxel-samurai-quiz: `surfaceDetail=0` neutralisiert FBM auf 0,5 und Grate/Fissuren auf 0, Geometrie bleibt · claude-flakes: Coverage-Fenster musste vor Amplitude korrigiert werden, sonst blieb Frost/Kontakt schwach · 2026-07-27–31*
 
-Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
+- **Transparente Röhre oder Wasserfläche zeigt Zähne** — Vorder- und Rückwand mischen in Indexreihenfolge oder Winding ist invertiert. → Erst Flat-Color/Winding prüfen; Volumen als Rückwand- und Vorderwandpass mit explizitem Cull/Depth-Vertrag zeichnen, `DoubleSide` nur zur Diagnose.
+  *claude-flakes: glatte Röhre mit 176-Spalten-Sägezahn, repariert durch zwei Cull-Pässe · claude-of-tsushima: invertierter Ozeanring sowie nach unten gerichtete Dächer/Zylinder · 2026-07-28–30*
 
-- **Warmup lief durch, die Erstauftritte stehen trotzdem noch da** — `compile()` meldet keinen Fehler, und beim
-  Spawn kompiliert dieselbe Menge Programme wie ohne Warmup. Ursache: `compile()` sammelt **zwei** Mengen mit
-  **zwei verschiedenen Traversierungen** — Lichter per `traverseVisible` (unsichtbare fallen heraus),
-  Materialien per `traverse` (unsichtbare zählen mit). Beide sehen nur, was **zur Compile-Zeit im Baum hängt**.
-  Wird beim Spawn ein Teilbaum gegen eine **andere Variante** getauscht (Profil, LOD, Skin), war dessen
-  Material beim Warmup gar nicht montiert — jedes vorgewärmte Programm gehört der falschen Variante und der
-  Warmup verhindert **null**. → Vor dem Warmup die Varianten montieren, die später wirklich erscheinen, oder
-  gegen die Kandidatenliste vorcompilieren; und den Erfolg am **Erstauftritts-Zähler des Spawns** messen, nie
-  am fehlerfreien Durchlauf von `compile()`.
-  *Ein Warmup montierte ein Bossprofil, gespawnt wurde ein anderes: 10 `(Erstauftritt)`-Programme vorher wie
-  nachher, unverändert über einen Fix, der die Lichtzahl vollständig stillstellte · Herkunft:
-  voxel-samurai-quiz (Mechanismus ohne Projektbezug, zweiter Beleg steht aus) · 2026-08-02*
+- **Albedo wird um Größenordnungen zu dunkel** — Farbbytes werden als linear erzeugt und danach nochmals sRGB-dekodiert; Datenmaps bekommen umgekehrt Farbraumbehandlung. → Farb- und Datentexturen am Erzeuger typisieren; genau eine Farbdekodierung und genau eine Outputkonvertierung zulassen.
+  *claude-of-tsushima: Rinde 0,0059 statt 0,0671, Faktor 11,4 · voxel-samurai-quiz: Shader-/Texturpfade trennen Farb- von Datenrollen und gatten Reserved/NaN statisch · 2026-07-29–08-04*
+
+- **Custom-Material addiert eine zweite Sonne** — Framework-Licht, CSM und eigener Uniformpfad beleuchten denselben Term; Regler wirken unvorhersagbar. → Einen legalen Material-/Hookowner definieren, Applied Uniforms zurücklesen und andere Lichtquellen aus dem Shader entfernen.
+  *claude-of-tsushima: eigene Sonne plus CSM machte Gras etwa 8× zu hell; `engine.lit()` zentralisierte den Pfad · voxel-samurai-quiz: CSM-, Boss- und Weltshader besitzen zentrale Compile-/Materialbrücken statt ad-hoc Lichtkopien · 2026-07-28–08-04*
 
 ## Handoffs
 
-- Licht/Grade → [Licht/Kamera](LIGHT-CAMERA.md)
-- VFX-Lifecycle → [VFX](VFX.md)
+- HDR, Grade und Licht → [Licht und Kamera](LIGHT-CAMERA.md)
+- VFX-Lebenskurven → [VFX](VFX.md)
+- Pipelinekosten/Warm-up → [Performance](PERFORMANCE.md)

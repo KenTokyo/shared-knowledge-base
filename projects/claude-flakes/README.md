@@ -21,7 +21,7 @@ Stackübergreifend: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 
 ## Belegumfang
 
-119 `History/`-Dateien in 17 chronologischen Siebenergruppen gelesen: 10.694 Zeilen/2.088.191 Bytes; gegengeprüft mit 12 `.completed/`-Dateien, README, ROADMAP, `docs/`, Code und Reviews. PNG-stärkste Phasen: PH18 240, PH28 188, PH23 178.
+Auditstand 2026-08-04: 165 `History/`-Dateien vollständig als Textkorpus gelesen (14.081 Zeilen/2.762.795 Bytes); gegengeprüft mit zwölf `.completed/`-Dateien, README, ROADMAP, aktiven `docs/`, aktuellen Codeowner-Pfaden und 2.566 Reviewbildern. Frühere Angaben mit 119 Dateien sind überholt.
 
 ## Teuerste Muster
 

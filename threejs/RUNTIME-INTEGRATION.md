@@ -1,47 +1,27 @@
-# Runtime-Integration, Uhren und Audio
+# Runtime-Integration, Uhren und Lifecycle — global
 
-- **Status:** optionale „könnte“-Tipps; lokale Reihenfolge, Clocks, APIs → Vorrang
+**Lesen wenn:** Reihenfolge, Pause, Reset, Poolidentität, Audio oder Frame-zu-Frame-Zustand falsch reagieren.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-## Fünf Tipps
+## Tipps
 
-- **1 · Updatevertrag könnte enthalten:**
-  - Input → Gameplay → Animation → Kontakt/VFX → Kamera → Render
-  - öffentliche API: Owner; Signatur; Lebenszyklus; Koordinatenraum
-  - additive Erweiterung statt stiller Signaturänderung
-- **2 · Clockdomänen könnten getrennt sein:**
-  - Simulationszeit → Welt; Animation; VFX
-  - Realzeit → geeignete Kamera/UI
-  - `AudioContext.currentTime` → Audio-Scheduling
-  - `timeScale(0)` ≠ Hard-Freeze
-- **3 · Poolidentität könnte Generation sein:**
-  - Generationstoken statt Objektadresse
-  - Reuse → alte Trails; Lichter; Voices; Snapshots lösen
-  - Fired/Refused/Stale-Event-Zähler
-- **4 · Audio-/Ressourcenowner könnten enthalten:**
-  - AudioContext nach User-Geste
-  - positional World-Cues; globale UI-Cues
-  - Voice-Cap; Priorität; Stealing; Loop-Stopp; Deduplizierung
-  - Renderziele/Pipelines/Pools: Resize + Dispose
-- **5 · Gegenbeweis könnte Diagnose wählen:**
-  - Effekt einen Frame spät → Publisher-/Consumer-Reihenfolge
-  - Hit-Stop verschiebt Audio → alle Clockdomänen loggen
-  - alter Trail auf neuem Gegner → Generation vergleichen
-  - stummer Test ändert Bild → RNG-Streams zählen
-  - Contract grün, Boot rot → echtes Szenario + Console + Pixel
+- **Consumer liest den vorigen Frame** — Hand, Trail, Kontakt oder Kamera hinkt genau einen Frame hinterher. → Datenfluss explizit ordnen: Gameplay → Pose → Weltmatrizen → Kontakt/VFX → Kamera → Render; Consumer liest den finalen Ownerzustand, nicht einen parallel fortgeschriebenen Proxy.
+  *voxel-samurai-quiz: Stützhand muss nach Klassenpose und `updateMatrixWorld` laufen · claude-flakes: Figure, Wake und Deformationswriter teilen ausgewertete Weltpunkte statt unabhängige Updates · 2026-07-25–08-04*
 
-## Belegte Tipps
+- **`dt=0` stoppt die Welt nicht** — Verlet trägt Vorframebewegung weiter oder ein zustandsgetriebener Zweig feuert trotz Pause. → Zeitintegration bei `!(dt>0)` ohne History-Mutation verlassen und Weltstopp zusätzlich über ein Pause-Flag gattern; Simulations-, Real- und Audiozeit getrennt benennen.
+  *claude-flakes: 165,03 mm Drift über 30 Nullschritte→0,00; zustandsgetriebener Wave-Zweig blieb aktiv · claude-of-tsushima: skaliertes `dt` verlängerte 38-ms-Hit-Stop auf bis ~0,25 s · 2026-07-29–08-04*
 
-Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
+- **Reset löscht das Bild, nicht die Geschichte** — gleicher Shot hängt von TAA, Cloth, Federn, Pools, Debts, Audio oder Vorgeschichte ab. → Einen atomaren Rewindvertrag führen: Consumer lösen, CPU/GPU-Slots und Cursor leeren, Clocks/History resetten, RNG als letzte Zeile seeden.
+  *claude-flakes: A/A mit TAA ~5,8 %→0,00 %, sechs Zeitpunkte delta max 0 · voxel-samurai-quiz: Klassen- und VFX-Reset löschen Snapshots, Owner und Cursor gemeinsam · 2026-07-29–08-04*
 
-- **Gameplay liest die Kamerarichtung** — Trefferbogen, Zielhilfe oder Aufsammeln brechen, sobald ein neuer
-  Kameramodus die Peilung dreht, und niemand sucht die Ursache in der Kamera. → Gameplay peilt aus dem
-  **Spielerzustand** (`pitch`/`yaw`), nicht aus `camera.getWorldDirection()`. Vor jedem Rig-Umbau danach
-  greppen; legitim sind nur Messobjekte und Billboards (`camera.quaternion`).
-  *Bei 39 ° Schwenk lag die Schwingebene 1,26 m unter der Peilung, unter dem Fuß des Ziels; der 54°-Bogen zog
-  sich auf 41° · Herkunft: voxel-samurai-quiz · 2026-08-01*
+- **Ein gestoppter Producer hinterlässt Licht oder Audio** — Ressource bleibt am letzten Wert, weil der frühe Return kein Teardown erreicht. → Flüchtige Wünsche pro Frame deklarieren und nach Verbrauch auf null setzen; persistente Handles brauchen Generation/Owner und explizites Release.
+  *claude-flakes: Spell-Lights werden je Frame neu deklariert · voxel-samurai-quiz: Apex-Lichtwünsche werden nach jedem Frame verbraucht; sonst leuchtete die Todesstelle weiter · 2026-08-02–08-04*
+
+- **Endzustand ersetzt ein Ereignis** — Consumer kann Wiederholungen, verweigerte Casts oder mehrere Kontakte nicht unterscheiden. → Monotone Event-ID/Generation plus `fired/refused/dropped/stale`-Zähler führen; Zustand beschreibt Gegenwart, Event beschreibt Übergang.
+  *voxel-samurai-quiz: Cast-ID und exhaustive Ereigniskinds besitzen VFX-Slots · claude-flakes: Event-/Phasenkontinuität und individuelle Growth-Uhren ersetzten grobe Plant-States · 2026-07-31–08-04*
 
 ## Handoffs
 
-- Kosten → [Performance](PERFORMANCE.md)
-- Capture → [Debug/Review](DEBUG-REVIEW.md)
-- Zahlen, auf die eine Entscheidung folgt → [Messhandwerk](MEASURING.md)
+- Pose/Kontakt → [Animation und Charakter](ANIMATION-CHARACTER.md)
+- Effektpools → [VFX](VFX.md)
+- Hotpathkosten → [Performance](PERFORMANCE.md)

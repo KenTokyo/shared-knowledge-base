@@ -1,17 +1,10 @@
-# Three.js und Echtzeit-3D
+# Three.js und Echtzeit-3D — Router
 
-- **Status:** optionale, stackneutrale „könnte“-Tipps; lokaler Owner → Vorrang
+**Status:** Fachdateien enthalten freiwillige, stackneutrale Tipps; lokaler Owner und gemessen bessere Lösung haben Vorrang.
 
-## Kern
+## Lesepfad
 
-- **Früher Gesamtframe könnte:** Motiv, Maßstab, Tiefe, Kontakt, Bewegung, Licht
-- **Diagnosewechsel könnte:** Daten → Geometrie → Material → Licht → PostFX → Kamera → Instrument
-- **Gemeinsame Wahrheit könnte:** Render, Kollision, Navigation, Effekte
-- **Produktbeleg könnte:** echtes Artefakt statt Build oder Datei
-- **Ownerwahl könnte:** nur engster Owner für konkrete Lücke; lokaler Auftrag → Vorrang
-- **Tipp könnte Diagnose bleiben:** keine kumulative Zweit-Checkliste, kein fremdes Zahlenrezept ohne gleichen Stack und Maßstab
-
-## Fachowner
+Nur den engsten Fachowner lesen:
 
 - Terrain, Modifier, Bakes → [Map-Generierung](threejs/MAP-GENERATION.md)
 - Gras, Bäume, Scatter, Life → [Vegetation](threejs/VEGETATION.md)
@@ -21,22 +14,24 @@
 - Pose, Clips, Rigging, Cloth → [Animation und Charakter](threejs/ANIMATION-CHARACTER.md)
 - Kamera, Licht, Schatten, PostFX → [Licht und Kamera](threejs/LIGHT-CAMERA.md)
 - Partikel, Trails, Effekt-Audio → [VFX](threejs/VFX.md)
-- Reihenfolge, Uhren, Audio-Runtime → [Runtime-Integration](threejs/RUNTIME-INTEGRATION.md)
+- Reihenfolge, Uhren, Reset → [Runtime-Integration](threejs/RUNTIME-INTEGRATION.md)
 - Shader, PBR, Renderpässe → [Shader und PBR](threejs/SHADERS.md)
 - Chunks, LOD, Frametime → [Performance](threejs/PERFORMANCE.md)
-- Nur nach freiwilligem Sichtprüfungs-Entscheidungsgate: Capture, A/A, A/B, Review → [Debug und Review](threejs/DEBUG-REVIEW.md)
-- Sweep, Ranking, Referenzvergleich, „ist das besser?" → [Messhandwerk](threejs/MEASURING.md)
+- Capture, A/A, A/B, Probe → [Debug und Review](threejs/DEBUG-REVIEW.md)
+- Sweep, Ranking, Referenzvergleich → [Messhandwerk](threejs/MEASURING.md)
+
+Für vollständige Weltarbeit routet der kompakte [Worldbuilding-Router](THREEJS-WORLDBUILDING-RULES.md). Agentische Sichtprüfung wird ausschließlich durch [`CODING-RULES.md`](CODING-RULES.md) §8–9 freigegeben und gedeckelt.
 
 ## Projektebene
 
-Was **nur in einem Repository** Zeit gekostet hat, steht in dessen eigenem Ordner unter
-[`projects/<repo-name>/`](projects/) — dort auch die Trigger-Tabelle des Projekts. Wie Tipps geschrieben,
-geändert, gestürzt und nach oben promotet werden: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).
+Projektfallen stehen unter [`projects/<repo-name>/`](projects/). Ein Tipp lebt genau einmal; Promotion ist Umzug, keine Kopie. Format, Belegstandard und Änderungsrecht: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).
 
 ## Quellenprofil
 
-- **Claude of Tsushima:** Weltkomposition; Weltfelder; gelöste Kameras; interne Captures
-- **Claude Flakes:** Fußspuren; Wake; gemeinsame Runtime-Deformation; lebendige Welt
-- **Claude Desert:** VFX-Isolation; Shader-/PBR-Gegenproben; Runtime-Readbacks
-- **Voxel Samurai Quiz:** AEON-Weltengine; Messkette gegen Referenzbilder; Third-Person-Rig
-- **Gemeinsam:** Form → Kontakt → Lesbarkeit → Material → Licht → Detail
+- **Claude of Tsushima · Three.js:** Weltverträge, Environment, Kamera/Kontakt, Kampf-VFX, Renderkosten und Messfallen.
+- **Voxel Samurai Quiz · Three.js/R3F:** Charakterlayer, VFX-Pools/Forge, Licht-/Shader-Lifecycle, AEON-Welt und Performanceinstrumente.
+- **Claude Flakes · Babylon.js/WebGPU:** nur stackneutrale Mechanismen aus Animation, VFX, Deformation, Reset und Kosten; keine WGSL-/Babylon-API als Three.js-Rezept.
+- **Avatar Casting Abilities · Three.js:** ergänzende Codegegenprobe für Layering, Trails, Partikel und Pools; keine History, daher allein kein Kosten- oder Qualitätsbeleg.
+- **Claude Desert · Three.js:** VFX-Isolation, Shader-/PBR-Gegenproben und Runtime-Readbacks.
+
+Neue globale Tipps brauchen Belege aus mindestens zwei Repositories. Lokale APIs, Konstanten, Ports und Messlatten bleiben im Projektordner.

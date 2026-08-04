@@ -14,7 +14,7 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 | [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
 | [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Kontextanker, Umsetzung, Echtzeit-3D, Validierung und Git |
-| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner nur für die freiwillige, auf 1–2 Sichtprüfungen begrenzte CLI-Capture-Ausnahme |
+| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für ausdrücklich freigegebene CLI-Captures; Gate und Gesamtbudget stehen in `CODING-RULES.md` |
 | [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |
 | [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md) | Alle Ressourcen in React Projects: Three.js-Bezug, Zweck, absolute macOS-Pfade, Pull-Pflicht und lokale Ports |
 | [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |

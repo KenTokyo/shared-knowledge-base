@@ -6,9 +6,9 @@ Dieser Leitfaden kombiniert die stärksten Elemente der drei Referenzprompts. Ke
 
 Die zitierten Originalprompts unten sind Quellenmaterial, keine aktuelle Arbeitsanweisung. Eigene Prompts sollen
 zusammenhängende Änderungen one-shotten, statisch und numerisch prüfen und die direkte visuelle Abnahme bevorzugt
-dem User überlassen. Agentische Sichtprüfung ist freiwillig und aus Zeitgründen ungern gesehen: nur bei danach
-ungelöster Look-Unsicherheit **eine**, im gesamten Userauftrag absolut höchstens **zwei** Sichtprüfungen; niemals
-eine Screenshot-Schleife. Wird diese Ausnahme gewählt, gilt [`../SCREENSHOT-GUIDE.md`](../SCREENSHOT-GUIDE.md).
+dem User überlassen. Agentische Sichtprüfung braucht die ausdrückliche Freigabe im aktuellen Userauftrag;
+Reihenfolge und Gesamtbudget kommen ausschließlich aus [`../CODING-RULES.md`](../CODING-RULES.md) §8–9, die
+Technik aus [`../SCREENSHOT-GUIDE.md`](../SCREENSHOT-GUIDE.md). Niemals eine Screenshot-Schleife.
 
 ## Empfohlener Mix
 
@@ -57,7 +57,7 @@ Don't stop until each sub-agent is utterly wowed with the quality when compared 
    bevorzugt durch den User; agentisch nur bei ungelöster Unsicherheit.
 5. **Performance und Messung:** Welche Budgets, Messwerte oder Tests sichern die technische Qualität?
 6. **Iterationsregel:** Nur ein konkreter Fund oder eine geänderte Frage öffnet eine weitere Umsetzungsschleife;
-   Sichtprüfung bleibt über den gesamten Auftrag auf eine, absolut höchstens zwei begrenzt.
+   Sichtprüfung nur nach aktueller Freigabe und innerhalb des zentralen Gesamtbudgets aus `CODING-RULES.md`.
 
 **Hinweis:** Nutze `/goal` in Codex und `/loop` in Claude oder Cursor, sofern die jeweilige Umgebung diese Befehle unterstützt. Ein absichtlich sehr hoher Qualitätsmaßstab fördert Verbesserungen; die tatsächliche Grenze bilden Zeit, Budget und technische Machbarkeit.
 
@@ -72,9 +72,9 @@ Fan out sub-agents by specialty. Build each coherent area completely before the 
 functionality, performance numbers and the strongest counterexample. Fix concrete findings and continue until the
 user goal or an objective technical limit is reached.
 
-Do not run screenshot reviews by default; the user should test the surface directly. Only if a material visual
-uncertainty remains after implementation and numeric checks may you perform one visual review, at the absolute
-maximum two across the entire task. Never create a screenshot-review loop. Do this in [your tool or stack].
+Do not run screenshot reviews by default; the user should test the surface directly. Perform visual review only
+when the current user request explicitly authorizes it, following the central ordering and total budget in
+`CODING-RULES.md`. Never create a screenshot-review loop. Do this in [your tool or stack].
 ```
 
 Die Vorlage funktioniert nicht nur für Spiele, sondern auch für Websites, Berichte, Präsentationen, Designs und andere kreative oder technische Ergebnisse.
@@ -181,9 +181,9 @@ Use hit reactions, stagger animations, basic death animations, weapon trails, du
 ## Optional in-game screenshot and visual-review system
 
 Do not build or run a screenshot system by default. Implement the coherent product slice first, use static and
-numeric checks, and let the user perform the direct visual surface/gameplay acceptance. Only when a material Look
-question remains unresolved may one visual review be used, at the absolute maximum two across the entire task. No
-review per camera, phase or candidate and no screenshot loop.
+numeric checks, and let the user perform the direct visual surface/gameplay acceptance. Visual review requires
+explicit authorization in the current user request and must follow the central total budget in `CODING-RULES.md`.
+No review per camera, phase or candidate and no screenshot loop.
 
 If this optional exception is selected and no project CLI capture exists, build it first. Start headless Chromium
 once through Playwright and keep the same session for every measurement and permitted image. Reject software
@@ -307,8 +307,8 @@ Fan out specialized sub-agents and assign each major visual area to a separate a
 Each sub-agent should complete its coherent area, then use the cheapest relevant static/numeric countercheck. Iterate
 only on a concrete finding, not on ritual review.
 
-If the optional visual exception is selected, use a reviewer that did not build the feature. Across all sub-agents,
-that still permits only one, absolutely at most two visual reviews for the entire task.
+If visual review is explicitly authorized, use a reviewer that did not build the feature. Across all sub-agents,
+share the single central task budget from `CODING-RULES.md`; no phase or agent receives a fresh budget.
 
 ## Optional Ghost of Tsushima comparison
 
@@ -331,9 +331,9 @@ The final result should not feel like a Three.js demonstration. It should feel l
 
 Use instancing, LOD systems, culling, optimized shadows, reusable materials, object pooling, adaptive vegetation density and intelligent world streaming to maintain stable performance without making the environment feel empty.
 
-Fan out sub-agents, build the strongest coherent slice one-shot, validate architecture and numbers, and reserve the
-internal screenshot pipeline for one unresolved Look question, absolutely at most two visual reviews across the
-entire task.
+Fan out sub-agents, build the strongest coherent slice one-shot, validate architecture and numbers, and use the
+internal screenshot pipeline only after explicit authorization, within the central task budget from
+`CODING-RULES.md`.
 
 Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249477528-g5umsca3.png
 Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249510257-2fgbc1vu.png

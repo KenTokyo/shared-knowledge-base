@@ -1,90 +1,30 @@
-# Echtzeit-Performance und räumliche Kosten
+# Echtzeit-Performance und räumliche Kosten — global
 
-- **Status:** optionale „könnte“-Tipps; lokale Budgets, Geräte, Stufen → Vorrang
+**Lesen wenn:** Framezeit, Draws, Pools, Culling, Warm-up oder Erstauftritte zu teuer sind.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-## Fünf Tipps
+## Tipps
 
-- **1 · Kostenmodell könnte sein:**
-  - `Buckets × Arten/Materialien × LOD × Render-/Schattenpässe + Screen-Space`
-  - exakter Subjekt-Hide statt ganzer Chunks
-  - Draw Calls + Vertexarbeit + Overdraw
-- **2 · Räumliche Wahrheit könnte gemeinsam sein:**
-  - lokale Chunk-Bounds nach Updates
-  - aktuelle Kamera/Frustum vor Culling
-  - LOD erhält Silhouette, Kontakt, Kartenfläche
-  - Schattenreichweite getrennt von Sichtreichweite
-- **3 · Hotpath/Pools könnten prüfen:**
-  - feste Kapazität; vorallokierte Buffer; bewusste Überlast
-  - keine Frame-Allokationen; GC im warmen Worst Case messen
-  - Idle: keine Scans; Voices; Draws
-  - Reset: CPU/GPU-Slots; Cursor; Debts; History
-- **4 · Messvertrag könnte enthalten:**
-  - Hardware-Renderer; Szene; Kamera; Qualität; Warm-up
-  - p50; p90; p95; p99; Worst
-  - Calls; Dreiecke; sichtbare Parität; Fremdlast
-- **5 · Gegenbeweis könnte Diagnose wählen:**
-  - hohe Calls → Chunk×Art×Pass-Tabelle
-  - Culling ohne Gewinn → Bounds + Frustumtreffer
-  - First-use-Stotterer → Kalt-/Warmlauf + Variantenliste
-  - teurer Zusatzpass → GPU-Zeit + Overdraw-A/B
-  - Prozessschwankung → Inhalt + Device + Fremdlast
+- **Weniger Instanzen, trotzdem mehr Draws** — neue Art oder kleiner Weltchunk vervielfacht Buckets und Pässe; Instanzzahl war nicht der Kostentreiber. → Kosten als `sichtbare Buckets × Arten/Materialien × LOD × Beauty-/Schattenpässe` aufschreiben; nach Renderbounds und Call schneiden, nicht nach Weltlogik.
+  *claude-of-tsushima: 6 Ahorne 38 Calls, 170 Ahorne 56; Randchunk −26 % Kosten bei 2,5 % Bäumen · voxel-samurai-quiz: Chunk ist Draw Call plus Bounding Sphere, nicht Weltbegriff · 2026-07-29–08-01*
 
-## Belegte Tipps
+- **Pool wächst im teuersten Moment** — Burst, Licht oder Effekt überläuft und allokiert genau unter Last. → Poolkapazität als Qualitätsbudget festlegen; bei Überlast priorisiert droppen/recyceln und Telemetrie führen, nie still wachsen.
+  *claude-of-tsushima: VFX-Pools entstehen vollständig beim Boot · voxel-samurai-quiz: harte Caps, Queue-/Familien-/Batch-Drops · claude-flakes: fester Lichtpool verwirft Überlauf · 2026-05-18–08-04*
 
-Format und Änderungsrecht: [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md).
+- **Kein `new`, trotzdem GC-Druck** — variadische Mathe, Boxing, temporäre Arrays oder Harness-Code allokieren im Framepfad. → Site isolieren, warme Nullkontrolle fahren, primitive Arithmetik und wiederverwendete Scratchwerte gegenmessen; Profilerfund erst nach echtem Korpus-A/B ändern.
+  *claude-flakes: `Math.hypot`/HeapNumbers 126.982→131 B/Update, Gesamt 86.148→6.709 B/Frame · voxel-samurai-quiz: Rig-, Pool- und Composerpfade halten Scratch/Slots außerhalb des Frames · 2026-07-31–08-04*
 
-- **„X ist teuer" ohne zu wissen, welche Hälfte** — optimiert wird die Seite, die nichts kostet. → Zwei
-  Läufe diffen: **Population auf 0** gegen **Meshes verstecken**. Die Differenz ist Vertexarbeit plus Draw
-  Calls, der Rest ist Fragment.
-  *0,21 ms gegen 0,37 ms — 0,16 ms davon Vertex und Draw Call · Herkunft: voxel-samurai-quiz · 2026-08-01*
+- **Warm-up ist grün, Erstauftritt bleibt** — Compile sieht falsches Target, falsche Lichtzahl oder eine andere, nicht montierte Variante. → Exakt die späteren Materialien/Geometrien gegen echte Environment- und Targetparameter wärmen; Erfolg an neuen Programmen beim Erstauftritt messen, nicht am fehlerfreien `compile()`.
+  *voxel-samurai-quiz: falsches Render-Target kostete ~6,3 s Ladezeit; anderes Bossprofil ließ 10 Erstauftrittsprogramme stehen · claude-flakes: „First-Cast“ folgte der Laufposition, nicht der Ability; 19 Materialien/9 Postpässe waren bereits eager · 2026-07-31–08-02*
 
-- **Chunkgrenzen nach Weltlogik geschnitten** — schöne Datenstruktur, unerklärlich viele Draw Calls.
-  Ursache: ein Chunk ist genau ein Draw Call **und** eine Bounding Sphere — beides Rendering-Begriffe, keine
-  Tatsachen über die Welt. → Nach Call und Bounds schneiden; ein Material je Art, von allen Chunks geteilt.
-  *Herkunft: voxel-samurai-quiz · 2026-08-01*
+- **Leerlaufhülle wird als Optimierung ausgehängt** — null aktive Instanzen sparen keinen Draw, Unmount gibt Materialien/Programme frei und die nächste Salve kompiliert neu. → Renderer mit echtem Nullpfad montiert lassen; Instanzzahl null und `visible=false` am Mesh, Feature-Schalter nur für dauerhafte Deaktivierung.
+  *voxel-samurai-quiz: 4 Layer×11 Meshes, Thrash-Schlüssel 9→0, Kompilate 50→5/65→2 · claude-of-tsushima: feste Boot-Pools setzen inaktive Spans außerhalb des Bilds statt Renderer zu erzeugen/zerstören · 2026-08-02–04*
 
-- **Population wächst mit der Welt statt mit dem Bild** — Kandidaten über die ganze Karte streuen und danach
-  Culling suchen. → **Ein Element je Zelle eines auf die Kamera zentrierten Gitters**; die Instanzzahl hängt
-  dann an der Sichtweite, nicht an der Weltgröße.
-  *Herkunft: voxel-samurai-quiz · 2026-08-01*
-
-- **Schattenwurf als „kleiner Schalter"** — eine dichte Vegetationsschicht verdoppelt beinahe die Dreiecke.
-  → Vor dem Anschalten zählen, nicht danach messen. **Und danach getrennt zählen:** die Schattenhälfte kostet
-  weit weniger Zeit als ihr Dreiecksanteil, also überschätzt jede Dreiecksdifferenz den erreichbaren Gewinn
-  um rund den Faktor zwei — Culling und LOD erreichen nur den Beauty-Pass, das Schattenfrustum gehört dem
-  Licht.
-  *+2 980 800 Dreiecke (+90 %) für Grascasting · Herkunft: voxel-samurai-quiz · 2026-08-01*
-  *zweiter Beleg: Schicht gesamt −1.65 … −2.20 ms, davon Schattenpass nur −0.25 … −0.65 ms, bei exakt
-  hälftigem Dreiecksanteil; ein LOD, das 558 168 Dreiecke „entfernt", verkauft davon 279 084 und lässt die
-  andere Hälfte als Schatten ohne Baum im Bild · Herkunft: claude-tower-defense · 2026-08-01*
-
-- **„Grober Stellvertreter im Schattenpass, feine Geometrie im Bild" — geht in three nicht** — der
-  naheliegendste Schattenhebel überhaupt, und er ist im Renderer verschlossen. `WebGLShadowMap.render` ruft
-  **dieselbe** `renderObject`-Funktion wie der Beauty-Pass und übergibt ihr die **Hauptkamera**; darin steht
-  `object.layers.test( camera.layers )`. Die Layer des Schattenkamera-Objekts werden beim Filtern **nie
-  gelesen** — ein Caster auf eigenem Layer ist damit auch für den Schattenpass unsichtbar. `visible === false`
-  kehrt aus demselben Grund vorher zurück, und der Vor-Schatten-Haken feuert erst **nach** beiden Tests, ist
-  also zu spät, um Sichtbarkeit umzuschalten. → Vor dem Planen eines Proxy-Casters die drei Stellen im
-  Renderer-Quelltext lesen, nicht die API-Namen. Wer den Weg trotzdem will, zahlt einen **zweiten Draw im
-  Beauty-Pass** — das ist ein Aufschlag, kein Sparweg; der verbleibende Hebel ist die **Auflösung** der
-  Schattenkarte, nicht die Objektmenge.
-  *r180, im Quelltext nachgelesen statt aus der API geschlossen; die Annahme hatte eine ganze Phase getragen
-  · Herkunft: claude-tower-defense · 2026-08-01*
-
-- **`frustumCulled = false` als Freibrief für eine fehlende Hülle** — Frame bricht mitten in der Traversierung
-  ab, alles hinter dem Mesh fehlt im Bild, `TypeError … reading 'center'`, kein einziger Draw Call schlägt fehl.
-  `WebGLRenderer.projectObject` holt den Sortierschlüssel **innerhalb** von
-  `if (!object.frustumCulled || _frustum.intersectsObject(object))`: erst `object.boundingSphere`, und weil
-  `Mesh` keine eigene führt (`undefined`), über den Zweig `geometry.boundingSphere.center`. Abgeschaltetes
-  Culling überspringt den Frustumtest per Kurzschluss und führt damit **gerade in** diesen Zugriff — es schützt
-  nicht, es garantiert ihn. → Wer `computeBoundingSphere` aushebelt, weil im `position`-Attribut Gitterindizes
-  oder ein Einheitsprimitiv stehen, muss die Hülle danach **setzen**; `null` ist kein „egal".
-  *r184 im Quelltext gegengelesen statt aus `frustumCulled` geschlossen: 1524 Fehler je Lauf über drei Karten,
-  und das Prüfwerkzeug meldete „keine riskanten Meshes", weil es dieselbe Annahme trug wie der Code
-  · Herkunft: voxel-samurai-quiz · 2026-08-02*
+- **Culling prüft eine erfundene Hülle** — Stock-Bounds decken instanzierte Weltpositionen nicht ab oder eine fehlende Sphere crasht trotz `frustumCulled=false`. → Hülle nach letzter Positions-/Matrixänderung explizit setzen und gegen echte Instanzextents prüfen; Culling nur abschalten, wenn sein Test nachweislich teurer oder bedeutungslos ist.
+  *voxel-samurai-quiz: 1.524 Traversalfehler durch fehlende Geometry-Sphere; Stock-Bounds entwerteten Gras-/Terrainculling · claude-of-tsushima: Chunk-/Tree-Cost hängt an lokalen Renderbounds statt Weltpopulation · 2026-07-30–08-02*
 
 ## Handoffs
 
-- Shaderpässe → [Shader/PBR](SHADERS.md)
-- Evidenz → [Debug/Review](DEBUG-REVIEW.md)
-- Kostenzahlen, die zitiert werden sollen → [Messhandwerk](MEASURING.md)
+- Messaufbau und Verteilungen → [Messhandwerk](MEASURING.md)
+- Shader-/Passkosten → [Shader und PBR](SHADERS.md)
+- Effektkapazitäten → [VFX](VFX.md)

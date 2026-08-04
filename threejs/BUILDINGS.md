@@ -1,32 +1,21 @@
-# Prozedurale Bauten und Landmarken
+# Prozedurale Bauten und Landmarken — global
 
-- **Status:** optionale „könnte“-Tipps; lokale Baustile, Maße, APIs → Vorrang
+**Lesen wenn:** Bau, Brücke, Ruine oder Landmarke schwebt, schneidet, verschwindet oder Scatter falsch blockt.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-## Fünf Tipps
+## Tipps
 
-- **1 · Standort könnte flächig geprüft werden:**
-  - Ecken; Kanten; Min/Max-Höhe; Gefälle; Eingrabung
-  - gemeinsamer Transform: Mesh; Collider; Clearing; Kamera; Navigation
-- **2 · Occupancy könnte gemeinsam sein:**
-  - Bauten; Wege; Pads; Trümmer → Kernzone + weicher Rand
-  - Consumer: Bäume; Gras; Blumen; Gegner; Life; Navigation
-- **3 · Geometrieprüfung könnte enthalten:**
-  - Außenflächen; Dächer; Böden; Giebel; Kappen; Extrusionsenden
-  - Winding; Dreiecksfläche; Degeneration; NaN
-  - `DoubleSide` → nur Diagnose
-- **4 · Form könnte vor Oberfläche kommen:**
-  - Silhouette; Dach; Öffnungen; Wandstärke; Maßstabsanker
-  - Ruine: Ursprungsgrundriss → plausible Brüche
-  - Kamera: echte Piece-Bounds statt Site-Mittelpunkt
-- **5 · Gegenbeweis könnte Diagnose wählen:**
-  - schwebende Ecke → Footprint-Min/Max
-  - Gras im Pflaster → Occupancy-Consumer prüfen
-  - verschwindendes Dach → Normalen + Front/Backface
-  - Site sichtbar, Bau unsichtbar → Piece-Bounds projizieren
-  - schlechte Cullingkosten → lokale Batch-Bounds
+- **Mittelpunkt sitzt, Gebäuderand schwebt** — Standortprüfung sampelt einen Punkt, obwohl das Bauwerk Fläche belegt. → Ecken, Kanten und Footprint-Ring auf der finalen Oberfläche messen; Mesh, Collider, Clearing, Navigation und Kamera aus demselben Site-Transform ableiten.
+  *claude-of-tsushima: finale Footprints/Ringe entschieden Teich- und Bauorte nach dem Rohscore · voxel-samurai-quiz: AEON-Bauten teilen Layout-, Kollisions- und Feldsampler statt unabhängiger Höhenwerte · 2026-07-26–08-04*
+
+- **Gras, Weg oder Gegner steht im Baukörper** — jeder Scatterer besitzt eigene Blocker. → Eine Occupancy mit Kern und weichem Rand veröffentlichen; Bauten, Wege, Pads, Navigation und Spawn lesen dieselbe Maske.
+  *claude-of-tsushima: `WorldSpec` bündelt Weltfelder und Bautenbelegung · voxel-samurai-quiz: AEON-Layout/Collision/Scatter führen gemeinsame Feldsampler · 2026-07-26–08-04*
+
+- **Site ist sichtbar, Landmarke trotzdem außerhalb Kamera/Culling** — Mittelpunkt oder Weltchunk ersetzt die Bounds der echten Pieces. → Piece-Bounds nach Transform berechnen und für Framing, LOD und lokale Batches verwenden; `DoubleSide`/Culling-Off nur als Gegenprobe.
+  *claude-of-tsushima: invertierte Dächer/Zylinder und echte Piece-Silhouetten statt Site-Schwerpunkt · voxel-samurai-quiz: Renderchunks müssen nach Call und Bounds statt Weltlogik geschnitten werden · 2026-07-29–08-01*
 
 ## Handoffs
 
 - Terrainkontakt → [Map-Generierung](MAP-GENERATION.md)
-- PBR → [Shader/PBR](SHADERS.md)
-- Framing → [Licht/Kamera](LIGHT-CAMERA.md)
+- Material/Winding → [Shader und PBR](SHADERS.md)
+- Framing → [Licht und Kamera](LIGHT-CAMERA.md)

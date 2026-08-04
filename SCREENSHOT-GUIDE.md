@@ -4,10 +4,10 @@
 Capture-Ausnahme gewählt wird.
 **Geltung:** verbindlicher technischer Owner nur für diesen Ausnahmefall; lokale CLI-Namen stehen in der `AGENTS.md`.
 
-**Default:** Keine agentische Sichtprüfung und kein vorsorglicher Bau des Capture-Systems. Sie ist aus Zeitgründen
-bewusst ungern gesehen; die direkte Oberflächen-/Gameplay-Abnahme durch den User ist vorzuziehen. Nur wenn statische
-und numerische Gegenchecks die relevante Look-Frage nicht beantworten, darf **eine** Sichtprüfung stattfinden,
-absolut höchstens **zwei im gesamten Userauftrag**. Keine Screenshot- oder Review-Schleife.
+**Default:** Keine agentische Sichtprüfung und kein vorsorglicher Bau des Capture-Systems. Die direkte
+Oberflächen-/Gameplay-Abnahme durch den User ist vorzuziehen. Agentische Sichtprüfung braucht eine ausdrückliche
+Freigabe im aktuellen Userauftrag; Reihenfolge und Gesamtbudget stehen ausschließlich in
+[`CODING-RULES.md`](CODING-RULES.md) §8–9. Keine Screenshot- oder Review-Schleife.
 
 1. **Nur nach diesem Entscheidungsgate das projekteigene CLI-Capture-System nutzen.** Existiert dann keines, zuerst
    eines nach diesem Muster bauen. Kein sichtbares Browserfenster und keine manuelle Browserprüfung.
@@ -34,10 +34,10 @@ absolut höchstens **zwei im gesamten Userauftrag**. Keine Screenshot- oder Revi
    Rankings den Rauschboden bestimmen und prüfen, worauf das Messfenster tatsächlich zeigt; ein präziser Wert aus
    dem falschen Fenster ist kein Beleg.
 
-7. **Review-Budget hart schließen.** Mehrere notwendige Frames in genau ein Vergleichsbild montieren; dessen
-   einmalige Auswertung ist eine Sichtprüfung. Eine zweite ist nur nach einer relevanten Änderung oder neuen
-   konkreten Unsicherheit zulässig. Niemals eine dritte, keine vollständigen Passes und kein Durchblättern von
-   Kameras oder Sweeps.
+7. **Freigegebenes Review-Budget hart schließen.** Mehrere notwendige Frames in ein Vergleichsbild montieren;
+   dessen Auswertung zählt als Sichtprüfung. Weitere Sichtprüfungen nur für eine relevant geänderte Fassung oder
+   eine neue konkrete Frage und nur innerhalb des zentralen Gesamtbudgets aus `CODING-RULES.md`; keine
+   vollständigen Passes und kein Durchblättern von Kameras oder Sweeps.
 
 8. **GPU-Flags nicht erraten.** Flags wie `--use-angle=vulkan`, `--enable-features=Vulkan` oder
    `--disable-vulkan-surface` nur nach eigener Messung einsetzen; sie waren auf NVIDIA bereits messbar schädlich.

@@ -1,44 +1,31 @@
-# Debug, Capture und Review-Evidenz
+# Debug, Capture und Review-Evidenz — global
 
-- **Status:** optionale „könnte“-Tipps; lokale Hosts, Baselines, Latten → Vorrang
+**Lesen wenn:** Capture, A/A, A/B, Probe, Regression oder sichtbare Ursache unklar ist.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
-## Bildreview-Budget
+Agentische Sichtprüfung ist **kein Standardgate**. Sie braucht die ausdrückliche Freigabe im aktuellen Userauftrag; Reihenfolge, Werkzeug und Gesamtbudget stehen ausschließlich in [`CODING-RULES.md`](../CODING-RULES.md) §8–9. Diese Datei ordnet nur die technische Evidenz.
 
-Agentische Bildprüfung ist kein Standardgate und aus Zeitgründen ungern gesehen; direkte Abnahme durch den User
-hat Vorrang. Nur eine nach statischen/numerischen Checks ungelöste Look-Frage rechtfertigt ein Vergleichsbild,
-absolut höchstens zwei Sichtprüfungen im gesamten Userauftrag. Die technischen Tipps unten schreiben kein Capture
-vor; falls die Ausnahme gewählt wird, gilt zusätzlich [`SCREENSHOT-GUIDE.md`](../SCREENSHOT-GUIDE.md).
+## Tipps
 
-## Fünf Tipps
+- **Zwei Bridge-Aufrufe liefern zwei Zustände** — zwischen Mutation, Render und Readback läuft die Seite weiter. → Mutation, Capture-Latch, Render und Readback in einem exklusiven Eval-/Requestfenster ausführen; tatsächliche Frame-/Eventsignatur mit ausgeben.
+  *claude-flakes: `cast()` und `advance()` trennten ~10 Frames/0,15 s · claude-of-tsushima: After-Pose-Read lag 4,29–6,21 % neben dem Ziel-Frame · 2026-07-28–29*
 
-- **1 · Beleg könnte enthalten:**
-  - Behauptung; echtes Artefakt; Vorbedingungen; billigster Gegenbeweis; Grenze
-  - Status: verifiziert; Hypothese; widerlegt; offen; Produktwahl
-  - Renderer-Readback statt Browser-/DOM-Bild
-- **2 · Capturevertrag könnte enthalten:**
-  - exklusives Target vom Render bis Readback
-  - Format; BGRA/RGBA; Zeilenrichtung; Alpha; lineares Downsampling
-  - tatsächlicher Frame; elapsed time; Eventsignatur
-  - Modell/Sweep → Kandidat; fester Frame/Beat → Edit oder zitierbarer Beleg
-- **3 · A/A könnte vor A/B kommen:**
-  - Uhr; `dt`; Wind; Kamera; LOD; CSM; Environment; History; Pools; RNG
-  - gleicher Shot: wiederholt; nach zwei Vorgängern; in frischen Prozessen
-  - Warm-up getrennt; Source-Edit während Lauf → Lauf ungültig
-- **4 · Probe-Selftest könnte enthalten:**
-  - A/A; absichtliches A/B; Seitentausch; leer; Singleton; Rotkontrolle; Restore
-  - Count + Mindestkardinalität; null Output ≠ Pass
-  - Applied Value; Left-visible; Left-casting
-  - alle Renderables: Waffen; Ghosts; PostFX-Spuren
-- **5 · Metrik/Baseline könnte enthalten:**
-  - Population; Nenner; Schwelle; Messboden; Kamera; Tiefe; Raw/HDR/LDR; Maske; Mindestpixel
-  - Erasure statt Overlap; geclippte Pixel separat; Messfarbraum benennen
-  - Baseline: Source/Bake; Sequenz; Seed; Target; Toolversion; Gatezahl
-  - falls Bildausnahme gewählt: stärkste relevante Ansichten in **einem** Vergleichsbild statt Einzelreview je Winkel
+- **`clear()` macht das Bild leer, A/A bleibt rot** — History, Federn, Pools, Debts, Uhren oder RNG überleben. → Voll-Rewind statt sichtbarem Clear; zwei verschiedene Vorgeschichten auf denselben Shot führen und Byte-/Fingerprintgleichheit verlangen.
+  *claude-flakes: TAA-A/A ~5,8 %→0,00 %, sechs Zeitpunkte delta max 0 · voxel-samurai-quiz: Pool-/Animationsreset löscht Owner, Cursor und Snapshots gemeinsam · 2026-07-29–08-04*
 
-## Gegenbeispiele
+- **Hide-Ablation ändert null Pixel** — Update setzt Sichtbarkeit zurück oder Post verarbeitet das alte Scene-Target. → Live setteln, Capture einfrieren, Hide unmittelbar vor echtem Szenenrender anwenden, danach im selben Targetbesitz lesen und exakt restaurieren.
+  *claude-of-tsushima: 83/249 Kronen wurden vom LOD-Update wieder sichtbar; Post-Hide ohne Scene-Render ergab 0 Pixel · voxel-samurai-quiz: Shipping-Pose und gematchte Same-frame-Hide-Diffs waren Voraussetzung für belastbare Layerwerte · 2026-07-30–08-01*
 
-- periodisches A/A → Cursor/Debt/History
-- gleiches HDR, anderes spätes LDR → Targetbesitz
-- grünes Tool ohne Output → Run-Guard + erwartete Zeilen
-- Hide null, Subjekt sichtbar → Runtime-Restore
-- A/B verschiebt Fremdpartikel → RNG-Verbrauch
+- **Gleiche Spaltenzahl, anderer Farbraum** — HDR-Region und LDR-PNG werden gerankt, obwohl Tonemap/Grade dazwischenliegt. → Artefaktkopf nennt Target, Format, Farbraum, Alpha und Zeilenrichtung; Raw/HDR/LDR nie in derselben Rangfolge mischen.
+  *claude-of-tsushima: Blütenrechteck 5,77 HDR gegen 2,79–2,92 LDR · claude-flakes: ein nichtfinites HDR-Texel wurde erst im Postpfad zum schwarzen Block · 2026-07-29–30*
+
+- **Grüne Probe hat nichts gelesen** — leerer Sweep, falsches Szenariofenster oder fehlendes Artefakt liefert Exit 0. → erwartete Zeilen/Population und Mindestkardinalität binden; Detektor einmal gezielt vergiften; Gleichheit mit ungestörtem Lauf als „behauptet nichts“ behandeln.
+  *claude-flakes: Ability-Szenario hatte identisches 49er-Tally wie ungestörter Lauf; leere Sweeps blieben grün · claude-of-tsushima: schwellwertfreies Wassergate bestand bei leerer Zielmenge · 2026-08-01–03*
+
+- **Belegordner mischt Generationen** — abgebrochener Lauf lässt alte und neue Frames unter denselben Namen. → pro Lauf leeres, gescoptes Ziel; Abschluss nur aus Exit, erwarteter Anzahl, Zeitfenster und Summary; Quelle während Messlauf nicht editieren.
+  *claude-flakes: 158 gemischte Logs statt 175/175 bis Bridge-Neuaufbau · voxel-samurai-quiz: alte Prefix-Frames verfälschten Sweep-Tabellen · claude-of-tsushima: HMR entfernte Bridge/Recorder während Framecost · 2026-07-30–08-01*
+
+## Handoffs
+
+- Zahlen und Schlussfolgerungen → [Messhandwerk](MEASURING.md)
+- Laufzeitreset → [Runtime-Integration](RUNTIME-INTEGRATION.md)
