@@ -248,10 +248,10 @@ Parameter des Altbestands drehen.
 - Standardgrößen der UI-Bibliothek und bestehende Variants bevorzugen; keine willkürlichen lokalen Overrides.
 - „Juicy“ heißt klare Gruppierung, Form, semantischer Rim/Glow und kurze Transform-/Opacity-Rückmeldung — nicht
   mehr Erklärtext, Kartenstapel oder dekorative Icon-Flut.
-- Automatische Browser-, DOM-, Screenshot-, UI-Smoke- oder manuelle UI-Prüfungen bleiben ohne ausdrücklichen
-  Userbefehl verboten.
+- Automatische Browser-, DOM-, Screenshot-, UI-Smoke- oder manuelle UI-Prüfungen sind nur nach ausdrücklicher
+  Freigabe im aktuellen Userauftrag erlaubt; dann gelten Reihenfolge, Werkzeug und Budget aus §9.
 
-## 8. Echtzeit-3D — große Schritte, Sichtprüfung nur als Ausnahme wenn es gesagt wird
+## 8. Echtzeit-3D — große Schritte, Sichtprüfung nur nach ausdrücklicher Freigabe
 
 Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-RULES.md`:
 
@@ -262,12 +262,17 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
   Vertical Slice bauen; anhand von Architektur, Zahlen und Produktziel behalten oder wechseln.
 - **VFX als System:** Form, Bewegung, Material/Licht, Timing, Reaktion und Audio schichten; nicht nur Partikelzahl
   erhöhen.
-- **One-shot statt Bildschleife:** Kandidaten zusammenhängend vollständig bauen. Agentische Sichtprüfung ist aus
-  Zeitgründen ungern gesehen und standardmäßig aus; direkte Oberflächen-/Gameplay-Abnahme macht bevorzugt der User.
-- **Freiwillige Ausnahme:** Bleibt nach statischen und numerischen Gegenchecks echte Unsicherheit, ob der Look trägt,
-  darf eine Sichtprüfung stattfinden, ausnahmsweise eine zweite nach relevanter Änderung oder neuer Frage. Pro
-  gesamtem Userauftrag gelten **eine, absolut höchstens zwei Sichtprüfungen oder mehr falls User dir es erlaubt** — niemals pro Phase, Kamera, Kandidat
-  oder Mikroedit. Ein montiertes Vergleichsbild zählt als eine Sichtprüfung.
+- **One-shot statt Bildschleife:** Alle gekoppelten Anforderungen und Kandidaten zuerst vollständig
+  ausimplementieren. Keine Capture-, Zwischenstands- oder Bildschleife während des Bauens.
+- **Explizites Gate:** Agentische Sichtprüfung ist nur erlaubt, wenn der aktuelle Userauftrag sie ausdrücklich
+  freigibt. Schweigen, frühere Freigaben, ein sichtbarer Scope oder eigene Unsicherheit zählen nicht. Ohne Freigabe
+  übernimmt der User die direkte Oberflächen-/Gameplay-Abnahme.
+- **Freigabe = Pflicht:** Liegt sie vor, die freigegebenen Sichtprüfungen nach vollständiger Umsetzung sowie
+  statischen und numerischen Gegenchecks mit dem projekteigenen CLI-System nach §9 durchführen.
+- **Budget statt Bildschleife:** Für den gesamten Userauftrag gelten absolut höchstens sechs Sichtprüfungen. Bei
+  umfangreicher visueller 3D-Arbeit und allgemeiner Freigabe fünf gezielte Sichtfragen prüfen; die sechste für einen
+  relevant korrigierten Endstand oder eine neue konkrete Frage reservieren. Nennt der User eine niedrigere Zahl,
+  gilt diese. Das Budget gilt nie neu pro Phase, Kamera, Kandidat oder Mikroedit.
 - Nach 3–5 Verbesserungen derselben Messachse an einer anderen 3D-Achse weiterarbeiten.
 
 ### Sichtbare Echtzeitformen statisch absichern
@@ -279,7 +284,7 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
 - Masse und Licht trennen: solide Materie schreibt Tiefe; HDR-Kern, Halo, Funken und Bloom sind eigene Lichtrollen.
 - Bodenreste, Scars, Risse, Decals und Zonen brauchen authored Masken und Rand-Falloff; Träger-Box oder Plane darf
   nicht als sichtbares Rechteck die Silhouette bestimmen.
-- Geometrieherkunft, Farbpfad, Depth-/Blend-Rollen, HDR-Werte und Masken vor einer möglichen Sichtprüfung statisch
+- Geometrieherkunft, Farbpfad, Depth-/Blend-Rollen, HDR-Werte und Masken vor einer erlaubten Sichtprüfung statisch
   kontrollieren.
 
 ## 9. Validierung, Tests und Prüfbudget
@@ -318,23 +323,30 @@ Nur für visuelle oder spielerische Echtzeit-3D-Arbeit, zusätzlich zu `THREEJS-
 - Reine Doku-, Prompt- oder Regeländerungen brauchen keinen Typecheck.
 - Statische Checks belegen nur Typ- und Kompiliersicherheit, nicht Gameplay, Kampfgefühl, Lesbarkeit oder Optik.
 
-### Capture nur in der freiwilligen 3D-Ausnahme
+### Sichtprüfung und Capture nur nach ausdrücklicher Userfreigabe
 
-Nur wenn §8 die freiwillige Ausnahme erlaubt:
-
-- ausschließlich das projekteigene CLI-Capture-System verwenden;
-- den lokalen Einstieg zuerst in der Projekt-Pfadkarte, den `package.json`-Scripts und passenden `scripts/`-
-  Ordnern suchen;
-- den [Screenshot-Guide](SCREENSHOT-GUIDE.md) nur lesen, wenn der Einstieg danach unklar bleibt oder das System
-  wirklich fehlt; ein fehlendes System anschließend nach diesem Vertrag bauen;
-- Playwright startet einmalig headless Chromium, dieselbe Sitzung bedient alle Messungen;
-- Software-Renderer brechen den Lauf ab;
+- Fehlt im aktuellen Userauftrag die ausdrückliche Erlaubnis, keine Sichtprüfung und kein Capture starten. Frühere
+  Freigaben, ein sichtbarer Scope, eigene Unsicherheit oder ein laufender Dev-Server ersetzen sie nicht.
+- Freigabe macht die Sichtprüfung im genannten Scope zum Pflichtschritt. Reihenfolge: alle fachlichen Todos und
+  Änderungen vollständig ausimplementieren → kanonisches statisches Gate und nötige numerische Gegenchecks →
+  Sichtprüfung. Keine Zwischenstands-, Phasen- oder Fortschritts-Captures.
+- Für den gesamten Userauftrag höchstens sechs gezielte Sichtprüfungen durchführen. Eine ausdrücklich niedrigere
+  Userzahl gewinnt; das Budget erneuert sich nicht pro Phase, Kamera, Kandidat oder Mikroedit. Jede weitere Prüfung
+  braucht eine andere konkrete Sichtfrage oder einen relevant geänderten Endstand. Ein montiertes Vergleichsbild
+  zählt als eine Sichtprüfung.
+- Ausschließlich das projekteigene CLI-Capture-System verwenden.
+- Den lokalen Einstieg zuerst in der Projekt-Pfadkarte, den `package.json`-Scripts und passenden `scripts/`-
+  Ordnern suchen.
+- Den [Screenshot-Guide](SCREENSHOT-GUIDE.md) nur lesen, wenn der Einstieg danach unklar bleibt oder das System
+  wirklich fehlt; ein fehlendes System anschließend nach diesem Vertrag bauen.
+- Playwright startet einmalig headless Chromium, dieselbe Sitzung bedient alle Messungen.
+- Software-Renderer brechen den Lauf ab.
 - PNG direkt aus dem Engine-Post-Target erzeugen, in Three.js per `readRenderTargetPixels()`, niemals per
-  `page.screenshot()` oder sichtbarem Browser;
-- Zahlen zuerst: relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen;
-- kein PNG erzeugen oder ansehen, wenn Zahlen die Frage beantworten;
-- sonst genau stärkstes Vorher/Nachher- oder Gewinner/Verlierer-Vergleichsbild prüfen; zweite Sichtprüfung nur nach
-  relevant geändertem Kandidaten oder neuer konkreter Frage, niemals eine dritte.
+  `page.screenshot()` oder sichtbarem Browser.
+- Im fertigen Build zuerst relative Maße, Rauschboden und tatsächlichen Messfensterinhalt prüfen; danach nur die für
+  die benannten Sichtfragen nötigen Bildausschnitte ansehen.
+- Pro Sichtfrage genau das stärkste Vorher/Nachher- oder Gewinner/Verlierer-Vergleichsbild prüfen. Unveränderte
+  Bilder oder identische Fragen nicht erneut prüfen; nach spätestens der sechsten Prüfung die Bildschleife beenden.
 
 ## 10. Sichtbare Ergebnisqualität und Craft-Modus
 
@@ -353,7 +365,8 @@ bleibt möglichst simpel.
 - Vor Abschluss den gesamten Auftrag einmal gegenlesen: Ist jedes explizite Merkmal noch wahr? Wurde nichts vorher
   Gutes geopfert?
 - Ohne erlaubte visuelle Prüfung Abschluss ehrlich als technisch umgesetzt und manuell abzunehmen kennzeichnen.
-  Code-Sicherheit niemals als sichtbaren Qualitätsbeweis verkaufen.
+  Mit Freigabe erst nach den vorgesehenen CLI-Sichtprüfungen abschließen. Code-Sicherheit niemals als sichtbaren
+  Qualitätsbeweis verkaufen.
 
 ### Generative Bau-Prompts
 
@@ -464,7 +477,8 @@ Performance-Bauweise als Markdown-SSoT festhalten.
 - Jede neue oder berührte handgepflegte Codedatei bei höchstens 1.600 LOC?
 - Explizite Eigenschaften erhalten, keine Regression eingeführt?
 - Eigene Funde im Scope behoben, fremde Änderungen unangetastet?
-- Keine unerlaubten UI-/Gameplay-Tests, Worktrees, Dev-Server oder Hintergrundprozesse gestartet?
+- Keine unerlaubten UI-/Gameplay-Tests, Worktrees, Dev-Server oder Hintergrundprozesse gestartet; bei Freigabe
+  Sichtprüfungen erst nach kompletter Umsetzung, nur per Projekt-CLI und höchstens sechsmal durchgeführt?
 - Kanonisches statisches Gate nach Codeänderungen gebündelt ausgeführt; Dokuänderung nicht sinnlos typegecheckt?
 - UTF-8, Links, Dateiende und Diff geprüft?
 - Nur eigene Dateien gestagt, kompilierfähige Einheit committed und gepusht?
