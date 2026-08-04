@@ -38,3 +38,6 @@
 
 - **Summenboden bestätigt kompensierende Blindheit** — fehlende Nadel und zusätzlicher Treffer halten dieselbe Kardinalität. → Identitäten Quelle↔Parser kreuzen und jede Nadel, Guard-Klausel sowie Exit-Erwartung einzeln brechen.
   *Parser verschluckte je Fall letzte Nadel und traf trotzdem Sollsumme 10; Sweep A hielt später alle 20/20 einzeln · 2026-08-02*
+
+- **Layoutsonde misst ihr Element, nicht den Bildschirm** — jede Prüfung vergleicht das eigene Panel gegen den Viewport, keine fragt, wer sonst dieselben Pixel belegt; `elementFromPoint` in der Panelmitte antwortet auch dann korrekt, wenn 400 px weiter zwei fremde Kästen ineinanderstehen. Ein neues Panel verschiebt zudem das Zentrum jeder *anderen* zentrierten Box, die Kollision entsteht also erst durch die eigene Änderung. → Nachbarschaft paarweise als Rechteck schneiden statt Einzelboxen zu prüfen; das eine erlaubte Bild wirklich ansehen, es ist die einzige Prüfung, die ungestellte Fragen findet; den Fund danach als Gegenbeweis zurückschreiben — nach dem Fix messen, dass die alten Boxen sich geschnitten **hätten**, sonst prüft die neue Zeile nichts.
+  *Erste Runde 40/40 grün, Bild zeigte `#hud-bottom` (Zentrum 800) unter `#vfx-rail` (Zentrum 614); der nachgezogene Gegenbeweis belegte 250 px geteilte Breite · 2026-08-04*

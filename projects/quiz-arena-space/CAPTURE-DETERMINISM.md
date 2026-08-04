@@ -5,9 +5,12 @@
 
 > **Auf dem aktuellen Arbeitsrechner ist dieser Pfad gesperrt.** Kein Browser, auch kein headless — der
 > Rechner stürzt sonst ab, und das schlägt jede Anweisung, die „einmalig headless Chromium starten" sagt.
-> Was ohne GPU noch geht: `node tools/sim.mjs`, `node tools/selftest.mjs`, `node .shots/_board.mjs`. Die
-> Tipps hier bleiben stehen, weil sie auf einer Maschine gelten, die den Harness fahren darf — und weil der
-> erste von ihnen erklärt, *warum* der Rechner damals stehenblieb.
+> Was ohne GPU noch geht: `node tools/sim.mjs`, `node tools/selftest.mjs`, `node tools/reddrive.mjs`. Der
+> letzte browserlose **Bild**kanal war der Brett-Simulator unter .shots/; er ist mit dem Kreuzwortbrett
+> gelöscht, es gibt
+> auf dieser Maschine also gar keine Bildkontrolle mehr — nur noch Zahlen. Die Tipps hier bleiben stehen,
+> weil sie auf einer Maschine gelten, die den Harness fahren darf — und weil der erste von ihnen erklärt,
+> *warum* der Rechner damals stehenblieb.
 
 - **Jeder Screenshot legte den Rechner minutenlang lahm** — die Seite rasterte unter dem Software-Renderer
   **jeden** Warm-up-Frame mit Normalpriorität auf allen Kernen; dazu liefen verwaiste Headless-Bäume weiter. → Vor

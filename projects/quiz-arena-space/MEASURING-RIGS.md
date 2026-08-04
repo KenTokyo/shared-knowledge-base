@@ -12,8 +12,19 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   Wrapper über die vollständige Signatur oder über `(...a)` schreiben, und nach jeder Signaturerweiterung im
   Produktivcode jeden Wrapper im Harness nachziehen. Ein Wrapper, der schmaler ist als sein Ziel, fällt nicht
   aus — er misst den alten Code weiter.
+  **Ein Stub, der schmaler ist als sein Ziel, fällt dagegen laut aus — und das ist teurer, nicht billiger:**
+  ein fehlender Member ist kein Messfehler, sondern ein `TypeError` mitten im Arm, und alles **hinter** dem
+  Arm wird in diesem Lauf nie beurteilt. Eine getippte Memberliste ist dabei die eigentliche Ursache; sie
+  kann nur zurückfallen. → Die Memberliste **aus der Quelle schneiden** (`readFileSync` + Regex auf die
+  Aufrufform, hier `this.vfx.X(` / `this.vfx.X.Y(`) und einen **Größen-Term** danebenlegen: ein Regex, das
+  aufhört zu matchen, liefert die leere Menge im selben zuversichtlichen Ton wie eine Datei, die aufgehört
+  hat, Effekte zu rufen.
   *`VFX._afford` bekam einen vierten Parameter `evicts`, der Wrapper in `tools/sim.mjs` nahm drei und ließ ihn
   fallen: `rings=158/176` und dieselben Verweigerungen vor wie nach dem Fix · 2026-08-02*
+  *Zwei Rigs derselben Datei, eines nachgezogen, eines nicht: `Weapons.ts` ruft sieben `vfx`-Member, der
+  Stub im `weapons`-Arm trug fünf. `this.vfx.shockwave is not a function` beendete den Lauf in der
+  Scatter-Halteschleife — **31 Klauseln** ab diesem Arm kamen nie zu einem Verdikt, die des Arms selbst
+  eingeschlossen, weil er erst am Ende meldet. Geschnitten statt getippt: 69 von 69 · 2026-08-03*
 
 - **Round-Robin füllt keinen Pool** — die naheliegende Antriebsform (reihum je einen Gegner je Schlüssel,
   viele Runden) misst nichts: `acquireModel` holt sofort zurück, was die Vorrunde freigab, die Free-List

@@ -1,6 +1,6 @@
 # Notiz- und Zitat-Bench — quiz-arena-space
 
-**Lesen wenn:** du in `tools/selftest.mjs` eine Klausel, ein `want`, eine Treibung aus der `DRIVES`-Tabelle anfasst — oder eine Zahl bzw. ein Quellzitat in `Notes/visual-review.md`, `.shots/_grid.mjs` oder `.shots/_board.mjs` änderst.
+**Lesen wenn:** du in `tools/selftest.mjs` eine Klausel, ein `want` oder eine Treibung aus der `DRIVES`-Tabelle in `tools/reddrive.mjs` anfasst — oder eine Zahl bzw. ein Quellzitat in `Notes/visual-review.md` änderst.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen Brett-Renderern und
@@ -21,8 +21,9 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   `_place`/`_scorePlacement` +79, `_drawPanel` +141. Bench 58/60 → 60/60, Commit `6258e20` · 2026-08-02*
   *Eine Schicht später, bei einem Versatz von nur +5: zwei Zitate lagen ~570 Zeilen daneben, ein Schieben um
   5 hätte sie zementiert. Ein drittes log über die eigene Herkunft und war für jeden `Crossword.ts:`-Grep
-  unsichtbar, weil `.shots/_board.mjs:590` es als Bildunterschrift `PORTED CROSSWORD.TS:1900-1917` ins
-  Diagramm zeichnet — alle sieben mixed-case-Zitate derselben Datei waren sauber. Commit `8a7326f` · 2026-08-03*
+  unsichtbar, weil der damalige Brett-Simulator (seit 2026-08-03 gelöscht) es als Bildunterschrift
+  PORTED CROSSWORD.TS:1900-1917 ins Diagramm zeichnete — alle sieben mixed-case-Zitate derselben Datei
+  waren sauber. Commit `8a7326f` · 2026-08-03*
   *Dasselbe Paar in `main.ts` stand über vier Stellungen: `Game.ts:725`/`:743`, `786`/`804`, `806`/`824`,
   heute `809`/`827` — zweimal repariert, dreimal gebrochen. Beim mittleren Bruch wuchs der Doc-Block darüber
   um 20 Zeilen, und `simulate(dt) {` rutschte von 766 auf **exakt die zitierte 786**, während der gemeinte
@@ -123,6 +124,19 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   *Verworfen: Zahlwort+Substantiv 10 Treffer gemischt, gebacktickter `--flag` 1/1 falsch, gebacktickte
   Datei 6/11 falsch, doppelt-gequotete Spanne 9/9 falsch. Umgedreht: 16 Spannen, 0 falsch, 0 mehrdeutig,
   2 echte Drifts gefunden · 2026-08-01*
+  **Zweite Schicht, dieselbe Klausel: die umgedrehte Richtung filtert gegen die Platte, und ein gelöschtes
+  Skript fällt damit aus der *Menge* statt in den Rot-Zweig.** Die Kandidatenliste entsteht per
+  `readdirSync` über `tools/`; nennt eine geschriebene Kommandozeile ein Skript, das es nicht mehr gibt,
+  kommt sie leer zurück und die Spanne wird in derselben Stille übersprungen, die eine Spanne *ohne* Skript
+  verdient. Das ist der schlimmere der beiden Verfälle: ein erfundener Switch ist ein falsches Wort auf
+  einer Zeile, die noch läuft — ein gelöschtes Skript ist eine ganze Zeile, die nichts mehr beantwortet.
+  → Jeden Filter, dessen Menge aus dem Dateisystem kommt, als **eigenen Term mit eigenem Zweig** führen;
+  ein Term ohne Zweig druckt am Ende nur den bestätigenden Satz. Und nach jedem Löschen die Blätter nach
+  dem toten Dateinamen greppen, statt dem Check zu glauben, der ihn gerade verloren hat.
+  *Der Brett-Schnitt nahm den Gitter-Simulator mit; danach stand seine `--algo park`-Zeile in drei
+  Prosa-Spannen zweier Blätter, und der Treiber, der genau diese Klausel rot treiben sollte, ankerte selbst
+  darauf — der Wächter konnte seinen eigenen Fall nicht mehr sehen und kam `green` zurück. Der dritte Term
+  fand alle drei sofort. Volllauf danach: 64 von 64 Toren rot treibbar, `selftest` 37/37 · 2026-08-03*
 
 - **Ein Dateisplit verschiebt nicht nur Nummern, sondern die Datei, die ein Zitat meint** — eine
   Fortsetzung wie `` `:681` `` nennt keinen Dateinamen und löst gegen die zuletzt genannte Datei des
@@ -137,11 +151,13 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   ungeprüft weiter, auch wenn das Zitat selbst nachgezogen wurde. Nach jedem Schnitt zusätzlich per
   Symbolgrep über die zitierenden Dateien gehen, nicht nur den Check fahren.
   *`Crossword.ts` 2.882 → 1.408 in drei Schnitten. `:681` zeigte in beiden Blättern nach dem Umzug von
-  `park` nach `CrosswordGrid.ts` auf `_unregister` und blieb grün; umgehängt auf `` `:55` ``/`CrosswordGrid.ts`,
-  Leerzeilen-Treiber von `1780→1769` auf `1205→1206` · 2026-08-03*
+  *park* in die damalige Gitterdatei auf `_unregister` und blieb grün; umgehängt auf deren `:55`,
+  Leerzeilen-Treiber von `1780→1769` auf `1205→1206`. Beide Ziele sind mit dem Brett gelöscht — die
+  Zitatform steht hier deshalb ohne Backticks, damit kein Grep ihr noch folgt · 2026-08-03*
   *Zwei Schichten später: derselbe Schnitt hatte die **Rümpfe** beider Simulatoren korrekt zurückgelassen
   und ihre **Kopfblöcke** nicht — 14 tote Symbolnennungen (`_place`, `_scorePlacement`, `_nextEntry`,
-  `_drawPanel`; alle vier leben ohne Unterstrich in `CrosswordGrid.ts`/`CrosswordBoard.ts`) und zwei
+  `_drawPanel`; alle vier lebten damals ohne Unterstrich in den beiden Brettdateien, heute keines von
+  ihnen mehr) und zwei
   Hausregelsätze, die auf `src/systems/Crossword.ts` zeigten, wo der geportete Code nicht mehr liegt.
   `selftest` meldete davor wie danach 1 von 60. Mitgewandert war auch die Aussage: `place` parkt nicht
   mehr selbst, sondern fällt auf `park` durch · 2026-08-03*

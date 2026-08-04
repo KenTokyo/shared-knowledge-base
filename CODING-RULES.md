@@ -390,6 +390,17 @@ bleibt möglichst simpel.
 - Maximale Informationsdichte: Fehlerbild, Ursache, Handlung und Beleg erhalten; Füllwörter, Einleitungen,
   Wiederholungen und Synonymketten streichen.
 
+### Übergabedateien kurz halten
+
+Eine Übergabe ist ein Startbefehl, kein Arbeitsbericht. Gleiche Dichte wie oben, zusätzlich hart gedeckelt:
+
+- **Deckel:** höchstens sechs Abschnitte, je höchstens acht Zeilen; Gesamtlänge unter einer Bildschirmseite.
+- **Diese sechs:** Auftrag · Stand · nächster Schritt · Fallen · Dateien mit Zeilennummer · Startbefehl.
+- **Zahl statt Prosa:** Messwert, Pfad, Commit-Hash. Herleitungen, Sweeps und widerlegte Hypothesen gehören in
+  die Task-Datei, nicht in die Übergabe; dort steht nur der Verweis darauf.
+- **Nichts wiederholen,** was schon in Task-Datei, Commit-Nachricht oder Code-Kommentar steht.
+- **Kein Rückblick:** was erledigt und dokumentiert ist, ist Erledigtes und kein Übergabeinhalt.
+
 ### Chat-Titel
 
 Jeder neue Chat erhält, sobald das konkrete Ziel klar ist, genau eine Metadatenzeile:
