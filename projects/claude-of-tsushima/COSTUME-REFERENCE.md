@@ -31,6 +31,13 @@ Rig, Pose und Kamera bleiben bei [`CHARACTER-CAMERA.md`](CHARACTER-CAMERA.md).
   liegt die Ursache im Knochen, Band mit Grund ausnehmen statt ein passendes Teil zu verstellen.
   *Armknochen 1,394 m, Kinn-zu-Arm 0,027 m hier gegen 0,202 m in der Vorlage · PH8 · 2026-08-04*
 
+- **Zweites Blatt erbt die Haltung des ersten** — jedes Blatt einzeln grün, im Sammellauf fällt das zweite
+  durch; die Review-Haltung setzt nur eine Marke, und die Knochen schreibt erst ein Neu-Posen zurück. Ein
+  Runtime, der bei stehendem Playhead nichts neu posed, macht das nie. → Haltungswechsel über **einen**
+  Pfad, der Marke und vollen Rebuild koppelt (`invalidate` reicht nicht: null Schritte auf demselben
+  Frame); Sammellauf gegen die Einzelläufe gegenprüfen, bevor man ihm glaubt.
+  *Wanderer in T-Pose gemessen: Band 0,825 = 0,837 statt 0,300, Deckung 33,9 % statt 8,2 % · PH8 · 2026-08-04*
+
 - **Referenzblatt als Modulkonstanten** — `REF`, `REF_MARKS`, `TORSO_CLIP`, Fenster und Schwellen lagen lose
   im Probecode; das zweite Blatt hätte jeder davon ein `if` verpasst. → Blätter sind Daten (`ref`, `outfit`,
   `stance`, `marks`, `torsoClip`, `note()`, Fenster, Schwellen), die Probe bleibt Instrument; ein neues Blatt
