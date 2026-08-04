@@ -18,8 +18,8 @@
 - **Cast-Reaktion endet vor Impact** — `_release` nach 0,323 s null, Crystallise 0,72 s später. → Hülle vom spätesten Wirkungsmoment rückwärts; Reviewframe mit Brace/Throw-Energie.
   *Reviewframe 0,30–0,49 Brace; 38 % Wurf statt 1 %, Deltas nur Figur/Cloth · 2026-07-30*
 
-- **Verlet bei `dt=0` aktiv** — `(pos-prev)` trägt Vorframe-Verschiebung weiter. → Bei `!(dt>0)` ohne `prev`-Änderung zurück; Wachkontrolle.
-  *165,03 mm Drift/30 Nullschritte→0,00; echter Frame 41,15 mm · 2026-07-29*
+- **`dt=0` friert nur zeitgetriebene Zweige ein** — zwei Bilder, ein Mechanismus. Verlet trägt über `(pos-prev)` die Vorframe-Verschiebung weiter. Und ein Zweig, der auf **Zustand** prüft statt auf eine Uhr, feuert bei Nullzeit unverändert: `Combat.update` erreicht „wave cleared“ über `standingCount === 0`, also hätte „clear targets“ im gestoppten VFX-Studio den Cairn (z-index 140) über dem Panel (100) geöffnet — Spieler hinter zwei Panels, das untere unerreichbar. → Bei `!(dt>0)` ohne `prev`-Änderung zurück. Jeden Weltstopp zusätzlich über das vorhandene Pause-Flag führen (`combat.paused`), nie über die Uhr allein. Wachkontrolle: im gestoppten Frame jeden Zustandszweig einmal von Hand auslösen.
+  *165,03 mm Drift/30 Nullschritte→0,00, echter Frame 41,15 mm · 2026-07-29 — Panel hinter Panel statisch gefunden, im Bild nie sichtbar gewesen · 2026-08-04*
 
 - **Mock verdeckt Achsen** — Identitätskamera nullt 6/9 Komponenten; geteiltes Objekt leakt. → Schräge orthonormale Basis, frische World je Szenario, Property-Zugriffe inventarisieren.
   *Nur `rig.right`/`rig.up` fehlten; schräge Basis deckte Ribbon-Formel · 2026-07-29*
