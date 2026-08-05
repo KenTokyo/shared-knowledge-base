@@ -11,6 +11,7 @@
 - Je Stil eine Long- und Short-Fassung unter einer klaren New-Game-Ordnerstruktur.
 - Jump, separater Dodge, Dash-Skill, Luftskill und hochwertiges Slash-VFX-Layering sind Pflicht.
 - Aktuelle Erweiterung: je Stil zusätzliche Long-/Short-Subagent-Fassung mit Three.js-Blindvergleich und hartem Qualitätsloop.
+- Current extension: three monster-showcase prompts output one offline `monster.html` each, with ten original creatures per style.
 
 ## Lösungswahl
 
@@ -194,3 +195,24 @@
 **Eingehalten:** Nutzer-Opt-in für Subagents und Sichtvergleich dokumentiert ✅, bestehende Promptformen bleiben unangetastet ✅, keine Runtime- oder Codeänderung ✅.
 
 **Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Begeisterung eines Subagenten ist kein Qualitätsbeleg. Fix-Pfad: Prompt verlangt echte Side-by-Side-Evidenz, Blindurteil, konkrete Defizite, zentral integrierte Korrekturen und ehrliche Kennzeichnung jedes nicht ausführbaren manuellen Gates.
+
+### Phase 9 — Three HTML-only monster showcases
+
+**Goal:** Voxel, Ashen Coast, and Claude Flakes each receive one standalone chat prompt that outputs exactly one offline `monster.html` with ten unique stone-like voxel creatures.
+
+- [x] Created `monster/` as a dedicated prompt format beside the game-build variants.
+- [x] Defined eight regular creatures and two bosses per style; all 30 names, silhouettes, locomotion systems, and material identities are distinct.
+- [x] Enforced glowing eyes as the only visible facial feature on every creature.
+- [x] Required an interactive WebGL2 gallery, selector, clean hero viewport, scale cue, animation controls, responsive UI, and complete offline behavior.
+- [x] Kept each response to one self-contained `monster.html`; CLI, build tools, imports, CDN, network calls, and external assets are forbidden.
+- [x] Updated the game index, root prompt index, and compatibility guide from 15 to 18 prompts.
+- [x] Validated creature counts, name uniqueness, bosses, output contract, shared sections, links, English, UTF-8, Mojibake, final newline, and LOC.
+- [ ] Commit and push Shared Docs, then commit and push only the parent submodule pointer.
+
+**Result:** Three standalone prompts now define 30 unique stone-like voxel creatures and one offline `monster.html` gallery per style; Git delivery remains.
+
+**Architecture fits:** `monster/` is a focused HTML-only showcase format inside the existing game prompt library; the three files share one gallery contract while style-specific creature rosters stay fully independent.
+
+**Rules met:** existing prompt SSoT continued ✅, duplicate runtime work avoided ✅, no browser or gameplay run ✅, English-only new artifacts ✅.
+
+**Findings/performance/critical issues:** 🟡 Thirty creatures inside one page can trigger heavy startup and GPU cost. Fix path: render one selected hero at full detail, reuse one renderer and shared geometry/material families, dispose switched resources, cap DPR/effects, and degrade background polish before silhouette or animation.

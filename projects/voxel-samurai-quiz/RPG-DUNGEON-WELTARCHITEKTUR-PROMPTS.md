@@ -39,6 +39,15 @@
 - Output contract: one directly downloadable or fenced `index.html`, runnable through `file://`, with all CSS, JavaScript, shaders, procedural assets, and audio inline.
 - Forbidden: CLI, npm, build, server, imports, CDN, network requests, external libraries, and additional files.
 
+## Single-File Monster Showcase Prompts
+
+1. [`Voxel Style — 10 Monsters`](prompts/new-games/endless-voxel-slasher/monster/voxel-style.md).
+2. [`Ashen Coast Style — 10 Monsters`](prompts/new-games/endless-voxel-slasher/monster/ashen-coast-style.md).
+3. [`Claude Flakes Style — 10 Monsters`](prompts/new-games/endless-voxel-slasher/monster/claude-flakes-style.md).
+
+- Output contract: one offline `monster.html` with ten selectable stone-like voxel creatures, including two bosses, interactive hero framing, and no external files.
+- Face contract: glowing eyes are the only visible facial feature on all 30 creatures.
+
 ## Selection in One Line
 
 - **Voxel Style:** strongest local voxel composition and direct module authorship.

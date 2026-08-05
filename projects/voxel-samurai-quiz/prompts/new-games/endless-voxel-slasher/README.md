@@ -1,9 +1,9 @@
 # Endless Voxel Slasher — English New-Game Prompts
 
-**Use when:** The same complete browser action RPG should be built or compared through three distinct map architectures, with linear, orchestrated, or single-file HTML execution profiles.
+**Use when:** The same browser action RPG or its creature direction should be built or compared through three distinct styles, with linear, orchestrated, single-file game, or single-file monster-showcase profiles.
 **Constant:** English-only game copy, two worlds, Swordfighter plus Elemental Technician, full-body animation, jump, separate dodge, class Q dash, aerial skill branch, nine skills per class, premium layered sword/elemental VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Verification boundary:** Baseline and HTML-only prompts do not authorize automated visual checks; `long-subagent/` and `short-subagent/` explicitly authorize final-product browser, gameplay, screenshot, performance, and blind reference review.
+**Verification boundary:** Baseline, HTML-only, and monster prompts do not authorize automated visual checks; `long-subagent/` and `short-subagent/` explicitly authorize final-product browser, gameplay, screenshot, performance, and blind reference review.
 
 ## Long Prompts — Complete Product Specifications
 
@@ -38,6 +38,14 @@ Each subagent prompt keeps one integration owner for coupled decisions, delegate
 3. [`Claude Flakes Style — HTML Only`](html-only/claude-flakes-style.md) — reactive heightfield and bounded surface field inside one file.
 
 Each HTML-only prompt is designed for direct chat use and demands exactly one downloadable `index.html` or one fallback `html` code block: no CLI, build, server, CDN, network request, external library, or additional asset.
+
+## Monster HTML-Only Chat Prompts — One `monster.html`
+
+1. [`Voxel Style — 10 Monsters`](monster/voxel-style.md) — bold authored mineral creatures with modular faceted bodies.
+2. [`Ashen Coast Style — 10 Monsters`](monster/ashen-coast-style.md) — salt-, reef-, ash-, storm-, and coastline-weathered creatures.
+3. [`Claude Flakes Style — 10 Monsters`](monster/claude-flakes-style.md) — snow-, rime-, glacier-, and aurora-reactive mineral creatures.
+
+Each monster prompt demands one offline `monster.html` with exactly ten original selectable creatures: eight regular species plus two bosses. All 30 names and body plans are distinct, and every sealed face exposes glowing eyes as its only visible facial feature.
 
 ## Shared Game Contract
 
