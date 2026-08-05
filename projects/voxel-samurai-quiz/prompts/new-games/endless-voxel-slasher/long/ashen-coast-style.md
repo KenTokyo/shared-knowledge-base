@@ -1,7 +1,7 @@
 # Ashen Coast Style — Local AEON Spec and Bake World Engine
 
 **Use:** Copy the complete fenced block and execute it as a standalone game-build request in the target repository.
-**Constant:** Game, character, combat, eight skills, enemies, waves, spawn, audio, UI, and English-only player-facing language match the two sibling long prompts.
+**Constant:** Game, two playable classes, nine skills per class, combat, enemies, waves, spawn, audio, UI, and English-only player-facing language match the two sibling long prompts.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
 **Map focus:** Local V73 AEON construction with authored WorldSpec, staged bake, shared fields, and a material-semantic InteractionField.
 **Visual verification:** Do not start automated browser, screenshot, gameplay, or FPS verification without an explicit current user request.
@@ -11,7 +11,7 @@ CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — ASHEN COAST STYLE AEON WORLD
 
 MISSION AND QUALITY BAR
 
-Build a completely new, immediately playable third-person browser hack-and-slash. The game has exactly two selectable compact worlds, one voxel-like swordfighter class, endless enemy waves, premium MMORPG-grade abilities, and a minimal start flow.
+Build a completely new, immediately playable third-person browser hack-and-slash. The game has exactly two selectable compact worlds, two complete voxel hero classes—a Swordfighter and a technology-based Elemental Technician—endless enemy waves, premium MMORPG-grade abilities, and a minimal start flow.
 
 Target the combat responsiveness, full-body animation quality, impact clarity, and layered spectacle associated with the strongest modern action MMORPGs such as Black Desert, while creating an original voxel identity. Use that title only as a quality benchmark. Do not copy its assets, characters, effects, UI, audio, or proprietary content.
 
@@ -26,46 +26,49 @@ Use the images as art direction and a quality bar, never as flat scenery. The re
 FIRST READ
 
 - First Read 1: the selected world and central combat arena are unmistakable immediately.
-- First Read 2: the voxel swordfighter has a clear samurai/action-MMORPG silhouette.
+- First Read 2: class choice reads instantly as either an agile voxel swordfighter or a reactor-equipped Elemental Technician.
 - First Read 3: enemies visibly assemble in the arena center before attacking.
-- First Read 4: the skill bar communicates eight abilities and cooldowns without menu clutter.
-- First Read 5: jumping, the directional dash skill, and the aerial attack branch read as distinct intentional actions.
-- Anti-goal: no empty terrain demo, Minecraft clone, rigid sliding figures, particle show without impact causality, or overloaded MMO interface.
+- First Read 4: the skill bar communicates nine class abilities and cooldowns without menu clutter.
+- First Read 5: jumping, the class dash, each aerial attack branch, sword impacts, and large elemental area attacks read as intentional actions.
+- Anti-goal: no empty terrain demo, Minecraft clone, rigid sliding figures, robe-wizard reskin, unexplained recolored magic circles, particle show without impact causality, or overloaded MMO interface.
 
 PRODUCT SCOPE
 
 - Build a new standalone game, not a demo inside an editor or Asset Lab.
 - Include exactly two worlds selected before play.
+- Include exactly two complete playable classes selected before play: `Swordfighter` and `Elemental Technician`.
 - Keep each world's outer span at or below 600 units.
 - Keep the playable combat/exploration core around 220–340 units.
 - Build a compact endless arena session, not an open-world quest game.
 - Support one local player; no network or backend.
-- One shared Game Host owns camera, input, combat, enemies, waves, audio, UI, and save/session state.
-- Maps never create a second gameplay, input, camera, audio, or UI runtime.
-- All player-facing language is English: title, buttons, HUD, tutorials, skill descriptions, wave messages, errors, accessibility labels, and death/restart copy.
+- One shared Game Host owns camera, input, class selection, combat, enemies, waves, audio, UI, and save/session state.
+- Maps and classes never create a second gameplay, input, camera, audio, or UI runtime.
+- Both classes receive equal production depth: full-body rigs, movement, jump, dodge, ground/air dash, nine skills, aerial branch, cooldown UI, VFX, audio, hits, map response, and reset behavior.
+- All player-facing language is English: title, class and skill names, buttons, HUD, tutorials, skill descriptions, wave messages, errors, accessibility labels, and death/restart copy.
 
 START FLOW AND UI
 
 1. The start screen contains only:
    - game title,
    - two large world cards with reference image and English name,
-   - an unmistakable selected state,
+   - two clear class cards for `Swordfighter` and `Elemental Technician`,
+   - unmistakable selected states for world and class,
    - one primary `Start` button.
 2. Do not add settings, accounts, news, shop, character editor, or nested menus.
-3. `Start` loads the selected world and places the player at its authored entrance.
+3. `Start` loads the selected world and selected class at the authored entrance.
 4. In-game HUD:
    - `Health`,
    - `Stamina`,
-   - `Spirit` for the ultimate,
+   - class resource: `Spirit` for Swordfighter or `Core Charge` for Elemental Technician,
    - `Wave` and `Enemies Remaining`,
-   - eight compact skill slots,
-   - hotkeys `Q E R 1 2 3 4 5`,
+   - nine compact skill slots,
+   - hotkeys `Q E R 1 2 3 4 5 6`,
    - dark radial or area cooldown progress,
    - remaining cooldown seconds,
-   - clear disabled state when Spirit is insufficient.
-5. The skill bar remains readable through intense VFX.
+   - clear disabled state when the current class resource is insufficient.
+5. The skill bar remains readable through intense sword and elemental VFX.
 6. Pause contains only `Resume`, `Restart World`, and `World Selection`.
-7. Death shows `Wave Reached`, `Retry`, and `World Selection`.
+7. Death shows `Wave Reached`, `Retry`, and `World Selection`; retry preserves the selected class.
 
 THE TWO WORLDS
 
@@ -150,28 +153,21 @@ ASHEN COAST STYLE — LOCAL AEON WORLD ARCHITECTURE
 30. Specs describe camera intents through subject, range, bearing arc, light relationship, clear sightline, foreground, and terrain falloff; solve coordinates from final bake and revalidate after world changes.
 31. Visual target: an authored compact world with dense local geography, constructively aligned systems, and three clear depth planes—not noise terrain with props placed on top.
 
-VOXEL CHARACTER SYSTEM
+TWO VOXEL CLASS SYSTEMS
 
 - Build neither realistic humans nor simple Minecraft block figures.
-- Procedurally construct body and armor from named voxel parts with stable part IDs, local pivots, and material roles.
-- Player palette: moon silver, deep indigo, cyan energy, and restrained gold accents.
+- Include exactly two selectable hero classes with different silhouettes, weapons, animation language, resources, and complete nine-skill kits; neither class may be a recolor or placeholder.
+- Procedurally construct bodies and armor from named voxel parts with stable part IDs, local pivots, and material roles.
 - Enemies are creature-shaped voxel/stone beings: angular rock plates, fractured edges, crystals, and readable animal proportions form body and armor.
 - Faces remain fully mask-like and show only one pair of glowing eyes; no visible mouths, noses, teeth, skin, or realistic facial features.
 - Eye shape, eye color, silhouette, and value distribution separate roles from combat distance; color alone is insufficient.
-- The player may use a dedicated hero-rig render path; repeated enemy parts must be instanced or batched by geometry/material.
+- Each player class may use a dedicated hero-rig render path; repeated enemy parts must be instanced or batched by geometry/material.
 - Never create one React element or independent mesh per body part and enemy.
 - Batched rigs carry at least `aPartId/aBoneId`, `aPivot`, `aActorId`, `aBaseColor`, and optional emissive/mask attributes.
 - Vertex processing transforms position and normal around the real joint pivot through bone/part matrices; lighting must not remain attached to rest pose.
 - Interactive bone matrices derive from actor state and normalized clip time, not global world time alone.
-- The animation solver evaluates each actor pose once per frame and writes part matrices, weapon anchors, and hit anchors in batches; no React state per joint.
+- The animation solver evaluates each actor pose once per frame and writes part matrices, weapon/emitter anchors, and hit anchors in batches; no React state per joint.
 - Identical actor state plus identical clip time produces the same pose; animation remains deterministic and inspectable.
-- Target an expressive voxel action figure with faceted box/wedge volumes, readable armor layering, and a premium silhouette.
-- Player class is a swordfighter:
-  - angular head with glowing eyes and no realistic facial features,
-  - separate breastplate, hip guards, shoulder plates, bracers, and boots,
-  - asymmetric shoulder/waist profile for recognition,
-  - katana in the right hand and scabbard on the left hip,
-  - cloth/banner elements limited to a few controlled parts.
 - Use a hierarchical voxel rig with at least:
   - Root,
   - Pelvis,
@@ -183,26 +179,50 @@ VOXEL CHARACTER SYSTEM
   - Hip,
   - Knee,
   - Ankle/Foot,
-  - weapon and scabbard anchors.
+  - class weapon, emitter, and equipment anchors.
 - Place pivots anatomically at shoulders, elbows, hips, and knees; limbs never rotate around their center.
-- Katana, scabbard, blade trail, cast origin, and hit point remain attached to real rig anchors.
+
+SWORDFIGHTER CLASS
+
+- Target an expressive voxel samurai/action-MMORPG silhouette with faceted box/wedge volumes and readable armor layering.
+- Palette: moon silver, deep indigo, cyan energy, and restrained gold accents.
+- Use separate breastplate, hip guards, shoulder plates, bracers, boots, and an asymmetric shoulder/waist profile.
+- Attach katana to the right hand, scabbard to the left hip, and sword trail/cast/hit anchors to the real blade path.
+- Limit cloth/banner elements to a few controlled parts.
+- Resource: `Spirit`, earned through deliberate combat and spent by upper-tier sword skills.
+
+ELEMENTAL TECHNICIAN CLASS
+
+- This class fills the mage role through visible engineered technology, never robes, a staff, unexplained spellcasting, or a swordfighter recolor.
+- Silhouette: ceramic-metal field armor, reinforced stance, articulated coil gauntlets, compact back reactor, shoulder emitter fins, belt canisters, and one small utility drone.
+- Palette: dark graphite, pale ceramic, copper conductors, bright cyan charge, and element-specific accents only at active emitters.
+- Resource: `Core Charge`, built by accurate attacks, elemental interactions, and controlled multi-target hits.
+- Every element has a readable device chain: reactor charge → named emitter → travel/field medium → measured contact → material response.
+- Plasma igniters create flame and fireballs; cryogenic phase arrays grow ice and frost; Tesla coils and ion channels create lightning; turbine/vector nozzles compress wind; induction lances melt mineral feedstock into magma; paired gravity lenses create a brief contained micro-singularity effect.
+- Fire, frost, lightning, wind, magma, and gravity must differ in motion, sound, timing, material response, crowd control, and decay—not merely color.
+- The Technician is intentionally overpowered against groups through large authored AoE footprints, chain reactions, and strong crowd control, while telegraphs, boss resistance rules, visibility, and hard runtime caps remain clear.
+- Attach gauntlet muzzles, reactor vents, drone ports, field projectors, cast origins, and hit points to real rig/equipment anchors; no effect may originate from an arbitrary world point.
+
+FULL-BODY ANIMATION CONTRACT
+
 - Drive interactive animation from actor time and a state machine, never a global showcase loop.
-- Required animation states:
-  - Idle with breathing and weight shift,
-  - Run/Sprint/Strafe with opposing arms and planted feet,
+- Required states for both classes:
+  - Idle with breathing, device/weapon readiness, and weight shift,
+  - Run/Sprint/Strafe with opposing limbs and planted feet,
   - Jump Start, Airborne Loop, Aerial Skill, Fall, and Landing,
   - Dodge Roll,
-  - three-hit LMB chain,
-  - heavy RMB slash,
-  - Block and Parry,
-  - eight skill clips including directional dash and aerial Skyward Fang branch,
+  - class-specific three-hit LMB chain,
+  - class-specific RMB heavy/guard action,
+  - Block or Projector Guard and Parry/Overload reaction,
+  - nine authored skill clips per class including a ground/air dash and aerial attack branch,
   - Hit, Stagger, Knockback, Knockdown, Death, and Victory.
 - Every attack follows Anticipation → Travel → Contact → Recovery.
 - Damage is active only during visible contact frames.
 - Blend compatible poses smoothly; define cancel windows, input buffering, root-motion ownership, and movement release deliberately.
-- Full-body action must include planted feet or airborne center-of-mass motion, hip/chest counter-rotation, shoulder lead, off-hand balance, head intent, and follow-through; arm-only weapon swings are invalid.
-- Prevent foot sliding, rigid whole-body yaw, gliding enemies, floating jumps, and weapons detached from wrists.
-- Enemies use the same rig system with distinct silhouettes, proportions, armor, weapons, and locomotion.
+- Full-body action includes planted feet or airborne center-of-mass motion, hip/chest counter-rotation, shoulder lead, off-hand balance, head intent, recoil or follow-through; arm-only attacks are invalid.
+- Sword cuts carry the whole body; Technician casts visibly brace, recoil, redirect emitters, vent heat, and recover from force.
+- Prevent foot sliding, rigid whole-body yaw, gliding enemies, floating jumps, and weapons, emitters, drones, or VFX detached from their anchors.
+- Enemies use the same rig principles with distinct silhouettes, proportions, armor, weapons, and locomotion.
 
 CONTROLS AND COMBAT FEEL
 
@@ -211,112 +231,96 @@ CONTROLS AND COMBAT FEEL
 - `Shift`: sprint.
 - `Space`: responsive jump with input buffer, short coyote time, authored ascent/fall, and grounded landing recovery.
 - `Left Alt`: dodge roll with brief invulnerability and a visible movement path.
-- `LMB`: fast three-hit sword chain.
-- `RMB`: heavy slash; hold to block.
-- `Q`: dedicated directional dash skill, usable on ground and in air when its cooldown permits.
+- `LMB`: class primary chain—three fast sword cuts or three articulated gauntlet pulses.
+- `RMB`: class heavy/defense—heavy slash with hold-to-block or charged plasma shot with hold-to-projector-guard.
+- `Q`: dedicated directional class dash, usable on ground and in air when its cooldown permits.
 - Optional soft lock prioritizes enemies inside a view/range cone without imprisoning the camera.
 - Define air control, gravity, maximum fall speed, ledge behavior, and landing ownership centrally; jumping must not become flight or bunny-hop speed tech.
 - Skills explicitly declare `ground`, `air`, or `both`; unavailable airborne actions buffer safely instead of silently failing.
-- At least `Q — Windstep Sever` and the aerial branch of `2 — Skyward Fang` must work during a jump.
+- Swordfighter `Q — Windstep Sever` and `2 — Skyward Fang`, plus Technician `Q — Ion Vector` and `2 — Cyclone Drive`, must each have functional airborne behavior during a jump.
 - Airborne attacks preserve readable momentum and return to a valid fall/landing state after recovery.
-- Hits require spatial hitboxes, team filtering, one hit ID per swing, and explicit range.
+- Both classes share camera quality, movement responsiveness, dodge safety, hit rules, input buffering, cooldown feedback, and recovery depth; class choice never removes a core feature.
+- Hits require spatial hitboxes, team filtering, one hit ID per swing/cast stage, and explicit range.
 - Combat is fast, cancelable, and forceful, never floaty or animation-locked.
 - Hit feedback layers a short hit stop, restrained camera impulse, enemy reaction, VFX, and spatial audio.
 - Camera impulse remains short and bounded; no persistent nausea-inducing shake.
 
-FIXED SKILL KIT
+TWO FIXED NINE-SKILL KITS
 
-- `Q — Windstep Sever`, cooldown 5 s, `both`:
-  - short directional dash through or past the target on ground or in air,
-  - horizontal sword trail synchronized to the full-body cut,
-  - delayed afterimage silhouette,
-  - light displacement/stagger at contact,
-  - never replaces the normal jump or dodge controls.
-- `E — Moon Guard`, cooldown 8 s, `ground`:
-  - brief parry window,
-  - successful parry creates a radial counter arc and strong stagger,
-  - failure grants only a short guard with no free damage.
-- `R — Tempest Wheel`, cooldown 10 s, `ground`:
-  - controlled spinning slash around the player,
-  - low ground ring communicates reach,
-  - lightly gathers nearby lightweight enemies.
-- `1 — Crescent Wave`, cooldown 6 s, `both`:
-  - broad low sword arc travels forward,
-  - ends at the real collision or maximum-range point,
-  - airborne cast follows aim pitch within safe limits without hovering the player.
-- `2 — Skyward Fang`, cooldown 9 s, `both`:
-  - ground cast performs an upward slash, launches a small target, and carries the player into a short controlled aerial follow-up,
-  - airborne cast becomes a deliberate descending fang that preserves aim, locks onto a valid ground-contact point, and ends in a compact impact slash,
-  - both branches share one definition, cooldown, damage budget, and hit ID policy.
-- `3 — Phantom Blades`, cooldown 14 s, costs Spirit, `both`:
-  - three delayed spirit blades strike marked targets,
-  - each blade has origin, flight, contact, and its own impact impulse.
-- `4 — Storm Domain`, cooldown 18 s, costs Spirit, `ground`:
-  - bounded ground zone with an authored edge mask,
-  - pulsing cuts and wind lines,
-  - no visible rectangular carrier surface.
-- `5 — Heaven Splitter`, cooldown 35 s, requires full Spirit, `ground`:
-  - short readable preparation,
-  - huge vertical sword arc,
-  - contact core, halo, directional arc, sparks, ground scar, and pressure ring,
-  - strongest moment in the kit without obscuring the entire screen.
-- Cooldowns, costs, damage, control, input context, and air/ground permissions live in one shared skill definition consumed by UI, combat, animation, and AI.
+SWORDFIGHTER — `SPIRIT`
 
-SLASH VFX RESEARCH, LAYERING, AND AUDIO
+- `Q — Windstep Sever`, cooldown 5 s, `both`: directional ground/air dash with full-body cut, sampled sword trail, afterimage, and measured contact.
+- `E — Moon Guard`, cooldown 8 s, `ground`: brief parry; success creates a radial counter arc and strong stagger, failure only a short guard.
+- `R — Tempest Wheel`, cooldown 10 s, `ground`: controlled spinning slash, readable ground ring, and light gather.
+- `1 — Crescent Wave`, cooldown 6 s, `both`: broad low sword arc ending at true collision/range; airborne aim pitch is safely bounded.
+- `2 — Skyward Fang`, cooldown 9 s, `both`: ground launch branch and deliberate airborne descending fang share one cooldown/damage policy.
+- `3 — Phantom Blades`, cooldown 14 s, costs Spirit, `both`: three delayed blades each own origin, flight, contact, and impulse.
+- `4 — Storm Domain`, cooldown 18 s, costs Spirit, `ground`: bounded authored zone of pulsing cuts and wind lines; no rectangular carrier.
+- `5 — Heaven Splitter`, cooldown 35 s, requires full Spirit, `ground`: huge vertical sword arc with short preparation, contact core, halo, directional arc, sparks, ground scar, and pressure ring; strongest single cleave without obscuring the screen.
+- `6 — Thousandfold Horizon`, cooldown 45 s, requires full Spirit, `ground`: broad telegraphed sector, full-body multi-cut convergence, and one horizon-cleaving final AoE; regular enemies gather, bosses resist pull.
 
-- Before implementation, inspect the strongest relevant local combat/VFX examples and current first-party engine documentation for trails, transparent sorting, HDR, pooling, depth, and shader ownership.
-- Study high-quality action-game blade arcs, sword trails, hit flashes, and aerial slashes as motion/readability references; recreate principles, never assets or proprietary effect designs.
-- Evaluate every slash from gameplay camera distance for silhouette, direction, timing, contact point, target visibility, and map response.
-- Every effect follows Cause → Travel/Motion → Contact → Reaction → Decay.
-- VFX origin comes from hand, sword edge, foot contact, target contact, or authored ground anchor.
-- Premium slash VFX deliberately layer:
-  - solid/depth-writing blade or impact mass where physical form is needed,
-  - narrow HDR blade-edge core,
-  - camera-readable ribbon trail following sampled weapon motion,
-  - directional crescent/arc that communicates attack plane and reach,
-  - soft halo kept subordinate to silhouette,
-  - contact flash and radial or directional impact burst,
-  - sparks, stone shards, leaves, dust, or water droplets selected by surface material,
-  - wind streaks or restrained distortion aligned with motion,
-  - short pooled dynamic light,
-  - authored ground scar/decal or reaction-field write,
-  - synchronized enemy reaction, hit stop, camera impulse, and spatial audio.
-- Do not maximize every layer simultaneously; assign primary, support, contact, and decay roles so the swordfighter and target remain readable.
-- Sample the real weapon path across animation time; trails must not jump from wrist to target or remain attached to rest pose.
-- Slash width, taper, curvature, UV flow, brightness, and lifetime follow velocity and attack phase rather than generic global time.
-- Mass writes depth; halos and light layers may be transparent/additive. Avoid flat glowing planes, rectangular carrier silhouettes, texture cutoffs, and bloom-only shape.
-- Aerial slash VFX preserve vertical direction and show the actual landing/contact point before the strongest burst.
-- Pool particles, trails, impact lights, scars, and spawn fragments; prewarm any first-cast shader variants.
-- Audio per skill layers preparation, body/cloth motion, blade swing, travel, material-specific contact, low impact, and decay.
-- Footsteps, armor, katana, water, wind, forest, arena, and enemies have distinct spatial roles.
+ELEMENTAL TECHNICIAN — `CORE CHARGE`
+
+- `Q — Ion Vector`, cooldown 5 s, `both`: vector-nozzle ground/air dash with ion wake and one measured gauntlet contact.
+- `E — Pyroclast Orb`, cooldown 6 s, `both`: reactor-charged plasma fireball detonating at true collision into broad fireburst and short material-specific burn field.
+- `R — Cryo Bastion`, cooldown 10 s, `ground`: curved thick ice wall grown from valid anchors; briefly blocks light enemies/projectiles, never traps bosses, spawns, exits, or player, then fractures from pools.
+- `1 — Thunder Grid`, cooldown 11 s, `ground`: three Tesla pylons chain capped lightning through a readable area and culminate in one radial thunder impact.
+- `2 — Cyclone Drive`, cooldown 9 s, `both`: ground turbine vortex launches player/light enemies; airborne branch descends as a steerable pressure spear and wide wind ring.
+- `3 — Magma Rail`, cooldown 13 s, `both`: induction lance drives a finite molten-mineral eruption corridor to a measured endpoint; water becomes steam and cooling rock.
+- `4 — Zero-Point Blizzard`, cooldown 17 s, `ground`: large irregular frost field slows regular enemies, primes brittle reactions, and ends in an inward ice fracture; boss slow is capped.
+- `5 — Elemental Overdrive`, cooldown 24 s, costs Core Charge, `ground`: four staged AoEs—wind gather → lightning grid → frost lock → plasma eruption—with separate contacts and reactions.
+- `6 — Event Horizon Engine`, cooldown 45 s, requires full Core Charge, `ground`: containment lenses form a bounded micro-singularity effect; regular enemies/debris spiral inward before collapse and shockwave, bosses resist pull but take capped hits.
+
+- Technician skills are intentionally overpowered against groups through huge authored AoE, chain reactions, and crowd control, while telegraphs, boss rules, target visibility, pooling, and hard caps remain clear.
+- Skill names and causal roles are parity anchors; do not replace them with generic recolored circles.
+- Cooldowns, resources, damage, control, input context, air/ground permissions, VFX roles, and map-contact roles live in one class-skill definition source consumed by UI, combat, animation, AI, audio, and map response.
+
+CLASS COMBAT VFX RESEARCH, LAYERING, AND AUDIO
+
+- Before implementation, inspect the strongest relevant local combat/VFX examples and current first-party engine documentation for trails, transparent sorting, HDR, pooling, depth, volumetric fields, distortion, and shader ownership.
+- Study blade arcs, elemental projectiles, ice walls, lightning fields, wind funnels, large AoE, and gravity effects as motion/readability references; recreate principles, never assets or proprietary designs.
+- Every effect follows Cause → Travel/Motion → Contact → Reaction → Decay and is judged from gameplay camera distance.
+- Origins come from real sword, gauntlet, reactor, drone, foot, target, or validated ground anchors.
+- Sword attacks layer depth-writing mass, HDR edge core, sampled ribbon, directional arc, restrained halo, contact flash, material debris, wind/distortion, pooled light, ground response, enemy reaction, hit stop, camera impulse, and spatial audio.
+- Technician attacks layer visible device ignition/recoil, element-specific core, projectile/beam/wall/field travel, authored AoE boundary, measured contacts, material debris/vapor/frost/embers/ion sparks/pressure dust, capped light/distortion, map/enemy reaction, spatial audio, and technology-specific decay.
+- Fireballs carry plasma mass, flame sheath, wake, collision burst, heat light, scorch/steam, and cooling decay.
+- Ice walls are depth-writing temporary structures with growth, thickness, footing, collision, cracks, timed fracture, and pooled cleanup—not blue planes.
+- Lightning areas expose pylons/emitters, branch to valid targets, light contacts, and visibly ground; no random screen bolts.
+- Wind shows pressure through directional debris, condensation, ribbons, and enemy motion; carrier geometry stays hidden.
+- Event Horizon shows containment lenses and bounded accretion before collapse; distortion never hides telegraphs, targets, or arena.
+- Assign primary, support, contact, and decay roles rather than maximizing every layer.
+- Sample real weapon/emitter motion; width, field radius, brightness, and lifetime follow attack phase, not generic global time.
+- Physical mass writes depth; halos and light may blend additively. Reject flat carrier planes, rectangular silhouettes, texture cutoffs, bloom-only shape, and effects detached from class anchors.
+- Pool trails, projectiles, field volumes, ice-wall pieces, lights, scars, and debris; prewarm first-cast variants for both classes.
+- Audio layers preparation, body/device motion, release, travel, material contact, low impact, and decay.
 - Music begins restrained, intensifies for elites/bosses, and loops endlessly without an audible seam.
 
-WORLD RESPONSE TO MOVEMENT AND SKILLS
+WORLD RESPONSE TO MOVEMENT AND BOTH CLASS KITS
 
-- Damage, hit timing, range, cooldown, and control remain identical across map styles and surface materials.
-- One shared `WorldImpactEvent` is the only combat-to-map handoff: stable event ID, world ID, final contact point, surface normal, direction, footprint, strength, duration, and reaction roles.
-- Create the event at real weapon, projectile, foot, landing, or ground contact, never at the player origin as a substitute.
-- Rendering, persistent map response, particles, light, and audio consume the same contact; never estimate separate hit points.
-- Response is cosmetic by default and changes neither damage, navigation, spawn fairness, nor boss mechanics.
-- Skyglass responds through carved stone, chipped edges, displaced dust, fine fracture veins, and short water wakes.
-- Verdant responds through torn moss, compacted soil, cut leaves, loosened earth, and stressed root surfaces.
-- Architecture, water, parapets, spawn anchors, and indestructible landmarks may react visibly but retain gameplay-critical collision.
-- Movement response: steps leave subtle contacts; sprint, dodge, dash, jump takeoff, and landing create broader directional scuffs or compression without repainting the arena in seconds.
-- `Q — Windstep Sever`: narrow directional cut along the real ground or aerial dash path; dust/leaves/water move laterally, with no fake ground scar while fully airborne.
-- `E — Moon Guard`: only a successful counter writes a brief broken pressure ring at the parry contact; failure leaves no persistent mark.
-- `R — Tempest Wheel`: several shallow tangential cuts form an irregular ring instead of a perfect circle texture.
-- `1 — Crescent Wave`: low trail ends at the true collision/range point and becomes shallower with distance.
-- `2 — Skyward Fang`: ground branch opens a compact wedge crack at takeoff; aerial branch writes its strongest compact mark only at the measured landing/contact point.
-- `3 — Phantom Blades`: each spirit blade writes exactly one narrow notch at its own target contact.
-- `4 — Storm Domain`: pulses accumulate bounded crossing cuts within the authored edge mask; no rectangular carrier.
-- `5 — Heaven Splitter`: deepest directional groove in the kit with broken rim, material fragments, and a long but finite decay.
-- The same event ID never writes a second residue; multi-hit, render replay, and state replay remain idempotent.
-- Residues have fixed capacity, spatial window, or capped chunks; overload discards the smallest/oldest secondary marks before memory or draw calls grow.
-- Surfaces heal or weather slowly by material profile; the ultimate scar lasts longest and micro-footsteps shortest.
-- `Restart World`, death retry, and world selection clear all map residues completely and deterministically.
-- Beauty, depth/prepass, and shadow paths consume the same visible geometry change; a color mask cannot pretend to be a deep groove.
-- Underwater response becomes wake/turbidity instead of a permanent scar; steep or ineligible surfaces safely degrade to material feedback.
-- Debug data exposes active contacts, residue occupancy, discarded writes, field/chunk boundaries, air/ground context, and reset revision; do not start browser checks without explicit permission.
+- Damage, timing, range, cooldown, and control remain identical across map styles and materials.
+- One `WorldImpactEvent` carries stable event/class/skill/world IDs, final contact, normal, direction, footprint, strength, duration, element/material roles, and air/ground context.
+- Create it at real weapon, projectile, emitter, foot, landing, or ground contact; rendering, map response, particles, light, and audio consume that same contact.
+- Response is cosmetic by default; temporary Cryo Bastion collision is a separate bounded skill object.
+- Skyglass supports chips, dust, fractures, heat, frost, grounding, wakes, and steam; Verdant supports torn moss, soil compression, leaves, roots, char, frost, and wind pressure.
+- Movement contacts stay subtle and bounded.
+
+SWORDFIGHTER MAP CONTACTS
+
+- `Q`: directional cut near valid surfaces; none while fully airborne. `E`: successful counter ring only. `R`: irregular tangential cuts.
+- `1`: trail ends at true endpoint. `2`: takeoff wedge plus measured landing mark. `3`: one notch per blade.
+- `4`: bounded crossing cuts. `5`: deep finite groove. `6`: decorative cuts converge into one capped sector mask and final horizon scar.
+
+ELEMENTAL TECHNICIAN MAP CONTACTS
+
+- `Q`: ion/pressure wake near valid surfaces. `E`: radial heat/scorch or water steam. `R`: temporary frost/compression footing under wall.
+- `1`: three pylon contacts plus capped target grounding. `2`: separate takeoff and landing pressure contacts.
+- `3`: finite heat/displacement corridor to true endpoint. `4`: bounded irregular frost field. `5`: four element contacts inside one authored event family.
+- `6`: bounded inward compression and one final annular fracture; all debris remains pooled.
+
+- Event writes are idempotent; residues use fixed capacity/window/chunks and discard low-priority marks under load.
+- Ultimates last longest, footsteps shortest; `Restart World`, retry, class change, and world selection clear residues and temporary objects deterministically.
+- Beauty, depth/prepass, and shadow consume the same visible geometry response.
+- Debug data exposes contacts, class/skill IDs, occupancy, dropped writes, element/air context, temporary objects, and reset revision; no browser checks without permission.
 
 ENDLESS WAVES AND ENEMIES
 
@@ -371,44 +375,34 @@ LIGHTING SYSTEM
 
 EXECUTION AND CRAFT LOOP
 
-- Execution profile `linear`: one integration owner understands the repository and references, builds the full product, and keeps coupled decisions in one context.
-- Do not create subagents or a parallel architecture.
-- Order: lock product contract → Game Host → primary map path → character/combat → skills → enemies/waves → second world → lighting/performance → final contract pass.
-- Before combat VFX implementation, complete the targeted research pass defined above and record only decisions that affect the product.
-- After each coherent cut, inspect real artifacts: ownership, data flow, registration, limits, air/ground state, reset, and static gates.
-- Fix the largest evidence-backed gap; do not use a fixed iteration count or self-declared quality as proof.
-- Never start agent-driven browser, screenshot, gameplay, or FPS checks without explicit permission in the current request.
-- Visible effect quality, combat feel, and measured runtime remain honest manual product gates without that permission.
+- Execution profile `linear`: one integration owner understands references, builds the full product, and keeps coupled decisions in one context; no subagents or parallel architecture.
+- Order: product/class contract → Game Host → primary map → shared rig/movement → Swordfighter slice → Elemental Technician parity → enemies/waves → second world → lighting/performance → final pass.
+- Technician is not stretch content; both complete classes belong to the playable path.
+- Complete targeted VFX research before class effects and retain only product-relevant decisions.
+- Inspect real ownership, data flow, registrations, limits, class/resource state, air/ground state, reset, and static gates after coherent cuts; fix the largest evidenced gap.
+- Never start agent-driven browser, screenshot, gameplay, or FPS checks without current permission.
+- Visible quality, combat feel, class parity, and measured runtime remain honest manual gates without it.
 
 PERFORMANCE AND GATES
 
-- Target stable 60 FPS on defined target hardware; never claim FPS without measurement.
-- Report CPU/GPU frame time p50/p90/p99, draw calls, triangles, active enemies, particles, and shadow cost only when measured through an allowed run.
-- Instance repeated world forms and voxel enemy parts where movement architecture permits.
-- No per-frame geometry/material creation, unbounded arrays, or React state updates in the render loop.
-- Pool enemies, projectiles, hits, VFX, trails, decals/scars, audio sources, and dynamic lights.
-- Remove invisible distant cost, excess shadows, and secondary particles first; preserve character, slash, skill, and arena readability.
-- Static gates verify:
-  - TypeScript,
-  - deterministic map build,
-  - ground parity,
-  - spawn outside blockers,
-  - complete skill definitions including air/ground permissions,
-  - valid jump/dodge/dash state transitions,
-  - finite shader uniforms,
-  - resource disposal,
-  - active enemy/pool caps,
-  - bounded map response, complete reset, and beauty/depth/shadow parity.
-- Do not add browser, screenshot, or gameplay tests without an explicit user request.
+- Target stable 60 FPS on defined hardware; never claim FPS without measurement.
+- Report frame times, draw calls, triangles, enemies, particles, field volumes, and shadow cost only from an allowed run.
+- Instantiate only selected hero rig/active class pools; instance repeated world/enemy forms.
+- No per-frame geometry/material creation, unbounded arrays, or React state in render loop.
+- Pool enemies, projectiles, hits, VFX, trails, scars, audio, lights, ice fragments, elemental fields, and gravity debris.
+- Extreme Technician AoE uses fixed slots, batching/instancing, capped chains, and bounded field writes.
+- Remove distant/secondary cost before selected-class readability.
+- Static gates verify TypeScript, deterministic maps, ground parity, safe spawns, exactly two complete class definitions, nine skills/class, resource and air/ground rules, movement/dash/aerial transitions, finite uniforms, disposal, pool/chain/field caps, temporary-object cleanup, reset, and beauty/depth/shadow parity.
+- Do not add browser, screenshot, or gameplay tests without explicit request.
 
 DELIVERY ORDER
 
 1. Understand rules, repository, and references.
-2. Build shared Game Host, state flow, and world selection.
+2. Build shared Game Host, state flow, and world/class selection.
 3. Build closed WorldSpec contract, staged AEON bake, and InteractionField foundation.
 4. Build Skyglass as the complete Ashen-Coast-style AEON vertical slice.
 5. Integrate voxel player, jump/dodge/dash, base combat, and camera.
-6. Integrate eight skills, researched layered slash VFX, audio, and skill bar.
+6. Integrate both nine-skill class kits, researched sword/elemental VFX, audio, and shared skill bar.
 7. Integrate enemy rigs, AI, spawn, and endless waves.
 8. Build Verdant as the second independent spec in the same local AEON engine.
 9. Close lighting, material separation, performance, and edge cases.
@@ -416,15 +410,15 @@ DELIVERY ORDER
 
 DONE WHEN
 
-- Start screen selects exactly Skyglass or Verdant and starts directly.
+- Start screen selects exactly Skyglass or Verdant plus Swordfighter or Elemental Technician and starts directly.
 - Both maps use the same local Ashen-Coast-style AEON engine and differ through specs, sites, fields, and material profiles.
-- Player and enemies are premium voxel rigs with articulated full-body ground and aerial animation.
-- Jump, separate dodge, `Q` dash, and aerial `Skyward Fang` transition without broken states.
-- `Q E R 1–5` work, show cooldowns, and own attached layered VFX/audio/hits.
+- Swordfighter, Elemental Technician, and enemies are premium voxel rigs with articulated full-body ground and aerial animation.
+- Both classes have jump, separate dodge, ground/air `Q` dash, and a functional aerial `2` branch without broken states.
+- Each class has nine complete skills on `Q E R 1 2 3 4 5 6` with cooldowns, resource rules, attached full-body animation, layered VFX/audio, and measured hits.
 - Endless waves, elites, and bosses run without unbounded growth.
-- Movement and all eight skills leave material-correct bounded fully resettable map traces.
+- Movement and all 18 class skills produce material-correct, bounded, fully resettable map responses.
 - Enemies visibly assemble in the arena center and activate only after assembly.
-- World light, skill light, slash layers, materials, and tone mapping remain readable.
+- World light, sword layers, elemental fields, materials, targets, telegraphs, and tone mapping remain readable.
 - Every player-facing string is English and UI stays compact around start plus combat values.
 - Static/numeric gates are green; visible combat feel remains honestly marked for user acceptance.
 ```

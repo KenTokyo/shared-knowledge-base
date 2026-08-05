@@ -1,7 +1,7 @@
 # Endless Voxel Slasher — Categorized Game-Prompt Guide
 
 **Status:** Legacy entry point retained for compatibility; current English prompts are grouped by game and length under [`prompts/new-games/endless-voxel-slasher/`](prompts/new-games/endless-voxel-slasher/README.md).
-**Constant:** Game, English-only copy, character, jump/dodge/dash, aerial skill, combat, slash VFX, audio, enemies, waves, spawn, lighting roles, and UI remain identical across map styles.
+**Constant:** Game, English-only copy, Swordfighter plus technology-based Elemental Technician, nine skills per class on `Q E R 1 2 3 4 5 6`, jump/dodge/class dash, aerial branches, sword/elemental VFX, audio, enemies, waves, spawn, lighting roles, and UI remain identical across map styles.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible skill residues.
 
 ## Complete Long Prompts

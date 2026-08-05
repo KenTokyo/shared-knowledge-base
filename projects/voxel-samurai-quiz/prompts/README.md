@@ -4,7 +4,7 @@
 
 ## New Games
 
-- [`Endless Voxel Slasher`](new-games/endless-voxel-slasher/README.md) — six standalone English game-build prompts: three detailed long versions and three compact Black-Desert-benchmark short versions.
+- [`Endless Voxel Slasher`](new-games/endless-voxel-slasher/README.md) — six standalone English game-build prompts with Swordfighter and technology-based Elemental Technician: three detailed long versions and three compact Black-Desert-benchmark short versions.
 
 ## Structure Contract
 

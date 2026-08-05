@@ -1,7 +1,7 @@
 # Endless Voxel Slasher — English New-Game Prompts
 
 **Use when:** The same complete browser action RPG should be built or compared through three distinct map architectures.
-**Constant:** English-only game copy, two worlds, voxel swordfighter, full-body animation, jump, separate dodge, Q dash, aerial skill branch, eight skills, premium layered slash VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
+**Constant:** English-only game copy, two worlds, Swordfighter plus Elemental Technician, full-body animation, jump, separate dodge, class Q dash, aerial skill branch, nine skills per class, premium layered sword/elemental VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
 **Verification boundary:** Do not start automated browser, screenshot, gameplay, or FPS verification without an explicit current user request.
 
@@ -22,14 +22,16 @@
 - Exactly two worlds: Skyglass Aqueduct Palace and Verdant Titan Grove Fortress.
 - Maximum outer span: 600 units per world; playable core approximately 220–340 units.
 - English-only title, UI, HUD, tutorials, errors, accessibility labels, and player-facing copy.
-- Identical voxel swordfighter, controls, and eight skills on `Q E R 1 2 3 4 5`.
-- `Space` jumps, `Left Alt` dodges, `Q` is a ground/air directional dash skill, and airborne `Skyward Fang` descends into a measured contact.
-- Premium full-body animation uses real pivots, planted locomotion, airborne center-of-mass motion, body counter-rotation, attached weapon anchors, anticipation, contact, and follow-through.
-- Slash VFX require research plus causal layering: impact mass, HDR core, sampled ribbon, directional arc, halo, contact burst, material debris, wind/distortion, pooled light, map response, hit reaction, and spatial audio.
+- Exactly two complete selectable classes: voxel `Swordfighter` and technology-based `Elemental Technician`.
+- Both classes use nine skills on `Q E R 1 2 3 4 5 6`, `Space` jump, separate `Left Alt` dodge, ground/air `Q` dash, and a functional airborne `2` branch.
+- Swordfighter uses `Spirit`, katana combat, sampled blade motion, and `6 — Thousandfold Horizon` as broad multi-cut ultimate.
+- Technician uses `Core Charge`; reactor, gauntlets, drone, plasma, cryogenics, Tesla channels, turbines, induction, and gravity lenses create fire, ice, lightning, wind, magma, and gravity attacks.
+- Technician kit: Ion Vector, Pyroclast Orb, Cryo Bastion, Thunder Grid, Cyclone Drive, Magma Rail, Zero-Point Blizzard, Elemental Overdrive, and Event Horizon Engine.
+- Both classes receive full-body animation, class-attached VFX/audio/hits, extreme but readable AoE, bounded map response, cooldown UI, reset behavior, pooling, and hard runtime caps.
 - Exactly ten stone-like voxel enemy species: eight regular creatures, Titan Golem, and Storm Wyrm.
 - Every fifth wave `5, 10, 15, …` is a mandatory alternating boss wave.
 - One `WorldImpactEvent` reports the true contact point, direction, footprint, and strength to the selected map system.
-- Map response remains cosmetic by default, bounded, weathered by material, and completely reset on retry or world selection.
+- Map response remains cosmetic by default, bounded, weathered by material, and completely reset on retry, class change, or world selection.
 
 ## Style Selection
 

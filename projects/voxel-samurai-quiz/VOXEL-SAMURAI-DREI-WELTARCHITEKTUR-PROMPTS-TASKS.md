@@ -134,3 +134,22 @@
 **Architektur passt:** Promptbibliothek kategorisiert erst nach `new-games`, dann nach konkretem Spiel, anschließend nach `long`/`short`; jedes Spielset besitzt einen eigenen Index als SSoT.
 
 **Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** Keine offenen Funde. Black Desert bleibt ausdrücklich Qualitätsbenchmark ohne Asset-/Inhaltskopie; sichtbares Kampfgefühl und gemessene 60 FPS bleiben ehrliche manuelle Gates.
+
+### Phase 6 — Schwertkämpfer und technologiegestützter Elementar-Techniker
+
+**Ziel:** Alle sechs Prompts verlangen zwei gleichwertige Klassen mit neun Skills auf `Q E R 1 2 3 4 5 6`.
+
+- [x] Schwertkämpfer auf neun Skills erweitert und `6 — Thousandfold Horizon` ergänzt.
+- [x] Elementar-Techniker als technisch erklärten Magier mit eigenem Rig, Ressource, Animationen und neun Skills ergänzt.
+- [x] Feuer, Eis, Donner, Wind, Magma und Gravitation über sichtbare Geräteketten statt unerklärter Magie festgelegt.
+- [x] Große Flächenangriffe, Luftvariante, Map-Reaktionen, VFX-/Audio-Layer, Bossregeln, Pooling und harte Laufzeitgrenzen definiert.
+- [x] Welt-/Klassenauswahl, HUD, Steuerung, Lieferfolge und Fertigkriterien auf zwei Klassen umgestellt.
+- [x] Drei Long- und drei Short-Prompts sowie beide Indizes statisch auf Parität, Sprache, Links, UTF-8, Dateiende und LOC geprüft.
+
+**Ergebnis:** Swordfighter und Elemental Technician sind in allen sechs englischen Prompts vollständige Auswahlklassen; der Techniker erzeugt extreme, lesbare Flächenangriffe durch Plasma-, Kryo-, Tesla-, Turbinen-, Induktions- und Gravitationstechnik.
+
+**Architektur passt:** Ein Game Host und eine gemeinsame Klassendefinitionsquelle besitzen Auswahl, Eingaben, Ressourcen, Skills, HUD und Map-Kontakte; Map-Stile bleiben alleiniger Variantenbereich.
+
+**Eingehalten:** neun Skills je Klasse ✅, gleiche Featuretiefe ✅, Englisch-only ✅, sechs Standalone-Prompts ✅, keine Browser-/Gameplayprüfung ✅, Dateien unter 1.600 Zeilen ✅.
+
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Extreme Techniker-AoE kann Transparenz-, Licht- und Objektkosten sprengen. Fix: authored Grenzen, feste Slots, gepoolte Felder/Trümmer/Lichter, begrenzte Kettenziele und klare Degradationsreihenfolge sind Promptpflicht.
