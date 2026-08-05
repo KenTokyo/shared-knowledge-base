@@ -29,6 +29,9 @@
 - **Vertexshader kompiliert nicht, obwohl die Zeile mathematisch stimmt** — nach einem Swizzle heißen die Komponenten neu (`vec2 d = b.xz - a.xz` trägt x und z, adressiert werden sie als `.x`/`.y`), und unverdächtige Namen wie `flat` sind reservierte Qualifizierer. Für Typechecker und Linter ist beides nur Text in einem Template-Literal; der Treiber meldet es einmal, danach unterdrückt der Kontext **alle weiteren** Shaderfehler — die Konsole ist also keine vollständige Fehlerliste. → Beide Klassen statisch gaten: deklarierte Vektorgröße gegen jeden Swizzle prüfen, Bezeichner gegen die Reserved-Liste; Selftest mit Negativkontrolle ist der Beleg, nicht das Bild.
   *voxel-samurai-quiz: `atan(d.x, d.z)` auf einem `vec2` und `vec3 flat` legten ein Statisten-Rig und den Funkenburst still — bei grünem Typecheck, grünem Guard und grünem Shader-Gate · 2026-08-05*
 
+- **Additive Fernschicht brennt das Bild weiß, sobald die Kamera fährt** — Wolken-, Dunst- oder Staubkarten haben gar keine Sperre gegen die **Kameradistanz** und liegen auf Motivhöhe statt darüber; eine Orbitkamera schiebt sie damit zwischen Linse und Motiv, wo sich Dutzende additive Karten zu Vollweiß summieren. Eine Schwesterschicht mit korrekter Sperre lenkt den Verdacht auf das falsche System. → Jede additive Fernschicht über `length(centre - cameraPosition)` einblenden, Deckunterkante über die Augenhöhe legen, Kartenstärke gegen die reale Überlappungszahl auslegen und Bounds nach dem Anheben mitziehen.
+  *voxel-samurai-quiz Arena-Gipfel: 74 Wolkenkarten auf y 66–135, Unterkante y≈10 bei `PLATEAU_Y` 7,1 und `viewHeight` 52, Kameraradius 300, keine Distanzsperre → Kampffläche unsichtbar; das benachbarte Dunstband mit `smoothstep(120, 330)` war unbeteiligt · 2026-08-05*
+
 ## Handoffs
 
 - HDR, Grade und Licht → [Licht und Kamera](LIGHT-CAMERA.md)
