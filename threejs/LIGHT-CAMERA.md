@@ -17,6 +17,9 @@
 - **Post-Regler soll einen HDR-Defekt reparieren** — Grade/Tonemapping komprimiert nur eine bereits überstrahlte oder nichtfinite Szene. → Rohterm → Scene-HDR → Einzelpass → Tonemap/Grade → LDR verfolgen; Clipping und Nichtfinites vor jedem Downsample prüfen.
   *claude-of-tsushima: Dämmerungshimmel lag bei 1,3–2,7 linear, sonnennah 7–20 · claude-flakes: ein NaN-Texel wurde als 16-px-PostFX-Block vergrößert · 2026-07-30–31*
 
+- **Ganzes Bild milchig, auch der Nahbereich** — additive Dunst-, Wolken- oder Horizontkarten stehen auf einem Radius **innerhalb** der Kameraumlaufbahn; die Kamera schaut dann durch die Nebelwand auf die Szene statt an ihr vorbei, und additives Blending macht daraus eine reine Aufhellung ohne Tiefenwirkung. → Radius jeder Atmosphärenkarte gegen den Kameraumlaufradius prüfen: Horizontband hinter die Kamerabahn, Wolkendeck über den Öffnungswinkel; additive Schicht nie zwischen Auge und Motiv.
+  *voxel-samurai-quiz: 46 Dunstkarten à 96 Units auf Radius 258 bei Kameraumlauf 300 ergaben eine geschlossene additive Wand direkt vor der Linse · 2026-08-05*
+
 - **Lichtsysteme stimmen einzeln, gemeinsam nicht** — Sonne, Nebel, Wasser, Vegetation und Grade lesen unterschiedliche Tageszustände. → Eine Environment-SSoT liefert Richtung, Farbe, Intensität, Atmosphäre und Grade; Materialien hängen über einen legalen Hookpfad daran statt eigene Sonne zu addieren.
   *claude-of-tsushima: `Environment` schreibt gemeinsamen Uniformblock und CSM; ohne `engine.lit()` beleuchteten alle Kaskadenlichter ein Standardmaterial N-fach · claude-flakes: Spell-Lights werden vor der Consumer-Schleife an alle sichtbaren Materialconsumer übertragen · 2026-07-28–08-04*
 

@@ -32,6 +32,9 @@ Jeder Tipp kostete mindestens einen Durchgang.
   *`dungeonGrass.js` `VERT_BODY`: zwei Durchgänge verloren, weil beide Fehlerbilder auf einen GLSL-Compile-Fehler
   zeigten · 2026-08-03*
 
+- **Shader-Gate grün, Treiber bricht trotzdem ab** — das Asset-Lab-Gate prüfte nur Deklarationen, Attribute, Klammern, Uniformwerte und Farbpfad; Swizzle außerhalb der Komponentenzahl und reservierte Wörter fielen durch. → `pnpm asset-lab:shader-gate --entry=<slug>/<target>` deckt beide seit 2026-08-05 mit ab (`scripts/asset-lab/assetLabGlslIdentifierChecks.mts`); der repoweite `pnpm vfx:shader-reserved-lint` zählt Benchmark-Ordner nur unter `--strict` und schweigt im eigenen Ordner sonst.
+  *2 Compile-Fehler in 17 Surfaces trotz grünem Gate, grünem Guard und grünem Typecheck · 2026-08-05*
+
 - **`CameraRig.js`-Grep verfälscht Kommentarzeichen** — Ausgabe stellt `//` als `\` dar. → Aussagen per direktem Read prüfen.
   *Grep und Read unterschieden sich an Kommentarzeichen · 2026-08-01*
 
