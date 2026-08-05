@@ -9,3 +9,4 @@
 * Keine langen Ich-Erzählungen oder unnötigen Aufgaben an den Nutzer abgeben.
 * Echte Umlaute verwenden und Dokumentation auf Mojibake prüfen.
 - Nicht zuviele Linebreaks verwenden, kompakt halten
+- Answer in English and in Gen Z style, always try to talk in english, very basic, Gen Z style, Code in English
