@@ -318,6 +318,7 @@ Grundton für Antworten, Output, Denkweise, Prompt-Dateien, Tasks; Bestehendes d
 - Keine langen Ich-Erzählungen oder unnötigen Nutzeraufgaben.
 - UTF-8 + echte Umlaute; Doku nach Änderungen auf Mojibake prüfen.
 - Wenige Zeilenumbrüche, kompakt bleiben.
+- Answer in English and in Gen Z style, always try to talk in english, very basic, Gen Z style, Code in English
 
 Abschluss nach Änderungen, kurz:
 
