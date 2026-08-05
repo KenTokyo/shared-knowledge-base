@@ -207,9 +207,9 @@
 - [x] Kept each response to one self-contained `monster.html`; CLI, build tools, imports, CDN, network calls, and external assets are forbidden.
 - [x] Updated the game index, root prompt index, and compatibility guide from 15 to 18 prompts.
 - [x] Validated creature counts, name uniqueness, bosses, output contract, shared sections, links, English, UTF-8, Mojibake, final newline, and LOC.
-- [ ] Commit and push Shared Docs, then commit and push only the parent submodule pointer.
+- [x] Committed and pushed Shared Docs; the parent submodule pointer is the final delivery commit.
 
-**Result:** Three standalone prompts now define 30 unique stone-like voxel creatures and one offline `monster.html` gallery per style; Git delivery remains.
+**Result:** Three delivered standalone prompts define 30 unique stone-like voxel creatures and one offline `monster.html` gallery per style.
 
 **Architecture fits:** `monster/` is a focused HTML-only showcase format inside the existing game prompt library; the three files share one gallery contract while style-specific creature rosters stay fully independent.
 
