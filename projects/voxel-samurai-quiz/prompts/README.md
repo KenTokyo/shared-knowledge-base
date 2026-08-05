@@ -8,7 +8,7 @@
 ## Prompts
 
 1. [`voxel-style.md`](voxel-style.md) — authored Voxel-Module, lokale Weltbuilder, gebatchte Oberflächen und begrenzte Reaktionschunks.
-2. [`kazenoshima-style.md`](kazenoshima-style.md) — gemeinsame `WorldSpec`-/Bake-Weltengine mit materialsemantischem `InteractionField`.
+2. [`ashen-coast-style.md`](ashen-coast-style.md) — lokale V73-AEON-Bauweise mit authored `WorldSpec`, gestuftem Bake und materialsemantischem `InteractionField`.
 3. [`cloud-flakes-style.md`](cloud-flakes-style.md) — Makro-Heightfield, kontinuierliches Clipmap-Terrain, begrenztes `SurfaceReactionField` und warm-kühle Reliefbeleuchtung.
 
 ## Gemeinsamer Vergleichsvertrag
@@ -28,7 +28,7 @@
 | Stil | Wählen, wenn | Haupttrade-off |
 |---|---|---|
 | Voxel | handgebaute facettierte Diorama-Welt und direkte Modulkontrolle zählen | lokale Builder und Reaktionschunks brauchen Kartenhandwerk |
-| Kazenoshima | weitere Welten später überwiegend als Specs hinzukommen sollen | höhere Anfangsinvestition in gemeinsame Bakes/Felder |
+| Ashen Coast | lokale AEON-Weltenarchitektur, authored Geografie und gemeinsame Bake-/Runtime-Owner zählen | höherer Spec-, Bake- und Validierungsaufwand vor erster fertiger Welt |
 | Cloud Flakes | kontinuierliche Oberfläche, echte Skillnarben und reliefbetontes Licht im Mittelpunkt stehen | reaktives Feld, LOD-Parität und Shader-/Bandbreitenbudget sind anspruchsvoller |
 
 ## Cloud-Flakes-Referenzgrenze

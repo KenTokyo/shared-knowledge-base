@@ -7,11 +7,11 @@
 ## Aktuelle Prompts
 
 1. [`Voxel Style`](prompts/voxel-style.md) — eigenständige authored Voxel-Welten mit begrenzten Reaktionschunks.
-2. [`Kazenoshima Style`](prompts/kazenoshima-style.md) — gemeinsame Spec-/Bake-Weltengine mit `InteractionField`.
+2. [`Ashen Coast Style`](prompts/ashen-coast-style.md) — lokale V73-AEON-Bauweise mit authored Spec, gestuftem Bake und `InteractionField`.
 3. [`Cloud Flakes Style`](prompts/cloud-flakes-style.md) — reaktives Heightfield-/Clipmap-Terrain mit gebundenem Oberflächenzustand.
 
 ## Auswahl in einem Satz
 
 - **Voxel Style:** stärkste lokale Voxel-Komposition und direkte Modulautorenschaft.
-- **Kazenoshima Style:** stärkste gemeinsame Weltwahrheit und beste Spec-Erweiterbarkeit.
+- **Ashen Coast Style:** stärkste lokale AEON-Weltwahrheit mit authored Geografie, abgeleitetem Wasser und gemeinsamem Bake-/Runtime-Pfad.
 - **Cloud Flakes Style:** stärkste kontinuierliche Bodenreaktion, Skillnarben und reliefbetonte Lichtkopplung.

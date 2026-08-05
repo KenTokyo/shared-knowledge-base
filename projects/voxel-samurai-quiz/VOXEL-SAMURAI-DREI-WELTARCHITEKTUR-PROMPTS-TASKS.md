@@ -4,7 +4,8 @@
 
 - Drei einzeln kopierbare Prompts für dasselbe Endlos-Voxel-Hack-and-Slash liefern.
 - Nur Map-Aufbau, Map-Rendering, Lichtkopplung und Skill-Reaktion der Map unterscheiden.
-- Varianten heißen `Voxel Style`, `Kazenoshima Style` und `Cloud Flakes Style`.
+- Varianten heißen `Voxel Style`, `Ashen Coast Style` und `Cloud Flakes Style`.
+- Ashen-Coast-Variante übernimmt lokale AEON-/V73-Prinzipien für authored Specs, Bake, Runtime, Wasser und Licht.
 - Cloud-Flakes-Variante übernimmt belegte stackneutrale Prinzipien für Terrain, Deformation, Rückstände und Licht.
 
 ## Lösungswahl
@@ -41,7 +42,7 @@
 
 **Referenzen:**
 - `shared-docs/projects/voxel-samurai-quiz/prompts/voxel-style.md`
-- `shared-docs/projects/voxel-samurai-quiz/prompts/kazenoshima-style.md`
+- `shared-docs/projects/voxel-samurai-quiz/prompts/kazenoshima-style.md` — in Phase 4 durch `ashen-coast-style.md` ersetzt
 - `shared-docs/projects/voxel-samurai-quiz/prompts/cloud-flakes-style.md`
 
 ### Phase 3 — Index, Ablösung und Abschlussabgleich
@@ -79,4 +80,27 @@
 
 **Eingehalten:** 15 Nicht-Map-Abschnitte wortgleich ✅, je acht Skillreaktionen ✅, je zehn Gegnerarten ✅, Bossrhythmus `5, 10, 15, …` ✅, Links/UTF-8/Mojibake/Dateiende sauber ✅, fremde Änderungen unangetastet ✅.
 
-**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** Keine offenen Funde im Lieferumfang. Sichtbare Mapwirkung und gemessene Laufzeit bleiben bewusst manuelle Gates.
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** Keine offenen Funde im damaligen Lieferumfang. Sichtbare Mapwirkung und gemessene Laufzeit bleiben bewusst manuelle Gates.
+
+### Phase 4 — Kazenoshima durch lokale V73 Ashen Coast ersetzen
+
+**Ziel:** Zweiter Prompt basiert ausschließlich auf belegter lokaler AEON-/V73-Bauweise; Kazenoshima verschwindet aus aktuellem Promptset.
+
+- [x] `v73-ashen-coast`, Weltregistrierung, Bake-/Runtime-Owner und Lichtprofil gelesen.
+- [x] `kazenoshima-style.md` durch eigenständige Datei `ashen-coast-style.md` ersetzt.
+- [x] Promptindex, Wegweiser, Auswahlhilfe und Taskreferenzen auf Ashen Coast aktualisiert.
+- [x] Gemeinsame Nicht-Map-Abschnitte erneut auf Wortgleichheit geprüft.
+- [x] Links, UTF-8, Mojibake, Dateiende und Git-Diff geprüft; Submodul und Eltern-Pointer liefern.
+
+**Ergebnis:** Drei aktive Einzelprompts vergleichen jetzt Voxel Style, lokalen Ashen Coast Style und Cloud Flakes Style; 15 Nicht-Map-Abschnitte bleiben wortgleich.
+
+**Referenzen:**
+- `src/engine/world/worlds/v73AshenCoast.js`
+- `docs/aeon-engine/aeon-engine-overview.md`
+- `shared-docs/projects/voxel-samurai-quiz/prompts/ashen-coast-style.md`
+
+### Phase 4
+
+**Eingehalten:** lokale V73-/AEON-Owner belegt ✅, V73 unverändert ✅, aktiver Prompt und Links vollständig umbenannt ✅, drei Standalone-Prompts erhalten ✅, keine Browser-/Gameplayprüfung ✅.
+
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 V73 ist größer und höher aufgelöst als die Zielwelten; Zahlen wurden deshalb nicht kopiert. Der Prompt fordert separate, bedarfsgeleitete Feldauflösungen und LOD nur bei belegtem Nutzen. Skillrückstände bleiben als begrenztes Runtime-Overlay vom unveränderlichen Bake getrennt.

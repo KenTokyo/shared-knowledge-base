@@ -1,13 +1,13 @@
-# Kazenoshima Style — gemeinsame Spec-/Bake-Weltengine
+# Ashen Coast Style — lokale AEON-Spec-/Bake-Weltengine
 
 **Verwendung:** Vollständig kopieren und als Bauauftrag im Zielrepository ausführen.
 **Konstante:** Spiel, Charakter, Kampf, Skills, Gegner, Wellen, Spawn, Audio und UI bleiben gegenüber den zwei Schwesterprompts gleich.
 **Einziger Vergleichsbereich:** Map-Aufbau, Map-Rendering, Map-Lichtkopplung und sichtbare Skillrückstände.
-**Map-Fokus:** Gemeinsame Weltfelder, Specs, Bakes und materialsemantisches InteractionField.
+**Map-Fokus:** Lokale V73-AEON-Bauweise mit authored WorldSpec, gestuftem Bake, gemeinsamen Weltfeldern und materialsemantischem InteractionField.
 **Sichtprüfung:** Keine automatische Browser-/Screenshot-/Gameplayprüfung ohne aktuellen ausdrücklichen Userauftrag.
 
 ```text
-CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — KAZENOSHIMA STYLE WORLD ENGINE
+CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — ASHEN COAST STYLE AEON WORLD ENGINE
 
 AUFTRAG UND QUALITÄTSBAR
 
@@ -88,35 +88,63 @@ WELT 2 — VERDANT TITAN GROVE FORTRESS
 - Gegner-Spawnzone folgt zentraler Runenspur; Spawnanker bleiben vom Spielerstart getrennt.
 - Licht: warmer Sonnenkegel durch Kronendach, kühler grüner Umgebungsfill, warme Fenster/Laternen, sichtbare Luftperspektive ohne milchigen Nahnebel.
 
-KAZENOSHIMA-STYLE-WELTARCHITEKTUR
+ASHEN-COAST-STYLE-WELTARCHITEKTUR
 
-1. Baue eine gemeinsame `WorldSpec`-Schnittstelle als Hauptquelle beider Karten, nach stackneutralen Prinzipien einer Kazenoshima-artigen Weltengine.
-2. Jede Spec beschreibt Kartenmaß, Seed, authored Makroformen, Wege, Plaza/Lichtung, Wasser, Sites, Landmarken, Biomregionen, Grenzen, Spawnanker, Kamera und Lichtprofil.
-3. Eine gemeinsame Bake-Pipeline erzeugt Heightfield, Normalen-/Steigungsfeld, Material-Splat, Biom-/Dichtefeld, Wasser-/Occupancy-Daten und validierbaren Cache.
-4. `groundHeightAt(x,z)` und passende Normalen-/Materialabfragen versorgen Terrain, Spieler, Gegner, Kamera, Props, Gebäude, Wasser, VFX und Map-Reaktion.
-5. CPU- und GPU-Höhenabtastung müssen aus derselben gebackenen Wahrheit stammen und an Kontaktpunkten übereinstimmen.
-6. Straßen, Plaza, Lichtung, Kanäle und Baupads verändern oder besitzen Boden konstruktiv; keine darübergelegten Farbwege ohne Geländeantwort.
-7. Beide Welten nutzen gemeinsames Terrain-, Material-, Vegetations-, Wasser-, Wind- und Environment-System; Specs wählen Daten und Stilparameter.
-8. Bei maximal 600 Einheiten keine Großweltzahlen blind kopieren:
-   - Rasterauflösung aus sichtbarer Bodenfrequenz wählen,
-   - Chunking/LOD nur bei tatsächlichem Verwerfen durch Kamera,
-   - keine extremen Bake-Texturen oder CDLOD ohne messbaren Nutzen.
-9. Deterministischer Scatter respektiert Gebäude, Wege, Wasser, Spawnräume und authored Landmarken; Wiederholungen werden instanziert.
-10. Footprints von Bauten werden an mehreren finalen Bodenpunkten gesampelt; Plinthen reichen unter tiefsten Kontakt; Türen und Wege bleiben offen.
-11. Wasserhöhe folgt fertigem Boden; Kanäle/Ufer schließen konstruktiv; Wasserfälle sitzen an echten Höhenstufen; Wellenphase nutzt Weltkoordinaten.
-12. Eine Environment-SSoT besitzt Sonne, Himmel, Wind, Nebel, Wetter, Schatten und Color Grade; Materialien ergänzen keine eigene Sonne.
-13. Laufzeitreaktion liegt als gemeinsames materialsemantisches `InteractionField` über unveränderlichem Baseline-Bake:
-   - Höhenoffset/Verdrängung,
-   - Bruch oder Verdichtung,
-   - Feuchte/Hitze/Materialzustand,
-   - Alter/Erholung.
-14. `WorldImpactEvent` wird über Welt-ID in das richtige Feld geroutet; Spec-Materialrollen bestimmen sichtbare Antwort, nicht Skill-Sondercode pro Karte.
-15. Beauty-, Depth-/Prepass-, Schatten- und Bodenkontaktpfad lesen denselben gefilterten Feldoffset; grobe Gameplayhöhe bleibt stabil, solange Reaktion kosmetisch ist.
-16. Reaktionsfeld nutzt gecappte Weltkacheln oder fokusnahe Texturfenster; abgeleitete Ressourcen tragen Spec-/Bake-/Feldrevision.
-17. Überschreibt ein Impact Site-, Wasser- oder Vegetationsbereich, liefern Occupancy und Materialfeld sicheren Fallback statt Narbe durch unzuständige Geometrie.
-18. Beide Karten liefern denselben Playfield-/Kollisionsvertrag; keine unsichtbaren Blocker durch Türen, Vegetation oder Arenawege.
-19. Visuelles Ziel: organisch zusammenhängende, materialreiche Welt mit starken authored Sites, deren Systeme aus einer gemeinsamen Weltwahrheit zusammenpassen.
-20. Neue dritte oder vierte Welt soll überwiegend als neue Spec entstehen, nicht als Kopie der Terrainengine.
+1. Nutze ausschließlich lokale AEON-Bauweise als Architekturvorbild:
+   - `src/engine/world/worlds/v73AshenCoast.js`,
+   - `src/engine/world/WorldSpec.js`, `Heightfield.js`, `Terrain.js`, `Structures.js`, `TreeField.js`,
+   - `src/engine/render/Environment.js` und `Water.js`.
+2. V73 Ashen Coast ist fertige Referenz und bleibt unverändert; baue Skyglass und Verdant als neue Specs derselben Prinzipien, nicht als Kopien der Aschenküste.
+3. Eine geschlossene `WorldSpec` ist Hauptquelle je Welt; fehlendes Pflichtfeld scheitert beim Boot laut statt drei Systeme später als leere Fläche.
+4. Löse ausgewählte Welt vor Allocation von Heightfield, Typed Arrays und Runtime-Systemen genau einmal auf; friere aktive Spec ein oder führe einen vollständigen kontrollierten Reload aus, nie einen halben Live-Swap.
+5. Jede Spec authoriert mindestens:
+   - Weltmaß, Meer-/Wasserbasis, getrennte Feldauflösungen und Seed,
+   - Landmassensilhouette, Grate, Sporne, Peaks und große Senken,
+   - Flusskontrolllinie/-profil, Teiche, Kanäle und Küsten-/Wassergrenzen,
+   - Straßen, Nebenwege, Baupads, Landmarken, Camps und Fernträger,
+   - Biomregionen, Spielerstart, Gegner-/Bossanker,
+   - überprüfbare Kamera-/Kompositionsintents statt nur vergänglicher Koordinaten.
+6. Authore große Formen und Routen bewusst; Noise bricht Oberfläche und Übergänge, entscheidet aber nie allein, wo Arena, Landmarke, Fluss oder Weg liegt.
+7. Gemeinsame Bake-Pipeline läuft in fester Abhängigkeitenreihenfolge:
+   - Distanzfelder für Grate, Wasserwege und Straßen,
+   - analytische Makroform aus Spec,
+   - Erosion/Verwitterung,
+   - Wasserprofil aus erodiertem Boden ableiten und Bett/Ufer danach formen,
+   - Straßen graden, Pads planieren und Fernformen setzen,
+   - auf finale Höhe hochsamplen und feines Relief ergänzen,
+   - Normalen/Steigung, Material-Splat und Biom-/Dichtefeld ableiten.
+8. Alles nach dem Bake liest dieselben Felder: Terrain, Spieler, Gegner, Kamera, Strukturen, Vegetation, Wasser, VFX, Spawn und Map-Reaktion.
+9. `groundHeightAt`, Normale, Steigung, Wasserhöhe, Splat und Biomabfrage stammen aus finalem Bake; keine CPU/GPU-Doppelimplementierung mit abweichender Interpolation.
+10. Cache ist deterministisch und weltgebunden; Schema-/Bake-Version, Seed, Auflösungen, Welt-ID und Quellenhash verhindern stale oder vertauschte Welten.
+11. Skaliere V73-Zahlen nicht blind auf maximal 600 Einheiten:
+   - jede Feldauflösung folgt kleinster sichtbarer/spielerisch benötigter Frequenz,
+   - Weltgröße, Bake-, Splat-, Biom- und Distanzfeldauflösung bleiben getrennte Entscheidungen,
+   - LOD lohnt nur, wenn echte Zielkamera Flächen oder Detailstufen verwirft.
+12. Kontinuierlicher Boden nutzt bei belegtem Bedarf Ashen-Coast-artiges CDLOD/Quadtree-Terrain: ein wiederverwendetes Patchmesh, instanzierte Knoten, enge Frustum-Auswahl und Morphband zwischen Nachbarstufen.
+13. Beauty- und Schatten-/Depth-Pfad verwenden identische Patchplatzierung, Kamerauniform, Höhenabtastung und Morphlogik; Lichtkamera darf Gelände nicht anders displacen als Spielkamera.
+14. Terrainmaterial mischt wenige klare Materialrollen aus gemeinsamen Texturarrays und Splat/Biome: Stein, Boden/Gras, Sand/Schutt, Weg und Nässe; Steilwände erhalten passende Projektion statt verschmierter Top-UVs.
+15. Skyglass-Spec authoriert Plateau, Plaza, Palastpad, Kanäle, Aquäduktfundamente, Canyonrand und sichere Zugänge als zusammenhängende Felder/Sites.
+16. Verdant-Spec authoriert Waldkessel, Lichtung, Hallenpad, Wege, Terrassen, Wurzelhügel, Titanbaumstandorte und Randanstieg als zusammenhängende Felder/Sites.
+17. Strukturen samplen mehrere Punkte ihres finalen Footprints; Oberseite sitzt über höchstem Kontakt, Plinthenschürze reicht unter tiefsten, damit weder schweben noch Eingraben möglich ist.
+18. Bauten werden pro Site und Material gebatcht, nicht zu einem Inselmesh verschmolzen; Site-Bounds erhalten Frustum-Culling und wiederholte Formen behalten maßstabsgerechte Welt-UVs.
+19. Strukturen veröffentlichen Clearings, Pflaster/Wege, Collider, begehbare Sonderflächen und benannte Anker; Vegetation, Materialpfad, Spieler und Gegner lesen dieselben Ergebnisse.
+20. Gras/Blumen dürfen kamerarelativ und shadergetrieben arbeiten; große Bäume werden einmal deterministisch aus Biom, Splat, Wasser, Steigung und Clearings gestreut, räumlich gechunkt und instanziert.
+21. Jeder sichtbare Zufallsparameter erhält unabhängigen stabilen Hashstrom; Existenz/Position dürfen nicht ungewollt Yaw, Größe, Helligkeit oder Artenwahl koppeln.
+22. Wasser entsteht aus fertigem Gelände:
+   - Flussoberfläche läuft nicht bergauf,
+   - Bett/Ufer passen zum Profil,
+   - Wasserfälle entstehen an gemessenen Gefällestrecken,
+   - Teichoberfläche liegt in einem tatsächlich haltenden Bowl,
+   - Shader-Tiefe nutzt dieselbe Höhenabfrage wie Boden.
+23. Laufzeitreaktion liegt als begrenztes materialsemantisches `InteractionField` über unveränderlichem Baseline-Bake; Skillnarben schreiben nie zurück in signierten Terrain-Cache.
+24. `WorldImpactEvent` fragt am echten Kontakt Splat, Biom, Wasser und Site-Belegung ab; Materialrolle bestimmt Kerbe, Verdrängung, Bruch, Nässe und Erholung statt Karten-Sondercode im Skill.
+25. Beauty-, Depth-/Prepass- und Schattenpfad lesen denselben gefilterten Reaktionsoffset; Gameplayhöhe bleibt stabil, solange Rückstände kosmetisch sind.
+26. Reaktionsfeld nutzt gecappte Weltkacheln oder fokusnahes Fenster mit Feldrevision, vollständigem Reset und sicherem Fallback auf Strukturen/Wasser/steilen Flächen.
+27. Eine Environment-SSoT besitzt Tageszeit, Wetter, Sonnenrichtung/-farbe/-stärke, Himmels- und Bodenfill, Nebel/Haze, Wind, Schatten, Belichtung und Color Grade.
+28. Sky-Dome, gerichtete Schatten, Environment-Probe, Terrain, Vegetation, Wasser, Skilllichter und PostFX lesen diese SSoT; kein Consumer erfindet eigene Sonne oder unabhängigen Nebel.
+29. Licht folgt Ashen-Coast-Prinzipien: Cross-/Backlight zeichnet Gras und Oberflächenkanten, warmer Schlüssel trennt sich von kühlem Sky-Fill, Ground-Bounce hält Schatten materialgerecht und Luftperspektive trägt echte Vorder-/Mittel-/Hintergründe.
+30. Specs beschreiben Kameraintents aus Motiv, Distanz, Peilbogen, Lichtbezug, freier Sicht, Vordergrund und Geländeabfall; Koordinaten werden aus finalem Bake gelöst und nach Weltänderung neu validiert.
+31. Visuelles Ziel: authored kompakte Welt mit dichter lokaler Geografie, konstruktiv passenden Systemen und klaren drei Tiefenebenen; kein Noise-Terrain mit aufgesetzten Props.
 
 VOXEL-LIKE CHARAKTERSYSTEM
 
@@ -352,19 +380,19 @@ LIEFERREIHENFOLGE
 
 1. Regeln, Bestand und Referenzen verstehen.
 2. gemeinsamen Game-Host, Statefluss und Weltenauswahl bauen.
-3. gemeinsame WorldSpec-/Bake-/InteractionField-Grundlage bauen.
-4. Skyglass als vollständigen Vertical Slice bauen.
+3. geschlossenen WorldSpec-Vertrag, gestuften AEON-Bake und InteractionField-Grundlage bauen.
+4. Skyglass als vollständigen Ashen-Coast-artigen AEON-Vertical-Slice bauen.
 5. Voxel-Spieler, Grundkampf und Kamera integrieren.
 6. acht Skills, VFX, Audio und Skillleiste integrieren.
 7. Gegner-Rigs, KI, Spawn und Endloswellen integrieren.
-8. Verdant als zweite Spec derselben Weltengine bauen.
+8. Verdant als zweite eigenständige Spec derselben lokalen AEON-Weltengine bauen.
 9. Licht, Materialtrennung, Performance und Sonderfälle schließen.
 10. statische/numerische Gates bündeln; sichtbare Abnahme dem User übergeben.
 
 FERTIG WENN
 
 - Startansicht lässt genau Skyglass oder Verdant wählen und startet direkt.
-- beide Karten nutzen dieselbe Kazenoshima-artige Weltengine und unterscheiden sich durch Specs, Assets und Parameter.
+- beide Karten nutzen dieselbe lokale Ashen-Coast-artige AEON-Weltengine und unterscheiden sich durch Specs, Sites, Felder und Materialprofile.
 - Spieler und alle Gegner sind hochwertige Voxel-Rigs mit gelenkiger Ganzkörperanimation.
 - `Q E R 1–5` funktionieren, zeigen Cooldowns und besitzen befestigte VFX/Audio/Treffer.
 - Endloswellen, Eliten und Bosse laufen ohne ungebremstes Wachstum.
