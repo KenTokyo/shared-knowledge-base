@@ -217,7 +217,9 @@ VOXEL-LIKE CHARAKTERSYSTEM
 - Baue keine realistischen Menschenmodelle und keine einfachen Minecraft-Würfelmenschen.
 - Erzeuge Körper und Rüstung prozedural aus benannten Voxel-Teilen mit stabilen Part-IDs, lokalen Pivotpunkten und Materialrollen.
 - Spielerpalette: Mondsilber, tiefes Indigo, Cyan-Energie und begrenzter Goldakzent.
-- Gegnerpaletten trennen Rollen bereits an Silhouette und Hell-Dunkel-Verteilung, nicht nur über andere Farben.
+- Gegner sind kreaturenartige Voxel-/Steinwesen statt Menschen: kantige Felsplatten, Bruchkanten, Kristalle und klar lesbare Tierproportionen bilden Körper und Rüstung.
+- Gesichter bleiben vollständig maskenhaft und zeigen ausschließlich ein Paar leuchtende Augen; keine sichtbaren Münder, Nasen, Zähne, Haut oder realistischen Gesichtszüge.
+- Augenform, Augenfarbe, Silhouette und Hell-Dunkel-Verteilung trennen Rollen schon aus Kampfdistanz; zusätzliche Farben allein reichen nicht.
 - Spieler darf ein eigener Hero-Rig-Renderpfad sein; wiederholte Gegnerteile werden nach Geometrie/Material instanziert oder gebatcht.
 - Erzeuge nie ein React-Element oder einzelnes Mesh pro Körperteil und Gegner.
 - Für gebatchte Rigs trägt Geometrie mindestens `aPartId/aBoneId`, `aPivot`, `aActorId`, `aBaseColor` und optionale Emissive-/Maskenattribute.
@@ -336,18 +338,30 @@ ENDLOSSYSTEM UND GEGNER
 
 - Wellen laufen `1…∞`; kein finales Victory-Gate.
 - nächste Welle startet nach kurzer klarer Pause, sobald vorige Gegner besiegt sind.
-- Schwierigkeit steigt kontrolliert über Gegnerzahl, Lebenspunkte, Schaden, Tempo, Kombinationen und Elite-Modifikatoren.
+- ein gemeinsamer `WaveDirector` ist Hauptquelle für Wellenzahl, freigeschaltete Arten, Zusammenstellung, Skalierung, Elite-Modifikatoren und Bossrotation.
+- jede fünfte Welle `5, 10, 15, …` ist zwingend eine Bosswelle mit Boss plus reduzierter Begleitung; es gibt keine bossfreie fünfte Welle.
+- Bosswellen wechseln deterministisch zwischen Titan Golem und Storm Wyrm; spätere Auftritte ergänzen neue Phasen, Angriffskombinationen und stärkere Begleiter statt nur mehr Lebenspunkte.
+- Schwierigkeit fällt nie zurück: Lebenspunkte, Schaden und Stagger-Widerstand steigen pro Welle über stabile, begrenzte Formeln; Bewegungs- und Angriffstempo steigen langsamer und besitzen sichere Obergrenzen.
+- jeder Fünf-Wellen-Abschnitt schaltet neue Arten, Angriffe, Gruppenkombinationen oder Elite-Modifikatoren frei.
+- Wellen 1–4 führen die ersten vier regulären Arten ein; Wellen 6–9 ergänzen zwei weitere; ab Welle 11 stehen alle acht regulären Arten für zunehmend gemischte Gruppen bereit.
+- ab Welle 6 dürfen Elite-Modifikatoren reguläre Arten verstärken, gelten aber nie als zusätzliche Gegnerart.
+- nach Freischaltung mehrerer Arten dürfen zwei aufeinanderfolgende Nicht-Bosswellen nicht dieselbe Gegnerzusammenstellung verwenden.
 - aktive Gegnerzahl bleibt hart begrenzt; Zielbereich ungefähr 18–24 gleichzeitig nach Performancebeleg.
 - alle Spawn-/Gegner-/Projektileffekte verwenden Pools; keine ungebremste Objektansammlung.
-- jede fünfte Welle enthält Elite.
-- jede zehnte Welle enthält Boss plus reduzierte Begleitung.
-- Gegnerrollen:
-  - Ashblade: schneller Nahkämpfer mit klarer Dreierkette,
-  - Iron Ward: langsamer Schild-/Rüstungsgegner mit Guard Break,
-  - Reed Spear: mittlere Reichweite, Stoß und Sweep,
-  - Sky Archer: Distanzangriff mit sichtbarer Linie und Ausweichfenster,
-  - Titan Captain: großer Boss-Rig mit zwei Phasen und klaren Bodenwarnungen.
-- Gegner navigieren um Häuser, Wasser, Bäume, Wurzeln, Brüstungen und Arena-Props.
+- es gibt genau zehn Gegnerarten; acht reguläre Kreaturen plus zwei Bosskreaturen:
+  1. Stonefang Wolf: niedriger schneller Vierbeiner mit Rudelkreisen, Sprungbiss-Telegraphie und verwundbarer Erholung,
+  2. Crystal Mantis: schmaler Kristalljäger mit Seitenschritten, Scherenkombo und klarer Kreuzschnitt-Warnung,
+  3. Rootshell Beetle: gepanzerter Käfer-Tank mit Frontschutz, Stoß und offenem Hinterleib als Konterfläche,
+  4. Shardwing Raven: fliegende Steinkreatur mit Schattenwarnung, Sturzflug und kurzer Bodenphase,
+  5. Obsidian Ape: schwerer Brecher mit Felsfaust-Kombo, Sprungschlag und radialer Bodenwarnung,
+  6. Runehorn Stag: schneller Anstürmer mit sichtbarer Angriffslinie, Wandstagger und weitem Geweih-Sweep,
+  7. Boulder Tortoise: langsame Artilleriekreatur mit Steinpanzer, Splittergeschoss und unterbrechbarer Aufladung,
+  8. Hollow Serpent: segmentierte Steinschlange mit Bodenwelle, kurzem Abtauchen und klar markiertem Auftauchpunkt,
+  9. Titan Golem: massiver Boss aus schwebenden Voxel-Felsplatten mit zwei bis drei Phasen, zerstörbaren Panzerrollen und großen Bodenwarnungen,
+  10. Storm Wyrm: langer Voxel-Steinwyrm mit Flug-/Bodenwechsel, Blitzaugen, Schneisenangriff und arenaweiter, aber ausweichbarer Bossmechanik.
+- alle zehn Arten besitzen steinartige Voxel-Silhouetten; im Gesicht sind aus jeder relevanten Distanz nur die leuchtenden Augen erkennbar.
+- reguläre Arten und Bosse brauchen eigene Proportionen, Bewegungsmuster, Angriffsreichweiten, Telegraphien und Konterfenster; reine Farbvarianten sind ungültig.
+- Gegner navigieren um Häuser, Wasser, Bäume, Wurzeln, Brüstungen und Arena-Props; Flug- und Abtauchphasen respektieren dieselben Spielraumgrenzen.
 - kein Gegner läuft durch Geometrie, greift durch Wände an oder spawnt im Spieler.
 
 SPAWN-ANIMATION
@@ -570,7 +584,9 @@ VOXEL-LIKE CHARAKTERSYSTEM
 - Baue keine realistischen Menschenmodelle und keine einfachen Minecraft-Würfelmenschen.
 - Erzeuge Körper und Rüstung prozedural aus benannten Voxel-Teilen mit stabilen Part-IDs, lokalen Pivotpunkten und Materialrollen.
 - Spielerpalette: Mondsilber, tiefes Indigo, Cyan-Energie und begrenzter Goldakzent.
-- Gegnerpaletten trennen Rollen bereits an Silhouette und Hell-Dunkel-Verteilung, nicht nur über andere Farben.
+- Gegner sind kreaturenartige Voxel-/Steinwesen statt Menschen: kantige Felsplatten, Bruchkanten, Kristalle und klar lesbare Tierproportionen bilden Körper und Rüstung.
+- Gesichter bleiben vollständig maskenhaft und zeigen ausschließlich ein Paar leuchtende Augen; keine sichtbaren Münder, Nasen, Zähne, Haut oder realistischen Gesichtszüge.
+- Augenform, Augenfarbe, Silhouette und Hell-Dunkel-Verteilung trennen Rollen schon aus Kampfdistanz; zusätzliche Farben allein reichen nicht.
 - Spieler darf ein eigener Hero-Rig-Renderpfad sein; wiederholte Gegnerteile werden nach Geometrie/Material instanziert oder gebatcht.
 - Erzeuge nie ein React-Element oder einzelnes Mesh pro Körperteil und Gegner.
 - Für gebatchte Rigs trägt Geometrie mindestens `aPartId/aBoneId`, `aPivot`, `aActorId`, `aBaseColor` und optionale Emissive-/Maskenattribute.
@@ -689,18 +705,30 @@ ENDLOSSYSTEM UND GEGNER
 
 - Wellen laufen `1…∞`; kein finales Victory-Gate.
 - nächste Welle startet nach kurzer klarer Pause, sobald vorige Gegner besiegt sind.
-- Schwierigkeit steigt kontrolliert über Gegnerzahl, Lebenspunkte, Schaden, Tempo, Kombinationen und Elite-Modifikatoren.
+- ein gemeinsamer `WaveDirector` ist Hauptquelle für Wellenzahl, freigeschaltete Arten, Zusammenstellung, Skalierung, Elite-Modifikatoren und Bossrotation.
+- jede fünfte Welle `5, 10, 15, …` ist zwingend eine Bosswelle mit Boss plus reduzierter Begleitung; es gibt keine bossfreie fünfte Welle.
+- Bosswellen wechseln deterministisch zwischen Titan Golem und Storm Wyrm; spätere Auftritte ergänzen neue Phasen, Angriffskombinationen und stärkere Begleiter statt nur mehr Lebenspunkte.
+- Schwierigkeit fällt nie zurück: Lebenspunkte, Schaden und Stagger-Widerstand steigen pro Welle über stabile, begrenzte Formeln; Bewegungs- und Angriffstempo steigen langsamer und besitzen sichere Obergrenzen.
+- jeder Fünf-Wellen-Abschnitt schaltet neue Arten, Angriffe, Gruppenkombinationen oder Elite-Modifikatoren frei.
+- Wellen 1–4 führen die ersten vier regulären Arten ein; Wellen 6–9 ergänzen zwei weitere; ab Welle 11 stehen alle acht regulären Arten für zunehmend gemischte Gruppen bereit.
+- ab Welle 6 dürfen Elite-Modifikatoren reguläre Arten verstärken, gelten aber nie als zusätzliche Gegnerart.
+- nach Freischaltung mehrerer Arten dürfen zwei aufeinanderfolgende Nicht-Bosswellen nicht dieselbe Gegnerzusammenstellung verwenden.
 - aktive Gegnerzahl bleibt hart begrenzt; Zielbereich ungefähr 18–24 gleichzeitig nach Performancebeleg.
 - alle Spawn-/Gegner-/Projektileffekte verwenden Pools; keine ungebremste Objektansammlung.
-- jede fünfte Welle enthält Elite.
-- jede zehnte Welle enthält Boss plus reduzierte Begleitung.
-- Gegnerrollen:
-  - Ashblade: schneller Nahkämpfer mit klarer Dreierkette,
-  - Iron Ward: langsamer Schild-/Rüstungsgegner mit Guard Break,
-  - Reed Spear: mittlere Reichweite, Stoß und Sweep,
-  - Sky Archer: Distanzangriff mit sichtbarer Linie und Ausweichfenster,
-  - Titan Captain: großer Boss-Rig mit zwei Phasen und klaren Bodenwarnungen.
-- Gegner navigieren um Häuser, Wasser, Bäume, Wurzeln, Brüstungen und Arena-Props.
+- es gibt genau zehn Gegnerarten; acht reguläre Kreaturen plus zwei Bosskreaturen:
+  1. Stonefang Wolf: niedriger schneller Vierbeiner mit Rudelkreisen, Sprungbiss-Telegraphie und verwundbarer Erholung,
+  2. Crystal Mantis: schmaler Kristalljäger mit Seitenschritten, Scherenkombo und klarer Kreuzschnitt-Warnung,
+  3. Rootshell Beetle: gepanzerter Käfer-Tank mit Frontschutz, Stoß und offenem Hinterleib als Konterfläche,
+  4. Shardwing Raven: fliegende Steinkreatur mit Schattenwarnung, Sturzflug und kurzer Bodenphase,
+  5. Obsidian Ape: schwerer Brecher mit Felsfaust-Kombo, Sprungschlag und radialer Bodenwarnung,
+  6. Runehorn Stag: schneller Anstürmer mit sichtbarer Angriffslinie, Wandstagger und weitem Geweih-Sweep,
+  7. Boulder Tortoise: langsame Artilleriekreatur mit Steinpanzer, Splittergeschoss und unterbrechbarer Aufladung,
+  8. Hollow Serpent: segmentierte Steinschlange mit Bodenwelle, kurzem Abtauchen und klar markiertem Auftauchpunkt,
+  9. Titan Golem: massiver Boss aus schwebenden Voxel-Felsplatten mit zwei bis drei Phasen, zerstörbaren Panzerrollen und großen Bodenwarnungen,
+  10. Storm Wyrm: langer Voxel-Steinwyrm mit Flug-/Bodenwechsel, Blitzaugen, Schneisenangriff und arenaweiter, aber ausweichbarer Bossmechanik.
+- alle zehn Arten besitzen steinartige Voxel-Silhouetten; im Gesicht sind aus jeder relevanten Distanz nur die leuchtenden Augen erkennbar.
+- reguläre Arten und Bosse brauchen eigene Proportionen, Bewegungsmuster, Angriffsreichweiten, Telegraphien und Konterfenster; reine Farbvarianten sind ungültig.
+- Gegner navigieren um Häuser, Wasser, Bäume, Wurzeln, Brüstungen und Arena-Props; Flug- und Abtauchphasen respektieren dieselben Spielraumgrenzen.
 - kein Gegner läuft durch Geometrie, greift durch Wände an oder spawnt im Spieler.
 
 SPAWN-ANIMATION
