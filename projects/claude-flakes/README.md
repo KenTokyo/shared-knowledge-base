@@ -25,6 +25,6 @@ Auditstand 2026-08-04: 165 `History/`-Dateien vollständig als Textkorpus gelese
 
 ## Teuerste Muster
 
-> **Plausibles Bild, ungültiger Vergleich:** freie Frames, Restschulden, geerbte Kamera, TAA-History, verschobener RNG.
+> **Plausibles Bild, ungültiger Vergleich:** freie Frames, Restschulden, geerbte Kamera, Zielstrahl durch die Bildecke, TAA-History, verschobener RNG.
 
 > **Grüner Check, ungeprüfte Bedingung:** erst Mutanten, Fresh Clone, Crash-Guards und rote Detailzeile belegten Gates.
