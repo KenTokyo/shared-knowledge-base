@@ -6,6 +6,13 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 
 **Wie das System wächst und wer was ändern darf: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).**
 
+## Als Submodule hinzufügen
+
+```bash
+git submodule add https://github.com/KenTokyo/shared-knowledge-base shared-docs
+git submodule update --init --recursive
+```
+
 ## Wo was liegt
 
 | Ordner / Datei | Inhalt |
