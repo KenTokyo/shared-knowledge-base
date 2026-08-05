@@ -216,3 +216,23 @@
 **Rules met:** existing prompt SSoT continued ✅, duplicate runtime work avoided ✅, no browser or gameplay run ✅, English-only new artifacts ✅.
 
 **Findings/performance/critical issues:** 🟡 Thirty creatures inside one page can trigger heavy startup and GPU cost. Fix path: render one selected hero at full detail, reuse one renderer and shared geometry/material families, dispose switched resources, cap DPR/effects, and degrade background polish before silhouette or animation.
+
+### Phase 10 — Offline renderer fallbacks and `monster-html` migration
+
+**Goal:** All six HTML-only prompts keep their offline single-file contract and produce a usable interactive result when WebGL2 is unavailable.
+
+- [x] Replace each hard WebGL2 requirement with the ordered runtime ladder `WebGL2 → WebGL1 → Canvas 2D`.
+- [x] Require shared simulation, creature definitions, input, UI, and lifecycle state across renderer adapters instead of separate reduced products.
+- [x] Keep Canvas 2D genuinely animated and interactive; forbid screenshots, static cards, fake 3D DOM stacks, and disabled controls as fallback output.
+- [x] Require WebGL1-compatible shaders/resources and a fresh canvas per backend attempt; preserve state when an initialized GPU context is lost.
+- [x] Rename `monster/` to `monster-html/` and update every prompt-library link and structure contract.
+- [x] Validate fallback wording, exact file contracts, links, English, UTF-8, Mojibake, final newlines, LOC, and scoped Git diff.
+- [ ] Commit and push Shared Docs; then commit and push only the parent submodule pointer.
+
+**Result:** All six prompts now preserve one offline product across WebGL2, WebGL1, and live Canvas 2D; current indexes resolve through `monster-html/`.
+
+**Architecture fits:** One renderer-independent product state feeds three ordered adapters; each prompt stays standalone, and `monster-html/` names the artifact format without colliding with runtime monster ownership.
+
+**Rules met:** existing append-only task continued ✅, one prompt mode and one renderer owner read ✅, Ironhold delivery contract checked directly ✅, no browser/gameplay run ✅.
+
+**Findings/performance/critical issues:** 🟡 Historical Operation Ironhold allowed Three.js r128 from CDN, while its current repository is a Vite/React multi-file app; neither is evidence for weakening the offline `file://` contract. Fixed: all six prompts keep renderer code inline and network-free. Static evidence: six ladders found, zero hard WebGL2-error phrases, old folder absent, new folder present, prompt files 23–68 lines, links and Mojibake scan clean.

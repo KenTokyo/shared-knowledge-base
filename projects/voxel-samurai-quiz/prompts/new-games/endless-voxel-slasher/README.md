@@ -41,9 +41,9 @@ Each HTML-only prompt is designed for direct chat use and demands exactly one do
 
 ## Monster HTML-Only Chat Prompts — One `monster.html`
 
-1. [`Voxel Style — 10 Monsters`](monster/voxel-style.md) — bold authored mineral creatures with modular faceted bodies.
-2. [`Ashen Coast Style — 10 Monsters`](monster/ashen-coast-style.md) — salt-, reef-, ash-, storm-, and coastline-weathered creatures.
-3. [`Claude Flakes Style — 10 Monsters`](monster/claude-flakes-style.md) — snow-, rime-, glacier-, and aurora-reactive mineral creatures.
+1. [`Voxel Style — 10 Monsters`](monster-html/voxel-style.md) — bold authored mineral creatures with modular faceted bodies.
+2. [`Ashen Coast Style — 10 Monsters`](monster-html/ashen-coast-style.md) — salt-, reef-, ash-, storm-, and coastline-weathered creatures.
+3. [`Claude Flakes Style — 10 Monsters`](monster-html/claude-flakes-style.md) — snow-, rime-, glacier-, and aurora-reactive mineral creatures.
 
 Each monster prompt demands one offline `monster.html` with exactly ten original selectable creatures: eight regular species plus two bosses. All 30 names and body plans are distinct, and every sealed face exposes glowing eyes as its only visible facial feature.
 

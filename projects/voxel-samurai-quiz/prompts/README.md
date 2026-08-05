@@ -13,6 +13,6 @@
 - `new-games/<game>/long-subagent/` contains complete specifications with explicit orchestrated implementation and visual review.
 - `new-games/<game>/short-subagent/` contains compact benchmark prompts with the same explicit orchestration profile.
 - `new-games/<game>/html-only/` contains chat-ready prompts that demand one locally runnable `index.html` without build tools or external files.
-- `new-games/<game>/monster/` contains chat-ready creature galleries that demand one locally runnable `monster.html` with ten distinct species.
+- `new-games/<game>/monster-html/` contains chat-ready creature galleries that demand one locally runnable `monster.html` with ten distinct species.
 - Each game folder owns one `README.md` that explains constants, style differences, and direct copy targets.
 - Prompt files contain English only when the target game is English-only.
