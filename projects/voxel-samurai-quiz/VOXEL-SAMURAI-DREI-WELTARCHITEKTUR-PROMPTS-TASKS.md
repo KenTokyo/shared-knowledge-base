@@ -185,9 +185,9 @@
 - [x] Gewünschten Call-of-Duty-Qualitätsloop als letzten Promptteil wortgleich in alle sechs Dateien gesetzt.
 - [x] Spieleindex, Rootindex und kompatiblen Wegweiser auf 15 Promptvarianten aktualisiert.
 - [x] Inhalt, Parität, Schlussposition, Links, Englisch, UTF-8, Mojibake, Dateiende und LOC statisch geprüft.
-- [ ] Shared-Docs committen/pushen; danach ausschließlich Elternrepo-Submodule-Pointer committen/pushen.
+- [x] Shared-Docs committen/pushen; danach ausschließlich Elternrepo-Submodule-Pointer committen/pushen.
 
-**Ergebnis:** Sechs kopierbare Subagent-Prompts behalten den vollständigen Spielvertrag und erlauben ausdrücklich orchestrierte Umsetzung, Sichtprüfung und Blindvergleich; Git-Lieferung folgt.
+**Ergebnis:** Sechs kopierbare Subagent-Prompts behalten den vollständigen Spielvertrag, erlauben ausdrücklich orchestrierte Umsetzung, Sichtprüfung und Blindvergleich und sind über Shared-Docs geliefert.
 
 **Architektur passt:** Bestehende Prompts bleiben unveränderte lineare Baseline; neue Ordner kennzeichnen das abweichende orchestrierte Ausführungsprofil eindeutig.
 
