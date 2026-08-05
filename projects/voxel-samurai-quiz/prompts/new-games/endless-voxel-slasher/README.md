@@ -1,6 +1,6 @@
 # Endless Voxel Slasher — English New-Game Prompts
 
-**Use when:** The same complete browser action RPG should be built or compared through three distinct map architectures.
+**Use when:** The same complete browser action RPG should be built or compared through three distinct map architectures, including single-file HTML experiments for chat interfaces.
 **Constant:** English-only game copy, two worlds, Swordfighter plus Elemental Technician, full-body animation, jump, separate dodge, class Q dash, aerial skill branch, nine skills per class, premium layered sword/elemental VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
 **Verification boundary:** Do not start automated browser, screenshot, gameplay, or FPS verification without an explicit current user request.
@@ -16,6 +16,14 @@
 1. [`Voxel Style — Short`](short/voxel-style.md) — compact handcrafted voxel-diorama request.
 2. [`Ashen Coast Style — Short`](short/ashen-coast-style.md) — compact local AEON-spec/bake request.
 3. [`Claude Flakes Style — Short`](short/claude-flakes-style.md) — compact reactive heightfield/clipmap request.
+
+## HTML-Only Chat Prompts — One `index.html`
+
+1. [`Voxel Style — HTML Only`](html-only/voxel-style.md) — raw WebGL2 voxel diorama in one locally opened file.
+2. [`Ashen Coast Style — HTML Only`](html-only/ashen-coast-style.md) — authored specs and deterministic staged bake inside one file.
+3. [`Claude Flakes Style — HTML Only`](html-only/claude-flakes-style.md) — reactive heightfield and bounded surface field inside one file.
+
+Each HTML-only prompt is designed for direct chat use and demands exactly one downloadable `index.html` or one fallback `html` code block: no CLI, build, server, CDN, network request, external library, or additional asset.
 
 ## Shared Game Contract
 

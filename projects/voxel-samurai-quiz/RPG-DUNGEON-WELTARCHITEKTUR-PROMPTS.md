@@ -16,6 +16,15 @@
 2. [`Ashen Coast Style — Short`](prompts/new-games/endless-voxel-slasher/short/ashen-coast-style.md).
 3. [`Claude Flakes Style — Short`](prompts/new-games/endless-voxel-slasher/short/claude-flakes-style.md).
 
+## Single-File HTML Chat Prompts
+
+1. [`Voxel Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/voxel-style.md).
+2. [`Ashen Coast Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/ashen-coast-style.md).
+3. [`Claude Flakes Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/claude-flakes-style.md).
+
+- Output contract: one directly downloadable or fenced `index.html`, runnable through `file://`, with all CSS, JavaScript, shaders, procedural assets, and audio inline.
+- Forbidden: CLI, npm, build, server, imports, CDN, network requests, external libraries, and additional files.
+
 ## Selection in One Line
 
 - **Voxel Style:** strongest local voxel composition and direct module authorship.

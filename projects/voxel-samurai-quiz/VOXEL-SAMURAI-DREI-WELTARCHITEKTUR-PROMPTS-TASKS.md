@@ -153,3 +153,23 @@
 **Eingehalten:** neun Skills je Klasse ✅, gleiche Featuretiefe ✅, Englisch-only ✅, sechs Standalone-Prompts ✅, keine Browser-/Gameplayprüfung ✅, Dateien unter 1.600 Zeilen ✅.
 
 **Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Extreme Techniker-AoE kann Transparenz-, Licht- und Objektkosten sprengen. Fix: authored Grenzen, feste Slots, gepoolte Felder/Trümmer/Lichter, begrenzte Kettenziele und klare Degradationsreihenfolge sind Promptpflicht.
+
+### Phase 7 — Drei HTML-only-Chat-Prompts
+
+**Ziel:** Jede Weltvariante besitzt einen kompakten Chat-Prompt, dessen einzige Lieferung eine lokal öffnungsfähige `index.html` ist.
+
+- [x] Ordner `html-only/` als dritte Promptform neben `long/` und `short/` angelegt.
+- [x] Voxel-, Ashen-Coast- und Claude-Flakes-Variante als eigenständige englische Chat-Prompts erstellt.
+- [x] Ausgabe auf eine Datei, `file://`-Start und vollständig eingebettete CSS-/JavaScript-/GLSL-/Audio-Inhalte festgelegt.
+- [x] CLI, npm, Build, Server, Imports, CDN, Netzwerkzugriffe, externe Bibliotheken und Zusatzassets ausgeschlossen.
+- [x] Zwei Welten, zwei Klassen, 18 Skills, zehn Gegner, Bossrhythmus, VFX, Audio, Map-Reaktion und HUD erhalten.
+- [x] Spieleindex, Rootindex und kompatiblen Wegweiser auf neun Prompts erweitert.
+- [x] Gemeinsame Absätze, Stiltrennung, Links, Englisch, UTF-8, Dateiende und LOC statisch geprüft.
+
+**Ergebnis:** Drei direkt in Chat-Oberflächen nutzbare Kurzprompts fordern je eine vollständige `index.html`; nur Weltbau, Rendering, Lichtkopplung und Oberflächenreaktion unterscheiden sich.
+
+**Architektur passt:** `html-only/` ist eine eigene Lieferform desselben Spiels; jeder Prompt bleibt standalone, während der Spieleindex Konstanten und Auswahl besitzt.
+
+**Eingehalten:** exakt drei Varianten ✅, eine Ausgabedatei ✅, ohne CLI/Build/Server ✅, vollständiger Klassen-/Wellenvertrag ✅, keine Browser-/Gameplayprüfung ✅.
+
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Vollständiges 3D-Spiel in einer HTML-Datei erzeugt große Ausgabe und erhöht Umsetzungsdruck. Fix: Prompt erlaubt vereinfachte prozedurale Details, aber keine ausgelassenen Systeme, Fake-Buttons oder statische Scheinlösung; strukturierte Abschnitte ersetzen Minifizierung.

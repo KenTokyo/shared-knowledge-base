@@ -4,11 +4,12 @@
 
 ## New Games
 
-- [`Endless Voxel Slasher`](new-games/endless-voxel-slasher/README.md) — six standalone English game-build prompts with Swordfighter and technology-based Elemental Technician: three detailed long versions and three compact Black-Desert-benchmark short versions.
+- [`Endless Voxel Slasher`](new-games/endless-voxel-slasher/README.md) — nine standalone English game-build prompts with Swordfighter and technology-based Elemental Technician: three detailed long versions, three compact benchmark versions, and three single-file HTML chat versions.
 
 ## Structure Contract
 
 - `new-games/<game>/long/` contains complete greenfield product specifications.
 - `new-games/<game>/short/` contains compact benchmark-driven experiments for the same product.
+- `new-games/<game>/html-only/` contains chat-ready prompts that demand one locally runnable `index.html` without build tools or external files.
 - Each game folder owns one `README.md` that explains constants, style differences, and direct copy targets.
 - Prompt files contain English only when the target game is English-only.
