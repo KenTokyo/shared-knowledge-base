@@ -12,7 +12,7 @@ Architektur: `docs/aeon-engine/aeon-engine-overview.md` (SSoT). Messhandwerk:
 |---|---|
 | Asset-Lab-Landschaft gegen Kaze-Technik vollständig vergleichen | [`ASSET-LAB-KAZE-WELTTECHNIK.md`](ASSET-LAB-KAZE-WELTTECHNIK.md) |
 | Größte Asset-Lab-/Kaze-Unterschiede und Auswirkungen kompakt | [`ASSET-LAB-KAZE-WELTTECHNIK-KOMPAKT.md`](ASSET-LAB-KAZE-WELTTECHNIK-KOMPAKT.md) |
-| Endlos-Voxel-Hack-and-Slash mit zwei Weltarchitekturen prompten | [`RPG-DUNGEON-WELTARCHITEKTUR-PROMPTS.md`](RPG-DUNGEON-WELTARCHITEKTUR-PROMPTS.md) |
+| Endlos-Voxel-Hack-and-Slash mit drei Map-Stilen prompten | [`prompts/README.md`](prompts/README.md) |
 | Gras, Laub, Terrain, Dichte, Draw Calls, Framezeit | [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md) |
 | Shader-Kompilate, VFX-Layer, Render-Hüllen, `game:perf` | [`GAME-PERFORMANCE.md`](GAME-PERFORMANCE.md) |
 | AEON-Bildmaße, Layer-A/B, Sondenmetrik, Probe-vs.-Shipping | [`MEASURING.md`](MEASURING.md) |
