@@ -227,7 +227,7 @@
 - [x] Require WebGL1-compatible shaders/resources and a fresh canvas per backend attempt; preserve state when an initialized GPU context is lost.
 - [x] Rename `monster/` to `monster-html/` and update every prompt-library link and structure contract.
 - [x] Validate fallback wording, exact file contracts, links, English, UTF-8, Mojibake, final newlines, LOC, and scoped Git diff.
-- [ ] Commit and push Shared Docs; then commit and push only the parent submodule pointer.
+- [x] Commit and push Shared Docs; parent submodule pointer follows as the separate final delivery unit.
 
 **Result:** All six prompts now preserve one offline product across WebGL2, WebGL1, and live Canvas 2D; current indexes resolve through `monster-html/`.
 
