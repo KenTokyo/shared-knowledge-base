@@ -15,12 +15,6 @@
 - **Shaderterm sechsmal unter Pixelraster** — 0,13–0,25-px-Risse werden unter TAA Speckle; Breite erhöht Coverage. → Feature in Pixeln; Frequenz+Breite sweepen statt Hochpass-Sigma.
   *TAA-Überleben Risse 54 %, ~3-px-Einschlüsse 81 %; Modell 53,8 % · 2026-07-31*
 
-- **Kontakt/Frost „zu schwach“** — Kill-Delta 12–22, Kontrast nur 8: zu wenig sichtbare Höhe. → Coverage-Fenster vor Amplitude; `sun`/`shadow` auf Clip/Absaufen.
-  *Kontaktfenster 0,42/0,16→0,62/0,40: max Delta 23; Frost 33, Matrix ohne Clipping · 2026-07-31*
-
-- **Mehr Peak-Licht flacht Peak** — breites Licht +52 % p99, −11 % Struktur; weitere +75 % nur Delta 26 in Tonemap-Schulter. → Peak am Subjekt emittieren/geometrisch formen; Staubring später.
-  *`FLASH_ICE=14`: 4,4 % statt Wash; Struktur 4,04→3,99 %, Clipping 0 · 2026-07-31*
-
 - **Sekundäreffekt feuert beim Anlegen** — Schnee/`frost.grow` 0,11–0,60 s vor Prisma. → Emission/Audio an individuelle Growth-Uhr statt `_plant`.
   *Population t1,0: 814→265; bei lesbarem Eis t1,6: 246→649, ohne neues Korn · 2026-07-31*
 
@@ -35,9 +29,6 @@
 
 - **Dimensionslose Grenze gegen Meter-Scatter** — 0,167 Höhe = 0,46 m bei 2,73 m; Scatter 0,30 m. → CPU/GPU gleiche Einheit; Seed×Höhen-Population.
   *Clamp 0,28 m: 0/65.536 über Eis, 27,7 % Kappen unverändert · 2026-07-30*
-
-- **Lichtkanal ohne Lücke, harter Cut** — Afterglow überbrückt Präsenz; Peak-Prozent beschuldigt Ribbon. → Größten absoluten Framefall bei 60/120 fps; Fade halbiert, Branch-Cut gleich.
-  *Legitim 0,50–0,60; echter Cut 0,987; Schwelle 0,75 · 2026-07-31*
 
 - **WGSL/JS-Doppelkonstante driftet lautlos zu Rauschen** — WGSL kann nicht importieren, also steht die Layoutzahl beidseitig als Literal; driftet sie, adressiert der Indexbuffer verschobene Vertexgruppen. Kein Wurf, keine Konsolenzeile, `npm run build` und `node --check` blind — sichtbar nur im Bild, in einem Projekt mit 1–2 erlaubten Sichtprüfungen. → Explizite Paarungstabelle in `tools/const-parity.mjs`, verdrahtet als Vite-Plugin (`buildStart`) in `vite.config.js`; deckt `dev`, `build` und jedes Capture-Werkzeug ab, weil alle über `serve.mjs` dieselbe Config hochziehen. Fehlender Name, doppelter Name und Nicht-Literal sind Fehler, nie Skip. Blanke Kehrwerte (`* 0.25`) vorher benennen — ungenannt nicht prüfbar.
   *Namens-Sweep verworfen: 4 Kollisionen, nur 2 echte Paare — `REACH` 0.82 (Shafts) vs. 1.9 m (Wights), `SINK` 3.7 m vs. 0.9 s. Alle drei Fehlermodi absichtlich gebaut: Skript und Build je Exit 1 · 2026-08-03*
