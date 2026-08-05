@@ -93,6 +93,18 @@ Arbeitsloop je Phase:
 6. Direkt zur nächsten offenen Phase.
 7. Nach letzter Phase Userauftrag + alle Akzeptanzkriterien vollständig gegenlesen.
 
+### Sub-Agents — sparsam, groß geschnitten, kollisionsfrei
+
+Sub-Agents sind kein Standard. Kleine, sequenzielle oder eng gekoppelte Arbeit direkt im Hauptagenten lösen. Nur delegieren, wenn größere fachliche Arbeitskategorien wirklich unabhängig parallel bearbeitbar sind und Nutzen den Koordinationsaufwand klar übersteigt.
+
+- Nach großen fachlichen Grenzen teilen, nicht nach ähnlichen Mikroaufgaben. Geeignet: getrennte Module, unabhängige Recherchefelder, breite Inventuren mit klar getrennten Bereichen. Ungeeignet: mehrere Agents an derselben Komponente, denselben Dateien, benachbarter Logik oder demselben Planabschnitt.
+- Vor Delegation exklusiven Besitz festlegen: Scope, Dateien/Pfade, Zustände und Task-IDs dürfen sich nicht überschneiden. Lässt sich Schreibkollision nicht sicher ausschließen → einen Owner wählen oder Arbeit sequenziell mit Übergabe ausführen.
+- Ähnliche Aufgaben nicht parallel verteilen, wenn sie dieselben Dateien oder voneinander abhängigen Code berühren könnten. Read-only-Erkundung nur parallelisieren, wenn Fragen klar verschieden und Ergebnisse getrennt zuordenbar sind.
+- Kleinste ausreichende Agentenzahl wählen: ein Sub-Agent statt mehrere; kein Sub-Agent für wenige Toolaufrufe, einzelne Datei, einfache Suche, kleine Prüfung oder leicht direkt lösbare Änderung.
+- Delegationsprompt nennt präzise: Ziel, In-Scope, Out-of-Scope, exklusive Pfade/Owner, Abhängigkeiten, erwartetes Ergebnis und Stoppgrenze. Keine Nebenbereinigung außerhalb des zugewiesenen Besitzes.
+- Unabhängige Sub-Agents gemeinsam starten. Hauptagent wiederholt oder re-deriviert delegierte Arbeit nicht, sondern führt Ergebnisse zentral zusammen, prüft Schnittstellen und löst verbleibende Konflikte.
+- Keine zusätzlichen Review-/Verifikations-Sub-Agents, wenn Hauptagent und kanonische Gates dieselbe Sicherheit günstiger liefern.
+
 3D-Verbesserungsachsen: [3–5-Verbesserungen-Deckel](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md) → Achse schließen, nächste relevante Dimension bearbeiten. Audit zählt nicht als weitere Verbesserung.
 
 ## 5. Umsetzung und Architektur
