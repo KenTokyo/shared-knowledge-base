@@ -16,6 +16,20 @@
 2. [`Ashen Coast Style — Short`](prompts/new-games/endless-voxel-slasher/short/ashen-coast-style.md).
 3. [`Claude Flakes Style — Short`](prompts/new-games/endless-voxel-slasher/short/claude-flakes-style.md).
 
+## Orchestrated Long Prompts
+
+1. [`Voxel Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/voxel-style.md).
+2. [`Ashen Coast Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/ashen-coast-style.md).
+3. [`Claude Flakes Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/claude-flakes-style.md).
+
+## Orchestrated Short Prompts
+
+1. [`Voxel Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/voxel-style.md).
+2. [`Ashen Coast Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/ashen-coast-style.md).
+3. [`Claude Flakes Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/claude-flakes-style.md).
+
+- Orchestrated prompts explicitly authorize disjoint subagent tracks, final integrated visual review, and a blind execution-quality comparison against lawful Call of Duty references without copying proprietary content.
+
 ## Single-File HTML Chat Prompts
 
 1. [`Voxel Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/voxel-style.md).

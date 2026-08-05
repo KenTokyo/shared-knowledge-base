@@ -10,6 +10,7 @@
 - Aktuelle Erweiterung: alle kopierbaren Prompts und Spieltexte auf Englisch; Stilname `Claude Flakes` statt `Cloud Flakes`.
 - Je Stil eine Long- und Short-Fassung unter einer klaren New-Game-Ordnerstruktur.
 - Jump, separater Dodge, Dash-Skill, Luftskill und hochwertiges Slash-VFX-Layering sind Pflicht.
+- Aktuelle Erweiterung: je Stil zusätzliche Long-/Short-Subagent-Fassung mit Three.js-Blindvergleich und hartem Qualitätsloop.
 
 ## Lösungswahl
 
@@ -173,3 +174,23 @@
 **Eingehalten:** exakt drei Varianten ✅, eine Ausgabedatei ✅, ohne CLI/Build/Server ✅, vollständiger Klassen-/Wellenvertrag ✅, keine Browser-/Gameplayprüfung ✅.
 
 **Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Vollständiges 3D-Spiel in einer HTML-Datei erzeugt große Ausgabe und erhöht Umsetzungsdruck. Fix: Prompt erlaubt vereinfachte prozedurale Details, aber keine ausgelassenen Systeme, Fake-Buttons oder statische Scheinlösung; strukturierte Abschnitte ersetzen Minifizierung.
+
+### Phase 8 — Orchestrierte Long-/Short-Prompts mit Blindvergleich
+
+**Ziel:** Drei Long- und drei Short-Kopien erlauben ausdrücklich Subagenten, Three.js-Sichtprüfung, harte Kritik und einen echten blinden Qualitätsvergleich.
+
+- [x] Ordner `long-subagent/` und `short-subagent/` neben den bisherigen Lieferformen angelegt.
+- [x] Sechs bestehende Standalone-Prompts verlustfrei übernommen; nur Titel und Ausführungsprofil unterscheiden.
+- [x] Disjunkte Subagent-Tracks, zentralen Integrationsowner und prüfbare Rückgaben festgelegt.
+- [x] Gewünschten Call-of-Duty-Qualitätsloop als letzten Promptteil wortgleich in alle sechs Dateien gesetzt.
+- [x] Spieleindex, Rootindex und kompatiblen Wegweiser auf 15 Promptvarianten aktualisiert.
+- [x] Inhalt, Parität, Schlussposition, Links, Englisch, UTF-8, Mojibake, Dateiende und LOC statisch geprüft.
+- [ ] Shared-Docs committen/pushen; danach ausschließlich Elternrepo-Submodule-Pointer committen/pushen.
+
+**Ergebnis:** Sechs kopierbare Subagent-Prompts behalten den vollständigen Spielvertrag und erlauben ausdrücklich orchestrierte Umsetzung, Sichtprüfung und Blindvergleich; Git-Lieferung folgt.
+
+**Architektur passt:** Bestehende Prompts bleiben unveränderte lineare Baseline; neue Ordner kennzeichnen das abweichende orchestrierte Ausführungsprofil eindeutig.
+
+**Eingehalten:** Nutzer-Opt-in für Subagents und Sichtvergleich dokumentiert ✅, bestehende Promptformen bleiben unangetastet ✅, keine Runtime- oder Codeänderung ✅.
+
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Begeisterung eines Subagenten ist kein Qualitätsbeleg. Fix-Pfad: Prompt verlangt echte Side-by-Side-Evidenz, Blindurteil, konkrete Defizite, zentral integrierte Korrekturen und ehrliche Kennzeichnung jedes nicht ausführbaren manuellen Gates.

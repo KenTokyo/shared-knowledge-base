@@ -1,9 +1,9 @@
 # Endless Voxel Slasher — English New-Game Prompts
 
-**Use when:** The same complete browser action RPG should be built or compared through three distinct map architectures, including single-file HTML experiments for chat interfaces.
+**Use when:** The same complete browser action RPG should be built or compared through three distinct map architectures, with linear, orchestrated, or single-file HTML execution profiles.
 **Constant:** English-only game copy, two worlds, Swordfighter plus Elemental Technician, full-body animation, jump, separate dodge, class Q dash, aerial skill branch, nine skills per class, premium layered sword/elemental VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Verification boundary:** Do not start automated browser, screenshot, gameplay, or FPS verification without an explicit current user request.
+**Verification boundary:** Baseline and HTML-only prompts do not authorize automated visual checks; `long-subagent/` and `short-subagent/` explicitly authorize final-product browser, gameplay, screenshot, performance, and blind reference review.
 
 ## Long Prompts — Complete Product Specifications
 
@@ -16,6 +16,20 @@
 1. [`Voxel Style — Short`](short/voxel-style.md) — compact handcrafted voxel-diorama request.
 2. [`Ashen Coast Style — Short`](short/ashen-coast-style.md) — compact local AEON-spec/bake request.
 3. [`Claude Flakes Style — Short`](short/claude-flakes-style.md) — compact reactive heightfield/clipmap request.
+
+## Long Subagent Prompts — Orchestrated Product Specifications
+
+1. [`Voxel Style — Long Subagent`](long-subagent/voxel-style.md) — complete authored voxel specification plus disjoint build tracks and harsh visual review.
+2. [`Ashen Coast Style — Long Subagent`](long-subagent/ashen-coast-style.md) — complete local AEON specification plus disjoint build tracks and harsh visual review.
+3. [`Claude Flakes Style — Long Subagent`](long-subagent/claude-flakes-style.md) — complete reactive heightfield specification plus disjoint build tracks and harsh visual review.
+
+## Short Subagent Prompts — Orchestrated Benchmark Requests
+
+1. [`Voxel Style — Short Subagent`](short-subagent/voxel-style.md) — compact voxel request with orchestrated Three.js quality loop.
+2. [`Ashen Coast Style — Short Subagent`](short-subagent/ashen-coast-style.md) — compact local AEON request with orchestrated Three.js quality loop.
+3. [`Claude Flakes Style — Short Subagent`](short-subagent/claude-flakes-style.md) — compact reactive heightfield request with orchestrated Three.js quality loop.
+
+Each subagent prompt keeps one integration owner for coupled decisions, delegates disjoint implementation tracks, and ends with the requested Call-of-Duty-quality blind-comparison loop. Call of Duty is an execution-quality reference only; proprietary content must not be copied, and unavailable comparisons must remain an honest manual gate.
 
 ## HTML-Only Chat Prompts — One `index.html`
 
