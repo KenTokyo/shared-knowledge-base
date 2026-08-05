@@ -39,6 +39,7 @@ Nicht automatisch zustimmen. Behauptung, Diagnose, Annahme oder Plan bleibt unge
 - **Intent ableiten:** Speech-to-Text-Fehler und grobe Beschreibungen mitdenken; Beispiele/Referenzen stärker gewichten als einzelne wahrscheinlich verfälschte Wörter.
 - **Verstehen statt umdeuten:** Lösung A verbessern, nicht still zu B wechseln. Vor Umsetzung fragen: „Löst dieser Schritt das genannte Problem?“
 - **Spezifikation = Boden, nicht Decke:** Explizite Maße, Superlative, Eigenschaften bleiben harte Grenzen; Qualität darüber aufbauen, nicht gegen andere Stärken tauschen.
+- **Übernehmen/Kopieren = Zielparität:** Gefordertes System in Funktion, Verhalten, Datenfluss und Qualität vollständig übertragen. Zielarchitektur ist kein Kürzungsgrund; fehlende Voraussetzungen umbauen oder ersetzen, verdrängten Altpfad entfernen.
 - **Qualität vor Änderungsgröße:** Kleiner Fix nur, wenn er Problem vollständig und sauber löst; sonst größeren Umbau planen und umsetzen. Wenige geänderte Zeilen sind kein Ziel.
 - **Bestand = Ausgangspunkt:** Viele Apps stammen großteils von Junior-Entwicklern. Code kann schwache/falsche Grundlage sein → erst prüfen, dann Grundlage reparieren oder passend umbauen.
 - **Wirkungsumfeld prüfen:** Bei sichtbarer/verhaltensrelevanter Änderung vollständigen Ausgabepfad kontrollieren → globale Settings, Theme/CSS, Shader/Tone-Mapping, Material-Overrides, Feature-Flags, Cache, Normalisierung, Fallbacks, Persistenz.
@@ -56,6 +57,7 @@ Nicht automatisch zustimmen. Behauptung, Diagnose, Annahme oder Plan bleibt unge
 Fund im bearbeiteten Scope → nächster Arbeitsschritt:
 
 - sichtbaren Fehler, TypeScript-Fehler, tote Referenz, beschädigte Doku, falsche Rechnung oder eigene Regression direkt beheben → danach als erledigt nennen;
+- qualitätsschädlichen Altcode im betroffenen Lieferpfad eigenständig entfernen oder ersetzen; dafür nötige gekoppelte Architekturänderungen einschließen, nicht zur Freigabe zurückgeben;
 - wegen selbst lösbarem Problem nicht stoppen;
 - fremde offene Änderungen weder revertieren noch überschreiben;
 - blockiert fremder Fehler eigenen Lieferpfad → minimal/additiv reparieren, als fremden Blocker dokumentieren, weiterarbeiten;
@@ -101,6 +103,7 @@ Gilt für gesamte App: Architektur, Code, Daten, Server, Werkzeuge, UI, Gameplay
 - Bestehendes System nur nutzen, wenn Grundlage zum Ziel passt; ungeeignete/kaputte Grundlage zuerst reparieren oder umbauen, Fehler/Altlasten nicht ausbauen.
 - Erst Struktur, Verantwortung, Datenfluss, vollständigen Hauptweg → danach Werte, Optik, Feinschliff.
 - **Lösung darf groß sein:** Kleine Lücke → kleiner Fix; schwache Grundlage/viele verbundene Probleme → größerer zusammenhängender Umbau. Nötige Qualität bestimmt Änderungsgröße.
+- **Fehlschlag = Ursachenebene wechseln:** Parameter nur ändern, wenn die belegte Ursache dort liegt; sonst Struktur, Architektur oder Ansatz deutlich ändern oder ersetzen.
 - Keine versteckten harten Grenzen oder Qualitätsverluste als „Performance-Fix“.
 
 Bleibt gleiche Sache wiederholt falsch, widersprüchlich oder instabil:
@@ -282,6 +285,7 @@ Generative Bau-Prompts:
 - **Learning-Stil:** Tippinhalt ausschließlich als kompakte Markdown-Stichpunkte; je Punkt eine klare Information, keine Fließtextabsätze.
 - **Pflicht im Learning-Kopf:** Zwei kurze Sätze nennen sinngleich „Nur kompakte Stichpunkte; je Punkt eine klare Information.“ und „Füllwörter, Einleitungen, Wiederholungen, unnötige Artikel streichen; Fehlerbild, Ursache, Handlung, Beleg erhalten.“
 - Maximale Informationsdichte: Fehlerbild, Ursache, Handlung, Beleg erhalten; Füllwörter, Einleitungen, Wiederholungen, Synonymketten streichen.
+- Neue Regeln aus Ziel, Begründung und Beispielen auf kleinsten allgemeingültigen Regelsatz verdichten; Beispiele nur behalten, wenn sie eine zusätzliche Entscheidung oder Grenze tragen.
 
 Übergabe = Startbefehl, kein Arbeitsbericht:
 
