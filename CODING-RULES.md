@@ -279,6 +279,8 @@ Generative Bau-Prompts:
 - Technische Tipps bleiben freiwillig/widerlegbar; gemessen bessere Lösung gewinnt.
 - Nur ein Learning lesen, das vor konkreter Arbeit hilft.
 - Belegt teure Erfahrung nach `LEARNING-SYSTEM.md` als kurzen Projekttipp zurückgeben; Duplikate vermeiden.
+- **Learning-Stil:** Tippinhalt ausschließlich als kompakte Markdown-Stichpunkte; je Punkt eine klare Information, keine Fließtextabsätze.
+- **Pflicht im Learning-Kopf:** Zwei kurze Sätze nennen sinngleich „Nur kompakte Stichpunkte; je Punkt eine klare Information.“ und „Füllwörter, Einleitungen, Wiederholungen, unnötige Artikel streichen; Fehlerbild, Ursache, Handlung, Beleg erhalten.“
 - Maximale Informationsdichte: Fehlerbild, Ursache, Handlung, Beleg erhalten; Füllwörter, Einleitungen, Wiederholungen, Synonymketten streichen.
 
 Übergabe = Startbefehl, kein Arbeitsbericht:
