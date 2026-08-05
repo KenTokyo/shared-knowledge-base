@@ -1,17 +1,23 @@
-# Endlos-Voxel-Hack-and-Slash — drei getrennte Weltarchitektur-Prompts
+# Endless Voxel Slasher — Categorized Game-Prompt Guide
 
-**Status:** Frühere Doppeldatei abgelöst; aktuelle Prompts liegen einzeln und vollständig kopierbar im Ordner [`prompts/`](prompts/README.md).
-**Konstante:** Spiel, Charakter, Kampf, Skills, VFX, Audio, Gegner, Wellen, Spawn, Lichtrollen und UI bleiben gleich.
-**Vergleichsbereich:** Nur Map-Aufbau, Map-Rendering, Map-Lichtkopplung und sichtbare Skillrückstände unterscheiden sich.
+**Status:** Legacy entry point retained for compatibility; current English prompts are grouped by game and length under [`prompts/new-games/endless-voxel-slasher/`](prompts/new-games/endless-voxel-slasher/README.md).
+**Constant:** Game, English-only copy, character, jump/dodge/dash, aerial skill, combat, slash VFX, audio, enemies, waves, spawn, lighting roles, and UI remain identical across map styles.
+**Only comparison area:** Map construction, map rendering, map-light coupling, and visible skill residues.
 
-## Aktuelle Prompts
+## Complete Long Prompts
 
-1. [`Voxel Style`](prompts/voxel-style.md) — eigenständige authored Voxel-Welten mit begrenzten Reaktionschunks.
-2. [`Ashen Coast Style`](prompts/ashen-coast-style.md) — lokale V73-AEON-Bauweise mit authored Spec, gestuftem Bake und `InteractionField`.
-3. [`Cloud Flakes Style`](prompts/cloud-flakes-style.md) — reaktives Heightfield-/Clipmap-Terrain mit gebundenem Oberflächenzustand.
+1. [`Voxel Style`](prompts/new-games/endless-voxel-slasher/long/voxel-style.md) — independent authored voxel worlds with bounded reaction chunks.
+2. [`Ashen Coast Style`](prompts/new-games/endless-voxel-slasher/long/ashen-coast-style.md) — local V73 AEON construction with authored specs, staged bake, and `InteractionField`.
+3. [`Claude Flakes Style`](prompts/new-games/endless-voxel-slasher/long/claude-flakes-style.md) — reactive heightfield/clipmap terrain with bounded surface state.
 
-## Auswahl in einem Satz
+## Compact Short Prompts
 
-- **Voxel Style:** stärkste lokale Voxel-Komposition und direkte Modulautorenschaft.
-- **Ashen Coast Style:** stärkste lokale AEON-Weltwahrheit mit authored Geografie, abgeleitetem Wasser und gemeinsamem Bake-/Runtime-Pfad.
-- **Cloud Flakes Style:** stärkste kontinuierliche Bodenreaktion, Skillnarben und reliefbetonte Lichtkopplung.
+1. [`Voxel Style — Short`](prompts/new-games/endless-voxel-slasher/short/voxel-style.md).
+2. [`Ashen Coast Style — Short`](prompts/new-games/endless-voxel-slasher/short/ashen-coast-style.md).
+3. [`Claude Flakes Style — Short`](prompts/new-games/endless-voxel-slasher/short/claude-flakes-style.md).
+
+## Selection in One Line
+
+- **Voxel Style:** strongest local voxel composition and direct module authorship.
+- **Ashen Coast Style:** strongest local AEON world truth through authored geography, derived water, and one bake/runtime path.
+- **Claude Flakes Style:** strongest continuous ground response, skill scars, and relief-driven light coupling.

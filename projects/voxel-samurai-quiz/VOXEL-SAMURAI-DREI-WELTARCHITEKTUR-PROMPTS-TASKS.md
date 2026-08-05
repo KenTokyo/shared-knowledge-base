@@ -4,9 +4,12 @@
 
 - Drei einzeln kopierbare Prompts für dasselbe Endlos-Voxel-Hack-and-Slash liefern.
 - Nur Map-Aufbau, Map-Rendering, Lichtkopplung und Skill-Reaktion der Map unterscheiden.
-- Varianten heißen `Voxel Style`, `Ashen Coast Style` und `Cloud Flakes Style`.
+- Varianten heißen `Voxel Style`, `Ashen Coast Style` und `Claude Flakes Style`.
 - Ashen-Coast-Variante übernimmt lokale AEON-/V73-Prinzipien für authored Specs, Bake, Runtime, Wasser und Licht.
-- Cloud-Flakes-Variante übernimmt belegte stackneutrale Prinzipien für Terrain, Deformation, Rückstände und Licht.
+- Claude-Flakes-Variante übernimmt belegte stackneutrale Prinzipien für Terrain, Deformation, Rückstände und Licht.
+- Aktuelle Erweiterung: alle kopierbaren Prompts und Spieltexte auf Englisch; Stilname `Claude Flakes` statt `Cloud Flakes`.
+- Je Stil eine Long- und Short-Fassung unter einer klaren New-Game-Ordnerstruktur.
+- Jump, separater Dodge, Dash-Skill, Luftskill und hochwertiges Slash-VFX-Layering sind Pflicht.
 
 ## Lösungswahl
 
@@ -104,3 +107,30 @@
 **Eingehalten:** lokale V73-/AEON-Owner belegt ✅, V73 unverändert ✅, aktiver Prompt und Links vollständig umbenannt ✅, drei Standalone-Prompts erhalten ✅, keine Browser-/Gameplayprüfung ✅.
 
 **Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 V73 ist größer und höher aufgelöst als die Zielwelten; Zahlen wurden deshalb nicht kopiert. Der Prompt fordert separate, bedarfsgeleitete Feldauflösungen und LOD nur bei belegtem Nutzen. Skillrückstände bleiben als begrenztes Runtime-Overlay vom unveränderlichen Bake getrennt.
+
+### Phase 5 — Englische Long-/Short-Prompts unter New-Game-Kategorie
+
+**Ziel:** Sechs eindeutig kategorisierte, englische Standalone-Prompts enthalten vollständigen Spielvertrag oder bewusste Kurzfassung.
+
+- [x] Ordner `prompts/new-games/endless-voxel-slasher/{long,short}/` angelegt und Altdateien migriert.
+- [x] Drei Long-Prompts vollständig ins Englische übertragen; Nicht-Map-Vertrag wortgleich gehalten.
+- [x] `Cloud Flakes` vollständig in `Claude Flakes` umbenannt.
+- [x] Englisch-only-UI, Jump, Dodge, Dash, Luftskill und Slash-VFX-Research/-Layering ergänzt.
+- [x] Drei Black-Desert-inspirierte Short-Prompts erstellt.
+- [x] Rootindex, Spieleindex und Wegweiser auf neue Kategorie aktualisiert.
+- [x] Struktur, Links, Sprachreinheit, Inhaltsparität, UTF-8, Dateiende und LOC geprüft; Submodul und Eltern-Pointer liefern.
+
+**Ergebnis:** Kategorie `new-games/endless-voxel-slasher` führt zu drei englischen Long- und drei englischen Short-Prompts mit identischem Spielvertrag und klar getrennten Map-Stilen.
+
+**Referenzen:**
+- `shared-docs/projects/voxel-samurai-quiz/prompts/new-games/endless-voxel-slasher/`
+- `shared-docs/projects/voxel-samurai-quiz/prompts/README.md`
+- `shared-docs/projects/voxel-samurai-quiz/RPG-DUNGEON-WELTARCHITEKTUR-PROMPTS.md`
+
+### Phase 5
+
+**Eingehalten:** sechs Standalone-Prompts ✅, 15 gemeinsame Long-Abschnitte wortgleich ✅, Englisch-only-Vertrag ✅, Jump + separater Dodge + Q-Dash + Luftskill ✅, VFX-Research und 11+ kausale Layerrollen ✅, keine Browser-/Gameplayprüfung ✅, alle Dateien unter 1.600 Zeilen ✅.
+
+**Architektur passt:** Promptbibliothek kategorisiert erst nach `new-games`, dann nach konkretem Spiel, anschließend nach `long`/`short`; jedes Spielset besitzt einen eigenen Index als SSoT.
+
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** Keine offenen Funde. Black Desert bleibt ausdrücklich Qualitätsbenchmark ohne Asset-/Inhaltskopie; sichtbares Kampfgefühl und gemessene 60 FPS bleiben ehrliche manuelle Gates.
