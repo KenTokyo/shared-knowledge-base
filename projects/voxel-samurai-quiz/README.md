@@ -10,6 +10,7 @@ Architektur: `docs/aeon-engine/aeon-engine-overview.md` (SSoT). Messhandwerk:
 
 | Arbeit | Zuerst lesen |
 |---|---|
+| Asset-Lab-Landschaft gegen Kaze-Technik vergleichen | [`ASSET-LAB-KAZE-WELTTECHNIK.md`](ASSET-LAB-KAZE-WELTTECHNIK.md) |
 | Gras, Laub, Terrain, Dichte, Draw Calls, Framezeit | [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md) |
 | Shader-Kompilate, VFX-Layer, Render-Hüllen, `game:perf` | [`GAME-PERFORMANCE.md`](GAME-PERFORMANCE.md) |
 | AEON-Bildmaße, Layer-A/B, Sondenmetrik, Probe-vs.-Shipping | [`MEASURING.md`](MEASURING.md) |
