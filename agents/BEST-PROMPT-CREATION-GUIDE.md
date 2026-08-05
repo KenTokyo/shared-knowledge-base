@@ -246,4 +246,13 @@ Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249510257-2fgbc
 Bild 3: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249557816-6gqqx3dx.png
 
 
-Always try creating something similar like this prompt above
+- Always try creating something similar like this prompt above
+
+- Sollte dir noch gesagt werden, dass du bilder generieren oder suchen sollst, darfst du das tun und in den prompt mit reinschreiben
+
+- Gebe es als eine Datei aus bzw. den Pfad zur datei in /notes
+mit endung Thema[]-prompt, gebe dem user nur den Pfad der Datei am Ende deiner nachricht aus
+
+- Wichtig: Bilder müssen dir mitgegeben werden ansonsten muss du selbst welche suchen mittels WebFetch, WebSearch oder erstellen, ohne Bilder nicht anfangen, es sei denn es wird dir vorher gesagt du sollst das ohne Bilder versuchen
+
+- Keine Coding-Regeln mitgeben. Das ist, das bekommt der ja außen mit. Nur WIRKLICH stark an dem Template orientieren, keine mandatory rules oder so extra, die nicht aus dem Template stammen
