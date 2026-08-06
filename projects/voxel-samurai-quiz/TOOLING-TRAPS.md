@@ -1,6 +1,6 @@
 # Werkzeugfallen — voxel-samurai-quiz (AEON)
 
-**Lesen wenn:** Welt-CLI, Sonde, `.mjs`/Shader, SSoT-Tabelle oder Commit.
+**Lesen wenn:** Welt-CLI, Sonde, `.mjs`/Shader, SSoT-Tabelle, Komponentensplit oder Commit.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Jeder Tipp kostete mindestens einen Durchgang.
@@ -34,6 +34,12 @@ Jeder Tipp kostete mindestens einen Durchgang.
 
 - **Shader-Gate grün, Treiber bricht trotzdem ab** — das Asset-Lab-Gate prüfte nur Deklarationen, Attribute, Klammern, Uniformwerte und Farbpfad; Swizzle außerhalb der Komponentenzahl und reservierte Wörter fielen durch. → `pnpm asset-lab:shader-gate --entry=<slug>/<target>` deckt beide seit 2026-08-05 mit ab (`scripts/asset-lab/assetLabGlslIdentifierChecks.mts`); der repoweite `pnpm vfx:shader-reserved-lint` zählt Benchmark-Ordner nur unter `--strict` und schweigt im eigenen Ordner sonst.
   *2 Compile-Fehler in 17 Surfaces trotz grünem Gate, grünem Guard und grünem Typecheck · 2026-08-05*
+
+- **Gate meldet Code als fehlend, der dasteht** — eigener Regex-Kommentar-Stripper (`/\/\*[\s\S]*?\*\//` + `/\/\/[^\n]*/`) kennt keinen Kontext; `/*` in einem Glob-Pfad, `//` in einem String oder `*/` in einer Regex frisst echten Code bis zum nächsten Blockende. → Nie neu schreiben, `stripSourceComments` aus `scripts/gate-kit/stripSourceComments.mts` importieren (Zustandsstapel für String, Template, Regex, Kommentar).
+  *24 Kopien in 23 Gate-Skripten; Sonde über 8409 Dateien: 144 Dateien, wo die alte Fassung Code fraß, davor zwei Durchgänge auf falscher Fährte · 2026-08-06*
+
+- **Gate wird rot nach fremdem Komponentensplit** — Gates lesen Quelldateien per hartkodiertem Pfadstring; ein Split verschiebt den Besitzer, der Pfad zeigt ins Leere und der Guard meldet „nicht lesbar" statt der echten Ursache. → Beim Verschieben einer gelesenen Datei `scripts/**` nach dem alten Pfad greppen und im selben Schnitt umstellen; Gates ohne Leerlauf-Guard messen sonst still gegen `NaN`.
+  *`AppCanvas.tsx`-Split traf `_meguri-height-gate` (41 ok/3 FAIL) und `_aonagi-layout-gate`; beide grün nach Pfadfix · 2026-08-06*
 
 - **`CameraRig.js`-Grep verfälscht Kommentarzeichen** — Ausgabe stellt `//` als `\` dar. → Aussagen per direktem Read prüfen.
   *Grep und Read unterschieden sich an Kommentarzeichen · 2026-08-01*
