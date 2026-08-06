@@ -2,6 +2,7 @@
 
 **Lesen wenn:** Frametime, GPU-Zeit, Submissionszeit, Quantil oder Rauschboden aus laufendem Spiel.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
+**Form:** Nur kompakte Stichpunkte; je Punkt eine klare Information. Füllwörter, Einleitungen, Wiederholungen, unnötige Artikel streichen; Fehlerbild, Ursache, Handlung, Beleg erhalten.
 
 Harness: [`HARNESS-GATES.md`](HARNESS-GATES.md) · Kennzahlen: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md).
 Ausführbarer Owner: `tools/perf.mjs` samt Begründung im Dateikopf.
@@ -32,6 +33,12 @@ Ausführbarer Owner: `tools/perf.mjs` samt Begründung im Dateikopf.
 
 - **Ein Presetregler, der linear ohne Schwelle kostet, ist meist Ballast statt falscher Wert** — ein Sweep, der je Stufe denselben Betrag kostet, sagt „jede Einheit rechnet mit", nicht „die Zahl ist zu hoch". → Zählen, wie viele Einheiten sich tatsächlich anmelden; die Differenz nach dem letzten Anmelder und **vor** dem ersten kompilierten Material kürzen, danach das Budget versiegeln. Später gekürzt kostet dieselbe Ersparnis eine Neukompilierung im Ladebildschirm oder mitten im Spiel.
   *`pointLightSlots` auf `ultra`: Sweep 24→32 linear ≈0,6 ms je Slot, Ablation 32→24 = 4,93 ms bei 0,34 ms Rauschboden; nur 26 von 32 Slots wurden je vergeben, sechs Ballastlichter mit Intensität 0 kosteten 4,11 ms/Frame (18,42 → 14,31 ms), Dreiecke und Draw Calls unverändert · 2026-08-04*
+
+- **Sind mehr Varianten langsamer als der Basislauf, ist der Basislauf der Ausreisser** — die übliche Ablationsform misst die Basis **einmal am Anfang** und danach N Varianten; die Maschine driftet aber über den Lauf, also trägt die Basis einen anderen Zustand als jede Variante. Das Ergebnis liest sich als Tabelle mit N negativen Ersparnissen und sieht dabei wie ein Befund aus. → Ein-Blick-Falsifikation **vor** der Auswertung: Varianten zählen, die langsamer sind als die Basis. Sind es die meisten, ist keine Zeile eine Ersparnis, und der Rauschboden ist die **Breite der Variantenwolke**, nicht die Blockwiederholung. Danach verschränken wie im Tipp darunter oder die Basis mehrfach einstreuen.
+  *`perf --ablate --quality=high`, V74: Basis 16,65 ms, dann 18 von 18 aufgelösten Reglern zwischen **17,83 und 18,60** — Wolke 0,77 ms breit, Basis 1,18 ms darunter, deckungsgleich mit der Vormessung 18,47. Nur `renderScale` 13,97 lag mit 3,86 ms ausserhalb; `aoScale` 16,59 trug exakt die Signatur der Basis und war damit ebenso unbelegt · 2026-08-06*
+
+- **Ein Rauschboden, der erst am Ende gedruckt wird, existiert bei Abbruch nicht** — `--ablate` rechnet ihn aus allen Läufen und druckt ihn nach dem letzten; stirbt der Prozess bei 20 von 23, sind die 20 Zeilen da und die Zahl, die sie interpretierbar macht, fehlt. → Jede Zeile ihre eigene Wiederholung mitdrucken lassen, nicht nur die Endsumme; ein Langlauf-Messwerkzeug muss nach jedem Schritt auswertbar sein.
+  *20 von 23 Läufen (~19 min) überlebten, die Selbstprobe „alle zusammen trifft `medium`" nicht — ohne sie bleibt jede Zeile eine Teilerklärung · 2026-08-06*
 
 - **Eine Änderung unter 31 % ist nur verschränkt messbar** — Vorher/Nachher über zwei `perf`-Läufe kann eine Schicht, die 0,1 % kostet, nicht sehen; sie verschwindet im Prozessboden. → Alle Konfigurationen in EINEM Prozess, VERSCHRÄNKT und mehrfach (A B C A B C …), Median je Konfiguration, Streuung als mittlere Hälfte statt voller Spanne — Fremdlast schlägt nach oben aus, nie nach unten, und ein einziger Ausreisser beschreibt sonst nur sich selbst.
   *Schattenwurf je Art: verschränkt trennten sich 0,008 und 0,152 ms gegen einen Boden von 0,032 ms; unverschränkt lag derselbe Block einmal bei 11,75 statt 6,3 ms und riss die Spanne auf 5,4 ms · 2026-08-02*

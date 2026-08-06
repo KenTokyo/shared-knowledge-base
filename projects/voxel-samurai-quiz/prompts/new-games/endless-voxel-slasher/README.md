@@ -3,13 +3,14 @@
 **Use when:** The same browser action RPG or its creature direction should be built or compared through three distinct styles, with linear, orchestrated, single-file game, or single-file monster-showcase profiles.
 **Constant:** English-only game copy, two worlds, Swordfighter plus Elemental Technician, full-body animation, jump, separate dodge, class Q dash, aerial skill branch, nine skills per class, premium layered sword/elemental VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Verification boundary:** Baseline, HTML-only, and monster prompts do not authorize automated visual checks; `long-subagent/` and `short-subagent/` explicitly authorize final-product browser, gameplay, screenshot, performance, and blind reference review.
+**Verification boundary:** Baseline, HTML-only, and monster prompts do not authorize automated visual checks. `long-subagent/` and `short-subagent/` authorize one bounded final-product browser, gameplay, screenshot, and performance review; another review requires a material change or a new concrete question.
+**Technology guide:** [`Three-style comparison and short glossary`](WORLD-TECHNOLOGY-GLOSSARY.md) explains the portable map approaches without source-project or code-layout dependencies.
 
 ## Long Prompts — Complete Product Specifications
 
-1. [`Voxel Style`](long/voxel-style.md) — authored voxel modules, independent local world builders, batched surfaces, and bounded reaction chunks.
-2. [`Ashen Coast Style`](long/ashen-coast-style.md) — local V73 AEON principles: authored WorldSpec, staged bake, derived water, shared runtime fields, and InteractionField.
-3. [`Claude Flakes Style`](long/claude-flakes-style.md) — macro heightfield, continuous terrain LOD, bounded SurfaceReactionField, and warm/cool relief lighting.
+1. [`Voxel Style`](long/voxel-style.md) — authored modular hotspots, batched faceted surfaces, spatial culling, and bounded local reactions.
+2. [`Ashen Coast Style`](long/ashen-coast-style.md) — authored world specification, staged derived-data bake, deterministic cache, derived water, and shared world truth.
+3. [`Claude Flakes Style`](long/claude-flakes-style.md) — authored macro heightfield, optional continuous terrain LOD, bounded recyclable surface response, and relief-driven lighting.
 
 ## Short Prompts — Black Desert Quality Benchmark
 
@@ -19,17 +20,17 @@
 
 ## Long Subagent Prompts — Orchestrated Product Specifications
 
-1. [`Voxel Style — Long Subagent`](long-subagent/voxel-style.md) — complete authored voxel specification plus disjoint build tracks and harsh visual review.
-2. [`Ashen Coast Style — Long Subagent`](long-subagent/ashen-coast-style.md) — complete local AEON specification plus disjoint build tracks and harsh visual review.
-3. [`Claude Flakes Style — Long Subagent`](long-subagent/claude-flakes-style.md) — complete reactive heightfield specification plus disjoint build tracks and harsh visual review.
+1. [`Voxel Style — Long Subagent`](long-subagent/voxel-style.md) — portable modular-voxel direction plus disjoint build tracks and a bounded final quality review.
+2. [`Ashen Coast Style — Long Subagent`](long-subagent/ashen-coast-style.md) — portable authored-spec and staged bake/cache direction plus disjoint build tracks and a bounded final quality review.
+3. [`Claude Flakes Style — Long Subagent`](long-subagent/claude-flakes-style.md) — portable reactive-heightfield direction plus disjoint build tracks and a bounded final quality review.
 
 ## Short Subagent Prompts — Orchestrated Benchmark Requests
 
-1. [`Voxel Style — Short Subagent`](short-subagent/voxel-style.md) — compact voxel request with orchestrated Three.js quality loop.
-2. [`Ashen Coast Style — Short Subagent`](short-subagent/ashen-coast-style.md) — compact local AEON request with orchestrated Three.js quality loop.
-3. [`Claude Flakes Style — Short Subagent`](short-subagent/claude-flakes-style.md) — compact reactive heightfield request with orchestrated Three.js quality loop.
+1. [`Voxel Style — Short Subagent`](short-subagent/voxel-style.md) — compact voxel request with orchestrated implementation and bounded review.
+2. [`Ashen Coast Style — Short Subagent`](short-subagent/ashen-coast-style.md) — compact local AEON request with orchestrated implementation and bounded review.
+3. [`Claude Flakes Style — Short Subagent`](short-subagent/claude-flakes-style.md) — compact reactive heightfield request with orchestrated implementation and bounded review.
 
-Each subagent prompt keeps one integration owner for coupled decisions, delegates disjoint implementation tracks, and ends with the requested Call-of-Duty-quality blind-comparison loop. Call of Duty is an execution-quality reference only; proprietary content must not be copied, and unavailable comparisons must remain an honest manual gate.
+Each subagent prompt keeps one integration owner for coupled decisions and delegates disjoint implementation tracks. Its bounded review compares anonymous integrated candidates against the prompt's written product bar. The critic returns one strongest concrete gap; another pass runs only after a material change or a new concrete question, never as an endless screenshot loop.
 
 ## HTML-Only Chat Prompts — One `index.html`
 
@@ -60,19 +61,19 @@ Each monster prompt demands one offline `monster.html` with exactly ten original
 - Both classes receive full-body animation, class-attached VFX/audio/hits, extreme but readable AoE, bounded map response, cooldown UI, reset behavior, pooling, and hard runtime caps.
 - Exactly ten stone-like voxel enemy species: eight regular creatures, Titan Golem, and Storm Wyrm.
 - Every fifth wave `5, 10, 15, …` is a mandatory alternating boss wave.
-- One `WorldImpactEvent` reports the true contact point, direction, footprint, and strength to the selected map system.
+- One shared technology-neutral impact contact reports the true point, direction, footprint, and strength to the selected map system.
 - Map response remains cosmetic by default, bounded, weathered by material, and completely reset on retry, class change, or world selection.
 
 ## Style Selection
 
 | Style | Choose when | Main trade-off |
 |---|---|---|
-| Voxel | handcrafted faceted diorama composition and direct module authorship matter most | local builders and reaction chunks require map-specific craft |
-| Ashen Coast | local AEON architecture, authored geography, derived water, and shared bake/runtime truth matter most | higher spec, bake, and validation investment before the first finished world |
-| Claude Flakes | continuous terrain, genuine visible skill scars, and relief-driven lighting matter most | reaction-field, LOD parity, and shader/bandwidth budgets are more demanding |
+| Voxel | handcrafted faceted composition and direct module authorship matter most | authored hotspots and local reactions require map-specific craft |
+| Ashen Coast | authored geography, derived water, and staged bake/cache truth matter most | higher specification, bake, and validation investment before the first finished world |
+| Claude Flakes | continuous terrain, genuine visible skill scars, and relief-driven lighting matter most | reaction storage, LOD parity, and shader/bandwidth budgets are more demanding |
 
-## Claude Flakes Reference Boundary
+## Portability Boundary
 
-- Source reference: `D:/CODING/React Projects/github-repos-examples/Claude-Flakes`.
-- Transfer only stack-neutral principles: bake plus CPU ground parity, continuous terrain LOD, bounded deformation state, shared contact brush, complete reset, warm grazing light, and cool sky fill.
-- Do not copy Babylon.js/WGSL APIs, finished shaders, snow identity, or resolution values from the 2,048-meter reference world.
+- Long and Long Subagent prompts are complete, source-independent technology contracts.
+- Keep broad world technology and visible outcomes; choose host-native names, APIs, data structures, shaders, cache format, module boundaries, and algorithms.
+- Do not copy another map's function signatures, class layout, constants, paths, assets, or code organization.

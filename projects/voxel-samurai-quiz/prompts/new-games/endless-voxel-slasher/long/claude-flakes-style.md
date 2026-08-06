@@ -1,6 +1,6 @@
 # Reactive Heightfield and Clipmap World — Linear Build
 
-**Use:** Copy the complete fenced block and execute it as a standalone game-build request in the target repository.
+**Use:** Copy the complete fenced block and execute it as a standalone game-build request in the host project.
 **Constant:** Game, two playable classes, nine skills per class, combat, enemies, waves, spawn, audio, UI, and English-only player-facing language match the two sibling long prompts.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
 **Map focus:** Baked macro heightfields, continuous clipmap LOD, bounded material-semantic surface reaction, deterministic cache/reset, and relief-driven warm/cool lighting.
@@ -17,7 +17,7 @@ Reach premium modern action-RPG responsiveness, full-body animation weight, impa
 
 World quality must achieve strong composition, material separation, lighting, atmosphere, and traversable depth from the written world briefs below. Character construction must use clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX.
 
-Portability rule: this prompt is the complete reference. Do not inspect, name, or depend on any source project, benchmark repository, versioned map, local machine path, or fixed internal asset path. Use the target repository's existing renderer, language, ownership, and build system. Translate shaders, render targets, storage buffers, post-processing, audio, bakes, and caches into equivalent host-stack mechanisms; never import foreign APIs or finished source code.
+Portability rule: treat this as a self-contained product and technology brief. Use the host project's existing renderer, language, ownership, and build system. Choose host-native shaders, render targets, storage, post-processing, audio, bakes, caches, names, APIs, data shapes, and module boundaries. Create all content originally.
 
 Use the two text briefs as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
 
@@ -95,54 +95,22 @@ WORLD 2 — VERDANT TITAN GROVE FORTRESS
 
 REACTIVE HEIGHTFIELD + CLIPMAP MAP ARCHITECTURE
 
-1. Build this terrain-first world system from the complete contract below. Do not inspect or reference another repository, shader package, value table, map, or engine-specific implementation.
-2. Macro shape, fine surface, lighting, movement, and skill residues behave as one coherent terrain system rather than unrelated visual layers.
-3. Build one baked macro heightfield per world as the ground truth:
-   - broad authored landforms and combat spaces,
-   - directional medium-scale surface forms instead of isotropic noise,
-   - material/slope/exposure helper fields from the final bake,
-   - CPU mirror or equivalent query source for exact grounding.
-4. Skyglass and Verdant preserve their written composition, architecture, and material identity; this approach specifies terrain technology and surface behavior, not a snow biome or a particular renderer's look.
-5. Skyglass shapes plateau, plaza, channels, palace pad, aqueduct foundations, and canyon edge in the heightfield; architecture sits constructively on it.
-6. Verdant shapes basin, clearing, paths, hall pad, root mounds, terraces, and rim rise in the heightfield; Titan trees remain authored landmarks.
-7. Use a static nested-ring or equivalent clipmap mesh for continuous ground only when the target camera genuinely needs different resolutions.
-8. Clipmap vertices carry compact grid/level data; the vertex path computes world position, grid snapping, morphing, macro height, and response without per-frame CPU rebuild.
-9. Overlap/morph band prevents cracks between resolution rings; band-limit response to current grid spacing instead of producing moving triangle ridges.
-10. Center detail and response authority on player/playfield focus, not an orbit camera; camera rotation alone never moves or reshapes an existing scar.
-11. Fine surface structure is frequency-correct:
-   - macro form in the bake,
-   - medium directional relief only at sufficient vertex density,
-   - microdetail and material normals in the fragment path,
-   - pixel/footprint filtering against shimmer and moiré.
-12. Build a bounded texel-snapped `SurfaceReactionField` as a ping-pong or equivalent world-state window around player/arena.
-13. Field channels are material-semantic, not snow-specific:
-   - net depression,
-   - displaced mass/raised rim,
-   - compaction or fracture level,
-   - signed surface state such as wet/frozen versus burned/exposed.
-14. A fixed brush staging buffer collects all frame contacts; hard capacity, cheap out-of-window rejection, and overload priority prevent growth.
-15. One simulation step applies scroll/recycle, slow material-dependent recovery, directional weathering, new brushes, and safe clamps; no object list per trail.
-16. World addressing remains toroidal or equivalently recyclable; newly exposed cells clear safely and field edges fade before seams.
-17. Material profiles respond differently:
-   - Skyglass stone: shallow depression, sharp fracture, chipped rim, dust/heat state, very slow recovery,
-   - Verdant soil/moss: deeper compaction, soft earth berm, torn greenery, moisture, faster natural recovery,
-   - wood/root: shallow fiber notch without terrain hole,
-   - water: wake/foam/turbidity instead of persistent geometry scar.
-18. Beauty, depth/prepass, and every shadow vertex path use identical clipmap placement and filtered field offset; scars have real depth and matching shadows.
-19. Fragment material reads field gradient, rim mass, and state for normal, albedo, roughness, and fractured/compacted surface; color alone never pretends to be a deep groove.
-20. CPU gameplay height remains the stable baseline bake while residues are cosmetic; VFX and particles may also query visible field offset without rewriting navigation.
-21. Reset initializes both ping-pong sides from a safe zero state; world selection, restart, and deterministic review states inherit no old craters.
-22. Cache the immutable macro heightfield and helper fields when their build cost warrants it. Key the cache by world ID, schema/bake version, seed, resolutions, and source hash; any authored-form change invalidates all dependent fields together.
-23. Derive resolution and coverage from the 600-unit maximum, camera distance, smallest visible scar, pixel density, memory budget, and target hardware; never copy a foreign world's texture or grid values.
-24. Field update allocates nothing per frame; prebind and prewarm brush data, targets, scratch values, materials, post passes, and skill lights, then degrade by priority instead of growing.
-25. One central Environment source supplies sun direction, direct radiance, sky/ambient light, wind, fog, shadows, exposure, and grade to every material and post-processing consumer.
-26. A low warm grazing key reveals relief and long shadows; cool sky fill separates shade, relief direction stays sufficiently crosswise to light, and aerial perspective creates scale without milky close combat.
-27. Direct sun may move continuously; expensive sky/IBL bakes update only through controlled thresholds or crossfades without visible shadow, diffuse, or specular jumps.
-28. Cascaded or equivalent directional shadows fit the measured camera/height envelope and stabilize in the world texel grid. Split rings/patches expose valid bounds for frustum culling; beauty, depth, and shadow passes select and morph the same terrain.
-29. Pooled skill lights illuminate deformed materials in the same HDR scale; fixed slots and prewarmed variants prevent first-cast shader compilation spikes.
-30. Exposure and tone mapping preserve pale Skyglass stone, Verdant shafts, and skill cores simultaneously; bloom amplifies HDR cores but never replaces relief or material readability.
-31. World audio reads the same environment, material profile, and impact event: wind and ambience follow authored zones, while steps, scars, wakes, and skill contacts emit bounded spatial layers from the true contact.
-32. Visual target: broad continuous terrain with directional microstructure, stable LOD, real material-semantic combat history, warm/cool lighting depth, and no camera-driven scars or moving seams.
+Use these as technology and outcome requirements, not as a shader design, field schema, channel layout, class API, cache format, or implementation recipe. Choose concrete methods that fit the host renderer and target hardware.
+
+1. Build each world on an authored macro heightfield that carries the large landform and combat composition. Keep arena, routes, architecture pads, channels, basin, terraces, roots, and skyline deliberate; use directional surface breakup rather than generic all-direction noise.
+2. Keep one finished terrain truth available to rendering, grounding, collision, materials, water, structures, spawns, and effects so the visible surface and gameplay contact do not drift apart.
+3. Use clipmap, nested-ring, quadtree, or another continuous terrain LOD only when the camera and world span justify multiple resolutions. The choice is open; the required outcome is stable terrain without cracks, camera-driven reshaping, or mismatched shadow geometry.
+4. Separate spatial frequencies: macro form belongs in the baked terrain, medium relief appears only where geometry can resolve it, and microdetail belongs in filtered material shading that does not shimmer.
+5. Keep fine detail and reaction authority centered on the playable area rather than camera orientation. Camera movement alone must never move or alter an existing scar.
+6. Maintain a bounded, recyclable surface-reaction area around active play instead of an ever-growing trail-object history. Its representation may be a texture field, tiled state, sparse grid, or another host-appropriate method.
+7. Let reaction state describe material behavior such as depression, raised edges, fracture, compaction, wetness, frost, heat, or exposure without forcing a snow identity or a fixed set of channels.
+8. Apply contacts in capped batches, reject irrelevant work early, recycle old regions safely, fade boundaries, and clear all reaction history on retry or world change.
+9. Give stone, soil, moss, wood, roots, and water distinct responses. Water produces wake, foam, or turbidity; deep-looking ground scars need geometric or displacement depth plus matching normals and shadows, not color-only decals.
+10. Keep gameplay terrain stable while cosmetic reactions affect beauty, depth, and shadow consistently. Any effect sampling the visible response must use the same world addressing across detail levels.
+11. Cache immutable height and helper data when worthwhile, with deterministic invalidation after authored-form or generation-rule changes. Choose coverage and resolution from visible scar size, camera distance, memory, and hardware—not from a reference implementation.
+12. Use tight terrain-patch bounds, frustum culling, pooled skill lights, prewarmed render variants, fixed reaction capacity, and bounded frame work. Lower background detail and reaction microdetail before terrain continuity or combat readability.
+13. Shape light to reveal relief: a warm grazing key, cooler sky fill, stable shadows, controlled aerial perspective, and tone mapping that preserves pale stone, forest depth, and bright skill cores together.
+14. Visual target: broad continuous terrain with directional structure, stable LOD, material-specific combat history, warm/cool lighting depth, and no moving seams or camera-driven scars.
 
 TWO VOXEL CLASS SYSTEMS
 
@@ -153,11 +121,11 @@ TWO VOXEL CLASS SYSTEMS
 - Faces remain fully mask-like and show only one pair of glowing eyes; no visible mouths, noses, teeth, skin, or realistic facial features.
 - Eye shape, eye color, silhouette, and value distribution separate roles from combat distance; color alone is insufficient.
 - Each player class may use a dedicated hero-rig render path; repeated enemy parts must be instanced or batched by geometry/material.
-- Never create one React element or independent mesh per body part and enemy.
-- Batched rigs carry at least `aPartId/aBoneId`, `aPivot`, `aActorId`, `aBaseColor`, and optional emissive/mask attributes.
+- Never create one UI-framework element or independent mesh per body part and enemy.
+- Batched rigs carry enough per-part, pivot, actor, color, emissive, and mask data for articulated poses; exact attribute names and packing are host decisions.
 - Vertex processing transforms position and normal around the real joint pivot through bone/part matrices; lighting must not remain attached to rest pose.
 - Interactive bone matrices derive from actor state and normalized clip time, not global world time alone.
-- The animation solver evaluates each actor pose once per frame and writes part matrices, weapon/emitter anchors, and hit anchors in batches; no React state per joint.
+- The animation solver evaluates each actor pose once per frame and writes part transforms plus weapon, emitter, and hit anchors in batches; never use UI state per joint.
 - Identical actor state plus identical clip time produces the same pose; animation remains deterministic and inspectable.
 - Use a hierarchical voxel rig with at least:
   - Root,
@@ -289,8 +257,8 @@ CLASS COMBAT VFX RESEARCH, LAYERING, AND AUDIO
 WORLD RESPONSE TO MOVEMENT AND BOTH CLASS KITS
 
 - Damage, timing, range, cooldown, and control remain identical across map styles and materials.
-- One `WorldImpactEvent` carries stable event/class/skill/world IDs, final contact, normal, direction, footprint, strength, duration, element/material roles, and air/ground context.
-- Create it at real weapon, projectile, emitter, foot, landing, or ground contact; rendering, map response, particles, light, and audio consume that same contact.
+- Share one technology-neutral contact description from the real weapon, projectile, emitter, foot, or landing point. It must carry enough spatial, strength, material, element, and movement context for every visible and audible response.
+- Rendering, map response, particles, light, and audio consume that same measured contact; the prompt does not prescribe its type name, fields, serialization, or ownership layout.
 - Response is cosmetic by default; temporary Cryo Bastion collision is a separate bounded skill object.
 - Skyglass supports chips, dust, fractures, heat, frost, grounding, wakes, and steam; Verdant supports torn moss, soil compression, leaves, roots, char, frost, and wind pressure.
 - Movement contacts stay subtle and bounded.
@@ -308,16 +276,16 @@ ELEMENTAL TECHNICIAN MAP CONTACTS
 - `3`: finite heat/displacement corridor to true endpoint. `4`: bounded irregular frost field. `5`: four element contacts inside one authored event family.
 - `6`: bounded inward compression and one final annular fracture; all debris remains pooled.
 
-- Event writes are idempotent; residues use fixed capacity/window/chunks and discard low-priority marks under load.
+- Repeated identical contacts must not duplicate work; residues use fixed capacity, bounded regions, or capped chunks and discard low-priority marks under load.
 - Ultimates last longest, footsteps shortest; `Restart World`, retry, class change, and world selection clear residues and temporary objects deterministically.
 - Beauty, depth/prepass, and shadow consume the same visible geometry response.
-- Debug data exposes contacts, class/skill IDs, occupancy, dropped writes, element/air context, temporary objects, and reset revision; no browser checks without permission.
+- Provide enough diagnostics to inspect contacts, occupancy, dropped work, temporary objects, and reset state without prescribing a debug schema; no browser checks without permission.
 
 ENDLESS WAVES AND ENEMIES
 
 - Waves run `1…∞`; there is no final victory gate.
 - The next wave starts after a short clear pause when the previous enemies are defeated.
-- One shared `WaveDirector` is the source of truth for wave number, unlocked species, composition, scaling, elite modifiers, and boss rotation.
+- One shared wave-direction source owns wave number, unlocked species, composition, scaling, elite modifiers, and boss rotation; its type and module shape remain open.
 - Every fifth wave `5, 10, 15, …` is mandatory: one boss plus reduced support; no fifth wave may omit its boss.
 - Boss waves alternate deterministically between Titan Golem and Storm Wyrm; later appearances add phases, attack combinations, and stronger support instead of health alone.
 - Difficulty never drops: health, damage, and stagger resistance rise through stable bounded formulas; movement and attack speed rise more slowly and have safe caps.
@@ -366,7 +334,7 @@ LIGHTING SYSTEM
 
 EXECUTION AND CRAFT LOOP
 
-- Execution profile `linear`: one integration owner understands references, builds the full product, and keeps coupled decisions in one context; no subagents or parallel architecture.
+- Execution profile `linear`: one integration owner understands this complete prompt and the host project, builds the full product, and keeps coupled decisions in one context; no subagents or parallel architecture.
 - Order: product/class contract → Game Host → primary map → shared rig/movement → Swordfighter slice → Elemental Technician parity → enemies/waves → second world → lighting/performance → final pass.
 - Technician is not stretch content; both complete classes belong to the playable path.
 - Complete targeted VFX research before class effects and retain only product-relevant decisions.
@@ -379,18 +347,18 @@ PERFORMANCE AND GATES
 - Target stable 60 FPS on defined hardware; never claim FPS without measurement.
 - Report frame times, draw calls, triangles, enemies, particles, field volumes, and shadow cost only from an allowed run.
 - Instantiate only selected hero rig/active class pools; instance repeated world/enemy forms.
-- No per-frame geometry/material creation, unbounded arrays, or React state in render loop.
+- No per-frame geometry/material creation, unbounded arrays, or UI/store state updates in the render loop.
 - Pool enemies, projectiles, hits, VFX, trails, scars, audio, lights, ice fragments, elemental fields, and gravity debris.
 - Extreme Technician AoE uses fixed slots, batching/instancing, capped chains, and bounded field writes.
 - Remove distant/secondary cost before selected-class readability.
-- Static gates verify TypeScript, deterministic maps, ground parity, safe spawns, exactly two complete class definitions, nine skills/class, resource and air/ground rules, movement/dash/aerial transitions, finite uniforms, disposal, pool/chain/field caps, temporary-object cleanup, reset, and beauty/depth/shadow parity.
+- The host stack's canonical static gates verify deterministic maps, ground parity, safe spawns, exactly two complete class definitions, nine skills per class, resource and air/ground rules, movement/dash/aerial transitions, finite shader inputs, disposal, pool/chain/field caps, temporary-object cleanup, reset, and beauty/depth/shadow parity.
 - Do not add browser, screenshot, or gameplay tests without explicit request.
 
 DELIVERY ORDER
 
-1. Understand rules, repository, and references.
+1. Understand the project rules, product brief, and existing host architecture.
 2. Build shared Game Host, state flow, and world/class selection.
-3. Build macro heightfield, continuous ground, and SurfaceReactionField.
+3. Establish the authored macro-heightfield direction, continuous terrain LOD where useful, and bounded recyclable surface response.
 4. Build Skyglass as the complete reactive-terrain vertical slice.
 5. Integrate voxel player, jump/dodge/dash, base combat, and camera.
 6. Integrate both nine-skill class kits, researched sword/elemental VFX, audio, and shared skill bar.
@@ -402,7 +370,7 @@ DELIVERY ORDER
 DONE WHEN
 
 - Start screen selects exactly Skyglass or Verdant plus Swordfighter or Elemental Technician and starts directly.
-- Both maps use the same baked-heightfield, clipmap-LOD, cache, and bounded reaction-field foundation with distinct authored forms and material profiles.
+- Both maps use the same broad heightfield, optional continuous-LOD, cache, and bounded surface-reaction technology while keeping authored forms and material responses distinct.
 - Swordfighter, Elemental Technician, and enemies are premium voxel rigs with articulated full-body ground and aerial animation.
 - Both classes have jump, separate dodge, ground/air `Q` dash, and a functional aerial `2` branch without broken states.
 - Each class has nine complete skills on `Q E R 1 2 3 4 5 6` with cooldowns, resource rules, attached full-body animation, layered VFX/audio, and measured hits.

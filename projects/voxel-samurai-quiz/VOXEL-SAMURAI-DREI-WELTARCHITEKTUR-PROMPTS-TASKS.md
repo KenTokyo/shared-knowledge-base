@@ -241,16 +241,19 @@
 
 **Goal:** The three Long and three Long Subagent prompts explain reproducible map technology without requiring knowledge of any source project, version, repository, internal path, or benchmark product.
 
-- [ ] Replace named-project, version, repository, asset-path, and benchmark references inside all six standalone prompts with self-contained product and technology contracts.
-- [ ] Preserve the three distinct map approaches: authored modular voxel workspace, reactive heightfield/clipmap surface, and authored spec plus staged bake-cache world.
-- [ ] Carry implementation keywords and their required behavior into each map section: authored hotspots, shared fields, bake invalidation, batching, instancing, bounds, frustum culling, LOD, pooling, and bounded runtime response.
-- [ ] Add one short three-way architecture comparison and technical glossary beside the prompt index.
-- [ ] Keep normal and Subagent product/map contracts aligned; vary only orchestration and explicitly granted final-product visual verification.
-- [ ] Validate forbidden references, shared-section parity, Markdown fences, links, UTF-8, Mojibake, final newline, LOC, and scoped Git diff.
-- [ ] Commit and push Shared Docs; update only the parent repository submodule pointer in the follow-up delivery commit.
+- [x] Replaced named-project, version, repository, asset-path, and benchmark references inside all six standalone prompts with self-contained product and technology contracts.
+- [x] Preserved three distinct map approaches: authored modular voxel workspace, reactive heightfield/continuous-LOD surface, and authored specification plus staged bake cache.
+- [x] Kept required technology terms and behavior: authored hotspots, shared world truth, cache invalidation, batching, instancing, bounds, frustum culling, LOD, pooling, and bounded runtime response.
+- [x] Removed copied code shapes such as fixed builder signatures, class/type names, field layouts, shader attributes, cache keys, and host-stack-specific React/TypeScript wording.
+- [x] Added one short three-way architecture comparison and technical glossary beside the prompt index.
+- [x] Kept normal and Subagent product/map contracts aligned; only orchestration and explicitly granted final-product visual verification vary.
+- [x] Validated forbidden references, shared-section parity, Markdown fences, links, UTF-8, Mojibake, final newline, LOC, and scoped Git diff.
+- [x] Commit and push Shared Docs; update only the parent repository submodule pointer in the follow-up delivery commit.
 
-**Expected result:** Each copied prompt can be dropped into an unrelated repository and still communicates the target world-building effort, data flow, rendering architecture, map reactions, and performance envelope from first principles.
+**Result:** Each copied prompt can be dropped into an unrelated host project and communicates the map technology, visible outcomes, rendering costs, reactions, and performance envelope without prescribing another codebase's implementation shape.
 
 **Architecture fits:** Stable filenames preserve existing links; prompt bodies own complete portable contracts, while one neutral comparison document explains selection terms without becoming a runtime dependency.
 
-**Rules:** User correction is the new source of truth · no visual/gameplay run · pure prompt/docs change needs no type-check · foreign `CODING-RULES.md` edit remains untouched.
+**Rules met:** User correction is the source of truth ✅ · technology direction instead of copied functions/classes ✅ · no visual/gameplay run ✅ · pure prompt/docs change needs no type-check ✅ · all prompt files below 1,600 LOC ✅ · foreign edits preserved ✅.
+
+**Findings/performance/critical issues:** 🟠 Exact symbols such as `build(seed)`, fixed world-definition types, reaction-field types, shader attributes, and host-stack names overconstrained the implementation and encouraged codebase cloning. Fixed across all six prompts with explicit freedom boundaries and behavior-level technology. 🟡 Parallel Shared-Docs delivery introduced conflicts in the three Long Subagent review blocks. Fixed by preserving one bounded, neutral integrated-product review without named benchmark dependencies. Static evidence: normal/Subagent parity passes for all three styles after profile-only normalization; forbidden source/API scan returns zero; each prompt has two Markdown fences and 383–395 lines; links, UTF-8, Mojibake, and final newlines pass.
