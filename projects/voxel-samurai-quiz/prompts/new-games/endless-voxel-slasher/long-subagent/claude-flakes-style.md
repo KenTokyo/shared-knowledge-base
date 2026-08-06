@@ -417,12 +417,11 @@ DONE WHEN
 - Every player-facing string is English and UI stays compact around start plus combat values.
 - Static/numeric gates are green; visible combat feel remains honestly marked for user acceptance.
 
-MANDATORY SUB-AGENT QUALITY LOOP
+BOUNDED FINAL SUB-AGENT QUALITY REVIEW
 
-- Fan out the independent tracks above, then have a separate harsh visual critic review the integrated Three.js game rather than isolated parts.
-- Compare anonymous side-by-side captures against lawfully available current Call of Duty reference captures for execution quality only: first read, composition, material response, lighting, animation weight, contact, VFX layering, clarity, polish, and frame stability. Do not copy assets, branding, characters, maps, UI, audio, or proprietary content.
-- The critic must record the blind choice, concrete reasons, and the largest visible gap. Route that gap to the owning sub-agent, integrate the correction, rerun static/regression gates, and repeat the blind comparison.
-- Never invent a blind win, visual approval, or measured result. If the environment cannot access or display the real reference and built game fairly, keep the comparison as an explicit manual gate instead of claiming success.
-
-Don't stop until each sub-agent is utterly wowed with the quality when compared with the actual Call of Duty game. It should literally compare them side by side blind and say which one looks better. Do this in ThreeJS. /loop until it's utterly perfect. Fan out sub-agents and ultracode.
+- Fan out the independent tracks above, then use one independent critic to review the integrated Three.js game rather than isolated parts.
+- Judge Black Desert only for combat responsiveness, full-body force, impact clarity, and layered but readable skill spectacle. Judge Ghost of Tsushima only for katana weight, samurai motion, world composition, and atmospheric environmental craft. Copy no asset, branding, character, map, UI, audio, lore, or proprietary design.
+- Judge Skyglass and Verdant identity, composition, materials, lighting, and atmosphere directly against their supplied target-repository concept images listed above. The game must translate those references into its own playable voxel construction instead of copying or ignoring them.
+- The critic returns the single strongest concrete gap with evidence and an owner. Route it to that owner, integrate one coherent correction, and rerun the bundled static/regression gates. Run another critic pass only after a material change or a new concrete question—never as an automatic per-camera, per-phase, or endless screenshot loop.
+- Never invent approval, a visual win, or measured performance. If a fair review of the built game and lawful references cannot run, leave it as an explicit user acceptance gate.
 ```

@@ -3,7 +3,7 @@
 **Use when:** The same browser action RPG or its creature direction should be built or compared through three distinct styles, with linear, orchestrated, single-file game, or single-file monster-showcase profiles.
 **Constant:** English-only game copy, two worlds, Swordfighter plus Elemental Technician, full-body animation, jump, separate dodge, class Q dash, aerial skill branch, nine skills per class, premium layered sword/elemental VFX, ten enemies, endless waves, boss cadence, spawn, audio, and UI.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Verification boundary:** Baseline, HTML-only, and monster prompts do not authorize automated visual checks; `long-subagent/` and `short-subagent/` explicitly authorize final-product browser, gameplay, screenshot, performance, and blind reference review.
+**Verification boundary:** Baseline, HTML-only, and monster prompts do not authorize automated visual checks. `long-subagent/` and `short-subagent/` authorize one bounded final-product browser, gameplay, screenshot, and performance review; another review requires a material change or a new concrete question.
 
 ## Long Prompts — Complete Product Specifications
 
@@ -19,17 +19,17 @@
 
 ## Long Subagent Prompts — Orchestrated Product Specifications
 
-1. [`Voxel Style — Long Subagent`](long-subagent/voxel-style.md) — complete authored voxel specification plus disjoint build tracks and harsh visual review.
-2. [`Ashen Coast Style — Long Subagent`](long-subagent/ashen-coast-style.md) — complete local AEON specification plus disjoint build tracks and harsh visual review.
-3. [`Claude Flakes Style — Long Subagent`](long-subagent/claude-flakes-style.md) — complete reactive heightfield specification plus disjoint build tracks and harsh visual review.
+1. [`Voxel Style — Long Subagent`](long-subagent/voxel-style.md) — complete authored voxel specification plus disjoint build tracks and a bounded final quality review.
+2. [`Ashen Coast Style — Long Subagent`](long-subagent/ashen-coast-style.md) — complete local AEON specification plus disjoint build tracks and a bounded final quality review.
+3. [`Claude Flakes Style — Long Subagent`](long-subagent/claude-flakes-style.md) — complete reactive heightfield specification plus disjoint build tracks and a bounded final quality review.
 
 ## Short Subagent Prompts — Orchestrated Benchmark Requests
 
-1. [`Voxel Style — Short Subagent`](short-subagent/voxel-style.md) — compact voxel request with orchestrated Three.js quality loop.
-2. [`Ashen Coast Style — Short Subagent`](short-subagent/ashen-coast-style.md) — compact local AEON request with orchestrated Three.js quality loop.
-3. [`Claude Flakes Style — Short Subagent`](short-subagent/claude-flakes-style.md) — compact reactive heightfield request with orchestrated Three.js quality loop.
+1. [`Voxel Style — Short Subagent`](short-subagent/voxel-style.md) — compact voxel request with orchestrated implementation and bounded review.
+2. [`Ashen Coast Style — Short Subagent`](short-subagent/ashen-coast-style.md) — compact local AEON request with orchestrated implementation and bounded review.
+3. [`Claude Flakes Style — Short Subagent`](short-subagent/claude-flakes-style.md) — compact reactive heightfield request with orchestrated implementation and bounded review.
 
-Each subagent prompt keeps one integration owner for coupled decisions, delegates disjoint implementation tracks, and ends with the requested Call-of-Duty-quality blind-comparison loop. Call of Duty is an execution-quality reference only; proprietary content must not be copied, and unavailable comparisons must remain an honest manual gate.
+Each subagent prompt keeps one integration owner for coupled decisions and delegates disjoint implementation tracks. Its bounded review uses Black Desert for combat/VFX execution, Ghost of Tsushima for sword weight and world craft, and the supplied Skyglass/Verdant concept images for exact world direction. The critic returns one strongest concrete gap; another pass runs only after a material change or a new concrete question, never as an endless screenshot loop.
 
 ## HTML-Only Chat Prompts — One `index.html`
 
