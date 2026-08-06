@@ -1,27 +1,25 @@
-# Ashen Coast Style — Local AEON Spec and Bake World Engine — Subagent Orchestration
+# Authored Spec and Staged Bake-Cache World — Subagent Orchestration
 
 **Use:** Copy the complete fenced block and execute it as a standalone game-build request in the target repository.
 **Constant:** Game, two playable classes, nine skills per class, combat, enemies, waves, spawn, audio, UI, and English-only player-facing language match the two sibling long prompts.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Map focus:** Local V73 AEON construction with authored WorldSpec, staged bake, shared fields, and a material-semantic InteractionField.
-**Visual verification:** This prompt explicitly authorizes orchestrated browser, screenshot, gameplay, and blind side-by-side reference review for the final integrated product.
+**Map focus:** Authored world definitions, staged field bakes, deterministic bake caches, shared runtime queries, derived water, spatial culling, and a material-semantic interaction field.
+**Visual verification:** This prompt explicitly authorizes orchestrated browser, screenshot, gameplay, performance, and blind candidate comparison for the final integrated product.
 
 ```text
-CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — ASHEN COAST STYLE AEON WORLD ENGINE
+CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — AUTHORED SPEC AND STAGED BAKE-CACHE WORLD
 
 MISSION AND QUALITY BAR
 
 Build a completely new, immediately playable third-person browser hack-and-slash. The game has exactly two selectable compact worlds, two complete voxel hero classes—a Swordfighter and a technology-based Elemental Technician—endless enemy waves, premium MMORPG-grade abilities, and a minimal start flow.
 
-Target the combat responsiveness, full-body animation quality, impact clarity, and layered spectacle associated with the strongest modern action MMORPGs such as Black Desert, while creating an original voxel identity. Use that title only as a quality benchmark. Do not copy its assets, characters, effects, UI, audio, or proprietary content.
+Reach premium modern action-RPG responsiveness, full-body animation weight, impact clarity, and layered spectacle while creating an original voxel identity. Do not copy assets, characters, effects, UI, audio, maps, or proprietary content from another product.
 
-World quality must reach the composition, material separation, lighting, and atmosphere of the two supplied concept images. Character construction and animation must use the strongest principles of the Asset Lab V6/V36 voxel rigs: clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX. Implement everything from scratch and keep it local to this game; do not copy a finished benchmark entry.
+World quality must achieve strong composition, material separation, lighting, atmosphere, and traversable depth from the written world briefs below. Character construction must use clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX.
 
-References:
-- assets/concepts/asset-lab/v91-v120-world-comparison/imagegen-final/world-skyglass-aqueduct-palace-image.png
-- assets/concepts/asset-lab/v91-v120-world-comparison/imagegen-final/world-verdant-titan-grove-fortress-image.png
+Portability rule: this prompt is the complete reference. Do not inspect, name, or depend on any source project, benchmark repository, versioned map, local machine path, or fixed internal asset path. Use the target repository's existing renderer, language, ownership, and build system. Translate shaders, render targets, storage buffers, post-processing, audio, bakes, and caches into equivalent host-stack mechanisms; never import foreign APIs or finished source code.
 
-Use the images as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
+Use the two text briefs as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
 
 FIRST READ
 
@@ -50,7 +48,7 @@ START FLOW AND UI
 
 1. The start screen contains only:
    - game title,
-   - two large world cards with reference image and English name,
+   - two large world cards with a generated world preview or representative in-game thumbnail and English name,
    - two clear class cards for `Swordfighter` and `Elemental Technician`,
    - unmistakable selected states for world and class,
    - one primary `Start` button.
@@ -95,21 +93,19 @@ WORLD 2 — VERDANT TITAN GROVE FORTRESS
 - Enemy spawn zone follows the central rune; spawn anchors remain separated from the player entrance.
 - Lighting: warm sun shaft through the canopy, cool green ambient fill, warm windows/lanterns, and visible atmospheric depth without milky near fog.
 
-ASHEN COAST STYLE — LOCAL AEON WORLD ARCHITECTURE
+AUTHORED SPEC + STAGED BAKE-CACHE WORLD ARCHITECTURE
 
-1. Use only the local AEON implementation as the architectural reference:
-   - `src/engine/world/worlds/v73AshenCoast.js`,
-   - `src/engine/world/WorldSpec.js`, `Heightfield.js`, `Terrain.js`, `Structures.js`, `TreeField.js`,
-   - `src/engine/render/Environment.js` and `Water.js`.
-2. V73 Ashen Coast is a finished read-only reference; build Skyglass and Verdant as new specs using its principles, never copies of its coastline.
-3. One closed `WorldSpec` is the source of truth per world; missing required data fails loudly during boot instead of becoming an empty area three systems later.
+1. Build a reusable production-world engine from this complete contract. Do not inspect or reference another map implementation; adapt every mechanism to the target repository's renderer and runtime.
+2. Skyglass and Verdant are new independent world definitions, never copies of a finished map, coastline, field layout, value table, or asset set.
+3. One closed `WorldDefinition` is the source of truth per world; missing required data fails loudly during boot instead of becoming an empty area three systems later.
 4. Resolve the selected world exactly once before allocating heightfields, typed arrays, and runtime systems; freeze the active spec or perform a complete controlled reload, never a partial live swap.
-5. Each spec authors at least:
-   - world span, sea/water base, separate field resolutions, and seed,
-   - landmass silhouette, ridges, spurs, peaks, and large depressions,
+5. Each definition authors at least:
+   - world span, vertical range, sea/water base, separate field resolutions, and seed,
+   - landmass silhouette, ridges, spurs, peaks, basins, and large depressions,
    - river control line/profile, ponds, channels, and coast/water boundaries,
-   - roads, side paths, construction pads, landmarks, camps, and distant carriers,
-   - biome regions, player start, enemy/boss anchors,
+   - roads, side paths, construction pads, boundaries, and traversable special surfaces,
+   - separate authored sites/hotspots for entrance, arena, landmarks, camps, structures, and distant carriers,
+   - biome regions, material roles, vegetation policies, player start, enemy/boss/spawn anchors,
    - verifiable camera/composition intents rather than fragile coordinates alone.
 6. Author major forms and routes deliberately; noise breaks surfaces and transitions but never decides arena, landmark, river, or road placement alone.
 7. Run the shared bake in fixed dependency order:
@@ -123,11 +119,11 @@ ASHEN COAST STYLE — LOCAL AEON WORLD ARCHITECTURE
 8. Everything after the bake reads the same fields: terrain, player, enemies, camera, structures, vegetation, water, VFX, spawn, and map response.
 9. `groundHeightAt`, normal, slope, water height, splat, and biome query come from the final bake; no diverging CPU/GPU interpolation implementations.
 10. Cache is deterministic and world-bound; schema/bake version, seed, resolutions, world ID, and source hash prevent stale or swapped worlds.
-11. Never blindly scale V73 values to the 600-unit maximum:
+11. Never copy a source world's scale or resolution blindly:
    - each field resolution follows its smallest visible or gameplay-required frequency,
-   - world span and bake, splat, biome, and distance-field resolutions remain separate decisions,
+   - world span and height, splat, biome, and distance-field resolutions remain separate decisions,
    - LOD is justified only when the real target camera discards areas or detail levels.
-12. When evidence requires it, continuous ground uses Ashen-Coast-style CDLOD/quadtree terrain: one reusable patch mesh, instanced nodes, tight frustum selection, and a morph band between neighboring levels.
+12. When evidence requires it, continuous ground uses CDLOD/quadtree terrain or an equivalent host-stack method: one reusable patch mesh, instanced nodes, tight frustum selection, and a morph band between neighboring levels.
 13. Beauty and shadow/depth paths use identical patch placement, camera uniforms, height sampling, and morph logic; the light camera never displaces terrain differently from the game camera.
 14. Terrain material combines a few clear roles through shared texture arrays and splat/biome data: stone, soil/grass, sand/rubble, path, and wetness; steep faces use appropriate projection instead of smeared top UVs.
 15. Skyglass spec authors plateau, plaza, palace pad, channels, aqueduct foundations, canyon edge, and safe approaches as coherent fields/sites.
@@ -149,9 +145,11 @@ ASHEN COAST STYLE — LOCAL AEON WORLD ARCHITECTURE
 26. Response field uses capped world tiles or a focus-local window with field revision, complete reset, and safe fallback on structures, water, and steep surfaces.
 27. One Environment source of truth owns time of day, weather, sun direction/color/intensity, sky/ground fill, fog/haze, wind, shadows, exposure, and color grade.
 28. Sky dome, directional shadows, environment probe, terrain, vegetation, water, skill lights, and post effects consume that source; no consumer invents its own sun or fog.
-29. Lighting follows Ashen Coast principles: cross/back light draws grass and surface edges, warm key separates from cool sky fill, ground bounce keeps shadows material-readable, and aerial perspective carries true foreground/midground/background.
-30. Specs describe camera intents through subject, range, bearing arc, light relationship, clear sightline, foreground, and terrain falloff; solve coordinates from final bake and revalidate after world changes.
-31. Visual target: an authored compact world with dense local geography, constructively aligned systems, and three clear depth planes—not noise terrain with props placed on top.
+29. Cross/back light draws grass and surface edges; warm key separates from cool sky fill, ground bounce keeps shadows material-readable, and aerial perspective carries true foreground/midground/background.
+30. Definitions describe camera intents through subject, range, bearing arc, light relationship, clear sightline, foreground, and terrain falloff; solve coordinates from the final bake and revalidate after world changes.
+31. HDR skill/spawn lights use fixed pools and the same exposure scale as the world. Tone mapping protects material values; bloom and atmospheric post-processing support light depth without replacing geometry, shadows, or fog structure.
+32. World audio follows authored sites and shared environment state: ambient zones crossfade by location/weather, while material impacts use the same contact and occupancy queries as visual response.
+33. Visual target: an authored compact world with dense local geography, connected hotspots, deterministic bake/cache ownership, constructively aligned systems, and three clear depth planes—not noise terrain with props placed on top.
 
 TWO VOXEL CLASS SYSTEMS
 
@@ -380,7 +378,7 @@ EXECUTION AND CRAFT LOOP
 - Technician is not stretch content; both complete classes belong to the playable path.
 - Complete targeted VFX research before class effects and retain only product-relevant decisions.
 - Inspect real ownership, data flow, registrations, limits, class/resource state, air/ground state, reset, and static gates after coherent cuts; fix the largest evidenced gap.
-- This prompt grants current permission for agent-driven browser, screenshot, gameplay, and performance checks of the final integrated build. Establish the acceptance viewport first: maximize the preview, center and keep the active character visible, hide debug overlays, show the reference large enough to judge, and capture representative movement, skill, enemy, boss, and world states.
+- This prompt grants current permission for agent-driven browser, screenshot, gameplay, and performance checks of the final integrated build. Establish a reproducible acceptance state first: fixed seed, viewport, DPR, quality level, camera, and combat load; maximize the preview, keep the active character visible, hide debug overlays, and capture representative movement, skill, enemy, boss, and world states.
 - Visible quality, combat feel, class parity, and measured runtime remain honest manual gates without it.
 
 PERFORMANCE AND GATES
@@ -399,19 +397,19 @@ DELIVERY ORDER
 
 1. Understand rules, repository, and references.
 2. Build shared Game Host, state flow, and world/class selection.
-3. Build closed WorldSpec contract, staged AEON bake, and InteractionField foundation.
-4. Build Skyglass as the complete Ashen-Coast-style AEON vertical slice.
+3. Build the closed WorldDefinition contract, staged field bake, versioned bake cache, shared queries, and bounded interaction field.
+4. Build Skyglass as the complete spec-and-bake vertical slice.
 5. Integrate voxel player, jump/dodge/dash, base combat, and camera.
 6. Integrate both nine-skill class kits, researched sword/elemental VFX, audio, and shared skill bar.
 7. Integrate enemy rigs, AI, spawn, and endless waves.
-8. Build Verdant as the second independent spec in the same local AEON engine.
+8. Build Verdant as the second independent definition in the same reusable spec/bake runtime.
 9. Close lighting, material separation, performance, and edge cases.
 10. Bundle static/numeric gates and hand visible acceptance to the user.
 
 DONE WHEN
 
 - Start screen selects exactly Skyglass or Verdant plus Swordfighter or Elemental Technician and starts directly.
-- Both maps use the same local Ashen-Coast-style AEON engine and differ through specs, sites, fields, and material profiles.
+- Both maps use the same reusable spec, staged bake-cache, shared-field, and interaction runtime while differing through definitions, sites, fields, and material profiles.
 - Swordfighter, Elemental Technician, and enemies are premium voxel rigs with articulated full-body ground and aerial animation.
 - Both classes have jump, separate dodge, ground/air `Q` dash, and a functional aerial `2` branch without broken states.
 - Each class has nine complete skills on `Q E R 1 2 3 4 5 6` with cooldowns, resource rules, attached full-body animation, layered VFX/audio, and measured hits.
@@ -424,10 +422,11 @@ DONE WHEN
 
 MANDATORY SUB-AGENT QUALITY LOOP
 
-- Fan out the independent tracks above, then have a separate harsh visual critic review the integrated Three.js game rather than isolated parts.
-- Compare anonymous side-by-side captures against lawfully available current Call of Duty reference captures for execution quality only: first read, composition, material response, lighting, animation weight, contact, VFX layering, clarity, polish, and frame stability. Do not copy assets, branding, characters, maps, UI, audio, or proprietary content.
-- The critic must record the blind choice, concrete reasons, and the largest visible gap. Route that gap to the owning sub-agent, integrate the correction, rerun static/regression gates, and repeat the blind comparison.
-- Never invent a blind win, visual approval, or measured result. If the environment cannot access or display the real reference and built game fairly, keep the comparison as an explicit manual gate instead of claiming success.
+- Fan out only the independent tracks above, then have a separate harsh visual critic review the integrated running game rather than isolated parts.
+- Produce anonymous side-by-side captures of the strongest current candidate and the previous integrated candidate under the same seed, camera, viewport, movement/combat state, and quality settings.
+- Blind-rank the candidates against this prompt's written product bar: first read, composition, material response, lighting, animation weight, contact, VFX causality/layering, target clarity, polish, and frame stability.
+- Record the blind choice, concrete evidence, regressions, and largest visible gap. Route that gap to its owning track, integrate the correction, rerun static/regression/performance gates, and repeat only with a meaningfully changed candidate.
+- Never invent a blind win, visual approval, or measured result. If fair captures or runtime measurement are unavailable, keep those checks as explicit manual gates instead of claiming success.
 
-Don't stop until each sub-agent is utterly wowed with the quality when compared with the actual Call of Duty game. It should literally compare them side by side blind and say which one looks better. Do this in ThreeJS. /loop until it's utterly perfect. Fan out sub-agents and ultracode.
+Continue the `/loop` while a concrete, reproducible gap to this contract remains fixable. Stop on the complete product bar or a real external boundary—not on sub-agent excitement. Use the target repository's existing 3D stack and fan out sub-agents only across disjoint ownership.
 ```

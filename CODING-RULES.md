@@ -358,3 +358,4 @@ Für jede neue Datei/jedes Artefakt vollständigen Pfad nennen. Projektgebundene
 - [ ] UTF-8, Links, Dateiende, Diff geprüft?
 - [ ] Nur eigene Dateien gestagt, konsistente/kompilierfähige Einheit committed + gepusht?
 - [ ] Bei Submodul zuerst Submodul, danach Eltern-Pointer geliefert?
+- Answer, outputs all in english, specially Gen Z style slang, very lit, very important stay in english, very basic, Gen Z style, Code in English aswell, i talk german to you

@@ -1,27 +1,25 @@
-# Claude Flakes Style — Reactive Heightfield and Clipmap Worlds — Subagent Orchestration
+# Reactive Heightfield and Clipmap World — Subagent Orchestration
 
 **Use:** Copy the complete fenced block and execute it as a standalone game-build request in the target repository.
 **Constant:** Game, two playable classes, nine skills per class, combat, enemies, waves, spawn, audio, UI, and English-only player-facing language match the two sibling long prompts.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Map focus:** Stack-neutral Claude Flakes principles: macro heightfield, continuous terrain LOD, bounded SurfaceReactionField, and relief-driven warm/cool lighting.
-**Visual verification:** This prompt explicitly authorizes orchestrated browser, screenshot, gameplay, and blind side-by-side reference review for the final integrated product.
+**Map focus:** Baked macro heightfields, continuous clipmap LOD, bounded material-semantic surface reaction, deterministic cache/reset, and relief-driven warm/cool lighting.
+**Visual verification:** This prompt explicitly authorizes orchestrated browser, screenshot, gameplay, performance, and blind candidate comparison for the final integrated product.
 
 ```text
-CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — CLAUDE FLAKES STYLE REACTIVE WORLD ENGINE
+CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — REACTIVE HEIGHTFIELD AND CLIPMAP WORLD
 
 MISSION AND QUALITY BAR
 
 Build a completely new, immediately playable third-person browser hack-and-slash. The game has exactly two selectable compact worlds, two complete voxel hero classes—a Swordfighter and a technology-based Elemental Technician—endless enemy waves, premium MMORPG-grade abilities, and a minimal start flow.
 
-Target the combat responsiveness, full-body animation quality, impact clarity, and layered spectacle associated with the strongest modern action MMORPGs such as Black Desert, while creating an original voxel identity. Use that title only as a quality benchmark. Do not copy its assets, characters, effects, UI, audio, or proprietary content.
+Reach premium modern action-RPG responsiveness, full-body animation weight, impact clarity, and layered spectacle while creating an original voxel identity. Do not copy assets, characters, effects, UI, audio, maps, or proprietary content from another product.
 
-World quality must reach the composition, material separation, lighting, and atmosphere of the two supplied concept images. Character construction and animation must use the strongest principles of the Asset Lab V6/V36 voxel rigs: clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX. Implement everything from scratch and keep it local to this game; do not copy a finished benchmark entry.
+World quality must achieve strong composition, material separation, lighting, atmosphere, and traversable depth from the written world briefs below. Character construction must use clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX.
 
-References:
-- assets/concepts/asset-lab/v91-v120-world-comparison/imagegen-final/world-skyglass-aqueduct-palace-image.png
-- assets/concepts/asset-lab/v91-v120-world-comparison/imagegen-final/world-verdant-titan-grove-fortress-image.png
+Portability rule: this prompt is the complete reference. Do not inspect, name, or depend on any source project, benchmark repository, versioned map, local machine path, or fixed internal asset path. Use the target repository's existing renderer, language, ownership, and build system. Translate shaders, render targets, storage buffers, post-processing, audio, bakes, and caches into equivalent host-stack mechanisms; never import foreign APIs or finished source code.
 
-Use the images as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
+Use the two text briefs as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
 
 FIRST READ
 
@@ -50,7 +48,7 @@ START FLOW AND UI
 
 1. The start screen contains only:
    - game title,
-   - two large world cards with reference image and English name,
+   - two large world cards with a generated world preview or representative in-game thumbnail and English name,
    - two clear class cards for `Swordfighter` and `Elemental Technician`,
    - unmistakable selected states for world and class,
    - one primary `Start` button.
@@ -95,16 +93,16 @@ WORLD 2 — VERDANT TITAN GROVE FORTRESS
 - Enemy spawn zone follows the central rune; spawn anchors remain separated from the player entrance.
 - Lighting: warm sun shaft through the canopy, cool green ambient fill, warm windows/lanterns, and visible atmospheric depth without milky near fog.
 
-CLAUDE FLAKES STYLE — REACTIVE HEIGHTFIELD MAP ARCHITECTURE
+REACTIVE HEIGHTFIELD + CLIPMAP MAP ARCHITECTURE
 
-1. Transfer stack-neutral principles from `D:/CODING/React Projects/github-repos-examples/Claude-Flakes`; copy no Babylon.js/WGSL API, shader file, value table, or finished game world.
-2. The reference bar is terrain-dominant: macro shape, fine surface, light, movement, and skill residues behave as one coherent system.
+1. Build this terrain-first world system from the complete contract below. Do not inspect or reference another repository, shader package, value table, map, or engine-specific implementation.
+2. Macro shape, fine surface, lighting, movement, and skill residues behave as one coherent terrain system rather than unrelated visual layers.
 3. Build one baked macro heightfield per world as the ground truth:
    - broad authored landforms and combat spaces,
    - directional medium-scale surface forms instead of isotropic noise,
    - material/slope/exposure helper fields from the final bake,
    - CPU mirror or equivalent query source for exact grounding.
-4. Skyglass and Verdant preserve composition, architecture, and material identity; Claude Flakes Style is map technology and surface behavior, not a required snow biome or Babylon look.
+4. Skyglass and Verdant preserve their written composition, architecture, and material identity; this approach specifies terrain technology and surface behavior, not a snow biome or a particular renderer's look.
 5. Skyglass shapes plateau, plaza, channels, palace pad, aqueduct foundations, and canyon edge in the heightfield; architecture sits constructively on it.
 6. Verdant shapes basin, clearing, paths, hall pad, root mounds, terraces, and rim rise in the heightfield; Titan trees remain authored landmarks.
 7. Use a static nested-ring or equivalent clipmap mesh for continuous ground only when the target camera genuinely needs different resolutions.
@@ -134,19 +132,17 @@ CLAUDE FLAKES STYLE — REACTIVE HEIGHTFIELD MAP ARCHITECTURE
 19. Fragment material reads field gradient, rim mass, and state for normal, albedo, roughness, and fractured/compacted surface; color alone never pretends to be a deep groove.
 20. CPU gameplay height remains the stable baseline bake while residues are cosmetic; VFX and particles may also query visible field offset without rewriting navigation.
 21. Reset initializes both ping-pong sides from a safe zero state; world selection, restart, and deterministic review states inherit no old craters.
-22. Derive resolution and coverage from the 600-unit maximum, camera distance, smallest visible scar, VRAM, and target hardware; never copy 4096²/2048² reference values blindly.
-23. Field update allocates nothing per frame; prebound and prewarmed brush data, targets, scratch values, and skill lights remain capped.
-24. One central Environment source supplies sun direction, direct radiance, sky/ambient light, wind, fog, shadows, and grade to every material consumer.
-25. Lighting takes its principles from Claude Flakes:
-   - low warm grazing sun reveals relief and long shadows,
-   - cool sky separates shade from warm direct light,
-   - wind/relief direction remains sufficiently crosswise to the sun so micro edges do not flatten,
-   - aerial perspective gives terrain scale without making close combat milky.
-26. Direct sun moves continuously; expensive sky/IBL bakes may follow through controlled thresholds without visible shadow or specular jumps.
-27. Cascaded or equivalent directional shadows fit the real camera envelope and measured height extents, then stabilize in the world texel grid.
-28. Pooled skill lights illuminate deformed map materials in the same HDR scale; fixed slots prevent first-cast shader variants.
-29. Exposure and tone mapping preserve pale Skyglass stone, Verdant shafts, and skill cores simultaneously; bloom amplifies HDR cores but never replaces relief or material readability.
-30. Visual target: broad continuous terrain with directional microstructure, warm/cool lighting depth, and an arena visibly used after a wave.
+22. Cache the immutable macro heightfield and helper fields when their build cost warrants it. Key the cache by world ID, schema/bake version, seed, resolutions, and source hash; any authored-form change invalidates all dependent fields together.
+23. Derive resolution and coverage from the 600-unit maximum, camera distance, smallest visible scar, pixel density, memory budget, and target hardware; never copy a foreign world's texture or grid values.
+24. Field update allocates nothing per frame; prebind and prewarm brush data, targets, scratch values, materials, post passes, and skill lights, then degrade by priority instead of growing.
+25. One central Environment source supplies sun direction, direct radiance, sky/ambient light, wind, fog, shadows, exposure, and grade to every material and post-processing consumer.
+26. A low warm grazing key reveals relief and long shadows; cool sky fill separates shade, relief direction stays sufficiently crosswise to light, and aerial perspective creates scale without milky close combat.
+27. Direct sun may move continuously; expensive sky/IBL bakes update only through controlled thresholds or crossfades without visible shadow, diffuse, or specular jumps.
+28. Cascaded or equivalent directional shadows fit the measured camera/height envelope and stabilize in the world texel grid. Split rings/patches expose valid bounds for frustum culling; beauty, depth, and shadow passes select and morph the same terrain.
+29. Pooled skill lights illuminate deformed materials in the same HDR scale; fixed slots and prewarmed variants prevent first-cast shader compilation spikes.
+30. Exposure and tone mapping preserve pale Skyglass stone, Verdant shafts, and skill cores simultaneously; bloom amplifies HDR cores but never replaces relief or material readability.
+31. World audio reads the same environment, material profile, and impact event: wind and ambience follow authored zones, while steps, scars, wakes, and skill contacts emit bounded spatial layers from the true contact.
+32. Visual target: broad continuous terrain with directional microstructure, stable LOD, real material-semantic combat history, warm/cool lighting depth, and no camera-driven scars or moving seams.
 
 TWO VOXEL CLASS SYSTEMS
 
@@ -375,7 +371,7 @@ EXECUTION AND CRAFT LOOP
 - Technician is not stretch content; both complete classes belong to the playable path.
 - Complete targeted VFX research before class effects and retain only product-relevant decisions.
 - Inspect real ownership, data flow, registrations, limits, class/resource state, air/ground state, reset, and static gates after coherent cuts; fix the largest evidenced gap.
-- This prompt grants current permission for agent-driven browser, screenshot, gameplay, and performance checks of the final integrated build. Establish the acceptance viewport first: maximize the preview, center and keep the active character visible, hide debug overlays, show the reference large enough to judge, and capture representative movement, skill, enemy, boss, and world states.
+- This prompt grants current permission for agent-driven browser, screenshot, gameplay, and performance checks of the final integrated build. Establish a reproducible acceptance state first: fixed seed, viewport, DPR, quality level, camera, and combat load; maximize the preview, keep the active character visible, hide debug overlays, and capture representative movement, skill, enemy, boss, and world states.
 - Visible quality, combat feel, class parity, and measured runtime remain honest manual gates without it.
 
 PERFORMANCE AND GATES
@@ -406,7 +402,7 @@ DELIVERY ORDER
 DONE WHEN
 
 - Start screen selects exactly Skyglass or Verdant plus Swordfighter or Elemental Technician and starts directly.
-- Both maps use the same Claude-Flakes-style heightfield/clipmap/reaction-field foundation with distinct material profiles.
+- Both maps use the same baked-heightfield, clipmap-LOD, cache, and bounded reaction-field foundation with distinct authored forms and material profiles.
 - Swordfighter, Elemental Technician, and enemies are premium voxel rigs with articulated full-body ground and aerial animation.
 - Both classes have jump, separate dodge, ground/air `Q` dash, and a functional aerial `2` branch without broken states.
 - Each class has nine complete skills on `Q E R 1 2 3 4 5 6` with cooldowns, resource rules, attached full-body animation, layered VFX/audio, and measured hits.
@@ -419,10 +415,11 @@ DONE WHEN
 
 MANDATORY SUB-AGENT QUALITY LOOP
 
-- Fan out the independent tracks above, then have a separate harsh visual critic review the integrated Three.js game rather than isolated parts.
-- Compare anonymous side-by-side captures against lawfully available current Call of Duty reference captures for execution quality only: first read, composition, material response, lighting, animation weight, contact, VFX layering, clarity, polish, and frame stability. Do not copy assets, branding, characters, maps, UI, audio, or proprietary content.
-- The critic must record the blind choice, concrete reasons, and the largest visible gap. Route that gap to the owning sub-agent, integrate the correction, rerun static/regression gates, and repeat the blind comparison.
-- Never invent a blind win, visual approval, or measured result. If the environment cannot access or display the real reference and built game fairly, keep the comparison as an explicit manual gate instead of claiming success.
+- Fan out only the independent tracks above, then have a separate harsh visual critic review the integrated running game rather than isolated parts.
+- Produce anonymous side-by-side captures of the strongest current candidate and the previous integrated candidate under the same seed, camera, viewport, movement/combat state, and quality settings.
+- Blind-rank the candidates against this prompt's written product bar: first read, composition, material response, lighting, animation weight, contact, VFX causality/layering, target clarity, polish, and frame stability.
+- Record the blind choice, concrete evidence, regressions, and largest visible gap. Route that gap to its owning track, integrate the correction, rerun static/regression/performance gates, and repeat only with a meaningfully changed candidate.
+- Never invent a blind win, visual approval, or measured result. If fair captures or runtime measurement are unavailable, keep those checks as explicit manual gates instead of claiming success.
 
-Don't stop until each sub-agent is utterly wowed with the quality when compared with the actual Call of Duty game. It should literally compare them side by side blind and say which one looks better. Do this in ThreeJS. /loop until it's utterly perfect. Fan out sub-agents and ultracode.
+Continue the `/loop` while a concrete, reproducible gap to this contract remains fixable. Stop on the complete product bar or a real external boundary—not on sub-agent excitement. Use the target repository's existing 3D stack and fan out sub-agents only across disjoint ownership.
 ```

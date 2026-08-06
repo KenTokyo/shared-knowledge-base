@@ -13,15 +13,13 @@ MISSION AND QUALITY BAR
 
 Build a completely new, immediately playable third-person browser hack-and-slash. The game has exactly two selectable compact worlds, two complete voxel hero classes—a Swordfighter and a technology-based Elemental Technician—endless enemy waves, premium MMORPG-grade abilities, and a minimal start flow.
 
-Target the combat responsiveness, full-body animation quality, impact clarity, and layered spectacle associated with the strongest modern action MMORPGs such as Black Desert, while creating an original voxel identity. Use that title only as a quality benchmark. Do not copy its assets, characters, effects, UI, audio, or proprietary content.
+Reach premium modern action-RPG responsiveness, full-body animation weight, impact clarity, and layered spectacle while creating an original voxel identity. Do not copy assets, characters, effects, UI, audio, maps, or proprietary content from another product.
 
-World quality must reach the composition, material separation, lighting, and atmosphere of the two supplied concept images. Character construction and animation must use the strongest principles of the Asset Lab V6/V36 voxel rigs: clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX. Implement everything from scratch and keep it local to this game; do not copy a finished benchmark entry.
+World quality must achieve strong composition, material separation, lighting, atmosphere, and traversable depth from the written world briefs below. Character construction must use clearly separated body segments, real joint pivots, readable full-body motion, and spatially attached weapons and VFX.
 
-References:
-- assets/concepts/asset-lab/v91-v120-world-comparison/imagegen-final/world-skyglass-aqueduct-palace-image.png
-- assets/concepts/asset-lab/v91-v120-world-comparison/imagegen-final/world-verdant-titan-grove-fortress-image.png
+Portability rule: this prompt is the complete reference. Do not inspect, name, or depend on any source project, benchmark repository, versioned map, local machine path, or fixed internal asset path. Use the target repository's existing renderer, language, ownership, and build system. Translate shaders, render targets, storage buffers, post-processing, audio, bakes, and caches into equivalent host-stack mechanisms; never import foreign APIs or finished source code.
 
-Use the images as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
+Use the two text briefs as art direction and a quality bar, never as flat scenery. The result must function as a real 3D game.
 
 FIRST READ
 
@@ -50,7 +48,7 @@ START FLOW AND UI
 
 1. The start screen contains only:
    - game title,
-   - two large world cards with reference image and English name,
+   - two large world cards with a generated world preview or representative in-game thumbnail and English name,
    - two clear class cards for `Swordfighter` and `Elemental Technician`,
    - unmistakable selected states for world and class,
    - one primary `Start` button.
@@ -95,38 +93,51 @@ WORLD 2 — VERDANT TITAN GROVE FORTRESS
 - Enemy spawn zone follows the central rune; spawn anchors remain separated from the player entrance.
 - Lighting: warm sun shaft through the canopy, cool green ambient fill, warm windows/lanterns, and visible atmospheric depth without milky near fog.
 
-VOXEL-STYLE MAP ARCHITECTURE
+AUTHORED MODULAR VOXEL WORKSPACE — MAP ARCHITECTURE
 
-1. Build Skyglass and Verdant as two independent authored voxel worlds under one small shared `DungeonMapEntry` host contract.
-2. Voxel Style means deliberately placed faceted volumes and readable material blocks; no Minecraft grid, random cube terrain, or cube shell over legacy smooth geometry.
-3. Each map owns its folder and a local deterministic `build(seed)`.
-4. `build(seed)` returns:
+1. Build Skyglass and Verdant as two independent authored voxel workspaces under one small shared map-host contract. Everything needed to reproduce this approach is defined here; no external map code is required.
+2. Deliberately place faceted volumes and readable material blocks; reject Minecraft grids, random cube terrain, and cube shells over unrelated smooth geometry.
+3. Each map owns one isolated `AuthoredWorkspace` or equivalent and a deterministic `build(seed)` entry point.
+4. Split the workspace into separate authored hotspots: entrance, central arena, primary landmark, side route, water feature, secondary encounter pocket, and distant silhouette band.
+5. Each hotspot owns a local coordinate frame, explicit world bounds, geometry/material batches, ground and blocker data, player/enemy/boss anchors, lights/audio emitters, and optional reaction chunks.
+6. Connect hotspots through deliberately graded routes and shared world addressing; they may be built independently but must read as one traversable world without seams or disconnected diorama islands.
+7. `build(seed)` returns:
    - batched voxel/wedge/slab families,
-   - a few hero surfaces for shapes that modules cannot carry,
-   - `playfield` with `groundHeightAt`, normal, material role, player start, arena, boundaries, and blockers,
-   - camera/lighting profile,
-   - player, enemy, and boss anchors,
-   - local map-response interface.
-5. Shared helpers remain neutral: seed/math, primitives, greedy meshing or instance batches, host contracts, and impact data types.
-6. Neither map imports finished builders, material palettes, or landmarks from the other map.
-7. Ground comes from authored terraces, ramps, slabs, wedges, and coherent voxel clusters; the traversal path remains smooth enough for fast combat.
-8. `groundHeightAt(x,z)` and material queries match the visible surface; transitions derive from final batches/bakes rather than a parallel reconstruction.
-9. Skyglass uses pale stone voxels, dark metal/wood modules, turquoise water, and restrained gold inlays; large arches and palace mass use readable block rhythms instead of tiny tile noise.
-10. Verdant uses dark earth/rock voxels, layered root volumes, warm timber modules, and clearly grouped foliage; Titan trees remain authored hero silhouettes.
-11. Repeated modules are instanced by shape/material or merged into static batches; never one mesh or React element per voxel.
-12. Dynamic map response uses one small capped state atlas or sparse cell deltas per visible surface chunk:
+   - a few hero surfaces for silhouettes modules cannot carry,
+   - `playfield` queries for ground height, normal, material role, water, arena, boundaries, and blockers,
+   - camera, lighting, fog, post-processing, and audio profiles,
+   - player, enemy, boss, VFX, and ambient anchors,
+   - local bounded map-response ownership.
+8. Shared helpers remain neutral: deterministic seed/math, primitive generators, greedy meshing or instance batching, host contracts, impact data, bounds, and disposal.
+9. Use the seed for reproducible secondary variation only; composition, routes, landmark placement, arena shape, water, and safe exits stay explicitly authored.
+10. Build ground from terraces, ramps, slabs, wedges, retaining walls, and coherent voxel clusters; traversal stays smooth enough for fast combat.
+11. Visible ground and `groundHeightAt(x,z)`/material queries share one final source; collision and gameplay never reconstruct a second approximate floor.
+12. Skyglass uses pale stone masses, dark metal/wood modules, turquoise water, restrained gold inlays, large arches, and palace rhythms rather than tiny tile noise.
+13. Verdant uses dark earth/rock masses, layered root volumes, warm timber modules, grouped foliage, and deliberately authored Titan-tree silhouettes.
+14. Instance repeated modules by shape/material or merge them into static batches; never create one mesh, draw call, or UI-framework element per voxel.
+15. Keep unique hero geometry separate only when its silhouette, traversal, or material behavior cannot be represented by the module families.
+16. Partition render work by hotspot or spatial chunk. Compute tight bounding boxes/spheres after final transforms, then apply frustum culling per batch instead of treating the whole map as one always-visible object.
+17. Use LOD only for distant architecture, foliage, or silhouette carriers whose projected size justifies a cheaper form; avoid open-world streaming machinery for a compact fully resident map.
+18. Track cost as `visible batches × material families × LODs × beauty/shadow/depth passes`, not as raw voxel count alone.
+19. Dynamic map response uses a small capped state atlas or sparse cell deltas per visible surface chunk:
    - height/edge offset for real notches and raised rims,
-   - fracture/compaction mask for material response,
-   - loose fragments only from fixed pools,
-   - dirty queue with a hard work budget.
-13. One impact marks only affected surface cells; never remesh the whole map or all chunks per hit.
-14. Deep scars may modify local geometry or vertex displacement; micro traces remain material/normal response when projected size does not justify geometry.
-15. Chunks at impact boundaries share world addressing; cuts never stop at batch or chunk seams.
-16. Water, stairs, doors, arena axes, and parapets remain real authored forms; residues never break a safe route.
-17. The entire compact map may remain loaded; chunking controls reaction/culling cost rather than imitating an open world.
-18. Derive budgets per map from real target hardware; report instance families, static batches, reaction chunks, and shadow passes separately.
-19. Voxel response state owns session reset, world-change clear, and stable degradation; no unbounded destroyed-cell list.
-20. Visual target: handcrafted premium voxel diorama with large readable masses, traversable depth, and combat history—not a procedural block desert.
+   - fracture/compaction state for material response,
+   - wet/frozen/burned/exposed state where relevant,
+   - loose fragments from fixed pools,
+   - dirty queue with a hard per-frame work budget.
+20. One impact updates only touched cells and queues only dirty chunks; never remesh the complete workspace or scan every hotspot per hit.
+21. Deep scars may alter local vertices or displacement; micro traces remain normal/roughness/albedo response when their projected size does not justify geometry.
+22. Surface chunks share world-space addressing and border samples so cuts, wakes, and frost never stop at batch or hotspot seams.
+23. Water, stairs, doors, arena axes, parapets, spawn routes, and exits remain authored safe forms; cosmetic residues never break traversal or navigation.
+24. One Environment source owns direct light, sky/ambient fill, fog, wind, shadows, exposure, and grade. All hotspot materials, water, vegetation, skill lights, and post effects consume it.
+25. Use a small PBR material-role set with consistent world scale, readable roughness/value separation, contact AO, and triplanar or world-space projection where top-only UVs would smear steep forms.
+26. HDR skill/spawn lights come from fixed pools; bloom supports bright cores, tone mapping protects world materials, and post-processing never substitutes for geometry or light direction.
+27. World audio consumes the same environment and impact events as visuals: authored ambient zones crossfade by position, while material contacts choose bounded spatial layers from the true hit.
+28. The whole compact map may remain loaded; chunks organize culling, reaction updates, shadow cost, and ownership rather than pretending to be an endless streamed world.
+29. Derive budgets from target hardware and real combat load; report visible instance families, static batches, reaction chunks, shadow casters, lights, and post passes separately.
+30. Reset, retry, and world change clear reaction state, dirty queues, transient lights/audio, and pooled fragments deterministically without rebuilding immutable workspace geometry.
+31. Under load, drop distant detail, low-priority fragments, shadow density, and reaction microdetail before landmark silhouette, playfield truth, skill readability, or safe routes.
+32. Visual target: a handcrafted premium voxel world with large readable masses, connected authored hotspots, traversable depth, coherent light, and visible combat history—not a procedural block desert.
 
 TWO VOXEL CLASS SYSTEMS
 
@@ -350,7 +361,7 @@ LIGHTING SYSTEM
 
 EXECUTION AND CRAFT LOOP
 
-- Execution profile `linear`: one integration owner understands references, builds the full product, and keeps coupled decisions in one context; no subagents or parallel architecture.
+- Execution profile `linear`: one integration owner understands this complete contract and the target repository, builds the full product, and keeps coupled decisions in one context; no subagents or parallel architecture.
 - Order: product/class contract → Game Host → primary map → shared rig/movement → Swordfighter slice → Elemental Technician parity → enemies/waves → second world → lighting/performance → final pass.
 - Technician is not stretch content; both complete classes belong to the playable path.
 - Complete targeted VFX research before class effects and retain only product-relevant decisions.
