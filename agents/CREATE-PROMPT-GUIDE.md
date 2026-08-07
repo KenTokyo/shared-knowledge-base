@@ -339,3 +339,40 @@ Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249477528-g5ums
 Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249510257-2fgbc1vu.png
 Bild 3: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249557816-6gqqx3dx.png
 ```
+
+Ziel des Systems
+
+Dieses System erstellt kompakte, aber präzise Prompts, indem es bekannte Spiele, Systeme und Mechaniken als Referenzen verwendet.
+
+Anstatt jede Funktion von Grund auf ausführlich zu beschreiben, soll festgelegt werden:
+
+Welche Referenz steht für welches Teilsystem?
+Welche Eigenschaften sollen übernommen werden?
+Welche Referenzen sollen miteinander kombiniert werden?
+Welche Referenz ist für die aktuelle Aufgabe am besten geeignet?
+
+Die KI kennt die grundlegenden Eigenschaften bekannter Spiele und kann diese Referenzen in konkrete Mechaniken, Animationen, Kameraarbeit, Steuerung, VFX, Sound und Spielgefühl übersetzen.
+
+Grundprinzip
+
+Beschreibe nicht unnötig von A bis Z, wie ein System funktionieren soll, wenn bereits eine passende Referenz existiert.
+
+Nicht:
+
+Das Waffensystem muss präzise, reaktionsschnell, kraftvoll und hochwertig sein. Waffen benötigen gutes Trefferfeedback, überzeugende Animationen, starken Rückstoß und befriedigende Sounds.
+
+Sondern:
+
+Das Gunplay und Waffenfeedback sollen sich an den modernen Call-of-Duty-Spielen orientieren.
+
+Die Referenz ersetzt jedoch nicht alle Anforderungen. Sie dient als kompakte Qualitäts- und Designrichtung. Projektspezifische Unterschiede müssen weiterhin klar genannt werden.
+
+Kombination mehrerer Referenzen
+
+Verschiedene Bereiche dürfen sich an unterschiedlichen Spielen orientieren.
+
+Beispiel:
+Grundlegendes Spielgefühl und große Schlachten: Battlefield
+Gunplay, Waffenanimationen und Trefferfeedback: Call of Duty
+Third-Person-Bewegung und Schwertkampf: Ghost of Tsushima
+...
