@@ -9,6 +9,7 @@ Agentische Sichtprüfung ist kein Standardgate. Freigabe, Reihenfolge und Gesamt
 
 | Aufgabe | Lesen |
 | --- | --- |
+| Vollständige neue Welt mit Bake, Runtime, Kamera und Finalbild | [`threejs/AUTHORED-WORLD-RUNTIME.md`](threejs/AUTHORED-WORLD-RUNTIME.md) |
 | Neue Welt, Terrain, Biome, Wege | [`threejs/MAP-GENERATION.md`](threejs/MAP-GENERATION.md) + [`threejs/PERFORMANCE.md`](threejs/PERFORMANCE.md) |
 | Gras, Bäume, Blumen, Ambient Life | [`threejs/VEGETATION.md`](threejs/VEGETATION.md) + [`threejs/PERFORMANCE.md`](threejs/PERFORMANCE.md) |
 | Fluss, Meer, Teich, Wasserfall | [`threejs/WATER.md`](threejs/WATER.md) |
@@ -19,13 +20,14 @@ Agentische Sichtprüfung ist kein Standardgate. Freigabe, Reihenfolge und Gesamt
 | Capture, Regression, unklare Ursache | [`threejs/DEBUG-REVIEW.md`](threejs/DEBUG-REVIEW.md) |
 | Sweep, Ranking, Referenzvergleich | [`threejs/MEASURING.md`](threejs/MEASURING.md) |
 
-Zusätzlich genau eine passende Datei aus [`projects/<repo-name>/`](projects/) lesen, wenn dessen Trigger greift. Bei einer vollständigen neuen Welt zuerst Map-Generierung und Performance, danach nur die wirklich betroffenen Owner.
+Zusätzlich genau eine passende Datei aus [`projects/<repo-name>/`](projects/) lesen, wenn dessen Trigger greift. Bei vollständiger Welt zuerst Authored World Runtime, danach nur wirklich betroffene Owner.
 
 ## Startreihenfolge
 
 1. Hauptmotiv, Vorder-/Mittel-/Hintergrund, Route und Größenanker benennen.
-2. Gemeinsame Weltfelder und Integrationskontakte festlegen.
-3. Hauptschichten vollständig bauen; fehlend/kaputt schlägt Detailpolitur.
-4. Abgeleitete Bakes, Kameras, Spawns und Messregionen nach Weltänderungen erneuern.
+2. Authored Spec, gemeinsame Weltfelder und Integrationskontakte festlegen.
+3. Teure deterministische Ableitungen gestuft backen und mit Quellenhash/Stempel koppeln.
+4. Hauptschichten vollständig in einer Weltlaufzeit bauen; fehlend/kaputt schlägt Detailpolitur.
+5. Abgeleitete Bakes, Kameras, Spawns und Messregionen nach Weltänderungen erneuern.
 
 Fachmechanismen und Belege stehen ausschließlich in den verlinkten Ownern. Die frühere Parallelfassung unter `worldbuilding/` liegt nur noch in [`old-deprecated/worldbuilding/`](old-deprecated/worldbuilding/).

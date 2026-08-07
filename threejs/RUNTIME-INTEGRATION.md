@@ -7,6 +7,9 @@
 
 ## Tipps
 
+- **Weltqualität bricht erst im Host ein** — Importierte Welt läuft neben alter Kamera, Nebel-, Schatten-, PostFX- oder Framekette. → Eine host-native Weltlaufzeit besitzt Spec/Bake-Auswahl, Weltbau, Environment, Renderreihenfolge, HDR-Ziel, Finalbild und Teardown; genau ein Canvas, Renderer, Tiefenraum, Kamera-Handoff, Takt und Frame-Owner bleibt aktiv.
+  *claude-of-tsushima: vollständige Welt-Bootreihenfolge · voxel-samurai-quiz: Ashen Coast/Sunken Shrine erreichten Parität erst über gemeinsamen Canvas und einen Quizfall-Finalframe · 2026-08-06–08-07*
+
 - **Consumer liest vorigen Frame** — Hand, Trail, Kontakt oder Kamera hinkt genau einen Frame hinterher. → Datenfluss explizit ordnen: Gameplay → Pose → Weltmatrizen → Kontakt/VFX → Kamera → Render; Consumer liest finalen Ownerzustand statt parallel fortgeschriebenen Proxy.
   *voxel-samurai-quiz: Stützhand muss nach Klassenpose und `updateMatrixWorld` laufen · claude-flakes: Figure, Wake und Deformationswriter teilen ausgewertete Weltpunkte statt unabhängiger Updates · 2026-07-25–08-04*
 
@@ -24,6 +27,7 @@
 
 ## Handoffs
 
+- Vollständige Weltbild-Pipeline → [Authored World Runtime](AUTHORED-WORLD-RUNTIME.md)
 - Pose/Kontakt → [Animation und Charakter](ANIMATION-CHARACTER.md)
 - Effektpools → [VFX](VFX.md)
 - Hotpathkosten → [Performance](PERFORMANCE.md)

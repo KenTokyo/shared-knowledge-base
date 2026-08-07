@@ -9,25 +9,25 @@
 ## Long Prompts — Complete Product Specifications
 
 1. [`Voxel Style`](long/voxel-style.md) — authored modular hotspots, batched faceted surfaces, spatial culling, and bounded local reactions.
-2. [`Ashen Coast Style`](long/ashen-coast-style.md) — authored world specification, staged derived-data bake, deterministic cache, derived water, and shared world truth.
+2. [`Authored World Runtime Style`](long/authored-world-runtime-style.md) — authored world specification, mandatory staged bake for expensive fields, dedicated runtime, coherent environment/camera, and one HDR final image.
 3. [`Claude Flakes Style`](long/claude-flakes-style.md) — authored macro heightfield, optional continuous terrain LOD, bounded recyclable surface response, and relief-driven lighting.
 
 ## Short Prompts — Black Desert Quality Benchmark
 
 1. [`Voxel Style — Short`](short/voxel-style.md) — compact handcrafted voxel-diorama request.
-2. [`Ashen Coast Style — Short`](short/ashen-coast-style.md) — compact local AEON-spec/bake request.
+2. [`Authored World Runtime Style — Short`](short/authored-world-runtime-style.md) — compact full world-pipeline request.
 3. [`Claude Flakes Style — Short`](short/claude-flakes-style.md) — compact reactive heightfield/clipmap request.
 
 ## Long Subagent Prompts — Orchestrated Product Specifications
 
 1. [`Voxel Style — Long Subagent`](long-subagent/voxel-style.md) — portable modular-voxel direction plus disjoint build tracks and a bounded final quality review.
-2. [`Ashen Coast Style — Long Subagent`](long-subagent/ashen-coast-style.md) — portable authored-spec and staged bake/cache direction plus disjoint build tracks and a bounded final quality review.
+2. [`Authored World Runtime Style — Long Subagent`](long-subagent/authored-world-runtime-style.md) — full authored world-image pipeline plus collision-free build tracks and a bounded final quality review.
 3. [`Claude Flakes Style — Long Subagent`](long-subagent/claude-flakes-style.md) — portable reactive-heightfield direction plus disjoint build tracks and a bounded final quality review.
 
 ## Short Subagent Prompts — Orchestrated Benchmark Requests
 
 1. [`Voxel Style — Short Subagent`](short-subagent/voxel-style.md) — compact voxel request with orchestrated implementation and bounded review.
-2. [`Ashen Coast Style — Short Subagent`](short-subagent/ashen-coast-style.md) — compact local AEON request with orchestrated implementation and bounded review.
+2. [`Authored World Runtime Style — Short Subagent`](short-subagent/authored-world-runtime-style.md) — compact world-pipeline request with orchestrated implementation and bounded review.
 3. [`Claude Flakes Style — Short Subagent`](short-subagent/claude-flakes-style.md) — compact reactive heightfield request with orchestrated implementation and bounded review.
 
 Each subagent prompt keeps one integration owner for coupled decisions and delegates disjoint implementation tracks. Its bounded review compares anonymous integrated candidates against the prompt's written product bar. The critic returns one strongest concrete gap; another pass runs only after a material change or a new concrete question, never as an endless screenshot loop.
@@ -35,7 +35,7 @@ Each subagent prompt keeps one integration owner for coupled decisions and deleg
 ## HTML-Only Chat Prompts — One `index.html`
 
 1. [`Voxel Style — HTML Only`](html-only/voxel-style.md) — raw WebGL2 voxel diorama in one locally opened file.
-2. [`Ashen Coast Style — HTML Only`](html-only/ashen-coast-style.md) — authored specs and deterministic staged bake inside one file.
+2. [`Authored World Runtime Style — HTML Only`](html-only/authored-world-runtime-style.md) — authored spec, staged bake, Environment, camera, and final image inside one file.
 3. [`Claude Flakes Style — HTML Only`](html-only/claude-flakes-style.md) — reactive heightfield and bounded surface field inside one file.
 
 Each HTML-only prompt is designed for direct chat use and demands exactly one downloadable `index.html` or one fallback `html` code block: no CLI, build, server, CDN, network request, external library, or additional asset.
@@ -69,7 +69,7 @@ Each monster prompt demands one offline `monster.html` with exactly ten original
 | Style | Choose when | Main trade-off |
 |---|---|---|
 | Voxel | handcrafted faceted composition and direct module authorship matter most | authored hotspots and local reactions require map-specific craft |
-| Ashen Coast | authored geography, derived water, and staged bake/cache truth matter most | higher specification, bake, and validation investment before the first finished world |
+| Authored World Runtime | authored geography, deterministic bakes, coherent Environment/camera, and one final image matter most | higher specification, bake, integration, and validation investment before the first finished world |
 | Claude Flakes | continuous terrain, genuine visible skill scars, and relief-driven lighting matter most | reaction storage, LOD parity, and shader/bandwidth budgets are more demanding |
 
 ## Portability Boundary

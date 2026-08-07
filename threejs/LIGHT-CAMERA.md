@@ -22,11 +22,15 @@
 - **Ganzes Bild milchig, Nahbereich ebenfalls** — Additive Dunst-, Wolken- oder Horizontkarten liegen auf Radius **innerhalb** der Kameraumlaufbahn; Kamera blickt durch Nebelwand statt daran vorbei, additives Blending hellt ohne Tiefenwirkung auf. → Radius jeder Atmosphärenkarte gegen Kameraumlaufradius prüfen: Horizontband hinter Kamerabahn, Wolkendeck über Öffnungswinkel; additive Schicht nie zwischen Auge und Motiv.
   *voxel-samurai-quiz: 46 Dunstkarten à 96 Units auf Radius 258 bei Kameraumlauf 300 ergaben eine geschlossene additive Wand direkt vor der Linse · 2026-08-05*
 
-- **Lichtsysteme stimmen einzeln, gemeinsam nicht** — Sonne, Nebel, Wasser, Vegetation und Grade lesen verschiedene Tageszustände. → Eine Environment-SSoT liefert Richtung, Farbe, Intensität, Atmosphäre und Grade; Materialien über legalen Hookpfad anbinden statt eigene Sonne zu addieren.
+- **Lichtsysteme stimmen einzeln, gemeinsam nicht** — Sonne, Nebel, Wasser, Vegetation und Grade lesen verschiedene Tageszustände. → Eine Environment-SSoT liefert Richtung, Farbe, Intensität, Atmosphäre, Wind, Wetter, Schatten, Belichtung und Grade; Materialien über legalen Hookpfad anbinden statt eigene Sonne zu addieren.
   *claude-of-tsushima: `Environment` schreibt gemeinsamen Uniformblock und CSM; ohne `engine.lit()` beleuchteten alle Kaskadenlichter ein Standardmaterial N-fach · claude-flakes: Spell-Lights werden vor der Consumer-Schleife an alle sichtbaren Materialconsumer übertragen · 2026-07-28–08-04*
+
+- **Gute Welt wirkt durch Standardkamera und Einzelpass beliebig** — Schulterhöhe, Dämpfung, Sichtweite, Schatten und Finalbild wurden nicht als ein Vertrag gebaut. → Gameplaykamera mit Schulterabstand/-höhe, Fokusfeder, Kollision, First/Third Person, Reset und authored Views festlegen; ein HDR-Finalpfad ordnet Tone Mapping, Bloom, God Rays, Tiefenunschärfe, Ambient Occlusion und Grade nach klaren Bildrollen und Kosten.
+  *claude-of-tsushima: CameraRig, CSM, Environment und PostFX bilden ein Weltbild · voxel-samurai-quiz: Quizfall World Runtime übernimmt Kamera, Schatten und Finalbild gemeinsam · 2026-08-01–08-07*
 
 ## Handoffs
 
+- Vollständige Weltbild-Pipeline → [Authored World Runtime](AUTHORED-WORLD-RUNTIME.md)
 - Material-/Shaderpfad → [Shader und PBR](SHADERS.md)
 - Kamera als Gameplayrichtung → [Runtime-Integration](RUNTIME-INTEGRATION.md)
 - Kostenmessung → [Performance](PERFORMANCE.md)

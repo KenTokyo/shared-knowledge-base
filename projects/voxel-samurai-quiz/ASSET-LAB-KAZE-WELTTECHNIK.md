@@ -11,7 +11,7 @@
 - Ausgeschlossen: Figuren, Kampf, Ereignisablauf, Choreografie, Treffer, VFX und sonstige Simulationslogik.
 - V3-Beleg: `claude-opus-5-max/v3` mit Marktplatz, Bergrücken und Waldburg.
 - V36-Beleg: Tier-Vertrag plus vorhandene Weltunterbauten von GLM 5.2 und DeepSeek V4 Flash v2.
-- Kaze-Beleg: AEON-Port und Nur-Lese-Referenz `Claude-of-tsushima`.
+- Kaze-Beleg: retired standalone world-prototype port and read-only reference `Claude-of-tsushima`.
 - Claude Opus 5 besitzt V3-Beiträge, aber keinen V36-Beitrag.
 - Aussagen zu V36 beschreiben deshalb kein Opus-5-Ergebnis.
 
@@ -418,7 +418,7 @@ authored World-Spec
 - `apps/asset-lab/src/catalog/assetLabBenchmarks/glm-5-2-via-claude-code/v36/fortressEnvironment.ts`
 - `apps/asset-lab/src/catalog/assetLabBenchmarks/deepseek-v4-flash-v2-via-claude-code-max/v36/terrainMath.ts`
 - `apps/asset-lab/src/catalog/assetLabBenchmarks/deepseek-v4-flash-v2-via-claude-code-max/v36/environmentSurfaces.ts`
-- `docs/aeon-engine/kaze-no-shima-worldbuilding-und-performance-guide.md`
+- `docs/quizfall-world-runtime-entry.md`
 - `src/engine/world/worlds/kazeNoShima.js`
 - `src/engine/world/Heightfield.js`
 - `src/engine/world/Terrain.js`

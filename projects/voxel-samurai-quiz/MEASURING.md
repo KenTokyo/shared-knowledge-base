@@ -1,6 +1,6 @@
-# Bildmessung und Urteilen — voxel-samurai-quiz (AEON)
+# Bildmessung und Urteilen — voxel-samurai-quiz (Quizfall World Runtime)
 
-**Lesen wenn:** AEON-Bildmaße, Layer-Attribution, Sondenmetriken oder Probe-vs.-Shipping.
+**Lesen wenn:** Quizfall-Weltbildmaße, Layer-Attribution, Sondenmetriken oder Probe-vs.-Shipping.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Global: [`threejs/MEASURING.md`](../../threejs/MEASURING.md). Laufvarianz/Zeit/Spalten:

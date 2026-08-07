@@ -6,6 +6,7 @@
 
 Nur den engsten Fachowner lesen:
 
+- Vollständige Welt, Bake, Kamera, Environment und Finalbild → [Authored World Runtime](threejs/AUTHORED-WORLD-RUNTIME.md)
 - Terrain, Modifier, Bakes → [Map-Generierung](threejs/MAP-GENERATION.md)
 - Gras, Bäume, Scatter, Life → [Vegetation](threejs/VEGETATION.md)
 - Meer, Fluss, Teich, Ufer → [Wasser](threejs/WATER.md)
@@ -29,7 +30,7 @@ Projektfallen stehen unter [`projects/<repo-name>/`](projects/). Ein Tipp lebt g
 ## Quellenprofil
 
 - **Claude of Tsushima · Three.js:** Weltverträge, Environment, Kamera/Kontakt, Kampf-VFX, Renderkosten und Messfallen.
-- **Voxel Samurai Quiz · Three.js/R3F:** Charakterlayer, VFX-Pools/Forge, Licht-/Shader-Lifecycle, AEON-Welt und Performanceinstrumente.
+- **Voxel Samurai Quiz · Three.js/R3F:** Charakterlayer, VFX-Pools/Forge, Licht-/Shader-Lifecycle, Quizfall World Runtime und Performanceinstrumente.
 - **Claude Flakes · Babylon.js/WebGPU:** nur stackneutrale Mechanismen aus Animation, VFX, Deformation, Reset und Kosten; keine WGSL-/Babylon-API als Three.js-Rezept.
 - **Avatar Casting Abilities · Three.js:** ergänzende Codegegenprobe für Layering, Trails, Partikel und Pools; keine History, daher allein kein Kosten- oder Qualitätsbeleg.
 - **Claude Desert · Three.js:** VFX-Isolation, Shader-/PBR-Gegenproben und Runtime-Readbacks.

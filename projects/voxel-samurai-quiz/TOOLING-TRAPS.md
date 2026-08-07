@@ -1,4 +1,4 @@
-# Werkzeugfallen — voxel-samurai-quiz (AEON)
+# Werkzeugfallen — voxel-samurai-quiz (Quizfall World Runtime)
 
 **Lesen wenn:** Welt-CLI, Sonde, `.mjs`/Shader, SSoT-Tabelle, Komponentensplit oder Commit.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
@@ -53,4 +53,4 @@ Jeder Tipp kostete mindestens einen Durchgang.
   *Alte Prefix-Frames verfälschten PH18-Tabellen · 2026-07-31*
 
 - **`git checkout` als Messungs-Undo** — Gegenmessung überschreibt fremde/ungetrackte Arbeit außerhalb Diff. → Zieldatei nach `.tmp/`, gezielt restaurieren, byte-identisch diffen.
-  *`src/engine/`, `scripts/world/`, `scripts/engine/`, `public/aeon-world/`, `vite.aeon.config.js` lagen außerhalb Diff · 2026-08-01*
+  *`src/engine/`, `scripts/world/`, and `public/quizfall-world/` sat outside the inspected diff · 2026-08-01*

@@ -7,7 +7,7 @@ Use this page to pick a map technology direction. The labels identify visual/bui
 | Style label | How the map is built | Runtime response | Main performance shape |
 | --- | --- | --- | --- |
 | Voxel Style | Authored hotspots assembled from reusable faceted modules, static hero forms, deliberate routes, and coherent ground blocks | Bounded local surface regions hold chips, cuts, compression, heat, frost, wetness, and pooled fragments | Instancing or static batching, tight hotspot/chunk bounds, frustum culling, selective LOD |
-| Ashen Coast Style | Authored world specification feeds staged derived-data bakes for terrain, water, roads, materials, biome density, placement, and shared world truth | Material-aware cosmetic layer sits above immutable baked terrain and never corrupts navigation or cache data | Deterministic bake cache, dependency invalidation, spatial batches, field-specific resolution, measured LOD |
+| Authored World Runtime Style | Authored world specification feeds staged derived-data bakes, one dedicated world runtime, coherent Environment/camera ownership, and one HDR final image | Material-aware cosmetic layer sits above immutable baked terrain and never corrupts navigation or cache data | Deterministic bake cache, dependency invalidation, spatial batches, field-specific resolution, measured LOD, quality-scaled image layers |
 | Claude Flakes Style | Authored macro heightfield supports continuous terrain LOD where useful, frequency-aware relief, and terrain-aligned structures | Bounded recyclable surface state creates real depth, rims, fracture, compaction, elemental state, wakes, and complete reset | Tight terrain-patch bounds, frustum culling, capped contact batches, recyclable field storage, pooled lights |
 
 ## Shared Technology Flow
@@ -34,7 +34,9 @@ Use this page to pick a map technology direction. The labels identify visual/bui
 | Bounded reaction region | Fixed-capacity world area that stores nearby scars and elemental state without unbounded trail objects. |
 | Material-semantic response | Stone, soil, moss, wood, and water react differently to the same measured contact. |
 | Pooling | Reusing fixed sets of fragments, lights, particles, audio voices, or temporary effects instead of allocating during combat. |
+| Dedicated world runtime | One host-native owner builds world layers, Environment, camera handoff, render order, HDR target, PostFX, and teardown without a second canvas or frame loop. |
 | Environment coupling | Sun, sky fill, fog, wind, shadows, exposure, water, materials, audio, and skill lights follow one coherent direction. |
+| Final image path | One HDR result passes through deliberate tone mapping, bloom, god rays, depth of field, ambient occlusion, and grade under explicit quality budgets. |
 | Degradation order | Remove distant polish and microdetail before landmarks, routes, stable ground, navigation, or combat readability. |
 
 ## Freedom Boundary

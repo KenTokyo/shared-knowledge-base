@@ -1,9 +1,9 @@
-# Laufzeitmessung und Sondenstabilität — voxel-samurai-quiz (AEON)
+# Laufzeitmessung und Sondenstabilität — voxel-samurai-quiz (Quizfall World Runtime)
 
-**Lesen wenn:** AEON-Rauschklassen, Lauf-Flags, Zustandsdrift, Zeit oder Sondenspalten.
+**Lesen wenn:** Quizfall-Welt-Rauschklassen, Lauf-Flags, Zustandsdrift, Zeit oder Sondenspalten.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-Global: [`threejs/MEASURING.md`](../../threejs/MEASURING.md). Folgende Werte gelten nur für AEON-Sonden.
+Global: [`threejs/MEASURING.md`](../../threejs/MEASURING.md). Folgende Werte gelten nur für Quizfall-Weltsonden.
 
 ## Tipps
 

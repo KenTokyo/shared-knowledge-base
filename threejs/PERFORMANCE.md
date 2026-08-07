@@ -25,8 +25,12 @@
 - **Culling prüft erfundene Hülle** — Stock-Bounds decken instanzierte Weltpositionen nicht ab; fehlende Sphere crasht trotz `frustumCulled=false`. → Hülle nach letzter Positions-/Matrixänderung explizit setzen und gegen echte Instanzextents prüfen; Culling nur abschalten, wenn Test nachweislich teurer oder bedeutungslos.
   *voxel-samurai-quiz: 1.524 Traversalfehler durch fehlende Geometry-Sphere; Stock-Bounds entwerteten Gras-/Terrainculling · claude-of-tsushima: Chunk-/Tree-Cost hängt an lokalen Renderbounds statt Weltpopulation · 2026-07-30–08-02*
 
+- **Qualitätsstufe tauscht Weltcharakter gegen FPS** — Pauschales Abschalten entfernt Skyline, Route, Bodenlesbarkeit oder Kampfkontakt. → Eine Weltlaufzeit behalten; zuerst interne Auflösung, sinnloses Fern-LOD, Schattenreichweite, Reflexions-/PostFX-Qualität, Ambient-Life-Takt und Hintergrunddichte skalieren; authored Landmarken, sichere Wege und Gameplayklarheit schützen.
+  *claude-of-tsushima: räumliche Buckets und passbezogene Kosten · voxel-samurai-quiz: Quizfall World Runtime skaliert Weltqualität ohne zweiten Renderer · 2026-08-01–08-07*
+
 ## Handoffs
 
+- Vollständige Weltbild-Pipeline → [Authored World Runtime](AUTHORED-WORLD-RUNTIME.md)
 - Messaufbau und Verteilungen → [Messhandwerk](MEASURING.md)
 - Shader-/Passkosten → [Shader und PBR](SHADERS.md)
 - Effektkapazitäten → [VFX](VFX.md)

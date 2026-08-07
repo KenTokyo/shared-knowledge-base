@@ -7,25 +7,25 @@
 ## Complete Long Prompts
 
 1. [`Voxel Style`](prompts/new-games/endless-voxel-slasher/long/voxel-style.md) — independent authored voxel worlds with bounded reaction chunks.
-2. [`Ashen Coast Style`](prompts/new-games/endless-voxel-slasher/long/ashen-coast-style.md) — local V73 AEON construction with authored specs, staged bake, and `InteractionField`.
+2. [`Authored World Runtime Style`](prompts/new-games/endless-voxel-slasher/long/authored-world-runtime-style.md) — complete authored spec, staged bake, dedicated runtime, Environment/camera, final image, and bounded interaction contract.
 3. [`Claude Flakes Style`](prompts/new-games/endless-voxel-slasher/long/claude-flakes-style.md) — reactive heightfield/clipmap terrain with bounded surface state.
 
 ## Compact Short Prompts
 
 1. [`Voxel Style — Short`](prompts/new-games/endless-voxel-slasher/short/voxel-style.md).
-2. [`Ashen Coast Style — Short`](prompts/new-games/endless-voxel-slasher/short/ashen-coast-style.md).
+2. [`Authored World Runtime Style — Short`](prompts/new-games/endless-voxel-slasher/short/authored-world-runtime-style.md).
 3. [`Claude Flakes Style — Short`](prompts/new-games/endless-voxel-slasher/short/claude-flakes-style.md).
 
 ## Orchestrated Long Prompts
 
 1. [`Voxel Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/voxel-style.md).
-2. [`Ashen Coast Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/ashen-coast-style.md).
+2. [`Authored World Runtime Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/authored-world-runtime-style.md).
 3. [`Claude Flakes Style — Long Subagent`](prompts/new-games/endless-voxel-slasher/long-subagent/claude-flakes-style.md).
 
 ## Orchestrated Short Prompts
 
 1. [`Voxel Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/voxel-style.md).
-2. [`Ashen Coast Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/ashen-coast-style.md).
+2. [`Authored World Runtime Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/authored-world-runtime-style.md).
 3. [`Claude Flakes Style — Short Subagent`](prompts/new-games/endless-voxel-slasher/short-subagent/claude-flakes-style.md).
 
 - Orchestrated prompts explicitly authorize disjoint subagent tracks, final integrated visual review, and a blind execution-quality comparison against lawful Call of Duty references without copying proprietary content.
@@ -33,7 +33,7 @@
 ## Single-File HTML Chat Prompts
 
 1. [`Voxel Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/voxel-style.md).
-2. [`Ashen Coast Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/ashen-coast-style.md).
+2. [`Authored World Runtime Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/authored-world-runtime-style.md).
 3. [`Claude Flakes Style — HTML Only`](prompts/new-games/endless-voxel-slasher/html-only/claude-flakes-style.md).
 
 - Output contract: one directly downloadable or fenced `index.html`, runnable through `file://`, with all CSS, JavaScript, shaders, procedural assets, and audio inline.
@@ -51,5 +51,5 @@
 ## Selection in One Line
 
 - **Voxel Style:** strongest local voxel composition and direct module authorship.
-- **Ashen Coast Style:** strongest local AEON world truth through authored geography, derived water, and one bake/runtime path.
+- **Authored World Runtime Style:** strongest complete world-image contract through authored geography, deterministic bakes, one runtime, coherent Environment/camera, and one HDR final image.
 - **Claude Flakes Style:** strongest continuous ground response, skill scars, and relief-driven light coupling.

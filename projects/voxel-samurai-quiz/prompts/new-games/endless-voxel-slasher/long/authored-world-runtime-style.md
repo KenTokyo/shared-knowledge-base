@@ -1,13 +1,13 @@
-# Authored Spec and Staged Bake-Cache World — Subagent Orchestration
+# Authored World Runtime — Linear Build
 
 **Use:** Copy the complete fenced block and execute it as a standalone game-build request in the host project.
 **Constant:** Game, two playable classes, nine skills per class, combat, enemies, waves, spawn, audio, UI, and English-only player-facing language match the two sibling long prompts.
 **Only comparison area:** Map construction, map rendering, map-light coupling, and visible movement/skill residues.
-**Map focus:** Authored world definitions, staged field bakes, deterministic bake caches, shared runtime queries, derived water, spatial culling, and a material-semantic interaction field.
-**Visual verification:** This prompt explicitly authorizes orchestrated browser, screenshot, gameplay, performance, and blind candidate comparison for the final integrated product.
+**Map focus:** Authored world definitions, mandatory staged bakes for expensive deterministic fields, one dedicated host-native world runtime, shared world truth, layered vegetation and ambient life, coherent environment/camera ownership, one HDR final image, spatial culling, and bounded material-semantic reactions.
+**Visual verification:** Do not start automated browser, screenshot, gameplay, or FPS verification without an explicit current user request.
 
 ```text
-CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — AUTHORED SPEC AND STAGED BAKE-CACHE WORLD
+CREATE SKYGLASS & VERDANT ENDLESS VOXEL SLASHER — AUTHORED WORLD RUNTIME
 
 MISSION AND QUALITY BAR
 
@@ -93,7 +93,7 @@ WORLD 2 — VERDANT TITAN GROVE FORTRESS
 - Enemy spawn zone follows the central rune; spawn anchors remain separated from the player entrance.
 - Lighting: warm sun shaft through the canopy, cool green ambient fill, warm windows/lanterns, and visible atmospheric depth without milky near fog.
 
-AUTHORED SPEC + STAGED BAKE-CACHE WORLD ARCHITECTURE
+AUTHORED WORLD RUNTIME ARCHITECTURE
 
 Use these as technology and outcome requirements, not as a fixed schema, bake function, cache key, field layout, file tree, or engine recipe. Choose the concrete data model and implementation that best fit the host project.
 
@@ -108,9 +108,15 @@ Use these as technology and outcome requirements, not as a fixed schema, bake fu
 9. Derive rivers, ponds, banks, falls, wetness, and water depth from the finished landform so water never climbs uphill or floats above unrelated ground.
 10. Scatter vegetation deterministically from biome, material, slope, water, route, and clearing rules. Batch or instance repeated forms, partition them by useful spatial bounds, and preserve authored hero trees and skyline carriers.
 11. Keep runtime combat response as a bounded material-semantic layer above the immutable baked baseline. Stone, soil, moss, wood, and water may react differently, but cosmetic scars must not corrupt navigation or cached world truth.
-12. Drive time, weather, sunlight, sky fill, fog, wind, shadows, exposure, color grade, water response, ambient zones, and skill-light balance from one coherent environment direction.
-13. Pool transient lights, fragments, audio, and reaction work. Under load, reduce background vegetation, reflection quality, shadow reach, update frequency, and reaction microdetail before authored skyline, routes, arena readability, or combat clarity.
-14. Visual target: an authored compact world with dense local geography, connected hotspots, deterministic bake/cache ownership, aligned terrain-water-structure systems, and clear foreground, middle ground, and background—not noise terrain with props dropped on top.
+12. Run both worlds through one dedicated host-native world runtime that owns spec/bake selection, world construction, environment, render order, HDR target, final PostFX, and teardown. Keep one canvas, renderer, depth space, camera handoff, clock, and final frame owner; never mount a parallel map renderer.
+13. Drive time, weather, sunlight, sky fill, atmosphere, fog, wind, shadows, exposure, color grade, water response, ambient zones, and skill-light balance from one coherent Environment source of truth.
+14. Use cascaded or equivalent directional shadows around gameplay, lower-cost distant shadow roles, physically readable sun/sky contrast, and atmosphere that creates depth without placing a milky additive wall between camera and action.
+15. Build vegetation by distance role: layered near grass, clustered middle vegetation, authored skyline masses, foliage atlases with coverage-preserving alpha mips, and deterministic spatial batches. Preserve hero trees and biome silhouettes before raw instance count.
+16. Add bounded ambient life after composition works: water waves, wind response, pollen, leaves, birds, precipitation, and local atmospheric motion. Pool, cull, cap, and quality-scale every layer.
+17. Author one gameplay camera contract with shoulder distance/elevation, damped focus and movement, collision, first-/third-person behavior, reset, and named review views that prove world composition instead of replacing normal play.
+18. Resolve one HDR final image through deliberate tone mapping, bloom, god rays, depth of field, ambient occlusion, and color grade. Every pass needs a visible job, finite inputs, one owner, and a quality-tier budget; PostFX never hides targets or compensates for broken source lighting.
+19. Pool transient lights, fragments, audio, and reaction work. Under load, reduce internal resolution, useless distant LOD, background vegetation, reflection/PostFX quality, shadow reach, update frequency, ambient-life cadence, and reaction microdetail before authored skyline, routes, arena readability, or combat clarity.
+20. Visual target: an authored compact world with dense local geography, connected hotspots, deterministic bake/cache ownership, aligned terrain-water-structure systems, distance-aware vegetation, living atmosphere, authored gameplay framing, and clear foreground, middle ground, and background—not noise terrain with props dropped on top.
 
 TWO VOXEL CLASS SYSTEMS
 
@@ -279,7 +285,7 @@ ELEMENTAL TECHNICIAN MAP CONTACTS
 - Repeated identical contacts must not duplicate work; residues use fixed capacity, bounded regions, or capped chunks and discard low-priority marks under load.
 - Ultimates last longest, footsteps shortest; `Restart World`, retry, class change, and world selection clear residues and temporary objects deterministically.
 - Beauty, depth/prepass, and shadow consume the same visible geometry response.
-- Provide enough diagnostics to inspect contacts, occupancy, dropped work, temporary objects, and reset state without prescribing a debug schema; visual checks happen only after a coherent integrated build exists.
+- Provide enough diagnostics to inspect contacts, occupancy, dropped work, temporary objects, and reset state without prescribing a debug schema; no browser checks without permission.
 
 ENDLESS WAVES AND ENEMIES
 
@@ -334,12 +340,12 @@ LIGHTING SYSTEM
 
 EXECUTION AND CRAFT LOOP
 
-- Execution profile `orchestrated`: one integration owner keeps coupled architecture and shared state, while sub-agents own disjoint tracks for worlds/lighting, characters/combat/VFX, gameplay/UI/audio, and performance/accessibility. Each sub-agent returns changed files, evidence, risks, and unresolved gaps; only the integration owner merges decisions and performs the complete regression review.
+- Execution profile `linear`: one integration owner understands this complete prompt and the host project, builds the full product, and keeps coupled decisions in one context; no subagents or parallel architecture.
 - Order: product/class contract → Game Host → primary map → shared rig/movement → Swordfighter slice → Elemental Technician parity → enemies/waves → second world → lighting/performance → final pass.
 - Technician is not stretch content; both complete classes belong to the playable path.
 - Complete targeted VFX research before class effects and retain only product-relevant decisions.
 - Inspect real ownership, data flow, registrations, limits, class/resource state, air/ground state, reset, and static gates after coherent cuts; fix the largest evidenced gap.
-- This prompt grants current permission for agent-driven browser, screenshot, gameplay, and performance checks of the final integrated build. Establish a reproducible acceptance state first: fixed seed, viewport, DPR, quality level, camera, and combat load; maximize the preview, keep the active character visible, hide debug overlays, and capture representative movement, skill, enemy, boss, and world states.
+- Never start agent-driven browser, screenshot, gameplay, or FPS checks without current permission.
 - Visible quality, combat feel, class parity, and measured runtime remain honest manual gates without it.
 
 PERFORMANCE AND GATES
@@ -352,13 +358,13 @@ PERFORMANCE AND GATES
 - Extreme Technician AoE uses fixed slots, batching/instancing, capped chains, and bounded field writes.
 - Remove distant/secondary cost before selected-class readability.
 - The host stack's canonical static gates verify deterministic maps, ground parity, safe spawns, exactly two complete class definitions, nine skills per class, resource and air/ground rules, movement/dash/aerial transitions, finite shader inputs, disposal, pool/chain/field caps, temporary-object cleanup, reset, and beauty/depth/shadow parity.
-- Use the granted visual-review scope for targeted final-product evidence; avoid disposable tests or unrelated test configuration.
+- Do not add browser, screenshot, or gameplay tests without explicit request.
 
 DELIVERY ORDER
 
 1. Understand the project rules, product brief, and existing host architecture.
 2. Build shared Game Host, state flow, and world/class selection.
-3. Establish the authored world-spec direction, staged derived-data bake, deterministic cache, shared world truth, and bounded runtime response.
+3. Establish the authored world spec, mandatory staged bake for expensive deterministic fields, deterministic cache, shared world truth, dedicated world runtime, Environment, gameplay camera, and one HDR final-image path.
 4. Build Skyglass as the complete spec-and-bake vertical slice.
 5. Integrate voxel player, jump/dodge/dash, base combat, and camera.
 6. Integrate both nine-skill class kits, researched sword/elemental VFX, audio, and shared skill bar.
@@ -370,7 +376,7 @@ DELIVERY ORDER
 DONE WHEN
 
 - Start screen selects exactly Skyglass or Verdant plus Swordfighter or Elemental Technician and starts directly.
-- Both maps use the same broad authored-spec and staged bake/cache technology while keeping landforms, hotspots, fields, and material responses distinct.
+- Both maps use one authored-spec, staged bake/cache, dedicated world-runtime, Environment, gameplay-camera, and HDR final-image technology while keeping landforms, hotspots, fields, and material responses distinct.
 - Swordfighter, Elemental Technician, and enemies are premium voxel rigs with articulated full-body ground and aerial animation.
 - Both classes have jump, separate dodge, ground/air `Q` dash, and a functional aerial `2` branch without broken states.
 - Each class has nine complete skills on `Q E R 1 2 3 4 5 6` with cooldowns, resource rules, attached full-body animation, layered VFX/audio, and measured hits.
@@ -380,15 +386,4 @@ DONE WHEN
 - World light, sword layers, elemental fields, materials, targets, telegraphs, and tone mapping remain readable.
 - Every player-facing string is English and UI stays compact around start plus combat values.
 - Static/numeric gates are green; visible combat feel remains honestly marked for user acceptance.
-
-BOUNDED FINAL SUB-AGENT QUALITY REVIEW
-
-- Fan out only the independent tracks above, then use one independent critic to review the integrated running game rather than isolated parts.
-- Produce anonymous side-by-side evidence from the strongest current and previous integrated candidates under the same seed, camera, viewport, movement/combat state, and quality settings.
-- Blind-rank both candidates against this prompt's written product bar: first read, composition, material response, lighting, animation weight, contact, VFX causality, target clarity, polish, and frame stability.
-- Return the single strongest concrete gap with evidence and an owner. Route it to that owner, integrate one coherent correction, and rerun bundled static, regression, and allowed performance gates.
-- Run another critic pass only after a material change or a new concrete question; never create an automatic per-camera, per-phase, or endless screenshot loop.
-- Never invent approval, a visual win, or measured performance. If fair captures or runtime measurement are unavailable, keep them as explicit user acceptance gates.
-
-Continue the `/loop` while a concrete, reproducible gap to this contract remains fixable. Stop on the complete product bar or a real external boundary—not on sub-agent excitement. Use the host project's existing 3D stack and fan out sub-agents only across disjoint ownership.
 ```
