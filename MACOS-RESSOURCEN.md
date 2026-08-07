@@ -75,9 +75,9 @@ Die Tabelle enthält **konfigurierte oder vom Framework vorgegebene Ports**, kei
 | `quiz-blaster-arena` | `pnpm dev` | 3030 / 3031 | Vite bevorzugt 3030; Socket.IO ist fest auf 3031 · deprecated |
 | `3-crossword-core-breaker` | `pnpm dev` | 3060 | Vite bevorzugt 3060; Preview beginnt ohne feste Reservierung bei 4173 · leicht deprecated |
 | `voxel-samurai-quiz` | `pnpm dev` | 3070 | Hauptanwendung fest mit `strictPort` |
-| `voxel-samurai-quiz` Labore / Aeon | jeweiliger Labor-Modus | 3071 / 3072 / 3073 / 3074 | Asset-, Sound-, Monster-Lab und Aeon |
+| `voxel-samurai-quiz` Labore | jeweiliger Labor-Modus | 3071 / 3072 / 3073 | Asset-, Sound- und Monster-Lab; Quizfall World Runtime läuft in der Hauptanwendung auf 3070 |
 | `voxel-samurai-quiz` Multiplayer | Servermodus | 2567 | Standardport des Multiplayer-Servers |
-| `voxel-samurai-quiz` Previews | jeweiliger Preview-Modus | 4174 / 4175 / 4176 / 4177 | Asset-, Sound-, Monster- und Aeon-Preview |
+| `voxel-samurai-quiz` Previews | jeweiliger Preview-Modus | 4174 / 4175 / 4176 | Asset-, Sound- und Monster-Preview; Quizfall World Runtime läuft im Spiel-Preview |
 | `voxel-samurai-quiz` Mess-Preview | `preview:measure` | 4180 | **Konflikt:** kollidiert mit `Claude-of-tsushima` Preview |
 | `quizshoot` | `pnpm dev` | ab 5173 | Unfixierter Vite-Standard; weicht bei Belegung aus, Preview entsprechend ab 4173 |
 | `claude-desert` | `npm run dev` / Preview | 5173 / 4173 | Fest mit `strictPort` |
