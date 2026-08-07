@@ -43,6 +43,7 @@ Nicht automatisch zustimmen. Behauptung, Diagnose, Annahme oder Plan bleibt unge
 - **Qualität vor Änderungsgröße:** Kleiner Fix nur, wenn er Problem vollständig und sauber löst; sonst größeren Umbau planen und umsetzen. Wenige geänderte Zeilen sind kein Ziel.
 - **Bestand = Ausgangspunkt:** Viele Apps stammen großteils von Junior-Entwicklern. Code kann schwache/falsche Grundlage sein → erst prüfen, dann Grundlage reparieren oder passend umbauen.
 - **Wirkungsumfeld prüfen:** Bei sichtbarer/verhaltensrelevanter Änderung vollständigen Ausgabepfad kontrollieren → globale Settings, Theme/CSS, Shader/Tone-Mapping, Material-Overrides, Feature-Flags, Cache, Normalisierung, Fallbacks, Persistenz.
+- **Code löschen hilft sehr stark** Statt Code zu behalten und zu ändern, lieber inhalt löschen und neu schreiben, bitte nicht ändern, falls große Änderungen gemacht werden müssen, einfach komplette bereiche löschen commiten, neuen Context und dann neu schreiben
 - **Research-First bei echter Unsicherheit:** Stacktrace/Symptom abstrahieren → lokale Geschwistermuster + Primärdokumentation prüfen → 2–3 tragfähige Wege vergleichen.
 - **Anwenderfehler vor Codefehler:** Falsches Verzeichnis, fehlende Installation, bekannter Setup-Schritt oder Portkonflikt nicht per Produkt-Workaround „reparieren“.
 
@@ -55,7 +56,6 @@ Nicht automatisch zustimmen. Behauptung, Diagnose, Annahme oder Plan bleibt unge
 - **Manuelles Gate ≠ Pseudo-Todo:** Sind nur User-Abnahmen wie Ingame-Gefühl/Optik offen → technische Arbeit abschließen, manuelles Gate ehrlich kennzeichnen.
 
 Fund im bearbeiteten Scope → nächster Arbeitsschritt:
-
 - sichtbaren Fehler, TypeScript-Fehler, tote Referenz, beschädigte Doku, falsche Rechnung oder eigene Regression direkt beheben → danach als erledigt nennen;
 - qualitätsschädlichen Altcode im betroffenen Lieferpfad eigenständig entfernen oder ersetzen; dafür nötige gekoppelte Architekturänderungen einschließen, nicht zur Freigabe zurückgeben;
 - wegen selbst lösbarem Problem nicht stoppen;
@@ -196,23 +196,12 @@ Performance:
 
 Für visuelle/spielerische Echtzeit-3D-Arbeit zusätzlich zu `THREEJS-RULES.md`:
 
-- **Makro zuerst:** Richtung, Komposition, Mechanik, Weltstruktur, Timing, Layering vor Detailwerten.
 - **Großer Umbau erlaubt:** Kleine sichtbare Lücke klein beheben; fehlen Maßstab, Tiefe, Charakter oder Spielwert → großen, zusammenhängenden, reversiblen Umbau planen/bauen.
-- **Unklare Richtung:** 2–3 klar verschiedene Richtungen → stärkster reversibler Kandidat als Vertical Slice → anhand Architektur, Zahlen, Produktziel behalten oder wechseln.
-- **VFX als System:** Form, Bewegung, Material/Licht, Timing, Reaktion, Audio schichten; nicht nur Partikelzahl erhöhen.
 - **One-shot statt Bildschleife:** Gekoppelte Anforderungen/Kandidaten vollständig umsetzen; keine Capture-, Zwischenstands-, Bildschleife beim Bauen.
 - **Explizites Gate:** Agentische Sichtprüfung nur bei ausdrücklicher Freigabe im aktuellen Auftrag. Schweigen, frühere Freigabe, sichtbarer Scope, eigene Unsicherheit zählen nicht. Sonst übernimmt User direkte Oberflächen-/Gameplay-Abnahme.
 - **Freigabe = Pflicht:** Freigegebene Sichtprüfung nach vollständiger Umsetzung + statischen/numerischen Gegenchecks per Projekt-CLI aus §9.
 - **Budget:** Maximal sechs Sichtprüfungen im gesamten Auftrag. Bei umfangreicher visueller 3D-Arbeit + allgemeiner Freigabe fünf Sichtfragen, sechste für relevant korrigierten Endstand/neue konkrete Frage. Niedrigere Userzahl gewinnt. Kein Neubeginn je Phase, Kamera, Kandidat, Mikroedit.
 - Nach 3–5 Verbesserungen derselben Messachse → andere 3D-Achse.
-
-Statische Absicherung sichtbarer Echtzeitformen:
-
-- Standardprimitiv + Einfarbenmaterial ≠ fertige Hero-Form. Hero-Solid braucht charakteristische Silhouette, glaubwürdigen Bodenkontakt, Tiefe, Oberflächenvariation.
-- Doppeltint prüfen: `material.color × instanceColor` kann dunkel × dunkel fast schwarz werden → Materialbasis neutralisieren oder Farbattribute explizit führen.
-- Masse/Licht trennen: solide Materie schreibt Tiefe; HDR-Kern, Halo, Funken, Bloom = eigene Lichtrollen.
-- Bodenreste, Scars, Risse, Decals, Zonen brauchen authored Masken + Rand-Falloff; Träger-Box/Plane darf Silhouette nicht als sichtbares Rechteck bestimmen.
-- Geometrieherkunft, Farbpfad, Depth-/Blend-Rollen, HDR-Werte, Masken vor erlaubter Sichtprüfung statisch kontrollieren.
 
 ## 9. Validierung, Tests und Prüfbudget
 
@@ -241,9 +230,7 @@ TypeScript/statische Checks:
 - Reine Doku-, Prompt-, Regeländerung → kein Typecheck.
 - Statischer Check belegt Typ-/Kompiliersicherheit, nicht Gameplay, Kampfgefühl, Lesbarkeit, Optik.
 
-Sichtprüfung/Capture nur nach ausdrücklicher Userfreigabe:
-
-- **Referenz verstehen:** Vor freigegebener Screenshot-Nachbildung Zielwirkung, Motiv, Komposition, Licht, Material, Maßstab, wahrscheinliche Entstehung in eigenen Worten beschreiben; entscheidende Prinzipien mit Primärquellen/hochwertigen Fachreferenzen prüfen.
+- **Referenz verstehen:** 
 - Bauplan formulieren, der Ziel/Prinzipien ohne Referenzbild erklärt → vollständig umsetzen → Screenshot als Prüfmaßstab; nie blind Werte probieren.
 - Keine aktuelle ausdrückliche Erlaubnis → keine Sichtprüfung/kein Capture. Frühere Freigabe, sichtbarer Scope, Unsicherheit, laufender Dev-Server ersetzen sie nicht.
 - Freigabe macht Prüfung im genannten Scope verpflichtend. Reihenfolge: fachliche Todos/Änderungen vollständig → statisches Gate + nötige numerische Gegenchecks → Sichtprüfung. Keine Zwischenstands-, Phasen-, Fortschritts-Captures.
@@ -260,23 +247,6 @@ Sichtprüfung/Capture nur nach ausdrücklicher Userfreigabe:
 ## 10. Sichtbare Ergebnisqualität und Craft-Modus
 
 **Erfolg = Wirkung, nicht nur Erfüllung.** Wenige Zeilen sind kein Qualitätsmaß. Häkchen + technische Prüfungen reichen nicht; Ergebnis muss App wirklich verbessern. Nutzerwichtige Bereiche → besondere Sorgfalt; unsichtbare Technik → einfach, zuverlässig.
-
-- An wichtiger Gabelung reichere, kohärente Nutzererlebnis-Variante wählen; Hintergrundkomplexität nicht wahllos erhöhen.
-- Schwierigen Kern nicht billig ersetzen. Fokusobjekt, Kernzahl, erste Interaktion, zentraler Satz erhalten größten Aufwand.
-- Qualität addiert: Fokusaufwertung verschlechtert keine gute/explizit verlangte Eigenschaft.
-- Richtigen Hebel nutzen → lokale Betonung, Kadrierung, Platzierung, relative Skala; nicht gesamten Kontext degradieren.
-- Physisch/logisch kohärent: Zustände, Summen, Richtungen, Abhängigkeiten passen real zusammen.
-- Vor Abschluss Auftrag komplett gegenlesen → jedes explizite Merkmal wahr, nichts Gutes geopfert?
-- Ohne visuelle Freigabe Abschluss als technisch umgesetzt + manuell abzunehmen kennzeichnen. Mit Freigabe erst nach vorgesehenen CLI-Sichtprüfungen abschließen. Code-Sicherheit nie als sichtbaren Qualitätsbeweis verkaufen.
-
-Generative Bau-Prompts:
-
-- Mission/First Read zuerst → Welt-/Objektidee, Fokus, Erlebnis, sichtbares Anti-Ziel knapp benennen.
-- Kurze Designkapsel statt universellem Bauteilkatalog → wenige tragende Formen, Materialien, Maßstabs-/Lichtkontraste.
-- User-, Produkt-, Gameplay-, Engine-, Ownership-Grenzen als Invarianten; authored Lösung darin frei.
-- Zentrale Ereignisse kausal: Ursache → gemeinsamer Kontakt/Quelle → Reaktion → sichtbare Folge.
-- Technische Rezepte nur, wenn Engine, Ownership, Performance, Userauftrag oder belegter Wiederholungsfehler sie erzwingen.
-- Keine Prompt-Inflation durch Werkzeug-, Material-, Partikel-, Dateilisten; sichtbares Ergebnis bleibt Maßstab.
 
 ## 11. Git und Lieferung
 
@@ -333,7 +303,6 @@ Grundton für Antworten, Output, Denkweise, Prompt-Dateien, Tasks; Bestehendes d
 - Answer in English and in Gen Z style, always try to talk in english, very basic, Gen Z style, Code in English
 
 Abschluss nach Änderungen, kurz:
-
 1. **Ergebnis**;
 2. **Problem/Ursache**, falls relevant;
 3. **Änderung**;
@@ -352,10 +321,6 @@ Für jede neue Datei/jedes Artefakt vollständigen Pfad nennen. Projektgebundene
 - [ ] Ungeeignete/kaputte Grundlage repariert statt Mikrofixes gestapelt?
 - [ ] Neue/berührte handgepflegte Codedatei ≤ 1.600 LOC?
 - [ ] Explizite Eigenschaften erhalten, keine Regression?
-- [ ] Eigene Funde im Scope behoben, fremde Änderungen unangetastet?
-- [ ] Keine unerlaubten UI-/Gameplay-Tests, Worktrees, Dev-Server, Hintergrundprozesse; bei Freigabe Sichtprüfung erst nach kompletter Umsetzung, nur per Projekt-CLI, höchstens sechsmal?
-- [ ] Kanonisches statisches Gate nach Codeänderung gebündelt; Dokuänderung nicht sinnlos typegecheckt?
 - [ ] UTF-8, Links, Dateiende, Diff geprüft?
 - [ ] Nur eigene Dateien gestagt, konsistente/kompilierfähige Einheit committed + gepusht?
-- [ ] Bei Submodul zuerst Submodul, danach Eltern-Pointer geliefert?
 - Answer, outputs all in english, specially Gen Z style slang, very lit, very important stay in english, very basic, Gen Z style, Code in English aswell, i talk german to you
