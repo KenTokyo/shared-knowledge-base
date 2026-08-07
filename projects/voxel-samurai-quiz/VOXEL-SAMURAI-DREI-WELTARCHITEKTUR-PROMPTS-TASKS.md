@@ -87,11 +87,11 @@
 
 **Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** Keine offenen Funde im damaligen Lieferumfang. Sichtbare Mapwirkung und gemessene Laufzeit bleiben bewusst manuelle Gates.
 
-### Phase 4 — Kazenoshima durch lokale V73 Ashen Coast ersetzen
+### Phase 4 — Kazenoshima durch Tsushima World 73 — Ashen Coast ersetzen
 
 **Ziel:** Zweiter Prompt basiert auf belegter Authored-World-Runtime-Bauweise; Kazenoshima verschwindet aus aktuellem Promptset.
 
-- [x] `v73-ashen-coast`, Weltregistrierung, Bake-/Runtime-Owner und Lichtprofil gelesen.
+- [x] `tsushima-73-ashen-coast`, Weltregistrierung, Bake-/Runtime-Owner und Lichtprofil gelesen.
 - [x] `kazenoshima-style.md` replaced; current file is `authored-world-runtime-style.md`.
 - [x] Promptindex, Wegweiser, Auswahlhilfe und Taskreferenzen auf Ashen Coast aktualisiert.
 - [x] Gemeinsame Nicht-Map-Abschnitte erneut auf Wortgleichheit geprüft.
@@ -100,7 +100,7 @@
 **Ergebnis:** Drei aktive Einzelprompts vergleichen Voxel Style, Authored World Runtime Style und Claude Flakes Style; 15 Nicht-Map-Abschnitte bleiben wortgleich.
 
 **Referenzen:**
-- `src/engine/world/worlds/v73AshenCoast.js`
+- `src/engine/world/worlds/tsushimaWorld73AshenCoast.js`
 - `docs/quizfall-world-runtime-entry.md`
 - `shared-docs/projects/voxel-samurai-quiz/prompts/new-games/endless-voxel-slasher/long/authored-world-runtime-style.md`
 
@@ -108,7 +108,7 @@
 
 **Eingehalten:** lokale Quizfall-Welt-Owner belegt ✅, Weltquellen unverändert ✅, aktive Prompts und Links vollständig umbenannt ✅, drei Standalone-Prompts erhalten ✅, keine Browser-/Gameplayprüfung ✅.
 
-**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 V73 ist größer und höher aufgelöst als die Zielwelten; Zahlen wurden deshalb nicht kopiert. Der Prompt fordert separate, bedarfsgeleitete Feldauflösungen und LOD nur bei belegtem Nutzen. Skillrückstände bleiben als begrenztes Runtime-Overlay vom unveränderlichen Bake getrennt.
+**Auffälligkeiten/Performance-Issues/Probleme/Kritische Findings:** 🟡 Tsushima World 73 — Ashen Coast ist größer und höher aufgelöst als die Zielwelten; Zahlen wurden deshalb nicht kopiert. Der Prompt fordert separate, bedarfsgeleitete Feldauflösungen und LOD nur bei belegtem Nutzen. Skillrückstände bleiben als begrenztes Runtime-Overlay vom unveränderlichen Bake getrennt.
 
 ### Phase 5 — Englische Long-/Short-Prompts unter New-Game-Kategorie
 
