@@ -1,8 +1,11 @@
 # Terrain-Oberfläche und lokaler Kontrast — duty-of-tsushima
 
-**Lesen wenn:** du `src/world/splat.js` oder die Vertexattribute in `_chunkGeometry` anfasst, eine
-Oberflächenmaske einführst — oder eine Kennzahl für lokalen Kontrast im Bild heben sollst.
+**Lesen wenn:** du Terrain-Normalen in `src/world/Terrain.js`, `src/world/splat.js` oder die
+Vertexattribute in `_chunkGeometry` anfasst, eine Oberflächenmaske einführst — oder eine Kennzahl
+für lokalen Kontrast im Bild heben sollst.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
+**Stil:** Nur kompakte Stichpunkte; je Punkt eine klare Information.
+**Schnitt:** Füllwörter, Einleitungen, Wiederholungen, unnötige Artikel streichen; Fehlerbild, Ursache, Handlung, Beleg erhalten.
 
 Abgespalten von [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md), das mit zwölf Tipps auf der
 Obergrenze aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md) steht — geteilt nach Trigger, wie dort
@@ -60,3 +63,6 @@ Höhenfeld selbst hat seine eigene Datei, [`WORLD-LANES.md`](WORLD-LANES.md).
   und steht in einer Zeile, die nur ein Kommentar ist. → In GLSL-Strings keine Backticks setzen;
   Bezeichner dort ohne Auszeichnung schreiben. Zwei Build-Zyklen in dieser Schicht.
   *`src/world/splat.js:93` und `:248` · 2026-08-02*
+
+- **Mountain streaks survive shadow-bias tuning** — Dark columns move into view on steep distant terrain; a near-parallel tangent frame plus full-dose detail and 0.21 m baked normals overdrive lighting, while shadow receiving is secondary. → Ablate shadows, detail normals, albedo, baked normals, and occlusion at one fixed pose; stabilize the basis, fade only steep-distance detail, then blend shading toward a wider heightfield normal without moving geometry.
+  *Cross length 0.00414 = about 241× amplification · shadows off kept pattern at 0.0241 RMS · detail normals off cut local gradients about 74% · delivered 6 m baseline with 0.82 normal blend and 0.65 occlusion release · 2026-08-08*
