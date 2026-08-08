@@ -23,6 +23,8 @@ Global: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 | Textur zur Ladezeit rechnen, Atlasspalte, Decal-Kachel, Normale aus Höhenfeld | [`PROCEDURAL-TEXTURES.md`](PROCEDURAL-TEXTURES.md) |
 | Datensatz aus einem Pool wiederverwenden, Instanzring dimensionieren, Referenz auf einen Poolplatz | [`ACTOR-POOLS.md`](ACTOR-POOLS.md) |
 | Zustandsmaschine eines Gegners, Abstandsband, Halteregel, Ansturm, Standplatz | [`ENEMY-BEHAVIOUR.md`](ENEMY-BEHAVIOUR.md) |
+| Render-Target anlegen, Sampler setzen, Pass abschalten, zweiter Durchgang ins selbe Ziel, `Feedback loop` | [`RENDER-TARGET-BINDINGS.md`](RENDER-TARGET-BINDINGS.md) |
+| AudioContext-Start, Unterbrechung, stumme Sitzung, Fehlerkaskade | [`AUDIO-LIFECYCLE.md`](AUDIO-LIFECYCLE.md) |
 
 **Über der Größengrenze, offen:** `METRICS-AND-GATES.md` (22 Tipps), `HARNESS-GATES.md` (21) und
 `VEGETATION-SCATTER.md` (15) liegen über den ~12 aus [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md);
