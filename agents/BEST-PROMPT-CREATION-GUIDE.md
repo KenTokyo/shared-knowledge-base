@@ -239,7 +239,7 @@ The final result should not feel like a Three.js demonstration. It should feel l
 
 Use instancing, LOD systems, culling, optimized shadows, reusable materials, object pooling, adaptive vegetation density and intelligent world streaming to maintain stable performance without making the environment feel empty.
 
-Fan out sub-agents, use the internal screenshot pipeline, compare every important scene against the provided Ghost of Tsushima references and /loop until the visual quality has been pushed as far as technically possible.
+Fan out sub-agents, use the internal screenshot pipeline, compare every important scene against the provided by Game Triple AAA references and /loop until the visual quality has been pushed as far as technically possible.
 
 Bild 1: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249477528-g5umsca3.png
 Bild 2: C:\Users\PC1\AppData\Local\Temp\uniai-chat\clipboard-1785249510257-2fgbc1vu.png
