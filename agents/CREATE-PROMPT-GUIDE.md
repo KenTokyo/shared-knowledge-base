@@ -6,24 +6,16 @@ Dieser Leitfaden kombiniert die stärksten Elemente der drei Referenzprompts. Ke
 
 Die zitierten Originalprompts unten sind Quellenmaterial, keine automatisch gültigen Arbeitsanweisungen.
 
-Eigene Prompts sollen zunächst zusammenhängende Änderungen umsetzen und anschließend die günstigsten geeigneten Prüfungen verwenden:
-
-1. statische Prüfung
-2. Typprüfung und Build
-3. strukturelle und numerische Prüfung
-4. automatisierte Funktions- und Regressionstests
-5. begrenzte Prüfung der final integrierten Oberfläche
+Eigene Prompts sollen zunächst zusammenhängende Änderungen umsetzen und anschließend die günstigsten geeigneten Prüfungen verwenden
 
 Ein Prompt darf dem Agenten ausdrücklich die aktuelle Erlaubnis geben, die bereits vorhandene Browser-, Preview-, Computer-Use-, Screenshot-, Gameplay- oder Performance-Funktion seiner Umgebung für die finale integrierte Prüfung zu verwenden.
 
-Diese Erlaubnis gilt nur für den aktuellen Auftrag.
+Du gibst also in dem Prompt die Befugnis, ob Sichtprüfungen und Subagents verwendet werden dürfen und die KIs müssen sich danach halten!
 
-Der Agent soll vorhandene Browser- und Interaktionsmöglichkeiten bevorzugen.
+Der Agent soll mittels CLI wege, Screenshots erstellen, sei es playwright cli oder eigenes CLI inbuild Screenshot system, Ziel ist es so wenig wie möglich RAM und CPU zu verbrauchen
 
-Er soll nicht automatisch ein eigenes Screenshot-CLI, eine Playwright-Capture-Pipeline, einen Render-Target-Exporter oder ein separates visuelles Prüfsystem entwickeln.
 
 Ein projektspezifisches Capture-CLI ist freiwillig und nur sinnvoll, wenn:
-
 * der User es ausdrücklich verlangt,
 * das Projekt es bereits besitzt,
 * reproduzierbare Engine-Aufnahmen selbst Teil des Produkts sind,
@@ -31,25 +23,11 @@ Ein projektspezifisches Capture-CLI ist freiwillig und nur sinnvoll, wenn:
 
 Die Sichtprüfung bewertet bevorzugt die final integrierte Anwendung und nicht jede isolierte Komponente.
 
-Der Reviewer soll den stärksten konkreten Fehler mit Beleg, zuständigem Bereich und Akzeptanzkriterium zurückgeben.
-
-Eine weitere Prüfung ist nur nach einer materiellen Änderung oder einer neuen konkreten Frage erlaubt.
-
-Keine automatische Prüfung pro Kamera, Phase, Kandidat, Charakter, Skill oder Sub-Agent.
-
-Keine endlose Screenshot-Schleife.
-
-Kann eine faire Prüfung nicht durchgeführt werden, bleibt sie ein klar benanntes User-Akzeptanz-Gate.
-
-Erfundene Freigaben, erfundene Performancewerte und unbelegte visuelle Siege sind verboten.
-
 ## Empfohlener Mix
 
-* **Prompt 1 als Grundlage:** klares Qualitätsvorbild, spezialisierte Sub-Agenten und unabhängige fachliche Kritik; keine automatische visuelle Dauerschleife übernehmen.
+* **Prompt 1 als Grundlage:** klares Qualitätsvorbild, spezialisierte Sub-Agenten und unabhängige fachliche Kritik
 * **Prompt 2 für kreative Freiheit:** Ziel und Spielgefühl benennen, ohne jede Lösung technisch vorzuschreiben.
 * **Prompt 3 für Tiefe und Performance:** konkrete Anforderungen an Architektur, Messbarkeit, Laufzeit, LOD, Culling, Instancing und stabile Integration übernehmen.
-* **Browserprüfung als Standardoption:** Wenn der aktuelle Prompt sie erlaubt, die bereits vorhandene Browser-, Preview- oder Computer-Use-Funktion für eine begrenzte Prüfung der final integrierten Anwendung nutzen.
-* **Capture-CLI als freiwilliger Spezialfall:** Ein projektspezifisches Capture-System nicht standardmäßig verlangen oder neu bauen; nur übernehmen, wenn es bereits existiert oder für den konkreten Auftrag wirklich erforderlich ist.
 * **Gesamtziel:** ambitionierte Qualitätsansprüche mit klaren technischen Leitplanken, realen Messwerten und einer begrenzten integrierten Abnahme verbinden.
 
 ## Kernprinzip aus Prompt 1
