@@ -13,3 +13,6 @@
 
 - **Context stays running while dense combat kills the mix** — Voice caps miss internal sources, filters, and shapers; each accepted shot or footstep can fan into about 50 nodes. → Count node factory calls by semantic event, keep full detail only for the player-critical voice, use fixed-cost repeated or background voices, and meter post-master samples.
   *Shots: dense mean 39.5 → compact 14 nodes, 640 RPM 421 → 149 nodes/s, 900 RPM 593 → 210; enemy steps: 106/5,354 → 108/1,296 nodes, exactly 12 per step, zero Foley after cleanup, 16.70–16.80 ms recovery; `tools/wave-perf.mjs` · 2026-08-09*
+
+- **Ambience reaches 0% but wind remains; Weapons barely changes** — Feature sends feed shared reverb before bus controls, so faders and ducking touch dry sound only. → Give each bus a wet input with mirrored fader/duck state; route head-locked, spatial, and bed sends through it; place user gain after bus compression.
+  *V1 had three direct bypasses in ambience, spatial, and dry voices; the same route measured −3.58 dBFS with four V2 faders at zero; V1 Weapons now spans post-compressor 0–200% · 2026-08-09*
