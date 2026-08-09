@@ -176,4 +176,4 @@
 
 **Criteria met:** scoped staging ✅, staged-diff review ✅, remote integration ✅, submodule ownership ✅, unrelated changes preserved ✅, UTF-8 ✅, 20/20 image contract ✅, no unnecessary extension build ✅.
 
-**Findings / performance issues / rule violations by severity:** none open in the OALab delivery scope; `.uniai-chat/cache/opencode-models.json` and the generated PH1 handover note remain intentionally uncommitted and unchanged.
+**Findings / performance issues / rule violations by severity:** none open in the OALab delivery scope; `.uniai-chat/cache/opencode-models.json` remains intentionally unstaged and unchanged, while the task-related PH1 handover note is included in the scoped parent closure commit.
