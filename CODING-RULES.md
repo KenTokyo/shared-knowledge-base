@@ -190,7 +190,8 @@ Performance:
 - Panel mit wechselndem Inhalt: stabile Höhe/Mindesthöhe + internes Scrollen; Außenrahmen springt nicht bei Tab-, Item-, Providerwechsel.
 - Standardgrößen/Variants vorhandener UI-Bibliothek bevorzugen, keine willkürlichen lokalen Overrides.
 - „Juicy“ = klare Gruppierung, Form, semantischer Rim/Glow, kurze Transform-/Opacity-Rückmeldung; nicht mehr Erklärtext, Kartenstapel, dekorative Icon-Flut.
-- Automatische Browser-, DOM-, Screenshot-, UI-Smoke- oder manuelle UI-Prüfung nur nach ausdrücklicher Freigabe im aktuellen Auftrag; dann Reihenfolge, Werkzeug, Budget aus §9.
+- Automatische Browser-, DOM-, Screenshot-, UI-Smoke- oder manuelle UI-Prüfung wenn es sinnvoll ist machen, nicht willkürlich permanent ohne triftigen Gründe und bitte sparsam bzw. sinnvolle Vergleiche
+- Verhalte dich wie AGI
 
 ## 8. Echtzeit-3D — große Schritte, Sichtprüfung nur mit Freigabe
 
@@ -212,15 +213,11 @@ Für visuelle/spielerische Echtzeit-3D-Arbeit zusätzlich zu `THREEJS-RULES.md`:
 - Stärksten relevanten Gegencheck statt ritualisierter Vollprüfung wählen.
 
 Ohne Userbefehl verboten:
-
-- automatische UI-, Browser-, Playwright-, Screenshot-, DOM-Snapshot-, Preview-Prüfungen;
-- Gameplay-, Ingame-, Serverwert-, Recorder- oder selbst gebaute „Gefühl“-Beweise;
 - neue Unit-/Integration-/E2E-Tests oder Testkonfigurationsänderung;
 - Dev-Server vorsorglich starten; zuerst laufenden Server prüfen, Start nur bei echtem Bedarf/Userauftrag;
-- CLI-Modell-, Terminal-, PowerShell-, Watcher-, Statusprozesse im Hintergrund starten. Externe Prozesse nur bei konkretem Auftrag/sichtbarer Nutzeraktion, danach sauber beenden.
+
 
 TypeScript/statische Checks:
-
 - Nach Codeänderung exakt kanonisches Gate aus lokaler `AGENTS.md`; Projektbefehl gewinnt. `voxel-samurai-quiz` → `pnpm type-check`.
 - `include`-/`exclude`-Scopes nie für künstlich grünes/schnelles Gate verkleinern.
 - Cache + projektspezifische Heap-Konfiguration vorhandener Scripts statt eigenem blanken `tsc --noEmit`.
@@ -231,11 +228,7 @@ TypeScript/statische Checks:
 - Statischer Check belegt Typ-/Kompiliersicherheit, nicht Gameplay, Kampfgefühl, Lesbarkeit, Optik.
 
 - **Referenz verstehen:** 
-- Bauplan formulieren, der Ziel/Prinzipien ohne Referenzbild erklärt → vollständig umsetzen → Screenshot als Prüfmaßstab; nie blind Werte probieren.
-- Keine aktuelle ausdrückliche Erlaubnis → keine Sichtprüfung/kein Capture. Frühere Freigabe, sichtbarer Scope, Unsicherheit, laufender Dev-Server ersetzen sie nicht.
-- Freigabe macht Prüfung im genannten Scope verpflichtend. Reihenfolge: fachliche Todos/Änderungen vollständig → statisches Gate + nötige numerische Gegenchecks → Sichtprüfung. Keine Zwischenstands-, Phasen-, Fortschritts-Captures.
-- Gesamtbudget maximal sechs gezielte Sichtprüfungen; niedrigere Userzahl gewinnt. Kein Neubeginn je Phase/Kamera/Kandidat/Mikroedit. Weitere Prüfung nur für andere konkrete Sichtfrage oder relevant geänderten Endstand. Montiertes Vergleichsbild = eine Sichtprüfung.
-- Nur projekteigenes CLI-Capture-System.
+- Wenn möglich projekteigenes CLI-Capture-System.
 - Lokalen Einstieg zuerst in Projekt-Pfadkarte, `package.json`-Scripts, passenden `scripts/`-Ordnern suchen.
 - [Screenshot-Guide](SCREENSHOT-GUIDE.md) nur lesen, wenn Einstieg unklar/System fehlt; fehlendes System danach gemäß Vertrag bauen.
 - Playwright startet einmal headless Chromium; gleiche Sitzung für alle Messungen.
