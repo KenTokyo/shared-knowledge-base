@@ -111,3 +111,6 @@ Kennzahlen: [`METRICS-AND-GATES.md`](METRICS-AND-GATES.md) · Millisekunden: [`F
 
 - **UI-Boxgate grün, Bild trotzdem überfüllt** — DOM-Rechtecke beweisen Lage, aber weder echte Schrift, Deckkraft, Dichte noch gestapelte Oberflächen; Post-Target enthält kein DOM. → Oberflächenzustände numerisch ausschließen, Live-DOM separat rasterisieren und über `readRenderTargetPixels()` legen; genau ein Kontaktbild nach den Zahlen prüfen.
   *11,03 % Boxdeckung und 0 Überlappungen waren grün, während der Titel das komplette Kampf-HUD trug; Zustandsgate plus echtes DOM-Kontaktbild senkte Live-Kampf-Chrom auf 4,42 % · 2026-08-09*
+
+- **Render-target contact sheet stalls before writing a PNG** — `Array.from(Uint8Array)` serializes each frame as millions of JSON numbers across the Playwright bridge; four panels spend minutes in transfer and Node-side composition. → Build `ImageData` from the capture bytes in-page, scale and composite the DOM there, then return one encoded PNG per panel.
+  *Old job exceeded 11:48 at 75% CPU with no output file; 800×450 in-page panels completed the full numeric run plus four-panel capture in 55.8 s · 2026-08-09*
