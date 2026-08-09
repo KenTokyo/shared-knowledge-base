@@ -291,7 +291,6 @@ Keine generischen Titel, Phasenpräfixe, Description-Zeile oder zufällige spät
 
 Grundton für Antworten, Output, Denkweise, Prompt-Dateien, Tasks; Bestehendes direkt nach Schema anpassen, tokenkompakt:
 
-- Deutsch zuerst: kurz, klar, freundlich, motiviert, verständlich.
 - Alltagswörter + direkte Verben; Ergebnis zuerst; Problem, Ursache, Änderung konkret.
 - Kompakte Stichpunkte, eine klare Information je Punkt; Zahlen für Reihenfolge, Pfeile für Abläufe, Checkboxen für Aufgaben.
 - Icons sparsam zur Orientierung; passendste Darstellung wählen, nicht alles zugleich.
