@@ -84,9 +84,9 @@
 * [x] Validate role, state, hierarchy, required actions, legibility, consistency, and absence of watermarks.
 * [x] Complete one bounded audit; no material failure required regeneration.
 
-**Result:** Luminous Atelier delivers all ten warm light workflow screens. B01–B05 use the image generator; after its OAuth token was invalidated, B06–B10 were completed from the reusable deterministic renderer with the same documented design tokens and screen contracts.
+**Result:** Luminous Atelier delivers all ten warm light workflow screens; B06–B10 use the preceding selected screen as a style-only anchor to preserve the series without changing product scope.
 
-**Architecture fit:** Shared screen contracts keep both variants comparable; the supporting renderer centralizes B06–B10 tokens and layouts without becoming a second product-state source.
+**Architecture fit:** Shared screen contracts keep both variants comparable; the supporting renderer centralizes reusable B06–B10 fallback tokens and layout ideas without becoming a second product-state source.
 
 **References:**
 `shared-docs/OALab/Projects/service-oalab/service-oalab-design-assets.md`
@@ -159,7 +159,7 @@
 
 **Findings / performance issues / rule violations by severity:**
 
-1. 🟡 **Medium — image service OAuth token was invalidated after B05:** retries returned `401 token_revoked`. Fix status: resolved without scope loss by rendering B06–B10 from `assets/variant-b-renderer.html`; all five outputs were visually inspected and dimension-checked.
+1. 🟡 **Medium — image service OAuth token was temporarily invalidated after B05:** one retry returned `401 token_revoked`. Fix status: later generation completed B06–B10 successfully; the supporting renderer remains as a deterministic fallback, and all selected generator outputs were visually inspected and dimension-checked.
 
 ### Phase 5
 

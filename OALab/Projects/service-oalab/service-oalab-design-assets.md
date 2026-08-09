@@ -4,7 +4,7 @@
 
 - **Use case:** `ui-mockup`
 - **Asset type:** high-fidelity desktop web application screenshots
-- **Mode:** built-in `image_gen`
+- **Mode:** built-in `image_gen` for all 20 selected PNGs
 - **Format:** PNG
 - **Target framing:** landscape 16:10, intended 1536 × 1024 px, no browser chrome or device frame
 - **Series:** Variant A `Nocturne Console` and Variant B `Luminous Atelier`
@@ -183,7 +183,7 @@ All files are selected project-bound RGB PNGs at 1536 × 1024 px. Purpose and co
 - **Materials and lighting:** matte solid surfaces, fine separators, restrained depth, no primary glass surface; exact dark or light palette per variant base.
 - **Constraints:** role separation, sparse German copy, original OALab glyph, no external branding, watermark, Kanban on client screens, raw developer internals, or automatic production release.
 - **Selection:** both complete directions retained for comparison; Variant A remains implementation recommendation.
-- **Supporting renderer:** `assets/variant-b-renderer.html` captures reusable Luminous Atelier tokens and deterministic B06–B10 layout ideas; final PNG selection remains the image-generation output above.
+- **Supporting renderer:** `assets/variant-b-renderer.html` captures reusable Luminous Atelier tokens and deterministic B06–B10 layout ideas; it is a fallback/reference source, not a selected PNG source.
 
 ## 7. Validation checklist
 
@@ -197,4 +197,4 @@ All files are selected project-bound RGB PNGs at 1536 × 1024 px. Purpose and co
 - [x] All 20 files were decoded and recorded as 1536 × 1024 RGB PNGs.
 - [x] No final asset is left only under the generator account directory.
 
-**Audit result (2026-08-10):** one bounded visual pass across all 20 selected screens and one file-level format/dimension pass found no material failure requiring regeneration. Domain hostname is intentionally absent from the mockups and remains configurable in the blueprint and implementation prompt.
+**Audit result (2026-08-10):** one bounded visual pass across all 20 selected screens and one file-level format/dimension pass found no material failure requiring regeneration. A temporary `401 token_revoked` response caused no delivery gap; the final selected B06–B10 files are complete `image_gen` outputs. Domain hostname is intentionally absent from the mockups and remains configurable in the blueprint and implementation prompt.
