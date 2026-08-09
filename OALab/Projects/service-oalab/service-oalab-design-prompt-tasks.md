@@ -118,7 +118,7 @@
 * [x] Inspect shared-docs status and staged diff; include the user-supplied `initial-prompt.md` plus all task deliverables.
 * [x] Revalidate UTF-8, mojibake safety, exact 10+10 PNG counts, and 1536 × 1024 RGB PNG properties after the final asset replacement.
 * [x] Commit and push the shared-docs repository; content delivery ends at `fbf7909` after safe integration with current `origin/main`.
-* [x] Update and push only the shared-docs pointer in the parent repository at `20df5fc`; leave unrelated cache and handover-file changes untouched.
+* [x] Update and push only the shared-docs pointer in the parent delivery commit at `20df5fc`; archive the task-related PH1 handover note in the final closure commit while leaving the unrelated cache untouched.
 * [x] Verify both remote integrations, delivery commit hashes, scoped diffs, and final repository status before and after closure delivery.
 
 **Result:** Both visual directions, product specifications, final implementation prompt, source prompt, and reproducibility record are committed and remotely available; the parent repository references the delivered shared-docs state without absorbing unrelated workspace changes.
