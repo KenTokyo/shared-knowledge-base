@@ -111,14 +111,19 @@
 `shared-docs/OALab/Projects/service-oalab/assets/variant-a/`
 `shared-docs/OALab/Projects/service-oalab/assets/variant-b/`
 
-### ⏳ Phase 6 — Version-control delivery
+### ✅ Phase 6 — Version-control delivery
 
 **Goal:** Deliver a clean, integrated shared-docs commit and parent-repository pointer without mixing unrelated workspace changes.
 
 * [x] Inspect shared-docs status and staged diff; include the user-supplied `initial-prompt.md` plus all task deliverables.
-* [ ] Commit and push the shared-docs repository.
-* [ ] Update only the shared-docs pointer in the parent repository; leave unrelated cache changes untouched.
-* [ ] Verify remote integration, commit hashes, and final repository status.
+* [x] Revalidate UTF-8, mojibake safety, exact 10+10 PNG counts, and 1536 × 1024 RGB PNG properties after the final asset replacement.
+* [x] Commit and push the shared-docs repository; content delivery ends at `fbf7909` after safe integration with current `origin/main`.
+* [x] Update and push only the shared-docs pointer in the parent repository at `20df5fc`; leave unrelated cache and handover-file changes untouched.
+* [x] Verify both remote integrations, delivery commit hashes, scoped diffs, and final repository status before and after closure delivery.
+
+**Result:** Both visual directions, product specifications, final implementation prompt, source prompt, and reproducibility record are committed and remotely available; the parent repository references the delivered shared-docs state without absorbing unrelated workspace changes.
+
+**Architecture fit:** The OALab project remains one cohesive documentation-and-asset unit in `shared-docs`; the parent repository stores only its Git pointer, preserving repository ownership and a reviewable delivery boundary.
 
 **References:**
 `shared-docs/OALab/Projects/service-oalab/`
@@ -166,3 +171,9 @@
 **Criteria met:** documentation SSoT ✅, exact file manifest ✅, UTF-8 ✅, 20/20 dimension validation ✅, edge cases represented ✅, responsive implementation intent retained ✅.
 
 **Findings / performance issues / rule violations by severity:** none open; domain ambiguity remains an explicit deployment gate rather than an image-level guess.
+
+### Phase 6
+
+**Criteria met:** scoped staging ✅, staged-diff review ✅, remote integration ✅, submodule ownership ✅, unrelated changes preserved ✅, UTF-8 ✅, 20/20 image contract ✅, no unnecessary extension build ✅.
+
+**Findings / performance issues / rule violations by severity:** none open in the OALab delivery scope; `.uniai-chat/cache/opencode-models.json` and the generated PH1 handover note remain intentionally uncommitted and unchanged.
