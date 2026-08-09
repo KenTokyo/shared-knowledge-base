@@ -2,15 +2,16 @@
 
 ## Generation Record
 
-- Generated on 2026-08-09 with the built-in image-generation tool.
-- One independent generation call produced each final numbered image.
-- No external reference image, brand asset, or copied game artwork was supplied to generation.
-- Exact final prompts, purpose, relative project path, and acceptance criterion live in each
-  direction's [`Aetherfield`](aetherfield-last-harvest/ASSET-MANIFEST.md),
-  [`Blackrain`](blackrain-protocol/ASSET-MANIFEST.md), or
+- Original Last Harvest and Wildcore sets were generated on 2026-08-09 with the built-in image-generation tool.
+- Skygarden replaced the rejected dark tactical direction on 2026-08-10 through ten selected built-in generations.
+- One independent generation call produced each selected numbered Skygarden image.
+- `aetherfield-last-harvest/assets/01-wave-one-farm.png` served only as Skygarden style/composition reference.
+- No external reference image, brand asset, or copied game artwork was supplied.
+- Exact selected prompts, purpose, relative path, and acceptance criterion live in each direction's
+  [`Last Harvest`](aetherfield-last-harvest/ASSET-MANIFEST.md),
+  [`Skygarden`](aetherfield-skygarden-defense/ASSET-MANIFEST.md), or
   [`Wildcore`](wildcore-bloom-siege/ASSET-MANIFEST.md) manifest.
-- The listed checksum is the first 16 hexadecimal characters of SHA-256 and is intended as a compact
-  handoff fingerprint, not a security claim.
+- Checksum is the first 16 hexadecimal SHA-256 characters and acts as a compact handoff fingerprint.
 
 ## Technical Inventory
 
@@ -26,16 +27,16 @@
 | `aetherfield-last-harvest/assets/07-boss-wave.png` | 1672 × 941 | PNG RGB8 | `92909f9872b5eed8` |
 | `aetherfield-last-harvest/assets/08-wave-thirty-endgame.png` | 1672 × 941 | PNG RGB8 | `32762b3f4a786df4` |
 | `aetherfield-last-harvest/assets/09-future-maps.png` | 1672 × 941 | PNG RGB8 | `8800406a2c83bb33` |
-| `blackrain-protocol/assets/00-title-start.png` | 1672 × 941 | PNG RGB8 | `f72ed9a2af71d32e` |
-| `blackrain-protocol/assets/01-wave-one-farm.png` | 1672 × 941 | PNG RGB8 | `72f413e89a5d05e0` |
-| `blackrain-protocol/assets/02-build-mode.png` | 1672 × 941 | PNG RGB8 | `b4b6f908b93bd879` |
-| `blackrain-protocol/assets/03-quiz-event.png` | 1672 × 941 | PNG RGB8 | `13b0a6ab87e7c610` |
-| `blackrain-protocol/assets/04-defense-family.png` | 1672 × 941 | PNG RGB8 | `9e57cc637e31053a` |
-| `blackrain-protocol/assets/05-classes-weapons.png` | 1672 × 941 | PNG RGB8 | `8784e6d45a48d528` |
-| `blackrain-protocol/assets/06-upgrade-interface.png` | 1672 × 941 | PNG RGB8 | `5848caab7c44f386` |
-| `blackrain-protocol/assets/07-boss-wave.png` | 1672 × 941 | PNG RGB8 | `a048c00946cd8449` |
-| `blackrain-protocol/assets/08-wave-thirty-endgame.png` | 1672 × 941 | PNG RGB8 | `59806a2e37107114` |
-| `blackrain-protocol/assets/09-future-maps.png` | 1672 × 941 | PNG RGB8 | `f27d8b834ade0e99` |
+| `aetherfield-skygarden-defense/assets/00-title-start.png` | 1672 × 941 | PNG RGB8 | `15a96c05c71e4f07` |
+| `aetherfield-skygarden-defense/assets/01-wave-one-farm.png` | 1672 × 941 | PNG RGB8 | `16244d03d929b427` |
+| `aetherfield-skygarden-defense/assets/02-build-mode.png` | 1672 × 941 | PNG RGB8 | `2a1f8ba9febd3231` |
+| `aetherfield-skygarden-defense/assets/03-quiz-event.png` | 1672 × 941 | PNG RGB8 | `1e56cab5f725aa53` |
+| `aetherfield-skygarden-defense/assets/04-defense-family.png` | 1672 × 941 | PNG RGB8 | `70d45eaabb720d70` |
+| `aetherfield-skygarden-defense/assets/05-classes-weapons.png` | 1672 × 941 | PNG RGB8 | `b2e6763c2313c4dd` |
+| `aetherfield-skygarden-defense/assets/06-upgrade-interface.png` | 1672 × 941 | PNG RGB8 | `4fbc1edb8fa89ad8` |
+| `aetherfield-skygarden-defense/assets/07-boss-wave.png` | 1672 × 941 | PNG RGB8 | `7dc4995d0ed8df34` |
+| `aetherfield-skygarden-defense/assets/08-wave-thirty-endgame.png` | 1672 × 941 | PNG RGB8 | `9910e444a4cb8d49` |
+| `aetherfield-skygarden-defense/assets/09-future-maps.png` | 1672 × 941 | PNG RGB8 | `79621cf570f66dc7` |
 | `wildcore-bloom-siege/assets/00-title-start.png` | 1672 × 941 | PNG RGB8 | `6c6a72504b6c0235` |
 | `wildcore-bloom-siege/assets/01-wave-one-farm.png` | 1672 × 941 | PNG RGB8 | `8578464e587ae19d` |
 | `wildcore-bloom-siege/assets/02-build-mode.png` | 1672 × 941 | PNG RGB8 | `d6b2a6f19f66a721` |
@@ -49,24 +50,19 @@
 
 ## Review Result
 
-- Inventory gate: 30 of 30 numbered images present; no gaps or cross-direction asset references.
-- Decode gate: all 30 are non-interlaced 1672 × 941 PNG files in 8-bit RGB.
-- Sequence gate: every direction covers title, early play, build mode, live quiz, six defenses, two
-  class identities, upgrades, boss pressure, wave-30 resolution, and exactly two future-map panels.
-- Catalogue gate: every isolated defense sheet contains exactly six principal objects.
-- Quiz gate: every quiz composition contains four physical answer targets.
-- Manual review retained the original `blackrain-protocol/assets/07-boss-wave.png`: it has the
-  strongest readable boss/Vault/four-terminal composition, but image generation added a small
-  non-canonical `03` support-avatar/HUD artifact. It is not a third playable class. The canonical
-  system contract and all implementation prompts require exactly two playable classes. A targeted
-  regeneration was attempted, but the image service returned a revoked-token error; a local patch
-  was rejected because it visibly degraded the image.
+- Inventory gate: 30 of 30 numbered images exist; no number gap or cross-direction asset reference remains.
+- Decode gate: all 30 files are non-interlaced 1672 × 941 PNGs in 8-bit RGB.
+- Skygarden camera gate: all gameplay frames use the high overview and keep farm acreage larger than characters.
+- Skygarden farm gate: launch and later maps show crops, irrigation, routes, fences, farm buildings, and build space.
+- Skygarden voxel gate: hero sheet shows exactly two articulated chunky voxel classes plus one small drone.
+- Catalogue gate: Skygarden defense sheet shows exactly six principal objects and zero loose gear overflow.
+- Quiz gate: live quiz shows four physical answer pylons; selected boss frame shows four unobscured pylons around the Core.
+- Future-map gate: exactly two bright working farms replace ornate plaza, lava, dark, and realistic map drift.
 
 ## Selection
 
-- All delivered files are the selected complete generations for their numbered role.
-- Aetherfield is the recommended all-round product direction.
-- Blackrain is the recommended shooter-first direction.
-- Wildcore is the recommended originality-and-elemental direction.
-- Final art-direction selection remains a human product decision; no preference is recorded as user
-  approval.
+- User selected Last Harvest as the quality anchor for fantasy tone and farm readability.
+- User rejected the dark tactical direction as too realistic; its five documents and ten PNGs were removed.
+- Skygarden is the feedback-directed second Aetherfield option with higher camera, larger farm, and chunkier voxel heroes.
+- Wildcore remains available for later comparison but received no further polish in this revision.
+- All listed files are selected project-bound finals; discarded generation attempts are not referenced by the suite.

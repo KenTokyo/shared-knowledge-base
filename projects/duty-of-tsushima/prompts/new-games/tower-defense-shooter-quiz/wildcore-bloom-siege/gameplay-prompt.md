@@ -141,7 +141,7 @@ CAMERA
 - Perspective elevated three-quarter chase.
 - Pitch target 50–56 degrees.
 - Hero frame height 7–9%.
-- Slightly wider than Blackrain to read elemental fields.
+- Slightly wider than Last Harvest to read elemental fields.
 - Aim shifts framing modestly toward target.
 - Controlled zoom with safe bounds.
 - Prefer authored azimuth unless rotation is fully supported.

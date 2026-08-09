@@ -17,7 +17,7 @@
 The strongest shippable title candidates are:
 
 1. **Aetherfield: Last Harvest** — clearest fantasy-farm promise and strongest broad-audience read.
-2. **Blackrain Protocol** — strongest tactical shooter identity and most distinctive night silhouette.
+2. **Aetherfield: Skygarden Defense** — clearest whole-farm overview and strongest chunky voxel read.
 3. **Wildcore: Bloom Siege** — strongest elemental fantasy identity and most original tower language.
 
 Each title is original working copy. Perform legal and storefront availability checks before release.
@@ -33,16 +33,16 @@ Each title is original working copy. Perform legal and storefront availability c
 - VFX: physically rooted pressure, sparks, splinters, soil, fire, frost, and refracted aether.
 - Best for: inviting first impression, clear farm fantasy, readable daytime combat, broad appeal.
 
-## Variant B — Blackrain Protocol
+## Variant B — Aetherfield: Skygarden Defense
 
-- Path: [`blackrain-protocol/`](blackrain-protocol/README.md)
-- First read: a rain-soaked fortified grow-site survives under military sensor light.
-- Camera: tighter elevated tactical camera with deliberate recoil response and strong target marking.
-- Materials: wet black soil, gunmetal, obsidian composite, concrete, tarps, sodium lamps, vapor.
-- Light: storm-blue ambience, amber work light, cyan devices, red threat states, wet reflections.
-- UI: dense smoked-glass command deck with clean rails, waveform telemetry, and hard status blocks.
-- VFX: ballistic smoke, wet debris, electrical grounding, heat haze, laser volume, pressure shock.
-- Best for: strongest shooter intensity, high contrast, premium tactical interface, darker atmosphere.
+- Path: [`aetherfield-skygarden-defense/`](aetherfield-skygarden-defense/README.md)
+- First read: a huge sunlit fantasy farm becomes a readable voxel defense map at one glance.
+- Camera: high perspective bird's-eye view, 60–65° downward pitch, whole gate-to-Core route visible.
+- Materials: chunky timber, pale block stone, simple crops, honey brass, blue ceramic, broad cloth.
+- Light: bright warm sun, cool sky fill, graphic contact shadows, airy mint wind-aether.
+- UI: compact ivory field atlas with solid backing, large icons, lavender tabs, and low clutter.
+- VFX: crop pressure, broad wind ribbons, block debris, simple elemental contact, controlled glow.
+- Best for: largest readable farm, strongest strategy overview, clearest voxel heroes, playful fantasy.
 
 ## Variant C — Wildcore: Bloom Siege
 
@@ -81,7 +81,7 @@ Each title is original working copy. Perform legal and storefront availability c
 | Direction | UI prompt | Gameplay prompt | Progression prompt | Images |
 |---|---|---|---|---:|
 | Aetherfield | [`ui`](aetherfield-last-harvest/ui-prompt.md) | [`gameplay`](aetherfield-last-harvest/gameplay-prompt.md) | [`progression`](aetherfield-last-harvest/progression-prompt.md) | 10 |
-| Blackrain | [`ui`](blackrain-protocol/ui-prompt.md) | [`gameplay`](blackrain-protocol/gameplay-prompt.md) | [`progression`](blackrain-protocol/progression-prompt.md) | 10 |
+| Skygarden | [`ui`](aetherfield-skygarden-defense/ui-prompt.md) | [`gameplay`](aetherfield-skygarden-defense/gameplay-prompt.md) | [`progression`](aetherfield-skygarden-defense/progression-prompt.md) | 10 |
 | Wildcore | [`ui`](wildcore-bloom-siege/ui-prompt.md) | [`gameplay`](wildcore-bloom-siege/gameplay-prompt.md) | [`progression`](wildcore-bloom-siege/progression-prompt.md) | 10 |
 
 Generation mode, file dimensions, checksums, and visual-review notes are recorded in
@@ -120,9 +120,9 @@ Score each direction from 1–5 after viewing its ten images:
 
 ## Recommendation
 
-- Choose **Aetherfield** for the safest mix of warmth, clarity, and premium visual appeal.
-- Choose **Blackrain** if weapon feel and tactical intensity should dominate the brand.
-- Choose **Wildcore** if originality, elemental play, and living defenses should dominate the brand.
+- Choose **Last Harvest** for the safest mix of warmth, tactile detail, and premium visual appeal.
+- Choose **Skygarden Defense** for the highest camera, largest readable farm, and strongest voxel identity.
+- Keep **Wildcore** as a later comparison if organic elemental play should dominate the brand.
 - Do not merge all three palettes after selection; take systems from the shared contract and keep
   one coherent art direction.
 
