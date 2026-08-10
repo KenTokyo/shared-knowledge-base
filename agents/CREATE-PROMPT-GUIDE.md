@@ -32,6 +32,8 @@ Die Sichtprüfung bewertet bevorzugt die final integrierte Anwendung und nicht j
 
 ## Pflichtblock bei Runtime-VFX
 
+Copy-ready prompts for greenfield work, full migration, new effects, effect adjustments, and safe long-task interrupts: [`PROCEDURAL-VFX-SCENARIO-PROMPTS.md`](PROCEDURAL-VFX-SCENARIO-PROMPTS.md).
+
 Jeder neue Prompt mit Skill-, Kampf-, Monsterangriffs-, Boss-, Telegraph-, AoE-, Trail-, Impact- oder Bodeneffekt-Scope trägt den Quellenvertrag direkt oder verlinkt [`threejs/VFX.md`](../threejs/VFX.md):
 
 - Sichtbare Effektformen entstehen aus eigenem handgeschriebenem Shadercode und laufzeitgenerierter Geometrie; bei Three.js/WebGL heißt das GLSL, bei einem anderen Renderer dessen nativer Shaderpfad.
