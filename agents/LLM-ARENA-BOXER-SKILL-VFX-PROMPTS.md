@@ -93,3 +93,12 @@ Keep one skill active at a time. Queue one next input, reset cleanly to the same
 
 The finished result should feel like a tiny high-end fighting-game VFX studio: photorealistic character rendering, anatomy-driven boxing, dramatic charge-ups, explosive wind and fog, grounded physics, and fast keyboard-based skill comparison.
 ```
+
+
+# Variation 5 Allround
+
+
+Build every skill through a Three.js + hand-written custom GLSL VFX system. Write custom vertex and fragment shaders, generate BufferGeometry at runtime, and animate shader-driven particles. For VFX, use no bitmap, noise, or LUT textures, texture splats, sprite sheets, flipbooks, videos, baked VFX meshes, or imported effect packs. Generate noise mathematically inside GLSL and construct ribbons, rings, pressure cones, shards, fog volumes, and bursts procedurally.
+
+Use elemental skills such as lighting and fire for example: Flame Jab, Thunder Cross, Stormfire, Earthbreaker, and Overdrive Detonation. Give Flame a tight fire sheath, hot core, ember wake, and heat distortion. Give Thunder Cross branching leaders, restrikes, electric filaments, and a low shock ring. Fuse flame ribbons and lightning channels into a rotating plasma impact for Stormfire. Make Earthbreaker drive force into the floor, opening procedural radial cracks, lifting ground chunks, throwing grit, and leaving a layered crater and fading fissure glow. End Overdrive Detonation with a compressed energy core, expanding blast shells, debris, smoke, and a heavy shockwave. Build each move around anticipation, muscle tension, foot pressure, hip rotation, shoulder drive, contact, recoil, and guard recovery. Drive every layer from the exact fist path, impact point, and animation event.
+```
