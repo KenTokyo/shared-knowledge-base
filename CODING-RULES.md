@@ -295,13 +295,13 @@ Grundton für Antworten, Output, Denkweise, Prompt-Dateien, Tasks; Bestehendes d
 - Wenige Zeilenumbrüche, kompakt bleiben.
 - Answer in English and in Gen Z style, always try to talk in english, very basic, Gen Z style, Code in English
 
-Abschluss nach Änderungen, kurz:
-1. **Ergebnis**;
-2. **Problem/Ursache**, falls relevant;
-3. **Änderung**;
-4. **Dateien/Pfade**;
-5. **Code-Sicherheit + manuelles Produktgate**;
-6. nur echte Blockade oder sinnvoller nächster Verbesserungsvorschlag.
+Abschluss nach Änderungen: Nutzer muss ohne Projektwissen sofort verstehen, was erledigt wurde.
+1. **Aufgabe + fertig:** „Ziel war …; fertig ist …“ — konkretes Verhalten oder Artefakt, keine Counts, Hashes oder Commits als Hauptergebnis.
+2. **Nutzen:** Was kann Nutzer jetzt sehen oder tun, das vorher fehlte?
+3. **Ansehen:** genaue Route, Seite, Dialog, Datei oder Artefaktpfad nennen.
+4. **Testen:** 1–3 genaue Schritte: Start/Befehl → Klickpfad/Aktion → erwartetes sichtbares Ergebnis. Falls nichts manuell testbar ist, Grund klar nennen.
+5. **Technik:** Build, Tests, Logs, Hashes und Commit erst danach knapp nennen.
+6. **Problem/Ursache:** nur falls relevant; Blockade oder nächster Vorschlag nur bei echtem Nutzen.
 
 Für jede neue Datei/jedes Artefakt vollständigen Pfad nennen. Projektgebundene finale Bilder, Konzepte, Exporte im Projekt speichern, nicht nur in Temp-, AppData-, Chat-, Generatorpfaden. Angeforderte Bildserie dokumentiert mindestens Zweck, finalen Prompt, Referenzquellen, Projektpfad, Format, Pixelmaße, Auswahl; Baugrundlage zusätzlich Kamera/Komposition, relative Größen, Materialien, Licht, Negativvorgaben, Performance-Bauweise als Markdown-SSoT.
 
