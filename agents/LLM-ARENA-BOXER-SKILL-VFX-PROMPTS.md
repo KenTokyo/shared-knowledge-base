@@ -3,13 +3,15 @@
 ## Variation 1 — Tiny
 
 ```text
-Build a polished Three.js skill showcase with one photorealistic, Tekken-inspired heavyweight boxer on a minimal sci-fi VFX stage. Add five clickable skills with keys 1–5. Give every punch anatomy-aware motion, visible muscle tension, grounded weight transfer, explosive wind, fog, sparks, shockwaves, realistic debris physics, and a clean recovery. Show the active skill and keyboard controls in a compact bottom rail.
+Build a polished Three.js skill showcase with one photorealistic, Tekken-inspired heavyweight boxer on a minimal sci-fi VFX stage. Use a Three.js + hand-written custom GLSL pipeline with runtime-generated geometry for every skill effect. For VFX, use no bitmap or noise textures, texture splats, sprite sheets, flipbooks, videos, baked VFX meshes, or imported effect packs. Generate trails, particles, wind, fog, sparks, shockwaves, and debris procedurally in shader code. Add five clickable skills with keys 1–5. Give every punch anatomy-aware motion, visible muscle tension, grounded weight transfer, realistic physics, and a clean recovery. Show the active skill and keyboard controls in a compact bottom rail.
 ```
 
 ## Variation 2 — Short
 
 ```text
 Create a compact Three.js animation and VFX showcase starring one original, photorealistic heavyweight boxer with premium 3D fighting-game energy. Place him on an endless dark studio floor surrounded by low fog, soft light columns, and a surreal sci-fi atmosphere.
+
+Build every skill through a Three.js + hand-written custom GLSL VFX system. Write custom vertex and fragment shaders, generate BufferGeometry at runtime, and animate shader-driven particles. For VFX, use no bitmap, noise, or LUT textures, texture splats, sprite sheets, flipbooks, videos, baked VFX meshes, or imported effect packs. Generate noise mathematically inside GLSL and construct ribbons, rings, pressure cones, shards, fog volumes, and bursts procedurally.
 
 Add five clickable skills with keyboard keys 1–5: Gale Jab, Thunder Cross, Cyclone Hook, Meteor Uppercut, and Overdrive Combo. Build each move around anticipation, muscle tension, foot pressure, hip rotation, shoulder drive, fist contact, recoil, and guard recovery. Layer fist trails, compressed wind, pressure distortion, fog pull, sparks, debris, shock rings, brief impact light, and camera impulse around the exact fist path and contact point.
 
@@ -22,6 +24,8 @@ Use Space to replay, P to pause, and R to reset. Show skill names, keys, active 
 Build a polished browser-based Three.js VFX studio for quickly comparing character animation and skill effects. Feature one original, photorealistic, Tekken-inspired heavyweight boxer with realistic proportions, detailed gloves and training gear, skin and cloth shading, a focused guard stance, breathing, and subtle idle weight shifts.
 
 Use a minimal cinematic stage: an endless charcoal floor, deep black space, thin volumetric light, drifting ground fog, and sparse floating dust. Frame the full body, feet, fist path, and impact zone clearly.
+
+Build a custom procedural VFX runtime with Three.js + hand-written custom GLSL. Write dedicated vertex and fragment shaders for skill silhouettes, energy flow, particles, fog, distortion, contact, and aftermath. For VFX, use no bitmap, noise, or LUT textures, texture splats, sprite sheets, flipbooks, videos, baked VFX meshes, or imported effect packs. Create analytic masks, signed-distance shapes, hash noise, fractal noise, turbulence, and flow directly in GLSL. Generate ribbons, tubes, rings, cones, shards, trails, and particle buffers at runtime with reusable Three.js BufferGeometry. Feed every layer from shared cast events, the sampled fist path, and uniform data for time, origin, direction, impact, color, intensity, and lifecycle.
 
 Trigger five skills by clicking their cards or pressing 1–5:
 
@@ -52,6 +56,16 @@ Animate force through the full body. Feet grip the floor, knees and hips initiat
 ## Studio atmosphere
 
 Use an endless dark graphite floor inside a surreal sci-fi VFX studio. Add subtle floor reflections, thin volumetric beams, drifting low fog, suspended dust, distant geometric light shapes, and a deep black background. Use a strong rim light, soft frontal fill, readable skin tones, crisp contact shadows, controlled exposure, and restrained bloom. Compose the camera around the boxer’s full silhouette, planted feet, fist path, and impact point.
+
+## Three.js + hand-written custom GLSL VFX system
+
+Build all skill VFX from dedicated hand-written GLSL vertex and fragment shaders plus runtime-generated Three.js geometry. Apply this asset rule to every visible skill effect: no bitmap textures, noise textures, LUT textures, texture splats, sprite sheets, flipbooks, videos, baked VFX meshes, or imported effect packs. Generate all VFX shapes, masks, motion, breakup, color, opacity, and lighting procedurally. Character skin, clothing, and stage materials remain outside this VFX-only asset rule.
+
+Use analytic signed-distance shapes, gradients, hash functions, fractal noise, curl-like flow, turbulence, Fresnel rims, depth fades, vertex deformation, and time-based lifecycle curves directly in GLSL. Build reusable runtime geometry for ribbons, tubes, rings, cones, shock shells, shards, trails, particle fields, and volumetric forms with BufferGeometry and instancing. Use renderer-owned depth and color targets for soft intersections, scene-aware distortion, and post effects.
+
+Give each skill its own authored shader composition while sharing a small runtime contract. Pass time, phase, origin, direction, sampled fist path, impact point, color, intensity, seed, and lifecycle through explicit uniforms or instance attributes. Compile materials during startup, reuse bounded geometry and particle pools, reset every shader state on release, and keep draw calls and overdraw controlled.
+
+Compose each ability from event-driven layers: anticipation silhouette → charge energy → release trail → contact core → pressure shell → sparks and debris → floor response → residual fog. Use charge, release, contact, peak, recoil, and end events as the timing source for animation, geometry, shaders, light, and camera.
 
 ## Skills and controls
 
