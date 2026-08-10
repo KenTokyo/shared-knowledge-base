@@ -5,6 +5,14 @@
 **Stil:** Nur kompakte Stichpunkte; je Punkt eine klare Information.
 **Schnitt:** Füllwörter, Einleitungen, Wiederholungen, unnötige Artikel streichen; Fehlerbild, Ursache, Handlung, Beleg erhalten.
 
+## Combat-/Skill-VFX — Quellenvertrag
+
+- Sichtbare Effektformen entstehen aus handgeschriebenem GLSL und zur Laufzeit per Code erzeugter Geometrie; neutrale prozedurale Shader-/Geometriekerne dürfen geteilt werden, sichtbare Skill-Shells nicht.
+- Verboten: geladene Bitmap-, Noise-, LUT- oder Decal-Texturen, Sprite-Sheets, Flipbooks, Videos, gebackene VFX-Meshes, importierte Effektpakete und kopierte Fremdshader.
+- Erlaubt: `ShaderMaterial`/gezielte Material-Patches, SDFs, analytisches Noise, parametrisierte Ribbons/Tubes/Quads, `InstancedMesh`/`InstancedBufferGeometry`, codegenerierte Solids und rendererinterne Depth-/Color-Targets für Soft Intersection/PostFX.
+- Charakter-, Waffen- und Weltassets fallen nicht unter das VFX-Verbot; sie dürfen keine versteckten gebackenen Effektflächen oder Animations-Flipbooks tragen.
+- Prozedural bedeutet kein Pool-Spam: Hauptform, Beat, Raumanker, feste Kapazität, Blend-/Depth-Rolle und Degradation bleiben explizit.
+
 ## Tipps
 
 - **Viele Layer, keine lesbare Hauptform** — Mehr Partikel, Bloom und Licht; Effekt bleibt beliebig. → Pro Beat tragende Geometrie/Spine bestimmen; Kontakt, Spray, Licht, Audio und Nachleben darauf reagieren lassen, nicht zu konkurrierenden Hauptformen machen.

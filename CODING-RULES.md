@@ -202,6 +202,7 @@ Für visuelle/spielerische Echtzeit-3D-Arbeit zusätzlich zu `THREEJS-RULES.md`:
 - **Explizites Gate:** Agentische Sichtprüfung nur bei ausdrücklicher Freigabe im aktuellen Auftrag. Schweigen, frühere Freigabe, sichtbarer Scope, eigene Unsicherheit zählen nicht. Sonst übernimmt User direkte Oberflächen-/Gameplay-Abnahme.
 - **Freigabe = Pflicht:** Freigegebene Sichtprüfung nach vollständiger Umsetzung + statischen/numerischen Gegenchecks per Projekt-CLI aus §9.
 - **Budget:** Maximal sechs Sichtprüfungen im gesamten Auftrag. Bei umfangreicher visueller 3D-Arbeit + allgemeiner Freigabe fünf Sichtfragen, sechste für relevant korrigierten Endstand/neue konkrete Frage. Niedrigere Userzahl gewinnt. Kein Neubeginn je Phase, Kamera, Kandidat, Mikroedit.
+- **Combat-/Skill-VFX entstehen prozedural:** sichtbare Effektformen nutzen eigenen handgeschriebenen GLSL-Code und laufzeitgenerierte Geometrie. Keine Bitmap-/Noise-/LUT-Texturen, Sprite-Sheets, Flipbooks, Videos, gebackenen VFX-Meshes oder importierten Effektpakete; rendererinterne Depth-/Color-Targets sowie Charakter-/Weltassets sind nicht gemeint. Technischer Vertrag → `threejs/VFX.md`.
 - Nach 3–5 Verbesserungen derselben Messachse → andere 3D-Achse.
 
 ## 9. Validierung, Tests und Prüfbudget
