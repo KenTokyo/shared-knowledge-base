@@ -30,6 +30,17 @@ Die Sichtprüfung bewertet bevorzugt die final integrierte Anwendung und nicht j
 * **Prompt 3 für Tiefe und Performance:** konkrete Anforderungen an Architektur, Messbarkeit, Laufzeit, LOD, Culling, Instancing und stabile Integration übernehmen.
 * **Gesamtziel:** ambitionierte Qualitätsansprüche mit klaren technischen Leitplanken, realen Messwerten und einer begrenzten integrierten Abnahme verbinden.
 
+## Pflichtblock bei Runtime-VFX
+
+Jeder neue Prompt mit Skill-, Kampf-, Monsterangriffs-, Boss-, Telegraph-, AoE-, Trail-, Impact- oder Bodeneffekt-Scope trägt den Quellenvertrag direkt oder verlinkt [`threejs/VFX.md`](../threejs/VFX.md):
+
+- Sichtbare Effektformen entstehen aus eigenem handgeschriebenem Shadercode und laufzeitgenerierter Geometrie; bei Three.js/WebGL heißt das GLSL, bei einem anderen Renderer dessen nativer Shaderpfad.
+- Verboten: Bitmap-/Noise-/LUT-/Decal-Texturen als Effektquelle, Sprite-Sheets, Flipbooks, Videos, gebackene VFX-Meshes, importierte Effektpakete und kopierte Fremdshader.
+- Rendererinterne Depth-/Color-Targets, Charakter-/Weltassets und UI-Icons bleiben erlaubt, dürfen aber keine versteckten Effekt-Flipbooks oder gebackenen Skillflächen liefern.
+- Qualitätskette im Prompt: `First Read → Anticipation/Release → Raumweg → Kontakt → Reaktion → Folge/Recovery`; Gameplay, Animation, VFX, Sound und Bodenreaktion teilen Cast-ID, Zeitpunkt und Raumanker.
+- Jeder Effektbrief benennt dominante Silhouette, Material-/Lichtrollen, Blend-/Depth-Rolle, exakten Footprint, feste Kapazität, Degradation und sichtbare Unterschiede zu Nachbareffekten.
+- Referenzen liefern Qualitätsgründe, nie kopierbare Skills. `LinearAbiltyCastingThreeJS` unter [`WINDOWS-RESSOURCEN.md`](../WINDOWS-RESSOURCEN.md) ist die lokale Gegenprobe für prozedurale Layer, AoE-Zielbilder und Live-Tuning.
+
 ## Kernprinzip aus Prompt 1
 
 ### Originalprompt von Matt Shumer
