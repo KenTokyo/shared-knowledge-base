@@ -138,17 +138,17 @@
 `../../../../src/models/subagent-strategy.ts`
 `../../../../src/test/SubagentStrategy.test.ts`
 
-### ⏳ Phase 6 — Checks, package, and delivery
+### ✅ Phase 6 — Checks, package, and delivery
 **Goal:** Deliver the shared rules and runtime behavior as one verified release.
 * [x] `doc-checks` — Verified all Coding Rules links, explained-only no-go words, 235-line size, UTF-8/Mojibake, Markdown endings, and clean diffs.
 * [x] `project-checks` — `pnpm test` passed compile, lint, style guardrails, and all 171 extension tests in one full run.
 * [x] `release` — Bumped once to `3.6.444`, built through `pnpm package:vsix`, and verified manifest/runtime files inside the VSIX.
-* [ ] `git-delivery` — Commit/push shared-docs first, then commit/push the parent code and updated submodule pointer.
-* [ ] `final-audit` — Reread prompt, task, user edits, all phases, checks, package, and remaining unrelated status.
-**Result:** Rules, runtime tests, and `uniai-chat-3.6.444.vsix` are green; Git delivery and the final reread remain.
-**Limits:** Stage only task-owned files; keep unrelated cache and Notes changes untouched.
-**Architecture:** Shared-docs commit lands before the parent points to it; no direct VSCE command. The package contains the shared guidance once and both protocol consumers.
-**Findings:** 🟢 **Open:** VSCE warns that the extension has many JavaScript files; this existing bundle-size advice does not block the verified package.
+* [x] `git-delivery` — Pushed shared-docs implementation `a2b6086` first, then parent implementation `7aa5dcf`; final task/pointer closure follows this status edit.
+* [x] `final-audit` — Reread prompt, task, user edits, all phases, checks, artifact, both remotes, and unrelated remaining files.
+**Result:** The plain rules, active-only strategy guidance, tests, Build `3.6.444`, VSIX, and implementation commits are complete and remotely synced.
+**Limits:** Staged only task-owned files; unrelated cache and Notes changes remain untouched.
+**Architecture:** Shared-docs landed before each parent pointer. One shared string feeds both enabled protocols, `off` stays empty, and no second setting or runtime path exists.
+**Findings:** 🟢 **Info:** VSCE advises bundling because the extension has many JavaScript files; this existing package-size advice does not block the verified artifact.
 **References:**
 `coding-rules-prompt-file-contract-tasks.md`
 `../../../../package.json`
@@ -181,3 +181,9 @@
 1. 🟠 **High · fixed:** Cleanup inside the original-text section would have destroyed the unchanged source.
 2. 🟡 **Medium · fixed:** Direct and Workflow could drift because useful-work guidance had no shared source.
 3. 🟢 **Low · fixed:** The always-read file used 43 extra lines and several unexplained specialist words.
+
+### Phase 6
+**Criteria met:** docs and links ✅, compile/lint/style ✅, 171 tests ✅, verified VSIX ✅, submodule-first delivery ✅, remote sync ✅.
+**Findings by severity:**
+1. 🟢 **Info:** VSCE’s existing bundle-size warning is advisory; manifest version, runtime guidance, and required protocol files are present in the archive.
+2. 🟢 **Protected:** Pre-existing OpenCode cache and four Notes files were never staged or changed by this task.
