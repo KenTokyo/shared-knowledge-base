@@ -1,278 +1,235 @@
-# Coding Rules — kompakter Arbeitsvertrag
+# Coding Rules — einfacher Arbeitsvertrag
 
-**Ziel:** Verstehe den Auftrag, halte sein Original fest, plane nachvollziehbar, arbeite selbstständig und liefere eine saubere fertige Einheit.
+**Ziel:** Verstehe den Auftrag, speichere das unveränderte Original in einer Prompt-Datei, plane in einer Task-Datei, arbeite selbstständig und liefere ein fertiges Ergebnis.
 
-**Priorität:**
+**Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
-1. aktueller Userauftrag und seine unveränderte Prompt-Quelle;
-2. lokale `AGENTS.md` des Projekts;
-3. diese Coding Rules;
-4. nur passend ausgelöste Fachregeln und Learnings.
+## 1. Prompt-Datei und Task-Datei
 
-## 1. Prompt-Quelle, Task und Lesepfad
+Jeder Auftrag, der Projektdateien oder ein Projektartefakt ändert, erhält **vor dem ersten Edit** genau ein Paar:
 
-### Pflichtpaar für Projektarbeit
+- `…-prompt.md` — feste Quelle für Usertext und mögliche Verbesserung;
+- `…-tasks.md` oder vorhandene Task-/Masterdatei — änderbarer Arbeitsplan.
 
-Jeder Auftrag, der Repository-Dateien oder ein Projektartefakt ändert, erhält **vor der Umsetzung** genau ein zusammengehöriges Paar:
-
-- `…-prompt.md` — unveränderliche Quelle für Usertext und optionale Prompt-Verbesserung;
-- `…-tasks.md` oder vorhandene lokale Task-/Masterdatei — veränderlicher Ausführungsplan.
-
-Reine Fragen und reine Leseaufträge ohne Projektänderung brauchen kein Paar. Ein kleiner Fix erhält eine kurze Phase statt gar keiner Taskdatei.
+Reine Fragen und Leseaufträge brauchen kein Paar. Ein kleiner Fix bekommt eine kurze Phase statt gar keiner Task-Datei.
 
 Regeln für das Paar:
 
-- Beide Dateien liegen im selben Taskordner, sofern die Projektkonvention keinen anderen Ort verlangt.
-- Neue Paare teilen einen sprechenden Namensstamm: `<thema>-prompt.md` und `<thema>-tasks.md`.
-- Jede Taskdatei enthält direkt oben `## Initial goal` mit relativem Pfad zur Prompt-Datei.
-- Die Prompt-Datei besitzt das Ziel; die Taskdatei leitet daraus Scope, Phasen, Entscheidungen und Status ab.
-- Raw Prompt nie in der Taskdatei duplizieren. Ein kurzer Zielsatz ist erlaubt.
-- Bestehenden Plan fortführen, keinen Konkurrenzplan bauen. Fehlt ihm eine Prompt-Datei, vor dem nächsten Edit eine Begleitdatei aus dem noch verfügbaren Originalauftrag anlegen; unbekannte ältere Teile ehrlich als nicht verfügbar markieren.
-- Neuer User-Nachtrag zum selben Ziel wird datiert an dieselbe Prompt-Datei angehängt. Originaltext nie umschreiben.
-- Task gilt nicht als fertig, wenn Prompt-Datei fehlt, Link gebrochen ist oder Plan dem Prompt widerspricht.
+- Beide Dateien liegen im selben Taskordner, wenn das Projekt keinen anderen Ort vorgibt.
+- Neue Paare teilen einen klaren Namensstamm: `<thema>-prompt.md` und `<thema>-tasks.md`.
+- Die Task-Datei nennt direkt oben unter `## Initial goal` den relativen Prompt-Pfad.
+- Die Prompt-Datei hält den Auftrag. Die Task-Datei leitet daraus Arbeitsumfang, Phasen, Entscheidungen und Stand ab. Den ganzen Usertext dort nie kopieren.
+- Vorhandenen Plan fortführen. Fehlt seine Prompt-Datei, diese vor dem nächsten Edit aus dem noch verfügbaren Original anlegen; nicht mehr bekannte Teile als unbekannt markieren.
+- Spätere Useränderungen mit Datum an dieselbe Prompt-Datei anhängen. Früheren Text nie umschreiben.
+- Die Aufgabe ist nicht fertig, wenn die Prompt-Datei fehlt, der Link kaputt ist oder der Plan dem Auftrag widerspricht.
 
-### Inhalt der Prompt-Datei
+### Aufbau der Prompt-Datei
 
-Die Prompt-Datei trennt Quellen und Ableitungen klar:
+1. `## Source` — Datum, Chat-/Dateihinweis und Anhänge.
+2. `## Unchanged original` — Usertext in Originalsprache und Originalreihenfolge.
+3. `## Clear work goal` — nur wenn eine klare Kurzfassung oder echte Prompt-Verbesserung hilft.
+4. `## Dated updates` — spätere Useränderungen mit Datum und unverändertem Text.
 
-1. `## Source` — Datum, Chat-/Dateireferenz und Anhänge.
-2. `## Raw user request` — Usertext in Originalsprache und Reihenfolge; Pfade, Befehle, Zahlen, Bildreferenzen und Grenzen erhalten.
-3. `## Prompt improvement request` — nur bei echtem Verbesserungsmarker.
-4. `## Improved executable goal` — nur wenn der Marker eine echte Anweisung enthält.
-5. `## Updates` — spätere Useränderungen append-only mit Datum.
+Das Original bleibt wirklich unverändert: Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen bleiben stehen. Aufräumen, sortieren und kleine Abschnitte sind nur im `Clear work goal` erlaubt. Geheimnisse nie speichern; an ihrer Stelle `[REDACTED: secret]` schreiben.
 
-Secrets, Tokens und Passwörter nie persistieren; im Raw-Bereich als `[REDACTED]` mit kurzer Begründung markieren. Zeilenenden und unsichtbare Endspaces dürfen für Markdown-Hygiene normalisiert werden; Inhalt sonst nicht kürzen oder glätten.
-
-### Flexibler Verbesserungsmarker
-
-Kanonisches Format:
+Optionale Kennzeile:
 
 ```text
 Prompt-Verbesserung:[Keywords oder freie Anweisung]
 ```
 
-- Groß-/Kleinschreibung sowie Bindestrich oder Leerzeichen tolerant erkennen.
-- Klammerinhalt ist eine offene Anweisung, keine feste Enum. Beispiele: `kompakt`, `Architektur`, `Edge-Cases`, `Performance`, `UI/UX`, beliebige Kombination oder Freitext.
-- Leerer Inhalt oder Platzhalter wie `[HIER …]` zählt als **kein** Verbesserungsauftrag.
-- Ohne echten Marker enthält die Prompt-Datei nur den Raw Prompt und spätere Updates; keine künstliche Neufassung erfinden.
-- Mit Marker schreibt **dieselbe ausführende KI** darunter den verbesserten Zielprompt und setzt genau diesen um. Keine zweite KI, kein zweiter Provider und kein separater Enhancer-Prozess nur für diesen Workflow.
-- Verbesserung darf Rolle, Reihenfolge, Abnahme und nötige Edge-Cases klären, aber keine Fakten, Features oder Grenzen erfinden.
-- Userabsicht, Sprache, Negationen, Pfade, Befehle, Referenzen, Maße und harte Eigenschaften bleiben erhalten.
-- Raw Prompt und verbesserter Prompt bleiben getrennt; Verbesserung überschreibt nie die Quelle.
+- Groß-/Kleinschreibung sowie Bindestrich oder Leerzeichen dürfen abweichen.
+- Der Klammerinhalt ist frei: etwa `kompakt`, `Architektur`, `Edge-Cases`, `Performance`, `UI/UX` oder Freitext.
+- Leerer Inhalt und Platzhalter wie `[HIER …]` sind kein Auftrag. Dann keine verbesserte Fassung erfinden.
+- Bei echtem Auftrag schreibt **dieselbe ausführende KI** das `Clear work goal` und setzt es um. Keine zweite KI nur für diesen Dateiablauf starten.
+- Die Verbesserung darf Reihenfolge, Abnahme und nötige Sonderfälle klären, aber keine Fakten, Features oder Grenzen erfinden.
+- Absicht, Sprache, Verneinungen, Pfade, Befehle, Referenzen, Maße und feste Eigenschaften bleiben erhalten. Das bessere Ziel ergänzt das Original und ersetzt es nie.
 
-Ein produktseitiger Prompt-Enhancer darf als eigenes optionales Werkzeug bestehen. Er ist nicht Voraussetzung für diesen Datei-Workflow.
+Ein Prompt-Enhancer im Produkt darf getrennt bestehen; dieser Dateiablauf braucht ihn nicht.
 
-### Context Condense, Handover und Subagents
+### Übergabe und Lesen
 
-Sobald ein Taskpaar existiert, nennt jede Übergabe und jeder Context-Condense-Start direkt:
+Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 
 ```text
-- Prompt: <workspace-relativer Pfad zur *-prompt.md>
-- Task: <workspace-relativer Pfad zur Task-/Masterdatei>
+- Prompt: <projekt-relativer Pfad zur *-prompt.md>
+- Task: <projekt-relativer Pfad zur Task-/Masterdatei>
 ```
 
-- Folgeagent liest Prompt zuerst, danach Taskstatus und erst dann Code.
-- Subagent-Routing trägt Taskpfad und exakte Task-ID; die Taskdatei hält den Promptpfad als `Initial goal`. Der Child liest erst den verlinkten Prompt, dann sein Todo.
-- Fan-in und Abschluss lesen beide Dateien erneut. Kontextkürzung darf die Prompt-Referenz nie entfernen.
+Der Folgeagent liest Prompt → Taskstand → Code. Beim Zusammenführen und Abschluss liest er Prompt und Task erneut. Beide Pfade bleiben bei jeder Kontextkürzung erhalten.
 
-### Normaler Lesepfad
+Normaler Lesepfad:
 
-1. lokale `AGENTS.md` komplett lesen;
-2. diese Datei komplett lesen;
-3. verlinkte Prompt-Datei, danach bestehende Taskdatei lesen oder neues Paar anlegen;
-4. nur den engsten ausgelösten Fachowner lesen.
+1. lokale `AGENTS.md` vollständig lesen;
+2. diese Datei vollständig lesen;
+3. Prompt-Datei und danach Task-Datei lesen oder das Paar anlegen;
+4. nur die kleinste passende Fachdatei lesen.
 
-Fachowner:
+Fachdateien:
 
 - React, State, Hydration, Browser-UI → [FRONTEND-RULES.md](FRONTEND-RULES.md)
 - Echtzeit-3D → [THREEJS-RULES.md](THREEJS-RULES.md)
 - vollständiger Weltbau → [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md)
-- freigegebene CLI-Captures → [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md)
+- ausdrücklich erlaubte Bildschirmaufnahmen → [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md)
 - neue belegte Learnings → [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md)
-- Windows-Ressourcen, Nachbarrepo oder Port → [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md)
-- macOS-Ressourcen, Nachbarrepo oder Port → [MACOS-RESSOURCEN.md](MACOS-RESSOURCEN.md)
+- Windows-Ressourcen, Nachbarprojekt oder Port → [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md)
+- macOS-Ressourcen, Nachbarprojekt oder Port → [MACOS-RESSOURCEN.md](MACOS-RESSOURCEN.md)
 - mehrere Lieferphasen → [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md)
 
-Externe API oder Bibliothek → aktuelle Originaldokumentation nur zur offenen Frage lesen. Ein Link allein ist kein Leseauftrag; keine Linkketten vorsorglich öffnen.
-
-Vor großem Leseblock kurz festhalten: **Auftrag · Leseliste · Befund je Datei · nächster Schritt**. Suche beenden, sobald die Änderung sicher entschieden ist.
+Externe API oder Bibliothek → nur aktuelle Originaldoku zur offenen Frage lesen. Vor großem Lesen kurz notieren: **Auftrag · Leseliste · Fund je Datei · nächster Schritt**. Stoppen, sobald die Änderung sicher entschieden ist.
 
 ## 2. Prüfen, entscheiden, durcharbeiten
 
-- Aussage, Diagnose oder Plan erst nach Code, Doku, Log, Messung oder klarer Logik übernehmen.
-- Speech-to-Text-Fehler mitdenken; Beispiele und Referenzen stärker als wahrscheinlich falsche Einzelwörter gewichten.
-- Lösung A verbessern, nicht still zu B wechseln. Vor großer Änderung fragen: **Löst das das genannte Problem?**
-- Explizite Maße, Eigenschaften, Superlative und Negationen als harte Grenzen schützen.
-- „Übernehmen“ bedeutet Zielparität in Funktion, Verhalten, Datenfluss und Qualität.
-- Kleine Lücke klein beheben; schwache Grundlage zusammenhängend umbauen. Wenige Zeilen sind kein Ziel.
-- Altcode prüfen, nicht automatisch verteidigen. Schädlichen Altpfad im Lieferweg entfernen statt Notlösungen stapeln.
-- Bei echter Unsicherheit: Problem abstrahieren → lokale Geschwisterlösung + Originaldoku prüfen → 2–3 tragfähige Wege vergleichen → besten Weg wählen.
-- Setup-Fehler wie falscher Ordner, fehlende Installation oder Portkonflikt nicht als Produkt-Workaround verstecken.
+- Aussagen und Pläne erst nach Code, Doku, Log, Messung oder klarer Logik übernehmen.
+- Mögliche Speech-to-Text-Fehler mitdenken; Beispiele und Referenzen stärker als ein wahrscheinlich falsches Einzelwort gewichten.
+- Lösung A verbessern, nicht still zu B wechseln. Vor großer Änderung fragen: **Löst sie das genannte Problem?**
+- Maße, feste Eigenschaften, Superlative und Verneinungen schützen. „Übernehmen“ heißt gleiche Funktion, gleiches Verhalten, gleicher Datenfluss und gleiche Qualität.
+- Kleine Lücke klein beheben; schwache Grundlage zusammenhängend reparieren. Wenige Zeilen sind kein Ziel.
+- Altcode prüfen. Schädliche Altwege entfernen, statt weitere Notlösungen darauf zu stapeln.
+- Bei Unsicherheit: Problem vereinfachen → ähnliche Projektlösung und Originaldoku prüfen → zwei oder drei Wege vergleichen → besten wählen.
+- Setupfehler wie falscher Ordner, fehlende Installation oder Portkonflikt nicht als Produktlösung verstecken.
 
-Bei klarem Auftrag nicht nachfragen. Arbeiten bis Ziel, letzter Phase oder echter äußerer Blockade fortsetzen. Stoppen nur bei fehlendem Secret/Zugang, widersprüchlichen Pflichtdaten oder nicht erlaubter irreversibler Aktion; dann genau eine fehlende Information nennen.
+Bei klarem Auftrag nicht nachfragen. Bis zum Ziel oder zu einer echten äußeren Blockade weiterarbeiten. Nur stoppen bei fehlendem Secret/Zugang, widersprüchlichen Pflichtdaten oder nicht erlaubter endgültiger Aktion; dann genau die eine fehlende Information nennen.
 
-Im bearbeiteten Lieferweg:
+Im bearbeiteten Weg sichtbare Fehler, Typfehler, tote Verweise, kaputte Doku, falsche Rechnungen und eigene Rückschritte direkt beheben. Fremde Änderungen nie überschreiben oder zurücksetzen. Fremde Blocker nur so klein wie nötig und ohne Datenverlust beheben; Funde außerhalb des Auftrags nicht zum neuen Großprojekt machen.
 
-- sichtbaren Fehler, Typfehler, tote Referenz, kaputte Doku, falsche Rechnung und eigene Regression direkt beheben;
-- fremde offene Änderungen weder überschreiben noch zurücksetzen;
-- fremden Blocker minimal und additiv reparieren, klar nennen, weiterarbeiten;
-- auftragsfremden Fund nicht zum neuen Großprojekt machen.
-
-## 3. Taskphasen und Arbeitsloop
+## 3. Phasen und Arbeitsablauf
 
 Jede Phase enthält kompakt:
 
 1. **Ziel** — sichtbares oder prüfbares Ergebnis.
-2. **Todos** — klare `[ ]`/`[x]`-Punkte.
+2. **Todos** — klare `[ ]`- und `[x]`-Punkte.
 3. **Ergebnis** — ein kurzer Satz.
 4. **Warum** — nur wenn nicht offensichtlich.
-5. **Grenzen** — Regeln und harte Limits.
-6. **Architektur** — Hauptquelle, Besitzer, Datenfluss.
-7. **Funde** — Fehler und Performance-Risiken nach Schwere + Fixstatus.
-8. **Referenzen** — höchstens drei Hauptpfade, einschließlich Promptdatei wenn sie für die Phase zentral ist.
+5. **Grenzen** — feste Regeln und Obergrenzen.
+6. **Architektur** — Hauptquelle, Verantwortung und Datenfluss.
+7. **Funde** — Fehler und Leistungsrisiken nach Schwere und Fixstand.
+8. **Referenzen** — höchstens drei Hauptpfade.
 
-Reihenfolge: Grundlage → kompletter Hauptweg → Sonderfälle → Feinschliff → Endcheck. Jede Phase bleibt kohärent, rückbaubar und möglichst prüfbar.
+Reihenfolge: Grundlage → kompletter Hauptweg → Sonderfälle → Feinschliff → Endprüfung. Jede Phase bleibt zusammenhängend, rückbaubar und möglichst prüfbar.
 
-Arbeitsloop:
+Arbeitsablauf:
 
-1. Prompt, Taskstatus, Scope, Architektur, Git-Diff und Werkzeuge prüfen.
-2. Eng gekoppelte Todos vollständig umsetzen.
-3. Kanonische Checks einmal für den zusammenhängenden Teil ausführen.
-4. Funde gemeinsam beheben; danach normalerweise ein Kontrolllauf.
+1. Prompt, Taskstand, Arbeitsumfang, Architektur, Git-Diff und Werkzeuge prüfen.
+2. Eng verbundene Todos vollständig umsetzen.
+3. Stärksten passenden Projektcheck einmal ausführen.
+4. Funde gemeinsam beheben; danach normalerweise genau einen Kontrolllauf starten.
 5. Phase einmal aktualisieren und direkt zur nächsten offenen Phase wechseln.
-6. Am Ende Raw Prompt, verbessertes Ziel falls vorhanden, Task und alle Abnahmepunkte erneut lesen.
+6. Am Ende Original, besseres Arbeitsziel falls vorhanden, Task und alle Abnahmepunkte erneut lesen.
 
-Frühere Ergebnisse append-only erhalten; nichts rückwirkend erfinden. Ab etwa 600 Taskzeilen nach Projektkonvention teilen und gegenseitig verlinken. Offene gekoppelte Findings als Todos schließen; nur wirklich eigener Folgescope bekommt eine separate Optimierungsplanung.
-
-### Subagents nur bei echtem Gewinn
-
-- Kleine, sequenzielle oder eng gekoppelte Arbeit bleibt beim Hauptagenten.
-- Nach großen unabhängigen Fachbereichen teilen, nie nach Mini-Aufgaben.
-- Exklusive Dateien, Zustände und Task-IDs vergeben; bei Kollisionsrisiko einen Owner oder serielle Übergabe wählen.
-- Kleinste ausreichende Agentenzahl nutzen; kein Agent für wenige Toolaufrufe, eine Datei oder einen einfachen Check.
-- Auftrag nennt Task, Task-ID, Ziel, In-/Out-of-Scope, eigene Pfade, Abhängigkeiten, Rückgabe und Stoppgrenze; Prompt bleibt über `Initial goal` erreichbar.
-- Hauptagent führt Ergebnisse zusammen, prüft Schnittstellen und wiederholt delegierte Arbeit nicht.
+Frühere Ergebnisse nur ergänzen. Ab etwa 600 Taskzeilen nach Projektregel aufteilen und verlinken. Verbundene offene Funde als Todos schließen; nur echte spätere Zusatzarbeit bekommt einen eigenen Plan.
 
 ## 4. Code und Architektur
 
-- Vor Änderung Hauptquelle, Verantwortung und Datenfluss verstehen.
-- Erst Struktur und kompletter Hauptweg, danach Werte, Optik und Feinschliff.
-- Wiederholt instabiler Bereich: Mehrfachquellen und Altcode prüfen → eine verlässliche Quelle bauen → alle Consumer anbinden → toten Weg löschen.
-- „Komplett neu“ heißt Inhalt neu aufbauen, nicht nur Farben oder Zahlen drehen.
-- Keine versteckten harten Grenzen oder Qualitätsverluste als Performance-Fix.
+- Vor dem Edit Hauptquelle, Verantwortung und Datenfluss verstehen.
+- Erst Struktur und kompletten Hauptweg bauen, danach Werte, Optik und Feinschliff.
+- Bei instabilen Bereichen doppelte Quellen und Altcode prüfen → eine verlässliche Quelle bauen → alle Nutzer anbinden → alten Weg löschen.
+- „Komplett neu“ heißt Inhalt neu aufbauen, nicht nur Farben oder Zahlen ändern.
+- Keine versteckten Grenzen oder Qualitätsverluste als Leistungsverbesserung verkaufen.
 
-### Datei- und Besitzgrenzen
+Dateien:
 
-- Eine Datei besitzt ein Fachziel; unabhängige UI, Assets, Datenmodelle und Services trennen.
-- Keine wachsenden `entries.ts`-, `config.ts`-, `data.ts`-, `misc.ts`- oder `helpers.ts`-Sammeldateien.
-- Aggregatoren importieren/exportieren; Featurelogik bleibt beim Feature.
-- Shared-Modul nur bei echter Wiederverwendung, sonst Helper beim fachlichen Owner.
-- Globale Module importieren kein Feature.
-- Handgepflegte Codedatei maximal **1.600 physische Zeilen**. Neue/geänderte Datei nie darüber liefern; berührte Altdatei darüber im Auftrag fachlich teilen.
-- Generatorausgabe und unveränderter Vendor-Code sind ausgenommen.
-- Nach Umbau ungenutzten Code, Imports, Zustände und Verweise löschen.
+- Eine Datei hat ein Fachziel. Unabhängige UI, Assets, Datenmodelle und Services trennen.
+- Keine wachsenden Sammeldateien wie `entries.ts`, `config.ts`, `data.ts`, `misc.ts` oder `helpers.ts`.
+- Sammelstellen importieren und exportieren nur; Fachlogik bleibt beim Fachteil.
+- Gemeinsames Modul nur bei echter Wiederverwendung. Globale Module importieren kein Feature.
+- Handgepflegte Codedatei maximal **1.200 physische Zeilen**. Neue oder geänderte Datei nie darüber liefern; eine berührte größere Altdatei sinnvoll teilen. Erzeugte Dateien und unveränderter Fremdcode sind ausgenommen.
+- Nach Umbauten ungenutzten Code, Imports, Zustände und Verweise löschen.
 
-### Datenfluss und Performance
+Datenfluss und Leistung:
 
-- Single Source of Truth festlegen; parallele Stores und Ping-Pong-Synchronisation vermeiden.
-- Daten gesammelt laden; unabhängige Arbeit parallelisieren; N+1-Zugriffe vermeiden.
-- Teure Arbeit passend bündeln, poolen, cachen oder vorbacken.
-- Live-Collection nie im selben Iterator erweitern; Queue/Snapshot + `visited`-Set + hartes Sicherheitslimit nutzen.
-- Neue Layer müssen sichtbaren Nutzen gegen Laufzeit, Speicher und Pflegekosten rechtfertigen.
-- Performance darf Kernfunktion, Lesbarkeit oder belegte Qualität nicht still abbauen.
+- Eine verlässliche Hauptquelle festlegen; parallele Stores und Hin-und-her-Abgleich vermeiden.
+- Daten gesammelt laden, unabhängige Arbeit parallel ausführen und viele Einzelzugriffe vermeiden.
+- Teure Arbeit bündeln, wiederverwenden, zwischenspeichern oder vorberechnen.
+- Eine laufend veränderte Liste nie im selben Durchlauf erweitern; Kopie oder Queue plus `visited`-Set und feste Obergrenze nutzen.
+- Neue Schichten brauchen sichtbaren Nutzen. Leistung darf Kernfunktion, Lesbarkeit oder belegte Qualität nicht still verschlechtern.
 
-## 5. Fachrouter und Sichtprüfung
+## 5. Fachregeln und Sichtprüfung
 
-- React-/Frontend-Arbeit folgt [FRONTEND-RULES.md](FRONTEND-RULES.md); Details stehen nicht doppelt hier.
-- Echtzeit-3D folgt [THREEJS-RULES.md](THREEJS-RULES.md) und genau einem passenden Fachowner.
-- Agentische Browser-, Screenshot-, UI- oder Gameplay-Sichtprüfung braucht eine **ausdrückliche Freigabe im aktuellen Userauftrag**. Schweigen, frühere Freigabe, sichtbarer Scope oder eigene Unsicherheit reichen nicht.
-- Ohne Freigabe schließt der Agent technische Arbeit statisch ab; der User übernimmt direkte Sicht-/Spielgefühl-Abnahme.
-- Mit Freigabe erst vollständig umsetzen und statisch prüfen, dann projekteigenes CLI nutzen. Technischer Capture-Owner: [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md).
-- Für Echtzeit-3D höchstens sechs Sichtprüfungen im gesamten Auftrag; kleinere Usergrenze gewinnt. Gleiche Frage oder unverändertes Bild nicht erneut prüfen.
-- Nach 3–5 Verbesserungen derselben 3D-Messachse Achse schließen und zur nächsten relevanten Dimension wechseln.
+- React-/Frontend-Arbeit folgt [FRONTEND-RULES.md](FRONTEND-RULES.md); Echtzeit-3D folgt [THREEJS-RULES.md](THREEJS-RULES.md) und genau einer passenden Fachdatei.
+- Browser-, Screenshot-, UI- oder Gameplay-Sichtprüfung braucht eine **ausdrückliche Freigabe im aktuellen Userauftrag**. Schweigen, alte Freigaben oder eigene Unsicherheit reichen nicht.
+- Ohne Freigabe nur statisch prüfen; der User übernimmt die direkte Sicht- und Spielgefühl-Abnahme.
+- Mit Freigabe erst fertig umsetzen und statisch prüfen, dann [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) folgen.
+- Für Echtzeit-3D höchstens sechs Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
 
-## 6. Checks und Testbudget
+## 6. Checks und Testmenge
 
-- Zusammenhängenden Teil fertigstellen, dann stärksten kanonischen Projektcheck einmal für alle eigenen Änderungen ausführen.
-- Funde bündeln und normalerweise genau einen Kontrolllauf starten.
-- Gleichen Check ohne Änderung oder neue Frage nicht wiederholen; wiederholter Fehler verlangt andere Ursache oder Lösung.
-- TypeScript und CI belegen Code-Sicherheit, nicht Produktqualität, Optik, Lesbarkeit oder Spielgefühl.
-- `include`/`exclude` nie für künstlich grünes oder schnelles Gate verkleinern.
-- Vorhandene Cache-, Heap- und Projektscripts statt eigenem blanken Check nutzen.
-- Umgeleitete Logs brauchen Exit-Code + Inhalt; leeres Log ist kein Erfolg, wenn Prozess timeoutet oder beendet wurde.
-- Cache nur bei belegtem Verdacht über vorhandenes Clean-Script löschen.
-- Reine Doku-, Prompt- und Regeländerung braucht keinen Typecheck.
+- Zusammenhängenden Teil fertigstellen, dann stärksten passenden Projektcheck einmal für alle eigenen Änderungen ausführen.
+- Funde sammeln, gemeinsam beheben und normalerweise genau einen Kontrolllauf starten.
+- Gleichen Check ohne Änderung oder neue Frage nicht wiederholen. Gleicher Fehler braucht eine andere Ursachenprüfung oder Lösung.
+- TypeScript und CI belegen Codesicherheit, nicht Produktqualität, Optik, Lesbarkeit oder Spielgefühl.
+- `include` und `exclude` nie verkleinern, nur damit ein Check grün oder schneller wird.
+- Vorhandene Projekt-, Cache- und Heap-Skripte nutzen. Bei umgeleiteten Logs Exit-Code und Inhalt prüfen. Cache nur bei belegtem Verdacht über das Clean-Skript löschen.
+- Reine Doku-, Prompt- und Regeländerungen brauchen keinen Typecheck.
 
-Ohne Userauftrag oder klare Projektpflicht nicht:
-
-- neue Unit-, Integration- oder End-to-End-Tests anlegen;
-- Testkonfiguration ändern;
-- Dev-Server oder Browser vorsorglich starten;
-- Screenshot-, UI- oder Gameplay-Test starten.
+Ohne Userauftrag oder klare Projektpflicht keine neuen Tests oder Testeinstellungen anlegen und keinen Dev-Server, Browser, Screenshot-, UI- oder Gameplay-Test starten.
 
 ## 7. Git und Lieferung
 
-- Nur eigene Dateien stagen; nie pauschal `git add -A`.
-- Fremde Änderungen und fremde Staging-Einträge nicht übernehmen, resetten oder in eigene Commits mischen.
-- Zielbranch `main`, außer lokale `AGENTS.md` nennt einen anderen.
-- Branch oder Worktree nie ohne ausdrücklichen Userauftrag anlegen, wechseln oder öffnen.
-- Jede konsistente, bei Code kompilierfähige Einheit selbst committen und pushen.
-- Commit-Titel einzeilig und konkret: `typ(bereich): was`.
-- Submodule zuerst innen committen und pushen; danach im Elternrepo nur neuen Pointer + eigene Elternänderungen committen.
-- Vor Abschluss Remote fetch prüfen. Remote-Änderungen per Fast-forward oder sauberem Rebase/Merge integrieren; nichts still verwerfen.
-- Push-/Commit-Fehler selbst beheben; keine Hooks mit `--no-verify` umgehen.
-- Vor Commit Status, gestagte Dateiliste, staged Diff und `diff --check` prüfen; danach Hash, Remote-Sync und Reststatus melden.
+- Nur eigene Dateien stagen; nie `git add -A` nutzen. Fremde Änderungen oder Staging-Einträge nicht übernehmen oder zurücksetzen.
+- Zielbranch ist `main`, außer lokale Regeln nennen einen anderen. Branch oder Worktree nie ohne Userauftrag anlegen, wechseln oder öffnen.
+- Jede zusammenhängende und bei Code kompilierfähige Einheit selbst committen und pushen. Titel: `typ(bereich): was`.
+- Submodule zuerst innen committen und pushen; danach im Hauptprojekt Zeiger und eigene Hauptprojektdateien committen.
+- Vor Abschluss Remote-Stand abrufen und sauber einbauen; nichts still verwerfen.
+- Commit- und Push-Fehler beheben. Hooks nie mit `--no-verify` umgehen.
+- Vor Commit Status, gestagte Dateiliste, gestagten Diff und `diff --check` prüfen. Danach Hash, Remote-Abgleich und Reststatus melden.
 
-## 8. Wissen, Schreiben und Übergabe
+## 8. Sprache und Übergabe
 
-- Neue teuer belegte Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) speichern; keine zweite Formatkopie hier pflegen.
-- Technische Tipps bleiben widerlegbar; gemessen bessere Lösung gewinnt.
+Neue teuer belegte Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) speichern. Technische Tipps bleiben prüfbar; die gemessen bessere Lösung gewinnt.
 
-Gilt für Antworten, Prompt-, Task- und Doku-Dateien:
+Für Antworten, Prompt-, Task- und Doku-Dateien:
 
-- Ergebnis zuerst; Alltagswörter und direkte Verben nutzen.
-- Kurze Stichpunkte, ein Gedanke pro Punkt; Zahlen für Reihenfolge, Pfeile für kurze Abläufe, Checkboxen für echte Todos.
-- Icons sparsam einsetzen; nicht alle Formate zugleich nutzen.
-- Problem, Ursache und Änderung konkret nennen.
-- Füllwörter, Wiederholungen, unnötige Einleitungen und Satzteile streichen, ohne Information zu verlieren.
-- Schwierige Begriffe kurz erklären; keine erfundenen Abkürzungen.
-- Keine lange Ich-Erzählung und keine unnötigen Aufgaben an den User.
-- UTF-8 + echte Umlaute; Doku automatisiert auf Mojibake prüfen.
-- Chat-Antworten und erzeugte Outputs in einfachem Englisch mit leichtem Gen-Z-Ton schreiben; Klarheit gewinnt.
+- Ergebnis zuerst; Alltagswörter, direkte Verben und kurze Stichpunkte nutzen.
+- Zahlen für Reihenfolge, Pfeile für kurze Abläufe und Checkboxen nur für echte Todos nutzen. Icons sparsam einsetzen.
+- Problem, Ursache und Änderung konkret nennen. Füllwörter, Wiederholungen und unnötige Satzteile entfernen.
+- Schwierige Begriffe kurz erklären; keine Abkürzungen erfinden und keine lange Ich-Erzählung schreiben.
+- UTF-8 und echte Umlaute nutzen; Doku automatisch auf kaputte Zeichen prüfen.
+- Chat-Antworten und erzeugte Ausgaben in einfachem Englisch mit leichtem Gen-Z-Ton schreiben; Klarheit gewinnt.
 - Code, Namen und Code-Kommentare auf Englisch schreiben.
 
-### Übergabe und Context Condense
+### Wörter, die wir nicht ohne Erklärung nutzen
 
-- Startbefehl statt Arbeitsbericht; kompakte Markdown-Stichpunkte, höchstens sechs Abschnitte × acht Zeilen.
-- Abschnitte: Auftrag · Stand · nächster Schritt · Fallen · Dateien · Startbefehl.
-- Prompt- und Taskpfad stehen direkt im Auftrag/Dateiblock und bleiben in jedem Folgestart erhalten.
-- Zahlen, Pfade, Befehle und Hashes statt langer Herleitung; Ursachen, Grenzen und Abhängigkeiten trotzdem erhalten.
-- Erledigte und bereits dokumentierte Arbeit nicht wiederholen.
+| Nicht so | Besser so |
+|---|---|
+| `kanonisch` | `maßgeblich` oder `gemeinsame Hauptquelle` |
+| `normalisieren` | `prüfen und vereinheitlichen` |
+| `Raw` | `unverändertes Original` |
+| `Scope` | `Arbeitsumfang` |
+| `Owner` | `zuständige Datei` oder `verantwortlicher Teil` |
+| `Fan-in` | `Ergebnisse zusammenführen` |
+| `Gate` | `Prüfung` oder `Freigabepunkt` |
+| `bounded` | `mit klarer Obergrenze` |
+
+Exakte Code-, API-, Datei- oder Befehlsnamen dürfen diese Wörter behalten; dann ihre Bedeutung kurz erklären.
+
+### Übergabe nach Kontextkürzung
+
+- Höchstens sechs Abschnitte mit je acht kurzen Stichpunkten: Auftrag · Stand · nächster Schritt · Fallen · Dateien · Startbefehl.
+- Prompt- und Taskpfad direkt nennen und bei jedem Folgestart behalten.
+- Zahlen, Pfade, Befehle und Hashes statt langer Herleitung nutzen; Ursachen, Grenzen und Abhängigkeiten behalten.
+- Erledigtes nicht wiederholen.
 
 ### Abschluss nach Änderungen
 
-1. **Fertig:** Ziel und konkretes Ergebnis zuerst.
-2. **Nutzen:** Was geht jetzt besser?
-3. **Ansehen:** genaue Datei, Route oder Artefaktpfad.
-4. **Testen:** 1–3 Schritte + erwartetes Ergebnis; wenn nicht manuell testbar, Grund nennen.
-5. **Technik:** Checks, Build, Commit, Hash und Remote-Sync.
-6. **Problem/Ursache:** nur wenn für Ergebnis oder Blockade wichtig.
+1. **Done:** Ziel und Ergebnis.
+2. **Benefit:** Was geht besser?
+3. **View:** genaue Datei, Route oder Artefaktpfad.
+4. **Test:** ein bis drei Schritte plus erwartetes Ergebnis.
+5. **Tech:** Checks, Build, Commit, Hash und Remote-Abgleich.
+6. **Problem/Cause:** nur wenn wichtig.
 
-Neue Artefakte immer mit vollständigem Projektpfad nennen. Finale projektgebundene Bilder, Konzepte und Exporte im Projekt speichern, nicht nur unter Temp, AppData oder Chatpfaden.
+Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte und Exporte im Projekt speichern, nicht nur in Temp-, AppData- oder Chatpfaden.
 
 ## 9. Schnellcheck vor „fertig“
 
-- [ ] Raw Prompt unverändert gespeichert und in Task unter `Initial goal` verlinkt?
-- [ ] Echter `Prompt-Verbesserung`-Marker exakt umgesetzt, leerer/fehlender Marker nicht erfunden?
-- [ ] Userauftrag, lokale `AGENTS.md`, Prompt und Task vollständig erfüllt?
-- [ ] Vorhandenen Plan fortgeführt und alle Phasen/Abnahmepunkte erneut gelesen?
-- [ ] Kleine Lösung nur gewählt, wenn sie Problem vollständig löst?
-- [ ] Schlechte Grundlage repariert statt Mini-Fixes gestapelt?
-- [ ] Jede neue/berührte handgepflegte Codedatei höchstens 1.600 Zeilen?
-- [ ] Passenden Fachowner gelesen, universelle Regeln nicht dupliziert?
-- [ ] UTF-8, Links, Dateiende, Diff und relevante Checks grün?
-- [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote integriert?
-- [ ] Handover/Context Condense enthält Prompt- und Taskpfad?
-- [ ] Finale Antwort einfach, direkt, Englisch und leicht Gen Z?
+- [ ] Unverändertes Original gespeichert und unter `Initial goal` verlinkt?
+- [ ] Echte `Prompt-Verbesserung` umgesetzt und bei leerer Kennzeile nichts erfunden?
+- [ ] Userauftrag, `AGENTS.md`, Prompt, Task, Phasen und Abnahmepunkte erfüllt?
+- [ ] Problem vollständig gelöst und schwache Grundlage statt Mini-Fixes repariert?
+- [ ] Jede neue oder geänderte handgepflegte Codedatei höchstens 1.200 Zeilen?
+- [ ] Passende Fachdatei gelesen; UTF-8, Links, Dateiende, Diff und Checks grün?
+- [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote-Stand eingebaut?
+- [ ] Übergabe enthält Prompt- und Taskpfad; finale Antwort ist einfaches Englisch?
 
-Achtung: Vorerst keine Sichtprüfungen mehr, also keine Browser-Öffnungen; es sei denn es wird dir ausdrücklich gesagt mach das!
+**Wichtig:** Keine Browser- oder Sichtprüfungen starten, außer der aktuelle Userauftrag erlaubt es ausdrücklich.
