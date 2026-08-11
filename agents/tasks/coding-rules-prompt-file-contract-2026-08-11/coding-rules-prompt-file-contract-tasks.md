@@ -70,15 +70,15 @@
 `../../../THREEJS-RULES.md`
 `../../../SCREENSHOT-GUIDE.md`
 
-### 🚧 Phase 3 — Contract audit and Git delivery
+### ✅ Phase 3 — Contract audit and Git delivery
 **Goal:** Prove the lean rule set is complete, linked, readable, and delivered through submodule then parent.
 * [x] Re-read raw prompt, derived task goal, every phase, and all acceptance criteria.
 * [x] Check line reduction, duplicate instructions, contradictions, links, Markdown, UTF-8, Mojibake, and diff whitespace.
 * [x] Skip TypeScript/build checks because only documentation changes.
-* [ ] Commit and push shared-docs first; then commit and push only the parent submodule pointer.
-* [ ] Report both hashes, remote sync, remaining unrelated status, and exact files to inspect.
-**Result:** Contract and documentation audit pass; scoped Git delivery remains.
-**Rules met:** documentation-only gate ✅, scoped Git delivery prepared ✅, submodule order preserved ✅.
+* [x] Commit and push shared-docs implementation as `e72dfa6`; close this audit in a final docs commit, then deliver only the parent submodule pointer.
+* [x] Prepare final report with both repository hashes, remote sync, unrelated rest status, and exact inspection paths.
+**Result:** Prompt/task contract and lean owner routing are audited and delivered in shared-docs; final audit commit and parent pointer follow immediately.
+**Rules met:** documentation-only gate ✅, scoped Git delivery ✅, submodule-first order ✅.
 **Architecture fit:** owner content lands before any parent repository points to it.
 **Findings:** 🟢 **Fixed:** Renumbering exposed stale section references in specialist docs; all now use stable section names. Two broken legacy links in the touched JavaScript ADR were also repaired. No runtime or extension source change is needed.
 **References:**
@@ -102,7 +102,7 @@
 2. 🟢 **Low · fixed:** 3D and screenshot procedures now route to existing owners; obsolete numbered back-links were replaced with the section name.
 
 ### Phase 3
-**Criteria met:** raw/task re-read ✅, 40.6% line reduction ✅, 12 changed Markdown files linked ✅, UTF-8/Mojibake ✅, `git diff --check` ✅, docs-only gate ✅.
+**Criteria met:** raw/task re-read ✅, 40.6% line reduction ✅, 12 changed Markdown files linked ✅, UTF-8/Mojibake ✅, `git diff --check` ✅, docs-only gate ✅, shared-docs pushed ✅.
 **Findings by severity:**
 1. 🟡 **Medium · fixed:** Numbered Coding Rules references would have broken after slimming; specialist files now reference stable section names.
 2. 🟢 **Low · fixed:** The touched JavaScript ADR contained two already broken relative links; one became a truthful plain legacy filename and the Learning owner link now resolves.
