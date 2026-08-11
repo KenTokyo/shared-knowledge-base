@@ -20,7 +20,8 @@ git submodule update --init --recursive
 | [`LEARNING-SYSTEM.md`](LEARNING-SYSTEM.md) | Die Verfassung: Tippformat, Änderungsrecht, Promotion, Größenbudget |
 | [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
-| [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Kontextanker, Umsetzung, Echtzeit-3D, Validierung und Git |
+| [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Prompt-/Task-Quelle, Planung, Umsetzung, Validierung und Git |
+| [`FRONTEND-RULES.md`](FRONTEND-RULES.md) | Trigger-Owner für React, State, Hydration, Browser-UI und Frontend-Performance |
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für ausdrücklich freigegebene CLI-Captures; Gate und Gesamtbudget stehen in `CODING-RULES.md` |
 | [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |
 | [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md) | Alle Ressourcen in React Projects: Three.js-Bezug, Zweck, absolute macOS-Pfade, Pull-Pflicht und lokale Ports |

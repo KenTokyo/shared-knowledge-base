@@ -36,7 +36,7 @@
 4. Terrain, structures, water, vegetation, ambient life, and interactions from shared world truth.
 5. Environment, cascaded shadows, gameplay camera, HDR target, and one final PostFX chain.
 6. Spatial batches, LOD, culling, pools, quality tiers, teardown, and static/numeric gates.
-7. Agentic visual/gameplay/performance review only with current explicit permission from `CODING-RULES.md` §8–9.
+7. Agentic visual/gameplay/performance review only with current explicit permission from the **Fachrouter und Sichtprüfung** section in `CODING-RULES.md`.
 
 ## Performance boundary
 

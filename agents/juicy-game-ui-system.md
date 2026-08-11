@@ -311,7 +311,7 @@ Konkret, in dieser Reihenfolge angewandt:
 
 **Falscher Hebel (bewusst nicht tun):** die Panel-Spalte verbreitern, um den Namen
 unterzubringen — das schrumpft die Nachbarregion (3D-Bühne, Detailtafel) und
-tauscht ein gelöstes Problem gegen ein neues (`CODING-RULES.md` §8.3 „Kein Regress").
+tauscht ein gelöstes Problem gegen ein neues (Regressionsgrenze im Abschnitt **Prüfen, entscheiden, durcharbeiten** in [`CODING-RULES.md`](../CODING-RULES.md)).
 
 → Voxel Samurai Quiz: `src/components/ui/quizfall/nexus/classes/QuizfallClassRosterRow.tsx`
 (+ `QuizfallClassRoster.tsx` für die Container-Query).

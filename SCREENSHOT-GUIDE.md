@@ -6,8 +6,8 @@ Capture-Ausnahme gewählt wird.
 
 **Default:** Keine agentische Sichtprüfung und kein vorsorglicher Bau des Capture-Systems. Die direkte
 Oberflächen-/Gameplay-Abnahme durch den User ist vorzuziehen. Agentische Sichtprüfung braucht eine ausdrückliche
-Freigabe im aktuellen Userauftrag; Reihenfolge und Gesamtbudget stehen ausschließlich in
-[`CODING-RULES.md`](CODING-RULES.md) §8–9. Keine Screenshot- oder Review-Schleife.
+Freigabe im aktuellen Userauftrag; Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt
+**Fachrouter und Sichtprüfung** in [`CODING-RULES.md`](CODING-RULES.md). Keine Screenshot- oder Review-Schleife.
 
 1. **Nur nach diesem Entscheidungsgate das projekteigene CLI-Capture-System nutzen.** Existiert dann keines, zuerst
    eines nach diesem Muster bauen. Kein sichtbares Browserfenster und keine manuelle Browserprüfung.

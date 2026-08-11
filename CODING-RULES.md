@@ -1,465 +1,276 @@
-# Coding Rules — klare Regeln für gute Arbeit
+# Coding Rules — kompakter Arbeitsvertrag
 
-**Ziel:** Baue saubere, schnelle und gut wartbare Lösungen. Arbeite selbstständig. Liefere fertige Arbeit.
+**Ziel:** Verstehe den Auftrag, halte sein Original fest, plane nachvollziehbar, arbeite selbstständig und liefere eine saubere fertige Einheit.
 
-**Diese Reihenfolge gilt:**
+**Priorität:**
 
-1. aktueller Userauftrag;
+1. aktueller Userauftrag und seine unveränderte Prompt-Quelle;
 2. lokale `AGENTS.md` des Projekts;
 3. diese Coding Rules;
-4. Fachregeln und Learnings, wenn der Auftrag sie wirklich braucht.
+4. nur passend ausgelöste Fachregeln und Learnings.
 
-Fachthemen haben eigene Hauptquellen:
+## 1. Prompt-Quelle, Task und Lesepfad
 
+### Pflichtpaar für Projektarbeit
+
+Jeder Auftrag, der Repository-Dateien oder ein Projektartefakt ändert, erhält **vor der Umsetzung** genau ein zusammengehöriges Paar:
+
+- `…-prompt.md` — unveränderliche Quelle für Usertext und optionale Prompt-Verbesserung;
+- `…-tasks.md` oder vorhandene lokale Task-/Masterdatei — veränderlicher Ausführungsplan.
+
+Reine Fragen und reine Leseaufträge ohne Projektänderung brauchen kein Paar. Ein kleiner Fix erhält eine kurze Phase statt gar keiner Taskdatei.
+
+Regeln für das Paar:
+
+- Beide Dateien liegen im selben Taskordner, sofern die Projektkonvention keinen anderen Ort verlangt.
+- Neue Paare teilen einen sprechenden Namensstamm: `<thema>-prompt.md` und `<thema>-tasks.md`.
+- Jede Taskdatei enthält direkt oben `## Initial goal` mit relativem Pfad zur Prompt-Datei.
+- Die Prompt-Datei besitzt das Ziel; die Taskdatei leitet daraus Scope, Phasen, Entscheidungen und Status ab.
+- Raw Prompt nie in der Taskdatei duplizieren. Ein kurzer Zielsatz ist erlaubt.
+- Bestehenden Plan fortführen, keinen Konkurrenzplan bauen. Fehlt ihm eine Prompt-Datei, vor dem nächsten Edit eine Begleitdatei aus dem noch verfügbaren Originalauftrag anlegen; unbekannte ältere Teile ehrlich als nicht verfügbar markieren.
+- Neuer User-Nachtrag zum selben Ziel wird datiert an dieselbe Prompt-Datei angehängt. Originaltext nie umschreiben.
+- Task gilt nicht als fertig, wenn Prompt-Datei fehlt, Link gebrochen ist oder Plan dem Prompt widerspricht.
+
+### Inhalt der Prompt-Datei
+
+Die Prompt-Datei trennt Quellen und Ableitungen klar:
+
+1. `## Source` — Datum, Chat-/Dateireferenz und Anhänge.
+2. `## Raw user request` — Usertext in Originalsprache und Reihenfolge; Pfade, Befehle, Zahlen, Bildreferenzen und Grenzen erhalten.
+3. `## Prompt improvement request` — nur bei echtem Verbesserungsmarker.
+4. `## Improved executable goal` — nur wenn der Marker eine echte Anweisung enthält.
+5. `## Updates` — spätere Useränderungen append-only mit Datum.
+
+Secrets, Tokens und Passwörter nie persistieren; im Raw-Bereich als `[REDACTED]` mit kurzer Begründung markieren. Zeilenenden und unsichtbare Endspaces dürfen für Markdown-Hygiene normalisiert werden; Inhalt sonst nicht kürzen oder glätten.
+
+### Flexibler Verbesserungsmarker
+
+Kanonisches Format:
+
+```text
+Prompt-Verbesserung:[Keywords oder freie Anweisung]
+```
+
+- Groß-/Kleinschreibung sowie Bindestrich oder Leerzeichen tolerant erkennen.
+- Klammerinhalt ist eine offene Anweisung, keine feste Enum. Beispiele: `kompakt`, `Architektur`, `Edge-Cases`, `Performance`, `UI/UX`, beliebige Kombination oder Freitext.
+- Leerer Inhalt oder Platzhalter wie `[HIER …]` zählt als **kein** Verbesserungsauftrag.
+- Ohne echten Marker enthält die Prompt-Datei nur den Raw Prompt und spätere Updates; keine künstliche Neufassung erfinden.
+- Mit Marker schreibt **dieselbe ausführende KI** darunter den verbesserten Zielprompt und setzt genau diesen um. Keine zweite KI, kein zweiter Provider und kein separater Enhancer-Prozess nur für diesen Workflow.
+- Verbesserung darf Rolle, Reihenfolge, Abnahme und nötige Edge-Cases klären, aber keine Fakten, Features oder Grenzen erfinden.
+- Userabsicht, Sprache, Negationen, Pfade, Befehle, Referenzen, Maße und harte Eigenschaften bleiben erhalten.
+- Raw Prompt und verbesserter Prompt bleiben getrennt; Verbesserung überschreibt nie die Quelle.
+
+Ein produktseitiger Prompt-Enhancer darf als eigenes optionales Werkzeug bestehen. Er ist nicht Voraussetzung für diesen Datei-Workflow.
+
+### Context Condense, Handover und Subagents
+
+Sobald ein Taskpaar existiert, nennt jede Übergabe und jeder Context-Condense-Start direkt:
+
+```text
+- Prompt: <workspace-relativer Pfad zur *-prompt.md>
+- Task: <workspace-relativer Pfad zur Task-/Masterdatei>
+```
+
+- Folgeagent liest Prompt zuerst, danach Taskstatus und erst dann Code.
+- Subagent-Routing trägt Taskpfad und exakte Task-ID; die Taskdatei hält den Promptpfad als `Initial goal`. Der Child liest erst den verlinkten Prompt, dann sein Todo.
+- Fan-in und Abschluss lesen beide Dateien erneut. Kontextkürzung darf die Prompt-Referenz nie entfernen.
+
+### Normaler Lesepfad
+
+1. lokale `AGENTS.md` komplett lesen;
+2. diese Datei komplett lesen;
+3. verlinkte Prompt-Datei, danach bestehende Taskdatei lesen oder neues Paar anlegen;
+4. nur den engsten ausgelösten Fachowner lesen.
+
+Fachowner:
+
+- React, State, Hydration, Browser-UI → [FRONTEND-RULES.md](FRONTEND-RULES.md)
 - Echtzeit-3D → [THREEJS-RULES.md](THREEJS-RULES.md)
-- Weltbau → [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md)
-- neue Learnings → [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md)
+- vollständiger Weltbau → [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md)
+- freigegebene CLI-Captures → [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md)
+- neue belegte Learnings → [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md)
+- Windows-Ressourcen, Nachbarrepo oder Port → [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md)
+- macOS-Ressourcen, Nachbarrepo oder Port → [MACOS-RESSOURCEN.md](MACOS-RESSOURCEN.md)
+- mehrere Lieferphasen → [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md)
 
-## 1. Erst lesen, dann bauen
+Externe API oder Bibliothek → aktuelle Originaldokumentation nur zur offenen Frage lesen. Ein Link allein ist kein Leseauftrag; keine Linkketten vorsorglich öffnen.
 
-Lies immer in dieser Reihenfolge:
+Vor großem Leseblock kurz festhalten: **Auftrag · Leseliste · Befund je Datei · nächster Schritt**. Suche beenden, sobald die Änderung sicher entschieden ist.
 
-1. lokale `AGENTS.md` komplett;
-2. diese Datei komplett;
-3. nur die Fachdateien, die für den Auftrag nötig sind.
+## 2. Prüfen, entscheiden, durcharbeiten
 
-Öffne weitere Dateien nur bei einem klaren Grund:
+- Aussage, Diagnose oder Plan erst nach Code, Doku, Log, Messung oder klarer Logik übernehmen.
+- Speech-to-Text-Fehler mitdenken; Beispiele und Referenzen stärker als wahrscheinlich falsche Einzelwörter gewichten.
+- Lösung A verbessern, nicht still zu B wechseln. Vor großer Änderung fragen: **Löst das das genannte Problem?**
+- Explizite Maße, Eigenschaften, Superlative und Negationen als harte Grenzen schützen.
+- „Übernehmen“ bedeutet Zielparität in Funktion, Verhalten, Datenfluss und Qualität.
+- Kleine Lücke klein beheben; schwache Grundlage zusammenhängend umbauen. Wenige Zeilen sind kein Ziel.
+- Altcode prüfen, nicht automatisch verteidigen. Schädlichen Altpfad im Lieferweg entfernen statt Notlösungen stapeln.
+- Bei echter Unsicherheit: Problem abstrahieren → lokale Geschwisterlösung + Originaldoku prüfen → 2–3 tragfähige Wege vergleichen → besten Weg wählen.
+- Setup-Fehler wie falscher Ordner, fehlende Installation oder Portkonflikt nicht als Produkt-Workaround verstecken.
 
-- Es gibt schon einen Plan → diesen Plan weiterführen. Keinen zweiten Plan bauen.
-- Der Auftrag hat mehrere große Teile → einmal den [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md) lesen.
-- Der Auftrag betrifft Echtzeit-3D → `THREEJS-RULES.md` und danach nur den kleinsten passenden Fachbereich lesen.
-- Ein bekanntes Problem passt zu einem Projekttipp → genau einen passenden Tipp lesen.
-- Du brauchst einen Windows-Pfad, ein Nachbarprojekt oder einen Port → [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) lesen.
-- Du brauchst einen macOS-Pfad, ein Nachbarprojekt oder einen Port → [MACOS-RESSOURCEN.md](MACOS-RESSOURCEN.md) lesen und dortige Pull-Regel beachten.
-- Du nutzt eine externe API oder Bibliothek → aktuelle Original-Doku nur zur offenen Frage lesen.
+Bei klarem Auftrag nicht nachfragen. Arbeiten bis Ziel, letzter Phase oder echter äußerer Blockade fortsetzen. Stoppen nur bei fehlendem Secret/Zugang, widersprüchlichen Pflichtdaten oder nicht erlaubter irreversibler Aktion; dann genau eine fehlende Information nennen.
 
-Ein Link ist noch kein Leseauftrag. Öffne keine langen Linkketten auf Vorrat.
+Im bearbeiteten Lieferweg:
 
-Vor einem großen Leseblock kurz festhalten:
+- sichtbaren Fehler, Typfehler, tote Referenz, kaputte Doku, falsche Rechnung und eigene Regression direkt beheben;
+- fremde offene Änderungen weder überschreiben noch zurücksetzen;
+- fremden Blocker minimal und additiv reparieren, klar nennen, weiterarbeiten;
+- auftragsfremden Fund nicht zum neuen Großprojekt machen.
 
-- **Auftrag:** Ziel + klares Fertig-Kriterium in einem Satz.
-- **Leseliste:** `offen/gelesen · Pfad · Grund`.
-- **Befund:** pro Datei höchstens ein wichtiger Satz.
-- **Danach:** direkt zum nächsten Arbeitsschritt zurückkehren.
+## 3. Taskphasen und Arbeitsloop
 
-Keine extra Protokolldatei bauen, außer User, Projekt oder echter Mehrphasen-Auftrag verlangt sie. Stoppe die Suche, sobald die nächste Änderung sicher ist.
+Jede Phase enthält kompakt:
 
-## 2. Erst prüfen, dann glauben
+1. **Ziel** — sichtbares oder prüfbares Ergebnis.
+2. **Todos** — klare `[ ]`/`[x]`-Punkte.
+3. **Ergebnis** — ein kurzer Satz.
+4. **Warum** — nur wenn nicht offensichtlich.
+5. **Grenzen** — Regeln und harte Limits.
+6. **Architektur** — Hauptquelle, Besitzer, Datenfluss.
+7. **Funde** — Fehler und Performance-Risiken nach Schwere + Fixstatus.
+8. **Referenzen** — höchstens drei Hauptpfade, einschließlich Promptdatei wenn sie für die Phase zentral ist.
 
-Stimme nicht automatisch zu. Prüfe Aussagen mit Code, Doku, Logs, Messwerten oder klarer Logik.
+Reihenfolge: Grundlage → kompletter Hauptweg → Sonderfälle → Feinschliff → Endcheck. Jede Phase bleibt kohärent, rückbaubar und möglichst prüfbar.
 
-- **Absicht verstehen:** Denke bei Sprach-zu-Text-Fehlern mit. Beispiele und Referenzen wiegen mehr als ein wahrscheinlich falsches Wort.
-- **Beim Ziel bleiben:** Verbessere Lösung A. Wechsle nicht heimlich zu Lösung B.
-- **Klare Wünsche schützen:** Maße, Eigenschaften und Wörter wie „komplett“ oder „maximal“ sind feste Grenzen.
-- **Übernehmen heißt vollständig übernehmen:** Funktion, Verhalten, Datenfluss und Qualität müssen zum Ziel passen. Baue fehlende Grundlagen. Entferne den alten, ersetzten Weg.
-- **Qualität bestimmt die Größe:** Ein kleiner Fix reicht nur, wenn er das Problem ganz löst. Sonst ist ein größerer Umbau richtig.
-- **Altcode ist nur der Start:** Prüfe ihn zuerst. Repariere oder ersetze eine schlechte Grundlage.
-- **Ganze Wirkung prüfen:** Bei sichtbaren Änderungen auch Theme, globale Styles, Shader, Tone Mapping, Material-Overrides, Flags, Cache, Normalisierung, Fallbacks und gespeicherte Daten prüfen.
-- **Bei großem Umbau lieber sauber neu bauen:** Entferne den kaputten Bereich in einem klaren Schritt. Baue ihn danach mit einer guten Hauptquelle neu. Staple keine Notlösungen.
-- **Bei echter Unsicherheit recherchieren:** Problem kurz fassen → ähnliche lokale Lösung + Original-Doku prüfen → 2–3 gute Wege vergleichen.
-- **Setup-Fehler nicht im Produkt verstecken:** Falscher Ordner, fehlende Installation oder Portkonflikt zuerst direkt lösen.
+Arbeitsloop:
 
-Frage vor jeder größeren Änderung: **Löst das wirklich das genannte Problem?**
+1. Prompt, Taskstatus, Scope, Architektur, Git-Diff und Werkzeuge prüfen.
+2. Eng gekoppelte Todos vollständig umsetzen.
+3. Kanonische Checks einmal für den zusammenhängenden Teil ausführen.
+4. Funde gemeinsam beheben; danach normalerweise ein Kontrolllauf.
+5. Phase einmal aktualisieren und direkt zur nächsten offenen Phase wechseln.
+6. Am Ende Raw Prompt, verbessertes Ziel falls vorhanden, Task und alle Abnahmepunkte erneut lesen.
 
-## 3. Nicht wegen kleiner Fragen stoppen
-
-- Bei klarem Auftrag nicht nachfragen. Wähle die beste dauerhafte Lösung und setze sie um.
-- Eine klare Empfehlung im vorhandenen Plan gilt als gewählt.
-- Arbeite im Loop bis zum Userziel, zur letzten offenen Phase oder zu einer echten Grenze.
-- Bitte zwischen Phasen nicht um Erlaubnis.
-- Eine manuelle Sicht- oder Spielgefühl-Abnahme ist kein Technik-Todo. Schließe Technik ab und nenne das manuelle Gate ehrlich.
-
-Stoppe nur bei einer echten äußeren Blockade, zum Beispiel:
-
-- Secret oder Zugang liegt nur beim User;
-- Pflichtangaben widersprechen sich;
-- eine nicht erlaubte Aktion wäre dauerhaft oder zerstörerisch.
-
-Nenne dann genau die eine fehlende Information. Keine lange Auswahlrunde.
-
-Wenn du im bearbeiteten Bereich etwas findest:
-
-- sichtbaren Fehler, TypeScript-Fehler, tote Referenz, kaputte Doku, falsche Rechnung oder eigene Regression direkt beheben;
-- schädlichen Altcode im gleichen Lieferweg entfernen oder ersetzen;
-- gekoppelte Änderungen mitnehmen, wenn sie für eine saubere Lösung nötig sind;
-- fremde offene Änderungen nie zurücksetzen oder überschreiben;
-- fremden Blocker im eigenen Lieferweg klein und additiv reparieren, klar nennen und weiterarbeiten;
-- auftragsfremde Funde nicht zum neuen Großprojekt machen.
-
-## 4. Planen und in ganzen Teilen arbeiten
-
-1. Vorhandenen User- oder Projektplan weiterführen.
-2. Kleinen, klaren Fix direkt bauen.
-3. Größerer Umbau mit mehreren Teilen → genau eine Task- oder Masterdatei nach Projektart anlegen.
-4. Reihenfolge: Grundlage → kompletter Hauptweg → Sonderfälle → Feinschliff → Endcheck.
-5. Jede Phase muss zusammenpassen, rückbaubar und möglichst kompilierfähig sein.
-
-Jede Phase in einer Taskdatei enthält:
-
-1. **Ziel:** sichtbares oder prüfbares Ergebnis.
-2. **Todos:** klare `[ ]`- und `[x]`-Punkte.
-3. **Ergebnis:** ein kurzer Satz in einfacher Sprache.
-4. **Warum:** nur wenn der Grund nicht klar ist.
-5. **Grenzen:** wichtige Regeln und Limits.
-6. **Architektur:** Hauptquelle, Besitzer und Datenfluss kurz erklären.
-7. **Funde:** Fehler, Performance-Risiken und Fixweg nach Schwere sortieren.
-
-Weitere Regeln:
-
-- Pro Phase höchstens drei Hauptpfade.
-- Frühere Ergebnisse nicht umschreiben oder erfinden.
-- Taskdatei ab etwa 600 Zeilen nach Projektregel teilen und gegenseitig verlinken.
-
-Arbeitsloop pro Phase:
-
-1. Scope, Architektur, Git-Diff und vorhandene Werkzeuge prüfen.
-2. Eng verbundene Todos komplett bauen.
-3. Statische Projektchecks einmal für den ganzen Teil ausführen.
-4. Alle Funde zusammen beheben. Danach meist ein Kontrolllauf.
-5. Scheitert dieselbe Prüfung erneut → Ursache oder Lösung ändern. Nicht blind noch einmal starten.
-6. Phase einmal aktualisieren.
-7. Direkt mit der nächsten offenen Phase weitermachen.
-8. Am Ende Auftrag und alle Abnahmepunkte noch einmal komplett lesen.
+Frühere Ergebnisse append-only erhalten; nichts rückwirkend erfinden. Ab etwa 600 Taskzeilen nach Projektkonvention teilen und gegenseitig verlinken. Offene gekoppelte Findings als Todos schließen; nur wirklich eigener Folgescope bekommt eine separate Optimierungsplanung.
 
 ### Subagents nur bei echtem Gewinn
 
-Subagents sind Helfer mit eigenem Kontext. Nutze sie nicht als Standard.
+- Kleine, sequenzielle oder eng gekoppelte Arbeit bleibt beim Hauptagenten.
+- Nach großen unabhängigen Fachbereichen teilen, nie nach Mini-Aufgaben.
+- Exklusive Dateien, Zustände und Task-IDs vergeben; bei Kollisionsrisiko einen Owner oder serielle Übergabe wählen.
+- Kleinste ausreichende Agentenzahl nutzen; kein Agent für wenige Toolaufrufe, eine Datei oder einen einfachen Check.
+- Auftrag nennt Task, Task-ID, Ziel, In-/Out-of-Scope, eigene Pfade, Abhängigkeiten, Rückgabe und Stoppgrenze; Prompt bleibt über `Initial goal` erreichbar.
+- Hauptagent führt Ergebnisse zusammen, prüft Schnittstellen und wiederholt delegierte Arbeit nicht.
 
-- Kleine, direkte oder eng gekoppelte Arbeit bleibt beim Hauptagenten.
-- Teile nach großen unabhängigen Fachbereichen, nicht nach Mini-Aufgaben.
-- Gib jedem Agenten eigene Dateien, Zustände und Task-IDs. Keine Überschneidung.
-- Ist eine Schreibkollision möglich → einen Besitzer wählen oder nacheinander arbeiten.
-- Starte ähnliche Arbeiten nicht parallel, wenn sie dieselben Dateien oder Daten brauchen.
-- Nutze so wenige Agenten wie möglich.
-- Kein Subagent für wenige Toolaufrufe, eine Datei, eine kleine Suche oder einen einfachen Check.
-- Jeder Auftrag nennt Ziel, In-Scope, Out-of-Scope, eigene Pfade, Abhängigkeiten, Rückgabe und Stoppgrenze.
-- Unabhängige Agenten zusammen starten. Der Hauptagent führt Ergebnisse zusammen und prüft Schnittstellen.
-- Kein extra Review-Agent, wenn Hauptagent + Projektchecks dasselbe sicherer und günstiger schaffen.
+## 4. Code und Architektur
 
-Bei 3D-Arbeit gilt zusätzlich der [Deckel für 3–5 Verbesserungen](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md): eine Achse schließen, dann die nächste wichtige Achse bearbeiten. Ein Audit zählt nicht als Verbesserung.
+- Vor Änderung Hauptquelle, Verantwortung und Datenfluss verstehen.
+- Erst Struktur und kompletter Hauptweg, danach Werte, Optik und Feinschliff.
+- Wiederholt instabiler Bereich: Mehrfachquellen und Altcode prüfen → eine verlässliche Quelle bauen → alle Consumer anbinden → toten Weg löschen.
+- „Komplett neu“ heißt Inhalt neu aufbauen, nicht nur Farben oder Zahlen drehen.
+- Keine versteckten harten Grenzen oder Qualitätsverluste als Performance-Fix.
 
-## 5. Code und Architektur
+### Datei- und Besitzgrenzen
 
-Diese Regeln gelten für App, Server, Daten, UI, Gameplay, 3D, Audio, Tools und Doku.
-
-- Vor der Änderung Hauptquelle, Verantwortung und Datenfluss verstehen.
-- Vorhandenes System nur nutzen, wenn es zum Ziel passt.
-- Erst Struktur und kompletter Hauptweg. Danach Werte, Optik und Feinschliff.
-- Kleine Lücke → kleiner Fix. Schwache Grundlage → größerer sauberer Umbau.
-- Ändere Werte nur, wenn die Ursache wirklich bei den Werten liegt.
-- Verstecke keine Qualitätsverluste oder harten Limits als „Performance-Fix“.
-
-Wenn dieselbe Sache wieder falsch oder instabil bleibt:
-
-1. Koordinaten, Mehrfachquellen, getrennte Schichten und alten Code prüfen.
-2. Bereich sauber umbauen statt weitere Mini-Fixes stapeln.
-3. Eine verlässliche Hauptquelle bauen.
-4. Alle betroffenen Teile an diese Quelle hängen.
-5. Alten Code, tote Imports, Zustände und Verweise löschen.
-
-„Komplett neu“ heißt: Inhalt neu aufbauen. Nur Farben oder Zahlen ändern reicht nicht.
-
-### Dateien und Besitzer
-
-- Eine Datei hat ein klares Fachziel.
-- Trenne unabhängige UI-Teile, Assets, Datenmodelle und Services.
-- Keine wachsenden Sammeldateien wie `entries.ts`, `config.ts`, `data.ts`, `misc.ts` oder `helpers.ts`.
-- Eine Sammeldatei darf importieren und exportieren. Die eigentliche Logik bleibt beim Feature.
-- Shared-Modul nur bei echter Wiederverwendung. Sonst Helper beim Feature lassen.
-- Dateiname erklärt den Inhalt. Fach-Doku bekommt einen klaren Namen statt `info.md` oder `notes.md`.
-- Handgeschriebene Codedatei: höchstens 1.600 echte Zeilen.
-- Neue oder geänderte Datei nie über 1.600 Zeilen liefern.
-- Berührte Altdatei über 1.600 Zeilen im gleichen Auftrag sinnvoll teilen.
-- Klar erzeugte Dateien und unveränderter Fremdcode sind ausgenommen.
-- Nach einem Umbau ungenutzten Altcode löschen.
-
-### Komponenten und Services
-
-- Nie eine React-Komponente in einer anderen Komponente definieren. Sonst entsteht bei jedem Render ein neuer Typ und State kann verloren gehen.
-- Props gehen nach unten, Callbacks nach oben.
-- Bei tief geteiltem State vorhandenen Store nutzen. Keine langen Prop-Ketten oder Parallel-Stores bauen.
-- Feature-Services, Finder und Actions bleiben beim Feature.
-- Globale `lib`-Module sind nur für echte appweite Plattformlogik.
+- Eine Datei besitzt ein Fachziel; unabhängige UI, Assets, Datenmodelle und Services trennen.
+- Keine wachsenden `entries.ts`-, `config.ts`-, `data.ts`-, `misc.ts`- oder `helpers.ts`-Sammeldateien.
+- Aggregatoren importieren/exportieren; Featurelogik bleibt beim Feature.
+- Shared-Modul nur bei echter Wiederverwendung, sonst Helper beim fachlichen Owner.
 - Globale Module importieren kein Feature.
-- Mit Datenbank: Finder lesen, Actions schreiben.
+- Handgepflegte Codedatei maximal **1.600 physische Zeilen**. Neue/geänderte Datei nie darüber liefern; berührte Altdatei darüber im Auftrag fachlich teilen.
+- Generatorausgabe und unveränderter Vendor-Code sind ausgenommen.
+- Nach Umbau ungenutzten Code, Imports, Zustände und Verweise löschen.
 
-## 6. React, State und Laufzeit
+### Datenfluss und Performance
 
-- State unveränderlich aktualisieren.
-- Stabile, eindeutige Keys nutzen.
-- `useState` für Daten, die den Render ändern.
-- `useRef` für veränderliche Laufzeitdaten ohne Renderbedarf.
-- `useMemo`, `useCallback` und `React.memo` nur bei echtem Nutzen.
-- Timer, Listener und Subscriptions immer aufräumen.
-- In neuen Komponenten abgeleitete Werte direkt im Render berechnen.
-- Event-Handler oder echte Store-Subscriptions statt unnötiger Effect-Ketten nutzen.
+- Single Source of Truth festlegen; parallele Stores und Ping-Pong-Synchronisation vermeiden.
+- Daten gesammelt laden; unabhängige Arbeit parallelisieren; N+1-Zugriffe vermeiden.
+- Teure Arbeit passend bündeln, poolen, cachen oder vorbacken.
+- Live-Collection nie im selben Iterator erweitern; Queue/Snapshot + `visited`-Set + hartes Sicherheitslimit nutzen.
+- Neue Layer müssen sichtbaren Nutzen gegen Laufzeit, Speicher und Pflegekosten rechtfertigen.
+- Performance darf Kernfunktion, Lesbarkeit oder belegte Qualität nicht still abbauen.
 
-### Render und Hydration
+## 5. Fachrouter und Sichtprüfung
 
-- Im Render nie State, Store oder Context setzen.
-- Setter nicht in andere Setter-Updates stecken.
-- Zielwerte zuerst berechnen, Updates danach getrennt ausführen.
-- Parent-State nicht per Effect „reparieren“. Sicheren Wert ableiten und direkt anzeigen.
-- Interaktive Elemente nicht ineinander verschachteln.
-- Klickbare Wrapper brauchen passende HTML-Bedeutung und Tastatursteuerung.
-- Gleiche Daten nicht erneut zurückschreiben.
-- Store-Actions müssen bei gleichem Wert den alten State zurückgeben.
-- Normalizer nutzen stabile Defaults, nie `Date.now()` als Ersatzwert.
-- Daten nur in eine Richtung aus der echten Quelle synchronisieren.
-- Events und Snapshots nur senden, wenn sich ihr Inhalt wirklich ändert.
+- React-/Frontend-Arbeit folgt [FRONTEND-RULES.md](FRONTEND-RULES.md); Details stehen nicht doppelt hier.
+- Echtzeit-3D folgt [THREEJS-RULES.md](THREEJS-RULES.md) und genau einem passenden Fachowner.
+- Agentische Browser-, Screenshot-, UI- oder Gameplay-Sichtprüfung braucht eine **ausdrückliche Freigabe im aktuellen Userauftrag**. Schweigen, frühere Freigabe, sichtbarer Scope oder eigene Unsicherheit reichen nicht.
+- Ohne Freigabe schließt der Agent technische Arbeit statisch ab; der User übernimmt direkte Sicht-/Spielgefühl-Abnahme.
+- Mit Freigabe erst vollständig umsetzen und statisch prüfen, dann projekteigenes CLI nutzen. Technischer Capture-Owner: [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md).
+- Für Echtzeit-3D höchstens sechs Sichtprüfungen im gesamten Auftrag; kleinere Usergrenze gewinnt. Gleiche Frage oder unverändertes Bild nicht erneut prüfen.
+- Nach 3–5 Verbesserungen derselben 3D-Messachse Achse schließen und zur nächsten relevanten Dimension wechseln.
 
-Diese Warnungen sind Stoppsignale:
+## 6. Checks und Testbudget
 
-- `Maximum update depth exceeded`
-- `Too many re-renders`
-- `Cannot update while rendering`
-- `validateDOMNesting`
-- Hydration-Warnung
-
-Folge der Update-Kette bis zur ersten eigenen Datei. Behebe die Ursache. Warnung nie nur ausblenden.
-
-### Kontrollierte Werte und schnelle Edits
-
-- Tabs, Selects und Modi mit einer festen Erlaubtliste prüfen.
-- Ungültiger Wert → sicherer Default.
-- Event-Wert nie blind mit `as MyType` casten.
-- State nur bei echter Änderung setzen.
-- Nach schnellen Edits Imports, Dateiende, Klammern und doppelte JSX-Reste prüfen.
-- Radix/Shadcn `asChild` braucht ein ref-stabiles Child. Bewegte oder bedingte Children in einen stabilen Wrapper setzen.
-
-### Performance
-
-- Unabhängige Fetches parallel starten.
-- N+1-Abfragen vermeiden. Daten gesammelt laden.
-- Teure Arbeit passend teilen, poolen, cachen oder vorab bauen.
-- Jeder neue Layer muss seinen sichtbaren oder spielerischen Wert gegen Framezeit, Draw Calls, Speicher und Pflegekosten rechtfertigen.
-- Eine Live-Liste nie im gleichen Iterator erweitern.
-- Für Graphen, Flood-Fill, Nachbarn oder Spawn-Ausbreitung: Queue/Snapshot + `visited`-Set + festes Sicherheitslimit.
-- Performance darf Kernfunktion, Lesbarkeit, Steuerung oder belegte Qualität nicht still abbauen.
-
-## 7. Frontend und UI
-
-- Erst Designsystem, Theme-Werte, globale Styles, Portal und Overflow prüfen.
-- Mobile-first und platzsparend bauen.
-- Wichtigste Aktion bleibt sichtbar.
-- Seltene Optionen in Tooltip, Popover oder aufklappbaren Bereich legen.
-- Dichte Toolbars nutzen zuerst klare Icons.
-- Jeder Icon-Button braucht `aria-label`, Tooltip und klare Bedeutung.
-- Deaktivierte Controls erklären den Grund.
-- Bei fehlender Ressource Bedarf + aktuellen Wert zeigen.
-- Dialoge brauchen eine klare, solide Fläche. Starke Transparenz oder Blur nicht als Hauptfläche nutzen, wenn Text schlecht lesbar wird.
-- Dialog nicht direkt aus einem noch offenen modalen Menü starten. Menü zuerst schließen oder bewusst nicht-modal bauen.
-- Ein hängen gebliebenes `body.style.pointerEvents = "none"` nicht mit globalem CSS verstecken.
-- Layer-Probleme über Portal, Overflow und Stacking Context lösen. Nicht nur `z-index` erhöhen.
-- Panels mit wechselndem Inhalt brauchen stabile Höhe und internes Scrollen.
-- Vorhandene UI-Größen und Varianten nutzen. Keine zufälligen lokalen Abweichungen.
-- „Juicy“ heißt: klare Gruppen, gute Form, passender Rand/Glow und kurze Reaktion über Transform/Opacity. Nicht mehr Text, Karten oder Deko-Icons.
-- Browser-, DOM-, Screenshot-, UI- oder Gameplay-Prüfung nur starten, wenn der aktuelle Userauftrag sie erlaubt. Dann sparsam und mit klarer Prüffrage arbeiten.
-
-## 8. Echtzeit-3D
-
-Zusätzlich immer `THREEJS-RULES.md` beachten.
-
-- Kleine sichtbare Lücke klein beheben.
-- Fehlen Maßstab, Tiefe, Charakter oder Spielwert → großen, zusammenhängenden und rückbaubaren Umbau bauen.
-- Gekoppelte Anforderungen in einem Zug umsetzen. Beim Bauen keine Bildschleife nach jedem Mini-Schritt starten.
-- Agentische Sichtprüfung nur mit klarer Freigabe im aktuellen Auftrag.
-- Schweigen, alte Freigabe, sichtbarer Scope oder eigene Unsicherheit sind keine Freigabe.
-- Ohne Freigabe übernimmt der User die direkte Bild- und Gameplay-Abnahme.
-- Mit Freigabe: erst komplett bauen, statisch prüfen, dann Projekt-CLI nutzen.
-- Höchstens sechs Sichtprüfungen im ganzen Auftrag. Eine kleinere Usergrenze gilt.
-- Bei großer visueller Arbeit: bis zu fünf klare Sichtfragen, sechste Prüfung nur für den wichtig korrigierten Endstand oder eine neue Frage.
-- Combat- und Skill-VFX entstehen aus eigenem handgeschriebenem Shadercode + Laufzeit-Geometrie.
-- Für diese VFX verboten: Bitmap-/Noise-/LUT-Texturen, Sprite-Sheets, Flipbooks, Videos, gebackene VFX-Meshes und importierte Effektpakete.
-- Renderer-interne Depth-/Color-Targets und normale Charakter-/Weltassets sind nicht gemeint.
-- Technische VFX-Regeln → `threejs/VFX.md`.
-- Nach 3–5 Änderungen an derselben Messachse zur nächsten 3D-Achse wechseln.
-
-## 9. Checks und Testbudget
-
-- Erst einen zusammenhängenden Teil fertig bauen.
-- Danach genau den normalen statischen Projektcheck für alle eigenen Änderungen starten.
-- Alle Funde zusammen beheben.
-- Danach meist ein Kontrolllauf.
-- Gleichen Check ohne Änderung oder neue Frage nicht wiederholen.
-- Wiederholter Fehler → Ursache prüfen, nicht blind neu starten.
-- TypeScript und CI zeigen Code-Sicherheit. Sie beweisen nicht Produktqualität.
-- Nutze den stärksten passenden Gegencheck statt viele Routinechecks.
-
-Ohne Userauftrag verboten:
-
-- neue Unit-, Integration- oder End-to-End-Tests;
-- Testkonfiguration ändern;
-- Dev-Server vorsorglich starten;
-- Browser-, Screenshot-, UI- oder Gameplay-Test starten.
-
-### TypeScript und statische Checks
-
-- Nach Codeänderung gilt exakt der Befehl aus lokaler `AGENTS.md`.
-- Für `voxel-samurai-quiz`: `pnpm type-check`.
-- `include` oder `exclude` nie kleiner machen, nur damit der Check grün wird.
-- Vorhandene Cache- und Speicher-Scripts nutzen. Nicht einfach eigenes `tsc --noEmit` starten.
-- Bei Logdatei Exit-Code + Inhalt prüfen.
-- UTF-16LE-BOM kann `grep` täuschen. Bei Bedarf Encoding erkennen und `error TS` oder `ELIFECYCLE` dekodiert suchen.
-- Leeres Log ist nicht automatisch Erfolg. Prozess kann abgebrochen oder getötet worden sein.
-- Cache nur bei klarem Verdacht mit vorhandenem Clean-Script löschen.
+- Zusammenhängenden Teil fertigstellen, dann stärksten kanonischen Projektcheck einmal für alle eigenen Änderungen ausführen.
+- Funde bündeln und normalerweise genau einen Kontrolllauf starten.
+- Gleichen Check ohne Änderung oder neue Frage nicht wiederholen; wiederholter Fehler verlangt andere Ursache oder Lösung.
+- TypeScript und CI belegen Code-Sicherheit, nicht Produktqualität, Optik, Lesbarkeit oder Spielgefühl.
+- `include`/`exclude` nie für künstlich grünes oder schnelles Gate verkleinern.
+- Vorhandene Cache-, Heap- und Projektscripts statt eigenem blanken Check nutzen.
+- Umgeleitete Logs brauchen Exit-Code + Inhalt; leeres Log ist kein Erfolg, wenn Prozess timeoutet oder beendet wurde.
+- Cache nur bei belegtem Verdacht über vorhandenes Clean-Script löschen.
 - Reine Doku-, Prompt- und Regeländerung braucht keinen Typecheck.
-- Ein grüner Check beweist keine Optik, Lesbarkeit, FPS oder gutes Gameplay.
 
-### Referenz oder Bild prüfen
+Ohne Userauftrag oder klare Projektpflicht nicht:
 
-Nur mit passender Userfreigabe:
+- neue Unit-, Integration- oder End-to-End-Tests anlegen;
+- Testkonfiguration ändern;
+- Dev-Server oder Browser vorsorglich starten;
+- Screenshot-, UI- oder Gameplay-Test starten.
 
-1. Erst Projekt-Pfadkarte, `package.json` und passende `scripts/` prüfen.
-2. Wenn vorhanden, projekteinigenes CLI-Capture nutzen.
-3. [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) nur lesen, wenn Einstieg fehlt oder unklar ist.
-4. Ein headless Chromium für alle Messungen nutzen.
-5. Bei Software-Renderer sofort abbrechen.
-6. PNG direkt aus dem Engine-Post-Target lesen; bei Three.js über `readRenderTargetPixels()`.
-7. Kein `page.screenshot()` und kein sichtbarer Browser.
-8. Erst Maße, Rauschboden und echten Messbereich prüfen.
-9. Pro Sichtfrage nur den stärksten fairen Vorher/Nachher- oder Gewinner/Verlierer-Vergleich ansehen.
-10. Gleiche Bilder oder gleiche Fragen nicht neu prüfen. Nach spätestens sechs Sichtprüfungen stoppen.
+## 7. Git und Lieferung
 
-## 10. Sichtbare Qualität
+- Nur eigene Dateien stagen; nie pauschal `git add -A`.
+- Fremde Änderungen und fremde Staging-Einträge nicht übernehmen, resetten oder in eigene Commits mischen.
+- Zielbranch `main`, außer lokale `AGENTS.md` nennt einen anderen.
+- Branch oder Worktree nie ohne ausdrücklichen Userauftrag anlegen, wechseln oder öffnen.
+- Jede konsistente, bei Code kompilierfähige Einheit selbst committen und pushen.
+- Commit-Titel einzeilig und konkret: `typ(bereich): was`.
+- Submodule zuerst innen committen und pushen; danach im Elternrepo nur neuen Pointer + eigene Elternänderungen committen.
+- Vor Abschluss Remote fetch prüfen. Remote-Änderungen per Fast-forward oder sauberem Rebase/Merge integrieren; nichts still verwerfen.
+- Push-/Commit-Fehler selbst beheben; keine Hooks mit `--no-verify` umgehen.
+- Vor Commit Status, gestagte Dateiliste, staged Diff und `diff --check` prüfen; danach Hash, Remote-Sync und Reststatus melden.
 
-**Erfolg heißt Wirkung, nicht nur Häkchen.**
+## 8. Wissen, Schreiben und Übergabe
 
-- Wenige Codezeilen sind kein Qualitätsmaß.
-- Grüne Checks allein reichen nicht.
-- Das Ergebnis muss die App wirklich verbessern.
-- Nutzerwichtige Teile bekommen besonders viel Sorgfalt.
-- Unsichtbare Technik bleibt so einfach und verlässlich wie möglich.
+- Neue teuer belegte Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) speichern; keine zweite Formatkopie hier pflegen.
+- Technische Tipps bleiben widerlegbar; gemessen bessere Lösung gewinnt.
 
-## 11. Git und Lieferung
+Gilt für Antworten, Prompt-, Task- und Doku-Dateien:
 
-- Nur eigene Dateien stagen. Nie pauschal `git add -A`.
-- Fremde offene Änderungen nicht anfassen.
-- Zielbranch ist `main`, außer lokale `AGENTS.md` nennt einen anderen.
-- Branch oder Worktree nie selbst anlegen, wechseln oder öffnen, außer der User verlangt es.
-- Jede kompilierfähige Einheit selbst committen und pushen.
-- Reine Doku-Einheit committen, sobald sie in sich stimmt.
-- Commit-Titel: eine klare Zeile im Format `typ(bereich): was`.
-- Submodule zuerst innen committen und pushen.
-- Danach im Elternrepo nur neuen Submodule-Pointer + eigene Elternrepo-Dateien committen.
-- Commit- oder Push-Fehler selbst lösen.
-- Abgelehnten Push mit `git pull --rebase` abgleichen, Konflikte sauber lösen, Rebase fortsetzen und erneut pushen.
-- Fremde Staging-Einträge nicht übernehmen oder zurücksetzen.
-
-## 12. Wissen und Schreibstil
-
-- Technische Tipps sind Hilfen, keine Wahrheit. Eine gemessen bessere Lösung gewinnt.
-- Vor Facharbeit höchstens ein passendes Learning lesen.
-- Neue, teuer belegte Erfahrung nach `LEARNING-SYSTEM.md` als kurzen Projekttipp speichern.
-- Keine Duplikate bauen.
-
-### Learning-Stil
-
-- Nur kompakte Markdown-Stichpunkte.
-- Ein Punkt enthält eine klare Information.
-- Kopf nennt kurz: „Nur kompakte Stichpunkte; je Punkt eine klare Information.“
-- Kopf nennt kurz: „Füllwörter, Einleitungen, Wiederholungen und unnötige Artikel streichen; Fehlerbild, Ursache, Handlung und Beleg behalten.“
-- Inhalt: Fehlerbild → Ursache → Handlung → Beleg.
-- Neue globale Regel auf den kleinsten Satz kürzen, der Ziel und Grenze noch klar trägt.
-- Beispiel nur behalten, wenn es eine zusätzliche Entscheidung erklärt.
-
-### Einfach schreiben
-
-Gilt für Antworten, Prompts, Tasks, Doku und erzeugte Texte:
-
-- Alltagswörter nutzen.
-- Direkte Verben nutzen: `baue`, `prüfe`, `lösche`, `öffne`.
-- Ergebnis zuerst nennen.
+- Ergebnis zuerst; Alltagswörter und direkte Verben nutzen.
+- Kurze Stichpunkte, ein Gedanke pro Punkt; Zahlen für Reihenfolge, Pfeile für kurze Abläufe, Checkboxen für echte Todos.
+- Icons sparsam einsetzen; nicht alle Formate zugleich nutzen.
 - Problem, Ursache und Änderung konkret nennen.
-- Kurze Sätze schreiben.
-- Ein Gedanke pro Satz oder Stichpunkt.
-- Zahlen für Reihenfolge nutzen.
-- Pfeile für kurze Abläufe nutzen: `prüfen → ändern → erneut prüfen`.
-- Checkboxen für echte Todos nutzen.
-- Icons nur sparsam zur Orientierung nutzen.
-- Nicht alle Formate zugleich nutzen.
-- Füllwörter, Wiederholungen, lange Einleitungen und unnötige Satzteile löschen.
-- Schwieriges Fachwort kurz erklären. Technische Namen nicht umbenennen.
-- Keine erfundenen Abkürzungen nutzen.
-- Keine lange Ich-Erzählung schreiben.
-- Dem User keine unnötige Arbeit geben.
-- UTF-8 und echte Umlaute nutzen.
-- Nach Doku-Änderungen auf kaputte Zeichen wie `Ã`, `Â`, `â€` oder `�` prüfen.
-- Wenige, sinnvolle Zeilenumbrüche nutzen.
-- Chat-Antworten und erzeugte Outputs auf Englisch schreiben.
-- Einfaches Englisch mit leichtem Gen-Z-Ton nutzen. Klarheit ist wichtiger als Slang.
+- Füllwörter, Wiederholungen, unnötige Einleitungen und Satzteile streichen, ohne Information zu verlieren.
+- Schwierige Begriffe kurz erklären; keine erfundenen Abkürzungen.
+- Keine lange Ich-Erzählung und keine unnötigen Aufgaben an den User.
+- UTF-8 + echte Umlaute; Doku automatisiert auf Mojibake prüfen.
+- Chat-Antworten und erzeugte Outputs in einfachem Englisch mit leichtem Gen-Z-Ton schreiben; Klarheit gewinnt.
 - Code, Namen und Code-Kommentare auf Englisch schreiben.
 
-### Chat-Titel
+### Übergabe und Context Condense
 
-Sobald das genaue Ziel klar ist, in der ersten Antwort genau eine Zeile ausgeben:
-
-```text
-CHAT_META::Titel: [konkreter fachlicher Titel, 11–20 Wörter]
-```
-
-Regeln:
-
-- Erst Auftrag und genannte Dateien verstehen. Nicht raten.
-- Titel nennt Bereich, Teil und konkrete Änderung mit echten Nomen und Verben.
-- Keine Titel wie `Fix issue`, `Update` oder `New Chat`.
-- Kein Phasen-Präfix, Systemprompt-Text oder Description-Zeile.
-- Titel im gleichen Thema nie wiederholen.
-- Neuen Titel nur bei klarem Themenwechsel ausgeben.
-
-### Übergabe
-
-Übergabe ist ein Startbefehl, kein langer Bericht.
-
-- Nur kompakte Markdown-Stichpunkte.
-- Höchstens sechs Abschnitte mit je acht Zeilen.
-- Insgesamt unter einer Bildschirmseite.
-- Abschnitte: Auftrag · Stand · nächster Schritt · Fallen · Dateien mit Zeile · Startbefehl.
-- Zahlen, Pfade, Befehle und Commit-Hash statt langer Erklärung nennen.
-- Ursachen, Grenzen und Abhängigkeiten trotz Kürze behalten.
-- Erledigte und schon dokumentierte Arbeit nicht wiederholen.
-- Startprompt enthält nur direkt ausführbare Punkte.
+- Startbefehl statt Arbeitsbericht; kompakte Markdown-Stichpunkte, höchstens sechs Abschnitte × acht Zeilen.
+- Abschnitte: Auftrag · Stand · nächster Schritt · Fallen · Dateien · Startbefehl.
+- Prompt- und Taskpfad stehen direkt im Auftrag/Dateiblock und bleiben in jedem Folgestart erhalten.
+- Zahlen, Pfade, Befehle und Hashes statt langer Herleitung; Ursachen, Grenzen und Abhängigkeiten trotzdem erhalten.
+- Erledigte und bereits dokumentierte Arbeit nicht wiederholen.
 
 ### Abschluss nach Änderungen
 
-Der User soll das Ergebnis ohne Projektwissen sofort verstehen.
+1. **Fertig:** Ziel und konkretes Ergebnis zuerst.
+2. **Nutzen:** Was geht jetzt besser?
+3. **Ansehen:** genaue Datei, Route oder Artefaktpfad.
+4. **Testen:** 1–3 Schritte + erwartetes Ergebnis; wenn nicht manuell testbar, Grund nennen.
+5. **Technik:** Checks, Build, Commit, Hash und Remote-Sync.
+6. **Problem/Ursache:** nur wenn für Ergebnis oder Blockade wichtig.
 
-1. **Fertig:** Ziel und fertiges Ergebnis zuerst nennen.
-2. **Nutzen:** sagen, was jetzt besser geht oder sichtbar ist.
-3. **Ansehen:** genaue Route, Seite, Datei oder Artefakt nennen.
-4. **Testen:** 1–3 klare Schritte + erwartetes Ergebnis nennen. Wenn nichts manuell testbar ist, Grund nennen.
-5. **Technik:** Checks, Logs, Commit und Hash danach kurz nennen.
-6. **Problem/Ursache:** nur nennen, wenn es für Ergebnis oder Blockade wichtig ist.
+Neue Artefakte immer mit vollständigem Projektpfad nennen. Finale projektgebundene Bilder, Konzepte und Exporte im Projekt speichern, nicht nur unter Temp, AppData oder Chatpfaden.
 
-Für jede neue Datei den ganzen Projektpfad nennen. Finale Bilder, Konzepte und Exporte im Projekt speichern, nicht nur in Temp-, AppData- oder Chat-Pfaden.
+## 9. Schnellcheck vor „fertig“
 
-Eine angeforderte Bildserie dokumentiert mindestens:
-
-- Zweck;
-- finalen Prompt;
-- Referenzquellen;
-- Projektpfad;
-- Format und Pixelmaße;
-- Auswahl.
-
-Wenn die Serie als Baugrundlage dient, zusätzlich dokumentieren:
-
-- Kamera und Aufbau;
-- relative Größen;
-- Materialien und Licht;
-- was nicht vorkommen darf;
-- Performance-Bauweise.
-
-## 13. Schnellcheck vor „fertig“
-
-- [ ] Userauftrag und lokale `AGENTS.md` komplett erfüllt?
-- [ ] Vorhandenen Plan weitergeführt?
-- [ ] Kleine Lösung nur gewählt, wenn sie das Problem ganz löst?
-- [ ] Nötigen Umbau komplett gebaut?
+- [ ] Raw Prompt unverändert gespeichert und in Task unter `Initial goal` verlinkt?
+- [ ] Echter `Prompt-Verbesserung`-Marker exakt umgesetzt, leerer/fehlender Marker nicht erfunden?
+- [ ] Userauftrag, lokale `AGENTS.md`, Prompt und Task vollständig erfüllt?
+- [ ] Vorhandenen Plan fortgeführt und alle Phasen/Abnahmepunkte erneut gelesen?
+- [ ] Kleine Lösung nur gewählt, wenn sie Problem vollständig löst?
 - [ ] Schlechte Grundlage repariert statt Mini-Fixes gestapelt?
-- [ ] Jede neue oder berührte handgeschriebene Codedatei höchstens 1.600 Zeilen?
-- [ ] Alle festen Eigenschaften erhalten?
-- [ ] UTF-8, Umlaute, Links, Dateiende und Diff geprüft?
-- [ ] Keine fremden Änderungen angefasst?
-- [ ] Nur eigene Dateien gestagt, committed und gepusht?
-- [ ] Finale Antwort auf Englisch, einfach, direkt und leicht Gen Z?
+- [ ] Jede neue/berührte handgepflegte Codedatei höchstens 1.600 Zeilen?
+- [ ] Passenden Fachowner gelesen, universelle Regeln nicht dupliziert?
+- [ ] UTF-8, Links, Dateiende, Diff und relevante Checks grün?
+- [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote integriert?
+- [ ] Handover/Context Condense enthält Prompt- und Taskpfad?
+- [ ] Finale Antwort einfach, direkt, Englisch und leicht Gen Z?
