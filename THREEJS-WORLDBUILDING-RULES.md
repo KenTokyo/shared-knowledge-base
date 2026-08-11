@@ -3,7 +3,7 @@
 **Zweck:** Für Weltarbeit nur die betroffenen globalen Tipps laden; lokale Weltarchitektur bleibt maßgeblich.
 **Status:** Router, keine zweite Regelsammlung. Allgemeiner Owner: [`THREEJS-RULES.md`](THREEJS-RULES.md).
 
-Agentische Sichtprüfung ist kein Standardgate. Freigabe, Reihenfolge und Gesamtbudget stehen ausschließlich in [`CODING-RULES.md`](CODING-RULES.md) §8–9.
+Agentische Sichtprüfung ist kein Standardgate. Freigabe, Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt **Fachrouter und Sichtprüfung** in [`CODING-RULES.md`](CODING-RULES.md).
 
 ## Lesepfad
 
