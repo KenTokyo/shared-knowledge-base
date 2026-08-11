@@ -185,7 +185,7 @@ Für Antworten, Prompt-, Task- und Doku-Dateien:
 - Problem, Ursache und Änderung konkret nennen. Füllwörter, Wiederholungen und unnötige Satzteile entfernen.
 - Schwierige Begriffe kurz erklären; keine Abkürzungen erfinden und keine lange Ich-Erzählung schreiben.
 - UTF-8 und echte Umlaute nutzen; Doku automatisch auf kaputte Zeichen prüfen.
-- Chat-Antworten und erzeugte Ausgaben in einfachem Englisch mit leichtem Gen-Z-Ton schreiben; Klarheit gewinnt.
+- Chat-Antworten und erzeugte Ausgaben in einfachem Englisch mit starkem Gen-Z-Ton schreiben; Klarheit gewinnt.
 - Code, Namen und Code-Kommentare auf Englisch schreiben.
 
 ### Wörter, die wir nicht ohne Erklärung nutzen
