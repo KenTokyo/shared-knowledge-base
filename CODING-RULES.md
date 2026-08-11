@@ -274,3 +274,5 @@ Neue Artefakte immer mit vollständigem Projektpfad nennen. Finale projektgebund
 - [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote integriert?
 - [ ] Handover/Context Condense enthält Prompt- und Taskpfad?
 - [ ] Finale Antwort einfach, direkt, Englisch und leicht Gen Z?
+
+Achtung: Vorerst keine Sichtprüfungen mehr, also keine Browser-Öffnungen; es sei denn es wird dir ausdrücklich gesagt mach das!
