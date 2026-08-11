@@ -1,3 +1,14 @@
+## Quick tech read
+
+| Variation | Core technique | Strongest fit | Main tradeoff |
+| --- | --- | --- | --- |
+| 1 | Analytic heightfield + masks | Fast, fully code-authored prototype | Terrain can feel mathematically smooth |
+| 2 | Erosion-baked heightfield | Natural slopes, drainage, and shorelines | Higher generation cost and harder direct edits |
+| 3 | Spline-first world graph | Strong routes and cinematic art direction | Less automatic variation |
+| 4 | Modular grammar + constraints | Many valid village layouts | Needs strict rules to avoid noisy composition |
+| 5 | Voxel signed-distance field | Cliffs, cuts, caves, and live terrain edits | Heavier meshing and collision work |
+| 6 | Authored spec + staged bakes | Best production balance and reliability | More pipeline code up front |
+
 # LLM Arena prompts — Japanese village map generation
 
 Use the same world brief, seed, camera, controls, lighting, and performance HUD in every run. Change only the generation method. Compare composition, terrain quality, path readability, building placement, water integration, collision reliability, generation time, frame time, draw calls, and ease of art direction.
@@ -15,16 +26,7 @@ Use the same world brief, seed, camera, controls, lighting, and performance HUD 
 - Use a fixed displayed seed. WASD moves, mouse orbits, Shift sprints, M toggles the overview camera, G toggles generation overlays, and R resets.
 - Show generation time, FPS, frame time, draw calls, triangles, visible instances, and seed from real runtime values. Target smooth desktop play without deleting landmarks or route clarity.
 
-## Quick tech read
 
-| Variation | Core technique | Strongest fit | Main tradeoff |
-| --- | --- | --- | --- |
-| 1 | Analytic heightfield + masks | Fast, fully code-authored prototype | Terrain can feel mathematically smooth |
-| 2 | Erosion-baked heightfield | Natural slopes, drainage, and shorelines | Higher generation cost and harder direct edits |
-| 3 | Spline-first world graph | Strong routes and cinematic art direction | Less automatic variation |
-| 4 | Modular grammar + constraints | Many valid village layouts | Needs strict rules to avoid noisy composition |
-| 5 | Voxel signed-distance field | Cliffs, cuts, caves, and live terrain edits | Heavier meshing and collision work |
-| 6 | Authored spec + staged bakes | Best production balance and reliability | More pipeline code up front |
 
 ## Variation 1 — Analytic heightfield and semantic masks
 
