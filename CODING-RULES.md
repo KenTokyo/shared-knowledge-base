@@ -89,6 +89,31 @@ Externe API oder Bibliothek → nur aktuelle Originaldoku zur offenen Frage lese
 - Bei Unsicherheit: Problem vereinfachen → ähnliche Projektlösung und Originaldoku prüfen → zwei oder drei Wege vergleichen → besten wählen.
 - Setupfehler wie falscher Ordner, fehlende Installation oder Portkonflikt nicht als Produktlösung verstecken.
 
+### Teile aus Repositorys und Referenzen wirklich übernehmen
+
+„Nimm diesen Teil aus dem Repository“ ist ein Ergebnisvertrag, keine Bitte um lose Inspiration. Zu übernehmen sind die qualitätsbestimmenden Eigenschaften des benannten Teils: Funktion, Verhalten, Interaktion, Timing, Datenfluss, Rendering, Material-/Assetlogik, Zustände, Lebenszyklus und sichtbare Qualität. Gleiche Farben, Namen, Formen oder einige ähnliche Parameter reichen nicht, wenn Mechanik und Ergebnis anders bleiben.
+
+Vor dem ersten Implementierungsedit beide Wege Ende zu Ende erfassen:
+
+1. Referenz: Einstieg/Trigger → Daten und Zustände → Kernalgorithmus → Rendering/UI → Lebenszyklus und Cleanup.
+2. Zielprojekt: entsprechende Hauptquelle, vorhandene Architektur, widersprechende Altwege und direkt gekoppelte Abhängigkeiten.
+3. Qualitätsvertrag: konkrete Eigenschaften, an denen die Übernahme erkennbar ist, plus Referenzpfade und erlaubte Prüfart.
+4. Migrationsentscheidung je gekoppeltem Teil: behalten, anbinden, reparieren, ersetzen oder nach Nullreferenz löschen.
+
+Das Zielprojekt darf eine andere Architektur behalten, wenn sie dasselbe Ergebnis nachweisbar trägt. Verhindert seine Grundlage jedoch Funktion oder Qualität der Referenz, ist der nötige zusammenhängende Umbau ausdrücklich Teil des Auftrags: verantwortliche Module ersetzen, Daten- und Renderwege neu verbinden, echte Trigger umleiten und verdrängte Altpfade vollständig entfernen. Umfangreiche Änderungen und Löschungen sind dann richtiger als ein kleiner Patch; wenige geänderte Zeilen sind kein Qualitätsmerkmal.
+
+Nicht als Übernahme liefern:
+
+- isolierte Demo, Overlay oder Wrapper neben dem echten Produktweg;
+- vereinfachte Nachahmung, die den qualitätsbestimmenden Mechanismus auslässt;
+- neuer Pfad plus dauerhaft aktiver Altpfad, stiller Fallback oder zweiter Zustands-/Renderverantwortlicher;
+- reines Umbenennen, Umfärben, Skalieren oder Parameter-Tuning bei falscher Struktur;
+- Abschluss nach einem Pilot, wenn der benannte Teil noch nicht vollständig im echten Weg läuft.
+
+Meldet der User denselben Mangel erneut, gilt der bisherige Ansatz für diesen Punkt als widerlegt. Nicht dieselbe kleine Tuning-Achse wiederholen. Referenz und Ziel erneut Ende zu Ende öffnen, die erste ursächliche Abweichung finden und Architektur, Datenquelle, Ereignisse, Raum-/Zeitbezug, Rendering, Materialien, Assets, Lebenszyklus und Altpfade prüfen. Den Arbeitsumfang auf alle direkt gekoppelten Teile erweitern, die für die geforderte Qualität nötig sind; große Refactorings, Ersatz und Löschung sind dabei ausdrücklich erwartet. Bereits belegtes gutes Verhalten außerhalb dieses Wegs schützen.
+
+Fertig ist die Übernahme erst, wenn der echte Produkttrigger den neuen Weg nutzt, die benannten Qualitätsmerkmale umgesetzt sind, verdrängte Wege keine Produktionsreferenzen mehr haben und erlaubte Prüfungen das Ergebnis tragen. Ohne erlaubte Sichtprüfung nur statische Evidenz und eine genaue manuelle Abnahme nennen; keine optische Gleichheit behaupten.
+
 Bei klarem Auftrag nicht nachfragen. Bis zum Ziel oder zu einer echten äußeren Blockade weiterarbeiten. Nur stoppen bei fehlendem Secret/Zugang, widersprüchlichen Pflichtdaten oder nicht erlaubter endgültiger Aktion; dann genau die eine fehlende Information nennen.
 
 Im bearbeiteten Weg sichtbare Fehler, Typfehler, tote Verweise, kaputte Doku, falsche Rechnungen und eigene Rückschritte direkt beheben. Fremde Änderungen nie überschreiben oder zurücksetzen. Fremde Blocker nur so klein wie nötig und ohne Datenverlust beheben; Funde außerhalb des Auftrags nicht zum neuen Großprojekt machen.
@@ -227,6 +252,7 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 - [ ] Echte `Prompt-Verbesserung` umgesetzt und bei leerer Kennzeile nichts erfunden?
 - [ ] Userauftrag, `AGENTS.md`, Prompt, Task, Phasen und Abnahmepunkte erfüllt?
 - [ ] Problem vollständig gelöst und schwache Grundlage statt Mini-Fixes repariert?
+- [ ] Repository-/Referenzübernahme Ende zu Ende qualitätsgetreu integriert und verdrängte Altwege ohne Produktionsreferenz entfernt?
 - [ ] Jede neue oder geänderte handgepflegte Codedatei höchstens 1.200 Zeilen?
 - [ ] Passende Fachdatei gelesen; UTF-8, Links, Dateiende, Diff und Checks grün?
 - [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote-Stand eingebaut?
