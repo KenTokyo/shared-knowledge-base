@@ -1,166 +1,89 @@
-# Prompting-Tipps — ausführliche, umsetzbare Arbeitsaufträge
+# Prompting-Tipps — wann mehr Text wirklich hilft
 
-**Lesen wenn:** Ein Nutzerprompt vage ist, ein komplexes Projekt erzeugt werden soll oder eine Promptserie vorbereitet wird.
+**Lesen wenn:** Ein User nur „mach das besser“ sagt oder ein größerer Projektprompt geschrieben wird.
 
-## 1. Grundregel
+## Das Ziel
 
-Komplexe One-shot-, Projekt- und Implementierungsaufträge werden standardmäßig **ausführlich und operationalisiert** formuliert. Ein kurzer Nutzertext bleibt als unverändertes Original erhalten, wird aber nicht ungeprüft als Arbeitsauftrag weitergereicht.
+Der User soll keine perfekte technische Beschreibung liefern müssen. Die KI liest den vorhandenen Kontext und macht aus einem groben Wunsch selbst einen klaren Arbeitsauftrag.
 
-„Ausführlich“ bedeutet:
+Beispiel:
 
-- Entscheidungen, Reihenfolge und Zuständigkeiten sind klar;
-- Qualitätswörter werden in beobachtbares Verhalten übersetzt;
-- Grenzen, Fehlerfälle und zu schützendes Verhalten sind genannt;
-- die Abnahme sagt, wann die Arbeit wirklich fertig ist.
+- Zu vage: „Mach die Animation besser.“
+- Klarer: „Behalte Tempo und Trefferfolge. Verstärke Beinarbeit, Gewichtsverlagerung und Rumpfdrehung. Verhindere rutschende Füße und gekreuzte Beine. Fertig ist die Änderung, wenn jeder Schlag sichtbar aus dem Standbein angetrieben wird.“
 
-Es bedeutet **nicht**, denselben Wunsch mehrfach zu wiederholen, künstlich Wörter anzuhängen oder neue Features zu erfinden. Länge ist ein Nebenprodukt vollständiger Spezifikation, nicht das alleinige Ziel.
+Der zweite Prompt ist länger, weil er echte Fragen beantwortet. Er ist nicht besser, weil er einfach mehr Wörter enthält.
 
-Bestehende kompakte Prompts dürfen als historische Vergleichsdaten bestehen bleiben. Neue kompakte Varianten entstehen nur noch, wenn der Nutzer ausdrücklich einen kontrollierten Promptlängen-Test verlangt.
+## Hilft ein längerer Prompt wirklich?
 
-## 2. Beleg aus Boxer Animation Part 3
+**Oft ja — aber nur mit nützlichen Details.**
 
-Drei Direktvergleiche nutzten innerhalb ihres Paars dieselbe Technikbasis, denselben Seed, dieselben Skills, Zieldauern, Controls und VFX-Grenzen. Die ausführliche Variante gewann alle drei gespeicherten Bewertungen:
+Hilfreicher zusätzlicher Text erklärt:
 
-| Paar | Kompakt | Ausführlich | Differenz |
+- was genau besser werden soll;
+- was unverändert bleiben muss;
+- welche Schritte in welcher Reihenfolge nötig sind;
+- welche typischen Fehler verhindert werden sollen;
+- woran man ein gutes Ergebnis erkennt.
+
+Nicht hilfreich sind:
+
+- derselbe Wunsch in fünf Formulierungen;
+- viele Adjektive ohne sichtbare Bedeutung;
+- Fachwörter, die keine Entscheidung steuern;
+- neue Features, die der User nie verlangt hat.
+
+## Was unsere Boxer-Tests zeigen
+
+In Part 3 gewann die ausführliche Variante alle drei direkten Vergleiche:
+
+| Vergleich | Kompakt | Ausführlich | Gewinn |
 | --- | ---: | ---: | ---: |
 | V14.1 → V14.2 | 17 | 89 | +72 |
 | V16.1 → V16.2 | 13 | 36 | +23 |
 | V18.1 → V18.2 | 31 | 41 | +10 |
-| Mittelwert | 20,3 | 55,3 | +35,0 |
 
-Promptumfang:
+Das ist ein starkes Signal. Es beweist aber nicht, dass jeder zusätzliche Satz hilft. Die ausführlichen Varianten waren zugleich länger, genauer und klarer gegliedert. Besonders V14.2 erklärte Bewegungsphasen, Reihenfolge, erlaubte Korrekturen, Fehlerbilder und Abnahme viel genauer als V14.1.
 
-| Paar | Wörter kompakt/ausführlich | Absätze kompakt/ausführlich |
-| --- | ---: | ---: |
-| V14.1/V14.2 | 520 / 1.269 | 6 / 16 |
-| V16.1/V16.2 | 525 / 1.302 | 6 / 16 |
-| V18.1/V18.2 | 563 / 1.747 | 6 / 31 |
+Darum lautet die Regel nicht „immer maximal lang“, sondern:
 
-Der Nutzer berichtete beim ausführlichen V14.2-Lauf ungefähr 24 Minuten zusätzliche Generierungszeit. Das passt zu mehr ausgeführter Arbeit, ist allein aber kein Qualitätsbeweis.
+> Schreibe so ausführlich wie nötig, damit die KI wichtige Entscheidungen nicht erraten muss.
 
-### Was der Versuch belegt
+## Was die KI bei einem vagen Wunsch macht
 
-- In diesem Aufbau war ausführlich in `3/3` Paaren besser.
-- Die stärkste Verbesserung trat bei derselben technischen Richtung auf: V14.2 schlug V14.1 um 72 Punkte und den bisherigen Bestwert von 70.
-- Mehr explizite Umsetzungslogik kann die ausgeführte Architektur und das Endergebnis stark verändern, obwohl die grobe Produktidee gleich bleibt.
+Wenn der User „besser“, „schöner“, „perfekt“ oder ähnlich grob schreibt:
 
-### Was der Versuch nicht isoliert
+1. letzte konkrete Kritik lesen;
+2. betroffene Datei oder Funktion prüfen;
+3. festlegen, was besser werden soll;
+4. festhalten, was gleich bleiben muss;
+5. Umsetzung und fertiges Ergebnis klar beschreiben;
+6. direkt arbeiten, ohne unnötige Rückfrage.
 
-Die Paare variierten gleichzeitig **Länge und Anweisungspräzision**. Deshalb ist „mehr Wörter verursachen bessere Qualität“ nicht sauber bewiesen. Die belastbare Regel lautet:
+Nur fehlender Zugriff, ein Secret oder ein echter Widerspruch rechtfertigt eine Rückfrage.
 
-> Komplexe Prompts so weit ausführen, bis Architektur, Reihenfolge, Qualitätsgrenzen, Fehlerfälle und Abnahme keinen wichtigen Interpretationssprung mehr offenlassen.
+## Einfacher Kurzcheck
 
-## 3. Warum V14.2 deutlich stärker steuernde Informationen enthält
+Vor der Umsetzung müssen diese fünf Fragen beantwortet sein:
 
-V14.1 nennt bereits die richtige Technik, das gewünschte Tempo und wichtige Verbote. Viele Entscheidungen bleiben jedoch in Sammelbegriffen wie „phase-aware“, „amplify“, „lock planted feet“ oder „prioritize clean contacts“ verborgen.
+1. Was ist aktuell schlecht?
+2. Was soll danach konkret besser sein?
+3. Was darf nicht kaputtgehen oder verändert werden?
+4. Wie wird die Verbesserung umgesetzt?
+5. Woran erkennen wir, dass sie fertig ist?
 
-V14.2 macht daraus einen ausführbaren Vertrag:
+Fehlt eine Antwort, ergänzt die KI sie aus dem belegten Projektkontext. Sie erfindet dabei keine neuen Produktfeatures.
 
-1. **Kalibrierung vor Korrektur** — Restpose, Knochenachsen, Vorwärtsrichtung, Hüfthöhe, Proportionen, Root-Skalierung, Boden und Blickrichtung werden vor der Bewertung vereinheitlicht.
-2. **Geordnete Bewegungsphasen** — neun Marker von Guard bis stabiler Rückkehr legen fest, wann welche Änderung wirken darf.
-3. **Explizite Messdaten** — Kontakte, Beckenbewegung, Blickrichtung, Gelenkgeschwindigkeiten und Guard-relative Posen werden gespeichert.
-4. **Begrenzte Verstärkung** — nur im Capture vorhandene Bewegung darf mit glatten Verstärkungen gleicher Richtung deutlicher werden.
-5. **Lebendige Übergänge** — Atmung, Guard-Anpassung, Beckenbewegung, Gegenbewegung und Kopfreaktion dürfen zwischen Treffern nicht einfrieren.
-6. **Phasentreue Zeitsteuerung** — nur informationsarme Lücken werden gekürzt; Kontakt-, Takeoff-, Apex- und Landereihenfolge bleiben erhalten.
-7. **Geordnete Kontaktkorrektur** — erst Retargeting, Verstärkung und Timing, dann kleine Root-/Beckenkorrektur, zuletzt zentimeterkleine Bein-IK.
-8. **Vollständige Skill-Abläufe** — jede Animation besitzt konkrete Vorbereitung, Lastaufnahme, Angriff, Kontakt, Nachbewegung und Recovery.
-9. **Benannte Fehlerbilder** — gekreuzte Beine, kollabierende Knie, Foot Skating, eingefrorener Rumpf, Waist-Fold und unkontrollierte Landung sind ausdrücklich ausgeschlossen.
-10. **Deterministische Abnahme** — Replay und Guard-Reset beginnen aus demselben Root-, Kontakt- und VFX-Zustand.
+## Neue Promptvergleiche
 
-Die KI muss dadurch weniger entscheidende Lücken selbst erraten. Das erhöht die Chance, dass sie die richtige technische Reihenfolge tatsächlich baut statt nur passende Begriffe im Ergebnis zu erwähnen.
+Künftige Tests sollen nicht nur „kurz gegen lang“ vergleichen. Sonst wissen wir nicht, welcher Unterschied geholfen hat. Besser sind getrennte Varianten mit derselben Technik und demselben Inhalt:
 
-## 4. Automatische Verbesserung vager Nutzerprompts
-
-Folgende Formulierungen lösen immer eine Konkretisierung vor dem ersten Implementierungsedit aus:
-
-- „mach das besser“;
-- „mach das schöner“;
-- „mach das perfekt“;
-- „optimier das“;
-- „fix die Animation/UI/Performance“;
-- ähnliche Wünsche ohne benannte Qualitätsmerkmale oder Abnahme.
-
-Ablauf:
-
-1. **Original schützen** — Nutzertext, Verneinungen, Pfade, Zahlen, Referenzen und feste Eigenschaften unverändert aufbewahren.
-2. **Kontext lesen** — letzte konkrete Nutzerkritik, bestehende Task-Datei, zuständige Hauptquelle, relevante Daten und erlaubte Referenzen prüfen.
-3. **„Besser“ übersetzen** — aus belegten Mängeln konkrete Eigenschaften und beobachtbare Ergebnisse ableiten.
-4. **Arbeitsvertrag ausführen** — Ziel, Architektur, Reihenfolge, Grenzen, Fehlerfälle und Abnahme ergänzen.
-5. **Widerspruchsprüfung** — sicherstellen, dass keine Nutzergrenze verloren ging und kein neues Produktfeature erfunden wurde.
-6. **Umsetzen** — nicht auf eine zweite KI oder einen separaten Prompt-Enhancer warten.
-
-Wenn der Kontext die gewünschte Achse bereits zeigt, wird selbstständig die fachlich beste Option gewählt. Nur ein echter äußerer Blocker wie fehlender Zugriff, Secret oder widersprüchliche Pflichtdaten rechtfertigt eine Rückfrage.
-
-## 5. Mindestvertrag für komplexe Prompts
-
-Ein komplexer Arbeits- oder Generierungsprompt ist erst bereit, wenn diese acht Inhalte konkret genug vertreten sind. Eigene Überschriften sind hilfreich, aber nicht zwingend.
-
-1. **Ergebnis** — Was soll nachher funktionieren oder sichtbar sein?
-2. **Ausgangslage** — Welcher aktuelle Mangel oder belegte Stand wird verbessert?
-3. **Schutzvertrag** — Was muss unverändert bleiben?
-4. **Hauptquelle und Architektur** — Welche Datei, Datenquelle oder technische Instanz ist verantwortlich?
-5. **Reihenfolge** — Welche abhängigen Schritte müssen in welcher Ordnung erfolgen?
-6. **Qualitätsmerkmale** — Woran ist gutes Verhalten konkret erkennbar?
-7. **Fehler- und Sonderfälle** — Welche typischen falschen Ergebnisse müssen verhindert werden?
-8. **Abnahme und Lieferung** — Welche erlaubten Checks, Artefakte, Dokumentation und Abschlussdaten sind nötig?
-
-Für eine komplexe Aufgabe reicht eine Ein-Zeilen-Wiederholung des Nutzerwunsches nie. Ein Prompt darf erst kurz bleiben, wenn die Aufgabe selbst klein ist und alle acht Punkte entweder trivial oder bereits eindeutig im lokalen Vertrag beantwortet sind.
-
-## 6. Qualitätswörter operationalisieren
-
-Ein Adjektiv ohne Verhalten ist keine ausreichende Anweisung:
-
-| Vage | Umsetzbar |
-| --- | --- |
-| „schönere UI“ | visuelle Hierarchie, Abstände, Kontrast, Zustände, responsive Reihenfolge und zu schützende Interaktionen benennen |
-| „bessere Animation“ | Vorbereitung, Gewichtsverlagerung, Support-Kontakt, Beschleunigung, Treffer, Nachbewegung und Recovery benennen |
-| „mehr Performance“ | Engpass, Messgröße, Datenmenge, erlaubte Änderung und zu schützende Qualität benennen |
-| „perfekt“ | feste Abnahmepunkte und bekannte Fehlerbilder nennen; keine absolute Fehlerfreiheit behaupten |
-| „wie die Referenz“ | qualitätsbestimmende Mechanik, Datenfluss, Timing, Zustände und sichtbare Eigenschaften Ende zu Ende erfassen |
-
-Die Konkretisierung muss aus Nutzerfeedback, Projektzustand, Referenz oder belastbarer Fachlogik stammen. Adjektivketten ohne Mechanik erhöhen nur Textmenge.
-
-## 7. Erlaubte Ableitung und verbotene Erfindung
-
-**Erlaubt:**
-
-- nötige Implementierungsdetails aus vorhandener Architektur ableiten;
-- klare Reihenfolge und Zuständigkeit festlegen;
-- bekannte Fehlerfälle aus dem aktuellen Mangel ergänzen;
-- eine mess- oder beobachtbare Abnahme formulieren;
-- bei mehreren passenden Wegen begründet den fachlich stärksten wählen.
-
-**Verboten:**
-
-- nicht verlangte Produktfeatures ergänzen;
-- feste Maße, Inhalte, Pfade oder Technologien still ändern;
-- Widersprüche durch kreative Annahmen verdecken;
-- „länger“ durch Wiederholungen oder bedeutungslose Fachwörter simulieren;
-- eine Vermutung als gemessenen Fakt ausgeben.
-
-## 8. Kurzprüfung vor der Umsetzung
-
-- [ ] Ist jedes wichtige „besser/schöner/perfekt“ in konkretes Verhalten übersetzt?
-- [ ] Sind Hauptquelle, Datenfluss oder technische Verantwortung benannt?
-- [ ] Ist die Reihenfolge abhängiger Schritte klar?
-- [ ] Sind feste Grenzen und zu schützendes Verhalten erhalten?
-- [ ] Besitzt jeder wichtige Teil eine erkennbare Abnahme?
-- [ ] Sind typische Fehlerbilder und Sonderfälle abgedeckt?
-- [ ] Enthält der Prompt keine erfundenen Features oder künstliche Wiederholung?
-
-Bei einem `Nein` wird der Arbeitsauftrag vor dem Edit weiter konkretisiert.
-
-## 9. Künftige Promptvergleiche
-
-Nach diesem Ergebnis sollten neue Produktprompts nicht mehr standardmäßig „kompakt gegen ausführlich“ testen. Beide Varianten beginnen auf ausführlichem Qualitätsniveau. Pro Vergleich wird nur eine Vermittlungsachse verändert, zum Beispiel:
-
-- technische Reihenfolge;
+- mehr nützliche technische Details;
+- bildhafte Sprache mit konkreten Verben und Adjektiven;
+- Fehler zuerst, danach Prioritäten und Abnahme;
 - Beispiele gegen Negativbeispiele;
-- Abnahmekriterien früh gegen spät;
-- fachsprachliche gegen alltagssprachliche Erklärung;
-- tabellarische gegen narrative Struktur.
+- klare Produktionsschritte gegen freie Fließtextbeschreibung.
 
-Technologie, Produktumfang, Modell, Kontext, Seed, Assets und Abnahme bleiben gleich. Zusätzlich zu Score und Notizen werden Promptumfang und Generierungsdauer gespeichert. So wird messbar, **welcher Bestandteil** hilft, statt erneut Präzision und Länge gleichzeitig zu verändern.
+Score, Promptlänge und Generierungsdauer werden zusammen bewertet. So lernen wir, **welche Art von Zusatzinformation** wirklich hilft.
 
 ## Quellen
 

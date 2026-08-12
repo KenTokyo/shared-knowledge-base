@@ -47,18 +47,20 @@ Prompt-Verbesserung:[Keywords oder freie Anweisung]
 
 Ein Prompt-Enhancer im Produkt darf getrennt bestehen; dieser Dateiablauf braucht ihn nicht.
 
-### Automatische Promptprüfung
+### Vage Aufträge selbst konkret machen
 
-Vor dem ersten Implementierungsedit wird jeder Arbeitsauftrag auf fehlende Ausführbarkeit geprüft. Formulierungen wie „mach das besser“, „mach das schöner“, „mach das perfekt“, „optimier das“ oder ähnlich allgemeine Wünsche lösen auch **ohne** `Prompt-Verbesserung:`-Kennzeile automatisch ein ausführliches `Clear work goal` aus.
+**Ziel:** Der User muss keinen perfekten Prompt schreiben. Sagt er nur „mach das besser“, „schöner“ oder „perfekt“, soll die KI nicht blind raten.
 
-- Kontext, letzte konkrete Nutzerkritik, bestehende Task-Datei, zuständige Hauptquelle und erlaubte Referenzen zuerst lesen.
-- „Besser“ in beobachtbares Verhalten übersetzen und Ergebnis, Ausgangslage, Schutzvertrag, Architektur, Reihenfolge, Qualitätsmerkmale, Fehlerfälle sowie Abnahme konkretisieren.
-- Komplexe One-shot-, Projekt- und Implementierungsprompts standardmäßig ausführlich formulieren. Kompakte Prompts sind nur noch ein ausdrücklich beauftragter Testmodus; bestehende kompakte Varianten bleiben als historische Vergleichsdaten unverändert.
-- Länge entsteht durch vollständige Entscheidungen und Abnahmekriterien, nicht durch Wiederholung, Adjektivketten oder bedeutungslose Fachwörter.
-- Nötige Umsetzungsdetails dürfen aus dem belegten Projektkontext abgeleitet werden. Neue Produktfeatures, geänderte Grenzen oder erfundene Fakten sind verboten.
-- Die ausführende KI konkretisiert und setzt direkt um. Nur ein echter äußerer Blocker rechtfertigt eine Rückfrage.
+Vor dem ersten Edit macht die KI deshalb selbst vier einfache Schritte:
 
-Vollständiger Qualitätsvertrag, Evidenz und Kurzprüfung: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
+1. Letzte Kritik und aktuellen Projektstand lesen.
+2. Klar aufschreiben: Was ist schlecht? Was soll besser werden? Was muss gleich bleiben?
+3. Bei großen Aufgaben zusätzlich festlegen: Wie wird es umgesetzt und wann ist es fertig?
+4. Danach direkt umsetzen, statt den User nach einer besseren Formulierung zu fragen.
+
+Mehr Text ist nur dann nützlich, wenn er offene Fragen beantwortet. Wiederholungen, leere Fachwörter und viele Adjektive ohne klare Bedeutung helfen nicht. Die KI darf nötige Details aus dem Projekt ableiten, aber keine neuen Features oder geänderten Grenzen erfinden.
+
+Beispiele, Messwerte und Kurzcheck: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
 
 ### Übergabe und Lesen
 
