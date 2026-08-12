@@ -47,6 +47,19 @@ Prompt-Verbesserung:[Keywords oder freie Anweisung]
 
 Ein Prompt-Enhancer im Produkt darf getrennt bestehen; dieser Dateiablauf braucht ihn nicht.
 
+### Automatische Promptprüfung
+
+Vor dem ersten Implementierungsedit wird jeder Arbeitsauftrag auf fehlende Ausführbarkeit geprüft. Formulierungen wie „mach das besser“, „mach das schöner“, „mach das perfekt“, „optimier das“ oder ähnlich allgemeine Wünsche lösen auch **ohne** `Prompt-Verbesserung:`-Kennzeile automatisch ein ausführliches `Clear work goal` aus.
+
+- Kontext, letzte konkrete Nutzerkritik, bestehende Task-Datei, zuständige Hauptquelle und erlaubte Referenzen zuerst lesen.
+- „Besser“ in beobachtbares Verhalten übersetzen und Ergebnis, Ausgangslage, Schutzvertrag, Architektur, Reihenfolge, Qualitätsmerkmale, Fehlerfälle sowie Abnahme konkretisieren.
+- Komplexe One-shot-, Projekt- und Implementierungsprompts standardmäßig ausführlich formulieren. Kompakte Prompts sind nur noch ein ausdrücklich beauftragter Testmodus; bestehende kompakte Varianten bleiben als historische Vergleichsdaten unverändert.
+- Länge entsteht durch vollständige Entscheidungen und Abnahmekriterien, nicht durch Wiederholung, Adjektivketten oder bedeutungslose Fachwörter.
+- Nötige Umsetzungsdetails dürfen aus dem belegten Projektkontext abgeleitet werden. Neue Produktfeatures, geänderte Grenzen oder erfundene Fakten sind verboten.
+- Die ausführende KI konkretisiert und setzt direkt um. Nur ein echter äußerer Blocker rechtfertigt eine Rückfrage.
+
+Vollständiger Qualitätsvertrag, Evidenz und Kurzprüfung: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
+
 ### Übergabe und Lesen
 
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
@@ -249,7 +262,7 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 ## 9. Schnellcheck vor „fertig“
 
 - [ ] Unverändertes Original gespeichert und unter `Initial goal` verlinkt?
-- [ ] Echte `Prompt-Verbesserung` umgesetzt und bei leerer Kennzeile nichts erfunden?
+- [ ] Echte `Prompt-Verbesserung` und vage Wünsche konkretisiert, ohne eine leere Kennzeile als Zusatzauftrag zu missverstehen oder Features zu erfinden?
 - [ ] Userauftrag, `AGENTS.md`, Prompt, Task, Phasen und Abnahmepunkte erfüllt?
 - [ ] Problem vollständig gelöst und schwache Grundlage statt Mini-Fixes repariert?
 - [ ] Repository-/Referenzübernahme Ende zu Ende qualitätsgetreu integriert und verdrängte Altwege ohne Produktionsreferenz entfernt?

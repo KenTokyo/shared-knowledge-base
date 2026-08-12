@@ -21,6 +21,7 @@ git submodule update --init --recursive
 | [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
 | [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Prompt-/Task-Quelle, Planung, Umsetzung, Validierung und Git |
+| [`PROMPTING-TIPS.md`](PROMPTING-TIPS.md) | Ausführliche Promptqualität, automatische Konkretisierung vager Wünsche und Evidenz aus kontrollierten Vergleichen |
 | [`FRONTEND-RULES.md`](FRONTEND-RULES.md) | Trigger-Owner für React, State, Hydration, Browser-UI und Frontend-Performance |
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für ausdrücklich freigegebene CLI-Captures; Gate und Gesamtbudget stehen in `CODING-RULES.md` |
 | [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |

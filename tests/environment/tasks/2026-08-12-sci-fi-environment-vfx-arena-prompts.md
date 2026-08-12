@@ -10,7 +10,7 @@ Sechs vergleichbare LLM-Arena-Prompts für ein kleines, identisches Sci-Fi-VFX-S
 - [x] Dokument prüfen und Abschluss festhalten.
 
 ## Entscheidungen
-- Ablage neben den bestehenden LLM-Arena-Dokumenten unter `shared/shared-docs/agents`.
+- Ablage: ursprünglich neben den LLM-Arena-Dokumenten unter `shared/shared-docs/agents`; seit Runde 5 fachlich einsortiert unter `shared/shared-docs/tests/environment`.
 - Die Mini-Map bleibt in allen sechs Läufen fest und absichtlich einfach; nur die Simulations-/Rendering-Methode wechselt.
 - Licht ist fest vorgegeben und besitzt keine UI-Regler. Der Fokus liegt auf Wind, Nebel, Rauch, Staub, Blättern und optionalem Post-Processing.
 - Bildreferenzen dienen nur als Qualitäts- und Bewegungsreferenz, nicht als Auftrag zum Nachbau einer Welt oder konkreter Spielinhalte.
@@ -35,3 +35,9 @@ Das Arena-Dokument mit Locked Brief, einheitlichen Reglern, vier Presets, Diagno
 
 ### Runde 3 — 2026-08-12
 Nutzerfeedback umgesetzt: Den vollständigen Abschnitt mit Bildreferenzen, sämtliche Dateipfade und den letzten Referenzverweis aus dem Arena-Dokument entfernt. Die gewünschte Optik wird nun ausschließlich durch konkrete technische Bauvorgaben beschrieben. Technische Details bewusst kompakt beibehalten, weil genau sie den fairen Vergleich ohne Bildvorlagen ermöglichen. Keine Tests oder UI-Sichtprüfung bei dieser reinen Dokumentationsänderung.
+
+### Runde 4 — 2026-08-12
+Aktuelles Ergebnisbild analysiert: Der bisherige Bodennebel hellt vor allem die Fläche auf, statt die Sichtweite um eine Person zu reduzieren; die festen Rauchpunkte lesen sich als große weiße Kugeln beziehungsweise Vent-Plumes. Locked Brief und Controls deshalb neu gefasst: Third-Person-Mannequin, kamerazentrierte Distanz-Extinktion über die volle Sichthöhe, Fog-Density ab echtem Nullwert mit feiner Low-End-Steuerung, vertikale Reichweite bis 150 Meter sowie abgeleitete Sichtweite. Feste Rauchquellen in allen sechs Variationen durch deterministische, zufällig positionierte, wind- und böengetriebene Smoke Wisps ersetzt. Ground Mist bleibt nur ein zurückhaltender Sekundärlayer. Bewertungsablauf entsprechend angepasst. Keine Tests oder UI-Sichtprüfung bei reiner Dokumentationsänderung.
+
+### Runde 5 — 2026-08-12
+Die frühere Ablageentscheidung unter `shared/shared-docs/agents` ist durch die neue zentrale Sortierregel abgelöst. Arena-Dokument und dieses Fortschrittsprotokoll liegen jetzt unter `shared/shared-docs/tests/environment`; weitere LLM-Arena-Tests wurden entsprechend nach `animation`, `vfx` und `world` sortiert. Keine Tests oder Sichtprüfung bei reiner Dokumentationsorganisation.
