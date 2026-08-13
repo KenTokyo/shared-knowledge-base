@@ -1,173 +1,105 @@
-# Prompting-Tipps — wann mehr Text wirklich hilft
+# Prompting-Tipps — globale Kurzfassung
 
-**Lesen wenn:** Ein User nur „mach das besser“ sagt oder ein größerer Projektprompt geschrieben wird.
+**Lesen wenn:** Ein vager Wunsch konkretisiert oder ein größerer Projektprompt geschrieben wird.
 
-## Das Ziel
+## Grundregel
 
-Der User soll keine perfekte technische Beschreibung liefern müssen. Die KI liest den vorhandenen Kontext und macht aus einem groben Wunsch selbst einen klaren Arbeitsauftrag.
+> So ausführlich wie nötig, so fokussiert wie möglich.
 
-Beispiel:
+Mehr Text hilft nur, wenn er eine echte offene Frage beantwortet. Wiederholung, Fülltext und zusätzliche Adjektive machen einen Prompt nicht genauer.
 
-- Zu vage: „Mach die Animation besser.“
-- Klarer: „Behalte Tempo und Trefferfolge. Verstärke Beinarbeit, Gewichtsverlagerung und Rumpfdrehung. Verhindere rutschende Füße und gekreuzte Beine.“
+## Was in einen guten Projektprompt gehört
 
-Der zweite Prompt ist besser, weil er echte Fragen beantwortet — nicht weil er mehr Wörter enthält.
+1. **Ziel:** Was soll entstehen?
+2. **Aktueller Mangel:** Was fehlt oder funktioniert schlecht?
+3. **Priorität:** Was ist am wichtigsten?
+4. **Schutz:** Was muss unverändert bleiben?
+5. **Hauptquelle:** Welche Technik, Daten oder Assets tragen das Ergebnis?
+6. **Reihenfolge:** Welche wenigen Schritte müssen nacheinander erfolgen?
+7. **Hauptteile:** Was muss jeder wichtige Bereich konkret leisten?
+8. **Fehlergrenzen:** Welche wenigen wahrscheinlichen Fehler sind zu vermeiden?
+9. **Abnahme:** Was muss sichtbar oder technisch prüfbar sein?
+10. **Lieferung:** Stack, Dateien, Titel, Installation, Port und Dokumentation.
 
-## Hilft ein längerer Prompt?
-
-**Nur bis die wichtigen Entscheidungslücken geschlossen sind. Danach kann zusätzlicher Text schaden.**
-
-Hilfreicher Zusatztext erklärt:
-
-- was genau besser werden soll;
-- was unverändert bleiben muss;
-- welche Schritte in welcher Reihenfolge nötig sind;
-- welche wenigen typischen Fehler verhindert werden sollen;
-- woran man ein gutes Ergebnis erkennt.
-
-Nicht hilfreicher Zusatztext:
-
-- wiederholt dieselbe Anforderung;
-- verlangt interne Mess- und Kontrollsysteme, die niemand braucht;
-- stapelt Adjektive oder Aktionsverben ohne klare Mechanik;
-- beginnt mit einer langen Verbotsliste;
-- macht jede Einzelheit gleich wichtig;
-- schreibt einen bereits sehr guten Prompt vollständig neu.
-
-## Was die Boxer-Tests zeigen
-
-Direkter High-Vergleich derselben V14-Technik:
-
-| Version | Wörter | Score |
-| --- | ---: | ---: |
-| V14.1 — zu kompakt | 520 | 17 |
-| **V14.2 — ausführlich und fokussiert** | **1.269** | **89** |
-| V14.3 — maximaler Systems Blueprint | 2.392 | 52 |
-| V14.4 — viele Bilder, Adjektive und Verben | 1.812 | 30 |
-| V14.5 — Failure-First und Abnahmematrix | 1.945 | 50 |
-
-V14.2 erreichte in einem zusätzlichen Max-Lauf `94`. Dieser Lauf ist wegen des anderen Modell-Efforts kein sauberer Direktvergleich, zeigt aber, dass V14.2 nicht nur einmal stark funktionierte.
-
-Das Ergebnis korrigiert die frühere Vermutung „länger ist besser“:
-
-- Zu kurz kann wichtige Entscheidungen offenlassen.
-- Noch länger als ein bereits vollständiger Prompt ist nicht automatisch besser.
-- V14.3–V14.5 ergänzten mehr Architektur, Bildsprache oder Verbote, aber keine entsprechend besseren Resultate.
-
-Die brauchbare Regel lautet:
-
-> Ein guter Prompt ist so ausführlich wie nötig und so fokussiert wie möglich.
-
-## Warum zu viel schaden kann
-
-Ein LLM hat begrenzte Aufmerksamkeit und Arbeitszeit. Zusätzliche Anforderungen können:
-
-- den Fokus vom sichtbaren Ergebnis auf Nebensysteme verschieben;
-- Prioritäten verwässern;
-- dieselbe Aufgabe mehrfach und leicht unterschiedlich formulieren;
-- zu vielen nur teilweise gebauten Systemen führen;
-- eine kreative Bewegung durch zu viele Fehlerprüfungen vorsichtig und steif machen.
-
-Das sind plausible Erklärungen aus den Prompttexten und Scores, keine isoliert bewiesenen Einzelursachen. Ein Modelllauf enthält immer auch normale Streuung.
-
-## Was die Katana-Tests zusätzlich zeigen
-
-Sechs Folgeprompts sollten denselben starken Boxer-Build um dasselbe Katana-Loadout erweitern. Alle Läufe verwendeten Claude Opus 5 · High:
-
-| Promptform | Score |
-| --- | ---: |
-| Micro | 15 |
-| Constraint Ledger | 18 |
-| Product Brief | 37 |
-| **Systems Blueprint** | **58** |
-| Visual Director | 33 |
-| Acceptance Contract | 47 |
-
-Systems Blueprint war hier am stärksten, aber kein Ergebnis erreichte den guten Bereich ab `70`. Fast alle Reviews beschrieben Tennis-, Golf-, Badminton- oder Besenbewegungen, fehlende Beinarbeit und unklare Hiebe.
-
-Das ergänzt die bisherigen Regeln:
-
-- **Promptform nach Hauptrisiko wählen.** Beim Village gewann Visual Director `58` gegen Systems `36`, weil Raumkomposition das Produkt war. Beim Katana gewann Systems `58` gegen Visual Director `33`, weil Source-Auswahl, Retargeting, Waffengriff und Integration geordnet werden mussten.
-- **Externe Primärquellen zuerst qualifizieren.** Ein lizenzierter, technisch ladbarer Mocap-Take kann sichtbar trotzdem die falsche Aktion enthalten. Erst Rohbewegung abnehmen, dann Rig, VFX, UI und Varianten bauen.
-- **Technische und sichtbare Abnahme trennen.** Ein grünes Prüfskript für Dateien, Achsen und Griffresiduen beweist nicht, dass ein Mensch einen Katana-Hieb erkennt.
-- **Bei unsicherer Quelle erst einen repräsentativen Fall bauen.** Einen Hero-Skill akzeptieren lassen und erst danach auf sechs Skills skalieren.
-
-Mehr Detail half in dieser Katana-Reihe, weil die Integrationsreihenfolge wirklich offen war. Noch mehr Text wäre aber nicht die nächste Lösung: Zuerst muss das Ausgangsmaterial fachlich passen.
+Jede Anforderung steht an einem Hauptplatz. Ein Thema wird nicht in Einleitung, Pipeline, Einzelfunktion und Abschluss wiederholt.
 
 ## Vage Wünsche selbst konkret machen
 
-Wenn der User „besser“, „schöner“ oder „perfekt“ schreibt:
+Bei „besser“, „schöner“ oder „perfekt“:
 
-1. letzte konkrete Kritik lesen;
-2. betroffene Datei oder Funktion prüfen;
-3. festlegen, was besser werden soll;
-4. festhalten, was gleich bleiben muss;
-5. Umsetzung und fertiges Ergebnis klar beschreiben;
-6. direkt arbeiten, ohne unnötige Rückfrage.
+1. letzte konkrete Kritik und betroffenen Bereich lesen;
+2. schlecht, besser und unverändert festlegen;
+3. Umsetzung, Priorität und Fertig-Kriterium bestimmen;
+4. direkt arbeiten, ohne unnötige Rückfrage.
 
 Nur fehlender Zugriff, ein Secret oder ein echter Widerspruch rechtfertigt eine Rückfrage.
 
-## Einfacher Promptaufbau
+## Promptform nach Aufgabe wählen
 
-Für größere Aufgaben reichen meistens diese Teile:
+Es gibt keine universell beste Promptarchitektur:
 
-1. Ziel und aktueller Mangel.
-2. Eine technische Hauptquelle.
-3. Kurze geordnete Umsetzung.
-4. Zu schützendes Verhalten.
-5. Konkrete Anforderungen je Hauptteil.
-6. Wenige lokale Fehlerhinweise.
-7. Sichtbare oder prüfbare Abnahme.
-8. Lieferung und feste Grenzen.
+- **Environment:** Raumaufteilung, Wege, Blickachsen, Dichte, Variation, Material und Atmosphäre konkret beschreiben.
+- **Animation:** Vorbereitung, Timing, Ganzkörpereinsatz, Kontakt, Support und Recovery beschreiben.
+- **VFX:** Form, Materialwirkung, zeitliche Beats, Interaktion, Lesbarkeit und technische Grenzen beschreiben.
+- **Externe Assets oder Daten:** zuerst prüfen, ob die Quelle fachlich passt; danach Integration und technische Abnahme ordnen.
 
-Jede Anforderung hat einen Hauptplatz. Sie wird nicht in Einleitung, Pipeline, Einzelfunktion und Abschluss viermal neu erzählt.
+Systems Blueprint hilft, wenn Datenfluss und Integrationsreihenfolge das Hauptrisiko sind. Visual Director hilft, wenn Komposition und sichtbare Wirkung das Hauptrisiko sind. Acceptance-Kriterien helfen beim Abschluss, ersetzen aber keinen positiven Bauplan.
+
+## Adjektive sinnvoll verwenden
+
+Adjektive helfen, wenn sie eine sichtbare Entscheidung auslösen:
+
+- „dicht“ plus klarer Dichteverlauf;
+- „schwer“ plus längere Lastphase und kräftiger Follow-through;
+- „glühend“ plus Farbverlauf, Emission und Abklingverhalten.
+
+Sie helfen nicht als Stapel wie „episch, spektakulär, legendär, extrem hochwertig“. Bei Environment und VFX können Material- und Stilwörter nützlich sein; bei Animation müssen sie zusätzlich in Timing und Körpermechanik übersetzt werden.
+
+## Externe Quellen zuerst prüfen
+
+Ein technisch gültiges Mocap, Modell oder Datenset kann sichtbar ungeeignet sein. Deshalb:
+
+1. Rohquelle ohne kaschierende Effekte prüfen;
+2. fachliche Eignung sichtbar abnehmen;
+3. einen repräsentativen Hero-Fall vollständig lösen;
+4. erst danach auf viele Skills, Szenen oder Varianten skalieren.
+
+Dateiformat, Lizenz, Messwerte und grüne Prüfskripte belegen technische Konsistenz, nicht automatisch gute Produktqualität.
+
+## Was bisherige Tests knapp belegen
+
+- Aus den [Boxer-Learnings](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_V14_PROMPT_LEARNINGS.md): Zu kompakt lässt Entscheidungen offen; maximale Länge, Adjektivdichte oder Fehlerlisten sind kein Ersatz für eine fokussierte vollständige Bewegungsbeschreibung.
+- Aus den [Katana-Learnings](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/KATANA_V15_PROMPT_LEARNINGS.md): Geordnete Integration half relativ, löste aber ungeeignete Primärbewegung nicht. Source-Fitness kommt vor Rig, VFX und UI.
+- Aus den [Village-Learnings](../../animation-review-hub-v1-gpt-5-6-sol/docs/environment/JAPANESE_VILLAGE_PROMPT_LEARNINGS.md): Räumliche Art Direction half mehr als ein technisches Pflichtenheft. Organischer Content darf nicht über starre Objektquoten gesteuert werden.
+
+Neue Testreihen wie Sakura werden als weitere Learning-Quelle ergänzt. Globale Tipps ändern sich nur, wenn ein Befund wiederholt oder domänenübergreifend trägt; sonst bleibt er in einer eigenen Bereichssektion.
 
 ## Stop-Regel
 
-Ein zusätzlicher Absatz bleibt nur, wenn er mindestens eine neue Frage beantwortet:
+Ein Absatz bleibt nur, wenn er mindestens eine Frage neu beantwortet:
 
 - Welche wichtige Entscheidung war offen?
-- Welcher wahrscheinliche Fehler wird konkret verhindert?
 - Welche Reihenfolge war unklar?
+- Welcher wahrscheinliche Fehler wird konkret verhindert?
 - Welche Abnahme fehlte?
 
-Beantwortet er nichts davon, wird er entfernt.
+Wenn keine Frage beantwortet wird, Absatz entfernen.
+
+## Sauber lernen
+
+1. Besten Prompt als Baseline einfrieren.
+2. Baseline mit gleichem Modell, Effort, Kontext und Assets wiederholen.
+3. Danach nur einen klaren Block ändern.
+4. Mehrere Läufe und möglichst den Median vergleichen.
+5. Messwert, Nutzerbeobachtung und vermutete Ursache trennen.
+6. Nur wiederholt bessere Änderungen global übernehmen.
 
 ## No-Gos
 
-- Wortzahl als Qualitätsziel verwenden.
-- Einen Produktprompt in ein Lehrbuch oder internes Pflichtenheft verwandeln.
-- Viele Adjektive mit technischer Präzision verwechseln.
-- Viele Aktionsverben ohne eindeutige Reihenfolge stapeln.
-- Mit einer langen Liste von Fehlern beginnen.
+- Wortzahl oder Metrik als Qualitätsziel.
+- Unnötige Neben-, Diagnose- oder Kontrollsysteme.
+- Lange Verbotsliste vor dem positiven Ziel.
+- Adjektive oder Aktionsverben ohne konkrete Wirkung.
 - Alle Anforderungen gleich stark priorisieren.
-- Einen starken Baseline-Prompt wegen eines kleinen Mangels komplett umschreiben.
-- Aus einem einzelnen Lauf ein allgemeines Gesetz ableiten.
-
-## Wie das System wirklich lernt
-
-1. Besten Prompt als Baseline einfrieren.
-2. Baseline unverändert zwei- oder dreimal wiederholen, um normale Schwankungen zu sehen.
-3. Danach nur **einen kleinen Block** ändern.
-4. Modell, Effort, Kontext, Assets und Bewertungsroute gleich halten.
-5. Mehrere Läufe vergleichen und den Median verwenden.
-6. Nur wiederholt bessere Änderungen als globale Regel übernehmen.
-
-Für V14 bedeutet das: V14.2 unverändert wiederholen und anschließend nur die zwei schwachen Skillabschnitte zur Beinarbeit ändern. V14.3–V14.5 änderten zu viele Textbereiche gleichzeitig.
-
-## Kurzcheck
-
-1. Was ist aktuell schlecht?
-2. Was soll konkret besser sein?
-3. Was darf nicht verändert werden?
-4. Wie wird es umgesetzt?
-5. Woran erkennen wir, dass es fertig ist?
-6. Wiederholt der Prompt etwas ohne neue Information?
-7. Kann jetzt ein Absatz entfernt werden, ohne eine Entscheidung zu verlieren?
-
-## Quellen
-
-- `animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_V14_PROMPT_LEARNINGS.md`
-- `animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_ANIMATION_PART_3_PROMPTS.md`
-- `animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_ANIMATION_PART_4_PROMPTS.md`
-- `animation-review-hub-v1-gpt-5-6-sol/data/reviews/animation.json`
+- Einen starken Prompt wegen eines lokalen Mangels komplett neu schreiben.
+- Aus einem Einzelrun ein allgemeines Gesetz ableiten.
