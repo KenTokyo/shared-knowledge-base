@@ -70,6 +70,30 @@ Ein LLM hat begrenzte Aufmerksamkeit und Arbeitszeit. Zusätzliche Anforderungen
 
 Das sind plausible Erklärungen aus den Prompttexten und Scores, keine isoliert bewiesenen Einzelursachen. Ein Modelllauf enthält immer auch normale Streuung.
 
+## Was die Katana-Tests zusätzlich zeigen
+
+Sechs Folgeprompts sollten denselben starken Boxer-Build um dasselbe Katana-Loadout erweitern. Alle Läufe verwendeten Claude Opus 5 · High:
+
+| Promptform | Score |
+| --- | ---: |
+| Micro | 15 |
+| Constraint Ledger | 18 |
+| Product Brief | 37 |
+| **Systems Blueprint** | **58** |
+| Visual Director | 33 |
+| Acceptance Contract | 47 |
+
+Systems Blueprint war hier am stärksten, aber kein Ergebnis erreichte den guten Bereich ab `70`. Fast alle Reviews beschrieben Tennis-, Golf-, Badminton- oder Besenbewegungen, fehlende Beinarbeit und unklare Hiebe.
+
+Das ergänzt die bisherigen Regeln:
+
+- **Promptform nach Hauptrisiko wählen.** Beim Village gewann Visual Director `58` gegen Systems `36`, weil Raumkomposition das Produkt war. Beim Katana gewann Systems `58` gegen Visual Director `33`, weil Source-Auswahl, Retargeting, Waffengriff und Integration geordnet werden mussten.
+- **Externe Primärquellen zuerst qualifizieren.** Ein lizenzierter, technisch ladbarer Mocap-Take kann sichtbar trotzdem die falsche Aktion enthalten. Erst Rohbewegung abnehmen, dann Rig, VFX, UI und Varianten bauen.
+- **Technische und sichtbare Abnahme trennen.** Ein grünes Prüfskript für Dateien, Achsen und Griffresiduen beweist nicht, dass ein Mensch einen Katana-Hieb erkennt.
+- **Bei unsicherer Quelle erst einen repräsentativen Fall bauen.** Einen Hero-Skill akzeptieren lassen und erst danach auf sechs Skills skalieren.
+
+Mehr Detail half in dieser Katana-Reihe, weil die Integrationsreihenfolge wirklich offen war. Noch mehr Text wäre aber nicht die nächste Lösung: Zuerst muss das Ausgangsmaterial fachlich passen.
+
 ## Vage Wünsche selbst konkret machen
 
 Wenn der User „besser“, „schöner“ oder „perfekt“ schreibt:
