@@ -1,105 +1,160 @@
-# Prompting-Tipps — globale Kurzfassung
+# Prompting-Tipps — nur Regeln, die wirklich helfen
 
-**Lesen wenn:** Ein vager Wunsch konkretisiert oder ein größerer Projektprompt geschrieben wird.
+**Zweck dieser Datei:** kurze, direkt anwendbare Promptregeln. Keine technischen Messprotokolle, Laufzeitberichte, Toolbeschreibungen oder langen Versuchserklärungen.
 
 ## Grundregel
 
-> So ausführlich wie nötig, so fokussiert wie möglich.
+> **Short-first:** Mit dem kürzesten vollständigen Prompt starten. Nur bei einem konkreten Mangel gezielt verlängern.
 
-Mehr Text hilft nur, wenn er eine echte offene Frage beantwortet. Wiederholung, Fülltext und zusätzliche Adjektive machen einen Prompt nicht genauer.
+Ein vollständiger Kurzprompt nennt Ziel, Umfang, geschützte Baseline, Gestaltungsfreiheit und wichtigste Qualitätsrichtung. Alles entfernen, was nur wiederholt, verwaltet oder beeindruckend klingt.
 
-## Was in einen guten Projektprompt gehört
+## Was wirklich hilft
 
-1. **Ziel:** Was soll entstehen?
-2. **Aktueller Mangel:** Was fehlt oder funktioniert schlecht?
-3. **Priorität:** Was ist am wichtigsten?
-4. **Schutz:** Was muss unverändert bleiben?
-5. **Hauptquelle:** Welche Technik, Daten oder Assets tragen das Ergebnis?
-6. **Reihenfolge:** Welche wenigen Schritte müssen nacheinander erfolgen?
-7. **Hauptteile:** Was muss jeder wichtige Bereich konkret leisten?
-8. **Fehlergrenzen:** Welche wenigen wahrscheinlichen Fehler sind zu vermeiden?
-9. **Abnahme:** Was muss sichtbar oder technisch prüfbar sein?
-10. **Lieferung:** Stack, Dateien, Titel, Installation, Port und Dokumentation.
+### 1. Ziel und Priorität zuerst
 
-Jede Anforderung steht an einem Hauptplatz. Ein Thema wird nicht in Einleitung, Pipeline, Einzelfunktion und Abschluss wiederholt.
+Nenne zuerst:
 
-## Vage Wünsche selbst konkret machen
+- was entstehen soll;
+- was sichtbar am wichtigsten ist;
+- was unverändert bleiben muss;
+- woran ein gutes Ergebnis erkennbar ist.
 
-Bei „besser“, „schöner“ oder „perfekt“:
+Nicht alle Anforderungen gleich stark gewichten.
 
-1. letzte konkrete Kritik und betroffenen Bereich lesen;
-2. schlecht, besser und unverändert festlegen;
-3. Umsetzung, Priorität und Fertig-Kriterium bestimmen;
-4. direkt arbeiten, ohne unnötige Rückfrage.
+### 2. Adjektive gezielt platzieren
 
-Nur fehlender Zugriff, ein Secret oder ein echter Widerspruch rechtfertigt eine Rückfrage.
+Gut gewählte Adjektive können kreative Ergebnisse stark steuern. Sie stehen direkt bei dem Nomen, das sie verändern, statt als Schmuckliste am Promptende:
 
-## Promptform nach Aufgabe wählen
+- **Bezug:** „skulpturale Formen“, „leuchtende Materialien“, „rhythmisches Timing“.
+- **Wirkung:** Das Wort verändert eine sichtbare oder funktionale Entscheidung.
+- **Breite:** Wenige unterschiedliche Dimensionen abdecken, Synonyme vermeiden.
+- **Freiheit:** Wirkung vorgeben; konkrete Lösung, Namen und Gestaltung offenlassen.
 
-Es gibt keine universell beste Promptarchitektur:
+Geeignete Dimensionen:
 
-- **Environment:** Raumaufteilung, Wege, Blickachsen, Dichte, Variation, Material und Atmosphäre konkret beschreiben.
-- **Animation:** Vorbereitung, Timing, Ganzkörpereinsatz, Kontakt, Support und Recovery beschreiben.
-- **VFX:** Form, Materialwirkung, zeitliche Beats, Interaktion, Lesbarkeit und technische Grenzen beschreiben.
-- **Externe Assets oder Daten:** zuerst prüfen, ob die Quelle fachlich passt; danach Integration und technische Abnahme ordnen.
+- VFX → Form, Material/Licht, Timing/Nachwirkung, Lesbarkeit/Finish;
+- UI → Hierarchie, Dichte, Interaktion, Rückmeldung;
+- Animation → Vorbereitung, Gewicht, Kontakt, Recovery;
+- Text → Ton, Präzision, Struktur, Zielgruppe.
 
-Systems Blueprint hilft, wenn Datenfluss und Integrationsreihenfolge das Hauptrisiko sind. Visual Director hilft, wenn Komposition und sichtbare Wirkung das Hauptrisiko sind. Acceptance-Kriterien helfen beim Abschluss, ersetzen aber keinen positiven Bauplan.
+### Drei gute und drei schlechte Kurzbeispiele
 
-## Adjektive sinnvoll verwenden
+| Bereich | Gut | Schlecht |
+|---|---|---|
+| VFX | „Erweitere dieselbe Library um 20 weitere VFX. Wähle Skills und Namen selbst. Gestalte **skulpturale, dimensionale Formen**, **leuchtende, transluzente Materialien**, **dynamische Bewegung**, **klare Lesbarkeit** und ein **hochwertiges Finish**.“ | „Erzeuge 20 epische, fantastische, perfekte, extrem hochwertige VFX.“ |
+| Animation | „Der Angriff wirkt **gewichtig**: klare Vorbereitung, hüftgeführte Beschleunigung, fester Kontakt und kurze, kontrollierte Recovery.“ | „Die Animation soll realistisch, cool, flüssig, krass und AAA sein.“ |
+| UI | „Baue eine **kompakte Informationsfläche** mit **klarer Hierarchie**, **ruhigen Grundflächen** und **unmittelbarer Fehlerrückmeldung**.“ | „Erzeuge ein modernes, schönes, cleanes, professionelles Premium-UI.“ |
 
-Adjektive helfen, wenn sie eine sichtbare Entscheidung auslösen:
+### 3. Was die Bewertungen stützen
 
-- „dicht“ plus klarer Dichteverlauf;
-- „schwer“ plus längere Lastphase und kräftiger Follow-through;
-- „glühend“ plus Farbverlauf, Emission und Abklingverhalten.
+- Elemental V20.3: `91/100`; kompakte, geordnete VFX-Palette und viel Freiheit.
+- Elemental V20.2: `68/100`; ähnliche Adjektivdichte, aber schwächere Vermittlung.
+- Elemental V20.6: `40/100`; lange Acceptance Matrix ersetzte keinen starken positiven Bauplan.
+- Boxer V14.2: `89/94`; ein längerer Prompt kann bei komplexer Bewegung gewinnen.
+- Kurze Katana-Prompts: `15/18`; Kürze rettet keine ungeeignete Quelle oder schwache Baseline.
+- Boxer V14.4: 112 Adjektivtreffer bei `30/100`; Menge allein ist kein Qualitätshebel.
 
-Sie helfen nicht als Stapel wie „episch, spektakulär, legendär, extrem hochwertig“. Bei Environment und VFX können Material- und Stilwörter nützlich sein; bei Animation müssen sie zusätzlich in Timing und Körpermechanik übersetzt werden.
+Der neue sehr kurze Plus-20-VFX-Follow-up erzeugte laut Nutzerprüfung ebenfalls außergewöhnlich starke Effekte. Das stützt **Short-first auf einer starken Baseline**, ist ohne Wiederholung aber noch kein allgemeiner Beweis.
 
-## Externe Quellen zuerst prüfen
+Globale Richtung: wenige relevante Dimensionen, nicht redundante Adjektive, positiver Auftrag und freie Lösungswahl. Gewinnerwörter nicht blind auf andere Domänen kopieren.
 
-Ein technisch gültiges Mocap, Modell oder Datenset kann sichtbar ungeeignet sein. Deshalb:
+### 4. Produktionsprompt und Lernexperiment trennen
 
-1. Rohquelle ohne kaschierende Effekte prüfen;
-2. fachliche Eignung sichtbar abnehmen;
-3. einen repräsentativen Hero-Fall vollständig lösen;
-4. erst danach auf viele Skills, Szenen oder Varianten skalieren.
+Vor dem Schreiben festlegen, welcher Modus gilt:
 
-Dateiformat, Lizenz, Messwerte und grüne Prüfskripte belegen technische Konsistenz, nicht automatisch gute Produktqualität.
+- **Produktion:** Das bestmögliche bekannte Ergebnis liefern. Bewährte Steuerung erhalten und nur nötige Änderungen ergänzen.
+- **Experiment:** Eine benannte Hypothese prüfen. Genau eine Variable ändern; Baseline, Scope, Modell, Effort, Seed und Bewertung konstant halten.
 
-## Was bisherige Tests knapp belegen
+Eine absichtlich geschwächte Variante darf nicht als Qualitäts-Follow-up verkauft werden. Vergleichsläufe starten von derselben frischen Baseline; sequentielle Änderungen desselben Ergebnisses sind Produktentwicklung, kein kontrollierter Vergleich. Prompt-IDs dokumentieren Herkunft, schaffen aber keine Isolation.
 
-- Aus den [Boxer-Learnings](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_V14_PROMPT_LEARNINGS.md): Zu kompakt lässt Entscheidungen offen; maximale Länge, Adjektivdichte oder Fehlerlisten sind kein Ersatz für eine fokussierte vollständige Bewegungsbeschreibung.
-- Aus den [Katana-Learnings](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/KATANA_V15_PROMPT_LEARNINGS.md): Geordnete Integration half relativ, löste aber ungeeignete Primärbewegung nicht. Source-Fitness kommt vor Rig, VFX und UI.
-- Aus den [Village-Learnings](../../animation-review-hub-v1-gpt-5-6-sol/docs/environment/JAPANESE_VILLAGE_PROMPT_LEARNINGS.md): Räumliche Art Direction half mehr als ein technisches Pflichtenheft. Organischer Content darf nicht über starre Objektquoten gesteuert werden.
+### 5. Das Aufmerksamkeitbudget des Prompts schützen
 
-Neue Testreihen wie Sakura werden als weitere Learning-Quelle ergänzt. Globale Tipps ändern sich nur, wenn ein Befund wiederholt oder domänenübergreifend trägt; sonst bleibt er in einer eigenen Bereichssektion.
+Die stärksten Signale stehen früh und bleiben relativ dominant. Bewährte Reihenfolge:
+
+1. Ziel und wichtigste Ergebnisqualität;
+2. relevante Qualitätsdimensionen;
+3. konkreter Inhalt und Umfang;
+4. wenige unveränderliche Grenzen;
+5. sichtbare oder funktionale Abnahme;
+6. Installation und Liefervertrag.
+
+Eine große Infrastrukturmigration, ein neues Datenmodell oder umfangreiche Diagnostik ist ein eigener Hauptauftrag. Wenn gleichzeitig kreative Qualität verlangt wird, die Aufgaben trennen oder eine klare Primärpriorität setzen. Mehr technische Vollständigkeit kann das Ergebnis verschlechtern, wenn sie den eigentlichen Qualitätsauftrag sprachlich verdrängt.
+
+### 6. Einen positiven Bauplan geben
+
+Beschreibe zuerst, wie das gute Ergebnis aussehen und funktionieren soll. Danach nur wenige wahrscheinliche Fehler nennen.
+
+Lange Verbots-, Reject- oder Failure-Listen ersetzen keinen guten Entwurf. V20.6 verwendete eine ausführliche Acceptance Matrix und erreichte nur `40/100`.
+
+### 7. Die richtige Promptform wählen
+
+- Sichtbare Komposition ist das Hauptrisiko → konkrete Art Direction.
+- Bewegung ist das Hauptrisiko → Phasen, Support, Kraftkette und Kontakt.
+- Integration ist das Hauptrisiko → Quelle, Reihenfolge und Zuständigkeiten.
+- Abschluss ist das Hauptrisiko → kurze Abnahmekriterien.
+
+Kein Promptformat ist immer das beste.
+
+### 8. Gute Quellen vor Vollintegration prüfen
+
+Ein technisch gültiges Mocap, Modell oder Asset kann sichtbar ungeeignet sein.
+
+1. Rohquelle prüfen.
+2. Einen repräsentativen Hero-Fall vollständig lösen.
+3. Erst danach auf viele Skills oder Varianten erweitern.
+
+Eine schlechte Primärquelle wird durch mehr Prompttext, Rigging oder VFX nicht automatisch gut.
+
+### 9. Follow-ups als Änderung schreiben
+
+Bei einer starken Baseline nicht das ganze Projekt neu erklären. Nenne nur:
+
+- welche Baseline geschützt wird;
+- was neu oder besser werden soll;
+- welche Hauptunsicherheit geschlossen werden muss;
+- welche sichtbare Abnahme gilt.
+
+Eine starke Baseline lokal verbessern, nicht komplett neu schreiben.
+
+## Praktische Längenroute
+
+1. **Short:** Bei starker Baseline mit zwei bis sechs Sätzen starten: Änderung, Freiheit, kuratierte Qualitätsrichtung.
+2. **Medium:** Nur einen konkret sichtbaren Mangel ergänzen, etwa schwache Silhouette oder unlesbares Timing.
+3. **Long:** Nur wenn Quelle, Architektur, Integration, Reihenfolge oder Abnahme wirklich ungeklärt sind.
+4. **Ab etwa 1.500 Wörtern:** streng prüfen, welche Absätze keine neue Entscheidung klären.
+
+Wortzahl und Adjektivzahl sind keine Qualitätsziele. Der kürzeste Prompt gewinnt, der alle wichtigen offenen Entscheidungen trägt.
 
 ## Stop-Regel
 
-Ein Absatz bleibt nur, wenn er mindestens eine Frage neu beantwortet:
+Ein Absatz bleibt nur, wenn er mindestens eine neue Frage beantwortet:
 
 - Welche wichtige Entscheidung war offen?
 - Welche Reihenfolge war unklar?
-- Welcher wahrscheinliche Fehler wird konkret verhindert?
-- Welche Abnahme fehlte?
+- Welcher wahrscheinliche Fehler wird verhindert?
+- Welche sichtbare Abnahme fehlte?
 
-Wenn keine Frage beantwortet wird, Absatz entfernen.
-
-## Sauber lernen
-
-1. Besten Prompt als Baseline einfrieren.
-2. Baseline mit gleichem Modell, Effort, Kontext und Assets wiederholen.
-3. Danach nur einen klaren Block ändern.
-4. Mehrere Läufe und möglichst den Median vergleichen.
-5. Messwert, Nutzerbeobachtung und vermutete Ursache trennen.
-6. Nur wiederholt bessere Änderungen global übernehmen.
+Wenn nichts davon zutrifft, Absatz löschen.
 
 ## No-Gos
 
-- Wortzahl oder Metrik als Qualitätsziel.
-- Unnötige Neben-, Diagnose- oder Kontrollsysteme.
-- Lange Verbotsliste vor dem positiven Ziel.
-- Adjektive oder Aktionsverben ohne konkrete Wirkung.
-- Alle Anforderungen gleich stark priorisieren.
-- Einen starken Prompt wegen eines lokalen Mangels komplett neu schreiben.
-- Aus einem Einzelrun ein allgemeines Gesetz ableiten.
+- unnötige technische Neben- und Diagnosesysteme;
+- Messprotokolle oder Toolerklärungen im eigentlichen Projektprompt;
+- dieselbe Anforderung mehrfach formulieren;
+- lange Fehlerlisten vor dem positiven Ziel;
+- viele gleichbedeutende Superlative;
+- Adjektive ohne klaren Bezug oder beobachtbare Folge;
+- domänenspezifische Gewinner-Wortlisten blind auf andere Aufgaben kopieren;
+- Fachwort-, Adjektiv- oder Wortzahl als Qualitätsziel;
+- ungeeignete Quellen durch mehr Politur kaschieren;
+- aus einem einzelnen Lauf ein allgemeines Gesetz machen;
+- einen bewiesenen lokalen Qualitätsmechanismus still entfernen oder mit Infrastruktur überdecken;
+- Produktionsauftrag und absichtliches Grenzexperiment vermischen;
+- kumulative Batches im selben veränderten Projekt als kontrollierte Promptvarianten behandeln.
+
+## Weiterführende Learnings
+
+- [Boxer: fokussierte vollständige Bewegungsbeschreibung](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_V14_PROMPT_LEARNINGS.md)
+- [Katana: Source-Fitness vor Integration](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/KATANA_V15_PROMPT_LEARNINGS.md)
+- [Village: sichtbare Art Direction vor Technikbudget](../../animation-review-hub-v1-gpt-5-6-sol/docs/environment/JAPANESE_VILLAGE_PROMPT_LEARNINGS.md)
+- [Elemental Sandbox: kuratierte Adjektivpalette](../../animation-review-hub-v1-gpt-5-6-sol/docs/vfx/ELEMENTAL_SANDBOX_PROMPT_LEARNINGS.md)

@@ -43,9 +43,16 @@ Paarregeln:
 
 Ein klarer positiver Wunsch wie „verbessere …“, „mach das klarer/schöner“ oder eine echte `Prompt-Verbesserung:[Keywords oder freie Anweisung]` erzeugt `…-enhanced-prompt.md`. Groß-/Kleinschreibung, Bindestrich oder Leerzeichen dürfen abweichen; Verneinungen, nur zitierte Beispiele, leerer Inhalt und Platzhalter wie `[HIER …]` lösen keine Verbesserung aus. Dieselbe ausführende KI schreibt die verbesserte Fassung und setzt sie um; dieser Dateiablauf startet keine zweite KI und ändert keinen getrennten Produkt-Enhancer.
 
-Eine gute Verbesserung nennt zuerst das sichtbare Ziel, den aktuellen Mangel und die wichtigste Priorität. Sie ordnet vorhandene Angaben klar und ergänzt nur Details, die Entscheidungen, Grenzen oder die Abnahme verständlicher machen. Passende Beispiele aus anderen Spielen dürfen als gekennzeichnete Inspiration helfen, bleiben aber optional und werden nie zu erfundenen Pflichtmerkmalen. Konkrete Adjektive beschreiben eine sichtbare oder technische Wirkung, etwa „schwer“ über Timing und Nachlauf, statt leere Wörter zu stapeln. Der Prompt wird so lang wie nötig, nennt wichtige Pfade, Maße und Schutzregeln, lässt aber bei nicht festgelegten Gestaltungspunkten bewusst Freiheit. Zum Schluss entfernt die KI Wiederholungen, schützt Sprache, Verneinungen und feste Fakten und formuliert prüfbare Fertig-Kriterien.
+Standardroute für Promptverbesserungen:
 
-Weitere Beispiele, Messwerte und Kurzchecks: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
+- **Short-first:** kürzeste vollständige Fassung mit Ziel, Mangel, Priorität, Schutz und Abnahme schreiben.
+- Bei kreativer oder sichtbarer Arbeit wenige konkrete Adjektive direkt am Bezugswort platzieren, etwa „skulpturale Formen“, „leuchtende Materialien“ oder „gewichtige Bewegung“.
+- Unterschiedliche Wirkungsdimensionen abdecken; Synonym- und Superlativstapel löschen.
+- Nicht festgelegte Lösungen, Namen und Gestaltung bewusst dem ausführenden Modell überlassen.
+- Nur bei einem benannten Mangel auf Medium erweitern; Long nur für ungeklärte Quelle, Architektur, Integration oder Reihenfolge.
+- Feste Fakten, Verneinungen, Pfade und Maße schützen; Wiederholungen am Ende entfernen.
+
+Begründung, Bewertungen und Gut-/Schlecht-Beispiele: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
 
 ### Übergabe und Lesen
 

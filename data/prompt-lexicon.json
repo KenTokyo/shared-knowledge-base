@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "technicalTerms": [
+    "React",
+    "Vite",
+    "Three.js",
+    "TypeScript",
+    "procedural geometry",
+    "hierarchical rig",
+    "idle animation",
+    "walk animation",
+    "attack animation",
+    "orbit camera",
+    "VFX trail",
+    "strictPort"
+  ],
+  "adjectives": [
+    "voxel",
+    "faceted",
+    "sculptural",
+    "dimensional",
+    "luminous",
+    "translucent",
+    "atmospheric",
+    "readable",
+    "weighted",
+    "controlled",
+    "tactile",
+    "cinematic",
+    "polished",
+    "distinctive"
+  ],
+  "directives": [
+    "create exactly 20 enemies",
+    "create five groups of four enemies",
+    "invent groups and names",
+    "provide idle walk and attack animations",
+    "make animations playable",
+    "keep VFX trails subtle",
+    "use a fixed unregistered port",
+    "enable strictPort",
+    "register in PROJECTS.md"
+  ]
+}
