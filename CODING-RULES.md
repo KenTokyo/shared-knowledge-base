@@ -1,37 +1,43 @@
 # Coding Rules — einfacher Arbeitsvertrag
 
-**Ziel:** Verstehe den Auftrag, speichere das unveränderte Original, verbessere den Prompt bei klarem Wunsch, plane in einer Task-Datei und liefere ein fertiges Ergebnis.
+> **Kompaktpflicht**
+> - Tipps, Regeln, Prompts, Pläne, Learnings, Zusammenfassungen, angepasste Doku: möglichst wenige, token-effiziente Stichpunkte.
+> - Entfernen: Füllwörter, Wiederholungen, unnötige Artikel (`der`, `die`, `das`, `ein`, `eine`), Prosa.
+> - Bewahren: Pflichtinhalt, Gründe, Grenzen, Zahlen, Pfade, Befehle.
+> - Ausnahme: `Unchanged original` bleibt unverändert.
+
+**Ziel:** Auftrag verstehen, unverändertes Original speichern, Prompt bei klarem Wunsch verbessern, in Task-Datei planen, fertiges Ergebnis liefern.
 
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
 ## 1. Prompt-Datei und Task-Datei
 
-Jeder Auftrag, der Projektdateien oder ein Projektartefakt ändert, erhält **vor dem ersten Edit** genau ein Paar:
+Änderung an Projektdatei oder -artefakt → **vor erstem Edit** genau ein Paar:
 
-- `…-prompt.md` — feste Quelle, wenn keine Prompt-Verbesserung beauftragt ist;
-- `…-enhanced-prompt.md` — feste Quelle mit Original und verbesserter Fassung, wenn eine Prompt-Verbesserung beauftragt ist;
+- `…-prompt.md` — feste Quelle ohne beauftragte Prompt-Verbesserung;
+- `…-enhanced-prompt.md` — feste Quelle mit Original und beauftragter Verbesserung;
 - `…-tasks.md` oder vorhandene Task-/Masterdatei — änderbarer Arbeitsplan.
 
-Pro Paar gibt es genau **eine** der beiden Prompt-Dateien. Reine Fragen und Leseaufträge brauchen kein Paar. Ein kleiner Fix bekommt eine kurze Phase statt gar keiner Task-Datei.
+Je Paar genau **eine** Prompt-Datei. Reine Frage oder Leseauftrag → kein Paar. Kleiner Fix → kurze Phase statt fehlender Task-Datei.
 
-Regeln für das Paar:
+Paarregeln:
 
-- Beide Dateien liegen im selben Taskordner, wenn das Projekt keinen anderen Ort vorgibt.
-- Neue Paare teilen einen klaren Namensstamm: `<thema>-prompt.md` oder `<thema>-enhanced-prompt.md` plus `<thema>-tasks.md`.
-- Die Task-Datei nennt direkt oben unter `## Initial goal` den relativen Prompt-Pfad.
-- Die Task-Datei leitet Arbeitsumfang, Phasen, Entscheidungen und Stand aus der neuesten Fassung `Improved prompt` ab; ohne Verbesserung aus `## Unchanged original`. Den ganzen Usertext dort nie kopieren.
-- Vorhandenen Plan fortführen. Fehlt seine Prompt-Datei, diese vor dem nächsten Edit aus dem noch verfügbaren Original anlegen; nicht mehr bekannte Teile als unbekannt markieren.
-- Spätere Useränderungen mit Datum an dieselbe Prompt-Datei anhängen. Kommt erst später ein echter Verbesserungsauftrag, die Datei einmal zu `…-enhanced-prompt.md` umbenennen und den Task-Link ändern; keine zweite Prompt-Datei anlegen.
-- Früheren Text und frühere Verbesserungen nie umschreiben. Die Aufgabe ist nicht fertig, wenn die Prompt-Datei fehlt, der Link kaputt ist oder der Plan dem maßgeblichen Prompt widerspricht.
+- Gleicher Taskordner, sofern Projekt nichts anderes vorgibt.
+- Gemeinsamer Namensstamm: `<thema>-prompt.md` oder `<thema>-enhanced-prompt.md` plus `<thema>-tasks.md`.
+- Task-Datei: relativer Prompt-Pfad direkt unter `## Initial goal`.
+- Arbeitsumfang, Phasen, Entscheidungen, Stand: aus neuestem `Improved prompt`, sonst `## Unchanged original`; nie kompletten Usertext kopieren.
+- Vorhandenen Plan fortführen. Fehlende Prompt-Datei vor nächstem Edit aus verfügbarem Original anlegen; unbekannte Teile markieren.
+- Spätere Useränderungen datiert an bestehende Prompt-Datei anhängen. Später beauftragte Verbesserung → einmal zu `…-enhanced-prompt.md` umbenennen, Task-Link ändern; keine zweite Prompt-Datei.
+- Frühere Texte oder Verbesserungen nie umschreiben. Abschluss blockiert bei fehlender Prompt-Datei, kaputtem Link oder Widerspruch zwischen Plan und maßgeblichem Prompt.
 
-### Aufbau der Prompt-Datei
+### Prompt-Datei
 
-1. `## Source` — Datum, Chat-/Dateihinweis und Anhänge.
-2. `## Unchanged original` — geschützter Beleg des Usertexts in Originalsprache und Originalreihenfolge; nicht aufräumen oder als bessere Fassung ausgeben.
-3. `## Improved prompt` — Pflicht nur in `…-enhanced-prompt.md`; diese Fassung steuert Plan und Umsetzung.
-4. `## Dated updates` — spätere Useränderungen mit Datum und unverändertem Text; eine dazu verlangte `#### Improved prompt`-Fassung steht getrennt direkt darunter und ist ab dann die Arbeitsbasis.
+1. `## Source` — Datum, Chat-/Dateihinweis, Anhänge.
+2. `## Unchanged original` — geschützter Usertext in Originalsprache und Originalreihenfolge; nie aufräumen oder verbessern.
+3. `## Improved prompt` — nur in `…-enhanced-prompt.md` Pflicht; steuert Plan und Umsetzung.
+4. `## Dated updates` — spätere Useränderungen mit Datum und unverändertem Text; verlangte Verbesserung direkt darunter als `#### Improved prompt`, ab dann Arbeitsbasis.
 
-Im unveränderten Original bleiben Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen stehen. Geheimnisse nie speichern; an ihrer Stelle `[REDACTED: secret]` schreiben.
+`Unchanged original` bewahrt Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen. Secrets nie speichern; stattdessen `[REDACTED: secret]`.
 
 ### Wann und wie der Prompt verbessert wird
 
@@ -199,7 +205,7 @@ Neue teuer belegte Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) speic
 
 Für Antworten, Prompt-, Task- und Doku-Dateien:
 
-- Ergebnis zuerst; Alltagswörter, direkte Verben und kurze Stichpunkte nutzen.
+- Ergebnis zuerst; Alltagswörter, direkte Verben, möglichst wenige token-effiziente Stichpunkte.
 - Zahlen für Reihenfolge, Pfeile für kurze Abläufe und Checkboxen nur für echte Todos nutzen. Icons sparsam einsetzen.
 - Problem, Ursache und Änderung konkret nennen. Füllwörter, Wiederholungen und unnötige Satzteile entfernen.
 - Schwierige Begriffe kurz erklären; keine Abkürzungen erfinden und keine lange Ich-Erzählung schreiben.
