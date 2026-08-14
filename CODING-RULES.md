@@ -43,7 +43,7 @@ Paarregeln:
 **Default ohne Keyword:** Dieselbe ausführende KI verbessert jeden projektändernden Auftrag, schreibt die Arbeitsfassung und setzt sie ohne Freigabestopp direkt um. Kein zweiter Enhancer und keine getrennte Vorbereitungsrunde.
 
 - `Prompt verbessern` oder `Prompt-Verbesserung:[…]` → verbessern **und implementieren**; Zusatztext steuert den Schwerpunkt.
-- `Nur Prompt verbessern` → Arbeitsfassung schreiben, aber nichts implementieren.
+- `Wirklich Nur Prompt verbessern` → Arbeitsfassung schreiben, aber nichts implementieren.
 - `Prompt unverändert` → im `Improved prompt` auf das unveränderte Original verweisen und dieses ohne inhaltliche Erweiterung implementieren.
 
 Sätze wie „gefällt mir nicht“, „sieht billig/schlecht/generisch aus“, „mach das besser/schöner/hochwertiger“ oder „überarbeite das“ brauchen kein Keyword. Die KI liest betroffenen Projektzustand und übersetzt die Kritik in:
