@@ -6,7 +6,7 @@
 > - Bewahren: Pflichtinhalt, Gründe, Grenzen, Zahlen, Pfade, Befehle.
 > - Ausnahme: `Unchanged original` bleibt unverändert.
 
-**Ziel:** Auftrag verstehen, unverändertes Original speichern, Prompt bei klarem Wunsch verbessern, in Task-Datei planen, fertiges Ergebnis liefern.
+**Ziel:** Auftrag verstehen, Original und verlustfrei verbesserte Arbeitsfassung speichern, in Task-Datei planen, verbesserte Aufgabe direkt umsetzen.
 
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
@@ -14,43 +14,55 @@
 
 Änderung an Projektdatei oder -artefakt → **vor erstem Edit** genau ein Paar:
 
-- `…-prompt.md` — feste Quelle ohne beauftragte Prompt-Verbesserung;
-- `…-enhanced-prompt.md` — feste Quelle mit Original und beauftragter Verbesserung;
+- `…-enhanced-prompt.md` — feste Quelle mit Original und verbesserter Arbeitsfassung;
 - `…-tasks.md` oder vorhandene Task-/Masterdatei — änderbarer Arbeitsplan.
 
-Je Paar genau **eine** Prompt-Datei. Reine Frage oder Leseauftrag → kein Paar. Kleiner Fix → kurze Phase statt fehlender Task-Datei.
+Neue plain `…-prompt.md` entfallen. Reine Frage oder Leseauftrag → kein Paar. Kleiner Fix → kurze Phase, nicht fehlende Dateien.
 
 Paarregeln:
 
 - Gleicher Taskordner, sofern Projekt nichts anderes vorgibt.
-- Gemeinsamer Namensstamm: `<thema>-prompt.md` oder `<thema>-enhanced-prompt.md` plus `<thema>-tasks.md`.
+- Gemeinsamer Namensstamm: `<thema>-enhanced-prompt.md` plus `<thema>-tasks.md`.
 - Task-Datei: relativer Prompt-Pfad direkt unter `## Initial goal`.
-- Arbeitsumfang, Phasen, Entscheidungen, Stand: aus neuestem `Improved prompt`, sonst `## Unchanged original`; nie kompletten Usertext kopieren.
-- Vorhandenen Plan fortführen. Fehlende Prompt-Datei vor nächstem Edit aus verfügbarem Original anlegen; unbekannte Teile markieren.
-- Spätere Useränderungen datiert an bestehende Prompt-Datei anhängen. Später beauftragte Verbesserung → einmal zu `…-enhanced-prompt.md` umbenennen, Task-Link ändern; keine zweite Prompt-Datei.
-- Frühere Texte oder Verbesserungen nie umschreiben. Abschluss blockiert bei fehlender Prompt-Datei, kaputtem Link oder Widerspruch zwischen Plan und maßgeblichem Prompt.
+- Arbeitsumfang, Phasen, Entscheidungen und Stand aus neuestem `Improved prompt` ableiten; ganzen Usertext dort nie kopieren.
+- Vorhandenen Plan fortführen. Historische `…-prompt.md` nicht massenhaft umbenennen; beim nächsten aktiven Edit einmal zu `…-enhanced-prompt.md` migrieren, `Improved prompt` ergänzen und Task-Link ändern.
+- Spätere Useränderungen datiert an bestehende Enhanced-Datei anhängen; direkt darunter eine neue `#### Improved prompt`-Arbeitsfassung ergänzen.
+- Frühere Originale und Verbesserungen nie umschreiben. Abschluss blockiert bei fehlender Datei, kaputtem Link oder Widerspruch zwischen Arbeitsfassung und Plan.
 
-### Prompt-Datei
+### Enhanced-Prompt-Datei
 
 1. `## Source` — Datum, Chat-/Dateihinweis, Anhänge.
 2. `## Unchanged original` — geschützter Usertext in Originalsprache und Originalreihenfolge; nie aufräumen oder verbessern.
-3. `## Improved prompt` — nur in `…-enhanced-prompt.md` Pflicht; steuert Plan und Umsetzung.
-4. `## Dated updates` — spätere Useränderungen mit Datum und unverändertem Text; verlangte Verbesserung direkt darunter als `#### Improved prompt`, ab dann Arbeitsbasis.
+3. `## Improved prompt` — verlustfreie Arbeitsfassung; steuert immer Plan und Umsetzung.
+4. `## Dated updates` — spätere Useränderungen unverändert mit Datum; neue `#### Improved prompt`-Fassung direkt darunter.
 
 `Unchanged original` bewahrt Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen. Secrets nie speichern; stattdessen `[REDACTED: secret]`.
 
-### Wann und wie der Prompt verbessert wird
+### Auto-Enhance und optionale Keywords
 
-Ein klarer positiver Wunsch wie „verbessere …“, „mach das klarer/schöner“ oder eine echte `Prompt-Verbesserung:[Keywords oder freie Anweisung]` erzeugt `…-enhanced-prompt.md`. Groß-/Kleinschreibung, Bindestrich oder Leerzeichen dürfen abweichen; Verneinungen, nur zitierte Beispiele, leerer Inhalt und Platzhalter wie `[HIER …]` lösen keine Verbesserung aus. Dieselbe ausführende KI schreibt die verbesserte Fassung und setzt sie um; dieser Dateiablauf startet keine zweite KI und ändert keinen getrennten Produkt-Enhancer.
+**Default ohne Keyword:** Dieselbe ausführende KI verbessert jeden projektändernden Auftrag, schreibt die Arbeitsfassung und setzt sie ohne Freigabestopp direkt um. Kein zweiter Enhancer und keine getrennte Vorbereitungsrunde.
 
-Standardroute für Promptverbesserungen:
+- `Prompt verbessern` oder `Prompt-Verbesserung:[…]` → verbessern **und implementieren**; Zusatztext steuert den Schwerpunkt.
+- `Nur Prompt verbessern` → Arbeitsfassung schreiben, aber nichts implementieren.
+- `Prompt unverändert` → im `Improved prompt` auf das unveränderte Original verweisen und dieses ohne inhaltliche Erweiterung implementieren.
+
+Sätze wie „gefällt mir nicht“, „sieht billig/schlecht/generisch aus“, „mach das besser/schöner/hochwertiger“ oder „überarbeite das“ brauchen kein Keyword. Die KI liest betroffenen Projektzustand und übersetzt die Kritik in:
+
+- konkreten sichtbaren oder funktionalen Mangel;
+- passende Domänendimensionen, etwa Form, Material, Timing, Hierarchie oder Rückmeldung;
+- wenige Adjektive direkt am Bezugswort;
+- geschützte gute Eigenschaften und prüfbare Fertig-Kriterien.
+
+Ein bereits starker Prompt wird nur geordnet, entwirrt und auf Widersprüche geprüft; keine zusätzlichen Features, Fakten, Referenzen oder Qualitätsrichtungen erfinden. Verneinungen, zitierte Beispiele, leere Kennzeilen und Platzhalter wie `[HIER …]` sind keine neuen Aufträge.
+
+Standardroute:
 
 - **Short-first:** kürzeste vollständige Fassung mit Ziel, Mangel, Priorität, Schutz und Abnahme schreiben.
-- Bei kreativer oder sichtbarer Arbeit wenige konkrete Adjektive direkt am Bezugswort platzieren, etwa „skulpturale Formen“, „leuchtende Materialien“ oder „gewichtige Bewegung“.
+- Bei sichtbarer Arbeit konkrete Adjektive am Bezugswort platzieren, etwa „skulpturale Formen“, „leuchtende Materialien“ oder „gewichtige Bewegung“.
 - Unterschiedliche Wirkungsdimensionen abdecken; Synonym- und Superlativstapel löschen.
-- Nicht festgelegte Lösungen, Namen und Gestaltung bewusst dem ausführenden Modell überlassen.
-- Nur bei einem benannten Mangel auf Medium erweitern; Long nur für ungeklärte Quelle, Architektur, Integration oder Reihenfolge.
-- Feste Fakten, Verneinungen, Pfade und Maße schützen; Wiederholungen am Ende entfernen.
+- Nicht festgelegte Lösungen, Namen und Gestaltung dem ausführenden Modell überlassen.
+- Nur bei benanntem Mangel auf Medium erweitern; Long nur für ungeklärte Quelle, Architektur, Integration oder Reihenfolge.
+- Sprache, Verneinungen, feste Fakten, Pfade, Befehle und Maße schützen; Wiederholungen entfernen.
 
 Begründung, Bewertungen und Gut-/Schlecht-Beispiele: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
 
@@ -59,7 +71,7 @@ Begründung, Bewertungen und Gut-/Schlecht-Beispiele: [PROMPTING-TIPS.md](PROMPT
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 
 ```text
-- Prompt: <projekt-relativer Pfad zur *-prompt.md oder *-enhanced-prompt.md>
+- Prompt: <projekt-relativer Pfad zur *-enhanced-prompt.md>
 - Task: <projekt-relativer Pfad zur Task-/Masterdatei>
 ```
 
@@ -147,7 +159,7 @@ Arbeitsablauf:
 3. Stärksten passenden Projektcheck einmal ausführen.
 4. Funde gemeinsam beheben; danach normalerweise genau einen Kontrolllauf starten.
 5. Phase einmal aktualisieren und direkt zur nächsten offenen Phase wechseln.
-6. Am Ende unverändertes Original, `Improved prompt` falls vorhanden, Task und alle Abnahmepunkte erneut lesen.
+6. Am Ende `Unchanged original`, neuesten `Improved prompt`, Task und alle Abnahmepunkte erneut lesen.
 
 Frühere Ergebnisse nur ergänzen. Ab etwa 600 Taskzeilen nach Projektregel aufteilen und verlinken. Verbundene offene Funde als Todos schließen; nur echte spätere Zusatzarbeit bekommt einen eigenen Plan.
 
@@ -255,14 +267,14 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 
 ## 9. Schnellcheck vor „fertig“
 
-- [ ] Unverändertes Original gespeichert und die eine Prompt-Datei unter `Initial goal` verlinkt?
-- [ ] Bei echtem Verbesserungswunsch `…-enhanced-prompt.md` benannt und `Improved prompt` als Arbeitsbasis geschrieben, ohne Verneinungen, leere Kennzeilen oder Platzhalter als Auftrag zu missverstehen?
+- [ ] Unverändertes Original und verlustfreier `Improved prompt` in der einen `…-enhanced-prompt.md` gespeichert und unter `Initial goal` verlinkt?
+- [ ] Default oder optionales Keyword korrekt angewendet, ohne Verneinungen, Zitate, leere Kennzeilen oder Platzhalter als neue Aufträge zu missverstehen?
 - [ ] Userauftrag, `AGENTS.md`, Prompt, Task, Phasen und Abnahmepunkte erfüllt?
 - [ ] Problem vollständig gelöst und schwache Grundlage statt Mini-Fixes repariert?
 - [ ] Repository-/Referenzübernahme Ende zu Ende qualitätsgetreu integriert und verdrängte Altwege ohne Produktionsreferenz entfernt?
 - [ ] Jede neue oder geänderte handgepflegte Codedatei höchstens 1.200 Zeilen?
 - [ ] Passende Fachdatei gelesen; UTF-8, Links, Dateiende, Diff und Checks grün?
 - [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote-Stand eingebaut?
-- [ ] Übergabe enthält Prompt- und Taskpfad (`prompt` oder `enhanced-prompt`); finale Antwort ist einfaches Englisch?
+- [ ] Übergabe enthält Enhanced-Prompt- und Taskpfad; finale Antwort ist einfaches Englisch?
 
 **Wichtig:** Keine Browser- oder Sichtprüfungen starten, außer der aktuelle Userauftrag erlaubt es ausdrücklich.
