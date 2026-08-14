@@ -174,15 +174,15 @@
 `../../../../package.json`
 `../../../../src/models/subagent-strategy.ts`
 
-### ⏳ Phase 7 — Enhanced naming and compact improvement guide
+### ✅ Phase 7 — Enhanced naming and compact improvement guide
 **Goal:** Make requested prompt improvement explicit in the companion filename and in a short, safe writing guide.
 * [x] `read-current-state` — Read the latest remote Coding Rules, prompting tips, unchanged update, prior plan, and concurrent popover boundary.
 * [x] `enhanced-source` — Appended the unchanged user update, added its improved working prompt, and renamed this companion to `…-enhanced-prompt.md`.
 * [x] `rule-contract` — Split plain and enhanced prompt naming, defined the trigger and working source, and updated all path examples.
 * [x] `writing-guide` — Replaced repeated marker/vague-request prose with six compact sentences covering clarity, references, adjectives, detail, and creative freedom.
 * [x] `docs-checks` — Verified changed links, six guide sentences, UTF-8, Mojibake, final newlines, old/new companion paths, and whitespace.
-* [ ] `git-delivery` — Commit and push the submodule, record the result, then commit and push the parent pointer.
-**Result:** The rule flow is complete and statically clean; Git delivery is the only remaining step.
+* [x] `git-delivery` — Committed and pushed the shared-docs implementation as `922d402`; this final status update and the parent pointer are delivered next.
+**Result:** Plain and enhanced prompt files now have distinct names, enhanced text is the working basis, and the six-sentence guide stays compact and safe.
 **Why:** The old filename hid whether a better prompt existed, and `Clear work goal` did not clearly say which text drives execution.
 **Limits:** Documentation only; no popover/product code, version bump, build, browser, screenshot, or VSIX.
 **Architecture:** User request → one plain or enhanced prompt companion → linked task plan → execution from improved text when present. This is simple, reusable, maintainable, and adds no runtime work.
@@ -225,3 +225,10 @@
 **Findings by severity:**
 1. 🟢 **Info:** VSCE’s existing bundle-size warning is advisory; manifest version, runtime guidance, and required protocol files are present in the archive.
 2. 🟢 **Protected:** Pre-existing OpenCode cache and four Notes files were never staged or changed by this task.
+
+### Phase 7
+**Criteria met:** clear naming ✅, unchanged original preserved ✅, latest improved prompt drives work ✅, six-sentence guide ✅, negation/placeholder safety ✅, no product changes ✅, docs checks ✅, shared-docs implementation pushed ✅.
+**Findings by severity:**
+1. 🟠 **High · fixed:** One `…-prompt.md` name did not show whether the AI should follow an improved version; `…-enhanced-prompt.md` now does.
+2. 🟡 **Medium · fixed:** Marker and vague-request rules repeated the trigger but did not teach compact prompt improvement; one six-sentence guide now covers the useful parts.
+3. 🟢 **Protected:** `Notes/enhance-popover-funktion-verbessern-notes.md` and all product Prompt Enhancer/popover code stayed untouched.
