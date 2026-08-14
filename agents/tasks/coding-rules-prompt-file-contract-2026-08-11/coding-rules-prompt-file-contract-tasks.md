@@ -2,7 +2,7 @@
 
 ## Initial goal
 
-[coding-rules-prompt-file-contract-prompt.md](coding-rules-prompt-file-contract-prompt.md)
+[coding-rules-prompt-file-contract-enhanced-prompt.md](coding-rules-prompt-file-contract-enhanced-prompt.md)
 
 - The prompt file is the source of truth for the raw user request and any explicitly requested improvement.
 - This task plan derives scope and acceptance from that file.
@@ -41,6 +41,26 @@
 - Existing user edits are kept: original text remains separate, the general Subagent block stays removed, and the code-file limit stays at 1,200 lines.
 - Documentation checks, focused Subagent tests, full project checks, version bump, VSIX, Git/submodule delivery, and final reread pass.
 
+## Follow-up goal — explicit enhanced prompt files
+
+1. Change only the documentation workflow; do not touch the product Prompt Enhancer or popover.
+2. Keep plain requests in `…-prompt.md`; name the companion `…-enhanced-prompt.md` when the user clearly requests a better prompt.
+3. Preserve the unchanged original in both forms, but make `## Improved prompt` the required working basis in an enhanced file.
+4. Detect clear positive wording such as “improve”, “make it clearer”, or “make it nicer” without ignoring negations, empty markers, or placeholders.
+5. Add six compact sentences with the strongest prompt-writing tips, including optional game inspirations, meaningful adjectives, enough detail, and creative freedom.
+
+## Follow-up acceptance — enhanced naming and writing guide
+
+- The naming rule allows exactly one prompt companion and explains when an existing file is renamed.
+- `Unchanged original` is explained as the protected record, not the execution target of an enhanced file.
+- Natural improvement requests and the optional marker share one clear trigger rule.
+- The improved prompt cannot invent required facts, features, references, or boundaries.
+- Task plans, handovers, context reduction, and the final quick check accept both `*-prompt.md` and `*-enhanced-prompt.md`.
+- The current companion demonstrates the new enhanced naming and contains both the earlier source and the improved update.
+- Documentation links, UTF-8, Mojibake, whitespace, Git/submodule order, and remote sync pass; no code build or VSIX is needed for this docs-only follow-up.
+
+**Criteria feedback:** This stays maintainable and modular because naming carries the state instead of adding a second tool or runtime path. One prompt file remains the source, the task remains the plan, and explicit negation/placeholder rules cover the main edge cases with no performance cost.
+
 ## Solution comparison
 
 | Option | Benefit | Risk | Decision |
@@ -70,7 +90,7 @@
 **Architecture fit:** prompt file owns intent → task file owns execution → handover carries both paths; subagents receive the task and follow its `Initial goal` link.
 **Findings:** 🟠 **Fixed:** The former optional one-line note could not guarantee pairing, marker semantics, or condense continuity.
 **References:**
-`coding-rules-prompt-file-contract-prompt.md`
+`coding-rules-prompt-file-contract-enhanced-prompt.md`
 `../../../CODING-RULES.md`
 `../coding-rules-alt-neu-zusammenfuehrung-2026-08-03.md`
 
@@ -104,7 +124,7 @@
 **References:**
 `../../../CODING-RULES.md`
 `../../../FRONTEND-RULES.md`
-`coding-rules-prompt-file-contract-prompt.md`
+`coding-rules-prompt-file-contract-enhanced-prompt.md`
 
 ### ✅ Phase 4 — Feedback audit and plain-language design
 **Goal:** Turn both screenshots and the user’s edits into one smaller wording and prompt-flow decision before implementation.
@@ -120,7 +140,7 @@
 **References:**
 `../../../CODING-RULES.md`
 `../../../../src/providers/chat/shared/subagent-strategy-prompt.ts`
-`coding-rules-prompt-file-contract-prompt.md`
+`coding-rules-prompt-file-contract-enhanced-prompt.md`
 
 ### ✅ Phase 5 — Simpler rules and active-only Subagent guidance
 **Goal:** Make the always-read rules understandable and make an enabled Subagent mode carry its own short use rules.
@@ -153,6 +173,24 @@
 `coding-rules-prompt-file-contract-tasks.md`
 `../../../../package.json`
 `../../../../src/models/subagent-strategy.ts`
+
+### ⏳ Phase 7 — Enhanced naming and compact improvement guide
+**Goal:** Make requested prompt improvement explicit in the companion filename and in a short, safe writing guide.
+* [x] `read-current-state` — Read the latest remote Coding Rules, prompting tips, unchanged update, prior plan, and concurrent popover boundary.
+* [x] `enhanced-source` — Appended the unchanged user update, added its improved working prompt, and renamed this companion to `…-enhanced-prompt.md`.
+* [x] `rule-contract` — Split plain and enhanced prompt naming, defined the trigger and working source, and updated all path examples.
+* [x] `writing-guide` — Replaced repeated marker/vague-request prose with six compact sentences covering clarity, references, adjectives, detail, and creative freedom.
+* [x] `docs-checks` — Verified changed links, six guide sentences, UTF-8, Mojibake, final newlines, old/new companion paths, and whitespace.
+* [ ] `git-delivery` — Commit and push the submodule, record the result, then commit and push the parent pointer.
+**Result:** The rule flow is complete and statically clean; Git delivery is the only remaining step.
+**Why:** The old filename hid whether a better prompt existed, and `Clear work goal` did not clearly say which text drives execution.
+**Limits:** Documentation only; no popover/product code, version bump, build, browser, screenshot, or VSIX.
+**Architecture:** User request → one plain or enhanced prompt companion → linked task plan → execution from improved text when present. This is simple, reusable, maintainable, and adds no runtime work.
+**Findings:** 🟠 **Fixed:** One ambiguous filename represented two states. 🟡 **Fixed:** Repeated trigger prose lacked a compact writing method. 🟢 **Protected:** Concurrent popover/product files remain untouched.
+**References:**
+`../../../CODING-RULES.md`
+`coding-rules-prompt-file-contract-enhanced-prompt.md`
+`../../../PROMPTING-TIPS.md`
 
 ## Comments
 

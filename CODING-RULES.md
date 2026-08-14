@@ -1,6 +1,6 @@
 # Coding Rules — einfacher Arbeitsvertrag
 
-**Ziel:** Verstehe den Auftrag, speichere das unveränderte Original in einer Prompt-Datei, plane in einer Task-Datei, arbeite selbstständig und liefere ein fertiges Ergebnis.
+**Ziel:** Verstehe den Auftrag, speichere das unveränderte Original, verbessere den Prompt bei klarem Wunsch, plane in einer Task-Datei und liefere ein fertiges Ergebnis.
 
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
@@ -8,66 +8,45 @@
 
 Jeder Auftrag, der Projektdateien oder ein Projektartefakt ändert, erhält **vor dem ersten Edit** genau ein Paar:
 
-- `…-prompt.md` — feste Quelle für Usertext und mögliche Verbesserung;
+- `…-prompt.md` — feste Quelle, wenn keine Prompt-Verbesserung beauftragt ist;
+- `…-enhanced-prompt.md` — feste Quelle mit Original und verbesserter Fassung, wenn eine Prompt-Verbesserung beauftragt ist;
 - `…-tasks.md` oder vorhandene Task-/Masterdatei — änderbarer Arbeitsplan.
 
-Reine Fragen und Leseaufträge brauchen kein Paar. Ein kleiner Fix bekommt eine kurze Phase statt gar keiner Task-Datei.
+Pro Paar gibt es genau **eine** der beiden Prompt-Dateien. Reine Fragen und Leseaufträge brauchen kein Paar. Ein kleiner Fix bekommt eine kurze Phase statt gar keiner Task-Datei.
 
 Regeln für das Paar:
 
 - Beide Dateien liegen im selben Taskordner, wenn das Projekt keinen anderen Ort vorgibt.
-- Neue Paare teilen einen klaren Namensstamm: `<thema>-prompt.md` und `<thema>-tasks.md`.
+- Neue Paare teilen einen klaren Namensstamm: `<thema>-prompt.md` oder `<thema>-enhanced-prompt.md` plus `<thema>-tasks.md`.
 - Die Task-Datei nennt direkt oben unter `## Initial goal` den relativen Prompt-Pfad.
-- Die Prompt-Datei hält den Auftrag. Die Task-Datei leitet daraus Arbeitsumfang, Phasen, Entscheidungen und Stand ab. Den ganzen Usertext dort nie kopieren.
+- Die Task-Datei leitet Arbeitsumfang, Phasen, Entscheidungen und Stand aus der neuesten Fassung `Improved prompt` ab; ohne Verbesserung aus `## Unchanged original`. Den ganzen Usertext dort nie kopieren.
 - Vorhandenen Plan fortführen. Fehlt seine Prompt-Datei, diese vor dem nächsten Edit aus dem noch verfügbaren Original anlegen; nicht mehr bekannte Teile als unbekannt markieren.
-- Spätere Useränderungen mit Datum an dieselbe Prompt-Datei anhängen. Früheren Text nie umschreiben.
-- Die Aufgabe ist nicht fertig, wenn die Prompt-Datei fehlt, der Link kaputt ist oder der Plan dem Auftrag widerspricht.
+- Spätere Useränderungen mit Datum an dieselbe Prompt-Datei anhängen. Kommt erst später ein echter Verbesserungsauftrag, die Datei einmal zu `…-enhanced-prompt.md` umbenennen und den Task-Link ändern; keine zweite Prompt-Datei anlegen.
+- Früheren Text und frühere Verbesserungen nie umschreiben. Die Aufgabe ist nicht fertig, wenn die Prompt-Datei fehlt, der Link kaputt ist oder der Plan dem maßgeblichen Prompt widerspricht.
 
 ### Aufbau der Prompt-Datei
 
 1. `## Source` — Datum, Chat-/Dateihinweis und Anhänge.
-2. `## Unchanged original` — Usertext in Originalsprache und Originalreihenfolge.
-3. `## Clear work goal` — nur wenn eine klare Kurzfassung oder echte Prompt-Verbesserung hilft.
-4. `## Dated updates` — spätere Useränderungen mit Datum und unverändertem Text.
+2. `## Unchanged original` — geschützter Beleg des Usertexts in Originalsprache und Originalreihenfolge; nicht aufräumen oder als bessere Fassung ausgeben.
+3. `## Improved prompt` — Pflicht nur in `…-enhanced-prompt.md`; diese Fassung steuert Plan und Umsetzung.
+4. `## Dated updates` — spätere Useränderungen mit Datum und unverändertem Text; eine dazu verlangte `#### Improved prompt`-Fassung steht getrennt direkt darunter und ist ab dann die Arbeitsbasis.
 
-Das Original bleibt wirklich unverändert: Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen bleiben stehen. Aufräumen, sortieren und kleine Abschnitte sind nur im `Clear work goal` erlaubt. Geheimnisse nie speichern; an ihrer Stelle `[REDACTED: secret]` schreiben.
+Im unveränderten Original bleiben Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen stehen. Geheimnisse nie speichern; an ihrer Stelle `[REDACTED: secret]` schreiben.
 
-Optionale Kennzeile:
+### Wann und wie der Prompt verbessert wird
 
-```text
-Prompt-Verbesserung:[Keywords oder freie Anweisung]
-```
+Ein klarer positiver Wunsch wie „verbessere …“, „mach das klarer/schöner“ oder eine echte `Prompt-Verbesserung:[Keywords oder freie Anweisung]` erzeugt `…-enhanced-prompt.md`. Groß-/Kleinschreibung, Bindestrich oder Leerzeichen dürfen abweichen; Verneinungen, nur zitierte Beispiele, leerer Inhalt und Platzhalter wie `[HIER …]` lösen keine Verbesserung aus. Dieselbe ausführende KI schreibt die verbesserte Fassung und setzt sie um; dieser Dateiablauf startet keine zweite KI und ändert keinen getrennten Produkt-Enhancer.
 
-- Groß-/Kleinschreibung sowie Bindestrich oder Leerzeichen dürfen abweichen.
-- Der Klammerinhalt ist frei: etwa `kompakt`, `Architektur`, `Edge-Cases`, `Performance`, `UI/UX` oder Freitext.
-- Leerer Inhalt und Platzhalter wie `[HIER …]` sind kein Auftrag. Dann keine verbesserte Fassung erfinden.
-- Bei echtem Auftrag schreibt **dieselbe ausführende KI** das `Clear work goal` und setzt es um. Keine zweite KI nur für diesen Dateiablauf starten.
-- Die Verbesserung darf Reihenfolge, Abnahme und nötige Sonderfälle klären, aber keine Fakten, Features oder Grenzen erfinden.
-- Absicht, Sprache, Verneinungen, Pfade, Befehle, Referenzen, Maße und feste Eigenschaften bleiben erhalten. Das bessere Ziel ergänzt das Original und ersetzt es nie.
+Eine gute Verbesserung nennt zuerst das sichtbare Ziel, den aktuellen Mangel und die wichtigste Priorität. Sie ordnet vorhandene Angaben klar und ergänzt nur Details, die Entscheidungen, Grenzen oder die Abnahme verständlicher machen. Passende Beispiele aus anderen Spielen dürfen als gekennzeichnete Inspiration helfen, bleiben aber optional und werden nie zu erfundenen Pflichtmerkmalen. Konkrete Adjektive beschreiben eine sichtbare oder technische Wirkung, etwa „schwer“ über Timing und Nachlauf, statt leere Wörter zu stapeln. Der Prompt wird so lang wie nötig, nennt wichtige Pfade, Maße und Schutzregeln, lässt aber bei nicht festgelegten Gestaltungspunkten bewusst Freiheit. Zum Schluss entfernt die KI Wiederholungen, schützt Sprache, Verneinungen und feste Fakten und formuliert prüfbare Fertig-Kriterien.
 
-Ein Prompt-Enhancer im Produkt darf getrennt bestehen; dieser Dateiablauf braucht ihn nicht.
-
-### Vage Aufträge selbst konkret machen
-
-**Ziel:** Der User muss keinen perfekten Prompt schreiben. Sagt er nur „mach das besser“, „schöner“ oder „perfekt“, soll die KI nicht blind raten.
-
-Vor dem ersten Edit macht die KI deshalb selbst vier einfache Schritte:
-
-1. Letzte Kritik und aktuellen Projektstand lesen.
-2. Klar aufschreiben: Was ist schlecht? Was soll besser werden? Was muss gleich bleiben?
-3. Bei großen Aufgaben zusätzlich festlegen: Wie wird es umgesetzt und wann ist es fertig?
-4. Danach direkt umsetzen, statt den User nach einer besseren Formulierung zu fragen.
-
-Mehr Text ist nur dann nützlich, wenn er offene Fragen beantwortet. Wiederholungen, leere Fachwörter und viele Adjektive ohne klare Bedeutung helfen nicht. Die KI darf nötige Details aus dem Projekt ableiten, aber keine neuen Features oder geänderten Grenzen erfinden.
-
-Beispiele, Messwerte und Kurzcheck: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
+Weitere Beispiele, Messwerte und Kurzchecks: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
 
 ### Übergabe und Lesen
 
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 
 ```text
-- Prompt: <projekt-relativer Pfad zur *-prompt.md>
+- Prompt: <projekt-relativer Pfad zur *-prompt.md oder *-enhanced-prompt.md>
 - Task: <projekt-relativer Pfad zur Task-/Masterdatei>
 ```
 
@@ -155,7 +134,7 @@ Arbeitsablauf:
 3. Stärksten passenden Projektcheck einmal ausführen.
 4. Funde gemeinsam beheben; danach normalerweise genau einen Kontrolllauf starten.
 5. Phase einmal aktualisieren und direkt zur nächsten offenen Phase wechseln.
-6. Am Ende Original, besseres Arbeitsziel falls vorhanden, Task und alle Abnahmepunkte erneut lesen.
+6. Am Ende unverändertes Original, `Improved prompt` falls vorhanden, Task und alle Abnahmepunkte erneut lesen.
 
 Frühere Ergebnisse nur ergänzen. Ab etwa 600 Taskzeilen nach Projektregel aufteilen und verlinken. Verbundene offene Funde als Todos schließen; nur echte spätere Zusatzarbeit bekommt einen eigenen Plan.
 
@@ -263,14 +242,14 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 
 ## 9. Schnellcheck vor „fertig“
 
-- [ ] Unverändertes Original gespeichert und unter `Initial goal` verlinkt?
-- [ ] Echte `Prompt-Verbesserung` und vage Wünsche konkretisiert, ohne eine leere Kennzeile als Zusatzauftrag zu missverstehen oder Features zu erfinden?
+- [ ] Unverändertes Original gespeichert und die eine Prompt-Datei unter `Initial goal` verlinkt?
+- [ ] Bei echtem Verbesserungswunsch `…-enhanced-prompt.md` benannt und `Improved prompt` als Arbeitsbasis geschrieben, ohne Verneinungen, leere Kennzeilen oder Platzhalter als Auftrag zu missverstehen?
 - [ ] Userauftrag, `AGENTS.md`, Prompt, Task, Phasen und Abnahmepunkte erfüllt?
 - [ ] Problem vollständig gelöst und schwache Grundlage statt Mini-Fixes repariert?
 - [ ] Repository-/Referenzübernahme Ende zu Ende qualitätsgetreu integriert und verdrängte Altwege ohne Produktionsreferenz entfernt?
 - [ ] Jede neue oder geänderte handgepflegte Codedatei höchstens 1.200 Zeilen?
 - [ ] Passende Fachdatei gelesen; UTF-8, Links, Dateiende, Diff und Checks grün?
 - [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote-Stand eingebaut?
-- [ ] Übergabe enthält Prompt- und Taskpfad; finale Antwort ist einfaches Englisch?
+- [ ] Übergabe enthält Prompt- und Taskpfad (`prompt` oder `enhanced-prompt`); finale Antwort ist einfaches Englisch?
 
 **Wichtig:** Keine Browser- oder Sichtprüfungen starten, außer der aktuelle Userauftrag erlaubt es ausdrücklich.
