@@ -281,5 +281,3 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 - [ ] Passende Fachdatei gelesen; UTF-8, Links, Dateiende, Diff und Checks grün?
 - [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote-Stand eingebaut?
 - [ ] Übergabe enthält Enhanced-Prompt- und Taskpfad; finale Antwort ist einfaches Englisch?
-
-**Wichtig:** Keine Browser- oder Sichtprüfungen starten, außer der aktuelle Userauftrag erlaubt es ausdrücklich.
