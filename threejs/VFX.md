@@ -36,6 +36,9 @@
 - **Mehr Peak-Licht macht Treffer flacher** — Luma steigt; Struktur und Kontakt verschwinden in Bloom/Tonemap. → Hauptform ohne Bloom prüfen; Peak lokal geometrisch/emissiv formen; breite Staub-/Lichtlagen zeitlich nachstellen; Energie und Erasure getrennt messen.
   *claude-flakes: +52 % p99-Licht, aber −11 % Struktur · claude-of-tsushima: additive Maske wurde größer und im Mittel dunkler, Energie trotzdem +12–13 % · 2026-07-31–08-01*
 
+- **Copied effect stays weak for hours** — Target renderer was tuned before the source contract; distance and lifecycle defects hid behind byte-identical files. → Pin the source commit, map every slot through reset, connect the full runtime through one adapter, and check space/lifecycle before radiance.
+  *V21/Elemental → voxel-samurai-quiz: >5 h; 54 files matched, four body casts received only 50%, 50%, 1.5%, and 50% of authored range; a paused capture camera faked reset failures · 2026-08-15–16*
+
 ## Handoffs
 
 - Pose- und Waffenpfad → [Animation und Charakter](ANIMATION-CHARACTER.md)

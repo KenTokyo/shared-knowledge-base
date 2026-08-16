@@ -123,6 +123,8 @@ Vor dem ersten Implementierungsedit beide Wege Ende zu Ende erfassen:
 
 Das Zielprojekt darf eine andere Architektur behalten, wenn sie dasselbe Ergebnis nachweisbar trägt. Verhindert seine Grundlage jedoch Funktion oder Qualität der Referenz, ist der nötige zusammenhängende Umbau ausdrücklich Teil des Auftrags: verantwortliche Module ersetzen, Daten- und Renderwege neu verbinden, echte Trigger umleiten und verdrängte Altpfade vollständig entfernen. Umfangreiche Änderungen und Löschungen sind dann richtiger als ein kleiner Patch; wenige geänderte Zeilen sind kein Qualitätsmerkmal.
 
+Mandatory route for reference transfers, before look tuning: pin source commit and public trigger → trace source and target through reset → map every production slot → copy the full quality-bearing runtime slice → add one adapter for IDs, space, one clock, and native render contracts → route real triggers → delete the old path → check source content, finite values, expiry, and reset across all slots. Treat a missing or weak form as an integration defect; check distance, event beat, layers, uniforms, blend/depth, light, and lifecycle before brightness.
+
 Nicht als Übernahme liefern:
 
 - isolierte Demo, Overlay oder Wrapper neben dem echten Produktweg;
