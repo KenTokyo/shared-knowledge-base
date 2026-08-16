@@ -52,6 +52,7 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 
 - Erst Designsystem, Theme-Werte, globale Styles, Portal, Overflow und Stacking Context prüfen.
 - Mobile-first und platzsparend bauen; wichtigste Aktion sichtbar halten, seltene Optionen in Tooltip, Popover oder Collapsible legen.
+- Ein einzelner Schalter belegt nie eine eigene volle Inhaltszeile, wenn er inline, in einer dichten Gruppe oder in einem Popover verständlich bleibt.
 - Dichte Toolbars nutzen klare Icons. Jeder Icon-Button braucht `aria-label`, Tooltip und eindeutige Bedeutung.
 - Deaktivierte Controls erklären den Grund; Ressourcenblocker nennen Bedarf und aktuellen Wert.
 - Dialoge brauchen eine klare, solide Fläche. Starke Transparenz oder Blur nicht als unlesbare Hauptfläche nutzen.
