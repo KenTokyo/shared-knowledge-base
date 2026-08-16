@@ -24,7 +24,7 @@ Tailwind, optional React-Three-Fiber für *eine* Live-3D-Insel. Lucide-Icons.
 4. **Eine zusammenhängende gerundete Leiste/Konsole pro Region.** Lose Einzel-Elemente wirken unaufgeräumt — gruppieren.
 5. **Idle-Leben + Reaktions-Juice.** Hero-Elemente pulsieren leise (Infinite-Loops); alles Klickbare hebt sich bei Hover und drückt sich bei Tap.
 6. **„Fake-3D" statt teurer Canvas.** Lit-Logo, Glow-Halos, CSS-Dioramen, driftende Motes. Echte R3F nur als *eine* bewusste Insel.
-7. **Semantische Akzentfarben.** Primär/Bestätigen = Haupt-Akzent (solide, Shine), Erfolg/Belohnung = Gold, Gefahr/Abbruch = heiße Warnfarbe (nur Outline).
+7. **Semantische Akzentfarben.** Primär/Bestätigen = Haupt-Akzent (solide, Shine), Erfolg/Belohnung = Gold, Gefahr/Abbruch = heiße Warnfarbe (nur Outline). **Die Rollen sind Pflicht, die Hex-Werte nicht** — hat das Spiel schon eine Palette, werden die Rollen darauf abgebildet (§2).
 
 ---
 
@@ -43,8 +43,36 @@ Beobachtet an den gelobten Screens (Hauptmenü, „Hangar", Sanctuary/Dungeon-Ka
 
 ## 2. Token-System (für ein neues Spiel definieren)
 
+> ### ⚠️ Farben sind optional — die Regeln sind es nicht
+>
+> **Dieses Dokument ist ein Design-Regelwerk, keine Palette.** Verbindlich sind
+> die *Muster*: Rundung, gestaffelte solide Tiefe statt Opacity-Hacks, Glow im
+> Rand statt in der Füllung, eine Konsole pro Region, das Motion-Vokabular (§3),
+> Fake-3D (§4), die Lesbarkeitsregeln (§5.1) und die Performance-Pflichten.
+>
+> **Die konkreten Hex-Werte hier (`AMBER #ffb347`, `EMBER #ff6b2c`,
+> `GOLD #e8b04a`, das Warm-Schwarz-Trio …) sind ein Fallback** für ein Spiel,
+> das noch *kein* eigenes, funktionierendes Farbsystem hat.
+>
+> - **Spiel hat bereits ein Farbsystem → das gewinnt.** Nichts hier umfärben.
+>   Die Rollen (`ACCENT`/`HOT`/`REWARD`/`PAPER`/`BG`) auf die vorhandenen Tokens
+>   *abbilden* und weiterarbeiten. Ein zweites Palettensystem neben dem
+>   bestehenden ist der Fehler, den dieser Abschnitt verhindern soll.
+>   Beispiel: **Snowflow/Claude-Flakes** fährt eine eigene Eis-Palette
+>   (`--hud-frost`, `--hud-dim`, `--hud-accent`, `--hud-warn`) — dort ist
+>   `--hud-warn` das `HOT`, und Warm-Stone-Amber taucht nirgends auf.
+> - **Kein Farbsystem vorhanden → Warm-Stone als Startpunkt** nehmen und dann
+>   aufs Spiel drehen.
+> - **Die Kontrastregel gilt palettenunabhängig** (§ „Farb-Pop"): gesättigter
+>   Akzent auf tiefem, *nicht neutral-grauem* Grund. Das ist eine Aussage über
+>   Kontrast, nicht über Amber.
+>
+> Kurz: **Wie** etwas gebaut wird ist Pflicht, **womit** es eingefärbt wird ist
+> Vorschlag.
+
 Lege **ein** Token-Objekt an (`config/constants.ts` → z. B. `THEME`/`WARM_STONE`).
-Minimal-Set für den Look:
+Minimal-Set für den Look: je nachdem ob es dem spiel passt — die Rollen sind
+verbindlich, die CCB-Beispielwerte in der rechten Spalte sind es nicht.
 
 | Rolle | Zweck | CCB-Beispiel |
 |------|-------|--------------|
@@ -343,6 +371,7 @@ tauscht ein gelöstes Problem gegen ein neues (Regressionsgrenze im Abschnitt **
 - Kein `Math.random()`/`Date.now()` für Motes/Partikel-Positionen.
 - Keine zweite Live-R3F-Canvas über laufender Spiel-Szene.
 - Keine eckigen Buttons, kein Glow in der Flächenfüllung, kein Neon-Mix im selben Panel.
+- **Kein Warm-Stone-Amber in ein Spiel kippen, das schon eine eigene Palette hat** (§2). Rollen abbilden, nicht umfärben — sonst laufen zwei Farbsysteme nebeneinander.
 - Kein pastelliges Icon-Tile (Akzent-Füllung + heller Rand), kein `text-[8..10px]` für inhaltstragenden Text, kein weißer/heller Badge-Hintergrund, kein dekoratives Sinnlos-Icon (`ShieldCheck` ohne echte Sicherung).
 - Keine Infinite-Loops in Combat-Hotpaths.
 
@@ -350,7 +379,7 @@ tauscht ein gelöstes Problem gegen ein neues (Regressionsgrenze im Abschnitt **
 
 ## 8. Übertragungs-Rezept (neues Spiel in ~7 Schritten)
 
-1. **Token-Objekt** anlegen (`BASE/LIGHT/DARK/FRAME/ACCENT/HOT/REWARD/INK/PAPER/BG`) + Surface-Skala (§2).
+1. **Token-Objekt** anlegen (`BASE/LIGHT/DARK/FRAME/ACCENT/HOT/REWARD/INK/PAPER/BG`) + Surface-Skala (§2) — **oder**, wenn das Spiel schon eine Palette fährt, diese Rollen auf die vorhandenen Tokens abbilden und Schritt 1 damit abhaken.
 2. **Lit-Logo** für die Marke bauen (§4.1) — das ist die visuelle Signatur.
 3. **Cohesive Header-Bar** bauen (Logo + Werte-Pills + Icon-Buttons) statt loser Elemente.
 4. **Motion-Vokabular** (§3) als Gewohnheit: Entrance+Stagger, Hover/Tap, ein Idle-Glow, ein Shine-CTA, Spring-Dialoge.
