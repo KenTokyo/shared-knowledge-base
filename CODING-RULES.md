@@ -10,6 +10,8 @@
 
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
+**Ausnahmen sind erlaubt.** Der User darf jede Regel dieser Datei für eine Sitzung oder einen Auftrag aufheben — auch Sperren wie die Freigabepflicht für Sicht- und Browserprüfungen (§5) oder die Testsperre (§6). Eine gewährte Ausnahme gilt für die genannte Sitzung, wird in Antwort und Task-Datei genannt und braucht keine Rückfrage mehr. Sie ändert diese Datei nicht und gilt nicht automatisch für die nächste Sitzung.
+
 ## 1. Prompt-Datei und Task-Datei
 
 Änderung an Projektdatei oder -artefakt → **vor erstem Edit** genau ein Paar:
@@ -121,6 +123,8 @@ Vor dem ersten Implementierungsedit beide Wege Ende zu Ende erfassen:
 
 Das Zielprojekt darf eine andere Architektur behalten, wenn sie dasselbe Ergebnis nachweisbar trägt. Verhindert seine Grundlage jedoch Funktion oder Qualität der Referenz, ist der nötige zusammenhängende Umbau ausdrücklich Teil des Auftrags: verantwortliche Module ersetzen, Daten- und Renderwege neu verbinden, echte Trigger umleiten und verdrängte Altpfade vollständig entfernen. Umfangreiche Änderungen und Löschungen sind dann richtiger als ein kleiner Patch; wenige geänderte Zeilen sind kein Qualitätsmerkmal.
 
+Mandatory route for reference transfers, before look tuning: pin source commit and public trigger → trace source and target through reset → map every production slot → copy the full quality-bearing runtime slice → add one adapter for IDs, space, one clock, and native render contracts → route real triggers → delete the old path → check source content, finite values, expiry, and reset across all slots. Treat a missing or weak form as an integration defect; check distance, event beat, layers, uniforms, blend/depth, light, and lifecycle before brightness.
+
 Nicht als Übernahme liefern:
 
 - isolierte Demo, Overlay oder Wrapper neben dem echten Produktweg;
@@ -130,6 +134,8 @@ Nicht als Übernahme liefern:
 - Abschluss nach einem Pilot, wenn der benannte Teil noch nicht vollständig im echten Weg läuft.
 
 Meldet der User denselben Mangel erneut, gilt der bisherige Ansatz für diesen Punkt als widerlegt. Nicht dieselbe kleine Tuning-Achse wiederholen. Referenz und Ziel erneut Ende zu Ende öffnen, die erste ursächliche Abweichung finden und Architektur, Datenquelle, Ereignisse, Raum-/Zeitbezug, Rendering, Materialien, Assets, Lebenszyklus und Altpfade prüfen. Den Arbeitsumfang auf alle direkt gekoppelten Teile erweitern, die für die geforderte Qualität nötig sind; große Refactorings, Ersatz und Löschung sind dabei ausdrücklich erwartet. Bereits belegtes gutes Verhalten außerhalb dieses Wegs schützen.
+
+Ist Sichtprüfung ausdrücklich erlaubt, verlangt ein wiederholter Referenztransfer-Mangel vor Abschluss einen Source-/Target-Capturevergleich desselben Produktbeats mit vergleichbaren relativen Bildmaßen, Kameraabstand und Renderpfad. Erste sichtbare Abweichung in Ereignis, Raum, Layer, Material/Depth, HDR/Post oder Lebenszyklus beheben; nicht nur Helligkeit tunen.
 
 Fertig ist die Übernahme erst, wenn der echte Produkttrigger den neuen Weg nutzt, die benannten Qualitätsmerkmale umgesetzt sind, verdrängte Wege keine Produktionsreferenzen mehr haben und erlaubte Prüfungen das Ergebnis tragen. Ohne erlaubte Sichtprüfung nur statische Evidenz und eine genaue manuelle Abnahme nennen; keine optische Gleichheit behaupten.
 
@@ -195,6 +201,7 @@ Datenfluss und Leistung:
 - Ohne Freigabe nur statisch prüfen; der User übernimmt die direkte Sicht- und Spielgefühl-Abnahme.
 - Mit Freigabe erst fertig umsetzen und statisch prüfen, dann [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) folgen.
 - Für Echtzeit-3D höchstens sechs Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
+- Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
 
 ## 6. Checks und Testmenge
 
@@ -276,5 +283,3 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 - [ ] Passende Fachdatei gelesen; UTF-8, Links, Dateiende, Diff und Checks grün?
 - [ ] Nur eigene Dateien gestagt, committed und gepusht; Remote-Stand eingebaut?
 - [ ] Übergabe enthält Enhanced-Prompt- und Taskpfad; finale Antwort ist einfaches Englisch?
-
-**Wichtig:** Keine Browser- oder Sichtprüfungen starten, außer der aktuelle Userauftrag erlaubt es ausdrücklich.
