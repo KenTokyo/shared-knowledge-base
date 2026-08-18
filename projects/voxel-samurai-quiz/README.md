@@ -15,6 +15,7 @@ This folder keeps only unexpected, proven project traps.
 | Endlos-Voxel-Hack-and-Slash mit drei Map-Stilen prompten | [`prompts/new-games/endless-voxel-slasher/README.md`](prompts/new-games/endless-voxel-slasher/README.md) |
 | Gras, Laub, Terrain, Dichte, Draw Calls, Framezeit | [`WORLD-PERFORMANCE.md`](WORLD-PERFORMANCE.md) |
 | Shader-Kompilate, VFX-Layer, Render-Hüllen, `game:perf` | [`GAME-PERFORMANCE.md`](GAME-PERFORMANCE.md) |
+| V21-Klassen-VFX kopieren, Laufzeit-Overrides nach sauberem Slice-Diff | [`CLASS-VFX-TRANSFER.md`](CLASS-VFX-TRANSFER.md) |
 | Quizfall-Weltbildmaße, Layer-A/B, Sondenmetrik, Probe-vs.-Shipping | [`MEASURING.md`](MEASURING.md) |
 | Rauschboden, Lauf-Flags, Zustandsdrift, Zeit, Sondenspalten | [`RUNTIME-MEASURING.md`](RUNTIME-MEASURING.md) |
 | `CameraRig`, Third Person, Spielpose, Waffe, Gegnerpeilung | [`CAMERA-CHARACTER.md`](CAMERA-CHARACTER.md) |
