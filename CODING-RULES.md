@@ -203,6 +203,14 @@ Datenfluss und Leistung:
 - Für Echtzeit-3D höchstens sechs Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
 - Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
 
+### Electron startup smoke
+
+- Changes to Electron Main/Preload, app-provider trees, the embedded client or runtime, startup URL, runtime manager, or packaged startup need a **matching real Electron startup smoke** before completion. Typecheck and build alone are not enough.
+- Matching means opening the changed entry and visible target in a fresh process. Test packaged-start changes in the built package; test Notes-provider changes through the real Notes entry.
+- Run only with current Browser/Playwright permission from §5. Without it, keep the smoke open and do not claim full runtime completion. A direct user request for an Electron startup test grants this permission.
+- Use a verified free isolated port, short session name, and separate test profile. Capture page errors, relevant console events, and failed requests. Stop only owned processes and confirm port cleanup.
+- Before the next experiment, add each new or repeated finding to the active task with command/URL, setup, artifact, cause, what not to repeat, and next stable route.
+
 ## 6. Checks und Testmenge
 
 - Zusammenhängenden Teil fertigstellen, dann stärksten passenden Projektcheck einmal für alle eigenen Änderungen ausführen.

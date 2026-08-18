@@ -1,16 +1,22 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "technicalTerms": [
     "React",
     "Vite",
     "Three.js",
     "TypeScript",
     "procedural geometry",
+    "runtime-generated geometry",
     "hierarchical rig",
     "idle animation",
     "walk animation",
     "attack animation",
     "orbit camera",
+    "AOE telegraph",
+    "cooldown readiness",
+    "root motion",
+    "cast-local time",
+    "fixed VFX pools",
     "VFX trail",
     "strictPort"
   ],
@@ -28,7 +34,11 @@
     "tactile",
     "cinematic",
     "polished",
-    "distinctive"
+    "distinctive",
+    "reliable",
+    "cooldown-safe",
+    "retryable",
+    "authored"
   ],
   "directives": [
     "create exactly 20 enemies",
@@ -36,7 +46,11 @@
     "invent groups and names",
     "provide idle walk and attack animations",
     "make animations playable",
+    "block cooldown skills before placement",
+    "keep cast requests authoritative",
+    "reuse one cast-local clock",
     "keep VFX trails subtle",
+    "run static checks only",
     "use a fixed unregistered port",
     "enable strictPort",
     "register in PROJECTS.md"
