@@ -3,9 +3,9 @@
 Zentrale Übersicht der lokalen Ressourcen unter `/Users/kentoky/Documents/React Projects`.
 Sie ordnet Projekte nach Three.js-Bezug, nennt geeignete Einsatzfelder und hält die konfigurierten lokalen Ports fest.
 
-**Stand:** 2026-08-04 · **Scan:** 20 direkte Verzeichnisse · **Aufgenommen:** 14 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse
+**Stand:** 2026-08-20 · **Letzter Vollscan:** 2026-08-04 über 20 direkte Verzeichnisse · **Aufgenommen:** 15 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse · **Nachtrag 2026-08-20:** `signature-vfx-unified-library-v21-gpt-5-6-sol` und `Claude-Flakes` eingetragen; nicht als neuer Vollscan zu lesen.
 
-**Trigger-Wörter:** „Avatar“ → `AvatarCastingAbilitiesThreeJS` (Abschnitt 1). Die Arbeitskopie dieses Repos liegt derzeit unter Windows; der macOS-Pfad ist die Erwartung, nicht ein geprüfter Stand. Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
+**Trigger-Wörter:** „Avatar“, „Elemental“, „Domain Elemental“ → `domains/elemental` in `signature-vfx-unified-library-v21-gpt-5-6-sol` (Abschnitt 1). „Elemental Flakes“, „Claude Flakes“, „Snowflow“ → `Claude-Flakes` (Abschnitt 1). Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
 
 ## Pflicht vor jeder Ressourcennutzung
 
@@ -37,7 +37,8 @@ git -C "$RESOURCE" submodule update --init --recursive
 | `Claude-of-Duty` | Aktiv · Prozeduraler WebGL2-FPS; gut für eigene Render-, Physik-, Waffen-, Audio-, KI- und Performance-Systeme. | JavaScript, GLSL, HTML, CSS · Three.js r180, Vite 7 | `/Users/kentoky/Documents/React Projects/Claude-of-Duty` |
 | `3-crossword-core-breaker` | **Leicht deprecated** · „Crossword Core Breaker“; weiter nützlich für Kreuzwort-/Vokabel-Gameplay, Tippen, Bossphasen und dauerhafte Upgrades. | TypeScript, TSX, CSS, JSON · React 19, Three.js 0.183, React Three Fiber, Vite 6 | `/Users/kentoky/Documents/React Projects/3-crossword-core-breaker` |
 | `claude-desert` | Aktiv · Third-Person-Fantasy- und VFX-Showcase; gut für Shader, hochwertige Kampfeffekte und prozedurale Hero-Inszenierung. | JavaScript, GLSL, HTML, CSS · Three.js 0.185, Vite 8 | `/Users/kentoky/Documents/React Projects/claude-desert` |
-| `AvatarCastingAbilitiesThreeJS` | Aktiv · **Trigger-Wort „Avatar“ meint dieses Projekt.** Elementar-Sandbox: Pfad auf den Boden zeichnen, loslassen, Feuer-/Wasser-/Erde-/Luft-Fähigkeit läuft die Spline ab und detoniert. Stärkste Referenz für **Layering von Fähigkeiten**, Laufzeit-VFX-Editor und Presetbedienung. | JavaScript, GLSL, HTML, CSS · Three.js 0.185, lil-gui, Vite 8 | Arbeitskopie liegt heute unter Windows: `D:\CODING\React Projects\github-repos-examples\AvatarCastingAbilitiesThreeJS` · macOS-Erwartung: `/Users/kentoky/Documents/React Projects/AvatarCastingAbilitiesThreeJS` (vor Nutzung auf Existenz prüfen) |
+| `signature-vfx-unified-library-v21-gpt-5-6-sol` | Aktiv · **Trigger-Wörter „Avatar“ und „Elemental“ meinen `domains/elemental` in diesem Repo.** Vereinte Signatur-VFX-Bibliothek mit sechs Domains; `domains/elemental` ist die Elementar-Sandbox mit neunzig prozeduralen Signaturen, Sechs-Slot-Loadout, Linien- und Fernzielbild, Sigil-Icons und Laufzeit-VFX-Editor. Stärkste Referenz für **Layering von Fähigkeiten**, Loadout-Bedienung und handgeschriebenes GLSL. | TypeScript, TSX, JavaScript, GLSL, HTML, CSS · React 18, Three.js 0.185, lil-gui, Vite 8 | `/Users/kentoky/Documents/React Projects/test-projects/signature-vfx-unified-library-v21-gpt-5-6-sol` · Domain: `…/domains/elemental` |
+| `Claude-Flakes` | Aktiv · **Trigger-Wörter „Claude Flakes“, „Elemental Flakes“ und „Snowflow“ meinen dieses Repo.** Snowflow ist eine Schnee-Survivalwelt auf Babylon.js 9 / WebGPU mit Wellen, Quiz-Tafeln, Shop und Technomancer-Klasse; `elemental-flakes/` fährt daneben die Three.js-Fassung derselben Skills. Stärkste Referenz für **UI-Erlebnis**: Skill-Rail mit zwei Bänken, Loadout-Picker auf `L`, Skilltree und ein Sigil-Icon-Satz in einem Strichrahmen. | JavaScript, WGSL, GLSL, HTML, CSS · Babylon.js 9, WebGPU, Three.js 0.185, Vite 8 | `/Users/kentoky/Documents/React Projects/Claude-Flakes` · Three.js-Teil: `…/elemental-flakes` |
 | `claude-tower-defense` | Aktiv · Action-Tower-Defense mit Held, Arena und Türmen; gut für Baufluss, Gegnerwellen, Kamera, prozedurale Welt und HUD. | JavaScript, GLSL, HTML, CSS · Three.js r180, Vite 6 | `/Users/kentoky/Documents/React Projects/claude-tower-defense` |
 
 ## 2. Three.js als Teil eines größeren Produktstacks
@@ -84,6 +85,9 @@ Die Tabelle enthält **konfigurierte oder vom Framework vorgegebene Ports**, kei
 | `Claude-of-Duty` | `pnpm dev` / Preview | 5178 / 4178 | Fest mit `strictPort` |
 | `Claude-of-tsushima` | `pnpm dev` / Preview | 5180 / 4180 | Fest mit `strictPort`; Preview kollidiert mit Voxel-Mess-Preview |
 | `claude-tower-defense` | `pnpm dev` / Preview | 5183 / 4183 | Fest mit `strictPort` |
+| `signature-vfx-unified-library-v21-gpt-5-6-sol` | `pnpm dev` / Preview | 6117 | Fest mit `strictPort` auf `127.0.0.1`; Dev und Preview teilen den Port und laufen nicht gleichzeitig |
+| `Claude-Flakes` Snowflow | `npm run dev` | 5173 | Fest mit `strictPort`; **Konflikt:** kollidiert mit `claude-desert` Dev |
+| `Claude-Flakes` Elemental Flakes | `npm run flakes` | 5177 | Fest mit `strictPort`; eigener Vite-Root unter `elemental-flakes/` |
 | `quiz-arena-space` | `npm run dev` / Preview | 5184 / 4184 | Fest mit `strictPort` |
 | `duty-of-tsushima` | `pnpm dev` / Preview | 5185 / 4185 | Fest mit `strictPort` |
 | `uniai-chat-vscode-extension` | `pnpm compile` / `pnpm watch` | 18765 bei Bedarf | Kein Dev-/Preview-Server; gemeinsamer Loopback-Port für lokale Claude-Code-Proxy-Brücken |
@@ -92,7 +96,7 @@ Die Tabelle enthält **konfigurierte oder vom Framework vorgegebene Ports**, kei
 ### Bekannte Überschneidungen
 
 1. **4180 fest belegt:** `Claude-of-tsushima` Preview und `voxel-samurai-quiz` Mess-Preview können nicht gleichzeitig laufen.
-2. **5173/4173 gemischt:** `claude-desert` reserviert beide Ports fest. `quizshoot` und die freie Crossword-Preview beginnen dort nur standardmäßig und können ausweichen.
+2. **5173/4173 gemischt:** `claude-desert` und `Claude-Flakes` Snowflow reservieren 5173 beide fest und können nicht gleichzeitig laufen. `quizshoot` und die freie Crossword-Preview beginnen dort nur standardmäßig und können ausweichen.
 3. Alte laufende Prozesse oder CLI-Overrides können von dieser Konfiguration abweichen. Auf macOS den echten Listener prüfen:
 
 ```bash

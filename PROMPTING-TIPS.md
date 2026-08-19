@@ -157,4 +157,4 @@ Wenn nichts davon zutrifft, Absatz löschen.
 - [Boxer: fokussierte vollständige Bewegungsbeschreibung](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/BOXER_V14_PROMPT_LEARNINGS.md)
 - [Katana: Source-Fitness vor Integration](../../animation-review-hub-v1-gpt-5-6-sol/docs/animation/KATANA_V15_PROMPT_LEARNINGS.md)
 - [Village: sichtbare Art Direction vor Technikbudget](../../animation-review-hub-v1-gpt-5-6-sol/docs/environment/JAPANESE_VILLAGE_PROMPT_LEARNINGS.md)
-- [Elemental Sandbox: kuratierte Adjektivpalette](../../animation-review-hub-v1-gpt-5-6-sol/docs/vfx/ELEMENTAL_SANDBOX_PROMPT_LEARNINGS.md)
+- [Domain Elemental: kuratierte Adjektivpalette](../../animation-review-hub-v1-gpt-5-6-sol/docs/vfx/ELEMENTAL_SANDBOX_PROMPT_LEARNINGS.md)
