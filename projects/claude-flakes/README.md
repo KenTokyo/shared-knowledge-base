@@ -17,6 +17,7 @@ Architektur/Stand: Repo-`README.md`, `ROADMAP.md`, `.completed/`. Hier nur beleg
 | `progression-test.mjs`, `mutation-test.mjs`, Assertions | [`TEST-GATES.md`](TEST-GATES.md) |
 | `review/*.mjs`, Selbsttests, Dokumentzahlen, Beleglogs | [`PROBES-DOCUMENTATION.md`](PROBES-DOCUMENTATION.md) |
 | `evaluate`-Strings, `RAIL_CSS`, HUD-Markup — alles in Backticks | [`TEMPLATE-LITERALS.md`](TEMPLATE-LITERALS.md) |
+| Stagen, Commit, fremde Änderungen im Arbeitsbaum, Bilder im Repo | [`GIT-DELIVERY.md`](GIT-DELIVERY.md) |
 
 Stackübergreifend: [`THREEJS-RULES.md`](../../THREEJS-RULES.md).
 

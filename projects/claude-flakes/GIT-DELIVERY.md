@@ -1,0 +1,10 @@
+# Stagen und Liefern — claude-flakes
+
+**Lesen wenn:** du committen willst und `git status` Änderungen zeigt, die nicht von dir sind — oder wenn ein Bild im Commit landen soll.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
+
+- **Fremde Zeilen in derselben Datei mitcommittet** — dieses Repo trägt regelmäßig mehrere Aufgaben gleichzeitig im Arbeitsbaum; Sammelstellen wie `package.json`, `elemental-flakes/index.html` und `elemental-flakes/provenance/divergences.json` bekommen dann von zwei Seiten Zeilen. `git add <datei>` nimmt beide, der Commit deklariert Dateien, die er nicht enthält, und das Divergenz-Gate wird für Fremdarbeit rot. `git add -p` ist bei einzeiligen Hunks in Minified-JSON unbrauchbar. → HEAD-Fassung nehmen, nur die eigenen Zeilen einsetzen, Blob über `git hash-object -w --path=<pfad>` schreiben und mit `git update-index --cacheinfo 100644,<sha>,<pfad>` in den Index legen. Arbeitsbaum bleibt unangetastet, `git status` zeigt `MM`, die Fremdarbeit läuft weiter. Prüfung im selben Skript: eigenen Key muss es geben, jeden bekannten Fremdkey nicht.
+  *`feat(hud): rebuild both skillbars as hexagons on a rail` (e701029): 3 Dateien so gestaget, 6 fremde Hunks blieben draußen; zwei Phasen davor kostete dieselbe Datei bereits eine Runde Fehlersuche · 2026-08-20*
+
+- **Referenzbild gestaget, Bild fehlt im Repo** — `.gitignore:25` verbietet `*.png` pauschal („the repo is source only"), `git add` schweigt dazu. Genau eine Ausnahme steht darunter: `!docs/**/reference/*.png`, und die greift nur bei einem Ordner namens `reference/`. `docs/<thema>/reference-shot.png` sieht richtig aus und ist trotzdem ignoriert. → Das Bild, auf das ein Prompt zeigt, nach `docs/<thema>/reference/` legen, nicht daneben; Captures aus `review/` gehören nie in den Commit. Mit `git add -n <pfad>` prüfen, statt auf die Endung zu vertrauen.
+  *Die Skilleisten-Referenz lag als `docs/hex-skillbar/reference-skillbar.png` und wäre still aus dem Commit gefallen; drei Textstellen mussten hinterher umgebogen werden · 2026-08-20*
