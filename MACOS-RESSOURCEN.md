@@ -5,7 +5,7 @@ Sie ordnet Projekte nach Three.js-Bezug, nennt geeignete Einsatzfelder und hält
 
 **Stand:** 2026-08-20 · **Letzter Vollscan:** 2026-08-04 über 20 direkte Verzeichnisse · **Aufgenommen:** 15 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse · **Nachtrag 2026-08-20:** `signature-vfx-unified-library-v21-gpt-5-6-sol` und `Claude-Flakes` eingetragen; nicht als neuer Vollscan zu lesen.
 
-**Trigger-Wörter:** „Avatar“, „Elemental“, „Domain Elemental“ → `domains/elemental` in `signature-vfx-unified-library-v21-gpt-5-6-sol` (Abschnitt 1). „Elemental Flakes“, „Claude Flakes“, „Snowflow“ → `Claude-Flakes` (Abschnitt 1). Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
+**Trigger-Wörter:** „Avatar“, „Elemental“, „Domain Elemental“ → `domains/elemental` in `signature-vfx-unified-library-v21-gpt-5-6-sol` (Abschnitt 1). „Elemental Flakes“, „Claude Flakes“, „Snowflow“ → `Claude-Flakes` (Abschnitt 1); für Glass-Design und Icon-Erzeugung Abschnitt 1a. Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
 
 ## Pflicht vor jeder Ressourcennutzung
 
@@ -40,6 +40,35 @@ git -C "$RESOURCE" submodule update --init --recursive
 | `signature-vfx-unified-library-v21-gpt-5-6-sol` | Aktiv · **Trigger-Wörter „Avatar“ und „Elemental“ meinen `domains/elemental` in diesem Repo.** Vereinte Signatur-VFX-Bibliothek mit sechs Domains; `domains/elemental` ist Domain Elemental mit neunzig prozeduralen Signaturen, Sechs-Slot-Loadout, Linien- und Fernzielbild, Sigil-Icons und Laufzeit-VFX-Editor. Stärkste Referenz für **Layering von Fähigkeiten**, Loadout-Bedienung und handgeschriebenes GLSL. | TypeScript, TSX, JavaScript, GLSL, HTML, CSS · React 18, Three.js 0.185, lil-gui, Vite 8 | `/Users/kentoky/Documents/React Projects/test-projects/signature-vfx-unified-library-v21-gpt-5-6-sol` · Domain: `…/domains/elemental` |
 | `Claude-Flakes` | Aktiv · **Trigger-Wörter „Claude Flakes“, „Elemental Flakes“ und „Snowflow“ meinen dieses Repo.** Snowflow ist eine Schnee-Survivalwelt auf Babylon.js 9 / WebGPU mit Wellen, Quiz-Tafeln, Shop und Technomancer-Klasse; `elemental-flakes/` fährt daneben die Three.js-Fassung derselben Skills. Stärkste Referenz für **UI-Erlebnis**: Skill-Rail mit zwei Bänken, Loadout-Picker auf `L`, Skilltree und ein Sigil-Icon-Satz in einem Strichrahmen. | JavaScript, WGSL, GLSL, HTML, CSS · Babylon.js 9, WebGPU, Three.js 0.185, Vite 8 | `/Users/kentoky/Documents/React Projects/Claude-Flakes` · Three.js-Teil: `…/elemental-flakes` |
 | `claude-tower-defense` | Aktiv · Action-Tower-Defense mit Held, Arena und Türmen; gut für Baufluss, Gegnerwellen, Kamera, prozedurale Welt und HUD. | JavaScript, GLSL, HTML, CSS · Three.js r180, Vite 6 | `/Users/kentoky/Documents/React Projects/claude-tower-defense` |
+
+## 1a. Referenz „Glass-Design und Icon-Erzeugung“ — `Claude-Flakes/elemental-flakes`
+
+Nachgetragen am 2026-08-20, weil dieses Repo bei UI-Fragen zweimal als *das* Vorbild genannt wurde und die Tabellenzeile oben nur „Sigil-Icon-Satz in einem Strichrahmen“ sagt. Die zwei Dinge, um die es tatsächlich geht, stehen hier mit Dateipfad, damit sie nicht jedes Mal neu gelesen werden müssen.
+
+**Trigger:** „Glass-Design“, „Glass“, „Icons dürfen nicht alle die gleiche Farbe haben“ → dieser Abschnitt.
+
+### Glass — `elemental-flakes/src/ui/styles.css`
+
+Die Sprache besteht aus fünf Regeln, nicht aus einem Effekt:
+
+1. **Fast schwarze, durchscheinende Füllung** statt einer getönten: `--ui-bg: rgba(10, 14, 20, 0.55)`, dazu `--ui-bg-solid: rgba(12, 16, 22, 0.92)` für alles, was über einer bewegten Szene liegt und sonst flimmert.
+2. **`backdrop-filter: blur(...) saturate(...)`** — die Sättigung gehört dazu; ohne sie wirkt die Fläche grau statt gläsern.
+3. **Haarlinien in Weiß-Alpha, nie in einem Farbton:** `--ui-border: rgba(255, 255, 255, 0.12)`. Ein farbiger Rand macht aus Glas eine Neonkarte. Das ist die Regel, die am häufigsten gebrochen wird.
+4. **Ein einziges Glanzlicht innen oben** (`inset 0 1px 0 rgba(255,255,255,0.08)`), das die Kante als Dicke lesbar macht.
+5. **Farbe kommt ausschließlich aus einem `--accent` pro Element**, nicht aus der Fläche. Fläche, Rand und Text sind überall gleich; unterschieden wird über den Akzent.
+
+Weitere Tokens zum Abgleich: `--ui-text: rgba(238,245,255,0.92)`, `--ui-text-dim: rgba(197,214,232,0.6)`, `--ui-accent: #7fd6ff`, `--ui-radius: 14px`, `--ui-shadow: 0 10px 40px rgba(0,0,0,0.45)`.
+
+### Icons — `elemental-flakes/src/ui/glyph-frame.js` und `ELEMENT_META`
+
+Der Satz wirkt einheitlich, weil zwei Entscheidungen getrennt getroffen werden:
+
+- **Form:** `WRAP()` setzt jedes Glyph in **eine 100×100-Box mit `stroke-width: 4.2`**. Ein Icon ist reine Kontur. Kein Glyph nennt jemals eine Farbe — gezeichnet wird in `currentColor`, die Farbe kommt von außen. Deshalb ist derselbe Icon-Satz in jeder Umgebung stimmig.
+- **Farbe:** `ELEMENT_META` vergibt **pro Eintrag einen eigenen Hex-Akzent, von Hand**. Nicht aus einem Effekt-Farbwert abgeleitet, nicht aus einer Kategorie berechnet.
+
+Der zweite Punkt ist der, auf den es ankommt: **Gameplay-Farbe und Interface-Farbe sind zwei verschiedene Entscheidungen.** Wer den Akzent aus der Effektfarbe liest, bekommt so viele Farben wie es Energiearten gibt — in `quiz-arena-space` waren das achtzehn Farben auf fünfundfünfzig Skills, sieben davon dasselbe Violett.
+
+**Eindeutige Hex-Werte genügen dabei nicht.** Zwei verschiedene Zahlen können dieselbe Farbe sein; die erste Fassung der Akzenttabelle in `quiz-arena-space` hatte fünfundfünfzig verschiedene Strings und trotzdem zwei Einträge mit einem Abstand von 0,1 in OKLab. Die haltbare Regel ist ein **Wahrnehmungsabstand: kein Paar unter dE 5,0 in OKLab**, gemessen über *alle* Einträge, die nebeneinander erscheinen können. Umgesetzt in `src/ui/Bindings.ts` (`SKILL_ACCENT`), abgesichert in `tools/sim.mjs`.
 
 ## 2. Three.js als Teil eines größeren Produktstacks
 
