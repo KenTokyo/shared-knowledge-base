@@ -26,6 +26,27 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   Scatter-Halteschleife — **31 Klauseln** ab diesem Arm kamen nie zu einem Verdikt, die des Arms selbst
   eingeschlossen, weil er erst am Ende meldet. Geschnitten statt getippt: 69 von 69 · 2026-08-03*
 
+- **Ein selbstscharfstellender Timer im Messobjekt verschiebt den Zufallsstrom** — Vorher/Nachher einer
+  reinen Umschichtung wich ab, obwohl der Graph unverändert war. `_startAmbient` armt ein 2,2–7,4 s
+  `setTimeout`, das aus dem **geteilten** `audioRng` zieht und sich selbst neu scharfstellt; über einen
+  minutenlangen Sweep feuert es dutzendfach zu maschinenabhängigen Zeitpunkten und entnimmt Zahlen mitten
+  aus dem Strom, aus dem jede Tonhöhenvariation liest. Jede lange Audio-Messung ist damit unreproduzierbar,
+  ohne dass irgendwo ein Fehler auftaucht. → Nach `build()` `clearTimeout(engine._clankTimer)`, vor jedem
+  Render `audioRng.setSeed(...)`. Im **Rig** beheben, nicht in der Engine — das Geräusch soll es im Spiel
+  geben. Das Fehlerbild erkennt man am *Muster*, nicht am Betrag: genau die Stimmen, die den RNG nie
+  anfassen, bleiben bitgenau, alle anderen wandern. Sind einige Zeilen identisch und andere nicht, ist es
+  ein verschobener Strom und kein geänderter Graph.
+  *`shieldBreak` 0.3083 / `missileLaunch` 0.0627 / `bulwarkVent` 0.4179 zweimal bitgleich, `plasmaShot`
+  0.0907 → 0.0968; nach dem Fix zwei volle Läufe byte-identisch (4394 B) · 2026-08-20*
+
+- **Eine Umschichtung ist erst bewiesen, wenn beide Formen gegeneinander laufen** — zwei identische Läufe
+  *derselben* neuen Form beweisen nur, dass das Rig deterministisch ist, nicht dass die Teilung nichts
+  verändert hat. → Die alte Form aus den neuen Dateien **wieder zusammensetzen** und beide über dasselbe
+  Rig fahren (`QA_AUDIO_MOD=<pfad>`), danach die Rekonstruktion löschen. Ergänzend statisch: jeder
+  Methodenname genau einmal über die ganze Kette.
+  *`Audio.ts` 3196 → 6 Dateien; Monolith aus den vier neuen Dateien in Originalreihenfolge neu geschnitten
+  (2912 Z., temporär), volle Bench beider Formen `IDENTICAL`, 83 Methoden je genau einmal · 2026-08-20*
+
 - **Round-Robin füllt keinen Pool** — die naheliegende Antriebsform (reihum je einen Gegner je Schlüssel,
   viele Runden) misst nichts: `acquireModel` holt sofort zurück, was die Vorrunde freigab, die Free-List
   bleibt bei einer Handvoll stehen und die Deckel-Klausel wird grün, ohne den Deckel je berührt zu haben.
