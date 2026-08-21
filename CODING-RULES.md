@@ -96,6 +96,7 @@ Fachdateien, nur lesen, wenn wirklich notwendig
 - vollständiger Weltbau → [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md)
 - ausdrücklich erlaubte Bildschirmaufnahmen → [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md)
 - neue belegte Learnings → [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md)
+
 - Windows-Ressourcen, Nachbarprojekt oder Port → [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md)
 - macOS-Ressourcen, Nachbarprojekt oder Port → [MACOS-RESSOURCEN.md](MACOS-RESSOURCEN.md)
 - mehrere Lieferphasen → [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md)
@@ -205,6 +206,7 @@ Datenfluss und Leistung:
 - Mit Freigabe erst fertig umsetzen und statisch prüfen, dann [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) folgen.
 - Für Echtzeit-3D höchstens sechs Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
 - Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
+- Wichtig keine Endlosssichtprüfungen, max 2 Sichtprüfungen, außer dir wird gesagt du kannst soviele machen wie du möchtest, Sichtprüfungen verbrauchen viele Ressourcen!
 
 ## 6. Checks und Testmenge
 
