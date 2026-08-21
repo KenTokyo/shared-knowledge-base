@@ -1,0 +1,27 @@
+# Sonden, Selbsttests und Messtreiber — claude-flakes
+
+**Lesen wenn:** `review/*.mjs`, `tools/*shot.mjs`, Selbsttest, Falsifikator, Mutationstreiber oder eine Sonde, die Pixel oder Zustand misst.
+**Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
+
+Zahlen in README, ROADMAP und `docs/`: [`DOC-CLAIMS.md`](DOC-CLAIMS.md).
+
+- **Sonde rechnet ihren Eingabezustand nach statt ihn zu lesen** — Bogen meldet `rank 0`, auf der Platte stehen zwei Eliten. Der Treiber hatte die Rangregel kopiert (`slam ? 2 : elite ? 1 : 0`), statt den Wert zu lesen, den der Shader bekommt; die Kopie war von `rankOf()` abgedriftet. Der Fund liest sich dann als Zeichenfehler („Bauart trennt Elite nicht, Elite misst kleiner"), und die naheliegende Handlung — „Rang 1 vergrößern" — hätte auf echtem Schirm den **Grunt** vergrößert und den Bogen darauf grün gemacht. → Den Wert aus dem Renderpfad lesen (hier `bars._texData` Zeile 2, genau der Float, mit dem der Vertex-Shader skaliert), den Sollzustand in der Aufstellung **fordern** und mit Exit 2 gegen den gelesenen prüfen; zweite Prüfung, wenn zwei Körper auf demselben Sollwert landen — daran ist nichts mehr trennbar.
+  *Alle fünf Bauarten meldeten elite/grunt = 0,988 gegen geforderte 1,12, drei davon auf drei Stellen gleich: ein geteilter Quad, kein Zeichenfehler. Fünf geteilte Bauarten mit einer Zahl sind der billigste Beweis, dass die Aufstellung schuld ist · 2026-08-21*
+
+- **Restore übernimmt steckengebliebenen Mutanten** — In-place-Treiber nimmt roten Plattenstand als Baseline und meldet ihn nach Restore bytegleich. → Ziel-Gate vor erstem Write grün verlangen; bevorzugt Geschwister-Temp mutieren.
+  *Geerbtes `take: []` ergab FAIL 142/143; neuer Preflight verweigerte denselben Zustand mit Exit 9 vor Write · 2026-08-01*
+
+- **`process.exit()` umgeht Cleanup** — Exit im `try` beendet Node vor `finally`; Mutationskopien bleiben als nächste Baseline liegen. → Exit-Code sammeln, Cleanup im `finally`, erst danach `process.exitCode` setzen.
+  *Ein Refusal hinterließ 6 `_ph52-*`-Kopien; tabellengetriebener Umbau räumte alle Pfade auf · 2026-08-02*
+
+- **Selbsttest protokolliert statt entscheidet** — Fälle drucken nur Extrakte; leere oder falsche Nadel lässt Suite Exit 0. → Pro Fall erwartete Phrase und Exit assertieren, Gesamtfehlerzahl in Exit spiegeln.
+  *Identitätsfall druckte 2 Leerzeilen und blieb grün; Umbau hielt danach 10/10, später 14/14 echte Fälle · 2026-08-02*
+
+- **Regex leiht Rot aus nächstem Fall** — `=== n[\s\S]*?` läuft über Abschnittsgrenzen und ordnet fremdes Versagen zu. → Bis zum nächsten Sentinel begrenzen; Falschpositiv- und Wahrpositiv-Richtung messen.
+  *13/14 Fälle beanspruchten Fall 14s Rot; section-scoped Regex ergab 0 falsche und 0 verlorene Treffer · 2026-08-02*
+
+- **Summenboden bestätigt kompensierende Blindheit** — fehlende Nadel und zusätzlicher Treffer halten dieselbe Kardinalität. → Identitäten Quelle↔Parser kreuzen und jede Nadel, Guard-Klausel sowie Exit-Erwartung einzeln brechen.
+  *Parser verschluckte je Fall letzte Nadel und traf trotzdem Sollsumme 10; Sweep A hielt später alle 20/20 einzeln · 2026-08-02*
+
+- **Layoutsonde misst ihr Element, nicht den Bildschirm** — jede Prüfung vergleicht das eigene Panel gegen den Viewport, keine fragt, wer sonst dieselben Pixel belegt; `elementFromPoint` in der Panelmitte antwortet auch dann korrekt, wenn 400 px weiter zwei fremde Kästen ineinanderstehen. Ein neues Panel verschiebt zudem das Zentrum jeder *anderen* zentrierten Box, die Kollision entsteht also erst durch die eigene Änderung. → Nachbarschaft paarweise als Rechteck schneiden statt Einzelboxen zu prüfen; das eine erlaubte Bild wirklich ansehen, es ist die einzige Prüfung, die ungestellte Fragen findet; den Fund danach als Gegenbeweis zurückschreiben — nach dem Fix messen, dass die alten Boxen sich geschnitten **hätten**, sonst prüft die neue Zeile nichts.
+  *Erste Runde 40/40 grün, Bild zeigte `#hud-bottom` (Zentrum 800) unter `#vfx-rail` (Zentrum 614); der nachgezogene Gegenbeweis belegte 250 px geteilte Breite · 2026-08-04*
