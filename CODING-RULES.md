@@ -37,12 +37,12 @@ Paarregeln:
 #### Beispiel 1
 z.B. 
 User schreibt also unchanged original wäre:
-"baue mir 5 neue vfx effekte hier ein, sei extrem kreativ, komplett anders als bisher"
+"baue mir 5 neue vfx effekte hier ein also in der elemental domäne, sei extrem kreativ, komplett anders als bisher"
 
 **Enhanced-Prompt wäre also folgender:**
 "erweitere dieselbe Signature Library um genau **10 weitere neue VFX**. Erfinde Skills und Namen selbst und gestalte sie skulptural, dimensional, leuchtend, dynamisch, klar lesbar und hochwertig"
 
-Also weiterhin kompakt aber schöner ausgedruckt und schönere adjektive
+Also weiterhin kompakt aber schöner ausgedruckt und schönere adjektive, indemfall die zur Sache gehören, also da elemental domäne ein Projekt ist wo ein magier spells castet und diese gut aussehen sollen, adjektive einbauen. Nicht aber sinnlose, das muss zum entsprechenden Thema Sinn machen
 
 Aber Prompt kann auch ruhig größer sein z.B.
 
@@ -62,16 +62,15 @@ Use Space to replay, P to pause, and R to reset. Show skill names, keys, active 
 
 `Unchanged original` bewahrt Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen. Secrets nie speichern; stattdessen `[REDACTED: secret]`.
 
-### Auto-Enhance und optionale Keywords
 
-**Default ohne Keyword:** Dieselbe ausführende KI verbessert jeden projektändernden Auftrag, schreibt die Arbeitsfassung und setzt sie ohne Freigabestopp direkt um. Kein zweiter Enhancer und keine getrennte Vorbereitungsrunde. Außer man erwähnt, kein Prompt verbessern notwendig.
+## Weitere Regeln zu Promtps
+- Auto-Enhance also Prompts immer verbessern
+- Feedback wird ebenfalls häufig gegeben (entweder direkt im Chat oder am Ende der jeweiligen Task-Datei) und soll genauso optimiert werden.
+- Binde den jeweiligen Prompt fortlaufend nummeriert in die bestehende Datei enhanced-prompt.md falls existiert ein (ansonsten erzeugen) und optimiere ihn dort direkt.
+- Die obigen sind short und medium length prompts, evtl kann der User nach längeren Prompts verlangen oder entscheide du was in dem Fall sinnvoll ist
 
-Überlege selber, wie du den prompt verbessern kannst im positiven Sinne, sodass der User komplett überrascht wird. Du sollst ja den verbesserten Prompt 
-
-## Prompt-Optimierung bei Feedback
-Feedback wird ebenfalls häufig gegeben (entweder direkt im Chat oder am Ende der jeweiligen Task-Datei) und soll genauso optimiert werden.
-
-Binde den jeweiligen Prompt fortlaufend nummeriert in die bestehende Datei enhanced-prompt.md falls existiert ein (ansonsten erzeugen) und optimiere ihn dort direkt.
+## Grund warum wir das machen
+- Der User hat einen sehr begrenzten Wortschatz und kann sich nicht gut ausdrücken. Du hilfst ihm quasi dabei, also als würde er schreiben "verbessere den prompt" - du machst das und planst und implementierst du den prompt quasi aus
 
 ### Übergabe und Lesen
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
