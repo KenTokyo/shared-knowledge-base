@@ -1,13 +1,9 @@
-# Sonden und Dokumentations-Gates — claude-flakes
+# Dokumentansprüche und Doku-Gates — claude-flakes
 
-**Lesen wenn:** `review/*.mjs`, Selbsttest, Falsifikator, Dokumentanspruch oder Beleglog.
+**Lesen wenn:** eine Zahl, ein Absolutwort oder ein Artefaktverweis in README, ROADMAP oder `docs/` steht — oder ein Gate gebaut wird, das so etwas prüft.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-- **Restore übernimmt steckengebliebenen Mutanten** — In-place-Treiber nimmt roten Plattenstand als Baseline und meldet ihn nach Restore bytegleich. → Ziel-Gate vor erstem Write grün verlangen; bevorzugt Geschwister-Temp mutieren.
-  *Geerbtes `take: []` ergab FAIL 142/143; neuer Preflight verweigerte denselben Zustand mit Exit 9 vor Write · 2026-08-01*
-
-- **`process.exit()` umgeht Cleanup** — Exit im `try` beendet Node vor `finally`; Mutationskopien bleiben als nächste Baseline liegen. → Exit-Code sammeln, Cleanup im `finally`, erst danach `process.exitCode` setzen.
-  *Ein Refusal hinterließ 6 `_ph52-*`-Kopien; tabellengetriebener Umbau räumte alle Pfade auf · 2026-08-02*
+Sonden, Selbsttests und Messtreiber: [`PROBES-SELFTESTS.md`](PROBES-SELFTESTS.md).
 
 - **Dokumentzahl bleibt bei grünen Gates frei erfunden** — Suite liest nur Kurventabelle, ROADMAP gar nicht. Auch mit Doku-Gate bleibt eine Lücke: `FIGURE_SHAPES` erkennt ausschließlich „`review/x.log` + N lines". Ein Verdikt-Block (`all 16 checks passed`, `58/58 checks passed`) nennt weder Logdatei noch Zeilenzahl, fällt damit durch jede Shape und driftet unbemerkt weiter — ausgerechnet in dem Dokument, das „eine Zahl in Prosa ist ein Anspruch" als eigene Regel führt. → Claims aus aktuellem Dokument parsen, Artefakt live lesen, falschen Wert und fehlendes Artefakt separat röten; Verdikt-Zahlen beim Anfassen **neu messen statt abschreiben** — `consts`+`wgsl`+`progression`+`mutation`+`build` kosten zusammen unter einer Minute und keinen Browser, nur `play.mjs` kostet einen Chromium-Start.
   *README 141/118→777/555: Mutation-Gate 141/141 und Suite 124/124 weiter PASS; danach 255-vs-257-Fehler gefunden · 2026-08-01. Erneut in `docs/test-status.md` selbst: wgsl stand auf 16 (gemessen 18), play.mjs auf 58/58 (gemessen 140/140) — Gate blieb bei beiden 145/145 grün · 2026-08-03*
@@ -32,15 +28,3 @@
 
 - **Selbstreferenzielles Doku-Gate braucht Konvergenzreihenfolge** — neues Log ändert Doku-Zahl, Doku ändert Gate-Ausgabe, rote Zwischenstufe ist erwartbar. → Treiber→Log→Doku→Gate→Treiber; zuletzt alle Artefakte byte-diffen.
   *Falsifikatorlog 138→159→282→318 Zeilen; erst zweiter Treiberlauf belegte den jeweiligen Fixpunkt · 2026-08-01/02*
-
-- **Selbsttest protokolliert statt entscheidet** — Fälle drucken nur Extrakte; leere oder falsche Nadel lässt Suite Exit 0. → Pro Fall erwartete Phrase und Exit assertieren, Gesamtfehlerzahl in Exit spiegeln.
-  *Identitätsfall druckte 2 Leerzeilen und blieb grün; Umbau hielt danach 10/10, später 14/14 echte Fälle · 2026-08-02*
-
-- **Regex leiht Rot aus nächstem Fall** — `=== n[\s\S]*?` läuft über Abschnittsgrenzen und ordnet fremdes Versagen zu. → Bis zum nächsten Sentinel begrenzen; Falschpositiv- und Wahrpositiv-Richtung messen.
-  *13/14 Fälle beanspruchten Fall 14s Rot; section-scoped Regex ergab 0 falsche und 0 verlorene Treffer · 2026-08-02*
-
-- **Summenboden bestätigt kompensierende Blindheit** — fehlende Nadel und zusätzlicher Treffer halten dieselbe Kardinalität. → Identitäten Quelle↔Parser kreuzen und jede Nadel, Guard-Klausel sowie Exit-Erwartung einzeln brechen.
-  *Parser verschluckte je Fall letzte Nadel und traf trotzdem Sollsumme 10; Sweep A hielt später alle 20/20 einzeln · 2026-08-02*
-
-- **Layoutsonde misst ihr Element, nicht den Bildschirm** — jede Prüfung vergleicht das eigene Panel gegen den Viewport, keine fragt, wer sonst dieselben Pixel belegt; `elementFromPoint` in der Panelmitte antwortet auch dann korrekt, wenn 400 px weiter zwei fremde Kästen ineinanderstehen. Ein neues Panel verschiebt zudem das Zentrum jeder *anderen* zentrierten Box, die Kollision entsteht also erst durch die eigene Änderung. → Nachbarschaft paarweise als Rechteck schneiden statt Einzelboxen zu prüfen; das eine erlaubte Bild wirklich ansehen, es ist die einzige Prüfung, die ungestellte Fragen findet; den Fund danach als Gegenbeweis zurückschreiben — nach dem Fix messen, dass die alten Boxen sich geschnitten **hätten**, sonst prüft die neue Zeile nichts.
-  *Erste Runde 40/40 grün, Bild zeigte `#hud-bottom` (Zentrum 800) unter `#vfx-rail` (Zentrum 614); der nachgezogene Gegenbeweis belegte 250 px geteilte Breite · 2026-08-04*

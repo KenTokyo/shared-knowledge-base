@@ -15,7 +15,8 @@ Architektur/Stand: Repo-`README.md`, `ROADMAP.md`, `.completed/`. Hier nur beleg
 | Uhren, RNG, Reset, Audio, Cloth, Allokation, Warm-up | [`RUNTIME-PERFORMANCE.md`](RUNTIME-PERFORMANCE.md) |
 | Waves, Wights, Essence, Boons, Cairn, Balance | [`GAMEPLAY-BALANCE.md`](GAMEPLAY-BALANCE.md) |
 | `progression-test.mjs`, `mutation-test.mjs`, Assertions | [`TEST-GATES.md`](TEST-GATES.md) |
-| `review/*.mjs`, Selbsttests, Dokumentzahlen, Beleglogs | [`PROBES-DOCUMENTATION.md`](PROBES-DOCUMENTATION.md) |
+| `review/*.mjs`, `tools/*shot.mjs`, Selbsttests, Falsifikatoren, Messsonden | [`PROBES-SELFTESTS.md`](PROBES-SELFTESTS.md) |
+| Zahlen, Absolutworte, Artefaktverweise in README/ROADMAP/`docs/` | [`DOC-CLAIMS.md`](DOC-CLAIMS.md) |
 | `evaluate`-Strings, `RAIL_CSS`, HUD-Markup — alles in Backticks | [`TEMPLATE-LITERALS.md`](TEMPLATE-LITERALS.md) |
 | Stagen, Commit, fremde Änderungen im Arbeitsbaum, Bilder im Repo | [`GIT-DELIVERY.md`](GIT-DELIVERY.md) |
 
