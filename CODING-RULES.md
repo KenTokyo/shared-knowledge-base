@@ -16,10 +16,8 @@
 
 Änderung an Projektdatei oder -artefakt → **vor erstem Edit** genau ein Paar:
 
-- `…-enhanced-prompt.md` — feste Quelle mit Original und verbesserter Arbeitsfassung;
+- `…-enhanced-prompt.md` — feste Quelle mit Original und verbesserter Arbeitsfassung falls notwendig;
 - `…-tasks.md` oder vorhandene Task-/Masterdatei — änderbarer Arbeitsplan.
-
-Neue plain `…-prompt.md` entfallen. Reine Frage oder Leseauftrag → kein Paar. Kleiner Fix → kurze Phase, nicht fehlende Dateien.
 
 Paarregeln:
 
@@ -33,43 +31,44 @@ Paarregeln:
 
 ### Enhanced-Prompt-Datei
 
-1. `## Source` — Datum, Chat-/Dateihinweis, Anhänge.
-2. `## Unchanged original` — geschützter Usertext in Originalsprache und Originalreihenfolge; nie aufräumen oder verbessern.
+1. `## Unchanged original` — geschützter gesprochener Usertext in Originalsprache und Originalreihenfolge; füllwörter raus, aber gleichbleibender inhalt.
 3. `## Improved prompt` — verlustfreie Arbeitsfassung; steuert immer Plan und Umsetzung.
+
+#### Beispiel 1
+z.B. 
+User schreibt also unchanged original wäre:
+"baue mir 5 neue vfx effekte hier ein, sei extrem kreativ, komplett anders als bisher"
+
+**Enhanced-Prompt wäre also folgender:**
+"erweitere dieselbe Signature Library um genau **10 weitere neue VFX**. Erfinde Skills und Namen selbst und gestalte sie skulptural, dimensional, leuchtend, dynamisch, klar lesbar und hochwertig"
+
+Also weiterhin kompakt aber schöner ausgedruckt und schönere adjektive
+
+Aber Prompt kann auch ruhig größer sein z.B.
+
+#### Beispiel 2
+Erstelle mir ein Vfx studio für einen boxer. Der sollte in Richtung, also der sollte auch Custom GLSL verwenden. Genau, und der sollte so ungefähr fünf Skills haben, so ein bisschen Richtung Flammen und Elektro. so sci fi vibes.
+
+**Enhanced Prompt wäre ungefähr:**
+Create a compact Three.js animation and VFX showcase starring one original, photorealistic heavyweight boxer with premium 3D fighting-game energy. Place him on an endless dark studio floor surrounded by low fog, soft light columns, and a surreal sci-fi atmosphere.
+
+Build every skill through a Three.js + hand-written custom GLSL VFX system. Write custom vertex and fragment shaders, generate BufferGeometry at runtime, and animate shader-driven particles. For VFX, use no bitmap, noise, or LUT textures, texture splats, sprite sheets, flipbooks, videos, baked VFX meshes, or imported effect packs. Generate noise mathematically inside GLSL and construct ribbons, rings, pressure cones, shards, fog volumes, and bursts procedurally.
+
+Add five clickable skills with keyboard keys 1–5: Flame Jab, Thunder Cross, Stormfire Hook, Earthbreaker, and Overdrive Detonation. Give Flame Jab a tight fire sheath, hot core, ember wake, and heat distortion. Give Thunder Cross branching leaders, restrikes, electric filaments, and a low shock ring. Fuse flame ribbons and lightning channels into a rotating plasma impact for Stormfire Hook. Make Earthbreaker drive force into the floor, opening procedural radial cracks, lifting ground chunks, throwing grit, and leaving a layered crater and fading fissure glow. End Overdrive Detonation with a compressed energy core, expanding blast shells, debris, smoke, and a heavy shockwave. Build each move around anticipation, muscle tension, foot pressure, hip rotation, shoulder drive, fist contact, recoil, and guard recovery. Drive every layer from the exact fist path, impact point, and animation event.
+
+
+Use Space to replay, P to pause, and R to reset. Show skill names, keys, active state, and cooldowns in a clean bottom rail. Keep controls instant, animation readable, impacts explosive, and repeated playback smooth.
 4. `## Dated updates` — spätere Useränderungen unverändert mit Datum; neue `#### Improved prompt`-Fassung direkt darunter.
 
 `Unchanged original` bewahrt Füllwörter, Wiederholungen, Schreibweise, Pfade, Befehle, Zahlen, Bildhinweise und Grenzen. Secrets nie speichern; stattdessen `[REDACTED: secret]`.
 
 ### Auto-Enhance und optionale Keywords
 
-**Default ohne Keyword:** Dieselbe ausführende KI verbessert jeden projektändernden Auftrag, schreibt die Arbeitsfassung und setzt sie ohne Freigabestopp direkt um. Kein zweiter Enhancer und keine getrennte Vorbereitungsrunde.
+**Default ohne Keyword:** Dieselbe ausführende KI verbessert jeden projektändernden Auftrag, schreibt die Arbeitsfassung und setzt sie ohne Freigabestopp direkt um. Kein zweiter Enhancer und keine getrennte Vorbereitungsrunde. Außer man erwähnt, kein Prompt verbessern notwendig.
 
-- `Prompt verbessern` oder `Prompt-Verbesserung:[…]` → verbessern **und implementieren**; Zusatztext steuert den Schwerpunkt.
-- `Wirklich Nur Prompt verbessern` → Arbeitsfassung schreiben, aber nichts implementieren.
-- `Prompt unverändert` → im `Improved prompt` auf das unveränderte Original verweisen und dieses ohne inhaltliche Erweiterung implementieren.
-
-Sätze wie „gefällt mir nicht“, „sieht billig/schlecht/generisch aus“, „mach das besser/schöner/hochwertiger“ oder „überarbeite das“ brauchen kein Keyword. Die KI liest betroffenen Projektzustand und übersetzt die Kritik in:
-
-- konkreten sichtbaren oder funktionalen Mangel;
-- passende Domänendimensionen, etwa Form, Material, Timing, Hierarchie oder Rückmeldung;
-- wenige Adjektive direkt am Bezugswort;
-- geschützte gute Eigenschaften und prüfbare Fertig-Kriterien.
-
-Ein bereits starker Prompt wird nur geordnet, entwirrt und auf Widersprüche geprüft; keine zusätzlichen Features, Fakten, Referenzen oder Qualitätsrichtungen erfinden. Verneinungen, zitierte Beispiele, leere Kennzeilen und Platzhalter wie `[HIER …]` sind keine neuen Aufträge.
-
-Standardroute:
-
-- **Short-first:** kürzeste vollständige Fassung mit Ziel, Mangel, Priorität, Schutz und Abnahme schreiben.
-- Bei sichtbarer Arbeit konkrete Adjektive am Bezugswort platzieren, etwa „skulpturale Formen“, „leuchtende Materialien“ oder „gewichtige Bewegung“.
-- Unterschiedliche Wirkungsdimensionen abdecken; Synonym- und Superlativstapel löschen.
-- Nicht festgelegte Lösungen, Namen und Gestaltung dem ausführenden Modell überlassen.
-- Nur bei benanntem Mangel auf Medium erweitern; Long nur für ungeklärte Quelle, Architektur, Integration oder Reihenfolge.
-- Sprache, Verneinungen, feste Fakten, Pfade, Befehle und Maße schützen; Wiederholungen entfernen.
-
-Begründung, Bewertungen und Gut-/Schlecht-Beispiele: [PROMPTING-TIPS.md](PROMPTING-TIPS.md).
+Überlege selber, wie du den prompt verbessern kannst im positiven Sinne, sodass der User komplett überrascht wird. Du sollst ja den verbesserten Prompt 
 
 ### Übergabe und Lesen
-
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 
 ```text
@@ -77,7 +76,7 @@ Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 - Task: <projekt-relativer Pfad zur Task-/Masterdatei>
 ```
 
-Der Folgeagent liest Prompt → Taskstand → Code. Beim Zusammenführen und Abschluss liest er Prompt und Task erneut. Beide Pfade bleiben bei jeder Kontextkürzung erhalten.
+Der Folgeagent liest Prompt → Taskstand → Code. Beim Zusammenführen und Abschluss liest er Prompt und Task erneut. Beide Pfade bleiben bei jeder Kontextkürzung erhalten. Beim Context-Condense oder mit Arbeiten von Subagenten dienen task.md dateien als extrem hilfreich, da keine Informationen verloren gehen und man genau weiß wer an was arbeitet oder woran man vorher gearbeitet hat.
 
 Normaler Lesepfad:
 
@@ -86,7 +85,7 @@ Normaler Lesepfad:
 3. Prompt-Datei und danach Task-Datei lesen oder das Paar anlegen;
 4. nur die kleinste passende Fachdatei lesen.
 
-Fachdateien:
+Fachdateien, nur lesen, wenn wirklich notwendig
 
 - React, State, Hydration, Browser-UI → [FRONTEND-RULES.md](FRONTEND-RULES.md)
 - Echtzeit-3D → [THREEJS-RULES.md](THREEJS-RULES.md)
@@ -203,14 +202,6 @@ Datenfluss und Leistung:
 - Für Echtzeit-3D höchstens sechs Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
 - Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
 
-### Electron startup smoke
-
-- Changes to Electron Main/Preload, app-provider trees, the embedded client or runtime, startup URL, runtime manager, or packaged startup need a **matching real Electron startup smoke** before completion. Typecheck and build alone are not enough.
-- Matching means opening the changed entry and visible target in a fresh process. Test packaged-start changes in the built package; test Notes-provider changes through the real Notes entry.
-- Run only with current Browser/Playwright permission from §5. Without it, keep the smoke open and do not claim full runtime completion. A direct user request for an Electron startup test grants this permission.
-- Use a verified free isolated port, short session name, and separate test profile. Capture page errors, relevant console events, and failed requests. Stop only owned processes and confirm port cleanup.
-- Before the next experiment, add each new or repeated finding to the active task with command/URL, setup, artifact, cause, what not to repeat, and next stable route.
-
 ## 6. Checks und Testmenge
 
 - Zusammenhängenden Teil fertigstellen, dann stärksten passenden Projektcheck einmal für alle eigenen Änderungen ausführen.
@@ -225,7 +216,9 @@ Ohne Userauftrag oder klare Projektpflicht keine neuen Tests oder Testeinstellun
 
 ## 7. Git und Lieferung
 
-- Nur eigene Dateien stagen; nie `git add -A` nutzen. Fremde Änderungen oder Staging-Einträge nicht übernehmen oder zurücksetzen.
+- Nur eigene Dateien stagen; nie `git add -A` nutzen. Fremde Änderungen oder Staging-Einträge sind auch erlaubt, sofern sie älter sind, sonst liegen die zu lange dort. 
+- Bitte auch in git commiten, pullen und synchen nach Änderungen, auch im submodule /shared-docs regelmäßig pullen, commiten falls änderungen vorliegen und synchen
+- Merge Konflikte sorgfältig und eigenständig lösen, aber sinnvoll!
 - Zielbranch ist `main`, außer lokale Regeln nennen einen anderen. Branch oder Worktree nie ohne Userauftrag anlegen, wechseln oder öffnen.
 - Jede zusammenhängende und bei Code kompilierfähige Einheit selbst committen und pushen. Titel: `typ(bereich): was`.
 - Submodule zuerst innen committen und pushen; danach im Hauptprojekt Zeiger und eigene Hauptprojektdateien committen.
@@ -244,21 +237,21 @@ Für Antworten, Prompt-, Task- und Doku-Dateien:
 - Problem, Ursache und Änderung konkret nennen. Füllwörter, Wiederholungen und unnötige Satzteile entfernen.
 - Schwierige Begriffe kurz erklären; keine Abkürzungen erfinden und keine lange Ich-Erzählung schreiben.
 - UTF-8 und echte Umlaute nutzen; Doku automatisch auf kaputte Zeichen prüfen.
-- Chat-Antworten und erzeugte Ausgaben in einfachem Englisch mit starkem Gen-Z-Ton schreiben; Klarheit gewinnt.
+- Chat-Antworten und erzeugte Ausgaben mit starkem Gen-Z-Ton schreiben; Klarheit gewinnt.
 - Code, Namen und Code-Kommentare auf Englisch schreiben.
 
 ### Wörter, die wir nicht ohne Erklärung nutzen
 
 | Nicht so | Besser so |
 |---|---|
-| `kanonisch` | `maßgeblich` oder `gemeinsame Hauptquelle` |
+| `kanonisch` | `gemeinsame Hauptquelle` |
 | `normalisieren` | `prüfen und vereinheitlichen` |
 | `Raw` | `unverändertes Original` |
 | `Scope` | `Arbeitsumfang` |
 | `Owner` | `zuständige Datei` oder `verantwortlicher Teil` |
 | `Fan-in` | `Ergebnisse zusammenführen` |
 | `Gate` | `Prüfung` oder `Freigabepunkt` |
-| `bounded` | `mit klarer Obergrenze` |
+| `bounded` |  |
 
 Exakte Code-, API-, Datei- oder Befehlsnamen dürfen diese Wörter behalten; dann ihre Bedeutung kurz erklären.
 
@@ -283,7 +276,6 @@ Neue Artefakte mit vollständigem Projektpfad nennen. Finale Bilder, Konzepte un
 ## 9. Schnellcheck vor „fertig“
 
 - [ ] Unverändertes Original und verlustfreier `Improved prompt` in der einen `…-enhanced-prompt.md` gespeichert und unter `Initial goal` verlinkt?
-- [ ] Default oder optionales Keyword korrekt angewendet, ohne Verneinungen, Zitate, leere Kennzeilen oder Platzhalter als neue Aufträge zu missverstehen?
 - [ ] Userauftrag, `AGENTS.md`, Prompt, Task, Phasen und Abnahmepunkte erfüllt?
 - [ ] Problem vollständig gelöst und schwache Grundlage statt Mini-Fixes repariert?
 - [ ] Repository-/Referenzübernahme Ende zu Ende qualitätsgetreu integriert und verdrängte Altwege ohne Produktionsreferenz entfernt?
