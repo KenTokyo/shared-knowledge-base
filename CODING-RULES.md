@@ -68,6 +68,11 @@ Use Space to replay, P to pause, and R to reset. Show skill names, keys, active 
 
 Überlege selber, wie du den prompt verbessern kannst im positiven Sinne, sodass der User komplett überrascht wird. Du sollst ja den verbesserten Prompt 
 
+## Prompt-Optimierung bei Feedback
+Feedback wird ebenfalls häufig gegeben (entweder direkt im Chat oder am Ende der jeweiligen Task-Datei) und soll genauso optimiert werden.
+
+Binde den jeweiligen Prompt fortlaufend nummeriert in die bestehende Datei enhanced-prompt.md falls existiert ein (ansonsten erzeugen) und optimiere ihn dort direkt.
+
 ### Übergabe und Lesen
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 
