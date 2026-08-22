@@ -44,6 +44,13 @@ Jeder Tipp kostete mindestens einen Durchgang.
 - **`CameraRig.js`-Grep verfälscht Kommentarzeichen** — Ausgabe stellt `//` als `\` dar. → Aussagen per direktem Read prüfen.
   *Grep und Read unterschieden sich an Kommentarzeichen · 2026-08-01*
 
+- **Zeilenenden-Prüfung durch `sed` lügt** — `sed -n '94,110p' datei | cat -A` zeigt auf einer reinen CRLF-Datei
+  **kein** `^M`, weil `sed` unter Git Bash im Textmodus liest und das CR verschluckt. Wer damit einen frischen Edit
+  prüft, sieht „meine Zeilen sind LF, der Rest CRLF" und fängt an, ein Mischformat zu reparieren, das es nicht gibt.
+  → Bereichsprüfung mit `head -n X | tail -n Y | cat -A`, Gesamtprüfung mit
+  `total=$(wc -l < f); crlf=$(cat -A f | grep -c '\^M\$')` — sind beide gleich, ist die Datei einheitlich.
+  *`WorldRenderRuntime.js` (388/388 CRLF) wirkte nach einem Edit gemischt; ein Durchgang an eine Scheinfalle · 2026-08-22*
+
 - **SSoT-Zeile still abgeschnitten** — Leerzeile spaltet Tabelle; unescaptes `|` beendet Zelle. → Text-Pipes `\|`; je `| P…` vier unescapte Trenner zählen; kein awk/sed/perl.
   *P15b verlor gerendert ~3.400 Zeichen · 2026-08-01*
 
