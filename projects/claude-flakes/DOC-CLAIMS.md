@@ -1,6 +1,6 @@
 # Dokumentansprüche und Doku-Gates — claude-flakes
 
-**Lesen wenn:** eine Zahl, ein Absolutwort oder ein Artefaktverweis in README, ROADMAP oder `docs/` steht — oder ein Gate gebaut wird, das so etwas prüft.
+**Lesen wenn:** eine Zahl, ein Absolutwort oder ein Artefaktverweis in README, ROADMAP oder `docs/` steht — oder ein Code-Kommentar behauptet, was der Build mit dem Code tut — oder ein Gate gebaut wird, das so etwas prüft.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Sonden, Selbsttests und Messtreiber: [`PROBES-SELFTESTS.md`](PROBES-SELFTESTS.md).
@@ -28,3 +28,14 @@ Sonden, Selbsttests und Messtreiber: [`PROBES-SELFTESTS.md`](PROBES-SELFTESTS.md
 
 - **Selbstreferenzielles Doku-Gate braucht Konvergenzreihenfolge** — neues Log ändert Doku-Zahl, Doku ändert Gate-Ausgabe, rote Zwischenstufe ist erwartbar. → Treiber→Log→Doku→Gate→Treiber; zuletzt alle Artefakte byte-diffen.
   *Falsifikatorlog 138→159→282→318 Zeilen; erst zweiter Treiberlauf belegte den jeweiligen Fixpunkt · 2026-08-01/02*
+
+- **Kommentar behauptet, der Build falte den Zweig weg** — `dist/assets/index-*.js` trägt 9 Entwicklungs-Strings
+  (`dev only`, `test buy`, `reset account`, `dev-topup`, `no payment was made`), obwohl der Kopfkommentar genau diese
+  Faltung versprach. Ursache: Der Schalter war `sandboxOpen()`, und ein Aufruf ist für den Minifier undurchsichtig —
+  die Funktion könnte alles zurückgeben, also bleibt jeder Zweig dahinter stehen. Ebenso undurchsichtig: derselbe Wert
+  als Parameter durchgereicht (`walletHtml(…, dev)`) und unerreichbare Klassenmethoden — beide falten nie.
+  → Schalter als Konstante in der **exakten** Textform `export const X = import.meta.env.DEV === true` schreiben
+  (`import.meta.env?.DEV` ist anderer Text und trifft Vites Ersetzung **nicht**), `if (X)` direkt an jeder Aufrufstelle
+  prüfen statt weiterreichen, Handler in ein eigenes Modul statt in Lobby-Methoden legen; danach `grep` über
+  `dist/assets/index-*.js` — die Faltung belegen, nicht im Kommentar behaupten.
+  *9 Strings vor Umbau je 1–2 Treffer, danach 0 · 2026-08-23*
