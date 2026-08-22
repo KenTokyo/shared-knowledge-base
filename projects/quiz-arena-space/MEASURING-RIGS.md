@@ -167,3 +167,13 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   *Tier-1b 8 → 3 allein durch die geschnittene Maske, erkannte Array-Meldungen 11 → 28 von 69; Tier 1a fiel
   von „1 Klausel, 2 Terme" auf 0, nachdem Zweigspannen statt Zweigtext gelesen wurden. Die drei übrig
   gebliebenen Funde waren echt, einer druckte unter FAIL den bejahenden Satz · 2026-08-02*
+
+- **Kaltstart-Arm misst die Mischstufe statt das Spiel** — `audioprobe starforge cold` meldete 17 stumme
+  Einstiegspunkte, das Spiel war aber hörbar; der Arm rief `mountShot`/`mountCharge`/`enemyShot` direkt auf,
+  und die geben bei leerer Bank absichtlich `false` zurück, weil die Ersatzstimme eine Ebene höher in
+  `combat/Weapons.ts:_shotSound` liegt. → **Beim Prüfen einer Zusage die Ebene wählen, auf der die Zusage
+  implementiert ist**, nicht die unterste, die man aufrufen kann; und den Rückfall über `resolveMount` aus
+  der Quelle lesen statt ihn im Prüfstand zweitzuschreiben — das rechte Mount ist ein Overlay, die Solar
+  Lance trägt selbst kein `sound`, die Nova Discharge auf derselben Zelle nennt `explosion`.
+  *17 rote Zeilen auf 0; der eine echte Treffer, den der reparierte Arm noch fand, war genau diese
+  Overlay-Zeile. Ein Tor, das dauerhaft rot steht, wird nicht mehr gelesen · 2026-08-22*

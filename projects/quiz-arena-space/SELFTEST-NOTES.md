@@ -161,3 +161,14 @@ Diese Bench ist der einzige Wächter über die Fäden zwischen den browserlosen 
   Hausregelsätze, die auf `src/systems/Crossword.ts` zeigten, wo der geportete Code nicht mehr liegt.
   `selftest` meldete davor wie danach 1 von 60. Mitgewandert war auch die Aussage: `place` parkt nicht
   mehr selbst, sondern fällt auf `park` durch · 2026-08-03*
+
+- **Zeilenangabe zuerst korrigiert, Datei danach bearbeitet** — dieselbe Zitatzeile in
+  `visual-review-part-3` ging in einer Sitzung zweimal kaputt: erst durch fremde Einfügungen (`:7263`),
+  dann durch den eigenen späteren Commit, der 26 Zeilen davor einfügte (`:7392` → `:7418`). Der
+  `reddrive`-Antrieb, der auf dieser Zahl sitzt, meldete `refused` — sein Flicken fand seinen eigenen
+  Suchtext nicht mehr, also blieb der Wächter ungeprüft. → **Zeilenangaben als Letztes einer Änderung
+  nachlesen**, nach dem letzten Quell-Edit; und wer eine Angabe korrigiert, prüft mit, ob ein Antrieb oder
+  eine Transkriptzeile auf genau diesen Text gepinnt ist (`grep` nach der alten Zahl in `tools/` **und**
+  `Notes/`, nicht nur in der zitierenden Datei).
+  *Drei Angaben in einer Sitzung verschoben, nur eine davon fing ein Gate — die anderen zeigten auf eine
+  schließende Klammer und auf eine Kommentarzeile, beides nicht leer, und mehr prüft das Gate nicht · 2026-08-22*
