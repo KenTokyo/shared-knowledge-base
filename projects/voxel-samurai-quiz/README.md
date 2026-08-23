@@ -20,6 +20,7 @@ This folder keeps only unexpected, proven project traps.
 | Rauschboden, Lauf-Flags, Zustandsdrift, Zeit, Sondenspalten | [`RUNTIME-MEASURING.md`](RUNTIME-MEASURING.md) |
 | `CameraRig`, Third Person, Spielpose, Waffe, Gegnerpeilung | [`CAMERA-CHARACTER.md`](CAMERA-CHARACTER.md) |
 | CLI/Sonde/Datei schreiben, committen | [`TOOLING-TRAPS.md`](TOOLING-TRAPS.md) |
+| Committen mit fremder Arbeit im Index, Teil-Staging, Submodul-Zeiger | [`SHARED-INDEX-COMMITS.md`](SHARED-INDEX-COMMITS.md) |
 | Persistierte Favoriten, Rosteransicht, localStorage-Schlüssel, Produktumbenennung | [`PERSISTENCE-TRAPS.md`](PERSISTENCE-TRAPS.md) |
 
 Global: [Messhandwerk](../../threejs/MEASURING.md) · [3D-Router](../../THREEJS-RULES.md).
