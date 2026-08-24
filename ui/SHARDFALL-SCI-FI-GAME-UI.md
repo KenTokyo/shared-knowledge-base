@@ -6,12 +6,14 @@ Wiederverwendbare UI-Richtung für Shardfall-Prompts und ähnliche Three.js-Spie
 
 ## Referenzstatus
 
-Der Nutzer gruppierte acht lokale Bilder als:
+Der Nutzer gruppierte neun lokale Bilder als:
 
 - Bild 1–3: **Cool Sci-Fi**;
 - Bild 4–5: **Warm Sci-Fi**;
 - Bild 6: **Realistic Sci-Fi**;
-- Bild 7–8: **Warm Sci-Fi HUD und Notification Motion**.
+- Bild 7: **Warm Sci-Fi Tactical HUD**;
+- Bild 8: **Notification Motion 01 – With Icons**;
+- Bild 9: **Notification Motion 02 – Without Icons**.
 
 Die Dateien wurden am 2026-08-24 direkt per Bildleser angesehen und dauerhaft nach `shared/shared-docs/ui/references/` kopiert. Dabei wurde kein Browser, Dev-Server, Playwright- oder CLI-Browser-Lauf gestartet; die direkte Inspektion bereitgestellter Referenzdateien ist keine browsergestützte Laufzeit-Sichtprüfung.
 
@@ -21,7 +23,8 @@ Die Dateien wurden am 2026-08-24 direkt per Bildleser angesehen und dauerhaft na
 - [`warm-sci-fi-command-ui-01.png`](references/warm-sci-fi-command-ui-01.png) — gold-/bernsteinfarbenes Komponentenboard mit feinen Linien, Kreisen, Warnungen, Leisten, Slots und Bodeneffekten auf Schwarz.
 - [`warm-sci-fi-command-ui-02.png`](references/warm-sci-fi-command-ui-02.png) — warme Gold-Lobby mit realistischer Materialwirkung, ruhiger Landschaft, Skinraster, Party-/Challenge-Spalte und großer Play-Aktion.
 - [`warm-sci-fi-tactical-hud-03.png`](references/warm-sci-fi-tactical-hud-03.png) — vollständiges Gameplay-HUD mit Kompass, vier Statusleisten, radialen Kernwerten, semantischen Warnungen, Fähigkeiten, Verbrauchsgegenständen, Quest, Minikarte, Tracker, Schnellwahl und sechs räumlichen Ereignisbeispielen.
-- [`warm-sci-fi-notification-motion-04.png`](references/warm-sci-fi-notification-motion-04.png) — Notification-Motionboard mit sechs Ereignisfamilien in fünf klaren Phasen: Erscheint, Aufbau, Highlight, Stabil und Verblasst.
+- [**Notification Motion 01 – With Icons**](references/notification-motion-01-with-icons.png) — semantische Status-, Heilungs-, Ziel-, Beute-, Treffer- und Hype-Meldungen mit ereignisgebundenem Icon/Motiv, gerichteten Lichtspuren, Splittern und Partikeln in fünf Phasen: Erscheint, Aufbau, Highlight, Stabil und Verblasst.
+- [**Notification Motion 02 – Without Icons**](references/notification-motion-02-without-icons.png) — typografische Killstreak-, Combo-, Multi-Kill- und große Reaktionsmeldungen ohne separates Icon in vier Phasen: Erscheint, Aufbau, Highlight und Verblasst.
 - [`realistic-sci-fi-tactical-ui-01.png`](references/realistic-sci-fi-tactical-ui-01.png) — regennasse, materialreiche Lobby mit realistischer Figur und Umgebung, jedoch stark elektrischer blauer UI-Energie. Für Shardfall wird daraus die physische Tiefe übernommen, nicht die flächige Blausättigung.
 
 ## Drei kompatible Paletten
@@ -93,7 +96,10 @@ Canvas UI does not replace GSAP. GSAP sequences DOM state transitions; Canvas UI
 - Enemy health plate appears on aim, damage or threat, animates deltas, respects distance/occlusion and fades instead of permanently filling the screen.
 - Pulse Rifle uses a clean 1.8× holographic optic; Rail Scout uses a lens-based 4×/8× scope. Scatter Cannon and Arc SMG keep shoulder ADS without a scope overlay.
 - Scope entry changes camera FOV, weapon pose, reticle and edge treatment together. The center ray remains damage truth; the overlay never hides hit confirmation or ammo.
-- Notifications are queued/coalesced and animate through **appear → build → highlight → stable → fade**. The highlight owns the brief line sweep/particle burst; the stable phase becomes quiet and readable. Maximum three remain visible and never cover reticle, optic center, quiz or health. Reduced motion collapses appear/build/highlight into a short fade without losing semantic color or text.
+- Notifications are queued/coalesced, show at most three records and never cover reticle, optic center, quiz or health. Their event semantics select one of two binding motion contracts; generic card movement or a plain toast fade cannot replace either reference effect.
+  - **Notification Motion 01 – With Icons** is mandatory for status, healing, quest, objective, loot and comparable semantic events. It follows **appear → build → highlight → stable → fade**: an event-specific icon or integrated motif leads; directed light trails, shards and particles build the composition; highlight owns the strongest burst and luminance; stable settles into quiet readability; fade dissolves text, motif and particles.
+  - **Notification Motion 02 – Without Icons** is mandatory for killstreak, combo, multi-kill and large typographic reactions. It follows **appear → build → highlight → fade** with no separate icon and no forced stable phase: typography and background shards grow together, highlight reaches maximum luminance, then the whole composition decays directly and cleanly.
+  - Matching the boards means preserving rhythm, composition, luminance build, burst, typographic hierarchy and dissolution rather than merely copying colors. Reduced motion shortens both contracts to restrained fades but preserves event category, exact text, semantic color and the required icon-versus-no-icon selection.
 - Edit cells trace under held pointer, selected cells settle into a holographic draft, commit collapses physical sections and cancel rebuilds the last committed mask.
 - Turbo Build on repeats placement at a bounded cadence while held; off accepts exactly one placement per fresh mouse-down.
 - Build rotation uses 90° `R` steps. A setting chooses temporary rotation or remembered per-kind offset; `T` cycles material.
