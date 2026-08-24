@@ -39,8 +39,11 @@
 - **Copied effect stays weak for hours** — Target renderer was tuned before the source contract; distance and lifecycle defects hid behind byte-identical files. → Pin the source commit, map every slot through reset, connect the full runtime through one adapter, and check space/lifecycle before radiance.
   *V21/Elemental → voxel-samurai-quiz: >5 h; 54 files matched, four body casts received only 50%, 50%, 1.5%, and 50% of authored range; a paused capture camera faked reset failures · 2026-08-15–16*
 
+- **Elemente unterscheiden sich nur durch Farbe** — identische Ribbons mit anderer Palette lesen als Varianten desselben Skills. → [Schwertskill-Animation und elementare VFX](SWORD-SKILL-ANIMATION-VFX.md) anwenden: je Familie eigene Hauptform, Bewegungsphysik, Kontaktantwort und Nachleben; VFX an Ganzkörper- und Klingenpfad statt an einen losen Cast-Timer binden.
+
 ## Handoffs
 
+- Schwertskill-Sequenzen und elementare Referenzboards → [Schwertskill-Animation und elementare VFX](SWORD-SKILL-ANIMATION-VFX.md)
 - Pose- und Waffenpfad → [Animation und Charakter](ANIMATION-CHARACTER.md)
 - Uhren, Reset und Audio-Lifecycle → [Runtime-Integration](RUNTIME-INTEGRATION.md)
 - Blend-, Alpha- und Pixelmathematik → [Shader und PBR](SHADERS.md)

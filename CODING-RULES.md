@@ -72,6 +72,10 @@ Use Space to replay, P to pause, and R to reset. Show skill names, keys, active 
 ## Grund warum wir das machen
 - Der User hat einen sehr begrenzten Wortschatz und kann sich nicht gut ausdrücken. Du hilfst ihm quasi dabei, also als würde er schreiben "verbessere den prompt" - du machst das und planst und implementierst du den prompt quasi aus
 
+**Default ohne Keyword:** Dieselbe ausführende KI verbessert jeden projektändernden Auftrag, schreibt die Arbeitsfassung und setzt sie ohne Freigabestopp direkt um. Kein zweiter Enhancer und keine getrennte Vorbereitungsrunde. Außer man erwähnt, kein Prompt verbessern notwendig.
+
+Überlege selber, wie du den prompt verbessern kannst im positiven Sinne, sodass der User komplett überrascht wird. Du sollst ja den verbesserten Prompt
+
 ### Übergabe und Lesen
 Jede Übergabe und jeder Start nach einer Kontextkürzung nennt direkt:
 
