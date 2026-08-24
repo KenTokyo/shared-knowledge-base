@@ -6,11 +6,12 @@ Wiederverwendbare UI-Richtung für Shardfall-Prompts und ähnliche Three.js-Spie
 
 ## Referenzstatus
 
-Der Nutzer gruppierte sechs lokale Bilder als:
+Der Nutzer gruppierte acht lokale Bilder als:
 
 - Bild 1–3: **Cool Sci-Fi**;
 - Bild 4–5: **Warm Sci-Fi**;
-- Bild 6: **Realistic Sci-Fi**.
+- Bild 6: **Realistic Sci-Fi**;
+- Bild 7–8: **Warm Sci-Fi HUD und Notification Motion**.
 
 Die Dateien wurden am 2026-08-24 direkt per Bildleser angesehen und dauerhaft nach `shared/shared-docs/ui/references/` kopiert. Dabei wurde kein Browser, Dev-Server, Playwright- oder CLI-Browser-Lauf gestartet; die direkte Inspektion bereitgestellter Referenzdateien ist keine browsergestützte Laufzeit-Sichtprüfung.
 
@@ -19,6 +20,8 @@ Die Dateien wurden am 2026-08-24 direkt per Bildleser angesehen und dauerhaft na
 - [`cool-sci-fi-command-ui-03.png`](references/cool-sci-fi-command-ui-03.png) — byte-identisches Duplikat von Bild 2; als sechsteilige Originalserie bewusst erhalten.
 - [`warm-sci-fi-command-ui-01.png`](references/warm-sci-fi-command-ui-01.png) — gold-/bernsteinfarbenes Komponentenboard mit feinen Linien, Kreisen, Warnungen, Leisten, Slots und Bodeneffekten auf Schwarz.
 - [`warm-sci-fi-command-ui-02.png`](references/warm-sci-fi-command-ui-02.png) — warme Gold-Lobby mit realistischer Materialwirkung, ruhiger Landschaft, Skinraster, Party-/Challenge-Spalte und großer Play-Aktion.
+- [`warm-sci-fi-tactical-hud-03.png`](references/warm-sci-fi-tactical-hud-03.png) — vollständiges Gameplay-HUD mit Kompass, vier Statusleisten, radialen Kernwerten, semantischen Warnungen, Fähigkeiten, Verbrauchsgegenständen, Quest, Minikarte, Tracker, Schnellwahl und sechs räumlichen Ereignisbeispielen.
+- [`warm-sci-fi-notification-motion-04.png`](references/warm-sci-fi-notification-motion-04.png) — Notification-Motionboard mit sechs Ereignisfamilien in fünf klaren Phasen: Erscheint, Aufbau, Highlight, Stabil und Verblasst.
 - [`realistic-sci-fi-tactical-ui-01.png`](references/realistic-sci-fi-tactical-ui-01.png) — regennasse, materialreiche Lobby mit realistischer Figur und Umgebung, jedoch stark elektrischer blauer UI-Energie. Für Shardfall wird daraus die physische Tiefe übernommen, nicht die flächige Blausättigung.
 
 ## Drei kompatible Paletten
@@ -90,7 +93,7 @@ Canvas UI does not replace GSAP. GSAP sequences DOM state transitions; Canvas UI
 - Enemy health plate appears on aim, damage or threat, animates deltas, respects distance/occlusion and fades instead of permanently filling the screen.
 - Pulse Rifle uses a clean 1.8× holographic optic; Rail Scout uses a lens-based 4×/8× scope. Scatter Cannon and Arc SMG keep shoulder ADS without a scope overlay.
 - Scope entry changes camera FOV, weapon pose, reticle and edge treatment together. The center ray remains damage truth; the overlay never hides hit confirmation or ammo.
-- Notifications are queued/coalesced and animate enter–hold–exit; maximum three visible and never over reticle, optic center, quiz or health.
+- Notifications are queued/coalesced and animate through **appear → build → highlight → stable → fade**. The highlight owns the brief line sweep/particle burst; the stable phase becomes quiet and readable. Maximum three remain visible and never cover reticle, optic center, quiz or health. Reduced motion collapses appear/build/highlight into a short fade without losing semantic color or text.
 - Edit cells trace under held pointer, selected cells settle into a holographic draft, commit collapses physical sections and cancel rebuilds the last committed mask.
 - Turbo Build on repeats placement at a bounded cadence while held; off accepts exactly one placement per fresh mouse-down.
 - Build rotation uses 90° `R` steps. A setting chooses temporary rotation or remembered per-kind offset; `T` cycles material.
