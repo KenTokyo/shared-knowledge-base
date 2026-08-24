@@ -10,7 +10,7 @@
 
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
-**Ausnahmen sind erlaubt.** Der User darf jede Regel dieser Datei für eine Sitzung oder einen Auftrag aufheben — auch Sperren wie die Freigabepflicht für Sicht- und Browserprüfungen (§5) oder die Testsperre (§6). Eine gewährte Ausnahme gilt für die genannte Sitzung, wird in Antwort und Task-Datei genannt und braucht keine Rückfrage mehr. Sie ändert diese Datei nicht und gilt nicht automatisch für die nächste Sitzung.
+**Ausnahmen sind erlaubt.** Der User darf jede Regel dieser Datei für eine Sitzung oder einen Auftrag aufheben — auch Sperren wie die Freigabepflicht für browsergestützte Laufzeit-Sichtprüfungen (§5) oder die Testsperre (§6). Eine gewährte Ausnahme gilt für die genannte Sitzung, wird in Antwort und Task-Datei genannt und braucht keine Rückfrage mehr. Sie ändert diese Datei nicht und gilt nicht automatisch für die nächste Sitzung. Das direkte Lesen lokaler, vom User bereitgestellter Referenzbilder ist keine solche Ausnahme, sondern regulär erlaubt.
 
 ## 1. Prompt-Datei und Task-Datei
 
@@ -94,7 +94,7 @@ Fachdateien, nur lesen, wenn wirklich notwendig
 - React, State, Hydration, Browser-UI → [FRONTEND-RULES.md](FRONTEND-RULES.md)
 - Echtzeit-3D → [THREEJS-RULES.md](THREEJS-RULES.md)
 - vollständiger Weltbau → [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md)
-- ausdrücklich erlaubte Bildschirmaufnahmen → [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md)
+- ausdrücklich erlaubte browsergestützte Laufzeit-Captures → [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md)
 - neue belegte Learnings → [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md)
 
 - Windows-Ressourcen, Nachbarprojekt oder Port → [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md)
@@ -139,9 +139,9 @@ Nicht als Übernahme liefern:
 
 Meldet der User denselben Mangel erneut, gilt der bisherige Ansatz für diesen Punkt als widerlegt. Nicht dieselbe kleine Tuning-Achse wiederholen. Referenz und Ziel erneut Ende zu Ende öffnen, die erste ursächliche Abweichung finden und Architektur, Datenquelle, Ereignisse, Raum-/Zeitbezug, Rendering, Materialien, Assets, Lebenszyklus und Altpfade prüfen. Den Arbeitsumfang auf alle direkt gekoppelten Teile erweitern, die für die geforderte Qualität nötig sind; große Refactorings, Ersatz und Löschung sind dabei ausdrücklich erwartet. Bereits belegtes gutes Verhalten außerhalb dieses Wegs schützen.
 
-Ist Sichtprüfung ausdrücklich erlaubt, verlangt ein wiederholter Referenztransfer-Mangel vor Abschluss einen Source-/Target-Capturevergleich desselben Produktbeats mit vergleichbaren relativen Bildmaßen, Kameraabstand und Renderpfad. Erste sichtbare Abweichung in Ereignis, Raum, Layer, Material/Depth, HDR/Post oder Lebenszyklus beheben; nicht nur Helligkeit tunen.
+Ist eine browsergestützte Laufzeit-Sichtprüfung ausdrücklich erlaubt, verlangt ein wiederholter Referenztransfer-Mangel vor Abschluss einen Source-/Target-Capturevergleich desselben Produktbeats mit vergleichbaren relativen Bildmaßen, Kameraabstand und Renderpfad. Erste sichtbare Abweichung in Ereignis, Raum, Layer, Material/Depth, HDR/Post oder Lebenszyklus beheben; nicht nur Helligkeit tunen.
 
-Fertig ist die Übernahme erst, wenn der echte Produkttrigger den neuen Weg nutzt, die benannten Qualitätsmerkmale umgesetzt sind, verdrängte Wege keine Produktionsreferenzen mehr haben und erlaubte Prüfungen das Ergebnis tragen. Ohne erlaubte Sichtprüfung nur statische Evidenz und eine genaue manuelle Abnahme nennen; keine optische Gleichheit behaupten.
+Fertig ist die Übernahme erst, wenn der echte Produkttrigger den neuen Weg nutzt, die benannten Qualitätsmerkmale umgesetzt sind, verdrängte Wege keine Produktionsreferenzen mehr haben und erlaubte Prüfungen das Ergebnis tragen. Ohne erlaubte browsergestützte Laufzeit-Sichtprüfung nur statische Evidenz, direkt gelesene Referenzbilder und eine genaue manuelle Laufzeitabnahme nennen; keine optische Gleichheit des laufenden Produkts behaupten.
 
 Bei klarem Auftrag nicht nachfragen. Bis zum Ziel oder zu einer echten äußeren Blockade weiterarbeiten. Nur stoppen bei fehlendem Secret/Zugang, widersprüchlichen Pflichtdaten oder nicht erlaubter endgültiger Aktion; dann genau die eine fehlende Information nennen.
 
@@ -201,10 +201,11 @@ Datenfluss und Leistung:
 ## 5. Fachregeln und Sichtprüfung
 
 - React-/Frontend-Arbeit folgt [FRONTEND-RULES.md](FRONTEND-RULES.md); Echtzeit-3D folgt [THREEJS-RULES.md](THREEJS-RULES.md) und genau einer passenden Fachdatei.
-- Browser-, Screenshot-, UI- oder Gameplay-Sichtprüfung braucht eine **ausdrückliche Freigabe im aktuellen Userauftrag**. Schweigen, alte Freigaben oder eigene Unsicherheit reichen nicht.
-- Ohne Freigabe nur statisch prüfen; der User übernimmt die direkte Sicht- und Spielgefühl-Abnahme.
+- **Lokale Referenzbild-Inspektion ist erlaubt:** Vom User bereitgestellte oder im Auftrag benannte PNG/JPG/WebP-Dateien direkt per Datei-/Bildleser öffnen, ansehen, vergleichen und dauerhaft in den passenden Projektordner kopieren. Das startet keine Anwendung, erzeugt keinen Laufzeit-Capture und zählt nicht als Browser-/UI-/Gameplay-Sichtprüfung.
+- **Browsergestützte Laufzeit-Sichtprüfung braucht Freigabe:** Dazu zählen Browserstart, Playwright, CLI-Browser, DevTools-Automation, Öffnen der laufenden App sowie Erzeugen oder Prüfen von Laufzeit-Screenshots. Sie braucht eine **ausdrückliche Freigabe im aktuellen Userauftrag**; Schweigen, alte Freigaben oder eigene Unsicherheit reichen nicht.
+- Ohne diese Freigabe keinen Browser oder Dev-Server für Sichtprüfung starten. Statische Code-/Datenprüfung und direkte Referenzbild-Inspektion bleiben erlaubt; der User übernimmt die Sicht- und Spielgefühl-Abnahme der laufenden Anwendung.
 - Mit Freigabe erst fertig umsetzen und statisch prüfen, dann [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) folgen.
-- Für Echtzeit-3D höchstens sechs Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
+- Für Echtzeit-3D höchstens sechs browsergestützte Laufzeit-Sichtprüfungen; kleinere Usergrenze gewinnt. Nach drei bis fünf Verbesserungen derselben Eigenschaft zur nächsten wichtigen wechseln.
 - Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
 - Wichtig keine Endlosssichtprüfungen, max 2 Sichtprüfungen, außer dir wird gesagt du kannst soviele machen wie du möchtest, Sichtprüfungen verbrauchen viele Ressourcen!
 
@@ -218,7 +219,7 @@ Datenfluss und Leistung:
 - Vorhandene Projekt-, Cache- und Heap-Skripte nutzen. Bei umgeleiteten Logs Exit-Code und Inhalt prüfen. Cache nur bei belegtem Verdacht über das Clean-Skript löschen.
 - Reine Doku-, Prompt- und Regeländerungen brauchen keinen Typecheck.
 
-Ohne Userauftrag oder klare Projektpflicht keine neuen Tests oder Testeinstellungen anlegen und keinen Dev-Server, Browser, Screenshot-, UI- oder Gameplay-Test starten.
+Ohne Userauftrag oder klare Projektpflicht keine neuen Tests oder Testeinstellungen anlegen und keinen Dev-Server, Browser, browsergestützten Laufzeit-Screenshot-, UI- oder Gameplay-Test starten. Direktes Lesen oder Kopieren bereitgestellter lokaler Referenzbilder bleibt davon unberührt.
 
 ## 7. Git und Lieferung
 
