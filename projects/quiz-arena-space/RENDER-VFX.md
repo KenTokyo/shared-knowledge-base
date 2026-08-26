@@ -87,3 +87,49 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   Giftfall vier Läufe fahren (schweigt falsch → feuert → feuert zu Recht → schweigt echt).
   *Ursache war eine faul wachsende Free-Liste; nach dem Fix `draws=302`, `prog=35`, `tris=69991` identisch,
   also null Draw-Kosten · 2026-07-30*
+
+- **Das Qualitätsbudget erreichte ausgerechnet das System nicht, das der Spieler absichtlich auf den
+  Schirm holt** — `Renderer._adapt` fährt `effectQuality` herunter, sobald Frames reißen, und
+  `fx/VFX.ts`, `WeaponFxRuntime`, `Enemy` und `Boss` lesen die Zahl. Die Elemental-Bibliothek las sie
+  nie: nichts schob sie hinein, und die Runtime hält keinen Renderer. Auf genau der Maschine, die den
+  Regler braucht — die, die wegen eines Skills Auflösung abgibt — blieb der Skill selbst auf vollen
+  Partikelzahlen und vollem Raymarch-Budget, und der Regler bezahlte das aus der Auflösung von allem
+  anderen. Dazu war der F1-Regler `VFX` nur ein *Partikel*-Budget: `setQuality` schrieb
+  `particleCount` und `emissionRate` und ließ die vier bis sechs raymarchten Flammensäulen einer Magma
+  Rift auf ihren gesetzten 32 Schritten stehen. → Ein Qualitätsregler muss **jede** Kostenklasse eines
+  Systems erreichen, nicht die billigste; und wer eine Zahl veröffentlicht, muss sie auch **zustellen**.
+  *`grep -rn effectQuality src/fx/elemental` war vor dem Fix leer. Zweiter, davon unabhängiger Fund an
+  derselben Stelle: `emissionRate` **und** `particleCount` tragen beide den Reglerwert, und jeder
+  ratengetriebene Emitter multipliziert sie übereinander (`RateEmitter.tick` × `g.particleCount`,
+  z. B. `RiftAbility.ts:578/599/617`) — der Regler wirkt dort quadratisch, 0,45 liefert 0,20. Die
+  Burst-Aufrufe daneben wirken linear. Ungefixt, absichtlich: der Fix macht den Boden des Reglers
+  schwächer, das ist eine Design-Entscheidung · 2026-08-26*
+
+- **Ein Schrittbudget im Volumen-Raymarch kauft Pixel, keine Meter** — der Fire-March gab jeder Säule
+  dieselben Schritte, ob sie 30 px oder 500 px breit auf dem Schirm stand; das Kamera-Rig dieses Spiels
+  steht rund 54 Einheiten weg, also war fast jede Flamme in der unteren Hälfte dieser Spanne und zahlte
+  trotzdem das Budget der nächsten. Der Eintritts-Dither macht aus einem groben Schritt Korn statt
+  Zwiebelringen, und wie sichtbar dieses Korn ist, hängt an der Pixelzahl. → Schritte an der
+  **scheinbaren Größe** bemessen: `rPerp * uFocalPx / dist`, mit `uFocalPx = 0,5 · drawingBufferHeight /
+  tan(fovY/2)` aus dem *Drawing Buffer* — dann greift die Ersparnis mit dem Auflösungsregler ineinander,
+  statt gegen eine Größe zu messen, die der Frame gar nicht mehr hat. Untergrenze als Uniform, nicht als
+  Konstante: eine Optimierung ohne Ausschalter kann niemand bepreisen.
+  *`LOD_NEAR_PX` 40 / `LOD_FAR_PX` 260 (Radius), Boden 0,42. Bildlich im deterministischen Fenster
+  gemessen: 47,7 % der Pixel ändern sich, aber `delta max=21`, `mean=2,66` von 255 — Silhouette, Farbe
+  und Form unverändert. Zeitlich min-aus-4 `p95` 19,80 → 18,10 ms, in 3 von 4 Runden vorn ·
+  `?firelod=1` ist der Aus-Arm · 2026-08-26*
+
+- **Bei der teuersten Signatur der Bibliothek sind die Partikel die größere Hälfte, nicht der
+  Raymarch** — die Vermutung lag auf den vier volumetrischen Flammensäulen der Magma Rift, und die
+  Messung sagt etwas anderes: der Rauch. `smokeRate` 130/s bei `smokeLifetime` 3,6 s sind rund 470
+  lebende Quads, Basisgröße 1,1 auf `uEndSize` 3,4 gewachsen, jedes Fragment mit `fbm3` (drei
+  Simplex-Oktaven) plus einem Tiefen-Fetch — etwa anderthalb Bildschirme zusätzliche transparente
+  Füllrate. → Bevor an einem Shader gedreht wird, die **Kostenklassen einzeln bepreisen**; ein Regler,
+  der beide Hälften zugleich bewegt, kann nie sagen, welche die teure war.
+  *Min-aus-4, `?scenario=perf&skill=magma`, adaptiv gepinnt aus, 1280×800 auf M5, `p95`: alles an 19,80 —
+  nur March auf 55 % 18,40 — nur Partikel auf 0,45 (effektiv 0,20, siehe Quadrierung oben) 13,20 —
+  beides 10,40 ms. Der Median trennt hier gar nicht (7,00 → 5,50): das mittlere Frame gehört der Welle,
+  nicht dem Skill. Instrument: `?skill=` gab es vorher nicht, die Bench maß eine Welle und kein einziges
+  Volumen. Ihr Bild ist nur **früh** deterministisch — zwei Läufe bei `capture=4.5` sind bitgleich, bei
+  `capture=24` unterscheiden sie sich in 83 % der Pixel, also muss jedes Bild-A/B in dieses Fenster ·
+  2026-08-26*
