@@ -123,3 +123,21 @@
   der eine den anderen verdeckt.
   *`movement&capture=19` → `SHIPS:2/3`, mit 27 s grün. Der Lauf starb gleichzeitig an einem fehlenden
   `ctx.weaponFx` und lief 180,1 s in die Zeitüberschreitung, ohne eine Zahl zu melden · 2026-08-22*
+
+- **Panel „ohne Hintergrund" auf dem Screenshot, im Browser ist er da** — die Pose in `tools/uishot.mjs`
+  wartete zwei `requestAnimationFrame`, das Panel fährt aber über eine 140-ms-CSS-Animation von
+  `opacity: 0` hoch. Zwei Frames sind ~33 ms, also stand es bei rund einem Viertel — und die Scheibe war
+  bei 93 % Deckkraft trotzdem unsichtbar. Drei Aufnahmen hintereinander „belegten" einen Fehler, den es
+  nicht gab. → Nach der Pose auf `document.getAnimations()` warten (`playState === 'running'`, dann
+  `Promise.all(a.finished)`), nicht auf eine Framezahl. Kostet nichts auf Screens ohne Animation.
+  *`.chart-panel` mit `animation: chart-in 140ms`: Pixel bei (420,450) mit Animation 129,72,39, ohne
+  17,18,23 — Faktor 6. Rund 40 Minuten an CSS gesucht, an der falschen Stelle · 2026-08-26*
+
+- **Zwei Screenshots derselben Szene vergleichen, während die Szene läuft** — unter `?capture=` treibt
+  `setTimeout` die Schleife (siehe `schedule` in `src/main.ts`), sie hört nie auf. Zwischen zwei
+  Aufnahmen bewegt sich die Arena, also wird jeder Pixelvergleich zur Münze: dieselbe Messung sagte
+  dreimal hintereinander etwas anderes, einmal sogar „heller als vorher" für ein Panel, das abdunkelt.
+  → Vor dem Vergleich einfrieren: `window.setTimeout = () => 0` in der Seite, danach nur noch Stile
+  umschalten und schießen. Erst dann heißt eine Differenz „meine Änderung".
+  *Gleicher Punkt (420,700): Karte zu 201,125,73 — Karte auf 155,152,148 — Animation aus 18,22,28. Die
+  mittlere Zeile war reine Szenenbewegung · 2026-08-26*

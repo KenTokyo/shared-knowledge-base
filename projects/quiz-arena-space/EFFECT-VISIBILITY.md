@@ -70,3 +70,20 @@ du den Effekt, hier urteilst du über ihn. Was die Zahl danach behaupten darf, s
   Verschiebung per Schwerpunkt oder Block-Matching nachmessen.
   *Behauptete ~10 px gegen gemessene 1,3 px = Faktor 8; vierter dokumentierter Fehlalarm derselben Art auf
   derselben Zeile · 2026-07-31*
+
+- **CSS-Regel steht im Bundle und tut trotzdem nichts** — wir schreiben überall zwei Zeilen,
+  `backdrop-filter` und darunter `-webkit-backdrop-filter`. Der Minifier hält beide für dieselbe
+  Eigenschaft und behält die **letzte** — also die mit Präfix, die Chrome ignoriert. Im gebauten
+  Stylesheet standen 26 Regeln mit Präfix und 8 ohne; der Glas-Blur war im ganzen Spiel tot, und im
+  Quelltext sah alles richtig aus. → Präfix zuerst, Standard zuletzt. Und: `grep` im gebauten CSS beweist
+  nur, dass eine Zeile existiert, nicht dass sie wirkt.
+  *Kantenenergie hinter dem Panel (Summe der Nachbardifferenzen über ein Raster): ausgeliefert 74029,
+  mit von Hand gesetztem `backdrop-filter` 12901 — Faktor 5,7. `getComputedStyle().backdropFilter` sagte
+  `none` · 2026-08-26*
+
+- **Ein Blur/Filter nachweisen, ohne ihn zu sehen** — „unscharf" ist auf einem PNG nicht per Augenmaß
+  entscheidbar und über zwei Läufe schon gar nicht. → Kantenenergie messen: über ein festes Raster
+  `|p(x) − p(x+3)|` je Kanal summieren, einmal mit und einmal ohne den Filter, in **derselben**
+  eingefrorenen Szene. Ein echter Blur drückt die Summe um ein Vielfaches; Rauschen bewegt sie um
+  Promille.
+  *Mit Präfix 73990 gegen ohne 74048 — 0,08 %, also kein Blur. Mit echtem Filter 12901 · 2026-08-26*

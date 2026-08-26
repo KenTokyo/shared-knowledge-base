@@ -117,3 +117,12 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   **0** gegen 0.24 — während eine *falsche* Antwort mit 0.16 stieß. Trauma klingt linear mit 1.35/s ab: die
   0.40 des letzten Buchstabens waren bei 0,30 s aufgebraucht, der Solve feuert bei 0,50 s. Nachweislich
   stille Kamera im lautesten Moment der Phase, gesetzt auf 0.35 · 2026-08-03*
+
+- **Magazin eingebaut, und neun von zehn Waffen laufen mit 100 % Feuerzeit** — die Regeneration der
+  aktiven Waffe war mit `coolRate × 0.18` bewusst klein gewählt, wurde aber in der Messung **jeden Frame**
+  abgezogen, auch während des Feuerns. 0,162/s gegen plasmas Hitzerate 0,127/s heißt: die Waffe wird nie
+  warm, das Magazin existiert nicht. `Weapons.update` macht es richtig und hängt das Kühlen an `!wants`;
+  die Nachbildung im Werkzeug tat es nicht. → Bei jeder Regenerationsrate zuerst fragen, ob sie **während**
+  der Aktion läuft, die sie ausgleichen soll. Netto-Rate ausrechnen, bevor man die Konstante wählt.
+  *`probe-mounts.mjs`: ungetaktet 100,0 % Feuerzeit bei neun von zehn Familien; am Abzug getaktet 55,3 %
+  (Strahl) bis 86,2 % (Frost). Die Rotation über vier Plätze ist 20,7 Punkte wert · 2026-08-26*
