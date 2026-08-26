@@ -42,12 +42,12 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   *`maxPerFrame=1` bei 17/17 Schüssen, während die Bänder bei ±0,70u um einen Kern von 0,345u lagen =
   2,0× Kernbreite. Danach worst off-axis 0,310u gegen radius 0,368u, verwurzelt 120/120 · 2026-08-02*
 
-- **Die Arena war lauter als der Spieler** — drei Oszillatoren mit Amplitude 1 summierten in *ein*
-  Ausgangs-Gain, also erreichte rund das Dreifache der Konstante den Master; dazu fehlte die
-  Distanzdämpfung im ersten Frame. → Oszillatorstapel auf **Summe 1** normalisieren und je Quelle einen
-  eigenen Pegel führen (Spieler / Hazard / Slow).
-  *Eine 2,6 s haltende Stimme lag mit 0,698 über dem eigenen Schuss-Transienten (0,627); nachher 0,296 /
-  0,237 / 0,454. Gemessen ist die Gain-Summe im Graphen, nicht die wahrgenommene Lautheit · 2026-08-02*
+- **Die Arena war lauter als der Spieler** — Oszillatoren summierten mehrfach in ein Gain; gerenderte
+  Transienten widerlegten später denselben Denkfehler anders: Gain-Verhältnis war kein Pegelverhältnis.
+  → Quellen im echten Graphen aus gleichem Zustand messen; Oszillatorgewichte auf Summe 1, Render-Trims
+  gegen den Spielerpegel fitten, je Verursacher eigenen Pegel führen.
+  *Beam 0,698 > Spielerschuss 0,627 → 0,296 / 0,237 / 0,454 · Gegner-Trim 0,45 ergab 1,16×
+  Spielermündung, Trim 0,20 ergab 0,52×; Boss 0,17× · 2026-08-02/26*
 
 - **Eine Klemme, die geometrisch nicht tun kann, was sie behauptet** — die Kamera-Kollisionsklemme addierte
   auf `distance`; das Auge liegt aber auf dem Strahl, der das Subjekt unter `pitch` verlässt, also ist das
