@@ -239,6 +239,25 @@ Ohne Userauftrag oder klare Projektpflicht keine neuen Tests oder Testeinstellun
 
 ## 8. Sprache und Übergabe
 
+### Regel 0: Rede so, wie der User mit dir redet
+
+Der User schreibt in normalen, alltäglichen Sätzen. Antworte genauso. Das ist die wichtigste Sprachregel und sie schlägt jede andere Regel in diesem Abschnitt.
+
+Konkret:
+
+- **Kurze Sätze.** Ein Gedanke pro Satz. Punkt statt Komma.
+- **Normale Wörter.** Sag „Waffe wechseln", nicht „Rollenwechsel am Mount". Sag „geht schneller", nicht „reduziert die Latenz".
+- **Keine ausgedachten Fachwörter.** Wenn du ein Wort erfindest, um etwas kürzer zu sagen, hast du es länger gemacht.
+- **Keine Bilder und keine Sprüche.** Kein „der Clou", kein „das ist die Zahl, die alles trägt", kein „das ist das Spiel". Sag einfach, was passiert.
+- **Erst das Ergebnis, dann der Grund.** Nicht andersrum.
+- **Zahlen nur, wenn der User sie braucht.** Eine Zahl im Chat, der Rest in die Datei.
+- **Tabellen nur für echte Listen.** Nicht als Ersatz für einen Satz.
+- **Fachwort nur, wenn es sein muss.** Dann direkt dahinter in Klammern erklären.
+
+Test vor dem Absenden: Würde ein Freund ohne Programmiererfahrung das verstehen? Wenn nein, umschreiben.
+
+**Warum:** Der User hat gesagt, er versteht die Antworten nicht mehr. Eine Antwort, die keiner liest, ist keine Antwort. Technische Genauigkeit gehört in die Task- und Prompt-Dateien, nicht in den Chat.
+
 Neue teuer belegte Erfahrung nach [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md) speichern. Technische Tipps bleiben prüfbar; die gemessen bessere Lösung gewinnt.
 
 Für Antworten, Prompt-, Task- und Doku-Dateien:
@@ -263,6 +282,16 @@ Für Antworten, Prompt-, Task- und Doku-Dateien:
 | `Fan-in` | `Ergebnisse zusammenführen` |
 | `Gate` | `Prüfung` oder `Freigabepunkt` |
 | `bounded` |  |
+| `Vertrag`, `Contract` | `Absprache` oder `Regel` |
+| `Quelle der Wahrheit` | `die eine Stelle, die das entscheidet` |
+| `orchestrieren` | `steuern` |
+| `Instanz` | `Kopie` oder `Exemplar` |
+| `abgeleitet` | `ausgerechnet aus` |
+| `Kapstein`, `Capstone` | `letzte Stufe` |
+| `qualitativ` | `fühlt sich anders an` |
+| `Zustandsautomat` | `welcher Bildschirm gerade läuft` |
+| `Feuerzeitquote` | `wie oft du schießen kannst` |
+| `Multiplikatorkette` | `die Rechnung für die Beute` |
 
 Exakte Code-, API-, Datei- oder Befehlsnamen dürfen diese Wörter behalten; dann ihre Bedeutung kurz erklären.
 
