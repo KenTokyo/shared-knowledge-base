@@ -12,7 +12,7 @@ Architektur/Stand: Repo-`README.md`, `ROADMAP.md`, `.completed/`. Hier nur beleg
 | `shoot.mjs`, Capture, A/A, A/B, Presets, Crops | [`CAPTURE-MEASURING.md`](CAPTURE-MEASURING.md) |
 | Kristalle, Wasser, Vapor, Partikel, PostFX, WGSL | [`VFX-SHADERS.md`](VFX-SHADERS.md) |
 | Emissiv-, Hitze-, Lichtzahlen — „zu schwach“, „zu flach“, „zu weiß“ | [`EMISSION-LIGHT-LEVELS.md`](EMISSION-LIGHT-LEVELS.md) |
-| Uhren, RNG, Reset, Audio, Cloth, Allokation, Warm-up | [`RUNTIME-PERFORMANCE.md`](RUNTIME-PERFORMANCE.md) |
+| Uhren, RNG, Reset, Audio, Cloth, Allokation, Warm-up, ms-Sonden, Basislinien-Drift | [`RUNTIME-PERFORMANCE.md`](RUNTIME-PERFORMANCE.md) |
 | Waves, Wights, Essence, Boons, Cairn, Balance | [`GAMEPLAY-BALANCE.md`](GAMEPLAY-BALANCE.md) |
 | `progression-test.mjs`, `mutation-test.mjs`, Assertions | [`TEST-GATES.md`](TEST-GATES.md) |
 | `review/*.mjs`, `tools/*shot.mjs`, Selbsttests, Falsifikatoren, Messsonden | [`PROBES-SELFTESTS.md`](PROBES-SELFTESTS.md) |
