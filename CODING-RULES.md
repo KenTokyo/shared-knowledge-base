@@ -202,6 +202,25 @@ Datenfluss und Leistung:
 - Eine laufend veränderte Liste nie im selben Durchlauf erweitern; Kopie oder Queue plus `visited`-Set und feste Obergrenze nutzen.
 - Neue Schichten brauchen sichtbaren Nutzen. Leistung darf Kernfunktion, Lesbarkeit oder belegte Qualität nicht still verschlechtern.
 
+### Referenzprojekt für Echtzeit-3D-Performance
+
+**`d:\CODING\React Projects\test-projects\shardfall-arena-v2.5-active`** — Three.js · WebGL2 · handgeschriebenes
+GLSL, hält stabil 240 FPS bis `devicePixelRatio` 2. Userurteil 28.08.2026: *„Da hab ich am besten richtig gute
+Performance."* Bei einer Framerate-Frage auf diesem Stack **dort zuerst nachsehen, wie es gelöst ist**, statt
+eine eigene Lösung zu erfinden.
+
+Die vier Entscheidungen, die dort den Unterschied machen — jede im Repo nachlesbar:
+
+- **Fast keine dynamischen Punktlichter.** Feld-Szene: 1 `DirectionalLight`, 1 `HemisphereLight`, höchstens
+  2 Punktlichter. `src/loot/dropAura.ts` begründet ausdrücklich, warum kein Punktlicht pro Drop. Ein
+  Punktlicht kostet jeden beleuchteten Pixel der ganzen Szene, nicht nur seinen Radius.
+- **Ein Renderdurchgang.** `src/fx/grade.ts` rendert einmal in ein multisampled Target, überspringt Bloom
+  unter Stärke 0.01 und schließt mit *einem* kombinierten Pass.
+- **Boden ohne Pro-Pixel-Feld.** `src/world/terrain.ts` — 2 `smoothstep` + 3 `mix` pro Fragment, null
+  Rauschen, null Trigonometrie, null Textur; alle Variation als `fbm2` in Vertexfarben gebacken. Ein
+  ungleichmäßiges Gitter (1.25 m im Kern → 4 m außen) statt Ring-LOD, damit keine Naht entsteht.
+- **Schattenkarte 2048²** (`src/world/sky.ts`), nicht 4096².
+
 ## 5. Fachregeln und Sichtprüfung
 
 - React-/Frontend-Arbeit folgt [FRONTEND-RULES.md](FRONTEND-RULES.md); Echtzeit-3D folgt [THREEJS-RULES.md](THREEJS-RULES.md) und genau einer passenden Fachdatei.
