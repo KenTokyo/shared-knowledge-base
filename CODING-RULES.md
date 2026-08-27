@@ -213,6 +213,15 @@ Datenfluss und Leistung:
 - Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
 - Wichtig keine Endlosssichtprüfungen, max 2 Sichtprüfungen, außer dir wird gesagt du kannst soviele machen wie du möchtest, Sichtprüfungen verbrauchen viele Ressourcen!
 
+### Game UI default
+
+Unless a named project style or reference requires something stronger or different:
+
+- Do not ship generic flat dashboard cards as game UI. Use the project palette with layered solid surfaces, inset and raised planes, fine rims, highlights, contact shadows, and restrained glow so controls read as crafted 3D-like objects without adding another canvas.
+- Give every important action or state a clear, original inline SVG mark. Keep one stroke and shape language across the screen. Text-only placeholders, repeated generic symbols, and decorative icons without meaning do not count.
+- Tie motion to an event: appear → build → highlight → settle or fade. Selection, cast, hit, cooldown, success, and failure need immediate transform/opacity feedback. Keep idle motion to a few signature parts, respect reduced motion, and clean up every listener or animation owner.
+- Put combat skill bars at the lower gameplay edge as one compact rail or console. Each slot needs a distinct SVG mark, key chip, readable name on focus/activation, and clear ready, active, progress/cooldown, and disabled states. Group slots tightly; let rim, depth, and state light carry the look instead of oversized cards or constant full-surface neon.
+
 ## 6. Checks und Testmenge
 
 - Zusammenhängenden Teil fertigstellen, dann stärksten passenden Projektcheck einmal für alle eigenen Änderungen ausführen.
