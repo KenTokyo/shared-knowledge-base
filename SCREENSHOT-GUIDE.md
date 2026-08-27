@@ -1,20 +1,21 @@
-# CLI-Capture für visuelle Prüfungen
+# CLI-Capture für browsergestützte Laufzeit-Sichtprüfung
 
-**Lesen wenn:** nach vollständiger Umsetzung eine visuelle Unsicherheit übrig bleibt und die freiwillige
-Capture-Ausnahme gewählt wird.
+**Lesen wenn:** nach vollständiger Umsetzung eine visuelle Unsicherheit übrig bleibt und der User eine
+browsergestützte Laufzeit-Sichtprüfung ausdrücklich freigegeben hat.
 **Geltung:** verbindlicher technischer Owner nur für diesen Ausnahmefall; lokale CLI-Namen stehen in der `AGENTS.md`.
 
-**Default:** Keine agentische Sichtprüfung und kein vorsorglicher Bau des Capture-Systems. Die direkte
-Oberflächen-/Gameplay-Abnahme durch den User ist vorzuziehen. Agentische Sichtprüfung braucht eine ausdrückliche
-Freigabe im aktuellen Userauftrag; Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt
-**Fachrouter und Sichtprüfung** in [`CODING-RULES.md`](CODING-RULES.md). Keine Screenshot- oder Review-Schleife.
+**Default:** Keine agentische Laufzeit-Sichtprüfung und kein vorsorglicher Bau des Capture-Systems — Browserstart
+und Capture kosten viel CPU und RAM, davon ist wenig da. Die direkte Oberflächen-/Gameplay-Abnahme durch den User
+ist vorzuziehen. Gegated ist nur der Browserstart; lokale Referenzbilder direkt lesen bleibt erlaubt. Freigabe,
+Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt **Fachregeln und Sichtprüfung** in
+[`CODING-RULES.md`](CODING-RULES.md). Keine Screenshot- oder Review-Schleife.
 
 1. **Nur nach diesem Entscheidungsgate das projekteigene CLI-Capture-System nutzen.** Existiert dann keines, zuerst
    eines nach diesem Muster bauen. Kein sichtbares Browserfenster und keine manuelle Browserprüfung.
 
 2. **Ein headless Chromium als reiner Wirt.** Playwright startet den Browser einmal, lädt die App und ruft in die
    Seite hinein. Eine Sitzung bedient alle Messungen und Parametersweeps; nie ein Browser pro Bild oder Wert.
-   Browserstart, Welt-Bake und Shaderaufbau kosten oft mehr als die eigentliche Messung.
+   Browserstart, Welt-Bake und Shaderaufbau kosten oft mehr CPU als die eigentliche Messung; Sitzung danach sofort schließen.
 
 3. **Pixel direkt aus dem Render-Target.** Den engineeigenen GPU-Readback auf dem tatsächlichen Post-Target
    verwenden und das PNG in Node schreiben; in Three.js ist das `renderer.readRenderTargetPixels()`. Bei anderen

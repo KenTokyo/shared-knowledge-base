@@ -5,7 +5,7 @@
 **Stil:** Nur kompakte Stichpunkte; je Punkt eine klare Information.
 **Schnitt:** Füllwörter, Einleitungen, Wiederholungen, unnötige Artikel streichen; Fehlerbild, Ursache, Handlung, Beleg erhalten.
 
-- **Agentische Sichtprüfung:** kein Standardgate; nur mit ausdrücklicher Freigabe im aktuellen Userauftrag. Reihenfolge, Werkzeug und Gesamtbudget: ausschließlich Abschnitt **Fachrouter und Sichtprüfung** in [`CODING-RULES.md`](../CODING-RULES.md). Diese Datei ordnet nur technische Evidenz.
+- **Browsergestützte Laufzeit-Sichtprüfung:** kein Standardgate; nur mit ausdrücklicher Freigabe im aktuellen Userauftrag, weil Browserstart und Capture viel CPU kosten. Reihenfolge, Werkzeug und Gesamtbudget: ausschließlich Abschnitt **Fachregeln und Sichtprüfung** in [`CODING-RULES.md`](../CODING-RULES.md). Diese Datei ordnet nur technische Evidenz.
 
 ## Tipps
 

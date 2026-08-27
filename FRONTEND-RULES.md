@@ -65,5 +65,5 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 
 ## Prüfung
 
-- Browser-, DOM-, Screenshot- und UI-Prüfungen folgen ausschließlich dem Freigabegate in [`CODING-RULES.md`](CODING-RULES.md).
+- Browsergestützte Laufzeit-Sichtprüfung (Browserstart, Dev-Server, Playwright, DevTools, Laufzeit-Screenshots) folgt ausschließlich dem Freigabegate in [`CODING-RULES.md`](CODING-RULES.md). Statische DOM-/Code-Prüfung und gelieferte Referenzbilder bleiben frei.
 - Statische Checks beweisen Typ- und Buildsicherheit, nicht Lesbarkeit, Bedienbarkeit oder visuelle Qualität.

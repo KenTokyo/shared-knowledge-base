@@ -21,7 +21,7 @@ Nur den engsten Fachowner lesen:
 - Capture, A/A, A/B, Probe → [Debug und Review](threejs/DEBUG-REVIEW.md)
 - Sweep, Ranking, Referenzvergleich → [Messhandwerk](threejs/MEASURING.md)
 
-Für vollständige Weltarbeit routet der kompakte [Worldbuilding-Router](THREEJS-WORLDBUILDING-RULES.md). Agentische Sichtprüfung wird ausschließlich durch den Abschnitt **Fachrouter und Sichtprüfung** in [`CODING-RULES.md`](CODING-RULES.md) freigegeben und gedeckelt.
+Für vollständige Weltarbeit routet der kompakte [Worldbuilding-Router](THREEJS-WORLDBUILDING-RULES.md). Browsergestützte Laufzeit-Sichtprüfung wird ausschließlich durch den Abschnitt **Fachregeln und Sichtprüfung** in [`CODING-RULES.md`](CODING-RULES.md) freigegeben und gedeckelt.
 
 ## Projektebene
 
