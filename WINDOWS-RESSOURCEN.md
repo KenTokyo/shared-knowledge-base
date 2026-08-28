@@ -3,7 +3,7 @@
 Kompakte Pfadkarte für häufig genutzte lokale Projekte unter Windows. macOS erhält eine eigene Datei; diese absoluten
 Windows-Pfade dort nicht übernehmen.
 
-**Stand:** 2026-08-04 · Ports stammen aus Projektkonfigurationen, nicht aus laufenden Prozessen.
+**Stand:** 2026-08-28 · Ports stammen aus Projektkonfigurationen, nicht aus laufenden Prozessen.
 `Standard` bedeutet: Vite-Default ohne feste Reservierung.
 
 ## Kernprojekte
@@ -25,7 +25,10 @@ Windows-Pfade dort nicht übernehmen.
 | **Claude of Tsushima** | `D:\CODING\React Projects\github-repos-examples\Claude-of-tsushima` | Third-Person-Open-World-Vertical-Slice auf einer prozeduralen Insel. Fokus: Weltbau, Samurai-Kampf, VFX und Messwerkzeuge. | Three.js · Vite | JavaScript | [5180](http://localhost:5180) / [4180](http://localhost:4180) |
 | **Bending Sandbox** (`AvatarCastingAbilitiesThreeJS`) | `D:\CODING\React Projects\github-repos-examples\AvatarCastingAbilitiesThreeJS` | Avatar-inspirierte Elementar-Sandbox: Pfad auf den Boden zeichnen, loslassen, Feuer-/Wasser-/Erde-/Luft-Fähigkeit läuft die Spline ab und detoniert. Referenz für **Layering von Fähigkeiten**, den Look des VFX-Editors und Preset-Bedienung. **Trigger: sagt der Nutzer „Avatar“, ist dieses Projekt gemeint.** | Three.js 0.185 · lil-gui · GLSL · Vite 8 | JavaScript | [5173](http://127.0.0.1:5173) fest auf `127.0.0.1` / [4173](http://localhost:4173) Standard |
 | **Domain Elemental** (`LinearAbiltyCastingThreeJS`) | `D:\CODING\React Projects\github-repos-examples\LinearAbiltyCastingThreeJS` | Qualitäts- und Architekturreferenz für vollständig prozedurale Skill-VFX: handgeschriebenes GLSL, laufzeitgenerierte Geometrie, exakte AoE-/Skillshot-Zielbilder, GPU-Partikel, Live-Parameter und gekoppelte Cast-Beats. Keine Effekttexturen, Sprites, Flipbooks oder VFX-Meshes auf Disk. | Three.js 0.185.1 · lil-gui · GLSL · Vite 8 | JavaScript | [5173](http://127.0.0.1:5173) Standard / [4173](http://localhost:4173) Standard |
-| **Snowflow** (`Claude-Flakes`) | `D:\CODING\React Projects\github-repos-examples\Claude-Flakes` | Wave-Survival-Spiel auf einem Echtzeit-Schneerenderer. Wichtige Babylon-/WebGPU-Referenz, ausdrücklich kein Three.js-Projekt. | Babylon.js · WebGPU · WGSL | JavaScript / WGSL | [5173](http://localhost:5173) / [4173](http://localhost:4173) Standard |
+| **Snowflow** (`Claude-Flakes`) | `D:\CODING\React Projects\github-repos-examples\Claude-Flakes` | Wave-Survival-Spiel auf einem Echtzeit-Schneerenderer. Wichtige Babylon-/WebGPU-Referenz, ausdrücklich kein Three.js-Projekt. Eine von vier Apps in diesem Repo; die anderen drei stehen direkt darunter. | Babylon.js · WebGPU · WGSL | JavaScript / WGSL | [5173](http://localhost:5173) / [4173](http://localhost:4173) Standard |
+| **Elemental Flakes** (`Claude-Flakes/elemental-flakes`) | `D:\CODING\React Projects\github-repos-examples\Claude-Flakes\elemental-flakes` | V21-Elemental-Skill-Runtime als Kopie auf Snowflows Schneekarte. 145 Fähigkeiten, handgeschriebenes GLSL. Start `npm run flakes`. | Three.js · WebGL2 · GLSL | JavaScript | [5177](http://localhost:5177) fest / 4173 Standard |
+| **Moonlit Vale** (`Claude-Flakes/moonlit-vale`) | `D:\CODING\React Projects\github-repos-examples\Claude-Flakes\moonlit-vale` | Eigenständige First-Person-Nachtkarte gegen ein Referenzbild. Kein Asset, keine Textur, alles handgeschriebenes GLSL. Start `npm run vale`. | Three.js · WebGL2 · GLSL | JavaScript | [5178](http://localhost:5178) fest / 4173 Standard |
+| **Shardfall Flakes** (`Claude-Flakes/shardfall-flakes`) | `D:\CODING\React Projects\github-repos-examples\Claude-Flakes\shardfall-flakes` | Shardfall Arena v2.5 als Kopie mit der Elemental-Flakes-Zauberbibliothek darin. Kein Shooter, kein Bausystem. Start `npm run arena`, Prüflauf `npm run arena:gate` (19 Schritte). | Three.js · WebGL2 · GLSL · React | TypeScript / JavaScript | [5179](http://localhost:5179) fest / [4179](http://localhost:4179) fest |
 | **Starforge Arena** (`quiz-arena-space`) | `D:\CODING\React Projects\github-repos-examples\quiz-arena-space` | Browserbasiertes 3D-Weltraum-Action-Roguelite. Dient als schlanke Three.js-Spielreferenz. | Three.js · Vite | TypeScript | [5184](http://localhost:5184) / [4184](http://localhost:4184) |
 
 ## VFX-Referenzrouting
@@ -48,3 +51,5 @@ Windows-Pfade dort nicht übernehmen.
 2. Port 5173 kollidiert zwischen `claude-desert`, `Claude-Flakes`, `AvatarCastingAbilitiesThreeJS` und dem Vite-Standard von `quizshoot`. Die Bending Sandbox bindet zusätzlich fest an `127.0.0.1`, `localhost` kann dort je nach IPv6-Auflösung ins Leere zeigen.
 3. Port 4173 ist bei mehreren Projekten Preview-Standard. Kollidierende Projekte nur einzeln starten oder per CLI-Port trennen.
 4. Ein belegter Port beweist nicht, dass das richtige Projekt läuft; Prozess-Arbeitsverzeichnis und HTTP-Antwort mitprüfen.
+5. **Port 5178 kollidiert hart** zwischen **Moonlit Vale** (`Claude-Flakes/moonlit-vale`) und **Claude of Duty**. Beide setzen `strictPort: true`, der zweite Start bricht also ab statt auszuweichen. Nur einzeln starten.
+6. Die vier Apps in `Claude-Flakes` haben je eigenen Vite-Cache (`node_modules/.vite-flakes`, `.vite-vale`, `.vite-shardfall`) und können deshalb gleichzeitig laufen — Snowflow 5173, Elemental Flakes 5177, Moonlit Vale 5178, Shardfall Flakes 5179.

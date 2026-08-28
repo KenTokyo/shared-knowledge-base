@@ -5,6 +5,20 @@
 
 Architektur/Stand: Repo-`README.md`, `ROADMAP.md`, `.completed/`. Hier nur belegte Projektfallen.
 
+## Vier Apps in diesem Repo
+
+Vor Facharbeit klären, in welcher die Änderung landet — sie teilen nur Repo, `shared-docs/` und `node_modules/`.
+
+| App | Ordner | Start | Prüflauf | Kontext |
+|---|---|---|---|---|
+| Snowflow | `src/` | `npm run dev` (5173) | `shoot`, `smoke`, `sim`, `draw`, `wgsl` | Repo-`README.md` |
+| Elemental Flakes | `elemental-flakes/` | `npm run flakes` (5177) | `flakes:verify` | `elemental-flakes/README.md` |
+| Moonlit Vale | `moonlit-vale/` | `npm run vale` (5178) | `vale:verify` | `moonlit-vale/README.md` |
+| Shardfall Flakes | `shardfall-flakes/` | `npm run arena` (5179) | `arena:gate` (19 Schritte) | `shardfall-flakes/README.md` |
+
+Die Tippdateien unten stammen aus Snowflow-Arbeit. Für die drei Three.js-Apps gelten sie nur da, wo sie
+stackneutral sind; Renderer-, WGSL- und Capture-Tipps sind Babylon/WebGPU-spezifisch.
+
 ## Trigger
 
 | Arbeit | Zuerst lesen |
