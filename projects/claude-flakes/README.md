@@ -14,7 +14,7 @@ Vor Facharbeit klären, in welcher die Änderung landet — sie teilen nur Repo,
 | Snowflow | `src/` | `npm run dev` (5173) | `shoot`, `smoke`, `sim`, `draw`, `wgsl` | Repo-`README.md` |
 | Elemental Flakes | `elemental-flakes/` | `npm run flakes` (5177) | `flakes:verify` | `elemental-flakes/README.md` |
 | Moonlit Vale | `moonlit-vale/` | `npm run vale` (5178) | `vale:verify` | `moonlit-vale/README.md` |
-| Shardfall Flakes | `shardfall-flakes/` | `npm run arena` (5179) | `arena:gate` (19 Schritte) | `shardfall-flakes/README.md` |
+| Shardfall Flakes | `shardfall-flakes/` | `npm run arena` (5179) | `arena:gate` (20 Schritte) | `shardfall-flakes/README.md` |
 
 Die Tippdateien unten stammen aus Snowflow-Arbeit. Für die drei Three.js-Apps gelten sie nur da, wo sie
 stackneutral sind; Renderer-, WGSL- und Capture-Tipps sind Babylon/WebGPU-spezifisch.
