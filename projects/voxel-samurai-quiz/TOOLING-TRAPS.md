@@ -35,6 +35,32 @@ Jeder Tipp kostete mindestens einen Durchgang.
 - **Shader-Gate grün, Treiber bricht trotzdem ab** — das Asset-Lab-Gate prüfte nur Deklarationen, Attribute, Klammern, Uniformwerte und Farbpfad; Swizzle außerhalb der Komponentenzahl und reservierte Wörter fielen durch. → `pnpm asset-lab:shader-gate --entry=<slug>/<target>` deckt beide seit 2026-08-05 mit ab (`scripts/asset-lab/assetLabGlslIdentifierChecks.mts`); der repoweite `pnpm vfx:shader-reserved-lint` zählt Benchmark-Ordner nur unter `--strict` und schweigt im eigenen Ordner sonst.
   *2 Compile-Fehler in 17 Surfaces trotz grünem Gate, grünem Guard und grünem Typecheck · 2026-08-05*
 
+- **Figur unsichtbar, Konsole still, alle Checks grün** — ein reserviertes GLSL-Wort als Bezeichner
+  (`float half`, `vec3 flat`) bricht die Shader-Kompilierung; das Mesh zeichnet null Pixel und meldet nichts.
+  Typecheck sieht nur einen String, Geometrie, Culling, Kamera und Verdrahtung messen sich alle gesund.
+  Verschärfend: liegt das Wort in einem **geteilten** GLSL-Chunk, fallen alle einbindenden Programme
+  gleichzeitig aus — und `pnpm vfx:shader-reserved-lint` **schweigt für `assetLabBenchmarks/`**, also auch
+  für den eigenen Benchmark-Ordner. → Bei „unsichtbar ohne Fehlermeldung" zuerst
+  `pnpm vfx:shader-reserved-lint:strict`, nicht Geometrie und Kamera zerlegen.
+  *V70-Samurai: `half` in `samuraiPose.ts` killte Rig- und VFX-Vertexshader zugleich; zwei volle Phasen
+  Ursachensuche über Geometrie, Pose-Portierung, Culling und Kamera, bevor das Wort auffiel · 2026-08-28*
+
+- **Eigenes Prüfskript gebaut, das es längst gibt** — `.tmp/`-Scanner für reservierte GLSL-Wörter
+  geschrieben, während `pnpm vfx:shader-reserved-lint` samt `--selftest` und `--strict` im Repo steht;
+  der Zeiger darauf steht nur in dieser Tippdatei. → Vor jedem neuen Gate- oder Scanskript
+  `grep -n "<thema>" package.json` über den `scripts`-Block; das vorhandene Werkzeug kennt außerdem die
+  Projektpolitik (eingefrorene Benchmark-Ordner), die ein frischer Scanner nicht hat.
+  *Selbstgebauter Sweep meldete 326 Treffer, davon die meisten nur unter ES 3.00 gültig; das vorhandene
+  Lint trennte sauber und fand zusätzlich 2 echte Auslieferungsfehler · 2026-08-28*
+
+- **Grüner Scan ohne Selbsttest ist kein Beleg** — per Shell-Heredoc geschriebenes Skript meldete
+  `hits: 0` auf nachweislich kaputten Dateien: das Heredoc halbierte die Backslashes, aus
+  `` new RegExp(`\\b${w}\\b`) `` wurde `\b` = Backspace-Zeichen statt Wortgrenze. Das Skript lief fehlerfrei
+  und log. → Skripte mit dem Write-Werkzeug schreiben, nicht per Heredoc; jeden Scanner zuerst gegen einen
+  bekannt kaputten Stand aus `HEAD` laufen lassen (`git show HEAD:<datei> > .tmp/selftest/…`) und erst nach
+  Treffern dem Grün glauben. `pnpm vfx:shader-reserved-lint:selftest` macht genau das eingebaut.
+  *Zwei Durchgänge auf „alles sauber", obwohl 6 bekannte Fehlerzeilen im Prüfpfad lagen · 2026-08-28*
+
 - **Gate meldet Code als fehlend, der dasteht** — eigener Regex-Kommentar-Stripper (`/\/\*[\s\S]*?\*\//` + `/\/\/[^\n]*/`) kennt keinen Kontext; `/*` in einem Glob-Pfad, `//` in einem String oder `*/` in einer Regex frisst echten Code bis zum nächsten Blockende. → Nie neu schreiben, `stripSourceComments` aus `scripts/gate-kit/stripSourceComments.mts` importieren (Zustandsstapel für String, Template, Regex, Kommentar).
   *24 Kopien in 23 Gate-Skripten; Sonde über 8409 Dateien: 144 Dateien, wo die alte Fassung Code fraß, davor zwei Durchgänge auf falscher Fährte · 2026-08-06*
 
