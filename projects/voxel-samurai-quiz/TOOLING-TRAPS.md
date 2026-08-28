@@ -16,6 +16,9 @@ Jeder Tipp kostete mindestens einen Durchgang.
 - **Hintergrundsonde endet leer** — `run_in_background` starb dreimal und wirkte gehängt. → Vordergrund, großzügiger Timeout.
   *14 Zeilen ~29 s, `--site` ~22 s; `camwall.mjs` 101 s vs. `playpass.mjs` 25 s · 2026-08-01*
 
+- **Zwei Shader-Gates decken sich nicht gegenseitig ab** — `vfx:shader-lint` und `vfx:shader-reserved-lint` führten je eine eigene, handgepflegte Wortliste; ein Gate meldet grün, was das andere rot meldet. → Eine gemeinsame Liste (`scripts/vfx/lib/glslReservedWords.mts`); Gruppe 1 für den Token-Scan, Gruppe 2 (Qualifizierer wie `flat`) nur in Deklarationsform, sonst sechs Falschmeldungen auf legalem GLSL3-Code.
+  *Vorfix-`MirrorBeat.ts` mit `float flat`: `vfx:shader-lint` GRUEN, `vfx:shader-reserved-lint` ROT · 2026-08-28*
+
 ## Schreiben
 
 - **`node --check` übersieht NUL** — Datei parst, Ausgabe bleibt unbrauchbar. → Nach Write Byte `0` suchen; Index muss `-1` sein.
