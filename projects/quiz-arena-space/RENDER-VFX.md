@@ -133,3 +133,17 @@ Global dazu: [`../../threejs/SHADERS.md`](../../threejs/SHADERS.md) und
   Volumen. Ihr Bild ist nur **früh** deterministisch — zwei Läufe bei `capture=4.5` sind bitgleich, bei
   `capture=24` unterscheiden sie sich in 83 % der Pixel, also muss jedes Bild-A/B in dieses Fenster ·
   2026-08-26*
+
+- **Eine flach liegende Deckschicht kostet Fläche, nicht Stückzahl — und der Schnitt verrät sie nicht**
+  — die Eisdecke unter Glacial Crown und Permafrost Wake lief auf zwei Wegen zugleich: die Bodenmarke
+  `DecalType.FROST` (rund 16 Simplex-Aufrufe plus ein `voronoi2` mit 9 Zellen *pro Pixel*, Radius bis 9 m,
+  bis 260 Marken live) und darüber eine zweite mitwachsende Vollplatte `createFrostFieldMaterial`.
+  Beide `depthWrite: false`, also verdeckt keine die andere: jede Schicht zahlt volle Füllrate für Pixel,
+  die die oberste sowieso überschreibt. Kosten sind `Σ π · r²`, und drei harmlose Config-Werte —
+  Marken pro Meter, Radiusfaktor, Lebensdauer — multiplizieren sich hinein, ohne dass einer davon falsch
+  aussieht. → Bodeneffekte an der **beschatteten Fläche** bemessen, nicht an der Markenzahl, und eine zu
+  große Deckschicht **löschen statt klemmen**: ein Budget rettet den falschen Effekt nicht.
+  *22.000 m² beschatteter Boden für einen 110 m²-Skill, 198 Schichten tief. Im Nutzerbild FPS-Schnitt 94,9
+  bei 1%-Tief 49,0 — der Mittelwert sagt nichts, der Tiefpunkt alles. Entfernt 2026-08-28: −124 Zeilen
+  `GroundDecals.ts`, −225 Zeilen Material, 11 Aufrufstellen, 191 tote Config-Zeilen; `sim` 73/73,
+  `reddrive` 64/64 unverändert grün. Regel dazu in CODING-RULES §4 „Bodenflächen" · 2026-08-28*

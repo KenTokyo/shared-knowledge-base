@@ -219,7 +219,18 @@ Die vier Entscheidungen, die dort den Unterschied machen — jede im Repo nachle
 - **Boden ohne Pro-Pixel-Feld.** `src/world/terrain.ts` — 2 `smoothstep` + 3 `mix` pro Fragment, null
   Rauschen, null Trigonometrie, null Textur; alle Variation als `fbm2` in Vertexfarben gebacken. Ein
   ungleichmäßiges Gitter (1.25 m im Kern → 4 m außen) statt Ring-LOD, damit keine Naht entsteht.
+  Die Gegenprobe steht direkt darunter unter „Bodenflächen".
 - **Schattenkarte 2048²** (`src/world/sky.ts`), nicht 4096².
+
+### Bodenflächen (VFX) — gesperrt
+
+Nie wieder bauen: grosse, flach liegende, durchsichtige Flächen mit teurem prozeduralem Shader, die sich über den Boden ausbreiten und dabei stapeln.
+
+- **Grund:** ohne `depthWrite` verdecken sie sich nicht. Kosten = `Σ π · r²`, nicht Anzahl. Eine solche Fläche zog 22.000 m² beschatteten Boden für einen 110 m²-Skill — 198 Schichten tief. Die FPS bleiben im Schnitt hoch, der 1%-Tiefpunkt halbiert sich.
+- **Gesperrt:** Voronoi, fbm oder mehr als ~4 Noise-Aufrufe pro Pixel auf einer Bodenfläche; Radius über ~9 m; wachsende Vollplatte unter einem Skill; zweite Bodenschicht über bestehenden Bodenmarken.
+- **Erlaubt:** dünne Ringe und Kanten; Bodenmarke als Tönung über Stein statt als Deckschicht; alles, was **über** dem Boden steht (Kristalle, Splitter, Nebel, senkrechte Vorhänge, Partikel).
+- **Vorbild:** der Boden im Referenzprojekt oben — 2 `smoothstep` + 3 `mix` pro Fragment, Variation in Vertexfarben gebacken.
+- **Beleg:** 2026-08-28 aus `quiz-arena-space` entfernt (`DecalType.FROST`, `createFrostFieldMaterial`). Nicht als Budget klemmen — löschen: eine zu grosse Deckschicht ist der falsche Effekt, nicht ein falsch eingestellter.
 
 ## 5. Fachregeln und Sichtprüfung
 
