@@ -243,6 +243,17 @@ Nie wieder bauen: grosse, flach liegende, durchsichtige Flächen mit teurem proz
 - Eine Sitzungsausnahme des Users (siehe Kopf) hebt die Freigabepflicht auf. Sie hebt die Sechsergrenze und den Dauerwirt aus `AGENTS.md` nicht auf — beide schützen den Rechner, nicht die Regel.
 - Wichtig keine Endlosssichtprüfungen, max 2 Sichtprüfungen, außer dir wird gesagt du kannst soviele machen wie du möchtest, Sichtprüfungen verbrauchen viele Ressourcen!
 
+### Startprobe zum Abschluss — Pflicht, sobald die Freigabe vorliegt
+
+Liegt eine Freigabe vor, gehört zum Abschluss **ein** eigener Start der Anwendung mit gelesener Konsole. Nicht optional, nicht statt der Prüfläufe, sondern als letzter Schritt davor.
+
+- **Ablauf:** fertig umsetzen → Projektprüflauf → App selbst starten → Konsole lesen → jeden Fund an der Ursache beheben → ein Kontrollstart → committen.
+- **Was zählt:** `console.error`, `console.warn`, ungefangene Ausnahmen, Shader-Übersetzungsfehler, 404 auf eigene Dateien und Abkündigungen der Bibliothek. Eine Abkündigung ist ein Fund: sie steht bei **jedem** Spielstart im Bild und verdeckt den nächsten echten Fehler.
+- **Ursache statt Filter:** keine Meldung stummschalten, keine Ausnahmeliste erweitern, ohne den Grund danebenzuschreiben. Eine Ausnahme braucht eine Messung, die zeigt, dass die Seite die Zeile nicht verhindern kann.
+- **Grenze:** zwei Startprobe-Läufe, derselbe Deckel wie oben. Ein roter Lauf ist Fehlersuche und zählt nicht als Wiederholung.
+- **Am günstigsten** über den vorhandenen CLI-Harness des Projekts statt über ein sichtbares Fenster. Beispiel: `shardfall-flakes/tools/console-gate.mjs` (`npm run arena:console`) startet Vite in-process, hängt headless Chrome über CDP dran und macht jede laute Zeile zum Exit-Code. Bewusst **nicht** in der Kettenprüfung: eine Kette, die bei jedem Lauf einen Browser startet, frisst den Zweierdeckel.
+- **Ohne Freigabe** entfällt der Schritt ersatzlos; dann bleibt es beim statischen Beleg, und die Antwort sagt ausdrücklich, dass die Konsole ungeprüft ist.
+
 ### Game UI default
 
 Unless a named project style or reference requires something stronger or different:
