@@ -12,6 +12,8 @@
 
 **Ausnahmen sind erlaubt.** Der User darf jede Regel dieser Datei für eine Sitzung oder einen Auftrag aufheben — auch Sperren wie die Freigabepflicht für browsergestützte Laufzeit-Sichtprüfungen (§5) oder die Testsperre (§6). Eine gewährte Ausnahme gilt für die genannte Sitzung, wird in Antwort und Task-Datei genannt und braucht keine Rückfrage mehr. Sie ändert diese Datei nicht und gilt nicht automatisch für die nächste Sitzung. Das direkte Lesen lokaler, vom User bereitgestellter Referenzbilder ist keine solche Ausnahme, sondern regulär erlaubt.
 
+**Ausdrücklich bereitgestellte Test-Zugänge verwenden.** Nennt der User im aktuellen Auftrag einen lokalen Secret-Pfad oder stellt begrenzte API-Keys ausdrücklich für den beauftragten Test bereit, darf und soll die ausführende KI sie ohne erneute Erlaubnisfrage lesen und im genannten Umfang verwenden. Nur ignorierter lokaler Speicher oder Prozess-Umgebung; Werte nie ausgeben, in Prompt/Task/Log/Screenshot übernehmen oder committen. Kosten-/Providergrenzen beachten, zuerst kostenloses oder günstiges aktuell verfügbares Modell prüfen und echte Auth-/Quota-Fehler redigiert dokumentieren.
+
 ## 1. Prompt-Datei und Task-Datei
 
 Änderung an Projektdatei oder -artefakt → **vor erstem Edit** genau ein Paar:
