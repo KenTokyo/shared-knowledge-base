@@ -10,7 +10,7 @@
 
 - Commit-Pflicht: Bitte alles commiten, am besten erstmals deine Änderungen sowieso, du kannst auch von deinen anderen Mitarbeitern die commits mitcommiten, das ist vollkommen ok
 -- Du musst aber commiten und pushen, natürlich merge knoflikte sinnvoll und eigenständig beheben
--- Submodule z.B. shared-docs auch commiten
+-- Submodule z.B. shared-docs auch commiten, immer am Ende der Tasks, bitte beachten
 
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
