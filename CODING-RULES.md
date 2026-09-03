@@ -14,6 +14,8 @@
 
 **Ausdrücklich bereitgestellte Test-Zugänge verwenden.** Nennt der User im aktuellen Auftrag einen lokalen Secret-Pfad oder stellt begrenzte API-Keys ausdrücklich für den beauftragten Test bereit, darf und soll die ausführende KI sie ohne erneute Erlaubnisfrage lesen und im genannten Umfang verwenden. Nur ignorierter lokaler Speicher oder Prozess-Umgebung; Werte nie ausgeben, in Prompt/Task/Log/Screenshot übernehmen oder committen. Kosten-/Providergrenzen beachten, zuerst kostenloses oder günstiges aktuell verfügbares Modell prüfen und echte Auth-/Quota-Fehler redigiert dokumentieren.
 
+**Fester Schlüsselort auf diesem Mac (User 2026-09-01):** `/Users/kentoky/Desktop/Accs/KEYS.md` — dort liegen die freigegebenen Test-Schlüssel als `NAME=WERT` je Zeile (aktuell `OPENCODE_API_KEY`). Zweite Ablage im selben Ordner: `API-KEYS.md`. Bei einem beauftragten Anbietertest zuerst dort nachsehen, statt nach Schlüsseln zu fragen oder den User sie erneut in den Chat tippen zu lassen — ein Chat-Klartextschlüssel landet über die Markdown-Historie dauerhaft im Arbeitsordner. Datei nur lesen, Werte weiterhin nie ausgeben, kopieren, committen oder in Task/Log/Screenshot übernehmen.
+
 ## 1. Prompt-Datei und Task-Datei
 
 Änderung an Projektdatei oder -artefakt → **vor erstem Edit** genau ein Paar:
@@ -150,6 +152,8 @@ Ist eine browsergestützte Laufzeit-Sichtprüfung ausdrücklich erlaubt, verlang
 Fertig ist die Übernahme erst, wenn der echte Produkttrigger den neuen Weg nutzt, die benannten Qualitätsmerkmale umgesetzt sind, verdrängte Wege keine Produktionsreferenzen mehr haben und erlaubte Prüfungen das Ergebnis tragen. Ohne erlaubte browsergestützte Laufzeit-Sichtprüfung nur statische Evidenz, direkt gelesene Referenzbilder und eine genaue manuelle Laufzeitabnahme nennen; keine optische Gleichheit des laufenden Produkts behaupten.
 
 Bei klarem Auftrag nicht nachfragen. Bis zum Ziel oder zu einer echten äußeren Blockade weiterarbeiten. Nur stoppen bei fehlendem Secret/Zugang, widersprüchlichen Pflichtdaten oder nicht erlaubter endgültiger Aktion; dann genau die eine fehlende Information nennen.
+
+**Keine Rückfragen am Ende einer Antwort (Userregel 2026-09-01).** Auch bei mehrdeutigem Auftrag nicht mit einer Frage abschließen: die plausibelste Lesart wählen, die getroffene Annahme in einem Satz nennen und weiterarbeiten. Eine Annahme, die sich später als falsch zeigt, wird korrigiert — sie kostet weniger als ein blockierter Zug. Fragen bleiben nur bei fehlendem Zugang oder einer nicht erlaubten endgültigen Aktion erlaubt. Ebenso nicht am Ende um Erlaubnis für den nächsten offensichtlichen Schritt bitten, sondern ihn ausführen.
 
 Im bearbeiteten Weg sichtbare Fehler, Typfehler, tote Verweise, kaputte Doku, falsche Rechnungen und eigene Rückschritte direkt beheben. Fremde Änderungen nie überschreiben oder zurücksetzen. Fremde Blocker nur so klein wie nötig und ohne Datenverlust beheben; Funde außerhalb des Auftrags nicht zum neuen Großprojekt machen.
 

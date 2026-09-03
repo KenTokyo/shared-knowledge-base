@@ -91,6 +91,7 @@ Der zweite Punkt ist der, auf den es ankommt: **Gameplay-Farbe und Interface-Far
 | `.unityAIChat-backups` | Datierte Gesprächs-, Rewrite- und Git-Sicherungen für UniAI Chat und einzelne Projekte; nur zum Wiederherstellen und Nachschlagen. | JSON, Markdown, Text, Git-Patch, Git-Bundle | `/Users/kentoky/Documents/React Projects/.unityAIChat-backups` |
 | `claude-cartoon-tsushima` | Unvollständiger NoteTree-Lernworkspace mit Regeln und Chat-Sitzung; kein Code-Repository. | Markdown, JSON · NoteTree-Workspace | `/Users/kentoky/Documents/React Projects/claude-cartoon-tsushima` |
 | `new` | Leerer, ungeklärter Platzhalter ohne Manifest, Dokumentation oder Git-Repository; nicht als Projektvorlage behandeln. | Keine Dateien vorhanden | `/Users/kentoky/Documents/React Projects/new` |
+| `Accs` | **Schlüsselablage des Users.** `KEYS.md` hält freigegebene Test-Schlüssel als `NAME=WERT` je Zeile (aktuell `OPENCODE_API_KEY`), daneben `API-KEYS.md` und `Business-data.md`. Nur lesen, Werte nie ausgeben oder committen. | Markdown | `/Users/kentoky/Desktop/Accs` |
 
 ## 5. Portliste
 
