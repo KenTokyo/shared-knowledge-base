@@ -41,3 +41,22 @@ Create a cleaner companion for `claude-v6-costs.md` without changing or dropping
 - [x] Push shared-docs, then commit and push the parent pointer.
 
 **Result:** The readable edition is verified and ready for the shared-docs delivery flow.
+
+## Phase 3 — Shorter comparison view
+
+**Goal:** Make consumption differences obvious in Markdown Preview.
+
+**Todos**
+
+- [x] Sort directly comparable runs into one consistent table.
+- [x] Add reliable color markers with a non-misleading legend.
+- [x] Collapse verbose snapshots while preserving every source value.
+- [x] Add a short, evidence-based conclusion.
+- [x] Recheck facts, UTF-8, whitespace, Git diff, and delivery.
+
+**Limits**
+
+- Colors show relative rank only, not an invented universal rating.
+- Do not treat an unclear quota meter as confirmed consumption.
+
+**Result:** The page is 42% shorter, ranks comparable usage clearly, and keeps full details available in folded sections.
