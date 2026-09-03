@@ -8,6 +8,9 @@
 
 **Ziel:** Auftrag verstehen, Original und verlustfrei verbesserte Arbeitsfassung speichern, in Task-Datei planen, verbesserte Aufgabe direkt umsetzen.
 
+- Commit-Pflicht: Bitte alles commiten, am besten erstmals deine Änderungen sowieso, du kannst auch von deinen anderen Mitarbeitern die commits mitcommiten, das ist vollkommen ok
+-- Du musst aber commiten und pushen, natürlich merge knoflikte sinnvoll und eigenständig beheben
+
 **Reihenfolge bei Widersprüchen:** aktueller Userauftrag → lokale `AGENTS.md` → diese Coding Rules → passende Fachregeln und belegte Learnings.
 
 **Ausnahmen sind erlaubt.** Der User darf jede Regel dieser Datei für eine Sitzung oder einen Auftrag aufheben — auch Sperren wie die Freigabepflicht für browsergestützte Laufzeit-Sichtprüfungen (§5) oder die Testsperre (§6). Eine gewährte Ausnahme gilt für die genannte Sitzung, wird in Antwort und Task-Datei genannt und braucht keine Rückfrage mehr. Sie ändert diese Datei nicht und gilt nicht automatisch für die nächste Sitzung. Das direkte Lesen lokaler, vom User bereitgestellter Referenzbilder ist keine solche Ausnahme, sondern regulär erlaubt.
