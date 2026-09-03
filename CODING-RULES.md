@@ -242,6 +242,21 @@ Nie wieder bauen: grosse, flach liegende, durchsichtige Flächen mit teurem proz
 - **Vorbild:** der Boden im Referenzprojekt oben — 2 `smoothstep` + 3 `mix` pro Fragment, Variation in Vertexfarben gebacken.
 - **Beleg:** 2026-08-28 aus `quiz-arena-space` entfernt (`DecalType.FROST`, `createFrostFieldMaterial`). Nicht als Budget klemmen — löschen: eine zu grosse Deckschicht ist der falsche Effekt, nicht ein falsch eingestellter.
 
+### Prozedurale Rigs, Loop-Shader und Additiv-VFX (Belege 2026-09-03, Asset-Lab V6)
+
+Jede Regel stammt aus einem echten Fehler dieses Laufs; sie gilt für alle Agenten, die Shader-Animation ohne Browserprüfung liefern.
+
+- **Fog-Farbraum:** three.js übergibt `fogColor` (und andere „unlit“-Uniforms) im **Output-Farbraum** (sRGB), weil eingebaute Materialien den Nebel nach Tonemapping und Encoding mischen. Ein eigenes `ShaderMaterial` mischt deshalb `mix(finishOpaque(lit), fogColor, fogFactor())` **nach** dem Encoding, nie in Linear. Sonst nebelt die eigene Fläche ~18 % heller als die Instanz-Familien daneben, und die Naht ist sichtbar.
+- **Loop-Wrap:** in einer Szene mit Schleifenlänge L darf jede Kreisfrequenz nur `n · 2π / L` sein und jeder Noise-Scroll nur ein ganzzahliges Vielfaches seiner Kachelperiode. Ein rundes `sin(t * 9.0)` poppt bei t = L. Wrap numerisch prüfen: Zustand bei t = 0 gegen t = L⁻ vergleichen.
+- **Rig-Vorzeichen:** bei prozeduralen Rigs liegt die Masse eines Torso-Bones **über** dem Pivot, die eines Gliedmaßen-Bones **darunter**; dieselbe Winkelkonvention lässt ein „nach vorn lehnen“ am Torso rückwärts laufen. Konvention einmal je Bone-Klasse festlegen und Endeffektoren numerisch prüfen (Fahnenspitze über dem Kopf, Fußsohle bei y ≥ 0). Ein Salto auf dem Root-Pivot statt dem Becken schwingt die Figur unter den Boden.
+- **Boden-Clamp statt IK-Hoffnung:** Posen aus Keyframes durchdringen den Boden praktisch immer (hier bis 0,75 Einheiten in 22 % der Frames). Beim Backen die tiefste Blockecke je Frame messen und die Figur anheben; das Ergebnis numerisch belegen (min. Welt-y ≥ 0).
+- **Additive Farben über 1.0** nie Richtung `vec3(1.0)` mischen (das dunkelt ab); Richtung `max(r, max(g, b))` entsättigen.
+- **Feste Welt-Quads brauchen `DoubleSide`.** Nur echte Billboards dürfen `FrontSide`; gekreuzte Flammenblätter mit fester Ausrichtung verlieren sonst je Orbit-Viertel ein Blatt.
+- **Phasen-Seeds nie über kleine Modulo-Reihen** (`(i * 0.37) % 1` erzeugte für 72 Lichter nur 13 verschiedene Phasen). Hash je Index oder Rand-Stream.
+- **Nachedit = Nachprüfung:** nach jedem Sed/Kleinedit an einer Datei Smoke und Typecheck erneut laufen lassen; ein nachträglich ergänztes `side: DoubleSide` ohne Import ist ein leeres Material zur Laufzeit.
+- **Ohne Browser prüfen:** `build()` samt `createGeometry()`/`createMaterial()` in Node ausführen, dazu statischer GLSL-Lint (Varyings beider Stufen, Uniforms gegen `material.uniforms`, Attribute gegen die Geometrie, reservierte Wörter, ASCII, Klammern, Funktionsreihenfolge, Float/Int-Mischung) und die Repo-Shader-Lints. Was das nicht fängt (echte Compile-Fehler durch Typkonflikte), fängt nur ein zeilenweises Review der zusammengesetzten Shaderquelle.
+- **Suchen auf den eigenen Ordner scopen.** Ein Grep über ein gemeinsames Verzeichnis listet fremde Modellordner mit Trefferzeile — für Benchmark-Reviews bereits ein Fairness-Verstoß.
+
 ## 5. Fachregeln und Sichtprüfung
 
 - React-/Frontend-Arbeit folgt [FRONTEND-RULES.md](FRONTEND-RULES.md); Echtzeit-3D folgt [THREEJS-RULES.md](THREEJS-RULES.md) und genau einer passenden Fachdatei.
