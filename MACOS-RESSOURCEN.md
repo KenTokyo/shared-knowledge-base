@@ -3,9 +3,9 @@
 Zentrale Übersicht der lokalen Ressourcen unter `/Users/kentoky/Documents/React Projects`.
 Sie ordnet Projekte nach Three.js-Bezug, nennt geeignete Einsatzfelder und hält die konfigurierten lokalen Ports fest.
 
-**Stand:** 2026-08-20 · **Letzter Vollscan:** 2026-08-04 über 20 direkte Verzeichnisse · **Aufgenommen:** 15 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse · **Nachtrag 2026-08-20:** `signature-vfx-unified-library-v21-gpt-5-6-sol` und `Claude-Flakes` eingetragen; nicht als neuer Vollscan zu lesen.
+**Stand:** 2026-09-03 · **Letzter Vollscan:** 2026-08-04 über 20 direkte Verzeichnisse · **Aufgenommen:** 16 Codeprojekte und 4 Workspace-Ressourcen · **Ausgeschlossen:** 3 Sammelverzeichnisse · **Nachträge:** 2026-08-20 `signature-vfx-unified-library-v21-gpt-5-6-sol` und `Claude-Flakes`; 2026-09-03 `Cadle`; nicht als neuer Vollscan zu lesen.
 
-**Trigger-Wörter:** „Avatar“, „Elemental“, „Domain Elemental“ → `domains/elemental` in `signature-vfx-unified-library-v21-gpt-5-6-sol` (Abschnitt 1). „Elemental Flakes“, „Claude Flakes“, „Snowflow“ → `Claude-Flakes` (Abschnitt 1); für Glass-Design und Icon-Erzeugung Abschnitt 1a. Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
+**Trigger-Wörter:** „Avatar“, „Elemental“, „Domain Elemental“ → `domains/elemental` in `signature-vfx-unified-library-v21-gpt-5-6-sol` (Abschnitt 1). „Elemental Flakes“, „Claude Flakes“, „Snowflow“ → `Claude-Flakes` (Abschnitt 1); für Glass-Design und Icon-Erzeugung Abschnitt 1a. „Cadle“, „cadle.gg“, „hochwertige Landing“ → `Cadle` (Abschnitt 1); für Landing-/Marketing-Design Abschnitt 1b. Windows-Pfade stehen in [WINDOWS-RESSOURCEN.md](WINDOWS-RESSOURCEN.md) und gelten hier nicht.
 
 ## Pflicht vor jeder Ressourcennutzung
 
@@ -40,6 +40,7 @@ git -C "$RESOURCE" submodule update --init --recursive
 | `signature-vfx-unified-library-v21-gpt-5-6-sol` | Aktiv · **Trigger-Wörter „Avatar“ und „Elemental“ meinen `domains/elemental` in diesem Repo.** Vereinte Signatur-VFX-Bibliothek mit sechs Domains; `domains/elemental` ist Domain Elemental mit neunzig prozeduralen Signaturen, Sechs-Slot-Loadout, Linien- und Fernzielbild, Sigil-Icons und Laufzeit-VFX-Editor. Stärkste Referenz für **Layering von Fähigkeiten**, Loadout-Bedienung und handgeschriebenes GLSL. | TypeScript, TSX, JavaScript, GLSL, HTML, CSS · React 18, Three.js 0.185, lil-gui, Vite 8 | `/Users/kentoky/Documents/React Projects/test-projects/signature-vfx-unified-library-v21-gpt-5-6-sol` · Domain: `…/domains/elemental` |
 | `Claude-Flakes` | Aktiv · **Trigger-Wörter „Claude Flakes“, „Elemental Flakes“ und „Snowflow“ meinen dieses Repo.** Snowflow ist eine Schnee-Survivalwelt auf Babylon.js 9 / WebGPU mit Wellen, Quiz-Tafeln, Shop und Technomancer-Klasse; `elemental-flakes/` fährt daneben die Three.js-Fassung derselben Skills. Stärkste Referenz für **UI-Erlebnis**: Skill-Rail mit zwei Bänken, Loadout-Picker auf `L`, Skilltree und ein Sigil-Icon-Satz in einem Strichrahmen. | JavaScript, WGSL, GLSL, HTML, CSS · Babylon.js 9, WebGPU, Three.js 0.185, Vite 8 | `/Users/kentoky/Documents/React Projects/Claude-Flakes` · Three.js-Teil: `…/elemental-flakes` |
 | `claude-tower-defense` | Aktiv · Action-Tower-Defense mit Held, Arena und Türmen; gut für Baufluss, Gegnerwellen, Kamera, prozedurale Welt und HUD. | JavaScript, GLSL, HTML, CSS · Three.js r180, Vite 6 | `/Users/kentoky/Documents/React Projects/claude-tower-defense` |
+| `Cadle` | Aktiv · **Trigger-Wörter „Cadle“, „cadle.gg“ und „hochwertige Landing“ meinen dieses Repo.** Browser-FPS-RPG (Destiny-2-Gefühl, FFXIV-Optik) mit Landing unter `/` und Spiel unter `/play/`. Stärkste Referenz für **Marketing-/Landing-Design**: Gold-auf-Tinte-Palette, Glas-Platten, Split-Word-Reveals, metallische Pill-Buttons, Segment-Steuerung, Stat-Count-up (Abschnitt 1b). | JavaScript, GLSL, HTML, CSS · Three.js 0.185, postprocessing, Vite 8 | `/Users/kentoky/Documents/React Projects/Cadle` · Landing: `…/index.html` + `…/src/site/` |
 
 ## 1a. Referenz „Glass-Design und Icon-Erzeugung“ — `Claude-Flakes/elemental-flakes`
 
@@ -69,6 +70,29 @@ Der Satz wirkt einheitlich, weil zwei Entscheidungen getrennt getroffen werden:
 Der zweite Punkt ist der, auf den es ankommt: **Gameplay-Farbe und Interface-Farbe sind zwei verschiedene Entscheidungen.** Wer den Akzent aus der Effektfarbe liest, bekommt so viele Farben wie es Energiearten gibt — in `quiz-arena-space` waren das achtzehn Farben auf fünfundfünfzig Skills, sieben davon dasselbe Violett.
 
 **Eindeutige Hex-Werte genügen dabei nicht.** Zwei verschiedene Zahlen können dieselbe Farbe sein; die erste Fassung der Akzenttabelle in `quiz-arena-space` hatte fünfundfünfzig verschiedene Strings und trotzdem zwei Einträge mit einem Abstand von 0,1 in OKLab. Die haltbare Regel ist ein **Wahrnehmungsabstand: kein Paar unter dE 5,0 in OKLab**, gemessen über *alle* Einträge, die nebeneinander erscheinen können. Umgesetzt in `src/ui/Bindings.ts` (`SKILL_ACCENT`), abgesichert in `tools/sim.mjs`.
+
+## 1b. Referenz „Landing-/Marketing-Design“ — `Cadle/index.html` + `Cadle/src/site/ui.js`
+
+Nachgetragen am 2026-09-03, weil der User die NoteTree-Landing an Cadle ausrichten ließ („so ein bisschen hochwertig“). Die ganze Landing steckt in einer einzigen `index.html` (Inline-CSS/-HTML) plus `src/site/ui.js` (Reveals, Count-up, Segment-Steuerung, Scroll-Fortschritt) und `src/site/rail.js` (3D-Kartenschiene). Es geht um die *Mechanik*, nicht um die Spielinhalte.
+
+**Trigger:** „Cadle“, „cadle.gg“, „hochwertige Landing“, „Landing wie Cadle“ → dieser Abschnitt. In NoteTree bereits übertragen: `app/landing/components/shared/landing-editorial.tsx`, `WarmButton.tsx`, `SegmentedTabs.tsx`, `StatStrip.tsx`.
+
+### Vokabular (was den Eindruck macht)
+
+1. **Ein Metall auf tiefem Grund:** Gold-Familie `--gold #d8bd7a`, `--gold-lit #fdf3cd`, `--gold-deep #a9812f` auf fast schwarzer Tinte. Farbe nur als Deko, nie als Fläche.
+2. **Drei Hairline-Stufen statt einer Rahmenfarbe:** `rule-faint` (Gold bei .12), `rule` (.24), `rule-lit` (.62). Alles Trennende ist eine dieser drei Linien.
+3. **Glas-Platte** als einzige Inhaltsfläche: dunkle, leicht durchscheinende Füllung, Gold-Hairline, Glanzlicht innen oben (`inset 0 1px 0`), tiefer weicher Schatten.
+4. **Eyebrow mit vorangestellter Goldlinie** und **Flourish** (Hairline mit Raute in der Mitte) über/unter jeder Headline.
+5. **Display-Headline** mit Gold-Verlauf als Text-Clip und **Split-Word-Reveal**: jedes Wort steigt auf und wird scharf (`translateY` + `filter: blur → none`), Stagger ≈ 60–70 ms; Ruhewert `filter: none`, damit kein Stacking-Context bleibt.
+6. **Metallische Pill-Buttons:** mehrstufiger vertikaler Goldverlauf, Rim aus zwei Innenschatten (hell oben, dunkel unten), wandernder Glanz beim Hover (`::after` mit Verlauf, `translateX(-120%) → 120%`), Feder `cubic-bezier(.22,1.42,.36,1)`: Hover `translateY(-1px) scale(1.02)`, Druck `scale(.965)`. Ghost-Variante = transparent + Gold-Hairline.
+7. **Stat-Streifen** zwischen zwei Hairlines, Zahlen zählen per `data-to` einmal hoch (kubisches Ease-out, ≈1,15 s), Start bei Sichtbarkeit.
+8. **Segment-Steuerung:** versenkte Bahn, eine gleitende Pille per FLIP, Panels wechseln mit Blur-Überblendung; Pfeiltasten + Home/End, `aria-selected`.
+9. **Sticky-Kopfzeile** mit `.stuck`-Zustand (Blur-Grund + Gold-Hairline) und Scroll-Fortschrittslinie; Anker-Nav mit sektionsbewusster Unterstreichung.
+10. **Alles über `transform`/`opacity`/`filter`**, IntersectionObserver-Reveals mit Stagger 70 ms, vollständiger Reduced-Motion-Fallback. Endlos-Loops (Sheen-Drift) laufen dort nur dekorativ; in NoteTree bewusst weggelassen.
+
+### Was NICHT übernommen wird
+
+Reticle, Schuss-/Treffer-Effekte, die 3D-Regionen-Schiene und die Spieltexte. NoteTree behält seine warme Stein-/Glutgold-Palette und die Surface-Tokens; Cadle liefert nur Mechanik und Hierarchie.
 
 ## 2. Three.js als Teil eines größeren Produktstacks
 
@@ -117,6 +141,7 @@ Die Tabelle enthält **konfigurierte oder vom Framework vorgegebene Ports**, kei
 | `claude-tower-defense` | `pnpm dev` / Preview | 5183 / 4183 | Fest mit `strictPort` |
 | `signature-vfx-unified-library-v21-gpt-5-6-sol` | `pnpm dev` / Preview | 6117 | Fest mit `strictPort` auf `127.0.0.1`; Dev und Preview teilen den Port und laufen nicht gleichzeitig |
 | `Claude-Flakes` Snowflow | `npm run dev` | 5173 | Fest mit `strictPort`; **Konflikt:** kollidiert mit `claude-desert` Dev |
+| `Cadle` | `npm run dev` / Preview | 5173 / 5173 | Fest mit `strictPort` auf `127.0.0.1`; Dev und Preview teilen den Port; **Konflikt:** kollidiert mit `claude-desert` und `Claude-Flakes` Snowflow |
 | `Claude-Flakes` Elemental Flakes | `npm run flakes` | 5177 | Fest mit `strictPort`; eigener Vite-Root unter `elemental-flakes/` |
 | `quiz-arena-space` | `npm run dev` / Preview | 5184 / 4184 | Fest mit `strictPort` |
 | `duty-of-tsushima` | `pnpm dev` / Preview | 5185 / 4185 | Fest mit `strictPort` |
@@ -126,7 +151,7 @@ Die Tabelle enthält **konfigurierte oder vom Framework vorgegebene Ports**, kei
 ### Bekannte Überschneidungen
 
 1. **4180 fest belegt:** `Claude-of-tsushima` Preview und `voxel-samurai-quiz` Mess-Preview können nicht gleichzeitig laufen.
-2. **5173/4173 gemischt:** `claude-desert` und `Claude-Flakes` Snowflow reservieren 5173 beide fest und können nicht gleichzeitig laufen. `quizshoot` und die freie Crossword-Preview beginnen dort nur standardmäßig und können ausweichen.
+2. **5173/4173 gemischt:** `claude-desert`, `Claude-Flakes` Snowflow und `Cadle` reservieren 5173 alle drei fest und können nicht gleichzeitig laufen (Cadle auch in der Preview). `quizshoot` und die freie Crossword-Preview beginnen dort nur standardmäßig und können ausweichen.
 3. Alte laufende Prozesse oder CLI-Overrides können von dieser Konfiguration abweichen. Auf macOS den echten Listener prüfen:
 
 ```bash
