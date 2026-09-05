@@ -7,11 +7,11 @@ browsergestützte Laufzeit-Sichtprüfung ausdrücklich freigegeben hat.
 **Default:** Keine agentische Laufzeit-Sichtprüfung und kein vorsorglicher Bau des Capture-Systems — Browserstart
 und Capture kosten viel CPU und RAM, davon ist wenig da. Die direkte Oberflächen-/Gameplay-Abnahme durch den User
 ist vorzuziehen. Gegated ist nur der Browserstart; lokale Referenzbilder direkt lesen bleibt erlaubt. Freigabe,
-Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt **Fachregeln und Sichtprüfung** in
+Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt **Checks and runtime inspection** in
 [`CODING-RULES.md`](CODING-RULES.md). Keine Screenshot- oder Review-Schleife.
 
-1. **Nur nach diesem Entscheidungsgate das projekteigene CLI-Capture-System nutzen.** Existiert dann keines, zuerst
-   eines nach diesem Muster bauen. Kein sichtbares Browserfenster und keine manuelle Browserprüfung.
+1. **Use an existing project capture harness only after permission.** If none exists, report the missing harness;
+   building one needs a separate user request. Do not turn a visual check into a tooling project. Prefer headless inspection.
 
 2. **Ein headless Chromium als reiner Wirt.** Playwright startet den Browser einmal, lädt die App und ruft in die
    Seite hinein. Eine Sitzung bedient alle Messungen und Parametersweeps; nie ein Browser pro Bild oder Wert.
