@@ -71,3 +71,5 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - Local paths, ports or test-key locations: [Windows resources](WINDOWS-RESSOURCEN.md) or [macOS resources](MACOS-RESSOURCEN.md), not both.
 - External APIs: current original docs for the open question, not entire documentation trees.
 - New proven lessons: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md). Store with the relevant feature/project; do not grow this core with incident logs.
+
+Frontend delivery must meet the [working-surface layout gate](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen-08092026): inherit the selected theme, use mobile fullscreen dialogs, prioritize the task over settings, and record actual narrow-screen acceptance.

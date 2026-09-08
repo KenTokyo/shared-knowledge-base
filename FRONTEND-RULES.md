@@ -67,3 +67,13 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 
 - Browsergestützte Laufzeit-Sichtprüfung (Browserstart, Dev-Server, Playwright, DevTools, Laufzeit-Screenshots) folgt ausschließlich dem Freigabegate in [`CODING-RULES.md`](CODING-RULES.md). Statische DOM-/Code-Prüfung und gelieferte Referenzbilder bleiben frei.
 - Statische Checks beweisen Typ- und Buildsicherheit, nicht Lesbarkeit, Bedienbarkeit oder visuelle Qualität.
+
+## Verbindliche Layout-Abnahme für Arbeitsoberflächen (08.09.2026)
+
+- **Das gewählte Theme gewinnt.** Chat, Dialoge und Portale erben `primary`, `foreground`, `muted-foreground` und `surface-*`. Keine lokale neutrale oder warm-goldene Ersatzpalette. Anbieterlogos dürfen ihre Markenfarbe behalten; primäre Aktionen und aktive Navigation verwenden die gewählte Akzentfarbe.
+- **Mobil sind Dialoge Vollbild.** Unter 768px die gemeinsame Dialog-Hülle benutzen: volle verfügbare Breite/Höhe, Safe Areas, bei Texteingabe `fitVisualViewport`, fester Kopf und Fuß, genau ein scrollender Inhaltsbereich. Keine kleinen schwebenden Formulardialoge, kein `mobileFullscreen={false}`. Neue eigene Portal-Hüllen sind kein Ausweg.
+- **Die Aufgabe kommt vor der Verwaltung.** Bei KI-Textbearbeitung zuerst Auswahl, kompakter Zugang und Anweisung. Kontoprüfung, Rechnerverbindung, Standard speichern, Preisdetails und seltene Optionen bleiben nachgeordnet/eingeklappt. Ohne Zugang einen klaren Einstieg anbieten, keine komplette Einstellungsseite automatisch öffnen.
+- **Eine Ebene pro Aufgabe.** Keine Karten in Karten in Akkordeons. Einheitliche Zeilen, dünne Trenner, 16px mobiles Padding, 8–12px innerhalb einer Gruppe, 24px zwischen Abschnitten. Inhalt 14–16px, Titel 16–18px, sekundäre Hinweise mindestens 12px; Touch-Ziele mindestens 44px.
+- **Namen brauchen Platz.** Lange Anbieter-/Modellnamen umbrechen; Badges/Metadaten unterordnen. Keine Zeile mit Name, mehreren Badges und mehreren Aktionen, die den Namen verdrängen.
+- **Referenz vor Gestaltung:** tatsächlichen Screenshot oder bestehende Komponente lesen und Maße/Hierarchie in der Taskplanung festhalten. Linear/Codex sind Vorbilder für ruhige Arbeitsflächen, kein Grund für ein zweites Farbsystem. Das [Juicy-System](agents/juicy-game-ui-system.md) steuert Spiele; seine Dekoration nicht pauschal in Chat/Formulare übernehmen.
+- **Abnahme ist konkret:** 390px und 768px, vorhandenes helles/dunkles Theme sowie eine andere Akzentfarbe; Erststart, langer Name, geöffnete Einstellungen und Tastatur berücksichtigen. Anweisung und Hauptaktion müssen erreichbar sein, keine horizontalen Überläufe oder verdeckten Fußleisten. Ungeprüfte Zustände ausdrücklich dokumentieren.
