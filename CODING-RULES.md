@@ -31,6 +31,7 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - Fix causes, not symptoms. Remove displaced code after checking references. Keep unrelated working behavior and other contributors' edits intact.
 - Keep new handwritten code files below 1,200 lines. For larger existing files, extract cohesive responsibilities when relevant; a tiny fix alone must not trigger an unrelated rewrite. Generated/vendor files are exempt; stricter project gates still apply.
 - Batch repeated I/O, run independent work in parallel, reuse expensive results and clean up listeners/timers/resources. Optimize measured bottlenecks without hiding quality loss or cutting requested functionality.
+- **Idle work is a delivery concern in every project:** no endless decorative animations; deferred image placeholders stay static. Recurring animation, rendering and polling need an active purpose and a stop/cleanup path when their surface becomes inactive or hidden. Preserve actual gameplay, media and required background jobs. Follow [idle performance](IDLE-PERFORMANCE.md) for the small review and Chrome/Electron diagnosis workflow.
 - Never expand a collection while iterating it without a deliberate queue/snapshot, visited tracking and a bound.
 - A repeated defect needs a new cause investigation, not the same tuning again. Broaden repairs only to coupled parts needed for the requested result.
 - Repository/reference adoption: preserve the real behavior and quality-bearing mechanism, not just its appearance. Read [reference transfers](REFERENCE-TRANSFERS.md) when applicable.
@@ -45,6 +46,7 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - With permission: implement → static checks → start app and read console → fix causes → one control run if needed. Default budget: **two runtime inspection runs total, including failures and console checks**. User-specified budgets override this; exhausted budget means report the blocker, not another hidden run.
 - Browser downloads: if an ordinary download click fails with `ERR_BLOCKED_BY_CLIENT`, try the link's **Open Link in New Tab** action (or Cmd-click on macOS) before handing the download back to the user. This worked for the SourceGit GitHub release DMG on 12 September 2026. Verify the completed file and, when published, its checksum; opening a tab alone is not proof of a download. This tip does not authorize bypassing certificate, malware or other security warnings.
 - Use the existing harness; no automatic capture-framework project. Follow [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) for approved captures. Typechecks and stub-DOM checks do not prove visual quality or real runtime behavior.
+- For changes to recurring UI work, use comparable warm idle windows with DevTools closed for final CPU measurements, and verify the deployed version after an ordinary reload. Record CPU scale, foreground/background state and remaining coverage. A temporary diagnostic pause, successful deployment or rounded 0.0% snapshot is not final acceptance. Existing runtime permissions/budgets still apply; state unverified coverage explicitly.
 
 ## 5. Secrets, Git and delivery
 

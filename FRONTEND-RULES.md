@@ -41,6 +41,9 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 
 ## Frontend-Performance
 
+- Keine endlosen dekorativen Animationen. Verzögert geladene Bilder und ruhende Skelette statisch darstellen; `loading` allein bedeutet nicht, dass eine sichtbare Aktion läuft.
+- Wiederkehrende UI-Arbeit nach tatsächlicher Aktivität und Sichtbarkeit begrenzen. Auch Inhalte außerhalb des Scrollbereichs prüfen; ein sichtbares Fenster macht nicht jedes enthaltene Element sichtbar. `prefers-reduced-motion`, GPU-Beschleunigung und Electron-Hintergrunddrosselung ersetzen den Lebenszyklus nicht.
+- Bei verdächtiger Leerlauf-CPU den [kurzen Chrome-/Electron-Diagnoseablauf](IDLE-PERFORMANCE.md) verwenden: messen, einen Kandidaten pausieren, wiederherstellen, Ursache im Owner beheben, ausgelieferte Fassung nach Reload messen.
 - Unabhängige Fetches parallel starten; N+1-Abfragen durch Batch-Loading oder passende Joins vermeiden.
 - Teure Arbeit passend teilen, poolen, cachen oder vorab bauen.
 - Memoisierung nicht vorsorglich verteilen; erst stabile Identität oder messbare Renderkosten belegen.
