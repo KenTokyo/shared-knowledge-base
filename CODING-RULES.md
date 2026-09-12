@@ -43,6 +43,7 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - Local user-provided images may be read and copied without browser permission.
 - Browser/dev-server/UI/gameplay inspection requires explicit permission for this task/session. Without it, use static checks and report runtime/console coverage as unverified.
 - With permission: implement → static checks → start app and read console → fix causes → one control run if needed. Default budget: **two runtime inspection runs total, including failures and console checks**. User-specified budgets override this; exhausted budget means report the blocker, not another hidden run.
+- Browser downloads: if an ordinary download click fails with `ERR_BLOCKED_BY_CLIENT`, try the link's **Open Link in New Tab** action (or Cmd-click on macOS) before handing the download back to the user. This worked for the SourceGit GitHub release DMG on 12 September 2026. Verify the completed file and, when published, its checksum; opening a tab alone is not proof of a download. This tip does not authorize bypassing certificate, malware or other security warnings.
 - Use the existing harness; no automatic capture-framework project. Follow [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) for approved captures. Typechecks and stub-DOM checks do not prove visual quality or real runtime behavior.
 
 ## 5. Secrets, Git and delivery
