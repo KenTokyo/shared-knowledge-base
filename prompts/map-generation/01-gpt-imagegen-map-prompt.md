@@ -58,13 +58,14 @@ nicht einer pauschalen Obergrenze von drei oder vier Bildern.
 
 ### Räumliche Ansichten und Licht
 
-- Plane für eine vollständige Map **etwa 12–16 unterschiedliche Szenenansichten
-  als Ausgangspunkt**, zusätzlich zu Material- und Assetbildern. Decke eine
-  Layoutübersicht, alle vier Blickrichtungen, mehrere Spielkamerapositionen,
-  Ein-/Ausgänge, Verbindungen, Höhenwechsel und Nahdetails ab. Bei Höhlen gehören
-  Decke, Überhänge und verdeckte Kammern dazu. Für weitere Zonen oder verdeckte
-  Bereiche weitere Ansichten erzeugen. Eine ausdrücklich kleinere Nutzervorgabe
-  hat Vorrang; keine gleichartigen Blickwinkel als Abdeckung zählen.
+- Leite die **Anzahl und Auswahl der Ansichten aus Größe, Komplexität und
+  sichtbarer Abdeckung der konkreten Szene** ab; keine feste Mindestanzahl oder
+  Standardquote. Plane die benötigten Blickrichtungen, Spielkamerapositionen,
+  Ein-/Ausgänge, Verbindungen, Höhenwechsel und Nahdetails. Bei Höhlen gehören
+  verdeckte Decken, Überhänge und Kammern dazu, soweit sie für den Nachbau fehlen.
+  Eine Ansicht darf mehrere Anforderungen abdecken. Ergänze Bilder nur für
+  tatsächlich ungeklärte Bereiche; gleichartige Blickwinkel bringen keine neue
+  Abdeckung. Zeige die Ergebnisse, nicht nur den Bildplan.
 - Verwende dieselbe Layoutskizze und bereits erzeugte, geprüfte Bilder als
   Bildreferenzen für Folgeansichten. Halte Maßstab, Orientierung, Landmarken,
   Wege, Materialpalette und Lichtquellen konsistent. Lege Kamera-ID, Position,
@@ -116,13 +117,18 @@ nicht einer pauschalen Obergrenze von drei oder vier Bildern.
   Stalaktiten, Kristallgruppen, Treppen, Bögen, Türen und Feuerschalen, sofern
   diese zur Map gehören. Nicht jede wiederholte Steininstanz braucht ein neues Bild;
   unterschiedliche Silhouetten und Materialbelegungen schon.
-- Zeige mindestens Vorderseite, Seite und Rückseite sowie Draufsicht oder
-  Dreiviertelansicht, wenn sie Form oder Anschlussflächen besser erklären.
-  Ergänze bei komplexen Assets verdeckte Seiten, Unterseiten und Kontaktflächen.
+- Wähle Vorderseite, Seite, Rückseite, Drauf-/Unter- oder Dreiviertelansicht nach
+  dem tatsächlichen Formbedarf. Verdeckte Anschlüsse und komplexe Silhouetten
+  brauchen ergänzende Ansichten; einfache Formen keine mechanische Bildquote.
   Folgeansichten nutzen dasselbe Assetbild als Referenz. Form, Proportionen
   und Materialien dürfen zwischen Ansichten nicht wechseln.
-- Verwende neutralen Hintergrund und gut lesbares Licht. Liefere die Ansichten
-  einzeln in ausreichender Auflösung; Kontaktbögen dienen zusätzlich der Übersicht.
+- Teste **gemeinsame Bildtafeln für zusammengehörige Assets und Ansichten**.
+  Trenne Objekte klar, ordne IDs und Tafelfelder zu und verwende neutrales Licht
+  und einen ruhigen Hintergrund. Prüfe die erzeugte Tafel in Originalauflösung:
+  Sind Formen, Oberflächen und Anschlüsse erkennbar und die Ansichten konsistent?
+  Wenn ja, darf eine Tafel mehrere Einträge abdecken. Nur zu kleine, verdeckte
+  oder mehrdeutige Teile gezielt als Einzel-/Detailbild nacherzeugen. Nutzbare
+  Texturdateien bleiben separat; ein gemalter Katalog ist kein Texturatlas.
   Ordne jedem Asset Maße/Größenklasse, Material-IDs, Orientierung, Auflage- bzw.
   Anschlussflächen und den geplanten Einsatzort zu. Halte für den späteren Bau
   begehbare Flächen und Kollisionserwartungen fest; die Bilder selbst sind keine
