@@ -1,14 +1,12 @@
 # Eine ImageGen-Referenz, zwei Maps: Blender und Three.js vergleichen
 
-Diese dritte Variante baut dieselbe Landschaft über zwei Produktionswege.
-Geografie und Spielbedingungen bleiben vergleichbar; die Geometrieherkunft ist
-der bewusste Unterschied.
+Baue dieselbe Landschaft über zwei Produktionswege bei vergleichbaren Spielbedingungen.
 
 ## Meine Angaben
 
 - Projekt / Map-Name: `<absoluter Projektpfad, Name>`
 - Stil / Referenzen: `<Beschreibung oder AION 2-inspirierte Fantasy>`
-- Größe in Metern, Breite × Tiefe: `<optional; Standard unten>`
+- Größe in Metern, Breite × Tiefe: `<optional; Standard: 450 × 450 m>`
 - Ausführung: `<ein GPT-Modell oder Orchestrierung; ohne Angabe ein GPT-Modell mit ImageGen>`
 - Bei Orchestrierung: `<Orchestrierer: Anbieter/Modell/Denkstufe; Astra für ImageGen; Implementierer: Anbieter/Modell/Denkstufe>`
 - Spielweise / zu erhaltene Eigenschaften: `<Wege, Klassen, Dichte, Nahdetails, Effekte>`
@@ -21,10 +19,9 @@ Erzeuge mit ImageGen eine hochwertige Fantasy-Map-Referenz und implementiere
 erzeugter Geometrie. „Ion 2“ wird als **AION 2-inspirierte Fantasy-Landschaft**
 angenommen; meine eigenen Vorgaben haben Vorrang.
 
-Ohne eigene Maße gilt **424,26406871192853 × 424,26406871192853 m** wie Silberhain.
-Für dessen kreisförmigen Spielbereich gilt **202,2325394193526 m Radius**. Eine
-andere Breite/Tiefe wird in beiden Varianten identisch auf Terrain, Spielgrenzen,
-Kollision, Spawn und Platzierungen übertragen. Halte Einheit und Koordinatensystem fest.
+Standardgröße: **450 × 450 m**, durch eigene Maße überschreibbar. Leite Terrain,
+Spielgrenzen, Kollision, Spawns und Platzierungen in beiden Varianten gleich aus
+Größe und Spielbereichsform ab. Halte Einheiten und Koordinatensystem fest.
 
 Lies Projektregeln und vorhandene Laufzeit. Beide Varianten laufen als umschaltbare
 Maps durch denselben vorhandenen Renderer; in Reborn `src/game/Game.ts` mit
@@ -36,22 +33,20 @@ freigegeben. Nutze bestehende Prüfwege und deren geltendes Budget.
 
 ## Referenz und zwei Produktionswege
 
-1. Erzeuge und inspiziere mit ImageGen zusammenhängende Ansichten derselben Landschaft, etwa Übersicht, Spielkamera, Wasser und Vegetation/Landmarke. Speichere echte Bilddateien, verwendete Prompts und eine Referenzversion. Zusätzliche Welttexturen müssen tatsächlich verwendbar sein, einschließlich korrekter Transparenz und Materialzuordnung.
+1. Erzeuge und inspiziere mit ImageGen etwa Übersicht, Spielkamera, Wasser und Vegetation/Landmarke derselben Landschaft. Speichere Bilddateien, Prompts und Referenzversion. Welttexturen brauchen passende Transparenz und Materialzuordnung.
 2. Erstelle eine gemeinsame, versionierte Layoutquelle: Seed, Gelände-/Höhenfeld, Wasserstand, Wege, Baum-/Fels-/Landmarkentransformationen, Grasverteilung, Spawn, Kollision, Licht und Vergleichskameras. Beide Varianten lesen dieselben Daten. Identische Seeds allein beweisen keine identischen Platzierungen.
 3. **Blender-Variante:** Erzeuge echte Geometrie in Blender, exportiere sie und verwende diese Exporte im Spiel. Liefere Szene oder reproduzierbares Python-Skript, Exportparameter und Herkunft. Python/CLI ist ausreichend; MCP ist nicht nötig. Prüfe Einheiten, Achsen, Normalen, UVs, Materialzuordnung und Instanzierbarkeit.
-4. **Three.js-Variante:** Erzeuge die entsprechende Geometrie mit den vorhandenen nativen Modulen. Verwende denselben Terrainverlauf, dieselben Transformationen und vergleichbare Silhouetten/Detailrollen. Kopiere nicht einfach die Blender-Exporte in diese Variante und bezeichne sie als anderen Produktionsweg.
-5. Teile Wasser, Gras, Licht, Spielmechanik und Diagnose, soweit sie fachlich dieselbe Aufgabe haben. Halte den erforderlichen Adapter klein. Dokumentiere tatsächliche Unterschiede in Geometrie, Materialien, LOD und sichtbarer Qualität; gleiche Geografie bedeutet keine identische Dreiecksanzahl.
+4. **Three.js-Variante:** Erzeuge eigene Geometrie mit den nativen Modulen, denselben Terrain-/Transformationsdaten und vergleichbaren Silhouetten/Details. Ein bloßer zweiter Import der Blender-Exporte ist kein anderer Produktionsweg.
+5. Teile Wasser, Gras, Licht, Spielmechanik und Diagnose. Halte Adapter klein und dokumentiere Unterschiede in Geometrie, Materialien, LOD und Bildqualität; gleiche Geografie bedeutet keine identische Dreiecksanzahl.
 
-Bei einem GPT-Modell übernimmt es diese Schritte mit dem echten ImageGen-Werkzeug.
-Bei ausdrücklich gewählter Orchestrierung sind die angegebenen Rollen freigegeben:
-Astra erzeugt die Bilder, der gewählte Implementierer baut die Maps, der
-Orchestrierer integriert. Verwende die genauen Anbieter/Modelle/Denkstufen, prüfe
-ihre Zuweisung und gib getrennte Schreibbereiche sowie einen Git-Verantwortlichen
-vor. Übergebe verfügbare Bilddateien, Layoutversion, Maße, Kameras und die
-Performance-Regeln vor abhängiger Arbeit. Fehlende Modellangaben gezielt klären;
-keine stille Ersatzbesetzung und keine behaupteten Agentenergebnisse.
-Mehr Rollen-Details: [Orchestrierungs-Prompt](02-orchestrierte-imagegen-map-prompt.md).
-Das Modell ruft die [ImageGen-Funktion](https://developers.openai.com/api/docs/guides/tools-image-generation) auf; der Modellname allein erzeugt kein Bild.
+Ein GPT-Modell übernimmt alle Schritte über die vorhandenen Werkzeuge. Bei gewählter
+Orchestrierung sind die angegebenen Rollen freigegeben: Astra für ImageGen,
+Implementierer für Maps, Orchestrierer für Integration. Prüfe genaue Anbieter,
+Modelle und Denkstufen. Trenne Schreibbereiche und benenne einen Git-Verantwortlichen.
+Übergib verfügbare Bilder, Layoutversion, Maße, Kameras und Performance-Regeln vor
+abhängiger Arbeit. Fehlende Modellangaben klären; keine stille Ersatzbesetzung.
+Details: [Orchestrierung](02-orchestrierte-imagegen-map-prompt.md),
+[ImageGen-Werkzeug](https://developers.openai.com/api/docs/guides/tools-image-generation).
 
 ## Performance-Regeln für beide Varianten
 
@@ -67,12 +62,10 @@ Bei abweichender Ablage den vorhandenen Shared-Docs-Pfad nutzen; fehlende Quelle
 
 ## Sichtbarer und messbarer Vergleich
 
-Liefere je Vergleichsansicht ein **Side-by-Side: ImageGen-Referenz | Three.js im
-Spiel | Blender im Spiel**. Beschrifte Quelle, Map, Kamera und Stand. Gleiche Blickrichtung,
-Ausschnitt und Beleuchtung so weit wie möglich an und benenne Konzeptabweichungen.
-Zeige echte native Materialien und Postprocessing; Laufzeitbilder bleiben ohne
-ImageGen-Nachbearbeitung. Blender-Offlinerender dürfen zusätzlich gezeigt werden,
-aber belegen keine Spiel-FPS.
+Liefere **Side-by-Side: ImageGen-Referenz | Three.js im Spiel | Blender im Spiel**
+mit ähnlicher Kamera und Beleuchtung. Beschrifte Quelle, Map, Stand und Abweichungen.
+Zeige native Materialien und Postprocessing ohne ImageGen-Nachbearbeitung.
+Zusätzliche Blender-Offlinerender belegen keine Spiel-FPS.
 
 Vergleiche beide Varianten einzeln bei gleichem Build, GPU, Auflösung/Pixelratio,
 FOV, Seed/Layout, Population, Effekten und FPS-Limit. Verwende warme feste Fenster,

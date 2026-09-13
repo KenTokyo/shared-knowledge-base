@@ -1,13 +1,12 @@
 # Neue Fantasy-Map: Orchestrierer, Astra für ImageGen, gewählter Implementierer
 
-Diese Datei im Chat des Orchestrierers verwenden. Koordiniere die drei Rollen mit
-den tatsächlich verfügbaren Agenten-/Anbieterwerkzeugen bis zur integrierten Map.
+Im Chat des Orchestrierers verwenden. Koordiniere die drei Rollen bis zur integrierten Map.
 
 ## Meine Angaben
 
 - Projekt und Map-Name: `<absoluter Projektpfad, Name>`
 - Stil / Bildreferenzen: `<Beschreibung oder AION 2-inspirierte Fantasy>`
-- Größe in Metern, Breite × Tiefe: `<optional; Standard unten>`
+- Größe in Metern, Breite × Tiefe: `<optional; Standard: 450 × 450 m>`
 - Umsetzung: `<Three.js oder Blender; ohne Angabe vorhandene native Three.js-Pipeline>`
 - Orchestrierer, Anbieter / Modell / Denkstufe: `<dieser Chat oder genaue Vorgabe>`
 - Bilderzeugung: **GPT-6 Astra über ImageGen**; Anbieter / Modellkennung / Denkstufe: `<verfügbare Astra-Zuweisung>`
@@ -17,20 +16,9 @@ den tatsächlich verfügbaren Agenten-/Anbieterwerkzeugen bis zur integrierten M
 
 ## Gemeinsamer Auftrag
 
-Baue eine spielbare Map aus einer von Astra mit ImageGen erzeugten, gespeicherten
-und angesehenen Referenz. „Ion 2“ wird als **AION 2-inspirierte Fantasy-Landschaft**
-interpretiert; meine eigene Stilbeschreibung und Bilder haben Vorrang.
-Standardgröße ist **424,26406871192853 × 424,26406871192853 m**, der aktuelle
-Silberhain-Grundriss. Dessen kreisförmiger Spielbereich hat **202,2325394193526 m
-Radius**. Eigene Maße überschreiben den Standard; Spielbereich, Terrain, Kollision,
-Spawns und Dichte müssen dazu passen. Halte Maßstab, Grenzen und Seed fest.
+Baue eine spielbare Map aus einer von Astra mit ImageGen erzeugten und geprüften Referenz. „Ion 2“ wird als **AION 2-inspirierte Fantasy-Landschaft** angenommen; meine Vorgaben gehen vor. Standardgröße: **450 × 450 m**, durch eigene Maße überschreibbar. Leite Spielgrenzen, Terrain, Kollision und Spawns passend zur Größe und Spielbereichsform ab. Halte Maßstab, Grenzen und Seed fest.
 
-Lies Projektregeln und bestehenden Arbeitsstand. Erhalte Produktoberfläche,
-Klassen und Gameplay; integriere in den vorhandenen Welt-/Renderloop. In Reborn
-sind das `src/game/Game.ts` und `src/world/`. Für diesen Auftrag sind die genannten
-Agentenrollen und die vorhandenen Bild-/Browser-/Screenshot-/Gameplay-/Performance-
-Werkzeuge zur integrierten Prüfung freigegeben. Nutze bestehende Prüfwege und
-Budgets. Separate Chats allein schaffen keine getrennten Arbeitsverzeichnisse.
+Lies Projektregeln und Arbeitsstand. Erhalte Produktoberfläche, Klassen und Gameplay; nutze den vorhandenen Welt-/Renderloop, in Reborn `src/game/Game.ts` und `src/world/`. Die genannten Agentenrollen sowie vorhandene Bild-, Browser-, Screenshot-, Gameplay- und Performance-Werkzeuge sind für diesen Auftrag freigegeben. Bestehende Prüfwege und Budgets gelten weiter.
 
 ## Rollen und Übergaben
 
@@ -40,41 +28,17 @@ Budgets. Separate Chats allein schaffen keine getrennten Arbeitsverzeichnisse.
 | GPT-6 Astra | ImageGen ausführen, Bilder ansehen, konsistente Referenz und erforderliche Welttexturen liefern | Echte Bilddateien, ImageGen-Prompts, Version und Bild-/Materialmanifest |
 | Gewählter Implementierer | Aus den freigegebenen Referenzdateien die ausgewählte Blender-/Three.js-Pipeline bauen und integrieren | Spielbare Map, Quellcode/Generatoren, Assets, Kollision, Cleanup und Prüfergebnisse |
 
-Prüfe die tatsächlich zurückgemeldeten Anbieter, Modellkennungen, Denkstufen und
-Tool-Fähigkeiten. Übernimm meine Zuweisung unverändert. Fehlt die Angabe zum
-Implementierer, frage gezielt danach und erledige währenddessen die unabhängige
-Projekt-/Referenzvorbereitung. Wechsle bei fehlendem Modellzugang nicht heimlich
-das Modell. Fehlen Agentenwerkzeuge, bereite nutzbare Übergabedateien vor und
-benenne die konkret blockierte Rolle; ein nicht gestarteter Agent gilt nicht als erledigt.
+Prüfe die tatsächlichen Anbieter, Modellkennungen, Denkstufen und Tool-Fähigkeiten; halte meine Zuweisung ein. Fehlt der Implementierer, frage gezielt danach und setze unabhängige Vorbereitung fort. Fehlt Modell-/Agentenzugang, liefere Übergabedateien und benenne die blockierte Rolle. Keine stille Ersatzbesetzung oder behaupteten Agentenergebnisse.
 
-Lege vor paralleler Arbeit eindeutige Schreibbereiche und einen Integrations-/Git-
-Verantwortlichen fest. Gemeinsame Layout- und Referenzdateien haben einen Besitzer;
-andere Rollen lesen dieselbe versionierte Fassung. Nutze getrennte Dateibereiche
-oder einen bereits autorisierten isolierten Workspace. Erhalte fremde Änderungen.
+Lege eindeutige Schreibbereiche und einen Integrations-/Git-Verantwortlichen fest. Gemeinsame Layout-/Referenzdateien haben einen Besitzer und eine versionierte Fassung. Separate Chats isolieren keine Dateien: nutze getrennte Schreibbereiche oder einen autorisierten isolierten Workspace. Erhalte fremde Änderungen.
 
-Lass Astra etwa vier zusammenhängende Ansichten erstellen: Übersicht, Spielkamera,
-Wasserdetail und Vegetation/Landmarke. Geografie, Wege, Licht und Palette müssen
-zusammenpassen. Prüfe die fertigen Dateien und ihren Zugriff durch den Implementierer,
-bevor davon abhängige Implementierung beginnt. Ein gestarteter Chat oder ein
-Bildversprechen ersetzt kein verfügbares Artefakt. Astra verwendet das
-[ImageGen-Werkzeug](https://developers.openai.com/api/docs/guides/tools-image-generation);
-[Modellbeschreibung](https://developers.openai.com/api/docs/models/gpt-6-astra).
+Lass Astra etwa Übersicht, Spielkamera, Wasserdetail und Vegetation/Landmarke mit gemeinsamer Geografie, Licht und Palette erzeugen. Prüfe die fertigen Bilddateien und deren Zugriff durch den Implementierer vor abhängiger Arbeit. Astra verwendet das [ImageGen-Werkzeug](https://developers.openai.com/api/docs/guides/tools-image-generation); [Modellbeschreibung](https://developers.openai.com/api/docs/models/gpt-6-astra).
 
-Die Übergabe enthält mindestens Bildpfade, Referenzversion, Bildprompts,
-Breite/Tiefe/Einheiten, Spielgrenzen, Seed, Layout, Kameraliste, Materialpalette,
-Pipelinewahl, Schreibbereiche und die folgenden Performance-Regeln. Der
-Implementierer bestätigt diese Werte anhand der Dateien. **Blender** liefert
-echte Exporte aus einer Szene oder einem reproduzierbaren Python-Skript; Python/CLI
-genügt ohne MCP. **Three.js** erzeugt die Geometrie in den vorhandenen Modulen.
-Beide Wege nutzen den nativen Spielrenderer und erhalten die gewünschte Bildqualität.
+Übergib Bildpfade/-prompts, Referenzversion, Maße/Einheiten, Spielgrenzen, Seed/Layout, Kameras, Materialpalette, Pipeline, Schreibbereiche und Performance-Regeln. Der Implementierer prüft die Dateien. **Blender** liefert echte Exporte aus einer Szene oder einem reproduzierbaren Python-Skript; Python/CLI genügt ohne MCP. **Three.js** erzeugt die Geometrie in vorhandenen Modulen. Beide Wege nutzen den nativen Spielrenderer.
 
 ## Performance-Vertrag für alle Rollen
 
-Lies und übergib die absoluten Quellen:
-[Performance](</Users/kentoky/Documents/React Projects/shared-docs/threejs/PERFORMANCE.md>),
-[Messregeln](</Users/kentoky/Documents/React Projects/shared-docs/threejs/MEASURING.md>),
-[Leerlauf](</Users/kentoky/Documents/React Projects/shared-docs/IDLE-PERFORMANCE.md>).
-Bei anderer Ablage den vorhandenen Shared-Docs-Pfad verwenden; fehlende Dateien benennen.
+Lies und übergib die absoluten Quellen: [Performance](</Users/kentoky/Documents/React Projects/shared-docs/threejs/PERFORMANCE.md>), [Messregeln](</Users/kentoky/Documents/React Projects/shared-docs/threejs/MEASURING.md>), [Leerlauf](</Users/kentoky/Documents/React Projects/shared-docs/IDLE-PERFORMANCE.md>). Bei anderer Ablage den vorhandenen Shared-Docs-Pfad verwenden; fehlende Dateien benennen.
 
 - Nahdetails, Silhouetten, Dichte und aktive Effekte erhalten. LOD nach Bildgröße/Entfernung mit Hysterese; Instancing mit gemeinsamen Geometrien/Materialien. Gruppengröße gegen Draw Calls und Instanz-Culling abwägen.
 - Korrekte Bounds und Sichtbarkeit je Haupt-, Schatten- und Spiegelungsdurchlauf. Verschachtelte Render benötigen unabhängige Instanzdaten. Unveränderte Sichtbarkeit/LOD zwischenspeichern; keine wiederholten statischen Uploads oder Vollszenen-Scans.
@@ -84,16 +48,6 @@ Bei anderer Ablage den vorhandenen Shared-Docs-Pfad verwenden; fehlende Dateien 
 
 ## Integration, Vergleich und Lieferung
 
-Der Orchestrierer prüft gelieferte Dateien und Ergebnisse selbst anhand des
-bestehenden Prüfwegs. Liefere **Side-by-Side: ImageGen-Konzept und echter nativer
-Spiel-Render** mit ähnlicher Kamera, Licht und Ausschnitt; Herkunft und verbleibende
-Abweichungen klar beschriften. Keine ImageGen-Nachbearbeitung der Laufzeitbilder.
-Ein Blender-Offlinerender ist separate Design-Evidenz und kein Laufzeitnachweis.
+Der Orchestrierer prüft Dateien und Ergebnisse anhand des bestehenden Prüfwegs. Liefere **Side-by-Side: ImageGen-Konzept | echter nativer Spiel-Render** mit ähnlicher Kamera und Beleuchtung. Beschrifte Herkunft und Abweichungen. Laufzeitbilder bleiben ohne ImageGen-Nachbearbeitung; Blender-Offlinerender sind separate Design-Evidenz.
 
-Nach relevanten bestehenden Checks normal neu laden, DevTools für Abschlusswerte
-schließen und echte Bilder, Shaderfehler, LOD-Wechsel, aktive Effekte, Menü,
-Hintergrund und Mapwechsel kontrollieren. Ungeprüfte Zustände und fehlende GPU-Zeit
-bleiben ausdrücklich offen. Liefere Referenzen/Übergabe, implementierte Assets
-und Quellpfade mit Gründen, Vergleichsbilder, Messbedingungen und Ergebnisse.
-Der benannte Git-Verantwortliche committet und pusht die eigenen Änderungen nach
-Projektregeln; Agentenmeldungen allein sind keine bestandene Abnahme.
+Nach relevanten bestehenden Checks normal neu laden, DevTools für Abschlusswerte schließen und echte Bilder, Shaderfehler, LOD-Wechsel, aktive Effekte, Menü, Hintergrund und Mapwechsel kontrollieren. Ungeprüfte Zustände und fehlende GPU-Zeit bleiben ausdrücklich offen. Liefere Referenzen/Übergabe, implementierte Assets und Quellpfade mit Gründen, Vergleichsbilder, Messbedingungen und Ergebnisse. Der benannte Git-Verantwortliche committet und pusht die eigenen Änderungen nach Projektregeln; Agentenmeldungen allein sind keine bestandene Abnahme.

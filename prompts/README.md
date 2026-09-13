@@ -16,10 +16,10 @@ Bildern aus der Spiel-Laufzeit.
 
 ## Standards für die drei Generierungs-Prompts
 
-- **Größe:** 424,26406871192853 × 424,26406871192853 m, gerundet 424,264 × 424,264 m. Das ist Silberhains aktueller quadratischer Geländegrundriss, nicht 400 × 400 m. Im vorhandenen kreisförmigen Spielbereich beträgt der Radius 202,2325394193526 m. Eigene Maße haben Vorrang; Spielfeldgrenze und Kollision werden passend abgeleitet.
+- **Größe:** 450 × 450 m als aufgerundeter Standard für neue Maps. Eigene Maße haben Vorrang; Spielgrenzen, Kollision und Spawns werden passend zur Größe und Spielbereichsform abgeleitet.
 - **Stil:** „Ion 2“ wird als **AION 2-inspirierte Fantasy-Landschaft** interpretiert. Eigene Stilbeschreibung und Bildreferenzen überschreiben diese Annahme.
 - **Pipeline:** In Variante 1 und 2 zwischen Three.js und Blender wählen; ohne Angabe gilt die vorhandene native Three.js-Pipeline. Variante 3 liefert beide Wege. Blender ist ein Werkzeug zum Erzeugen echter exportierter Geometrie; die Spiel-Laufzeit bleibt der vorhandene Renderer.
-- **Referenz:** Immer ImageGen verwenden, Ergebnisse speichern und ansehen. Side-by-Side zeigt das Konzept und einen klar gekennzeichneten echten Laufzeit-Render. Ein Blender-Offlinerender ist zusätzliche Design-Evidenz.
+- **Referenz:** ImageGen-Ergebnisse speichern und ansehen. Side-by-Side zeigt das Konzept und den echten Laufzeit-Render. Blender-Offlinerender sind zusätzliche Design-Evidenz.
 - **Modelle:** Anbieter, Modellkennung und Denkstufe lassen sich eintragen. Variante 2 trennt Orchestrierer, Astra-Bilderzeugung und Implementierung; ein fehlender Implementierer wird nicht stillschweigend ersetzt.
 - **Leistungsziel:** Aus dem Zielprojekt oder der Nutzervorgabe ableiten. Silberhains bisheriges 600-FPS-Ziel und seine lokalen Messwerte sind keine allgemeine Vorgabe.
 
@@ -32,9 +32,8 @@ absoluten Pfaden:
 
 Auf einem anderen Rechner den dortigen Shared-Docs-Pfad verwenden und fehlende
 Dateien benennen. Die lokalen Projektregeln und der aktuelle Nutzerauftrag gelten
-weiter. Die Generierungs-Prompts erlauben für ihren späteren konkreten Auftrag
-die benötigten vorhandenen Laufzeitprüfungen; das Ablegen dieser Bibliothek startet
-weder Bildgenerierung noch Map-Bau oder Agenten.
+weiter. Die Generierungs-Prompts erlauben für ihren konkreten Auftrag die benötigten
+vorhandenen Laufzeitprüfungen.
 
 ## Ablage und Herkunft
 
@@ -45,8 +44,9 @@ auf Nutzerwunsch zusätzlich mit identischen sechs Dateien und diesem Index in
 Bei Änderungen beide Kopien gemeinsam aktualisieren. Das ist eine Prompt-Sammlung;
 andere Spiele werden dadurch nicht automatisch umgebaut.
 
-Der Größenstandard stammt aus Silberhains
-[Layout im Stand 5d0e8e272](https://github.com/KenTokyo/7-3D-Voxel-Samurai-Quiz/blob/5d0e8e272/public/maps/silberhain/layout.json).
+Ausgangspunkt war Silberhains rund 424 × 424 m großes
+[Layout im Stand 5d0e8e272](https://github.com/KenTokyo/7-3D-Voxel-Samurai-Quiz/blob/5d0e8e272/public/maps/silberhain/layout.json);
+der Nutzer hat den Prompt-Standard auf 450 × 450 m aufgerundet.
 Für die Rollenbeschreibung wurde am 13.09.2026 geprüft: Astra kann das
 Image-Generation-Werkzeug verwenden; die Rasterbilder entstehen durch dieses
 Werkzeug. Modell- und Tool-Verfügbarkeit bei der Verwendung erneut prüfen.

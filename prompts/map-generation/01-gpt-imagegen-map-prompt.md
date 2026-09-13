@@ -1,13 +1,12 @@
 # Neue Fantasy-Map: ein GPT-Modell, ImageGen und Umsetzung
 
-Diese Datei vollständig im Zielprojekt verwenden. Du übernimmst mit einem
-GPT-Modell die Referenzerstellung, Implementierung und Prüfung der Map.
+Ein GPT-Modell übernimmt Referenz, Implementierung und Prüfung. Diese Datei im Zielprojekt verwenden.
 
 ## Meine Angaben
 
 - Projekt und Map-Name: `<absoluter Projektpfad, Name>`
 - Stil und Referenzen: `<Beschreibung, vorhandene Bilder oder AION 2-inspirierte Fantasy>`
-- Größe in Metern, Breite × Tiefe: `<optional; Standard unten>`
+- Größe in Metern, Breite × Tiefe: `<optional; Standard: 450 × 450 m>`
 - Umsetzung: `<Three.js oder Blender; ohne Angabe vorhandene native Three.js-Pipeline>`
 - GPT-Modell / Anbieter / Denkstufe: `<optional; sonst aktuelles Modell mit verfügbarem ImageGen-Werkzeug>`
 - Spielweise und zu erhaltene Eigenschaften: `<Wege, Gegner, Klassen, Nahdetails, Effekte>`
@@ -15,16 +14,13 @@ GPT-Modell die Referenzerstellung, Implementierung und Prüfung der Map.
 
 ## Auftrag und Standards
 
-Erzeuge eine hochwertige, spielbare Map aus einer selbst mit ImageGen erstellten
-Bildreferenz. „Ion 2“ bedeutet hier als offene Annahme **AION 2-inspirierte Fantasy**:
-starke Landschaftssilhouetten, natürliche Vegetation, lesbare Wege, markante
-Landmarken und stimmige Materialien/Beleuchtung. Meine konkreten Vorgaben gehen vor.
+Erzeuge eine hochwertige, spielbare Map aus einer ImageGen-Referenz. „Ion 2“ wird
+als **AION 2-inspirierte Fantasy** angenommen: starke Silhouetten, natürliche
+Vegetation, lesbare Wege und stimmige Materialien/Beleuchtung. Meine Vorgaben gehen vor.
 
-Ohne Größenangabe gilt Silberhains aktueller Geländegrundriss:
-**424,26406871192853 × 424,26406871192853 m**. Im entsprechenden kreisförmigen
-Spielbereich gilt **202,2325394193526 m Radius**. Bei eigenen Maßen passe Terrain,
-Spielgrenzen, Kollision, sichere Spawns und Platzierungen konsistent an; behalte
-die Spielbereichsform des Zielprojekts bei. Dokumentiere Einheiten, Grenzen und Seed.
+Standardgröße: **450 × 450 m**. Eigene Maße haben Vorrang. Leite Terrain,
+Spielgrenzen, Kollision, Spawns und Platzierungen passend zur Größe und
+Spielbereichsform ab; dokumentiere Einheiten, Grenzen und Seed.
 
 Lies Projektregeln und vorhandene Welt-/Asset-Module. In Reborn bleibt
 `src/game/Game.ts` mit `src/world/` der einzige Welt-/Render-Owner. Erhalte
@@ -34,14 +30,13 @@ Prüfung freigegeben. Nutze den bestehenden Prüfweg und sein geltendes Budget.
 
 ## Von ImageGen zur Map
 
-1. Erzeuge mit dem tatsächlich verfügbaren ImageGen-Werkzeug eine zusammenhängende Referenz, etwa vier Ansichten: Übersicht, Spielkamera, Wasser-/Materialdetail und Vegetation/Landmarke. Alle zeigen dieselbe Geografie, Wege und Lichtstimmung. Vorhandene Nutzerbilder dienen als Ausgangspunkt. Speichere und inspiziere die echten Ergebnisse; eine Textbeschreibung ersetzt das Bild nicht.
-2. Halte Bildpfade, verwendeten Prompt, Referenzversion, Maßstab, Seed und geplante Vergleichsansichten in einem kleinen Manifest fest. Leite daraus Terrain, Wasserstand, Wege, Landmarken, Dichte und Farb-/Materialpalette ab. Dokumentiere unvermeidbare Perspektivabweichungen; ein generiertes Konzept ist keine metrisch genaue Kameraaufnahme.
+1. Erzeuge und inspiziere mit ImageGen eine zusammenhängende Referenz, etwa Übersicht, Spielkamera, Wasserdetail und Vegetation/Landmarke. Geografie, Wege und Licht müssen zusammenpassen. Nutzerbilder dienen als Ausgangspunkt; speichere die fertigen Bilder.
+2. Halte Bildpfade, Bildprompt, Referenzversion, Maßstab, Seed und Vergleichsansichten in einem Manifest fest. Leite Terrain, Wasserstand, Wege, Dichte und Materialpalette ab. Benenne Perspektivabweichungen; das Konzept ist keine metrisch genaue Kameraaufnahme.
 3. Setze die gewählte Pipeline vollständig um. **Three.js:** Geometrie und Materialien in den vorhandenen nativen Modulen. **Blender:** echte Szene bzw. reproduzierbares Python-Skript, tatsächlich erzeugte Exporte und Import in denselben Spielrenderer. Blender per Python/CLI genügt; MCP ist keine Voraussetzung. Benenne Transformationskonventionen, Materialzuordnung und Exportherkunft.
 4. Verwende bei Bedarf ImageGen auch für nutzbare Welttexturen mit passender Transparenz, Skalierung und Materialzuordnung. Eine schöne Vorschau allein ist kein verwendetes Laufzeitasset. Erhalte Nahdetails, dichte Silhouetten und lesbare Wege; integriere Kollision, Spawn, vorhandene Map-Auswahl und saubere Ressourcenfreigabe.
 
-Das GPT-Modell steuert die Bilderzeugung über ein Werkzeug. Prüfe die tatsächliche
-Tool-Verfügbarkeit und benenne einen fehlenden Zugang; behaupte keine erzeugten
-Bilder aufgrund eines Modellnamens. [Offizielle Tool-Beschreibung](https://developers.openai.com/api/docs/guides/tools-image-generation).
+Prüfe den tatsächlichen ImageGen-Zugang; das GPT-Modell ruft dafür ein Werkzeug
+auf. Fehlende Bilder bleiben offen. [Tool-Beschreibung](https://developers.openai.com/api/docs/guides/tools-image-generation).
 
 ## Performance gehört zum Aufbau
 
@@ -58,11 +53,10 @@ Liegt Shared Docs anderswo, verwende den dort vorhandenen Pfad und benenne fehle
 
 ## Vergleich und Lieferung
 
-Liefere **Side-by-Side-Bilder: links ImageGen-Referenz, rechts echter Render der
-fertigen Map im Zielspiel**. Nutze dieselben repräsentativen Blickrichtungen,
-Bildausschnitte und Lichtbedingungen; kennzeichne Quelle, Kamera und Annäherungen.
-Zeige den nativen Material-/Postprocessing-Stand. Verändere Laufzeitbilder nicht
-mit ImageGen; ein Blender-Offlinerender ist bei Bedarf separat beschriftet.
+Liefere **Side-by-Side: ImageGen-Referenz | echter Render im Zielspiel** mit ähnlicher
+Kamera und Beleuchtung. Beschrifte Quelle und Abweichungen; zeige native Materialien
+und Postprocessing. Laufzeitbilder bleiben ohne ImageGen-Nachbearbeitung,
+Blender-Offlinerender werden separat beschriftet.
 
 Miss bei gleicher Hardware/GPU, Auflösung, Pixelratio, FOV, Seed, Population und
 FPS-Begrenzung. Leite das Budget mit `1000 / Ziel-FPS` ab. Nutze Warm-up und feste
