@@ -2,8 +2,9 @@
 
 Die passende Datei vollständig im Chat des Zielprojekts mitgeben und die Angaben
 oben ergänzen. Die ersten drei Vorlagen behandeln Performance; die drei neuen
-Vorlagen erzeugen Maps mit ImageGen-Referenzen und vergleichen sie mit echten
-Bildern aus der Spiel-Laufzeit.
+Vorlagen erzeugen vollständige ImageGen-Bild-, Material- und Assetpakete und
+setzen daraus je nach Auftrag Maps um, die mit echten Bildern aus der
+Spiel-Laufzeit verglichen werden.
 
 | Zweck | Vorlage |
 | --- | --- |
@@ -19,7 +20,12 @@ Bildern aus der Spiel-Laufzeit.
 - **Größe:** 450 × 450 m als aufgerundeter Standard für neue Maps. Eigene Maße haben Vorrang; Spielgrenzen, Kollision und Spawns werden passend zur Größe und Spielbereichsform abgeleitet.
 - **Stil:** „Ion 2“ wird als **AION 2-inspirierte Fantasy-Landschaft** interpretiert. Eigene Stilbeschreibung und Bildreferenzen überschreiben diese Annahme.
 - **Pipeline:** In Variante 1 und 2 zwischen Three.js und Blender wählen; ohne Angabe gilt die vorhandene native Three.js-Pipeline. Variante 3 liefert beide Wege. Blender ist ein Werkzeug zum Erzeugen echter exportierter Geometrie; die Spiel-Laufzeit bleibt der vorhandene Renderer.
-- **Referenz:** ImageGen-Ergebnisse speichern und ansehen. Side-by-Side zeigt das Konzept und den echten Laufzeit-Render. Blender-Offlinerender sind zusätzliche Design-Evidenz.
+- **Arbeitsstufe:** „Erstmal nur Bilder“ liefert das vollständige Bildpaket einschließlich Materialien und Assetansichten. Blender, Geometrie und Spielintegration folgen erst bei entsprechendem Auftrag. Ein vollständiger Map-Auftrag bleibt vollständig ausführbar.
+- **Referenzumfang:** Etwa 12–16 räumliche Ansichten als Ausgangspunkt, erweitert nach Zonen und verdeckten Bereichen; zusätzlich eigene Bilder und benötigte Texturen für sämtliche Materialien sowie mehrere Ansichten aller unterschiedlichen Felsen, Steine und Bauteile. Die vollständige Inventarabdeckung entscheidet, nicht eine Obergrenze von drei Bildern.
+- **Nutzerbilder:** Screenshots werden mit ImageGen zu neuen, auf die Zielmap angepassten Referenzen verarbeitet. Folgeansichten verwenden geprüfte Bilder und dasselbe Layout; widersprüchliche Geometrie bleibt kein stiller Arbeitsauftrag.
+- **Materialien:** Neutrale kachelbare Albedo-Dateien, Materialvorschauen und benötigte Kanäle/Werte getrennt liefern und prüfen. Unabhängig generierte Bilder sind kein automatisch korrektes PBR-Set; abgeleitete oder später gebackene Kanäle nachvollziehbar kennzeichnen.
+- **Übergabe:** Originaldateien, exakte Prompts/Eingangsreferenzen, versioniertes Inventar/Manifest und lokal öffnende statische Galerie aller Bilder. Jedes Material und Asset erhält eine ID und geplante Einsatzzuordnung; tatsächlicher Einbau wird später gesondert belegt. Implementierer öffnen die relevanten Bilder.
+- **Vergleich:** Side-by-Side zeigt das Konzept und den echten Laufzeit-Render. Blender-Offlinerender sind zusätzliche Design-Evidenz.
 - **Modelle:** Anbieter, Modellkennung und Denkstufe lassen sich eintragen. Variante 2 trennt Orchestrierer, Astra-Bilderzeugung und Implementierung; ein fehlender Implementierer wird nicht stillschweigend ersetzt.
 - **Leistungsziel:** Aus dem Zielprojekt oder der Nutzervorgabe ableiten. Silberhains bisheriges 600-FPS-Ziel und seine lokalen Messwerte sind keine allgemeine Vorgabe.
 
