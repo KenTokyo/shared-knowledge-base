@@ -136,6 +136,22 @@ nicht einer pauschalen Obergrenze von drei oder vier Bildern.
 
 ### Ablage, Vollständigkeit und sichtbare Übergabe
 
+- **Komprimiere jedes neu erzeugte Bild direkt nach der Erzeugung**, bevor es
+  in Galerie, Vorschau oder Übergabe verwendet wird. Bereits passend komprimierte
+  Dateien nicht erneut verlustbehaftet kodieren. Wähle Format und Qualität nach
+  Inhalt und Zielrenderer, zum Beispiel WebP für Szenen und Referenztafeln;
+  Transparenz sowie Detail- und Datenkanäle korrekt erhalten. Normalen, Height,
+  Masken und andere numerische Texturkanäle nicht wie beliebige Fotos komprimieren.
+- Erzeuge zur Anzeige passende kleinere Vorschaudateien. Die Galerie lädt diese
+  bedarfsgerecht und öffnet die komprimierte volle Auflösung erst auf Wunsch;
+  bloßes Verkleinern per CSS spart keine Bilddaten. Keine großen Rohdateien in
+  Vorschaulisten einbetten. Bewahre notwendige Rohoriginale separat auf und halte
+  Ursprungsdatei, komprimierte Datei und Vorschau im Manifest auseinander.
+- Prüfe die echten Ergebnisse: Dateigröße vorher/nachher, Abmessungen, feine
+  Strukturen, kleine Beschriftungen, Farbwirkung und Alpha. Vergleiche kritische
+  Ausschnitte visuell; bei sichtbarem Verlust Qualität erhöhen oder verlustfrei
+  speichern. Berichte die gemessene Einsparung und aktualisiere sämtliche
+  verwendeten Bildpfade. Eine bloße Komprimierungsanweisung genügt nicht.
 - Speichere unter einem versionierten Map-Ordner die Szenenansichten,
   Material-/Texturdateien, Assetansichten, exakten Bildprompts und verwendeten
   Eingangsreferenzen. Nutze eindeutige Dateinamen mit IDs; keine überschriebenen
