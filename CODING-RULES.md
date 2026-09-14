@@ -42,10 +42,10 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - Use project build/cache scripts. Inspect exit codes and redirected logs. Never weaken checks or exclusions to obtain a green result. Docs-only changes need no typecheck.
 - No new tests/configuration unless requested or required by the project. Existing focused checks may be updated for changed behavior.
 - Local user-provided images may be read and copied without browser permission.
-- Browser/dev-server/UI/gameplay inspection requires explicit permission for this task/session. Without it, use static checks and report runtime/console coverage as unverified.
-- With permission: implement → static checks → start app and read console → fix causes → one control run if needed. Default budget: **two runtime inspection runs total, including failures and console checks**. User-specified budgets override this; exhausted budget means report the blocker, not another hidden run.
+- Browser, dev-server, UI and gameplay checks needed for the requested work are authorized by that request. Use the ChatGPT Chrome plugin in the existing user profile without asking for another permission. Preserve user tabs. Report an actual tool or runtime blocker precisely and continue independent work.
+- Run the checks needed to answer the open question. For performance changes, capture a comparable baseline, isolate the cause, implement and check the delivered result. There is no fixed inspection quota or extra confirmation step; explicit user limits still apply.
 - Use the existing harness; no automatic capture-framework project. Follow [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md) for approved captures. Typechecks and stub-DOM checks do not prove visual quality or real runtime behavior.
-- For changes to recurring UI work, use comparable warm idle windows with DevTools closed for final CPU measurements, and verify the deployed version after an ordinary reload. Record CPU scale, foreground/background state and remaining coverage. A temporary diagnostic pause, successful deployment or rounded 0.0% snapshot is not final acceptance. Existing runtime permissions/budgets still apply; state unverified coverage explicitly.
+- For changes to recurring UI work, use comparable warm idle windows with DevTools closed for final CPU measurements, and verify the deployed version after an ordinary reload. Record CPU scale, foreground/background state and remaining coverage. A temporary diagnostic pause, successful deployment or rounded 0.0% snapshot is not final acceptance. Explicit user limits still apply; state unverified coverage explicitly.
 
 ## 5. Secrets, Git and delivery
 
