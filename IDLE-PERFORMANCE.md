@@ -1,6 +1,6 @@
 # Leerlauf-CPU schnell prüfen — Chrome und Electron
 
-Lesen bei hoher CPU ohne Interaktion oder Änderungen an Animationen, Ladeanzeigen, Polling und Bildschleifen. Die verbindlichen Grundregeln stehen in [CODING-RULES.md](CODING-RULES.md); vorhandene Laufzeitfreigaben und Prüfbudgets gelten weiter.
+Lesen bei hoher CPU ohne Interaktion oder Änderungen an Animationen, Ladeanzeigen, Polling und Bildschleifen. Die verbindlichen Grundregeln stehen in [CODING-RULES.md](CODING-RULES.md); ausdrückliche Nutzergrenzen gelten weiter. Browserprüfungen im Projektauftrag benötigen keine zusätzliche Nachfrage.
 
 ## Vor dem Einbau
 
