@@ -31,6 +31,7 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - Fix causes, not symptoms. Remove displaced code after checking references. Keep unrelated working behavior and other contributors' edits intact.
 - Keep new handwritten code files below 1,200 lines. For larger existing files, extract cohesive responsibilities when relevant; a tiny fix alone must not trigger an unrelated rewrite. Generated/vendor files are exempt; stricter project gates still apply.
 - Batch repeated I/O, run independent work in parallel, reuse expensive results and clean up listeners/timers/resources. Optimize measured bottlenecks without hiding quality loss or cutting requested functionality.
+- Match deliberation to the next decision. Handle routine edits and tool calls directly. Use deeper reasoning for uncertainty, failures or consequential tradeoffs; do not re-derive settled decisions without new evidence. Keep required functionality and verification complete.
 - **Idle work is a delivery concern in every project:** no endless decorative animations; deferred image placeholders stay static. Recurring animation, rendering and polling need an active purpose and a stop/cleanup path when their surface becomes inactive or hidden. Preserve actual gameplay, media and required background jobs. Follow [idle performance](IDLE-PERFORMANCE.md) for the small review and Chrome/Electron diagnosis workflow.
 - Never expand a collection while iterating it without a deliberate queue/snapshot, visited tracking and a bound.
 - A repeated defect needs a new cause investigation, not the same tuning again. Broaden repairs only to coupled parts needed for the requested result.
@@ -64,6 +65,7 @@ General work policy. Read once per fresh context; reread changed sections only. 
 - Use basic English for chat, generated docs, code and comments unless explicitly requested otherwise. Preserved originals and exact identifiers keep their language.
 - Lead with the result. Use short, direct sentences and compact bullets. Explain necessary technical terms. Keep Gen-Z slang light and natural; clarity wins.
 - Use numbered steps for order, checkboxes for tasks and icons sparingly. Cut repetition and filler, not facts, grammar or important constraints.
+- Keep progress and final reports proportional to the task; report decisions, results and unresolved issues once. Concise writing is not a fixed thinking-token budget and must not shorten required code or evidence.
 - Use UTF-8 and real umlauts; check changed docs for broken encoding.
 - Do not repeat this style block in plans, model prompts or every-turn prompts. A standalone prompt without these rules may carry a short fallback.
 - Logs: compact readable stage/action, responsible module, outcome and useful timing. Color only where supported; never log secrets or endless progress noise.
