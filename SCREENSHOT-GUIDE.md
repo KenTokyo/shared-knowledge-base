@@ -1,44 +1,61 @@
-# CLI-Capture für browsergestützte Laufzeit-Sichtprüfung
+# Screenshots ohne unnötige Browser-CPU
 
-**Lesen wenn:** nach vollständiger Umsetzung eine visuelle Unsicherheit übrig bleibt und der User eine
-browsergestützte Laufzeit-Sichtprüfung ausdrücklich freigegeben hat.
-**Geltung:** verbindlicher technischer Owner nur für diesen Ausnahmefall; lokale CLI-Namen stehen in der `AGENTS.md`.
+**Lesen vor:** Browserstarts, Screenshots und browsergestützten Grafik-/Laufzeitprüfungen.
+**Geltung:** Playwright, direkte CDP-Verbindungen, Browser-CLI, Shellskripte und andere Testbrowser. Notwendige Prüfungen sind durch den Projektauftrag erlaubt; keine zusätzliche Freigaberunde. Ausdrückliche Nutzergrenzen gelten weiter.
 
-**Default:** Keine agentische Laufzeit-Sichtprüfung und kein vorsorglicher Bau des Capture-Systems — Browserstart
-und Capture kosten viel CPU und RAM, davon ist wenig da. Die direkte Oberflächen-/Gameplay-Abnahme durch den User
-ist vorzuziehen. Gegated ist nur der Browserstart; lokale Referenzbilder direkt lesen bleibt erlaubt. Freigabe,
-Reihenfolge und Gesamtbudget stehen ausschließlich im Abschnitt **Checks and runtime inspection** in
-[`CODING-RULES.md`](CODING-RULES.md). Keine Screenshot- oder Review-Schleife.
+## Zuerst vorhandene Oberflächen nutzen
 
-1. **Use an existing project capture harness only after permission.** If none exists, report the missing harness;
-   building one needs a separate user request. Do not turn a visual check into a tooling project. Prefer headless inspection.
+| Weg | Wann verwenden | Grenze |
+| --- | --- | --- |
+| Vorhandener oder eingebauter Browser-Tab | Standard für Seiten-/UI-Screenshots; vorhandene Browser- oder Computer-Use-Werkzeuge nutzen | Dieselbe Seite, richtige Ansicht und Auflösung prüfen. Auch ein eingebauter 3D-Tab braucht Rechenleistung. |
+| Native Fensteraufnahme / Electron `capturePage` | Bereits geöffnete App oder NoteTree-Browserfläche | Kein zusätzlicher Browser nötig; Aufnahme muss die beauftragte Fläche zeigen. |
+| Sichtbarer Testbrowser | Wenn vorhandene Tabs ungeeignet sind oder der Ablauf eine isolierte Sitzung braucht | Bestehenden Projektweg nutzen, keine privaten Profile kopieren. Edge bevorzugen, wenn vorhanden; sonst Chrome oder voller Chromium-Browser. |
+| Unsichtbarer Browser | Begründete Ausnahme, etwa CI ohne Bildschirm oder ausdrücklich beauftragter Headless-Test | Vorher warnen, begrenzte Laufzeit und Aufräumen; 3D nur mit geprüfter GPU, außer beim ausdrücklich beauftragten Software-Rendering-Test. |
 
-2. **Ein headless Chromium als reiner Wirt.** Playwright startet den Browser einmal, lädt die App und ruft in die
-   Seite hinein. Eine Sitzung bedient alle Messungen und Parametersweeps; nie ein Browser pro Bild oder Wert.
-   Browserstart, Welt-Bake und Shaderaufbau kosten oft mehr CPU als die eigentliche Messung; Sitzung danach sofort schließen.
+Kein neuer Browser nur deshalb, weil ein Screenshot gebraucht wird. Vorhandene geeignete Sitzung für zusammengehörige Aufnahmen wiederverwenden; keine neue Instanz pro Bild. Ist kein nutzbarer Weg verfügbar, die konkrete fehlende Fähigkeit nennen, statt ungefragt einen großen Aufnahme-Unterbau zu bauen oder einen Screenshot zu erfinden.
 
-3. **Pixel direkt aus dem Render-Target.** Den engineeigenen GPU-Readback auf dem tatsächlichen Post-Target
-   verwenden und das PNG in Node schreiben; in Three.js ist das `renderer.readRenderTargetPixels()`. Bei anderen
-   Engines das entsprechende Render-Target-/Texture-Readback nutzen. `page.screenshot()` und `fullPage` sind
-   verboten: Sie laufen über den Compositor, kosten unnötig und belegen nicht exakt den Engine-Output.
+## Warnpflicht und Regelverstöße
 
-4. **Software-Rendering ist ein Fehler.** Die echte Kennung über `WEBGL_debug_renderer_info`, bei WebGPU über die
-   Adapterinformationen lesen. Matcht sie `/swiftshader|llvmpipe|software|microsoft basic|warp|angle \(google/i`,
-   mit Fehlercode abbrechen — niemals nur warnen oder den Lauf ranken.
+**Vor jedem notwendigen unsichtbaren Browserlauf** im Chat sichtbar sagen:
 
-5. **Zahlen vor Bildern.** Zuerst die entscheidende Größe messen, etwa Deckung, Luminanz, NDC-Position, Abstand,
-   Kontrast oder Framezeit. Sweeps als Tabelle ausgeben und dafür kein PNG erzeugen. Ein Bild nur erzeugen und
-   ansehen, wenn Zahlen die Look-Entscheidung nicht beantworten; dann das stärkste Gewinner/Verlierer- oder
-   Vorher/Nachher-Vergleichsbild, nie alle Kandidaten.
+> CPU-Warnung: Dieser Test startet einen unsichtbaren Browser. Grund: … Sparsamere Alternative: … Ich beende den eigenen Browser spätestens nach … und prüfe danach, dass er geschlossen ist.
 
-6. **Vergleiche normalisieren.** Über verschiedene Auflösungen relative Maße statt nativer Pixel verwenden. Vor
-   Rankings den Rauschboden bestimmen und prüfen, worauf das Messfenster tatsächlich zeigt; ein präziser Wert aus
-   dem falschen Fenster ist kein Beleg.
+Die Warnung ist eine Information, keine zusätzliche Bestätigungsfrage bei bereits beauftragter Arbeit. Auch bei einem vorhandenen Skript dessen tatsächlichen Startweg prüfen. In unbeaufsichtigten Läufen gehört die Warnung in die sichtbare Testausgabe.
 
-7. **Freigegebenes Review-Budget hart schließen.** Mehrere notwendige Frames in ein Vergleichsbild montieren;
-   dessen Auswertung zählt als Sichtprüfung. Weitere Sichtprüfungen nur für eine relevant geänderte Fassung oder
-   eine neue konkrete Frage und nur innerhalb des zentralen Gesamtbudgets aus `CODING-RULES.md`; keine
-   vollständigen Passes und kein Durchblättern von Kameras oder Sweeps.
+Als Regelverstoß gelten:
 
-8. **GPU-Flags nicht erraten.** Flags wie `--use-angle=vulkan`, `--enable-features=Vulkan` oder
-   `--disable-vulkan-surface` nur nach eigener Messung einsetzen; sie waren auf NVIDIA bereits messbar schädlich.
+- Ein unangekündigter Headless-Start für lokale Screenshot-Arbeit, obwohl eine geeignete vorhandene/sichtbare Fläche nutzbar ist.
+- Erzwungene CPU-Grafik für normale 3D-Aufnahmen, etwa `--use-angle=swiftshader`, `--use-angle=swiftshader-webgl` oder `--use-vulkan=swiftshader`. `--enable-unsafe-swiftshader` erlaubt den problematischen Rückfall und ist kein Performance-Fix. `--disable-gpu` ist ebenfalls kein allgemeines Mittel gegen hohe CPU.
+- Ein eigener Testbrowser, der nach Erfolg, Fehler, Zeitlimit oder Abbruch weiterrechnet; auch abgetrennte Starts mit `nohup` oder `&` brauchen einen Besitzer und zuverlässiges Ende.
+
+Bei einem Verstoß den **eigenen** Lauf stoppen, kurz mit dem Präfix **„Browser-CPU-Warnung“** erklären und den passenden Weg aus der Tabelle verwenden. Bereits laufende fremde Tests zuordnen und melden, nicht pauschal beenden. Eine Ausnahme gilt nur für ausdrücklich beauftragte Software-Rendering-/Fallback-Tests; sie braucht dieselbe Warnung und Aufräumpflicht. Headless ist nicht grundsätzlich Software-Rendering, und ein sichtbares Fenster beweist noch keine echte GPU.
+
+## Echte Grafikbeschleunigung prüfen
+
+Bei 3D/WebGL/WebGPU vor längeren Aufnahmen oder Messreihen den tatsächlichen Renderer des verwendeten Grafikkontexts prüfen: WebGL über `WEBGL_debug_renderer_info`, WebGPU über die verfügbaren Adapterinformationen. Ein Browsername, ein Startflag oder ein neuer unbenutzter Testkontext beweist den Renderer der Szene nicht.
+
+`SwiftShader`, `llvmpipe`, `software`, `Microsoft Basic Render Driver` und `WARP` weisen auf CPU-Grafik hin. `ANGLE` allein ist kein Fehler: ANGLE kann die echte Apple-/Intel-/AMD-/NVIDIA-GPU verwenden. Fehlende oder unklare Angaben als ungeprüft dokumentieren; nicht als Hardware-Nachweis ausgeben und keinen teuren Blindversuch anschließen.
+
+Bei erkanntem Software-Rendering für normale 3D-Screenshots abbrechen und die vorhandene GPU-beschleunigte Fläche bzw. einen sichtbaren Browser verwenden. Keine Qualitätsreduktion, Auflösungsänderung oder heimliche Änderung von Nutzereinstellungen als vermeintliche CPU-Reparatur. Keine geratenen Vulkan-/Metal-/ANGLE-Flags.
+
+## Das passende Bild aufnehmen
+
+- Für Seiten, Menüs und Layouts sind normale Tab-/Fenster-Screenshots sowie `page.screenshot()` geeignet. Den beauftragten Ausschnitt aufnehmen; `fullPage` nur, wenn die ganze Seite benötigt wird.
+- Für einen isolierten Engine-/Shader-Vergleich kann ein bereits vorhandener GPU-Readback des tatsächlichen Render-Targets genauer sein. Er ersetzt keinen Screenshot der gesamten Oberfläche. Nicht allein für ein Bild die Engine umbauen oder permanent `preserveDrawingBuffer` aktivieren.
+- Bei Messreihen zuerst die tatsächlich relevante Zahl erheben. Bilder gezielt für offene visuelle Fragen aufnehmen, keine dauernde Screenshot-/Kameraschleife. Benötigte Auflösung und Vergleichszustände erhalten.
+
+## Eigene Sitzungen zuverlässig aufräumen
+
+Vor dem Start Besitzer, Profil/Port und ein zum Test passendes Zeitlimit festhalten. In eigenem Startcode `try/finally` sowie Fehler-, Abbruch- und Zeitlimitbehandlung vorsehen. Playwright-Testläufe sollen ihre verwalteten Fixtures nutzen; lose Skripte müssen `context.close()`/`browser.close()` und gegebenenfalls den selbst gestarteten Unterprozess beenden. Ein von der Prüfung unabhängiges Zeitlimit muss auch einen hängenden Aufruf beenden können.
+
+- Eigener Browser: am Ende vollständig schließen und gezielt anhand der eigenen PID/Prozessfamilie bzw. des eigenen Debug-Ports prüfen, dass nichts weiterläuft.
+- Angefügter Nutzerbrowser: nur eigene Test-Tabs/-Kontexte schließen und die Verbindung trennen; die fremde App, Tabs und Profile erhalten. `disconnect`/`detach` reicht nur hier, nicht für einen selbst gestarteten Browser.
+- Keine pauschalen `kill-all`-/`pkill Chrome`-Aufrufe. Keine Hintergrundspiele nach dem Screenshot stehen lassen. Einen nur für die Aufnahme geöffneten eingebauten Test-Tab ebenfalls schließen, sofern er nicht als gewünschte Vorschau weiter gebraucht wird.
+
+## CPU-Ergebnis ehrlich einordnen
+
+30–50 % während dauerhaftem Software-Rendering können erheblich sein. Ein einzelner Start-/Screenshot-Spitzenwert beweist aber keine Dauerlast. CPU eines Kerns und Anteil an der gesamten Maschine unterscheiden. Vorher/nachher an derselben Szene, Auflösung, Qualität und CPU-Skala messen; warme Fenster, gleiche Sichtbarkeit, DevTools für den Abschluss geschlossen. Details: [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md).
+
+Eine Regel ist kein systemweiter Prozesswächter. Sie wirkt bei Agenten, die sie laden. Technische Warnungen eines Teststarters erreichen nur dessen Läufe. Keine garantierten Prozent-Einsparungen ohne Vergleichsmessung behaupten.
+
+Quellen: [Chromium: SwiftShader](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/gpu/swiftshader.md), [Playwright: Browser und Headless-Modi](https://playwright.dev/docs/browsers).
