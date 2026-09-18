@@ -10,9 +10,18 @@
 | Vorhandener oder eingebauter Browser-Tab | Standard für Seiten-/UI-Screenshots; vorhandene Browser- oder Computer-Use-Werkzeuge nutzen | Dieselbe Seite, richtige Ansicht und Auflösung prüfen. Auch ein eingebauter 3D-Tab braucht Rechenleistung. |
 | Native Fensteraufnahme / Electron `capturePage` | Bereits geöffnete App oder NoteTree-Browserfläche | Kein zusätzlicher Browser nötig; Aufnahme muss die beauftragte Fläche zeigen. |
 | Sichtbarer Testbrowser | Wenn vorhandene Tabs ungeeignet sind oder der Ablauf eine isolierte Sitzung braucht | Bestehenden Projektweg nutzen, keine privaten Profile kopieren. Edge bevorzugen, wenn vorhanden; sonst Chrome oder voller Chromium-Browser. |
-| Unsichtbarer Browser | Begründete Ausnahme, etwa CI ohne Bildschirm oder ausdrücklich beauftragter Headless-Test | Vorher warnen, begrenzte Laufzeit und Aufräumen; 3D nur mit geprüfter GPU, außer beim ausdrücklich beauftragten Software-Rendering-Test. |
+| Unsichtbarer Browser | Begründete Ausnahme, etwa CI ohne Bildschirm, ausdrücklich beauftragter Headless-Test oder ein Starter, der nur mit Fokusraub sichtbar starten kann | Vorher warnen, begrenzte Laufzeit und Aufräumen; 3D nur mit geprüfter GPU, außer beim ausdrücklich beauftragten Software-Rendering-Test. |
 
 Kein neuer Browser nur deshalb, weil ein Screenshot gebraucht wird. Vorhandene geeignete Sitzung für zusammengehörige Aufnahmen wiederverwenden; keine neue Instanz pro Bild. Ist kein nutzbarer Weg verfügbar, die konkrete fehlende Fähigkeit nennen, statt ungefragt einen großen Aufnahme-Unterbau zu bauen oder einen Screenshot zu erfinden.
+
+## Nie den Fokus wegnehmen
+
+Der Nutzer arbeitet parallel weiter. Ein Testfenster darf ihm weder Tastaturfokus noch Vordergrund nehmen.
+
+- Im Prüfcode kein `bringToFront()`, `focus()`, `app.focus()` und kein Aktivieren der Test-App.
+- Sichtbare Testfenster nur ohne Aktivierung starten. Die NoteTree-Electron-Testinstanz (Electron-Playwright-CLI) erscheint von selbst inaktiv und rendert auch verdeckt weiter.
+- Kann ein Starter nur mit Fokusraub sichtbar starten, für normale 2D-Oberflächen den unsichtbaren Weg wählen (Warnung wie unten). 3D bleibt bei geprüfter GPU.
+- Eine laufende eigene Sitzung wiederverwenden, statt für weitere Aufnahmen neu zu starten: jeder Start ist ein neues Fenster.
 
 ## Warnpflicht und Regelverstöße
 
@@ -26,6 +35,7 @@ Als Regelverstoß gelten:
 
 - Ein unangekündigter Headless-Start für lokale Screenshot-Arbeit, obwohl eine geeignete vorhandene/sichtbare Fläche nutzbar ist.
 - Erzwungene CPU-Grafik für normale 3D-Aufnahmen, etwa `--use-angle=swiftshader`, `--use-angle=swiftshader-webgl` oder `--use-vulkan=swiftshader`. `--enable-unsafe-swiftshader` erlaubt den problematischen Rückfall und ist kein Performance-Fix. `--disable-gpu` ist ebenfalls kein allgemeines Mittel gegen hohe CPU.
+- Ein Testfenster, das dem Nutzer Fokus oder Vordergrund nimmt (Start mit Aktivierung, `bringToFront()`, `focus()`).
 - Ein eigener Testbrowser, der nach Erfolg, Fehler, Zeitlimit oder Abbruch weiterrechnet; auch abgetrennte Starts mit `nohup` oder `&` brauchen einen Besitzer und zuverlässiges Ende.
 
 Bei einem Verstoß den **eigenen** Lauf stoppen, kurz mit dem Präfix **„Browser-CPU-Warnung“** erklären und den passenden Weg aus der Tabelle verwenden. Bereits laufende fremde Tests zuordnen und melden, nicht pauschal beenden. Eine Ausnahme gilt nur für ausdrücklich beauftragte Software-Rendering-/Fallback-Tests; sie braucht dieselbe Warnung und Aufräumpflicht. Headless ist nicht grundsätzlich Software-Rendering, und ein sichtbares Fenster beweist noch keine echte GPU.
