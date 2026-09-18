@@ -19,7 +19,7 @@ Kein neuer Browser nur deshalb, weil ein Screenshot gebraucht wird. Vorhandene g
 Der Nutzer arbeitet parallel weiter. Ein Testfenster darf ihm weder Tastaturfokus noch Vordergrund nehmen.
 
 - Im Prüfcode kein `bringToFront()`, `focus()`, `app.focus()` und kein Aktivieren der Test-App.
-- Sichtbare Testfenster nur ohne Aktivierung starten. Die NoteTree-Electron-Testinstanz (Electron-Playwright-CLI) erscheint von selbst inaktiv und rendert auch verdeckt weiter.
+- Sichtbare Testfenster nur ohne Aktivierung starten. Die NoteTree-Electron-Testinstanz (Electron-Playwright-CLI) erscheint von selbst inaktiv, parkt bis auf einen 24-px-Streifen hinter dem rechten Bildschirmrand und rendert dort weiter; Aufnahmen, Viewport und Maus laufen über CDP. Zum Zuschauen mit `ND_ELECTRON_TEST_WINDOW=visible` starten. Lädt die Seite neu (etwa ein Vite-Neuladen), ist eine mit `resize` gesetzte Größe weg: vor jeder Aufnahme `innerWidth`/`innerHeight` prüfen.
 - Kann ein Starter nur mit Fokusraub sichtbar starten, für normale 2D-Oberflächen den unsichtbaren Weg wählen (Warnung wie unten). 3D bleibt bei geprüfter GPU.
 - Eine laufende eigene Sitzung wiederverwenden, statt für weitere Aufnahmen neu zu starten: jeder Start ist ein neues Fenster.
 
