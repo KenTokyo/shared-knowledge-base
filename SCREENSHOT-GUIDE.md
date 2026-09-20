@@ -3,42 +3,17 @@
 **Lesen vor:** Browserstarts, Screenshots und browsergestützten Grafik-/Laufzeitprüfungen.
 **Geltung:** Playwright, direkte CDP-Verbindungen, Browser-CLI, Shellskripte und andere Testbrowser. Notwendige Prüfungen sind durch den Projektauftrag erlaubt; keine zusätzliche Freigaberunde. Ausdrückliche Nutzergrenzen gelten weiter.
 
-## Zuerst vorhandene Oberflächen nutzen
+## Vorrang: Die Arbeit des Nutzers nicht unterbrechen
 
-| Weg | Wann verwenden | Grenze |
-| --- | --- | --- |
-| Vorhandener oder eingebauter Browser-Tab | Standard für Seiten-/UI-Screenshots; vorhandene Browser- oder Computer-Use-Werkzeuge nutzen | Dieselbe Seite, richtige Ansicht und Auflösung prüfen. Auch ein eingebauter 3D-Tab braucht Rechenleistung. |
-| Native Fensteraufnahme / Electron `capturePage` | Bereits geöffnete App oder NoteTree-Browserfläche | Kein zusätzlicher Browser nötig; Aufnahme muss die beauftragte Fläche zeigen. |
-| Sichtbarer Testbrowser | Wenn vorhandene Tabs ungeeignet sind oder der Ablauf eine isolierte Sitzung braucht | Bestehenden Projektweg nutzen, keine privaten Profile kopieren. Edge bevorzugen, wenn vorhanden; sonst Chrome oder voller Chromium-Browser. |
-| Unsichtbarer Browser | Begründete Ausnahme, etwa CI ohne Bildschirm, ausdrücklich beauftragter Headless-Test oder ein Starter, der nur mit Fokusraub sichtbar starten kann | Vorher warnen, begrenzte Laufzeit und Aufräumen; 3D nur mit geprüfter GPU, außer beim ausdrücklich beauftragten Software-Rendering-Test. |
+Verbindliche Korrektur des Nutzers vom 20.09.2026: Die frühere Pflicht zu sichtbaren lokalen Testbrowsern ist aufgehoben. Keine sichtbaren Testbrowser oder Testfenster starten. Keine Tabs nach vorne holen, keine Fenster aktivieren und keinen Tastaturfokus übernehmen. Das gilt auch für Playwright, CDP, Electron und Fehlerbehebungsversuche.
 
-Kein neuer Browser nur deshalb, weil ein Screenshot gebraucht wird. Vorhandene geeignete Sitzung für zusammengehörige Aufnahmen wiederverwenden; keine neue Instanz pro Bild. Ist kein nutzbarer Weg verfügbar, die konkrete fehlende Fähigkeit nennen, statt ungefragt einen großen Aufnahme-Unterbau zu bauen oder einen Screenshot zu erfinden.
-
-## Nie den Fokus wegnehmen
-
-Der Nutzer arbeitet parallel weiter. Ein Testfenster darf ihm weder Tastaturfokus noch Vordergrund nehmen.
-
-- Im Prüfcode kein `bringToFront()`, `focus()`, `app.focus()` und kein Aktivieren der Test-App.
-- Sichtbare Testfenster nur ohne Aktivierung starten. Die NoteTree-Electron-Testinstanz (Electron-Playwright-CLI) erscheint von selbst inaktiv, parkt bis auf einen 24-px-Streifen hinter dem rechten Bildschirmrand und rendert dort weiter; Aufnahmen, Viewport und Maus laufen über CDP. Zum Zuschauen mit `ND_ELECTRON_TEST_WINDOW=visible` starten. Lädt die Seite neu (etwa ein Vite-Neuladen), ist eine mit `resize` gesetzte Größe weg: vor jeder Aufnahme `innerWidth`/`innerHeight` prüfen.
-- Kann ein Starter nur mit Fokusraub sichtbar starten, für normale 2D-Oberflächen den unsichtbaren Weg wählen (Warnung wie unten). 3D bleibt bei geprüfter GPU.
-- Eine laufende eigene Sitzung wiederverwenden, statt für weitere Aufnahmen neu zu starten: jeder Start ist ein neues Fenster.
-
-## Warnpflicht und Regelverstöße
-
-**Vor jedem notwendigen unsichtbaren Browserlauf** im Chat sichtbar sagen:
-
-> CPU-Warnung: Dieser Test startet einen unsichtbaren Browser. Grund: … Sparsamere Alternative: … Ich beende den eigenen Browser spätestens nach … und prüfe danach, dass er geschlossen ist.
-
-Die Warnung ist eine Information, keine zusätzliche Bestätigungsfrage bei bereits beauftragter Arbeit. Auch bei einem vorhandenen Skript dessen tatsächlichen Startweg prüfen. In unbeaufsichtigten Läufen gehört die Warnung in die sichtbare Testausgabe.
-
-Als Regelverstoß gelten:
-
-- Ein unangekündigter Headless-Start für lokale Screenshot-Arbeit, obwohl eine geeignete vorhandene/sichtbare Fläche nutzbar ist.
-- Erzwungene CPU-Grafik für normale 3D-Aufnahmen, etwa `--use-angle=swiftshader`, `--use-angle=swiftshader-webgl` oder `--use-vulkan=swiftshader`. `--enable-unsafe-swiftshader` erlaubt den problematischen Rückfall und ist kein Performance-Fix. `--disable-gpu` ist ebenfalls kein allgemeines Mittel gegen hohe CPU.
-- Ein Testfenster, das dem Nutzer Fokus oder Vordergrund nimmt (Start mit Aktivierung, `bringToFront()`, `focus()`).
-- Ein eigener Testbrowser, der nach Erfolg, Fehler, Zeitlimit oder Abbruch weiterrechnet; auch abgetrennte Starts mit `nohup` oder `&` brauchen einen Besitzer und zuverlässiges Ende.
-
-Bei einem Verstoß den **eigenen** Lauf stoppen, kurz mit dem Präfix **„Browser-CPU-Warnung“** erklären und den passenden Weg aus der Tabelle verwenden. Bereits laufende fremde Tests zuordnen und melden, nicht pauschal beenden. Eine Ausnahme gilt nur für ausdrücklich beauftragte Software-Rendering-/Fallback-Tests; sie braucht dieselbe Warnung und Aufräumpflicht. Headless ist nicht grundsätzlich Software-Rendering, und ein sichtbares Fenster beweist noch keine echte GPU.
+- Vorhandene oder eingebaute Oberflächen und native Aufnahmen nur verwenden, wenn die laufende Arbeit ungestört bleibt.
+- Nötige eigene Browserprüfungen unsichtbar ausführen (`headless: true`), mit isoliertem Profil, begrenzter Laufzeit und verlässlichem Aufräumen.
+- Ein fehlendes ChatGPT-/Chrome-Plugin ist kein Grund für einen sichtbaren Ersatzstart. Headless ist der vorgesehene Ausweichweg, kein Regelverstoß.
+- Kein `bringToFront()`, `focus()`, `app.focus()`, Aktivieren einer Browser-App oder Öffnen sichtbarer Entwicklerwerkzeuge. Konsole und Netzwerk über die Prüfverbindung erfassen.
+- Headless erfordert keine zusätzliche Routinefreigabe und keine pauschale CPU-Warnung. Konkrete hohe Rechenlast vermeiden und bei Bedarf vorab benennen. Headless bedeutet nicht automatisch Software-Rendering.
+- Funktioniert der unsichtbare Weg nicht, den konkreten Fehler melden. Nicht mit sichtbaren Browserstarts wiederholen.
+- Bei versehentlicher Störung sofort nur den eigenen Lauf beenden. Fremde Browser, Tabs und Tests nicht schließen.
 
 ## Echte Grafikbeschleunigung prüfen
 
@@ -46,7 +21,7 @@ Bei 3D/WebGL/WebGPU vor längeren Aufnahmen oder Messreihen den tatsächlichen R
 
 `SwiftShader`, `llvmpipe`, `software`, `Microsoft Basic Render Driver` und `WARP` weisen auf CPU-Grafik hin. `ANGLE` allein ist kein Fehler: ANGLE kann die echte Apple-/Intel-/AMD-/NVIDIA-GPU verwenden. Fehlende oder unklare Angaben als ungeprüft dokumentieren; nicht als Hardware-Nachweis ausgeben und keinen teuren Blindversuch anschließen.
 
-Bei erkanntem Software-Rendering für normale 3D-Screenshots abbrechen und die vorhandene GPU-beschleunigte Fläche bzw. einen sichtbaren Browser verwenden. Keine Qualitätsreduktion, Auflösungsänderung oder heimliche Änderung von Nutzereinstellungen als vermeintliche CPU-Reparatur. Keine geratenen Vulkan-/Metal-/ANGLE-Flags.
+Bei erkanntem Software-Rendering für normale 3D-Screenshots abbrechen. Nur eine vorhandene GPU-beschleunigte Fläche ohne Arbeitsunterbrechung oder einen GPU-fähigen unsichtbaren Lauf verwenden; keinen sichtbaren Ersatzbrowser starten. Keine Qualitätsreduktion, Auflösungsänderung oder heimliche Änderung von Nutzereinstellungen als vermeintliche CPU-Reparatur. Keine geratenen Vulkan-/Metal-/ANGLE-Flags.
 
 ## Das passende Bild aufnehmen
 
