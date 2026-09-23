@@ -1,6 +1,6 @@
-# Bildmessung und Urteilen — voxel-samurai-quiz (AEON)
+# Bildmessung und Urteilen — voxel-samurai-quiz (Quizfall World Runtime)
 
-**Lesen wenn:** AEON-Bildmaße, Layer-Attribution, Sondenmetriken oder Probe-vs.-Shipping.
+**Lesen wenn:** Quizfall-Weltbildmaße, Layer-Attribution, Sondenmetriken oder Probe-vs.-Shipping.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Global: [`threejs/MEASURING.md`](../../threejs/MEASURING.md). Laufvarianz/Zeit/Spalten:
@@ -25,6 +25,9 @@ Treffer/Fehltreffer und alle drei Mutatoren; kein Tipp nötig.
 
 - **Probe driftet vom Shipping-Pfad** — Defaults, FreeCam, alte Pose oder nachgebaute Invariante liefern plausible Fremdzahlen. → Kandidatenflags, Produktions-Poser und veröffentlichte Runtime-Werte nutzen.
   *`camwall` ignorierte `--liftMode`/`--liftBodY`, Armformel veraltet; FreeCam verfehlte `groundLift`; alte Pose +1,009 vs. Shipping +0,083 · 2026-08-01*
+
+- **Kameraabstand als Ausweg aus einem Bestand** — `--cam …,45` stand mitten im Bambus, weil die notierte „Hainposition“ nur das dichteste 8-m-Nest einer über die ganze Karte gestreuten Art war; Abstand vergrößern trägt aus so einem Bestand nicht heraus. → Vor dem Bild offline die Instanzhülle, den freien Standort und den Korridor Kamera→Ziel messen (`world.heightAt` + Instanzmatrizen, Sekunden statt Minuten); Standort suchen statt raten.
+  *sd32 `senkenbambus`: 240 Halme über x −161…136 / z −155…172, davon 48 im 45-m-Umkreis des Nests; ein Sichtprüfungsbild verbrannt, das nächste traf mit gemessenem Stand −122/89 · 2026-08-05*
 
 - **Sonde misst dort, wo Fehler- und Sollwert zusammenfallen** — `sunkBy 0.00` liest sich als Beleg; am Zielanker ist der Boden selbst 0.00, eine fälschlich gelatchte 0 nicht von der richtigen unterscheidbar. → Vor dem Lauf prüfen, ob der Fehlerfall an dieser Stelle einen **anderen** Wert liefert als der Sollfall; sonst Ort wechseln oder offline nachstellen.
   *Zwei Diag-Läufe L11/L12 (~6 min) belegten nichts — Spot 0 ist auf jeder Etage der auf 0 planierte Arena-Kern; `pnpm terrain:anchor-probe` zeigte den Befund in Sekunden (alter ortsbasierter Schlüssel 0 bei Boden 16,6) · 2026-08-02*

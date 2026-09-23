@@ -1,16 +1,15 @@
-# Sonden und Dokumentations-Gates — claude-flakes
+# Dokumentansprüche und Doku-Gates — claude-flakes
 
-**Lesen wenn:** `review/*.mjs`, Selbsttest, Falsifikator, Dokumentanspruch oder Beleglog.
+**Lesen wenn:** eine Zahl, ein Absolutwort oder ein Artefaktverweis in README, ROADMAP oder `docs/` steht — oder ein Code-Kommentar behauptet, was der Build mit dem Code tut — oder ein Gate gebaut wird, das so etwas prüft.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-- **Restore übernimmt steckengebliebenen Mutanten** — In-place-Treiber nimmt roten Plattenstand als Baseline und meldet ihn nach Restore bytegleich. → Ziel-Gate vor erstem Write grün verlangen; bevorzugt Geschwister-Temp mutieren.
-  *Geerbtes `take: []` ergab FAIL 142/143; neuer Preflight verweigerte denselben Zustand mit Exit 9 vor Write · 2026-08-01*
-
-- **`process.exit()` umgeht Cleanup** — Exit im `try` beendet Node vor `finally`; Mutationskopien bleiben als nächste Baseline liegen. → Exit-Code sammeln, Cleanup im `finally`, erst danach `process.exitCode` setzen.
-  *Ein Refusal hinterließ 6 `_ph52-*`-Kopien; tabellengetriebener Umbau räumte alle Pfade auf · 2026-08-02*
+Sonden, Selbsttests und Messtreiber: [`PROBES-SELFTESTS.md`](PROBES-SELFTESTS.md).
 
 - **Dokumentzahl bleibt bei grünen Gates frei erfunden** — Suite liest nur Kurventabelle, ROADMAP gar nicht. Auch mit Doku-Gate bleibt eine Lücke: `FIGURE_SHAPES` erkennt ausschließlich „`review/x.log` + N lines". Ein Verdikt-Block (`all 16 checks passed`, `58/58 checks passed`) nennt weder Logdatei noch Zeilenzahl, fällt damit durch jede Shape und driftet unbemerkt weiter — ausgerechnet in dem Dokument, das „eine Zahl in Prosa ist ein Anspruch" als eigene Regel führt. → Claims aus aktuellem Dokument parsen, Artefakt live lesen, falschen Wert und fehlendes Artefakt separat röten; Verdikt-Zahlen beim Anfassen **neu messen statt abschreiben** — `consts`+`wgsl`+`progression`+`mutation`+`build` kosten zusammen unter einer Minute und keinen Browser, nur `play.mjs` kostet einen Chromium-Start.
   *README 141/118→777/555: Mutation-Gate 141/141 und Suite 124/124 weiter PASS; danach 255-vs-257-Fehler gefunden · 2026-08-01. Erneut in `docs/test-status.md` selbst: wgsl stand auf 16 (gemessen 18), play.mjs auf 58/58 (gemessen 140/140) — Gate blieb bei beiden 145/145 grün · 2026-08-03*
+
+  **Ein `@see`-Kommentar ist kein Gate.** Sonde nennt das Dokument nur im Kopfkommentar; die Punktzahl darin ist eine Abschrift ohne Leser, und beide Seiten wirken verbunden, weil die Sonde den Pfad ja nennt. → Sonde ihre **eigene** Zeile aus dem Dokument lesen lassen und die Zahl darin gegen `ok.length + fails.length + 1` prüfen (`+1` = diese Prüfung selbst, noch nicht gezählt). Zeile über den **eigenen Dateinamen** finden, nicht über die Zeilennummer — sonst prüft eine umbenannte Sonde still die Zeile einer fremden. Ein zweiter Check „Zeile existiert überhaupt" davor, sonst ist ein verschwundener Abschnitt kein Rot.
+  *`docs/vfx-studio-editor.md` §11 stand auf 416, `vfx-panel-probe.mjs` lief 445 — 29 Prüfungen Drift, alle vier Sonden verwiesen nur per `@see`. Das neue Gate war beim ersten Lauf sofort rot (445 vs 447) · 2026-08-08*
 
 - **Hartumbruch verkleinert Claim-Nenner** — Parser erwartet Literalspaces und überspringt umbrochene Prosa; kleinerer Nenner wirkt sauber. → Zwischen Tokens `\s+`; zusätzlich jede unverbrauchte `N lines`-Phrase mit Pfad/Zeile melden.
   *3/10 README-Claims fielen zunächst still weg; Residuum fand sofort 3 weitere übersehene Stellen · 2026-08-01*
@@ -30,11 +29,13 @@
 - **Selbstreferenzielles Doku-Gate braucht Konvergenzreihenfolge** — neues Log ändert Doku-Zahl, Doku ändert Gate-Ausgabe, rote Zwischenstufe ist erwartbar. → Treiber→Log→Doku→Gate→Treiber; zuletzt alle Artefakte byte-diffen.
   *Falsifikatorlog 138→159→282→318 Zeilen; erst zweiter Treiberlauf belegte den jeweiligen Fixpunkt · 2026-08-01/02*
 
-- **Selbsttest protokolliert statt entscheidet** — Fälle drucken nur Extrakte; leere oder falsche Nadel lässt Suite Exit 0. → Pro Fall erwartete Phrase und Exit assertieren, Gesamtfehlerzahl in Exit spiegeln.
-  *Identitätsfall druckte 2 Leerzeilen und blieb grün; Umbau hielt danach 10/10, später 14/14 echte Fälle · 2026-08-02*
-
-- **Regex leiht Rot aus nächstem Fall** — `=== n[\s\S]*?` läuft über Abschnittsgrenzen und ordnet fremdes Versagen zu. → Bis zum nächsten Sentinel begrenzen; Falschpositiv- und Wahrpositiv-Richtung messen.
-  *13/14 Fälle beanspruchten Fall 14s Rot; section-scoped Regex ergab 0 falsche und 0 verlorene Treffer · 2026-08-02*
-
-- **Summenboden bestätigt kompensierende Blindheit** — fehlende Nadel und zusätzlicher Treffer halten dieselbe Kardinalität. → Identitäten Quelle↔Parser kreuzen und jede Nadel, Guard-Klausel sowie Exit-Erwartung einzeln brechen.
-  *Parser verschluckte je Fall letzte Nadel und traf trotzdem Sollsumme 10; Sweep A hielt später alle 20/20 einzeln · 2026-08-02*
+- **Kommentar behauptet, der Build falte den Zweig weg** — `dist/assets/index-*.js` trägt 9 Entwicklungs-Strings
+  (`dev only`, `test buy`, `reset account`, `dev-topup`, `no payment was made`), obwohl der Kopfkommentar genau diese
+  Faltung versprach. Ursache: Der Schalter war `sandboxOpen()`, und ein Aufruf ist für den Minifier undurchsichtig —
+  die Funktion könnte alles zurückgeben, also bleibt jeder Zweig dahinter stehen. Ebenso undurchsichtig: derselbe Wert
+  als Parameter durchgereicht (`walletHtml(…, dev)`) und unerreichbare Klassenmethoden — beide falten nie.
+  → Schalter als Konstante in der **exakten** Textform `export const X = import.meta.env.DEV === true` schreiben
+  (`import.meta.env?.DEV` ist anderer Text und trifft Vites Ersetzung **nicht**), `if (X)` direkt an jeder Aufrufstelle
+  prüfen statt weiterreichen, Handler in ein eigenes Modul statt in Lobby-Methoden legen; danach `grep` über
+  `dist/assets/index-*.js` — die Faltung belegen, nicht im Kommentar behaupten.
+  *9 Strings vor Umbau je 1–2 Treffer, danach 0 · 2026-08-23*

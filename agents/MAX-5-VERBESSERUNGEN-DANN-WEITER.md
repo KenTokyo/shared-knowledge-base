@@ -1,6 +1,8 @@
 # Deckel — 3–5 Verbesserungen pro Achse, dann etwas Neues
 
-**Lesen wenn:** du an derselben Sache die dritte Verbesserung misst — und bevor du eine Loop-Schicht startest.
+**Scope:** Optional refinement only, not required defect fixes or acceptance checks. Stop when the requested result is met; this guide never requires new work or overrides the runtime budget in [Coding Rules](../CODING-RULES.md).
+
+**Lesen wenn:** du an derselben Sache die dritte optionale Verbesserung misst — nicht für normale Implementierung.
 **Status:** Deckel, kein Tipp · überschreiben nur über den Preisvergleich unten · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
 
 **Der Deckel stoppt nicht die Arbeit, er stoppt die Wiederholung.** Im

@@ -42,12 +42,12 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   *`maxPerFrame=1` bei 17/17 Schüssen, während die Bänder bei ±0,70u um einen Kern von 0,345u lagen =
   2,0× Kernbreite. Danach worst off-axis 0,310u gegen radius 0,368u, verwurzelt 120/120 · 2026-08-02*
 
-- **Die Arena war lauter als der Spieler** — drei Oszillatoren mit Amplitude 1 summierten in *ein*
-  Ausgangs-Gain, also erreichte rund das Dreifache der Konstante den Master; dazu fehlte die
-  Distanzdämpfung im ersten Frame. → Oszillatorstapel auf **Summe 1** normalisieren und je Quelle einen
-  eigenen Pegel führen (Spieler / Hazard / Slow).
-  *Eine 2,6 s haltende Stimme lag mit 0,698 über dem eigenen Schuss-Transienten (0,627); nachher 0,296 /
-  0,237 / 0,454. Gemessen ist die Gain-Summe im Graphen, nicht die wahrgenommene Lautheit · 2026-08-02*
+- **Die Arena war lauter als der Spieler** — Oszillatoren summierten mehrfach in ein Gain; gerenderte
+  Transienten widerlegten später denselben Denkfehler anders: Gain-Verhältnis war kein Pegelverhältnis.
+  → Quellen im echten Graphen aus gleichem Zustand messen; Oszillatorgewichte auf Summe 1, Render-Trims
+  gegen den Spielerpegel fitten, je Verursacher eigenen Pegel führen.
+  *Beam 0,698 > Spielerschuss 0,627 → 0,296 / 0,237 / 0,454 · Gegner-Trim 0,45 ergab 1,16×
+  Spielermündung, Trim 0,20 ergab 0,52×; Boss 0,17× · 2026-08-02/26*
 
 - **Eine Klemme, die geometrisch nicht tun kann, was sie behauptet** — die Kamera-Kollisionsklemme addierte
   auf `distance`; das Auge liegt aber auf dem Strahl, der das Subjekt unter `pitch` verlässt, also ist das
@@ -70,8 +70,19 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   Schadens- oder Projektiländerung verschiebt, und der grüne Wert war ein gewonnenes Rennen zwischen zwei
   Angriffsarten. → **Struktur erzwingen** (die anderen Angreifer entwaffnen), nicht den Wert nachjustieren.
   Ein Codekommentar „gemessen, nicht angenommen" ist damit widerlegbar — und wurde widerlegt.
+  Dieselbe Verwechslung mit vertauschten Rollen: **ein Maximum über N Züge ist ein Maximum über Glück.**
+  Ein Pegel-Vergleich, der die lauteste Frame der Waffe gegen die lauteste eines Höhepunkts stellt, zieht
+  auf der einen Seite viele Male und auf der anderen wenige — der Abstand, der dabei herauskommt, ist zum
+  großen Teil die Zugzahl. → Beide Seiten aus **demselben Zustand** und mit **gleicher Zugzahl** rechnen,
+  oder die Rivalin als Kontrafaktisches aus der Spur des Höhepunkts herleiten und die Zugzahlen mitdrucken;
+  ein Maximum aus ungleich großen Ziehungsmengen nie als Rangfolge veröffentlichen.
   *0,67 s → 0,03 s ohne eine Zeile Änderung an diesem Gegner; danach strukturell stabil auf dem
   Melee-Windup 0,45/0,63/0,70 s · 2026-07-29*
+  *Die Kanone zieht 16-mal, die drei Landmarken je einmal: ihr bester Zug 0,5977 steht gegen 0,4000 aus
+  ihrer lautesten echten Frame. Deshalb ist sie nicht die Rivalin — die Klausel rechnet jede Landmarke
+  gegen das, was die Waffe **vom selben Pegelstand aus** gekauft hätte (Stufe 0,06→0,404/0,204,
+  0,75→0,433/0,433, Kill 0,72→0,489/0,489), und das Modell dahinter reproduziert alle 36 echten Rufe ans
+  Rig · 2026-08-03*
 
 - **Ein voller Balken sah aus wie 78 %** — verdächtigt wurde die Rechnung der Vitalanzeige; die Zeile war
   die einzige mit Zahlenspalte, ihr Track dadurch kürzer als die der beiden Nachbarn. → Balken derselben
@@ -88,8 +99,13 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   führen, denn die Konstante darf überleben, während ihre Begründung stürzt.
   *`cwaimpull` über fünf Sektoren: verdant Boden 0.75 (4) liest 12 bei 0.50, voidscar Boden 0.50 (4) liest
   11 bei 0.75 — 3,0× und 2,75×. 0.5 blieb stehen, getragen jetzt vom Mittelpunkt-Argument statt vom flachen
-  Tal: innerhalb von 8° jedes eigenen Bodens, von 0.00 (23–31) nirgends geschlagen. Tabelle im Doc-Block von
-  `CW_AIM_PULL` in `src/core/Game.ts` — per Symbol zitiert, nicht per Zeile · 2026-08-03*
+  Tal: innerhalb von 8° jedes eigenen Bodens, von 0.00 (23–31) nirgends geschlagen · 2026-08-03*
+  *Eine Schicht später ist auch das Mittelpunkt-Argument gefallen, und zwar ohne eine einzige neue Reihe:
+  der Sweep maß `plateOff` gegen vier zusammenstehende Buchstabentürme, die der Frage-Runner gelöscht hat.
+  Eine Frage läuft jetzt in der lebenden Welle, Zentrierung ist nicht mehr die Größe, gegen die diese Zahl
+  handelt — `CW_AIM_PULL` steht auf **0.35** (`src/core/Game.ts`, per Symbol zitiert), und die Tabelle ist
+  mit ihrer Phase aus dem Doc-Block heraus. Der Tipp selbst hält damit zweimal: der Wert überlebte den
+  Sturz seiner ersten Begründung und starb am Wegfall seines Messobjekts · 2026-08-03*
 
 - **Der Beat mit dem größten Gewicht war der einzige ohne Kamerastoß** — Juice verteilt sich über
   unabhängige Kanäle (Trauma, Flash, Hitstop, Licht, Ring, Audio), und ein Beat kann auf fünf davon
@@ -101,3 +117,12 @@ Bevor eine Konstante gedreht wird, messen, welcher Term das Verhalten tatsächli
   **0** gegen 0.24 — während eine *falsche* Antwort mit 0.16 stieß. Trauma klingt linear mit 1.35/s ab: die
   0.40 des letzten Buchstabens waren bei 0,30 s aufgebraucht, der Solve feuert bei 0,50 s. Nachweislich
   stille Kamera im lautesten Moment der Phase, gesetzt auf 0.35 · 2026-08-03*
+
+- **Magazin eingebaut, und neun von zehn Waffen laufen mit 100 % Feuerzeit** — die Regeneration der
+  aktiven Waffe war mit `coolRate × 0.18` bewusst klein gewählt, wurde aber in der Messung **jeden Frame**
+  abgezogen, auch während des Feuerns. 0,162/s gegen plasmas Hitzerate 0,127/s heißt: die Waffe wird nie
+  warm, das Magazin existiert nicht. `Weapons.update` macht es richtig und hängt das Kühlen an `!wants`;
+  die Nachbildung im Werkzeug tat es nicht. → Bei jeder Regenerationsrate zuerst fragen, ob sie **während**
+  der Aktion läuft, die sie ausgleichen soll. Netto-Rate ausrechnen, bevor man die Konstante wählt.
+  *`probe-mounts.mjs`: ungetaktet 100,0 % Feuerzeit bei neun von zehn Familien; am Abzug getaktet 55,3 %
+  (Strahl) bis 86,2 % (Frost). Die Rotation über vier Plätze ist 20,7 Punkte wert · 2026-08-26*

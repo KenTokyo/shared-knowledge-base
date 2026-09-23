@@ -6,6 +6,13 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 
 **Wie das System wächst und wer was ändern darf: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).**
 
+## Als Submodule hinzufügen
+
+```bash
+git submodule add https://github.com/KenTokyo/shared-knowledge-base shared-docs
+git submodule update --init --recursive
+```
+
 ## Wo was liegt
 
 | Ordner / Datei | Inhalt |
@@ -13,8 +20,11 @@ verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
 | [`LEARNING-SYSTEM.md`](LEARNING-SYSTEM.md) | Die Verfassung: Tippformat, Änderungsrecht, Promotion, Größenbudget |
 | [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
-| [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Kontextanker, Umsetzung, Echtzeit-3D, Validierung und Git |
-| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner nur für die freiwillige, auf 1–2 Sichtprüfungen begrenzte CLI-Capture-Ausnahme |
+| [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Prompt-/Task-Quelle, Planung, Umsetzung, Validierung und Git |
+| [`PROMPTING-TIPS.md`](PROMPTING-TIPS.md) | Ausführliche Promptqualität, automatische Konkretisierung vager Wünsche und Evidenz aus kontrollierten Vergleichen |
+| [`prompts/`](prompts/README.md) | Sechs Map-Prompts: drei für Performance/Diagnose und drei für ImageGen-gestützte Generierung, Orchestrierung und Blender-/Three.js-Vergleich |
+| [`FRONTEND-RULES.md`](FRONTEND-RULES.md) | Trigger-Owner für React, State, Hydration, Browser-UI und Frontend-Performance |
+| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für ausdrücklich freigegebene CLI-Captures; Gate und Gesamtbudget stehen in `CODING-RULES.md` |
 | [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |
 | [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md) | Alle Ressourcen in React Projects: Three.js-Bezug, Zweck, absolute macOS-Pfade, Pull-Pflicht und lokale Ports |
 | [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |

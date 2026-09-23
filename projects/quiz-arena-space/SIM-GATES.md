@@ -20,9 +20,20 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   Klausel wahr bleibt, und dann zeigt das Rot auf die falsche Stelle. → Wo es geht, **zwei unabhängig
   hergeleitete Zahlen gleichsetzen** statt eine gegen eine Schwelle zu prüfen. Eine Gleichung braucht
   keinen Vakuum-Wächter, weil sie im Vakuum nicht erfüllbar ist.
+  **Das Vakuum tritt wirklich ein, sobald ein Modellwechsel dem Treiber die Vorbedingung nimmt.** Der
+  Treiber wird davon nicht rot — er läuft weiter wie im alten Modell, seine Läufe fallen der Abstinenz-
+  Bedingung zum Opfer, und die Klausel urteilt über die leere Menge, während sie die verworfenen Läufe
+  ordentlich ausdruckt. → Die Erwartung **pro Lauf aus dessen eigener Spur** herleiten statt als Konstante,
+  und einen **Reach-Term** danebenlegen, der rot fährt, wenn der Treiber sein Ziel gar nicht mehr trifft.
   *`flatfleet` riss die Radius-Klausel als Kollateral mit, obwohl deren Satz galt; `spined` wächst in **y**,
   wohin ein planarer Radius zu Recht nicht folgt, ein ehrlicher Retune ohne seitlichen Splay wäre rot
   gefahren. Als `radiusRatio === max(1, planarReachRatio)` exakt auf allen 18 Refits · 2026-08-02*
+  *Der Alarm-Sweep eröffnete das Feuer mit dem Fenster, was im hp-Modell richtig war: ein gehaltener Strahl
+  hielt die Drossel das ganze Fenster heiß. Ein Kern, der auf dem dritten gezählten Treffer stirbt, ist
+  0,6 s nach dem Abzug leer — also sechs Sekunden vor der ersten Ansage. Alle acht Feuerläufe starben
+  früh, `ranOut` verwarf alle acht als unbeurteilbar, die Klausel bestand auf ihrer eigenen Leerlauf-
+  Kontrolle und druckte dabei „8 run(s) died before the window ran out"; `--poison=corealarm` fuhr blind
+  durch. Jetzt wartet der Spieler und feuert **auf** die Ansage · 2026-08-03*
 
 - **Ein Gift kollabiert die Partition, gegen die der Deckel gemessen wird** — `mixpool` legt die
   Pool-Schlüssel auf den Typ zusammen; eine Klausel, die „bei N bindet der Deckel" über *Schlüssel*
@@ -32,11 +43,20 @@ steht in [`MEASURING-RIGS.md`](MEASURING-RIGS.md).
   *6 Typen × 41 Rümpfe landen unter beiden Schlüsselformen auf exakt 180 idle bei `POOL_TOTAL=180`,
   `PER_KEY=40`, `LIVE_CAP=90`; `tools/sim.mjs:4180-4270` · 2026-08-02*
 
-- **Ein einzelner Lauf geht bei getakteten Größen grün durch** — zwei Uhren waren phasenverriegelt und der
-  Lauf traf zufällig die günstige Phase; der Defekt war vollständig vorhanden. → Misst eine Klausel gegen
-  etwas Getaktetes, die **Phase sweepen** statt eine zu ziehen, und die Trefferfolge in die Meldung drucken.
+- **Zwei Uhren auf demselben festen Schritt schlagen gegeneinander** — und das kostet in beide Richtungen.
+  *Phase:* zwei Uhren waren phasenverriegelt, der Lauf traf zufällig die günstige Phase, der Defekt war
+  vollständig vorhanden. → Misst eine Klausel gegen etwas Getaktetes, die **Phase sweepen** statt eine zu
+  ziehen, und die Trefferfolge in die Meldung drucken.
+  *Frequenz:* `max(a, b)` ist die Antwort in **stetiger** Zeit und daneben, sobald beide Uhren `x -= dt`
+  gegen denselben Schritt zählen — die eine landet nicht auf der anderen, sondern auf ihrem ersten Anschlag
+  **ab** ihr. → Die Erwartung **in Frames** aus derselben Arithmetik herleiten, die die Datei fährt; dann
+  braucht die Gleichung **keine Toleranz** und keine der beiden Konstanten kann allein wandern.
   *`FX_INTERVAL 0,07` gegen `1/60` ergibt einen 5-Frame-Zyklus, der Alarm läuft alle 60 Frames, `60 % 5 = 0`;
   die Klausel fährt jetzt 8 Feuerphasen, `--poison=corealarm` meldet `30000300` · 2026-08-02*
+  *`HIT_GRACE` 0,300 s gegen die Feuertakte der Tabelle: die Kette bei 0,068 s landet nicht auf 0,300 s,
+  sondern auf ihrem fünften Anschlag danach, der Plasmabolzen bei 0,240 s auf seinem zweiten. Über
+  `CORE_HITS − 1` Lücken sind das 0,67 s und 1,00 s, wo `max()` für beide 0,60 s sagt und die stetige
+  Rechnung 0,68 s und 0,96 s · 2026-08-03*
 
 - **Eine Erwartung, die wie ein Präfix aussieht, ist keins, sobald ein Konsument von hinten indexiert** —
   die Strain-Zuweisung wurde als „die Welle führt die ersten *n* Einträge der Sektorflotte" modelliert;

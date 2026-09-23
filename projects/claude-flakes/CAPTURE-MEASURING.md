@@ -3,11 +3,11 @@
 **Lesen wenn:** `tools/shoot.mjs`, `src/capture/`, Presets, A/A, A/B, Crops oder Bildmetriken.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
-- **GPU-Flags entfernen WebGPU** — `--use-angle=vulkan`/`--enable-features=Vulkan` ergaben Adapter `null`; `--disable-vulkan-surface` entfernte `navigator.gpu`. → Nur `--headless=new`; aktiven Renderer messen.
-  *Ohne Zusatzflag NVIDIA; drei WebGPU-Flags einzeln widerlegt · 2026-07-29*
+- **Headless-Capture zielt in die Bildecke** — Bilder plausibel, Effekt aber klein, fern, „unsichtbar" oder ganz aus dem Bild; headless verweigert Chrome den Pointer-Lock, die Bridge setzt `input.locked` nicht selbst, und ein nie bewegter Cursor steht auf Client-Pixel (0,0) = NDC (-1,+1) statt Bildmitte. → Capture-Bridge setzt `input.locked` in `begin()` und gibt den Vorwert in `end()` zurück; Zielpunkt per `--stats` gegen `Linsenhöhe/tan(pitch)` gegenrechnen, nicht am Bild beurteilen.
+  *53 Bilder zweier Pässe landeten auf dem 22-m-Reichweitencap am linken Bildrand; neun als VFX-Fehler notierte Befunde waren Kadrierung; gemessen 14,289 m gegen geforderte 14,274 m · 2026-08-05*
 
-- **Softwarecheck liest Geräteliste** — Basic Render Driver neben aktiver RTX hätte Join abgebrochen. → Nur aktives Gerät plus `glRenderer`; Software = Exit, nicht Warnung.
-  *RTX 2080 aktiv, Basic Driver nur zweiter Eintrag · 2026-07-29*
+- **Renderer nie annehmen, immer messen** — `--use-angle=vulkan`/`--enable-features=Vulkan` ergaben Adapter `null`, `--disable-vulkan-surface` entfernte `navigator.gpu`; ein Softwarecheck über die Geräteliste sieht den Basic Render Driver neben der aktiven RTX. → Nur `--headless=new`; aktives Gerät plus `glRenderer` lesen, Software = Exit statt Warnung.
+  *Ohne Zusatzflag NVIDIA, drei WebGPU-Flags einzeln widerlegt; RTX 2080 aktiv, Basic Driver nur zweiter Eintrag · 2026-07-29*
 
 - **Freeze erzeugt Schwarz** — `h=0` macht `(velocity-prevVelocity)/h` zu NaN bis View-Matrix. → Zeitdivisoren/Solver auf `dt<=0`, NaN, negative Schritte; NaN-Detektor vergiften.
   *Schwarzframe; `heightAt→NaN` löste danach 36 Diagnosen · 2026-07-29*

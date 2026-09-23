@@ -1,6 +1,6 @@
 # quiz-arena-space — Projekt-Learnings
 
-**Lesen wenn:** du in Starforge Arena an den Prüf-Benches, an Capture und Messung, an Render/VFX, an einer spürbaren Spielgröße oder am Kreuzwortbrett arbeitest.
+**Lesen wenn:** du in Starforge Arena an den Prüf-Benches, an Capture und Messung, an Render/VFX, an einer spürbaren Spielgröße oder am Frage-Runner arbeitest.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
 
 Architektur, Befehle und Protokolle bleiben im Repository (`AGENTS.md`, `Notes/`, die Klassen-Docs im
@@ -19,7 +19,7 @@ Quelltext). Hier steht nur, was in **diesem** Repository wiederholt Zeit gekoste
 | `src/render/`, `src/fx/VFX.ts`, `src/fx/Particles.ts`, Shader, Bloom, Licht, Partikel **bauen** | [`RENDER-VFX.md`](RENDER-VFX.md) |
 | „Sieht man das?" — Differenzbild, Pixel-Gate, Crop, Kontrollframe, Verdikt über Sichtbarkeit | [`EFFECT-VISIBILITY.md`](EFFECT-VISIBILITY.md) |
 | Bewegung, Abklingzeiten, Waffenzahlen, Kameraklemmen, Audio-Pegel, HUD-Anzeige | [`GAMEPLAY-SYSTEMS.md`](GAMEPLAY-SYSTEMS.md) |
-| `src/systems/Crossword.ts`, `.shots/_grid.mjs`, `.shots/_board.mjs` | [`CROSSWORD-BOARD.md`](CROSSWORD-BOARD.md) |
+| `src/systems/Crossword.ts`, der Frage-Takt, die Antwortplaketten und ihre Wirte | [`QUESTION-RUNNER.md`](QUESTION-RUNNER.md) |
 
 Stackübergreifend zusätzlich: [`../../THREEJS-RULES.md`](../../THREEJS-RULES.md) als Router und
 [`../../threejs/MEASURING.md`](../../threejs/MEASURING.md) für Messhandwerk, das nicht an diesem Repo hängt.

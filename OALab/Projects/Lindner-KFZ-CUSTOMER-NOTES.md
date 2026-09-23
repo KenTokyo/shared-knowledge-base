@@ -14,3 +14,7 @@ Website: https://kfz-lindner.de
 - ✅ Der leere IONOS-Posteingang wurde aufgelöst: Der MX-Eintrag der Domain führt eingehende E-Mails zu Microsoft 365, während IONOS nur als authentifizierter SMTP-Ausgang dient.
 - ✅ Interne Formularbenachrichtigungen werden jetzt an das bestehende Microsoft-365-Postfach `info@kfz-lindner.de` adressiert; der kontrollierte Produktionstest wurde mit HTTP 200 und ohne Runtime-Fehler angenommen.
 - ⚠️ Der tatsächliche Eingang des neuen Routingtests in `info@kfz-lindner.de` ist noch manuell zu bestätigen; für einen Empfang im IONOS-Webmail müsste Nexos eine providerübergreifende Mailrouting-Regel einrichten.
+
+## 2026-08-04
+
+- ✅ Deutsche Umlaute und Sonderzeichen werden in den Termin- und Bewerbungs-E-Mails jetzt korrekt statt als sichtbare HTML-Codes dargestellt und wurden für HTML sowie Klartext geprüft.

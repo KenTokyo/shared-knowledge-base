@@ -1,4 +1,4 @@
-# Weltperformance — voxel-samurai-quiz (AEON)
+# Weltperformance — voxel-samurai-quiz (Quizfall World Runtime)
 
 **Lesen wenn:** Gras, Laub, Terrain, Dichte, LOD, Schatten oder Welt-Framezeit.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)
@@ -8,7 +8,7 @@ P14q-Budget: **Szenenpass 3,0781 ms**; **Gras 0,6563/0,70 ms Gate** (93,8 %; 21,
 ## Tipps
 
 - **Verschwundener Inhalt als Ersparnis** — weniger Chunks durch still entfernten Bewertungsinhalt. → Faktor `sichtbare Chunks × Arten × LOD × Pässe` nennen; Diagnosemodus ≠ Produktfix.
-  *AEON-Loop: Optimierung darf Bewertungsinhalt nicht heimlich entfernen · 2026-08-01*
+  *Quizfall-Weltloop: Optimierung darf Bewertungsinhalt nicht heimlich entfernen · 2026-08-01*
 
 - **Feindetail außerhalb Reichweite** — Fernbild flimmert, Mips mitteln Kachel längst zum Wash. → Ab gemessener Reichweite ausblenden; Fernstruktur eigenem Träger geben.
   *Feine Terrainkachel ab ~450 m ohne Nutzdetail · 2026-08-01*

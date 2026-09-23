@@ -1,4 +1,4 @@
-# Kamera, Held und Begegnung — voxel-samurai-quiz (AEON)
+# Kamera, Held und Begegnung — voxel-samurai-quiz (Quizfall World Runtime)
 
 **Lesen wenn:** `CameraRig`, Third-Person-Pose, `Weapon`, `Enemies` oder Spielaufnahme-Framing.
 **Status:** freiwillige Tipps · gemessen bessere Lösung → Vorrang · Änderungsrecht siehe [LEARNING-SYSTEM.md](../../LEARNING-SYSTEM.md)

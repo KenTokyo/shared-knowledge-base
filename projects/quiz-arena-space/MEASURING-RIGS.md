@@ -12,8 +12,40 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   Wrapper über die vollständige Signatur oder über `(...a)` schreiben, und nach jeder Signaturerweiterung im
   Produktivcode jeden Wrapper im Harness nachziehen. Ein Wrapper, der schmaler ist als sein Ziel, fällt nicht
   aus — er misst den alten Code weiter.
+  **Ein Stub, der schmaler ist als sein Ziel, fällt dagegen laut aus — und das ist teurer, nicht billiger:**
+  ein fehlender Member ist kein Messfehler, sondern ein `TypeError` mitten im Arm, und alles **hinter** dem
+  Arm wird in diesem Lauf nie beurteilt. Eine getippte Memberliste ist dabei die eigentliche Ursache; sie
+  kann nur zurückfallen. → Die Memberliste **aus der Quelle schneiden** (`readFileSync` + Regex auf die
+  Aufrufform, hier `this.vfx.X(` / `this.vfx.X.Y(`) und einen **Größen-Term** danebenlegen: ein Regex, das
+  aufhört zu matchen, liefert die leere Menge im selben zuversichtlichen Ton wie eine Datei, die aufgehört
+  hat, Effekte zu rufen.
   *`VFX._afford` bekam einen vierten Parameter `evicts`, der Wrapper in `tools/sim.mjs` nahm drei und ließ ihn
   fallen: `rings=158/176` und dieselben Verweigerungen vor wie nach dem Fix · 2026-08-02*
+  *Zwei Rigs derselben Datei, eines nachgezogen, eines nicht: `Weapons.ts` ruft sieben `vfx`-Member, der
+  Stub im `weapons`-Arm trug fünf. `this.vfx.shockwave is not a function` beendete den Lauf in der
+  Scatter-Halteschleife — **31 Klauseln** ab diesem Arm kamen nie zu einem Verdikt, die des Arms selbst
+  eingeschlossen, weil er erst am Ende meldet. Geschnitten statt getippt: 69 von 69 · 2026-08-03*
+
+- **Ein selbstscharfstellender Timer im Messobjekt verschiebt den Zufallsstrom** — Vorher/Nachher einer
+  reinen Umschichtung wich ab, obwohl der Graph unverändert war. `_startAmbient` armt ein 2,2–7,4 s
+  `setTimeout`, das aus dem **geteilten** `audioRng` zieht und sich selbst neu scharfstellt; über einen
+  minutenlangen Sweep feuert es dutzendfach zu maschinenabhängigen Zeitpunkten und entnimmt Zahlen mitten
+  aus dem Strom, aus dem jede Tonhöhenvariation liest. Jede lange Audio-Messung ist damit unreproduzierbar,
+  ohne dass irgendwo ein Fehler auftaucht. → Nach `build()` `clearTimeout(engine._clankTimer)`, vor jedem
+  Render `audioRng.setSeed(...)`. Im **Rig** beheben, nicht in der Engine — das Geräusch soll es im Spiel
+  geben. Das Fehlerbild erkennt man am *Muster*, nicht am Betrag: genau die Stimmen, die den RNG nie
+  anfassen, bleiben bitgenau, alle anderen wandern. Sind einige Zeilen identisch und andere nicht, ist es
+  ein verschobener Strom und kein geänderter Graph.
+  *`shieldBreak` 0.3083 / `missileLaunch` 0.0627 / `bulwarkVent` 0.4179 zweimal bitgleich, `plasmaShot`
+  0.0907 → 0.0968; nach dem Fix zwei volle Läufe byte-identisch (4394 B) · 2026-08-20*
+
+- **Eine Umschichtung ist erst bewiesen, wenn beide Formen gegeneinander laufen** — zwei identische Läufe
+  *derselben* neuen Form beweisen nur, dass das Rig deterministisch ist, nicht dass die Teilung nichts
+  verändert hat. → Die alte Form aus den neuen Dateien **wieder zusammensetzen** und beide über dasselbe
+  Rig fahren (`QA_AUDIO_MOD=<pfad>`), danach die Rekonstruktion löschen. Ergänzend statisch: jeder
+  Methodenname genau einmal über die ganze Kette.
+  *`Audio.ts` 3196 → 6 Dateien; Monolith aus den vier neuen Dateien in Originalreihenfolge neu geschnitten
+  (2912 Z., temporär), volle Bench beider Formen `IDENTICAL`, 83 Methoden je genau einmal · 2026-08-20*
 
 - **Round-Robin füllt keinen Pool** — die naheliegende Antriebsform (reihum je einen Gegner je Schlüssel,
   viele Runden) misst nichts: `acquireModel` holt sofort zurück, was die Vorrunde freigab, die Free-List
@@ -135,3 +167,13 @@ die bei ihr ankommt, nicht die war, die im Spiel entstand.
   *Tier-1b 8 → 3 allein durch die geschnittene Maske, erkannte Array-Meldungen 11 → 28 von 69; Tier 1a fiel
   von „1 Klausel, 2 Terme" auf 0, nachdem Zweigspannen statt Zweigtext gelesen wurden. Die drei übrig
   gebliebenen Funde waren echt, einer druckte unter FAIL den bejahenden Satz · 2026-08-02*
+
+- **Kaltstart-Arm misst die Mischstufe statt das Spiel** — `audioprobe starforge cold` meldete 17 stumme
+  Einstiegspunkte, das Spiel war aber hörbar; der Arm rief `mountShot`/`mountCharge`/`enemyShot` direkt auf,
+  und die geben bei leerer Bank absichtlich `false` zurück, weil die Ersatzstimme eine Ebene höher in
+  `combat/Weapons.ts:_shotSound` liegt. → **Beim Prüfen einer Zusage die Ebene wählen, auf der die Zusage
+  implementiert ist**, nicht die unterste, die man aufrufen kann; und den Rückfall über `resolveMount` aus
+  der Quelle lesen statt ihn im Prüfstand zweitzuschreiben — das rechte Mount ist ein Overlay, die Solar
+  Lance trägt selbst kein `sound`, die Nova Discharge auf derselben Zelle nennt `explosion`.
+  *17 rote Zeilen auf 0; der eine echte Treffer, den der reparierte Arm noch fand, war genau diese
+  Overlay-Zeile. Ein Tor, das dauerhaft rot steht, wird nicht mehr gelesen · 2026-08-22*

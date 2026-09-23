@@ -24,7 +24,7 @@ Tailwind, optional React-Three-Fiber für *eine* Live-3D-Insel. Lucide-Icons.
 4. **Eine zusammenhängende gerundete Leiste/Konsole pro Region.** Lose Einzel-Elemente wirken unaufgeräumt — gruppieren.
 5. **Idle-Leben + Reaktions-Juice.** Hero-Elemente pulsieren leise (Infinite-Loops); alles Klickbare hebt sich bei Hover und drückt sich bei Tap.
 6. **„Fake-3D" statt teurer Canvas.** Lit-Logo, Glow-Halos, CSS-Dioramen, driftende Motes. Echte R3F nur als *eine* bewusste Insel.
-7. **Semantische Akzentfarben.** Primär/Bestätigen = Haupt-Akzent (solide, Shine), Erfolg/Belohnung = Gold, Gefahr/Abbruch = heiße Warnfarbe (nur Outline).
+7. **Semantische Akzentfarben.** Primär/Bestätigen = Haupt-Akzent (solide, Shine), Erfolg/Belohnung = Gold, Gefahr/Abbruch = heiße Warnfarbe (nur Outline). **Die Rollen sind Pflicht, die Hex-Werte nicht** — hat das Spiel schon eine Palette, werden die Rollen darauf abgebildet (§2).
 
 ---
 
@@ -43,8 +43,36 @@ Beobachtet an den gelobten Screens (Hauptmenü, „Hangar", Sanctuary/Dungeon-Ka
 
 ## 2. Token-System (für ein neues Spiel definieren)
 
+> ### ⚠️ Farben sind optional — die Regeln sind es nicht
+>
+> **Dieses Dokument ist ein Design-Regelwerk, keine Palette.** Verbindlich sind
+> die *Muster*: Rundung, gestaffelte solide Tiefe statt Opacity-Hacks, Glow im
+> Rand statt in der Füllung, eine Konsole pro Region, das Motion-Vokabular (§3),
+> Fake-3D (§4), die Lesbarkeitsregeln (§5.1) und die Performance-Pflichten.
+>
+> **Die konkreten Hex-Werte hier (`AMBER #ffb347`, `EMBER #ff6b2c`,
+> `GOLD #e8b04a`, das Warm-Schwarz-Trio …) sind ein Fallback** für ein Spiel,
+> das noch *kein* eigenes, funktionierendes Farbsystem hat.
+>
+> - **Spiel hat bereits ein Farbsystem → das gewinnt.** Nichts hier umfärben.
+>   Die Rollen (`ACCENT`/`HOT`/`REWARD`/`PAPER`/`BG`) auf die vorhandenen Tokens
+>   *abbilden* und weiterarbeiten. Ein zweites Palettensystem neben dem
+>   bestehenden ist der Fehler, den dieser Abschnitt verhindern soll.
+>   Beispiel: **Snowflow/Claude-Flakes** fährt eine eigene Eis-Palette
+>   (`--hud-frost`, `--hud-dim`, `--hud-accent`, `--hud-warn`) — dort ist
+>   `--hud-warn` das `HOT`, und Warm-Stone-Amber taucht nirgends auf.
+> - **Kein Farbsystem vorhanden → Warm-Stone als Startpunkt** nehmen und dann
+>   aufs Spiel drehen.
+> - **Die Kontrastregel gilt palettenunabhängig** (§ „Farb-Pop"): gesättigter
+>   Akzent auf tiefem, *nicht neutral-grauem* Grund. Das ist eine Aussage über
+>   Kontrast, nicht über Amber.
+>
+> Kurz: **Wie** etwas gebaut wird ist Pflicht, **womit** es eingefärbt wird ist
+> Vorschlag.
+
 Lege **ein** Token-Objekt an (`config/constants.ts` → z. B. `THEME`/`WARM_STONE`).
-Minimal-Set für den Look:
+Minimal-Set für den Look: je nachdem ob es dem spiel passt — die Rollen sind
+verbindlich, die CCB-Beispielwerte in der rechten Spalte sind es nicht.
 
 | Rolle | Zweck | CCB-Beispiel |
 |------|-------|--------------|
@@ -220,13 +248,13 @@ MOTES.map(m => <motion.span key={m.x} style={{ left:m.x, background:ACCENT }}
   transition={{ duration:3.4, repeat:Infinity, ease:'easeOut', delay:m.d }} />)
 ```
 
-**Wiederverwendbare FX-Atoms (Aeon, `components/ui/aeon/fx/`)** — alle deterministisch
+**Wiederverwendbare FX-Atoms (Quizfall, `components/ui/quizfall/fx/`)** — alle deterministisch
 (Index-Hash statt `Math.random()`), nur `transform`/`opacity`, `useReducedMotion`-fest,
 `memo`, farb-/mengengetrieben per Props:
-- `AeonEmberField` — aufsteigende Glut-Funken (heiße Regionen: Amboss, Hero).
-- `AeonBubbleField` — glasige „Blubberblasen" mit Rim/Spekular (magisch/sprudelnd: Kristalle, Präsentation).
-- `AeonShockwave` — Explosionswelle (konzentrische Ringe + Bloom-Flash), feuert einmal auf `signal`-Änderung (wie `AeonSparkBurst`, kein Akkumulieren). Für Impact-Momente.
-- `AeonLightShafts` — volumetrische God-Rays (feste Winkel, Opacity-Shimmer) → Diorama-Tiefe statt „leer/billig".
+- `QuizfallEmberField` — aufsteigende Glut-Funken (heiße Regionen: Amboss, Hero).
+- `QuizfallBubbleField` — glasige „Blubberblasen" mit Rim/Spekular (magisch/sprudelnd: Kristalle, Präsentation).
+- `QuizfallShockwave` — Explosionswelle (konzentrische Ringe + Bloom-Flash), feuert einmal auf `signal`-Änderung (wie `QuizfallSparkBurst`, kein Akkumulieren). Für Impact-Momente.
+- `QuizfallLightShafts` — volumetrische God-Rays (feste Winkel, Opacity-Shimmer) → Diorama-Tiefe statt „leer/billig".
 
 **Geteiltes Diorama statt Duplikat:** Zwei ~90 %-gleiche Bühnen (Verstärken/Katalog) leben
 als **eine** SSoT `forge/ForgeDioramaStage` (fill-height, Lichtschächte, Perspektiv-Boden,
@@ -273,7 +301,7 @@ Auf tiefem Warm-Schwarz kippt der Look sonst in blass/pastellig/unlesbar. Die dr
 - **Nur bedeutungstragende Icons.** Kein dekoratives Security-/`ShieldCheck`-Glyph, wo es nichts sichert (ein KI-Anmelde-Dialog braucht kein Schild — eher `KeyRound`). Detail-Icons einer Zeile werden gefärbt (Mail = `text-status-info`, Konten = `text-status-success`), nicht muted-grau.
 - **Textgrößen: Werte lesbar.** Kennzahlen/Status/Namen **≥ `text-xs` (12px)**; `text-[8..10px]` ist verboten für inhaltstragenden Text (nur reine Mikro-Labels über einem großen Wert dürfen `text-[10px]`). Werte in Ton-/Akzentfarbe, Sekundärtext `text-muted-foreground`. Unbekannt = ehrlich „—", nie „0".
 - **Badge = dunkler Chip, Farbe im Rim/Wert — nicht in der Fläche.** Kein weißer/heller Badge-Hintergrund. Status-Leisten sind **eine zusammenhängende dunkle Bar** (`rounded-2xl border border-subtle bg-surface-2`), innen Marken-Solid-Chip + Online-Punkt + Wert(e) mit Mini-Balken; Einträge durch dünnen Divider getrennt (`bg-border`), nicht als lose Einzelkacheln. Plan/Tarif als schlichter Text-Chip (`border-subtle bg-surface-4`), kein Icon-Ballast.
-- **Generierte Bilder stehen alleinstehend (Standalone-Bild-Regel).** Liegt ein KI-generiertes Art-Layer vor (Gear-Emblem, Gem-Atlas, Klassen-Portrait), rendert es **allein**: **kein** dekoratives Hintergrund-Siegel dahinter, **kein** überlagernder Zweit-Glyph/Slot-Icon davor — sonst kollidieren zwei Motive (Bild hinter Bild). Das Bild wird **groß & zentral** gesetzt; Farbidentität/Tiefe kommen aus **Rim/Glow** (weicher Radial-Halo, Akzent-Rand) statt aus Füll-Deko. Nur wenn die Art fehlt (unbekannter Slot/Tier), greift ein **leiser Fallback-Glyph**. Referenz: `AeonItemEmblem` + `CrystalGem` (Atlas-Pfad), Panel-Halo in `GemInventoryPanel`.
+- **Generierte Bilder stehen alleinstehend (Standalone-Bild-Regel).** Liegt ein KI-generiertes Art-Layer vor (Gear-Emblem, Gem-Atlas, Klassen-Portrait), rendert es **allein**: **kein** dekoratives Hintergrund-Siegel dahinter, **kein** überlagernder Zweit-Glyph/Slot-Icon davor — sonst kollidieren zwei Motive (Bild hinter Bild). Das Bild wird **groß & zentral** gesetzt; Farbidentität/Tiefe kommen aus **Rim/Glow** (weicher Radial-Halo, Akzent-Rand) statt aus Füll-Deko. Nur wenn die Art fehlt (unbekannter Slot/Tier), greift ein **leiser Fallback-Glyph**. Referenz: `QuizfallItemEmblem` + `CrystalGem` (Atlas-Pfad), Panel-Halo in `GemInventoryPanel`.
 
 ---
 
@@ -311,10 +339,10 @@ Konkret, in dieser Reihenfolge angewandt:
 
 **Falscher Hebel (bewusst nicht tun):** die Panel-Spalte verbreitern, um den Namen
 unterzubringen — das schrumpft die Nachbarregion (3D-Bühne, Detailtafel) und
-tauscht ein gelöstes Problem gegen ein neues (`CODING-RULES.md` §8.3 „Kein Regress").
+tauscht ein gelöstes Problem gegen ein neues (Regressionsgrenze im Abschnitt **Prüfen, entscheiden, durcharbeiten** in [`CODING-RULES.md`](../CODING-RULES.md)).
 
-→ Voxel Samurai Quiz: `src/components/ui/aeon/nexus/classes/AeonClassRosterRow.tsx`
-(+ `AeonClassRoster.tsx` für die Container-Query).
+→ Voxel Samurai Quiz: `src/components/ui/quizfall/nexus/classes/QuizfallClassRosterRow.tsx`
+(+ `QuizfallClassRoster.tsx` für die Container-Query).
 
 ### 6.1 Weitere Muster
 
@@ -343,6 +371,7 @@ tauscht ein gelöstes Problem gegen ein neues (`CODING-RULES.md` §8.3 „Kein R
 - Kein `Math.random()`/`Date.now()` für Motes/Partikel-Positionen.
 - Keine zweite Live-R3F-Canvas über laufender Spiel-Szene.
 - Keine eckigen Buttons, kein Glow in der Flächenfüllung, kein Neon-Mix im selben Panel.
+- **Kein Warm-Stone-Amber in ein Spiel kippen, das schon eine eigene Palette hat** (§2). Rollen abbilden, nicht umfärben — sonst laufen zwei Farbsysteme nebeneinander.
 - Kein pastelliges Icon-Tile (Akzent-Füllung + heller Rand), kein `text-[8..10px]` für inhaltstragenden Text, kein weißer/heller Badge-Hintergrund, kein dekoratives Sinnlos-Icon (`ShieldCheck` ohne echte Sicherung).
 - Keine Infinite-Loops in Combat-Hotpaths.
 
@@ -350,7 +379,7 @@ tauscht ein gelöstes Problem gegen ein neues (`CODING-RULES.md` §8.3 „Kein R
 
 ## 8. Übertragungs-Rezept (neues Spiel in ~7 Schritten)
 
-1. **Token-Objekt** anlegen (`BASE/LIGHT/DARK/FRAME/ACCENT/HOT/REWARD/INK/PAPER/BG`) + Surface-Skala (§2).
+1. **Token-Objekt** anlegen (`BASE/LIGHT/DARK/FRAME/ACCENT/HOT/REWARD/INK/PAPER/BG`) + Surface-Skala (§2) — **oder**, wenn das Spiel schon eine Palette fährt, diese Rollen auf die vorhandenen Tokens abbilden und Schritt 1 damit abhaken.
 2. **Lit-Logo** für die Marke bauen (§4.1) — das ist die visuelle Signatur.
 3. **Cohesive Header-Bar** bauen (Logo + Werte-Pills + Icon-Buttons) statt loser Elemente.
 4. **Motion-Vokabular** (§3) als Gewohnheit: Entrance+Stagger, Hover/Tap, ein Idle-Glow, ein Shine-CTA, Spring-Dialoge.
@@ -382,10 +411,10 @@ tauscht ein gelöstes Problem gegen ein neues (`CODING-RULES.md` §8.3 „Kein R
 - Rollout-Masterplan: `docs/design/tasks/2026-07-01-warm-stone-juicy-console-global-rollout-masterplan.md`
 
 **Voxel Samurai Quiz — Skin „Imperiales Asche-Atelier"** (`voxel-samurai-quiz/`):
-- Die Nexus-Variante (`aeon`) trägt seit 2026-07-13 den **Asche-Atelier**-Skin:
+- Die Nexus-Variante (`quizfall`) trägt seit 2026-07-13 den **Asche-Atelier**-Skin:
   kühle Kohle-/Asche-Surfaces, Pergament, Altgold `#c5a766`, Granat `#7a1f1f`,
   Mondsilber `#c0c6cf` — Motion-/Fake-3D-Regeln dieses Dokuments gelten unverändert.
-- Token-SSoT: `voxel-samurai-quiz/src/config/aeonTheme.ts` · verbindliches
+- Token-SSoT: `voxel-samurai-quiz/src/config/quizfallTheme.ts` · verbindliches
   Zielbild + Board-Index: `voxel-samurai-quiz/DESIGN.md §10` · Konzept-Boards:
   `voxel-samurai-quiz/assets/concepts/imperiales-asche-atelier-ui/` (00–21).
 - Merke: Dieser Skin ist der seltene Fall eines sanktionierten **Surface-Skala-

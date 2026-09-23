@@ -19,3 +19,6 @@ Messen selbst: [`CAPTURE-MEASURING.md`](CAPTURE-MEASURING.md). Hier nur die Lüc
 
 - **Oberkante, die das Spiel nie erreicht** — Regler auf 2,1 geklemmt, also *liest* eine Kante bei 2.0 als erreichbar; die speisende Tabelle endet bei 1,705, ein Viertel des Bereichs liegt hinter dem Ende der Welt. → Rampenendpunkte aus der speisenden Tabelle ableiten (`Math.max(…, ...Object.values(TABLE).map(f))`) statt hinschreiben; dann richtet ein neues Preset die Schranke selbst nach.
   *Schlimmster ausgelieferter Sturm bekam `gate 0.7222` — 72 % eines auf 100 % geschriebenen Effekts · `review/crest-p32c.txt` · 2026-08-02*
+
+- **Helligkeitsgate als Wächter über Oberflächenqualität** — Breite, Median und p99 gingen alle grün durch einen Nachbau, der im Bild als Cordsamt las: ein Musterfehler verschiebt kein Percentil, weil er Licht nur *umverteilt*. Die Zeile, die als Frühwarnsystem der Materialachse geführt wurde, kann für diese Frage gar nicht rot werden. → Vor dem Vertrauen benennen, welche **Bildstörung** eine Zahl überhaupt bewegen kann; für Muster und Frequenz braucht es ein Frequenz- oder Anisotropiemaß, sonst bleibt die Achse ungegatet und das ehrlich so dokumentiert.
+  *`roh` PASS bei Median 25,7 / p99 134 / 16 Bändern in Toleranz — Sichtprüfung zeigte durchgehende Rillen über Torso, Hose und Wickel · PH10 · 2026-08-04*
