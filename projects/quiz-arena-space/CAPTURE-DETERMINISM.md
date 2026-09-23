@@ -97,3 +97,47 @@
   **jeden Lauf sofort lesen** — der Report existiert nur in der Konsolenausgabe, das PNG überlebt ihn.
   *`hazards&capture=82` → `TYPES:6/7`, mit 112 s grün; `clicks&capture=12` → `STEPS:23/39`, mit 22 s grün.
   Zwei Schichten in Folge verloren ihre Messung, während das PNG auf der Platte lag · 2026-07-29*
+
+- **Kurze Läufe sind bitgleich, lange nicht — und der feste Schritt beweist gar nichts** — `dt = CAPTURE_DT`
+  bei Diagnoseläufen, `Math.random` ist auf den gesetzten Strom umgebogen, `reseedSim()` läuft an der
+  Simulationsgrenze: alles, was Wiederholbarkeit verspricht, ist da. Trotzdem laufen lange Szenarien
+  auseinander, und zwar tief — nicht nur in der Zählung, sondern in der Gegnerzahl und der Spielerposition.
+  → Vor jedem A/B über ein langes Szenario **erst denselben Build zweimal fahren** und die Reportzeilen
+  vergleichen. Wo sie auseinandergehen, misst der Vergleich das Rauschen und nicht die Änderung. Wo eine
+  Schwelle im Rauschen liegt, ist ein einzelner roter Lauf keine Regression und ein einzelner grüner kein
+  Beleg. Als sauber nachgewiesen ausgeschlossen: der Audio-Zufall (eigener `audioRng`, kein rohes
+  `Math.random` in `src/fx/audio/`) und `Renderer._adapt` (rechnet mit dem Simulationsschritt, nicht mit
+  echter Zeit). Die eigentliche Quelle ist noch offen.
+  *`combat` (6 s) über zwei Läufe bit-identisch bis auf die letzte Stelle: `draws=257 tris=147011 enemies=6
+  proj=2 shd=104/135 plr=(17,-70)` beide Male. `mercy` (40 s), gleicher Build, zwei Läufe: `draws=552/571`
+  `tris=364581/366531` `enemies=38/47` `plr=(-13,27)/(-14,28)`. Über fünf Läufe schwankte `SAMPLE`
+  zwischen 27 und 57 gegen eine Schwelle von 40 — das Gate fällt also zufällig aus · 2026-08-22*
+
+- **Nachtrag zum zu kurzen `capture=`: der Kommentar am Szenario rechnet es dir vor** — `startMovement`
+  schreibt seine eigene Spanne in den Quelltext („8.7s per ship, 26.1s for the three"), abgenommen wurde
+  bei 19 s. Der Quotient 19 / 8,7 = 2,18 steht wörtlich im Urteil `SHIPS:2/3`. Die 19 war richtig, als
+  `RUN` und `REBUILD` bei 1,8 s standen; beide wurden auf 3,0 s gehoben, damit der Anlauf länger dauert als
+  `MOM_RAMP`, und die Abnahmezeit blieb stehen. → Wenn ein Urteil eine Quote nennt, die Quote gegen die
+  Spanne im Szenario rechnen, bevor man den Code verdächtigt. Und: dieser Fehler lag Monate unentdeckt,
+  weil derselbe Lauf parallel an etwas anderem starb und **gar nichts** meldete — zwei Fehler, von denen
+  der eine den anderen verdeckt.
+  *`movement&capture=19` → `SHIPS:2/3`, mit 27 s grün. Der Lauf starb gleichzeitig an einem fehlenden
+  `ctx.weaponFx` und lief 180,1 s in die Zeitüberschreitung, ohne eine Zahl zu melden · 2026-08-22*
+
+- **Panel „ohne Hintergrund" auf dem Screenshot, im Browser ist er da** — die Pose in `tools/uishot.mjs`
+  wartete zwei `requestAnimationFrame`, das Panel fährt aber über eine 140-ms-CSS-Animation von
+  `opacity: 0` hoch. Zwei Frames sind ~33 ms, also stand es bei rund einem Viertel — und die Scheibe war
+  bei 93 % Deckkraft trotzdem unsichtbar. Drei Aufnahmen hintereinander „belegten" einen Fehler, den es
+  nicht gab. → Nach der Pose auf `document.getAnimations()` warten (`playState === 'running'`, dann
+  `Promise.all(a.finished)`), nicht auf eine Framezahl. Kostet nichts auf Screens ohne Animation.
+  *`.chart-panel` mit `animation: chart-in 140ms`: Pixel bei (420,450) mit Animation 129,72,39, ohne
+  17,18,23 — Faktor 6. Rund 40 Minuten an CSS gesucht, an der falschen Stelle · 2026-08-26*
+
+- **Zwei Screenshots derselben Szene vergleichen, während die Szene läuft** — unter `?capture=` treibt
+  `setTimeout` die Schleife (siehe `schedule` in `src/main.ts`), sie hört nie auf. Zwischen zwei
+  Aufnahmen bewegt sich die Arena, also wird jeder Pixelvergleich zur Münze: dieselbe Messung sagte
+  dreimal hintereinander etwas anderes, einmal sogar „heller als vorher" für ein Panel, das abdunkelt.
+  → Vor dem Vergleich einfrieren: `window.setTimeout = () => 0` in der Seite, danach nur noch Stile
+  umschalten und schießen. Erst dann heißt eine Differenz „meine Änderung".
+  *Gleicher Punkt (420,700): Karte zu 201,125,73 — Karte auf 155,152,148 — Animation aus 18,22,28. Die
+  mittlere Zeile war reine Szenenbewegung · 2026-08-26*

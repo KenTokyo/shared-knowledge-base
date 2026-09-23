@@ -22,8 +22,11 @@
 - **Solver klebt am Cap, Kontakt verbessert sich kaum** — Zielpunkt liegt außerhalb der Freiheitsgrade; höhere Gewichte verrenken nur Arm oder Endpose. → Erreichbarkeit und Basisgewicht am Defektzeitpunkt prüfen, zusätzliche Knoten/Freiheitsgrade geben; bei unmöglicher Geometrie Quelle oder Waffenlage korrigieren.
   *voxel-samurai-quiz: 7/11 Stützgriffe scheiterten vor Geometrie-/Solverkorrektur · claude-of-tsushima: zwei Endkanäle 18 Iterationen am Cap, Fehler nur 0,479→0,449 · 2026-07-25–08-01*
 
+- **Spektakulärer Schwertskill wirkt trotzdem wie Tennis/Golf** — VFX trägt das Bild, aber Füße, Hüfte, Rumpf und Klingenebene erzeugen keinen glaubwürdigen Impuls. → [Schwertskill-Animation und elementare VFX](SWORD-SKILL-ANIMATION-VFX.md) vor Skill-Autoring lesen; body-only bei vier Tempi abnehmen, danach VFX an finalen Körper-/Klingenpfad binden.
+
 ## Handoffs
 
+- Schwertkombos, Dashes und elementare Skillbilder → [Schwertskill-Animation und elementare VFX](SWORD-SKILL-ANIMATION-VFX.md)
 - Effektform und Effekttiming → [VFX](VFX.md)
 - Reihenfolge, Uhren und Reset → [Runtime-Integration](RUNTIME-INTEGRATION.md)
 - Kamera-/Framingreaktion → [Licht und Kamera](LIGHT-CAMERA.md)

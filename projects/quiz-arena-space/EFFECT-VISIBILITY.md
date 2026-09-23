@@ -7,6 +7,20 @@ Abgespalten von [`RENDER-VFX.md`](RENDER-VFX.md), weil beide Trigger dort in ein
 du den Effekt, hier urteilst du über ihn. Was die Zahl danach behaupten darf, steht in
 [`BENCH-SCENARIOS.md`](BENCH-SCENARIOS.md) und global in [`../../threejs/MEASURING.md`](../../threejs/MEASURING.md).
 
+- **Der Harness konnte die Schicht gar nicht sehen, in der der Fehler lag** — 105 Symbole waren korrekt
+  verdrahtet, in der richtigen Farbe, mit der richtigen Marke, und der Nutzer meldete „die Icons fehlen".
+  Jede Bench war grün, weil `tools/shoot.mjs` sein Bild über `gl.readPixels` aus der Engine zieht: HUD,
+  Skillleiste und Ladeschirm sind **DOM über dem Canvas**, also ist eine Aufnahme mit acht leeren Kacheln
+  byte-gleich mit einer, in der alle acht stimmen. Kein Instrument im Repo konnte diese ganze Fehlerklasse
+  überhaupt beobachten. → Bei jeder Beschwerde über ein Element der *Oberfläche* zuerst fragen, ob das
+  gewählte Instrument diese Schicht abbildet; für DOM `tools/domshot.mjs` (`Page.captureScreenshot`
+  komponiert). Und **im Dokument messen statt im Bild**: ein fehlendes und ein 0×0 großes Symbol sehen im
+  PNG identisch aus und sind verschiedene Fehler.
+  *Ursache war eine Klasse, kein fehlendes Markup: die kopierten Marken tragen `class="glyph-svg"` wie in
+  der Quell-Library, jede Größenregel dieses Projekts hängt an `.sigil`. Gemessen: Mount-Kacheln 40×40,
+  alle fünf Skill-Kacheln 0×0 (`line-height: 0` lässt das ersetzte Element kollabieren statt auf 300×150
+  zurückzufallen — deshalb „leer" statt „kaputt") · 2026-08-20*
+
 - **Ein Verdikt sagt *ob*, nie *welche*** — der Kontrollframe blendet die ganze Effektschicht auf einmal
   aus und benennt deshalb keinen Täter; zwei Schichten dämpften daraufhin den falschen Effekt. → Das
   **zuordnende** Instrument (Gruppen einzeln ausblenden) bauen, *bevor* der erste Fix versucht wird, nicht
@@ -56,3 +70,20 @@ du den Effekt, hier urteilst du über ihn. Was die Zahl danach behaupten darf, s
   Verschiebung per Schwerpunkt oder Block-Matching nachmessen.
   *Behauptete ~10 px gegen gemessene 1,3 px = Faktor 8; vierter dokumentierter Fehlalarm derselben Art auf
   derselben Zeile · 2026-07-31*
+
+- **CSS-Regel steht im Bundle und tut trotzdem nichts** — wir schreiben überall zwei Zeilen,
+  `backdrop-filter` und darunter `-webkit-backdrop-filter`. Der Minifier hält beide für dieselbe
+  Eigenschaft und behält die **letzte** — also die mit Präfix, die Chrome ignoriert. Im gebauten
+  Stylesheet standen 26 Regeln mit Präfix und 8 ohne; der Glas-Blur war im ganzen Spiel tot, und im
+  Quelltext sah alles richtig aus. → Präfix zuerst, Standard zuletzt. Und: `grep` im gebauten CSS beweist
+  nur, dass eine Zeile existiert, nicht dass sie wirkt.
+  *Kantenenergie hinter dem Panel (Summe der Nachbardifferenzen über ein Raster): ausgeliefert 74029,
+  mit von Hand gesetztem `backdrop-filter` 12901 — Faktor 5,7. `getComputedStyle().backdropFilter` sagte
+  `none` · 2026-08-26*
+
+- **Ein Blur/Filter nachweisen, ohne ihn zu sehen** — „unscharf" ist auf einem PNG nicht per Augenmaß
+  entscheidbar und über zwei Läufe schon gar nicht. → Kantenenergie messen: über ein festes Raster
+  `|p(x) − p(x+3)|` je Kanal summieren, einmal mit und einmal ohne den Filter, in **derselben**
+  eingefrorenen Szene. Ein echter Blur drückt die Summe um ein Vielfaches; Rauschen bewegt sie um
+  Promille.
+  *Mit Präfix 73990 gegen ohne 74048 — 0,08 %, also kein Blur. Mit echtem Filter 12901 · 2026-08-26*

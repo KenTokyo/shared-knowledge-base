@@ -22,16 +22,16 @@ Als Sicherheitsnetz statt eines Compilers:
   Quality-Presets, die Weltfelder. Das sind die Stellen, an denen ein Missverständnis zwischen zwei
   parallel arbeitenden Agenten entsteht.
 - `pnpm check` = `glslcheck && build` plus passende numerische Probes — die Gates, die diesen Stack wirklich
-  brechen. CLI-Capture ist kein Standardgate; agentische Sichtprüfung nur nach ausdrücklicher aktueller Freigabe
-  und innerhalb von Reihenfolge und Gesamtbudget aus `CODING-RULES.md` §8–9.
+  brechen. CLI-Capture ist kein Standardgate; browsergestützte Laufzeit-Sichtprüfung nur nach ausdrücklicher
+  aktueller Freigabe und innerhalb von Reihenfolge und Gesamtbudget aus dem Abschnitt **Fachregeln und
+  Sichtprüfung** in `CODING-RULES.md`.
 
 ## Warum
 
 ### 1 · Drei von vier Quellen sind bereits plain ESM
 
 `Claude-of-Duty` (148 Dateien, ~70 000 Zeilen), `Claude-of-tsushima` (30 Dateien, ~27 000 Zeilen)
-und `claude-desert` (~31 000 Zeilen) sind JavaScript. Die Ernte ist laut
-[`HARVEST-MAP.md`](../HARVEST-MAP.md) zum größten Teil **PORT** — Datei kopieren, Konstanten
+und `claude-desert` (~31 000 Zeilen) sind JavaScript. Die frühere Projektanalyse `HARVEST-MAP.md` klassifizierte die Ernte zum größten Teil als **PORT** — Datei kopieren, Konstanten
 anpassen, Verhalten identisch lassen.
 
 Bei gleicher Sprache ist PORT ein Copy und ein Suchen-Ersetzen. Bei TypeScript wäre jeder PORT
@@ -108,4 +108,4 @@ Sie ist widerlegbar, und zwar an einer Zahl statt an einem Gefühl. Zu revidiere
 - Der Harness braucht ohnehin einen Buildschritt, sodass Punkt 2 entfällt.
 
 Wer sie stürzt, schreibt den Beleg dazu — Regel aus
-[`shared-docs/LEARNING-SYSTEM.md`](../../shared-docs/LEARNING-SYSTEM.md).
+[`LEARNING-SYSTEM.md`](LEARNING-SYSTEM.md).

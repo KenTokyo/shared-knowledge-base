@@ -453,4 +453,12 @@ DONE WHEN
 - Visible feel and final art taste remain explicit user gates.
 
 Continue until the complete playable contract is met or a real external boundary is documented.
+
+Fan out sub-agents and have sub-agents tackle each one individually so that the game is utterly perfect. You should /loop on each item and have a separate sub-agent check it visually to ensure it looks triple A. That separate sub-agent should be a really harsh critic, and if it doesn't look triple A, it should keep going. 
+
+Don't stop until each sub-agent is utterly wowed with the quality
+
+Maximal aber 6 Subagents zur gleichen Zeit nicht übertreiben sonst gehen meine limits weg!
+
+Du kannst den Claude Browser nutzen, also den eigenen, der dev server läuft und port ist erreichbar
 ```
