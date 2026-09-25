@@ -25,6 +25,9 @@
 - **Endzustand ersetzt Ereignis** — Consumer unterscheidet Wiederholungen, verweigerte Casts oder mehrere Kontakte nicht. → Monotone Event-ID/Generation plus `fired/refused/dropped/stale`-Zähler führen; Zustand beschreibt Gegenwart, Event Übergang.
   *voxel-samurai-quiz: Cast-ID und exhaustive Ereigniskinds besitzen VFX-Slots · claude-flakes: Event-/Phasenkontinuität und individuelle Growth-Uhren ersetzten grobe Plant-States · 2026-07-31–08-04*
 
+- **Spieltaste friert Spiel ein, neuer Tab im Hintergrund** — Keydown-Lauscher steigt vor `preventDefault` aus (anderer Dialog offen, `e.repeat`); Chrome führt Standardaktion aus: F1 öffnet Hilfe im neuen Tab, Spielseite wird `hidden`, Sichtbarkeitsstopp hält Schleife an. → Eigene Taste als erste Zeile bedingungslos `preventDefault`, erst danach Zustand prüfen; Test drückt sie in jedem Dialogzustand, liest Tabliste und `document.hidden`. Nur belegte Spieltasten abfangen.
+  *voxel-samurai-reborn: F1 unter Escape-Menü öffnete `chrome://settings/help` (headless Chrome, macOS, CDP-Taste; Bestandsfehler); zwei Weiterlauf-Checks rot bis Abfangen vor Ausstieg · 2026-09-25*
+
 ## Handoffs
 
 - Vollständige Weltbild-Pipeline → [Authored World Runtime](AUTHORED-WORLD-RUNTIME.md)
