@@ -28,6 +28,9 @@
 - **Qualitätsstufe tauscht Weltcharakter gegen FPS** — Pauschales Abschalten entfernt Skyline, Route, Bodenlesbarkeit oder Kampfkontakt. → Eine Weltlaufzeit behalten; zuerst interne Auflösung, sinnloses Fern-LOD, Schattenreichweite, Reflexions-/PostFX-Qualität, Ambient-Life-Takt und Hintergrunddichte skalieren; authored Landmarken, sichere Wege und Gameplayklarheit schützen.
   *claude-of-tsushima: räumliche Buckets und passbezogene Kosten · voxel-samurai-quiz: Quizfall World Runtime skaliert Weltqualität ohne zweiten Renderer · 2026-08-01–08-07*
 
+- **Overlay nach Composer kostet mehr als sein Draw** — Upload (`bufferSubData`, `texSubImage2D`) zwischen letztem Composer-Pass und Overlay-Draw; Apple-Kachel-GPU (ANGLE/Metal) muss Bildschirm-Pass speichern und neu laden. → Instanzdaten/Atlas vor Weltbild hochladen, z. B. unsichtbarer `renderer.render` mit `material.visible=false` (Three lädt Attribute vor Materialprüfung); nach Composer nur Programm, Uniforms, Draw. WebGL-Aufrufe zwischen letzten zwei Draws eines Bildes mitschneiden.
+  *voxel-samurai-reborn Kampfanzeige: Wechselmessung gleicher Blick, 4 Läufe, Upload spät +0,28–1,45 ms, vorab +0,10–0,30 ms GPU je Bild · 2026-09-25*
+
 ## Handoffs
 
 - Vollständige Weltbild-Pipeline → [Authored World Runtime](AUTHORED-WORLD-RUNTIME.md)
