@@ -98,6 +98,10 @@ versetzt übereinanderlegt:
 - **Dieselbe Lage nie zweimal im selben Moment starten.** Schlag und Treffer kommen oft im
   selben Bild. Beide Stapel mit Element starteten dieselbe Datei 16 ms versetzt und leicht
   verstimmt, und das klang phasig. Besser: die laufende Stimme nur lauter stellen.
+- **Takes im fertigen Stapel wählen, nicht einzeln.** Ein leises Element unter der Explosion
+  kann den ganzen Stapel kippen: Ein Element-Take mit 9,5 statt 7,8 senkte den
+  Explosions-Stapel von 8,1 auf 4,9. Die Klangbank probiert deshalb die besten Takes im Stapel
+  (`skill-sounds.mjs stacks`). Grenze: gemessen mit AudioSet/CLAP, nicht gehört.
 
 ### Das Material gehört zum Skill, die Lesart zur Richtung
 
