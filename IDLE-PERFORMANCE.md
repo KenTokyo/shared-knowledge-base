@@ -12,6 +12,8 @@ Lesen bei hoher CPU ohne Interaktion oder Änderungen an Animationen, Ladeanzeig
 
 ## In wenigen Minuten zur Ursache
 
+Bei `chrome-headless-shell` zuerst den Browserstart prüfen: `--use-angle=swiftshader` oder `--use-vulkan=swiftshader` verlagert die Grafik auf die CPU. Headless allein beweist noch kein Software-Rendering. Statt eines weiteren Testbrowsers vorhandene/eingebaute Tabs oder native Screenshots nutzen; Warnpflicht, GPU-Prüfung und Aufräumen stehen in [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md). Nicht mit einem zusätzlichen Dauerwächter neue Leerlaufarbeit erzeugen.
+
 1. **Den Prozess zuordnen.** App, Route, betroffenen Renderer-PID, Version, Fensterzustand und CPU-Skala festhalten. Nach dem Laden zunächst beruhigen lassen. CPU über 30–60 Sekunden beobachten, ohne zu scrollen oder zu tippen.
 2. **DevTools öffnen.** Chrome: auf macOS `⌘⌥I`, auf Windows/Linux `F12` oder `Strg+Umschalt+I`. Electron: vorhandenes Menü für Entwicklerwerkzeuge verwenden; im Entwicklungscode öffnet `win.webContents.openDevTools()` die Werkzeuge genau dieses Renderers. Bei mehreren Fenstern/WebViews den richtigen Inhalt wählen. In NoteTree zeigt die Console `location.href`, ob die lokale oder veröffentlichte App geladen ist.
 3. **Laufende Arbeit sichtbar machen.** Im DevTools-Befehlsmenü (`⌘⇧P` / `Strg+Umschalt+P`) `Show Performance monitor` wählen. CPU, Layouts und Stil-Neuberechnungen im ruhenden Zustand beobachten. Für die Ursache im **Performance**-Panel 10–15 Sekunden Leerlauf aufnehmen: wiederkehrende JavaScript-Aufrufe, Timer, Animation Frames, Layout, Paint und Composite einordnen. **Network** ergänzt die Suche nach Polling, zeigt aber keine vollständige Erklärung für CSS-/Renderkosten.

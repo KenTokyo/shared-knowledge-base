@@ -31,6 +31,9 @@
 - **Reviewbefund als Schlussfolgerung übernommen** — Messung stimmt, Ursache nicht; Satz wandert weiter. → Rohmessung übernehmen, Schluss selbst nachrechnen, beschuldigten Term per eigener A/B-Gegenprobe auf null setzen.
   *voxel-samurai-quiz: Reviewer lag in beiden Richtungen je einmal falsch · claude-of-tsushima: beschuldigtes Korn trug nur 1,8 % der Abweichung · 2026-08-01–02*
 
+- **Zeitabfrage um einen Draw misst Passgrenze mit** — `EXT_disjoint_timer_query_webgl2` allein um Overlay-Draw auf ANGLE/Metal: p50 0,9–1,0 ms, ganzes Bild per Wechselmessung +0,1–0,2 ms, leere Kontrollabfrage 0; vermutlich teilt Abfragegrenze den Metal-Pass. → Teilkosten per Wechselmessung in derselben Szene (Zustände reihum je 30 Bilder, Einschwingbilder verwerfen); GPU je ganzes Bild, Bildabstand und CPU getrennt führen; Gegenprobe darf Behandlung nicht schon enthalten.
+  *voxel-samurai-reborn Kampfanzeige: Einzelabfrage plus Gegenprobe mit schon hochgeladenem Puffer ließen nötigen Vorab-Upload streichen; Wechselmessung zeigte +0,1–1,2 ms GPU ohne ihn · 2026-09-25*
+
 ## Handoffs
 
 - Capturebesitz und Reproduzierbarkeit → [Debug und Review](DEBUG-REVIEW.md)
