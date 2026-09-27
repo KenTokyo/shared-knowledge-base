@@ -37,3 +37,4 @@
 - Messaufbau und Verteilungen → [Messhandwerk](MEASURING.md)
 - Shader-/Passkosten → [Shader und PBR](SHADERS.md)
 - Effektkapazitäten → [VFX](VFX.md)
+- Ruckeln trotz brauchbarer FPS, Stadtmasse → [Ruhiges Bild und Stadtgröße](SMOOTH-FRAMES-CITY-SCALE.md)
