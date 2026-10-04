@@ -10,6 +10,8 @@ Gilt für neue und angefasste React-Bereiche; keine pauschale Umschreibung funkt
 - Vergleichsquelle: T3 Code unter `/Users/kentoky/Documents/React Projects/t3code`, geprüfter Pin `4ee6bfd50ef4a089440d5c3662db2298da9cc50e`. Muster an unserer Datenquelle, Lebensdauer und Bedienung prüfen; ein Referenzname beweist keine bessere Performance.
 - Vorhandene Reparaturen und Tests lesen, bevor ein Befund als neu gilt. Frühere Messungen sind keine aktuelle Abnahme.
 
+Die React-Originaldokumentation bestätigt die Grundlage: [abgeleitete Werte und Effects](https://react.dev/learn/you-might-not-need-an-effect), [stabile externe Snapshots](https://react.dev/reference/react/useSyncExternalStore), [verzögerte Darstellung](https://react.dev/reference/react/useDeferredValue) und [Compiler-Grenzen](https://react.dev/learn/react-compiler/introduction). Abruf 04.10.2026. `useDeferredValue` macht langsame Darstellung unterbrechbar, ersetzt aber kein Debouncing von Netzabfragen. Snapshots bleiben bei unverändertem Inhalt identisch. Der Compiler verringert unnötige React-Arbeit; er repariert weder CSS-Invalidierung noch falsche Cache- oder Ressourcenlebensdauer.
+
 ## Prüfrichtlinie
 
 1. **Kleine Zuständigkeit, kleine Abonnements.** Eine Zeile liest ihre Daten, nicht den gesamten App-Zustand. Unveränderte Daten behalten ihre Referenzen. Selektor-Caches brauchen korrekte Invalidierung bei Löschen, Eltern-/Projektwechsel und verspäteten Antworten. Cache-Lebensdauer und Räumung prüfen.
@@ -42,3 +44,16 @@ Bei Umsetzung passende bestehende Prüfungen verwenden. Leistungsnachweis folgt 
 - `packages/client-runtime/src/state/threadSubagents.ts`: Kinder mit vorhandener Thread-Identität und Rundenzuordnung lesen.
 
 Übernahmen und Ursachenbelege: [TreeChat-Rework](../docs/chat/tasks/2026-10-04-treechat-t3-rework-tasks.md). Claude bleibt ausschließlich interaktive CLI im unsichtbaren Terminal. Stil-/State-Verbesserungen rechtfertigen keine zusätzlichen Modellanfragen.
+
+## Anwendung auf weitere Bereiche
+
+| Bereich | Grenze für teure Arbeit | Pflicht-Randfall bei entsprechender Änderung |
+| --- | --- | --- |
+| Dateibaum / Notizen | Root + Pfad + aktuelle Anforderung; bestehender Dateicache | A→B→A, externe Änderung, Rename, Speichern beim Wechsel |
+| Diagramme | aktives Dokument, vorhandener Layout-/Speicherbesitzer | Edit während Save, Worker-Antwort nach Wechsel, Undo/Redo |
+| Quiz / Kreuzwort | Frage/Zelle und echte inhaltliche Änderungen | Timer ohne Input, schnelle Antworten, Retry, App im Hintergrund |
+| Kataloge / Suche | Abfrageparameter, gemeinsame Pagination/Indizes | schnelle Suche, Leerzustand, Filterwechsel während Antwort |
+| Globale Schale | nur benötigte Context-Felder und aktive Dienste | andere Route, verborgenes Panel, Logout, Plattformwechsel |
+| TreeChat | Thread-/Familienidentität, vorhandener Scroll-/Draft-Owner | fremder Stream, Queue-Edit neben Entwurf, Menüfokus, Chatwechsel |
+
+Vor einem Fix einen konkreten Ablauf auswählen, vorhandene Tests und Aufrufpfade prüfen, die Ursache isolieren und anschließend dieselbe Bedienung prüfen. Keine globale `memo`-/Effect-Bereinigungsaktion ohne dieses Arbeitsziel.

@@ -41,6 +41,8 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 
 ## Frontend-Performance
 
+- Bei React-Änderungen und bereichsübergreifenden Prüfungen die [gemeinsame React-Prüfrichtlinie](REACT-PERFORMANCE.md) anwenden: kleine Abonnements, eindeutige Ressourcenbesitzer, sichere schnelle Wechsel und belegte Ursachen. Sie ordnet den vorhandenen Vercel-Skill und die geprüften T3-Muster für unseren React-18-Host und React-19-Chat ein.
+
 - Keine endlosen dekorativen Animationen. Verzögert geladene Bilder und ruhende Skelette statisch darstellen; `loading` allein bedeutet nicht, dass eine sichtbare Aktion läuft.
 - Wiederkehrende UI-Arbeit nach tatsächlicher Aktivität und Sichtbarkeit begrenzen. Auch Inhalte außerhalb des Scrollbereichs prüfen; ein sichtbares Fenster macht nicht jedes enthaltene Element sichtbar. `prefers-reduced-motion`, GPU-Beschleunigung und Electron-Hintergrunddrosselung ersetzen den Lebenszyklus nicht.
 - Bei verdächtiger Leerlauf-CPU den [kurzen Chrome-/Electron-Diagnoseablauf](IDLE-PERFORMANCE.md) verwenden: messen, einen Kandidaten pausieren, wiederherstellen, Ursache im Owner beheben, ausgelieferte Fassung nach Reload messen.
