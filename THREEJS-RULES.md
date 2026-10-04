@@ -18,6 +18,7 @@ Nur den engsten Fachowner lesen:
 - Reihenfolge, Uhren, Reset → [Runtime-Integration](threejs/RUNTIME-INTEGRATION.md)
 - Shader, PBR, Renderpässe → [Shader und PBR](threejs/SHADERS.md)
 - Chunks, LOD, Frametime → [Performance](threejs/PERFORMANCE.md)
+- Ruckeln bei 30–60 FPS, Bewegungsunschärfe, TAA, Stadt mit vielen Häusern/Autos (Vorbild Spiderbench) → [Ruhiges Bild und Stadtgröße](threejs/SMOOTH-FRAMES-CITY-SCALE.md)
 - Capture, A/A, A/B, Probe → [Debug und Review](threejs/DEBUG-REVIEW.md)
 - Sweep, Ranking, Referenzvergleich → [Messhandwerk](threejs/MEASURING.md)
 
@@ -34,5 +35,6 @@ Projektfallen stehen unter [`projects/<repo-name>/`](projects/). Ein Tipp lebt g
 - **Claude Flakes · Babylon.js/WebGPU:** nur stackneutrale Mechanismen aus Animation, VFX, Deformation, Reset und Kosten; keine WGSL-/Babylon-API als Three.js-Rezept.
 - **Avatar Casting Abilities · Three.js:** ergänzende Codegegenprobe für Layering, Trails, Partikel und Pools; keine History, daher allein kein Kosten- oder Qualitätsbeleg.
 - **Claude Desert · Three.js:** VFX-Isolation, Shader-/PBR-Gegenproben und Runtime-Readbacks.
+- **Spiderbench · Three.js/WebGL2:** ruhiges Bild bei wenig FPS (Kamera-Bewegungsunschärfe, TAA, Warm-up, Federkamera) und Stadtmasse (Superkacheln, Instanz-LOD, gestaffelte Kaskaden); Übernahme belegt in Shardfall V21.0.
 
 Neue globale Tipps brauchen Belege aus mindestens zwei Repositories. Lokale APIs, Konstanten, Ports und Messlatten bleiben im Projektordner.

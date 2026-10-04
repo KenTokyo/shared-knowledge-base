@@ -1,3 +1,5 @@
+LESE AGENTS.md im Root und shared-docs/CODING-RULES.md falls noch nicht getan
+
 # Antworten, Output und Denkweise
 * Deutsch zuerst: kurz, klar, freundlich, motiviert und verständlich.
 * Alltagswörter, direkte Verben und kompakte Stichpunkte verwenden.
