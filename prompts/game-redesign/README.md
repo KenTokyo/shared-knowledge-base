@@ -8,8 +8,8 @@ Welt sind getrennt; für einen kompletten Umbau beide zusammen verwenden.
 | Gesamte Oberfläche und Motion eines Spiels neu (Titel, Menüs, HUD, Dialoge, Ergebnis, Übergänge) | [01 — Spiel-UI und Motion](01-game-ui-graffiti-prompt.md) |
 | Karten, Licht, VFX und inszenierte Auftritte neu | [02 — Karten, VFX und Auftritte](02-game-maps-vfx-prompt.md) |
 
-Dazu gehören der Skill `game-ui-graffiti` (Ablauf und Agenten-Briefings für den UI-Teil) und der Skill
-`game-motion-studio` (Motion-Rezept und Ton).
+Dazu gehört der Skill `game-ui-graffiti`: Ablauf, Agenten-Briefings, Motion-Rezept und Ton (seit 12.10.2026
+auch das frühere `game-motion-studio`).
 
 ## Vorbild: der Core-Breaker-Auftrag (07.10.2026)
 

@@ -9,8 +9,8 @@
 > **Referenz-Implementierung:** Crossword Core Breaker, Styleguide „Nachtschicht“
 > (`/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md`, Code in `src/design/`).
 > Der Nutzer am 11.10.2026: „das ist der beste Graffiti-Stil bis jetzt … das darf nicht verloren gehen“.
-> **Dazu:** Motion-Rezept und Ton im Skill `game-motion-studio`; Prompt-Vorlagen für UI und Karten in
-> [`../prompts/game-redesign/`](../prompts/game-redesign/README.md); Skill `game-ui-graffiti`.
+> **Dazu:** Skill `game-ui-graffiti` (Ablauf, Briefings, Motion-Rezept und Ton nach dem Vorbild QuizBlitz);
+> Prompt-Vorlagen für UI und Karten in [`../prompts/game-redesign/`](../prompts/game-redesign/README.md).
 
 ---
 

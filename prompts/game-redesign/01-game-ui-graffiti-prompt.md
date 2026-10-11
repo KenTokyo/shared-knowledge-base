@@ -37,7 +37,7 @@ This is our house style. Read it first and treat it as the standard:
 - House guide: /Users/kentoky/Documents/React Projects/shared-docs/ui/PREMIUM-GRAFFITI-GAME-UI.md
 - Reference implementation ("Nachtschicht"): /Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md
   and its code in src/design/ and src/components/ui/hud/
-- Motion recipe: the skill game-motion-studio (QuizBlitz)
+- Motion recipe: the skill game-ui-graffiti, references/motion-recipe.md (QuizBlitz)
 Reuse the craft — layered pieces, slaps, posters, stencils, marker lines, stamps, an own hand-drawn
 icon set, one colour source, one timing table, one event channel, a studio with real mock data — but
 give <GAME> its own crew idea, place, props and palette. Do not copy the Nachtschicht look.
