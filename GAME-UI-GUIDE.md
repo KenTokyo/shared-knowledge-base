@@ -1,8 +1,13 @@
 # Game UI defaults
 
-Read only for game interface design. A named project style or user reference wins. General frontend correctness stays in [FRONTEND-RULES.md](FRONTEND-RULES.md); permissions and writing style stay in [CODING-RULES.md](CODING-RULES.md).
+Read only for game interface design. General frontend correctness stays in [FRONTEND-RULES.md](FRONTEND-RULES.md); permissions and writing style stay in [CODING-RULES.md](CODING-RULES.md).
 
-- Avoid generic flat dashboard cards. Use the project palette, layered solid surfaces, inset/raised planes, fine rims, contact shadows, highlights and restrained glow. No extra canvas merely to give controls depth.
-- Important actions/states need meaningful, distinct inline SVG marks with a consistent stroke/shape language. Text-only placeholders, repeated generic symbols and decorative icons do not replace meaning.
-- Tie motion to events: appear → build → highlight → settle/fade. Selection, cast, hit, cooldown, success and failure need immediate transform/opacity feedback. Limit idle motion, respect reduced motion and clean up listeners/animations.
-- Keep combat skills in a compact rail at the lower gameplay edge. Each slot needs a distinct mark, key chip, name on focus/activation and clear ready/active/progress/disabled states. Prefer tight grouping and state lighting over oversized cards or permanent full-surface neon.
+**House style since 11.10.2026: [Premium-Graffiti](ui/PREMIUM-GRAFFITI-GAME-UI.md)** — hand-drawn, layered graffiti plus video-cut motion, reference implementation Crossword Core Breaker "Nachtschicht". It is the default for every game UI, also for games without their own `DESIGN.md`.
+
+- **Precedence:** an explicit user decision for a project > this house style > older project styles. Older styles are translated at the next UI rework: the game keeps its world and palette, the craft and motion become the house style's.
+- **Prompts:** UI and world separately in [prompts/game-redesign/](prompts/game-redesign/README.md), with the original Core Breaker prompt as the example. Skills: `game-ui-graffiti` (UI rework flow and agent briefs), `game-motion-studio` (motion recipe and sound).
+- **Project contracts that stay valid inside their own scope:** [Shardfall Sci-Fi UI](ui/SHARDFALL-SCI-FI-GAME-UI.md) (reference boards for Shardfall), [MMO combat density](ui/LARGE-MMO-RPG-COMBAT-DENSITY.md) (how much may be on screen).
+- Important actions and states need meaningful, distinct marks from the game's own hand-drawn icon set — no generic icon library in the visible UI, no text-only placeholders.
+- Tie motion to events: build-up → hit → payoff → rest. Selection, cast, hit, cooldown, success and failure get immediate transform/opacity feedback. No idle loops, reduced motion shows the end state.
+- Keep combat skills in a compact rail at the lower gameplay edge. Each slot needs a distinct mark, key chip, name on focus/activation and clear ready/active/progress/disabled states.
+- The old "Juicy Game-UI System" (rounded warm-stone cards, idle loops, Lucide) is superseded: [old-deprecated/juicy-game-ui-system.md](old-deprecated/juicy-game-ui-system.md).

@@ -22,13 +22,14 @@ git submodule update --init --recursive
 | [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
 | [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Prompt-/Task-Quelle, Planung, Umsetzung, Validierung und Git |
 | [`PROMPTING-TIPS.md`](PROMPTING-TIPS.md) | Ausführliche Promptqualität, automatische Konkretisierung vager Wünsche und Evidenz aus kontrollierten Vergleichen |
-| [`prompts/`](prompts/README.md) | Sechs Map-Prompts: drei für Performance/Diagnose und drei für ImageGen-gestützte Generierung, Orchestrierung und Blender-/Three.js-Vergleich |
+| [`prompts/`](prompts/README.md) | Sechs Map-Prompts (Performance/Diagnose, ImageGen-Generierung) und zwei [Spiel-Redesign-Prompts](prompts/game-redesign/README.md) (UI + Motion, Karten + VFX) |
+| [`GAME-UI-GUIDE.md`](GAME-UI-GUIDE.md), [`ui/`](ui/) | **Spiel-UI-Hausstil [Premium-Graffiti](ui/PREMIUM-GRAFFITI-GAME-UI.md)** (Standard für alle Spiele seit 11.10.2026), dazu projektbezogene UI-Verträge |
 | [`FRONTEND-RULES.md`](FRONTEND-RULES.md) | Trigger-Owner für React, State, Hydration, Browser-UI und Frontend-Performance |
 | [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für ausdrücklich freigegebene CLI-Captures; Gate und Gesamtbudget stehen in `CODING-RULES.md` |
 | [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |
 | [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md) | Alle Ressourcen in React Projects: Three.js-Bezug, Zweck, absolute macOS-Pfade, Pull-Pflicht und lokale Ports |
 | [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |
-| [`agents/`](agents/) | Nur per Trigger: [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md), [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md), [Juicy-Game-UI](agents/juicy-game-ui-system.md) |
+| [`agents/`](agents/) | Nur per Trigger: [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md), [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md) |
 | [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
 | [`playwright-cli/`](playwright-cli/) | Playwright-CLI-Notizen |
 | [`old-deprecated/`](old-deprecated/) | Abgelöste Fassungen. Nur zum Nachschlagen, nicht mehr verlinken |

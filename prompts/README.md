@@ -1,4 +1,4 @@
-# Map-Prompts
+# Prompts
 
 Die passende Datei vollständig im Chat des Zielprojekts mitgeben und die Angaben
 oben ergänzen. Die ersten drei Vorlagen behandeln Performance; die drei neuen
@@ -14,6 +14,8 @@ Spiel-Laufzeit verglichen werden.
 | Ein GPT-Modell erzeugt Referenzen und implementiert die gewählte Pipeline | [GPT + ImageGen + Map](map-generation/01-gpt-imagegen-map-prompt.md) |
 | Ein Orchestrierer koordiniert Astra für Bilder und den vom Nutzer gewählten Implementierer | [Orchestrierte Map-Erzeugung](map-generation/02-orchestrierte-imagegen-map-prompt.md) |
 | Dieselbe Map über Blender und Three.js bauen und fair vergleichen | [ImageGen → Blender / Three.js](map-generation/03-imagegen-blender-threejs-vergleich-prompt.md) |
+
+**Spiel-Redesign im Hausstil Premium-Graffiti** (eigene Sammlung, UI und Welt getrennt): [Übersicht mit dem Core-Breaker-Original](game-redesign/README.md) · [01 Spiel-UI und Motion](game-redesign/01-game-ui-graffiti-prompt.md) · [02 Karten, VFX und Auftritte](game-redesign/02-game-maps-vfx-prompt.md). Die Spiegelpflicht nach Voxel Samurai Reborn unten gilt nur für die sechs Map-Prompts.
 
 ## Standards für die drei Generierungs-Prompts
 
