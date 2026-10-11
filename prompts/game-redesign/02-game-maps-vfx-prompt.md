@@ -34,10 +34,8 @@ UI and world read as one game. Study how the reference handles maps, VFX, enemy 
 environmental effects, lighting and presentation. Reuse the strongest ideas where they make sense —
 never copy. <GAME> needs its own identity and should look even more refined.
 
-House rules and reference implementation:
+House rules:
 - House guide: /Users/kentoky/Documents/React Projects/shared-docs/ui/PREMIUM-GRAFFITI-GAME-UI.md
-- Reference world ("Nachtschicht"): /Users/kentoky/Documents/React Projects/3-crossword-core-breaker,
-  CLAUDE.md section "Nachtschicht-Welt" and src/components/scene/world/, scene/vfx/, scene/combat/
 - Real-time 3D rules: /Users/kentoky/Documents/React Projects/shared-docs/threejs/PERFORMANCE.md
 
 Massively upgrade the **VFX system**. Every important gameplay moment gets satisfying visual impact:

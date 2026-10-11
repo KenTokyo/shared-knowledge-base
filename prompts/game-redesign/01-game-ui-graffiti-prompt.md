@@ -3,7 +3,7 @@
 Vorlage für einen kompletten UI-Umbau eines Spiels: Identität, alle Menüs, alle Oberflächen im Spiel,
 Motion. Karten, VFX und Gegner-Auftritte stehen getrennt in
 [02 — Karten, VFX und Auftritte](02-game-maps-vfx-prompt.md). Beide zusammen ergeben den
-Core-Breaker-Auftrag aus der [README](README.md).
+Original-Auftrag aus der [README](README.md).
 
 Die Angaben ausfüllen und den Block „Prompt“ vollständig im Chat des Zielprojekts mitgeben. Leere
 Angaben entscheidet der Orchestrator selbst und begründet sie im Aufgaben-Dokument.
@@ -35,12 +35,11 @@ and more polished than anything the game has today.
 
 This is our house style. Read it first and treat it as the standard:
 - House guide: /Users/kentoky/Documents/React Projects/shared-docs/ui/PREMIUM-GRAFFITI-GAME-UI.md
-- Reference implementation ("Nachtschicht"): /Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md
-  and its code in src/design/ and src/components/ui/hud/
-- Motion recipe: the skill game-ui-graffiti, references/motion-recipe.md (QuizBlitz)
+- Motion recipe: the skill game-ui-graffiti, references/motion-recipe.md
+The guide is complete on its own; there is no need to study another project.
 Reuse the craft — layered pieces, slaps, posters, stencils, marker lines, stamps, an own hand-drawn
 icon set, one colour source, one timing table, one event channel, a studio with real mock data — but
-give <GAME> its own crew idea, place, props and palette. Do not copy the Nachtschicht look.
+give <GAME> its own crew idea, place, props and palette. Do not copy another game's look.
 <WORLD / CREW IDEA, COLOURS TO KEEP, EXTRA REFERENCES>
 
 Redesign the **entire UI**: <SCREENS>. Make it dramatically more modern, cleaner, more confident and

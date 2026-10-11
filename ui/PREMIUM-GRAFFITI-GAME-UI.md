@@ -6,8 +6,11 @@
 > Hausstil. Ältere Projektstile werden beim nächsten UI-Umbau in ihn übersetzt (Welt und Palette des
 > Spiels bleiben, das Handwerk wird dieses hier). War der ältere Stil eine ausdrückliche Wahl des
 > Nutzers (z. B. die Glas-UI von Elemental Flakes), fragt der Umbau einmal nach, statt still zu ersetzen.
-> **Referenz-Implementierung:** Crossword Core Breaker, Styleguide „Nachtschicht“
-> (`/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md`, Code in `src/design/`).
+> **Designgefühl:** World-Class Motion, AAA, Award-Niveau – premium, von Hand gezeichnet, geschichtet,
+> ausdrucksstark und hochwertig („illustrated, layered, expressive and expensive — not like random
+> spray-paint fonts or cheap stickers“); geschnitten wie ein Video, nichts erscheint oder verschwindet
+> einfach, lebendig und nie chaotisch. Diese Datei ist in sich vollständig; kein Projekt muss dazu
+> angesehen werden.
 > Der Nutzer am 11.10.2026: „das ist der beste Graffiti-Stil bis jetzt … das darf nicht verloren gehen“.
 > **Dazu:** Skill `game-ui-graffiti` (Ablauf, Briefings, Motion-Rezept und Ton nach dem Vorbild QuizBlitz);
 > Prompt-Vorlagen für UI und Karten in [`../prompts/game-redesign/`](../prompts/game-redesign/README.md).
@@ -19,7 +22,7 @@
 1. **Gezeichnet, nicht getippt.** Große Wörter sind geschichtete Pieces: Füllverlauf, Extrusion,
    Tintenumriss, Glanz, Drips. Eine Sprühschrift ersetzt nie die Gestaltung.
 2. **Handwerk gleich, Welt eigen.** Jedes Spiel bekommt eine eigene Crew-Idee, einen eigenen Ort und
-   eine eigene Palette (§1). Keine Kopie der Nachtschicht.
+   eine eigene Palette (§1). Keine Kopie eines anderen Spiels.
 3. **Fast-Schwarz als Grund, Farbe trägt Bedeutung, höchstens zwei Akzente je Fläche.**
 4. **Flächen sind Slaps:** aufgeklebtes Papier, Plakat oder Sticker mit Tintenumriss, hartem
    Versatzschatten ohne Unschärfe und Textur. Kein Glas, kein `backdrop-filter`, keine
@@ -40,7 +43,7 @@
 
 ## 1. Steckbrief je Spiel (zuerst ausfüllen)
 
-| Feld | Inhalt | Beispiel Nachtschicht (CCB) |
+| Feld | Inhalt | Beispiel |
 |---|---|---|
 | **Crew und Ort** | Wer sprüht wo, und warum gehört das zum Spiel? | Writer-Crew bricht nachts in eine Kernanlage ein und „bombt“ den Schild mit Buchstaben |
 | **Oberfläche als Gegenstand** | Was ist die UI in dieser Welt? | Das Blackbook der Crew: Marker, Schablone, Slaps, Chrom-Pieces auf Beton |
@@ -61,7 +64,7 @@ Die Welt (Karten, Wandbilder) trägt dieselben Pieces wie die UI. So wird daraus
 **EINE Farbquelle** für DOM und 3D (`tokens.ts`). Beim Start werden daraus CSS-Variablen; die Szene
 liest dieselben Werte als Zahl. Kein Hex im Bauteil.
 
-| Rolle | Bedeutung | CCB |
+| Rolle | Bedeutung | Beispielwert |
 |---|---|---|
 | `INK` | tiefstes Schwarz: Umrisse, Schlagschatten, Letterbox | `#07080d` |
 | `NIGHT` | App- und Szenenhintergrund | `#0d0f17` |
@@ -79,7 +82,7 @@ liest dieselben Werte als Zahl. Kein Hex im Bauteil.
   diese Rollen ab.
 - Höchstens zwei Akzente je Fläche. Eine Farbe nur „weil es hübsch ist“ gibt es nicht.
 - **Piece-Paletten** als feste Verläufe: Chrom BONE → SMOKE mit INK-Umriss, Hitze GOLD → CORE → HOT,
-  dazu je Akzent eine (CCB: `PIECE_PALETTES` in `src/design/pieces/compose.ts`).
+  dazu je Akzent eine.
 - **Seltenheit** als feste Leiter, z. B. BONE · ICE · UV · GOLD.
 - **Zahlen** im Gebietsschema des Spiels über EINE Formatierfunktion (`41.320`, `41,3 %`).
 - Karten bzw. Welten haben ein Akzentpaar aus EINER Kartenliste; die UI baut keine eigene.
@@ -88,7 +91,7 @@ liest dieselben Werte als Zahl. Kein Hex im Bauteil.
 
 ## 3. Schriften — vier Rollen
 
-| Rolle | Wofür | CCB |
+| Rolle | Wofür | Beispiel |
 |---|---|---|
 | **Piece** | Pieces, Titel, große Momente. Nie Fließtext. | Sedgwick Ave Display |
 | **Marker** | Randnotizen, Tags, handschriftliche Hinweise | Sedgwick Ave |
@@ -106,8 +109,7 @@ liest dieselben Werte als Zahl. Kein Hex im Bauteil.
 
 ## 4. Bausatz
 
-Ein Bausatz für alles, mit Übersicht im Studio (§9). CCB: `src/design/kit/` (Export `index.ts`),
-Klassen in `kit.css`, `accents.css`, `motion.css`, Texturen in `public/ui/tex/`.
+Ein Bausatz für alles, an EINER Stelle (z. B. `src/design/kit/`), mit Übersicht im Studio (§9).
 
 | Baustein | Wann |
 |---|---|
@@ -122,7 +124,7 @@ Klassen in `kit.css`, `accents.css`, `motion.css`, Texturen in `public/ui/tex/`.
 | **Drip, ImpactFrame, CountUp** | Nase nach einem Einschlag, ein Einschlagbild, Zahl zählt hoch und rastet ein. |
 | **SprayWipe** | Jeder Bildschirmwechsel. Die Logik wechselt sofort, die Anzeige folgt dem Schnitt. |
 
-**Pieces bauen** (CCB: `src/design/pieces/`, Glyphen aus `tools/ui/gen-glyph-atlas.mjs`):
+**Pieces bauen** (Glyphen einmal per Werkzeug aus der Piece-Schrift erzeugen):
 - Schichten von hinten nach vorn: Schlagschatten → Extrusion → Tintenumriss → Füllverlauf → Glanz →
   Drips → Funkeln. Buchstaben leicht versetzt und gedreht, nie auf einer Grundlinie wie Satzschrift.
 - Ein Piece schlägt Buchstabe für Buchstabe ein (gestaffelt), Nasen laufen danach einmal.
@@ -151,7 +153,7 @@ die Fläche vom Schatten, Druck presst sie hinein. Treffziele mindestens 44 px, 
 mit `aria-label`, gestrichelter Fokusring nur bei Tastatur und nie entfernen. Knöpfe über dem Spielfeld
 lösen keinen Schuss bzw. keine Spielaktion aus.
 
-**Hauptfläche im Spiel** (CCB: die Fragetafel): ein Plakat mit Klebeband. Kategorie bzw. Kontext als
+**Hauptfläche im Spiel** (etwa die Fragetafel): ein Plakat mit Klebeband. Kategorie bzw. Kontext als
 Sprüh-Tag auf der Kante, Schlüsselwörter mit Textmarker im Akzent, gegebene Teile als helle
 Aufkleber-Rohlinge, offene Teile als Schablonen-Ausschnitte, das nächste Ziel mit Erfolgskante.
 Lange Inhalte werden kleiner, statt umzubrechen (Container-Einheiten). Richtig: Element fliegt vom Ort
@@ -183,17 +185,17 @@ Titel-Piece, Reiter, Inhalt. Nichts erscheint oder verschwindet einfach.
 
 ## 7. Bewegung
 
-**Quellen (Muster, CCB-Dateien in Klammern):**
+**Quellen (Dateinamen als Vorschlag):**
 
 | Teil | Aufgabe |
 |---|---|
 | Takttabelle (`src/design/choreo.ts`) | EINE Zeitquelle für DOM, 3D und Ton: `EASE`, `SPRING`, `DUR` (exit < enter, stagger, cut), `CHOREO` (ms je Moment) |
-| Installation (`installNight.ts`) | legt Kurven, Dauern und Federn (`linear()`-Kurven) als CSS-Variablen an; EINE Federrechnung |
+| Installation (`installDesign.ts`) | legt Kurven, Dauern und Federn (`linear()`-Kurven) als CSS-Variablen an; EINE Federrechnung |
 | Einmal-Klassen (`motion.css`) | `in-up`, `pop`, `kick`, `shake`, `out`, `draw-x`, `slap-in`, `stamp-in`, `piece` …; Zeitpunkt über eine CSS-Variable aus der Tabelle |
 | WAAPI-Helfer (`hud/hudMotion.ts`) | Einmal-Animationen im Kampf über `element.animate` |
 | Ereigniskanal (`game/presentation/fxEvents.ts`) | EIN Kanal Spiel → HUD, Szene, Ton (`emitFx`/`onFx`) |
 
-**Startwerte der Takte** (CCB, zum Übernehmen und Feintunen):
+**Startwerte der Takte** (bewährt, zum Übernehmen und Feintunen):
 `DUR` exit 180 · enter 480 · stagger 70 · cut 420 ms. Schnitt: Wischer 0, verdeckt 240, Wechsel 260,
 frei 300, fertig 700. Titelsequenz: Wand 240, Wort 1 300, Wort 2 560, Nasen 980, Menü 1250, fertig
 1950, je Buchstabe 52. Richtig: Kontakt 0, Tafel 90, Unterstrich 200, Combo 260, Ruhe 520. Großer
@@ -242,7 +244,7 @@ Urteil 380, Punkte ab 900, Kacheln ab 2100, Rang 2800, Aktionen 3300.
 - **Mocks schreiben nie in Speicherstände** und entstehen aus EINEM echten Datensatz (nie Hinweis
   des einen mit Erklärung des anderen mischen).
 - Prüffälle sind echte Extremfälle: längster Text, längstes Wort, längster Kategoriename.
-- Im Spiel prüfen DEV-Haken (`window.__cb`-Muster): Start, Bildschleife anhalten, genau n Bilder,
+- Im Spiel prüfen DEV-Haken (`window.__<spiel>`): Start, Bildschleife anhalten, genau n Bilder,
   jeden Moment auslösen.
 
 ---
@@ -250,8 +252,7 @@ Urteil 380, Punkte ab 900, Kacheln ab 2100, Rang 2800, Aktionen 3300.
 ## 10. Leistung der Oberfläche
 
 - Ziel: Bildrate = Bildwiederholrate. Die UI darf keine Spitzen erzeugen.
-- Ruhender Kampf: 0 B UI-Allokation je Bild und keine React-Commits (im Produktions-Build gemessen,
-  CCB: `docs/aaa-graffiti-rework/evidence/ui/u7/prodprof.mjs`).
+- Ruhender Kampf: 0 B UI-Allokation je Bild und keine React-Commits (im Produktions-Build gemessen).
 - Kein `filter`, kein `backdrop-filter`, keine animierten Schatten. Texturen als kleine WebP.
 - Pieces und große Titel gerastert statt als DOM-Schichten animiert.
 - Keine Laufzeitdateien von fremden Servern.
@@ -265,7 +266,7 @@ erst dann Aufnahmen.
 
 **Aufnahmen** nach `~/.claude/CLAUDE.md`: zuerst der eingebaute Browser, sonst EIN Chrome for Testing
 in Nutzerversion, headless, höchstens 1280×720, Schleife angehalten, nur benötigte Bilder, sofort
-beenden. Mehrere Agenten teilen sich eine Sperre (CCB: `tools/capture/lock.mjs`).
+beenden. Mehrere Agenten teilen sich eine Sperre (Lock-Datei).
 
 **Prüfmaße:** nichts abgeschnitten oder überlappend bei längstem Text, längstem Namen, Handy 320 px,
 360×720, 390×720, Desktop 1280×720. Fokusringe, `aria-label`, Test-IDs bleiben.
@@ -311,26 +312,7 @@ gearbeitet. Befunde gehen mit Bild und Zeitpunkt zurück an denselben Agenten.
 
 ---
 
-## 14. Referenz-Implementierung (Crossword Core Breaker)
-
-Basis: `/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/`
-
-| Thema | Datei |
-|---|---|
-| Styleguide des Spiels | `DESIGN.md`, Regeln in `CLAUDE.md` („Nachtschicht-UI“, „Nachtschicht-Welt“) |
-| Farben, Schriften | `src/design/tokens.ts`, `src/design/fonts.ts`, `src/design/night.css` |
-| Takte, Kurven, Federn | `src/design/choreo.ts`, `src/design/installNight.ts`, `src/design/motion.css` |
-| Bausatz | `src/design/kit/*`, `src/design/kit.css`, `src/design/accents.css` |
-| Pieces, Symbole | `src/design/pieces/*`, `src/design/icons/iconDefs.ts`, `src/design/marker.ts`, `tools/ui/gen-*.mjs` |
-| Ereignisse, Bildschirmanker | `src/game/presentation/fxEvents.ts`, `src/game/presentation/screenAnchor.ts` |
-| HUD, Hauptfläche, Overlays | `src/components/ui/hud/*` (`ClueBoard`, `hudMotion`, `titleLanes`, `MomentTitles`) |
-| Studio | `src/design/studio/*` |
-| Aufnahmen, Messungen | `tools/capture/*`, `tools/perf/fps-ab.mjs` |
-| Hergang, Noten, Belege | `docs/aaa-graffiti-rework/` |
-
----
-
-## 15. Spiele und ihre Fassungen
+## 14. Spiele und ihre Fassungen
 
 Namen wie im NoteTree-Spielehub (`notetree-tanstack/lib/games/game-registry.ts`, Stand 11.10.2026).
 Jedes Spiel hat seine Fassung des Hausstils in der eigenen `DESIGN.md`: Steckbrief, Farbrollen,
@@ -339,7 +321,7 @@ neues Spiel bekommt eine Zeile hier und eine eigene Fassung.
 
 | Spiel | früher | Repo unter `/Users/kentoky/Documents/React Projects/` |
 |---|---|---|
-| Crossword Core Breaker | – | `3-crossword-core-breaker` (Referenz-Implementierung) |
+| Crossword Core Breaker | – | `3-crossword-core-breaker` |
 | QuizBlitz | – | `quizblitz` (Motion-Referenz; die Welten bleiben eigene Stile) |
 | Bahnenwacht | Arbeitsname Lane Defense | `lane-defense` |
 | Wissensfestung | – | `Wissensfestung` |
@@ -351,3 +333,5 @@ neues Spiel bekommt eine Zeile hier und eine eigene Fassung.
 Außerhalb des Hubs mit eigener Fassung: Voxel Samurai Quiz („Quizfall“, `voxel-samurai-quiz`),
 Shardfall Arena v3 (`test-projects/shardfall-arena-v3-blender`), Elemental Flakes
 (`Claude-Flakes/elemental-flakes`, Glas-UI bis zur Entscheidung des Nutzers).
+
+<sub>Beispielprojekt, nur falls wirklich nötig: Crossword Core Breaker (`3-crossword-core-breaker/DESIGN.md`).</sub>
