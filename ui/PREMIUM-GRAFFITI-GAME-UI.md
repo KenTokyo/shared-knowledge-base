@@ -2,9 +2,10 @@
 
 > **Stand:** 11.10.2026. **Geltung:** Standard für jede Spiel-Oberfläche in jedem Spiel: Titel, Menüs,
 > Hangar/Shop, HUD, Dialoge, Pause, Ergebnisse, Übergänge, Momente im Kampf.
-> **Vorrang:** Eine ausdrückliche Nutzerentscheidung für ein Projekt geht vor. Danach gilt dieser
+> **Vorrang:** Was der Nutzer für ein Projekt ausdrücklich anders will, geht vor. Danach gilt dieser
 > Hausstil. Ältere Projektstile werden beim nächsten UI-Umbau in ihn übersetzt (Welt und Palette des
-> Spiels bleiben, das Handwerk wird dieses hier).
+> Spiels bleiben, das Handwerk wird dieses hier). War der ältere Stil eine ausdrückliche Wahl des
+> Nutzers (z. B. die Glas-UI von Elemental Flakes), fragt der Umbau einmal nach, statt still zu ersetzen.
 > **Referenz-Implementierung:** Crossword Core Breaker, Styleguide „Nachtschicht“
 > (`/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md`, Code in `src/design/`).
 > Der Nutzer am 11.10.2026: „das ist der beste Graffiti-Stil bis jetzt … das darf nicht verloren gehen“.
