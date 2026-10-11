@@ -6,6 +6,7 @@ Gilt für neue und angefasste React-Bereiche; keine pauschale Umschreibung funkt
 ## Gemeinsame Grundlage
 
 - Vorhandenen [Vercel-React-Skill](../.agents/skills/vercel-react-best-practices/SKILL.md) verwenden; nur relevante Regeldateien nachladen.
+- Stand am 11.10.2026 mit der offiziellen Quelle abgeglichen und auf 70 Regeln aktualisiert; Herkunft und Dateiprüfsummen stehen in `upstream-source.json` im Skillordner. Eine unveränderte Versionsnummer beweist keine Aktualität. [Prüfung und Pflege](../docs/performance/2026-10-11-skills-aktualitaet.md).
 - NoteTree-Host: React 18 / TanStack; eingebettetes TreeChat: isolierter React-19-Client mit Compiler. Next-Kompatibilität bleibt aktiv. Next-/RSC-/React-19-Empfehlungen deshalb nur am passenden Ausführungsort anwenden. Kein neuer Store, SWR oder Frameworkwechsel allein wegen eines Beispiels.
 - Vergleichsquelle: T3 Code unter `/Users/kentoky/Documents/React Projects/t3code`, geprüfter Pin `4ee6bfd50ef4a089440d5c3662db2298da9cc50e`. Muster an unserer Datenquelle, Lebensdauer und Bedienung prüfen; ein Referenzname beweist keine bessere Performance.
 - Vorhandene Reparaturen und Tests lesen, bevor ein Befund als neu gilt. Frühere Messungen sind keine aktuelle Abnahme.
