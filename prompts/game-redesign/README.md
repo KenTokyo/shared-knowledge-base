@@ -19,6 +19,9 @@ Mit diesem Prompt entstand die „Nachtschicht“ von Crossword Core Breaker. De
 Messwerten und Noten in `docs/aaa-graffiti-rework/tasks/2026-10-07-aaa-graffiti-rework-tasks.md`
 (Commits 07.–08.10.2026 bis `beb9dd3`).
 
+Voxel Samurai Reborn aus dem Originaltext heißt heute **Shardfall** und liegt unter
+`/Users/kentoky/Documents/React Projects/test-projects/shardfall`.
+
 Im Lauf kamen zwei Vorgaben dazu, die in beiden Vorlagen fest stehen: Bildrate = Bildwiederholrate
 (240 FPS auf 240 Hz), und auch Quiz-Tafel, Pause und alle übrigen Bildschirme folgen dem
 Graffiti-Design. Jeder fertige Stand wurde committet, gepusht und live geprüft.

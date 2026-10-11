@@ -327,3 +327,27 @@ Basis: `/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/`
 | Studio | `src/design/studio/*` |
 | Aufnahmen, Messungen | `tools/capture/*`, `tools/perf/fps-ab.mjs` |
 | Hergang, Noten, Belege | `docs/aaa-graffiti-rework/` |
+
+---
+
+## 15. Spiele und ihre Fassungen
+
+Namen wie im NoteTree-Spielehub (`notetree-tanstack/lib/games/game-registry.ts`, Stand 11.10.2026).
+Jedes Spiel hat seine Fassung des Hausstils in der eigenen `DESIGN.md`: Steckbrief, Farbrollen,
+Schriften, Bausatz, Takte, die Liste „wird beim nächsten Umbau übersetzt“ und offene Fragen. Ein
+neues Spiel bekommt eine Zeile hier und eine eigene Fassung.
+
+| Spiel | früher | Repo unter `/Users/kentoky/Documents/React Projects/` |
+|---|---|---|
+| Crossword Core Breaker | – | `3-crossword-core-breaker` (Referenz-Implementierung) |
+| QuizBlitz | – | `quizblitz` (Motion-Referenz; die Welten bleiben eigene Stile) |
+| Bahnenwacht | Arbeitsname Lane Defense | `lane-defense` |
+| Wissensfestung | – | `Wissensfestung` |
+| Shard Royale | Shardfall Arena V2.5 (Hub-Kennung `shardfall`) | `test-projects/shardroyale` |
+| Shardfall | Ronin, Voxel Samurai Reborn (Hub-Kennung `samurai-reborn`) | `test-projects/shardfall` |
+| Wavebreaker | QuizWaves Shardfall | `test-projects/quizwaves-shardfall-v1` |
+| Bastion | QuizWaves Radial | `test-projects/quizwaves-radial-v1` |
+
+Außerhalb des Hubs mit eigener Fassung: Voxel Samurai Quiz („Quizfall“, `voxel-samurai-quiz`),
+Shardfall Arena v3 (`test-projects/shardfall-arena-v3-blender`), Elemental Flakes
+(`Claude-Flakes/elemental-flakes`, Glas-UI bis zur Entscheidung des Nutzers).

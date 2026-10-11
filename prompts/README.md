@@ -49,7 +49,7 @@ vorhandenen Laufzeitprüfungen.
 Zentral gepflegt unter
 [Shared Docs](</Users/kentoky/Documents/React Projects/shared-docs/prompts/README.md>),
 auf Nutzerwunsch zusätzlich mit identischen sechs Dateien und diesem Index in
-[Voxel Samurai Reborn](</Users/kentoky/Documents/React Projects/test-projects/voxel-samurai-reborn/prompts/README.md>).
+[Shardfall, früher Voxel Samurai Reborn](</Users/kentoky/Documents/React Projects/test-projects/shardfall/prompts/README.md>).
 Bei Änderungen beide Kopien gemeinsam aktualisieren. Das ist eine Prompt-Sammlung;
 andere Spiele werden dadurch nicht automatisch umgebaut.
 

@@ -12,7 +12,7 @@ Leistungsfragen einer Karte gibt es die [Map-Performance-Prompts](../README.md).
 
 - Spiel und Projektpfad: `<Name, absoluter Pfad>`
 - Karten im Umfang: `<alle / Liste; neue Karten ja oder nein>`
-- Welt-Referenz: `<Standard: Sci-Fi-Karten aus /Users/kentoky/Documents/React Projects/test-projects/voxel-samurai-reborn>`
+- Welt-Referenz: `<Standard: Sci-Fi-Karten aus Shardfall (früher Voxel Samurai Reborn), /Users/kentoky/Documents/React Projects/test-projects/shardfall>`
 - Welt- bzw. Crew-Idee des Spiels: `<optional — aus der UI-Identität, falls schon vorhanden>`
 - Momente, die inszeniert werden sollen: `<Standard: Gegner-Spawn, Boss-Auftritt, Angriffe, Treffer, Zerstörung, richtige/falsche Eingabe, Combo, Fortschritt, Sieg/Niederlage>`
 - Bildrate-Ziel und Budget: `<Standard: Bildwiederholrate; Draw-Calls/Dreiecke aus dem Projekt>`
