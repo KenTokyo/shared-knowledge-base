@@ -63,9 +63,10 @@ General work policy. Read once per fresh context; reread changed sections only. 
 
 ## 6. Writing style — one owner
 
-- Use basic English for chat, generated docs, code and comments unless explicitly requested otherwise. Preserved originals and exact identifiers keep their language.
-- Lead with the result. Use short, direct sentences and compact bullets. Explain necessary technical terms. Keep Gen-Z slang light and natural; clarity wins.
-- Use numbered steps for order, checkboxes for tasks and icons sparingly. Cut repetition and filler, not facts, grammar or important constraints.
+- Write user-facing chat and explanations in simple German unless the user requests another language. Assume no technical background. Code and comments may stay in English; preserved originals and exact identifiers keep their language.
+- Lead with the result and what it means for the user. Use everyday words, short sentences and short paragraphs. Explain necessary technical terms immediately with a concrete example from the task. Be friendly without baby talk or forced slang.
+- Default to the user's preferred visual style: helpful icons as signposts (e.g. 🧠 explanation, ⚡ speed, ✅ result), bold key statements and clear section titles for longer explanations. Keep short answers short; do not force a fixed template or decorate every sentence.
+- Use concrete task examples to explain behavior (e.g. “Öffne Coolify und starte den Build”). Use numbered steps or arrows for a sequence and a small table for a useful comparison. Avoid forced analogies and long technical lists. Keep uncertainty, test limits and important constraints explicit.
 - Keep progress and final reports proportional to the task; report decisions, results and unresolved issues once. Concise writing is not a fixed thinking-token budget and must not shorten required code or evidence.
 - Use UTF-8 and real umlauts; check changed docs for broken encoding.
 - Do not repeat this style block in plans, model prompts or every-turn prompts. A standalone prompt without these rules may carry a short fallback.
