@@ -14,13 +14,13 @@ General work policy. Read once per fresh context; reread changed sections only. 
 ## 2. Plan only what the task needs
 
 - **Advice/review without edits:** answer directly; no task files, build, version bump or Git mutation.
-- **Small, clear change:** a short checklist is enough. Reuse an existing task file if relevant; no mandatory prompt/task pair.
-- **Multi-stage, risky or long work:** before implementation, create or continue one linked pair in the project task folder: `<topic>-enhanced-prompt.md` and `<topic>-tasks.md` (or an existing master plan).
-- Prompt file: `## Unchanged original` preserves user text verbatim except secrets (`[REDACTED: secret]`); `## Improved prompt` holds a concise, scope-preserving working request. Do not duplicate global rules. Append dated user updates; keep earlier originals intact.
-- Task file: link the prompt under `## Initial goal`. Each phase needs a goal, `[ ]`/`[x]` tasks, a short result and at most three relevant paths. Add architecture, reasons, risks or limits only when they affect decisions; one shared architecture note is enough.
+- **Small, clear change:** a short checklist is enough. Reuse an existing task file if relevant; no mandatory task file.
+- **Multi-stage, risky or long work:** before implementation, create or continue one task file in the project task folder: `<topic>-tasks.md` (or an existing master plan). No separate prompt file and no verbatim copy of the user's draft.
+- Task file, top to bottom: `## Initial goal` in one or two sentences; `## Improved prompt` with a concise, scope-preserving working request that keeps every image, file, path and link of the request exactly as written (secrets become `[REDACTED: secret]`); then the phases. Do not duplicate global rules. Fold dated user updates into `## Improved prompt`.
+- Each phase needs a goal, `[ ]`/`[x]` tasks, a short result and at most three relevant paths. Add architecture, reasons, risks or limits only when they affect decisions; one shared architecture note is enough.
 - Update after meaningful progress, then continue to the next task. Fix related findings in the same plan; do not create recursive cleanup plans or unrelated feature work. Split unwieldy plans around 600 lines.
-- Handover: goal, current state, next action, blockers, relevant paths and commands. Preserve prompt/task paths when they exist. After context loss, read request → current task state → relevant code; do not replay the whole history.
-- Before delivery, compare the implementation with the current request and open acceptance points. Reread originals only if intent is uncertain.
+- Handover: goal, current state, next action, blockers, relevant paths and commands. Preserve task paths when they exist. After context loss, read request → current task state → relevant code; do not replay the whole history.
+- Before delivery, compare the implementation with the current request and open acceptance points. Reread the request only if intent is uncertain.
 - Multi-stage details: [phase workflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md).
 
 ## 3. Code and architecture
