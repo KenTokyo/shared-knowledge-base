@@ -336,6 +336,8 @@ neues Spiel bekommt eine Zeile hier und eine eigene Fassung.
 
 Außerhalb des Hubs mit eigener Fassung: Voxel Samurai Quiz („Quizfall“, `voxel-samurai-quiz`),
 Shardfall Arena v3 (`test-projects/shardfall-arena-v3-blender`), Elemental Flakes
-(`Claude-Flakes/elemental-flakes`, Glas-UI bis zur Entscheidung des Nutzers).
+(`Claude-Flakes/elemental-flakes`, Glas-UI bis zur Entscheidung des Nutzers), GHOSTLINE
+(Three.js-Fahrspiel, Vesper City 2079, ohne externe Ressourcen; `/Users/kentoky/scifi-opus-5-5-threejs`,
+außerhalb von React Projects; Fassung seit 13.10.2026).
 
 <sub>Beispielprojekt, nur falls wirklich nötig: Crossword Core Breaker (`3-crossword-core-breaker/DESIGN.md`).</sub>
