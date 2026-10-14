@@ -9,7 +9,8 @@ Welt sind getrennt; für einen kompletten Umbau beide zusammen verwenden.
 | Karten, Licht, VFX und inszenierte Auftritte neu | [02 — Karten, VFX und Auftritte](02-game-maps-vfx-prompt.md) |
 
 Dazu gehört der Skill `game-ui-graffiti`: Ablauf, Agenten-Briefings, Motion-Rezept und Ton (seit 12.10.2026
-auch das frühere `game-motion-studio`).
+auch das frühere `game-motion-studio`, archiviert am 14.10.2026). Arbeits-Apps nutzen seinen App-Modus
+`app-ui-graffiti`.
 
 ## Vorbild: der Core-Breaker-Auftrag (07.10.2026)
 

@@ -12,7 +12,8 @@
 > einfach, lebendig und nie chaotisch. Diese Datei ist in sich vollständig; kein Projekt muss dazu
 > angesehen werden.
 > Der Nutzer am 11.10.2026: „das ist der beste Graffiti-Stil bis jetzt … das darf nicht verloren gehen“.
-> **Dazu:** Skill `game-ui-graffiti` (Ablauf, Briefings, Motion-Rezept und Ton nach dem Vorbild QuizBlitz);
+> **Dazu:** Skill `game-ui-graffiti` (Ablauf, Briefings, Motion-Rezept und Ton nach dem Vorbild QuizBlitz) –
+> Grundlage aller Graffiti-Skills; Arbeits-Apps nutzen seinen leiseren App-Modus `app-ui-graffiti`;
 > Prompt-Vorlagen für UI und Karten in [`../prompts/game-redesign/`](../prompts/game-redesign/README.md).
 
 ---
@@ -50,8 +51,8 @@
 | **Vorbilder** (Haltung, nicht kopieren) | 3–5 Werke | Spider-Verse, Jet Set Radio Future, Persona 5, Hades, Blade Runner 2049 / Edgerunners |
 | **Bewegung in drei Wörtern** | | Slam · Spray · Snap |
 | **Erkennungsbewegungen** | 3–5 | Stempel-Slam großer Wörter, Sprühwischer als Schnitt, Marker-Unterstrich zeichnet sich einmal, Sticker-Slap, Drip läuft einmal und steht |
-| **Formen** | | Tintenumriss 2–4 px, harter Versatzschatten, Marker mit spitzen Enden, Schablonen-Ausschnitte, Klebeband, Halbton, Drips |
-| **Requisiten** | | Sprühdose, Caps, Marker, Klebeband, Schablone, Krone, Pfeile, Crew-Tag |
+| **Formen** | | Tintenumriss 2–4 px, harter Versatzschatten, Marker mit spitzen Enden, Schablonen-Ausschnitte, Halbton, Drips |
+| **Requisiten** | | Sprühdose, Caps, Marker, Schablone, Krone, Pfeile, Crew-Tag |
 | **Palette** | Rollen aus §2 auf eigene Töne | NIGHT-Palette, CORE Orange als Marke |
 | **Lautstärke** | Wo laut, wo leise | HUD ruhig, volle Wucht nur in Menüs, Übergängen, Momenten |
 
@@ -114,12 +115,12 @@ Ein Bausatz für alles, an EINER Stelle (z. B. `src/design/kit/`), mit Übersich
 | Baustein | Wann |
 |---|---|
 | **Wall** | Betonwand hinter jedem Menü; je Bildschirm eine eigene Anordnung alter Tags. Statisch. |
-| **Slap** | **Jedes Panel.** Aufgeklebtes Papier, leicht gedreht, Umriss, Versatzschatten, optional Klebeband. Töne: Wand, Papier (hell, Text in Tinte), Akzent, eingelassen, flach. |
-| **Plakat** | Großer Slap mit Klebeband für die EINE Hauptfläche eines Moments (Haupttafel im Spiel, Dialog, Pause, Belohnung). Je Bildschirm höchstens eins. |
+| **Slap** | **Jedes Panel.** Aufgeklebtes Papier, leicht gedreht, Umriss, Versatzschatten. Töne: Wand, Papier (hell, Text in Tinte), Akzent, eingelassen, flach. |
+| **Plakat** | Großer Slap für die EINE Hauptfläche eines Moments (Haupttafel im Spiel, Dialog, Pause, Belohnung). Je Bildschirm höchstens eins. |
 | **Piece** | Gesprühtes Wort: Logo, Bildschirmtitel, Urteil, Momenttitel. Nur aus der Ferne lesbare Wörter, höchstens eins je Bildschirm. |
 | **Stencil** | Zahl oder kurzes Wort durch eine Schablone: Kennzahlen, Wellen, Stufen. Nie für Sätze. |
 | **MarkerLine** | Von Hand gezogen: Unterstrich, Kringel, Haken, Kreuz, Pfeil. Markiert, was gerade zählt. |
-| **Sticker / Stamp / Tape** | Etikett für Zustand und Seltenheit / Urteil oder Rang, schlägt einmal ein / Klebeband an Ecken. |
+| **Sticker / Stamp** | Etikett für Zustand und Seltenheit / Urteil oder Rang, schlägt einmal ein. |
 | **Tally, Splat, Swipe** | Strichliste, Farbklecks hinter einer Heldenzahl, Marker-Wisch hinter einer Überschrift — Akzente statt Farbbalken. |
 | **Drip, ImpactFrame, CountUp** | Nase nach einem Einschlag, ein Einschlagbild, Zahl zählt hoch und rastet ein. |
 | **SprayWipe** | Jeder Bildschirmwechsel. Die Logik wechselt sofort, die Anzeige folgt dem Schnitt. |
@@ -153,7 +154,7 @@ die Fläche vom Schatten, Druck presst sie hinein. Treffziele mindestens 44 px, 
 mit `aria-label`, gestrichelter Fokusring nur bei Tastatur und nie entfernen. Knöpfe über dem Spielfeld
 lösen keinen Schuss bzw. keine Spielaktion aus.
 
-**Hauptfläche im Spiel** (etwa die Fragetafel): ein Plakat mit Klebeband. Kategorie bzw. Kontext als
+**Hauptfläche im Spiel** (etwa die Fragetafel): ein Plakat. Kategorie bzw. Kontext als
 Sprüh-Tag auf der Kante, Schlüsselwörter mit Textmarker im Akzent, gegebene Teile als helle
 Aufkleber-Rohlinge, offene Teile als Schablonen-Ausschnitte, das nächste Ziel mit Erfolgskante.
 Lange Inhalte werden kleiner, statt umzubrechen (Container-Einheiten). Richtig: Element fliegt vom Ort
@@ -297,6 +298,9 @@ gearbeitet. Befunde gehen mit Bild und Zeitpunkt zurück an denselben Agenten.
 ## 13. Verboten
 
 - Glas, `backdrop-filter`, weiche Webkarten, Pillen-Knöpfe ohne Bezug zur Welt.
+- Klebeband, Klebestreifen oder Tape über Ecken und Kanten (Nutzer 14.10.2026: „sieht aus wie ein
+  Pflaster“). Slaps tragen sich über Umriss, Drehung und harten Versatz; Bedeutung zeigt eine kurze
+  gerade Kante in der Farbe der Art. Ältere Streifen fallen beim nächsten Umbau weg.
 - Sprühschrift statt gezeichnetem Piece; Piece für Fließtext; mehr als ein Piece je Bildschirm.
 - Mehr als zwei Akzente je Fläche; Gefahr- oder Erfolgsfarbe als Schmuck.
 - Lucide oder fremde Symbole in der sichtbaren UI.
