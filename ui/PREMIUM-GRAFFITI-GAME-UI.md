@@ -27,13 +27,17 @@
 3. **Fast-Schwarz als Grund, Farbe trägt Bedeutung, höchstens zwei Akzente je Fläche.**
 4. **Flächen sind Slaps:** aufgeklebtes Papier, Plakat oder Sticker mit Tintenumriss, hartem
    Versatzschatten ohne Unschärfe und Textur. Kein Glas, kein `backdrop-filter`, keine
-   `rounded-3xl`-Webkarte.
+   `rounded-3xl`-Webkarte. **Ausnahme 3D-Szenen und Simulationen:** Text, Werte und Reiter schweben
+   ohne Kasten neben der randlosen Szene (Verlauf zum Rand statt Fläche); Graffiti zeigt sich dort nur in
+   Schrift, Stencil-Zahlen, MarkerLine und Symbolen (Nutzer 16.10.2026).
 5. **Eigener, gezeichneter Symbolsatz.** Lucide oder fremde Symbole kommen in der sichtbaren UI nicht vor.
 6. **HUD ruhig und klar, mit Graffiti-Akzenten.** Die volle Wucht gehört Menüs, Übergängen und Momenten.
 7. **Geschnitten wie ein Video:** EINE Takttabelle für Bild, 3D und Ton; Aufbau → Treffer →
    Auszahlung → Ruhe; Schnitte statt Überblendungen.
 8. **Gehen ist kürzer als Kommen. Keine Endlosschleifen. Nur `transform` und `opacity` animieren.**
 9. **Im Kampf legt die UI je Bild nichts an.** Häufige Werte schreibt das Bauteil direkt in den DOM.
+10. **Ziel vor Regel.** Ziel ist immer Weltklasse. Passt eine Regel hier nicht zu einem Bereich oder zu
+   einem ausdrücklichen Nutzertest, gilt das Ziel bzw. der Test – und die Regel wird danach angepasst.
 10. **Overlays über dem Spielfeld verdecken nie die Hauptinformation** und weichen dem Blickpunkt aus.
 11. **Jeder Zustand ist im Studio aufrufbar**, mit Mocks aus echten Daten.
 12. **Unter 9/10 ist nichts fertig.** Bewertet werden Identität, Motion, Lesbarkeit und Leistung.
@@ -115,7 +119,7 @@ Ein Bausatz für alles, an EINER Stelle (z. B. `src/design/kit/`), mit Übersich
 | Baustein | Wann |
 |---|---|
 | **Wall** | Betonwand hinter jedem Menü; je Bildschirm eine eigene Anordnung alter Tags. Statisch. |
-| **Slap** | **Jedes Panel.** Aufgeklebtes Papier, leicht gedreht, Umriss, Versatzschatten. Töne: Wand, Papier (hell, Text in Tinte), Akzent, eingelassen, flach. |
+| **Slap** | **Jedes Panel** – nie über 3D-Szenen und Simulationen (dort Text ohne Kasten, Grundsatz 4). Aufgeklebtes Papier, leicht gedreht, Umriss, Versatzschatten. Töne: Wand, Papier (hell, Text in Tinte), Akzent, eingelassen, flach. |
 | **Plakat** | Großer Slap für die EINE Hauptfläche eines Moments (Haupttafel im Spiel, Dialog, Pause, Belohnung). Je Bildschirm höchstens eins. |
 | **Piece** | Gesprühtes Wort: Logo, Bildschirmtitel, Urteil, Momenttitel. Nur aus der Ferne lesbare Wörter, höchstens eins je Bildschirm. |
 | **Stencil** | Zahl oder kurzes Wort durch eine Schablone: Kennzahlen, Wellen, Stufen. Nie für Sätze. |
