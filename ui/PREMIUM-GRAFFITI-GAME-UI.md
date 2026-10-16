@@ -154,6 +154,14 @@ die Fläche vom Schatten, Druck presst sie hinein. Treffziele mindestens 44 px, 
 mit `aria-label`, gestrichelter Fokusring nur bei Tastatur und nie entfernen. Knöpfe über dem Spielfeld
 lösen keinen Schuss bzw. keine Spielaktion aus.
 
+**Wahlknöpfe und Formeln (Nutzer 16.10.2026):** Gleichrangige Wahlknöpfe (Stoffe, Modi, Fächer) sehen
+nie gleich aus: jeder trägt sein gezeichnetes Symbol und seine Farbe aus EINER Wertetabelle, schon im
+Ruhezustand (Farbkante, getönte Fläche), gewählt voll gefüllt; ein Kennwert darf mit (`Wasser 1,33`).
+Formeln, Messwerte und Merksätze sind farbkodiert: jede Größe und jeder Stoff hat überall dieselbe
+Farbe (Formel, Zahlenzeile, Etikett in der Szene, Knopf), Schlüsselwörter tragen Textmarker,
+Grenzwerte einen Stempelrahmen; der Satz selbst bleibt in der Textschrift. Wertefarben zählen nicht zu
+den zwei Akzenten.
+
 **Hauptfläche im Spiel** (etwa die Fragetafel): ein Plakat. Kategorie bzw. Kontext als
 Sprüh-Tag auf der Kante, Schlüsselwörter mit Textmarker im Akzent, gegebene Teile als helle
 Aufkleber-Rohlinge, offene Teile als Schablonen-Ausschnitte, das nächste Ziel mit Erfolgskante.
