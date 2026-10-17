@@ -1,84 +1,78 @@
-# Coding Rules
+# Arbeitsregeln (Coding Rules)
 
-General work policy. Read once per fresh context; reread changed sections only. Specialist knowledge belongs in linked docs, not here.
+Gilt für jede KI in jedem Projekt. Einmal je frischem Kontext lesen; später nur geänderte Abschnitte. Fachwissen steht in den verlinkten Dateien, nicht hier.
 
-## 1. Understand and protect the request
+**Frontier oder nicht?** Ein Frontier-Modell ist ein Spitzenmodell, das Grundlagen von selbst richtig macht. Steht im Block `<model_rules>` deiner Nachricht „Frontier für: …“ mit dem Bereich deiner Aufgabe (Backend, Frontend oder alles), überspringst du die Zusatzregeln. Sonst – auch ohne jede Angabe – liest du vor der ersten Änderung in [CODING-RULES-ZUSATZ.md](CODING-RULES-ZUSATZ.md) „Allgemein“ und den Abschnitt deines Bereichs.
 
-- Follow platform/system instructions first. Within project guidance: current user request → local `AGENTS.md` → these rules → relevant specialist guidance. User exceptions apply only to their stated task/session.
-- Inspect relevant code, docs, references and Git changes before deciding. Load the smallest useful file set; stop exploring once evidence supports the next change.
-- Preserve intent, quantities, paths, commands, names, constraints, negations and working behavior. Correct obvious speech-to-text noise only when meaning is clear.
-- Clarify wording, not scope. Never turn five effects into ten or invent features, controls, restrictions or architecture to make a prompt sound stronger. Creative detail belongs only in areas the user leaves open.
-- Treat an already enhanced prompt as the working request; do not enhance it again. Do not start a separate enhancer call unless requested or explicitly enabled.
-- Proceed with low-risk assumptions and state them briefly. Ask only when ambiguity changes required behavior, significant cost, safety or an irreversible action. Do not end with permission requests for obvious next steps.
+## 1. Auftrag verstehen und schützen
 
-## 2. Plan only what the task needs
+- Reihenfolge: Plattform- und Systemregeln → aktueller Wunsch des Nutzers → `AGENTS.md` des Projekts → diese Regeln → Fachregeln. Eine Ausnahme des Nutzers gilt nur für die genannte Aufgabe.
+- Erst passende Dateien, Doku und Git-Stand ansehen, dann entscheiden. Nur so viel lesen wie nötig; aufhören, sobald der nächste Schritt belegt ist.
+- Alles behalten: Mengen, Pfade, Befehle, Namen, Grenzen, Verneinungen und was schon funktioniert. Diktierfehler nur verbessern, wenn der Sinn klar ist.
+- Den Wortlaut klarer machen, nie den Umfang: Aus fünf Effekten werden nicht zehn. Keine erfundenen Funktionen, Regeln oder Architektur. Eigene Ideen nur dort, wo der Nutzer etwas offenlässt.
+- Ein schon verbesserter Prompt ist der Auftrag; ihn nicht noch einmal verbessern.
+- Kleine Annahmen selbst treffen und kurz nennen. Nur fragen, wenn die Antwort das Ergebnis, hohe Kosten, Sicherheit oder etwas Unumkehrbares ändert. Nicht um Erlaubnis für offensichtliche nächste Schritte bitten.
 
-- **Advice/review without edits:** answer directly; no task files, build, version bump or Git mutation.
-- **Small, clear change:** a short checklist is enough. Reuse an existing task file if relevant; no mandatory task file.
-- **Multi-stage, risky or long work:** before implementation, create or continue one task file in the project task folder: `<topic>-tasks.md` (or an existing master plan). No separate prompt file and no verbatim copy of the user's draft.
-- Task file, top to bottom: `## Initial goal` in one or two sentences; `## Improved prompt` with a concise, scope-preserving working request that keeps every image, file, path and link of the request exactly as written (secrets become `[REDACTED: secret]`); then the phases. Do not duplicate global rules. Fold dated user updates into `## Improved prompt`.
-- Each phase needs a goal, `[ ]`/`[x]` tasks, a short result and at most three relevant paths. Add architecture, reasons, risks or limits only when they affect decisions; one shared architecture note is enough.
-- Update after meaningful progress, then continue to the next task. Fix related findings in the same plan; do not create recursive cleanup plans or unrelated feature work. Split unwieldy plans around 600 lines.
-- Handover: goal, current state, next action, blockers, relevant paths and commands. Preserve task paths when they exist. After context loss, read request → current task state → relevant code; do not replay the whole history.
-- Before delivery, compare the implementation with the current request and open acceptance points. Reread the request only if intent is uncertain.
-- Multi-stage details: [phase workflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md).
+## 2. Nur so viel planen, wie die Aufgabe braucht
 
-## 3. Code and architecture
+- **Frage, Beratung, Prüfung ohne Änderung:** direkt antworten. Keine Aufgabendatei, kein Build, kein Commit.
+- **Kleine, klare Änderung:** eine kurze Checkliste reicht. Gibt es schon eine passende Aufgabendatei, dort weiterführen.
+- **Mehrstufig, riskant oder lang:** vor dem Bauen EINE Aufgabendatei anlegen oder fortsetzen. Ort: Aufgabenordner des Projekts (wie `AGENTS.md` oder `CLAUDE.md` ihn nennen, sonst `docs/tasks/`). Name wie im Projekt üblich, sonst `<JJJJ-MM-TT>-<thema>-tasks.md`. Keine eigene Prompt-Datei, den Entwurf des Nutzers nicht wörtlich abschreiben.
+- **Aufbau von oben nach unten:** `## Initial goal` (Ziel in ein bis zwei Sätzen) → `## Improved prompt` (der verbesserte Auftrag; jedes Bild, jede Datei, jeden Pfad und Link genau so übernehmen, Geheimnisse als `[REDACTED: secret]`) → Phasen. Neue Wünsche zur selben Aufgabe datiert in `## Improved prompt` einarbeiten. Allgemeine Regeln nicht hineinkopieren.
+- **Jede Phase:** Ziel, Punkte mit `[ ]`/`[x]`, kurzes Ergebnis, höchstens drei Pfade. Gründe, Risiken oder Architektur nur, wenn sie eine Entscheidung ändern.
+- Nach jedem Fortschritt abhaken und weitermachen. Funde gleich im selben Plan beheben; keine Aufräum-Pläne für Aufräum-Pläne, keine fremden Zusatzfunktionen.
+- **Über 500 Zeilen:** nicht weiter anhängen. Folgedatei mit gleichem Namen und `-2` am Ende anlegen, z. B. `2026-10-17-login-tasks-2.md` (danach `-3` …). Sie beginnt mit einem Verweis auf die Vorgängerin, dem Ziel, dem aktuellen `## Improved prompt` und nur den offenen Phasen. Die alte Datei bekommt unten einen Verweis auf die neue.
+- **Orchestrieren** (nur wenn der Nutzer Helfer, Unterchats oder einen Orchestrator verlangt): Der Leiter schreibt in die Aufgabendatei einmal das Gemeinsame (Regeln, Absprachen, wem welche Datei gehört) und je Helfer eine nummerierte Aufgabe mit Ziel, eigenen Dateien und erwartetem Ergebnis. Der Prompt an einen Helfer bleibt kurz: Pfad der Datei und seine Nummer. Jeder Helfer hakt nur seine eigene Aufgabe ab.
+- **Übergabe:** Ziel, Stand, nächster Schritt, Blocker, Pfade, Befehle. Nach Kontextverlust: Auftrag → Aufgabendatei → betroffener Code lesen, nicht den ganzen Verlauf nachspielen.
+- Vor der Abgabe das Ergebnis mit dem Auftrag und den offenen Abnahmepunkten vergleichen.
+- Mehr zu Phasen: [Phasen ohne Stopps](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md).
 
-- **Use a professional UI reference before editing layouts:** inspect a suitable existing app, preferably Linear, Codex or Synara. Record the source/version and concrete hierarchy, spacing, padding, button/row sizes, typography, interaction states and narrow-screen behavior in the task. Read an actual screenshot or source; a product name alone is not a reference. Adapt existing components and theme tokens for light, dark and supported color themes. Avoid repeated cards, inconsistent controls and decorative clutter. Compare the same states and widths within the permitted inspection budget; do not claim unseen visual quality. This adds no approval step.
-- Understand the responsible module and data flow. Reuse project patterns; prefer simple components/services with clear responsibilities and one reliable state source.
-- Shared modules need real reuse. Avoid growing miscellaneous files, duplicate stores, hidden fallbacks and layers without a concrete benefit.
-- Fix causes, not symptoms. Remove displaced code after checking references. Keep unrelated working behavior and other contributors' edits intact.
-- Keep new handwritten code files below 1,200 lines. For larger existing files, extract cohesive responsibilities when relevant; a tiny fix alone must not trigger an unrelated rewrite. Generated/vendor files are exempt; stricter project gates still apply.
-- Batch repeated I/O, run independent work in parallel, reuse expensive results and clean up listeners/timers/resources. Optimize measured bottlenecks without hiding quality loss or cutting requested functionality.
-- Match deliberation to the next decision. Handle routine edits and tool calls directly. Use deeper reasoning for uncertainty, failures or consequential tradeoffs; do not re-derive settled decisions without new evidence. Keep required functionality and verification complete.
-- **Idle work is a delivery concern in every project:** no endless decorative animations; deferred image placeholders stay static. Recurring animation, rendering and polling need an active purpose and a stop/cleanup path when their surface becomes inactive or hidden. Preserve actual gameplay, media and required background jobs. Follow [idle performance](IDLE-PERFORMANCE.md) for the small review and Chrome/Electron diagnosis workflow.
-- Never expand a collection while iterating it without a deliberate queue/snapshot, visited tracking and a bound.
-- A repeated defect needs a new cause investigation, not the same tuning again. Broaden repairs only to coupled parts needed for the requested result.
-- Repository/reference adoption: preserve the real behavior and quality-bearing mechanism, not just its appearance. Read [reference transfers](REFERENCE-TRANSFERS.md) when applicable.
+## 3. Code und Aufbau
 
-## 4. Checks and runtime inspection
+- Zuständiges Modul und Datenfluss verstehen. Muster des Projekts nutzen. Einfache Bausteine mit einer klaren Aufgabe und **einer** verlässlichen Datenquelle (eine Stelle hält den Zustand, nicht zwei).
+- Gemeinsame Module nur bei echter Mehrfachnutzung. Keine Sammeldateien, doppelten Stores, versteckten Ersatzwege oder Schichten ohne Nutzen.
+- Ursachen beheben, nicht Anzeichen. Abgelösten Code löschen, nachdem die Verweise geprüft sind. Funktionierendes Verhalten und Änderungen anderer bleiben.
+- Neue, von Hand geschriebene Code-Dateien bleiben unter 1.200 Zeilen. Große bestehende Dateien nur aufteilen, wenn die Aufgabe dort arbeitet; ein Mini-Fix löst keinen Umbau aus. Erzeugte und fremde Dateien sind ausgenommen; strengere Projektgrenzen gelten.
+- **Leerlauf kostet Strom:** keine endlosen Schmuck-Animationen; Platzhalter für Bilder bleiben still. Was sich wiederholt (Animation, Zeichnen, Abfragen), braucht einen Zweck und stoppt, wenn die Fläche verborgen oder inaktiv ist. Spiel, Medien und nötige Hintergrundjobs bleiben. Prüfweg: [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md).
 
-- Finish a coherent change, run the strongest relevant existing checks, fix findings together, then rerun affected checks. Do not repeat unchanged checks without a new question.
-- Use project build/cache scripts. Inspect exit codes and redirected logs. Never weaken checks or exclusions to obtain a green result. Docs-only changes need no typecheck.
-- No new tests/configuration unless requested or required by the project. Existing focused checks may be updated for changed behavior.
-- Local user-provided images may be read and copied without browser permission.
-- Browser, dev-server, UI and gameplay checks needed for the requested work are authorized by that request. Existing browser/plugin connections may be used only without disrupting the user. Never launch visible test browsers, activate windows or bring tabs to the foreground. If an existing connection is unavailable, use an isolated headless browser for authorized checks. Preserve user tabs. Report actual tool or runtime blockers precisely.
-- Run the checks needed to answer the open question. For performance changes, capture a comparable baseline, isolate the cause, implement and check the delivered result. There is no fixed inspection quota or extra confirmation step; explicit user limits still apply.
-- Browser downloads: if an ordinary download click fails with `ERR_BLOCKED_BY_CLIENT`, try the link's **Open Link in New Tab** action (or Cmd-click on macOS) before handing the download back to the user. This worked for the SourceGit GitHub release DMG on 12 September 2026. Verify the completed file and, when published, its checksum; opening a tab alone is not proof of a download. This tip does not authorize bypassing certificate, malware or other security warnings.
-- On macOS, automated browser processes must use a separate Chrome for Testing / Playwright Chromium app, never the personal `Google Chrome.app` (including `channel: chrome`). A different profile or `--headless` does not isolate the macOS app identity: a windowless test process can intercept normal Chrome opening. Verify the executable/app identity, reject personal Chrome overrides, and never fall back to it. Preserve test-specific profiles and clean up owned processes. Record the actual browser version when comparing rendering or performance.
-- For screenshots, reuse an existing or in-app surface/native capture only without focus or foreground changes; otherwise use an isolated headless browser (`headless: true`). Do not launch visible test windows, even as a fallback for a missing plugin or a failed headless run. Bound runtime and close owned processes on success, failure and cancellation. Forced software rendering for ordinary 3D captures remains prohibited; verify GPU support without opening a visible replacement. Follow [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md). Typechecks and stub-DOM checks do not prove visual quality or real runtime behavior.
-- For changes to recurring UI work, use comparable warm idle windows with DevTools closed for final CPU measurements, and verify the deployed version after an ordinary reload. Record CPU scale, foreground/background state and remaining coverage. A temporary diagnostic pause, successful deployment or rounded 0.0% snapshot is not final acceptance. Explicit user limits still apply; state unverified coverage explicitly.
+## 4. Prüfen
 
-## 5. Secrets, Git and delivery
+- Erst eine zusammenhängende Änderung fertig machen, dann die stärksten passenden vorhandenen Prüfungen laufen lassen, Funde gemeinsam beheben und nur Betroffenes erneut prüfen.
+- Projekt-Skripte nutzen; Exit-Code und Logs wirklich lesen. Prüfungen nie abschwächen, um Grün zu bekommen. Reine Doku braucht keinen Typecheck.
+- Keine neuen Tests oder Konfigurationen, außer der Nutzer oder das Projekt verlangt sie. Vorhandene Prüfungen bei gewollter Änderung anpassen.
+- Bilder, die der Nutzer lokal mitgibt, darf man lesen und kopieren.
+- Browser-, Dev-Server-, UI- und Spielprüfungen, die der Auftrag braucht, sind mit dem Auftrag erlaubt; keine zusätzliche Freigabe, keine feste Mindestzahl.
+- **Prüfbrowser:** erst Node ohne Grafikkarte, dann der eingebaute Browser der App (z. B. `browser_*` in TreeChat), erst dann ein eigener, unsichtbarer Prüfbrowser (`headless`). Eigener Prüfbrowser nur Chrome for Testing in der Version des Nutzer-Chrome, nie der persönliche Chrome (auch nicht `channel: chrome`) und nie Playwrights mitgelieferter Chromium. Kein sichtbares Fenster, kein Fokuswechsel, keine Tabs nach vorn; Tabs des Nutzers bleiben. Laufzeit begrenzen und den Browser schließen – bei Erfolg, Fehler und Abbruch. 3D mit echter Grafikkarte, nie Software-Rendering. Details: [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md), Pfade in den Ressourcen-Dateien (§7).
+- Typecheck und Test-DOM beweisen kein Aussehen und kein echtes Verhalten.
+- **Leistung:** erst einen vergleichbaren Ausgangswert messen, Ursache eingrenzen, ändern, gelieferten Stand messen. Bei wiederkehrender UI-Arbeit nach [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md). Ein Build oder gerundete 0,0 % sind keine Abnahme; Ungeprüftes offen nennen.
+- Download blockiert (`ERR_BLOCKED_BY_CLIENT`): Link in neuem Tab öffnen (Cmd-Klick), dann die fertige Datei und, falls veröffentlicht, die Prüfsumme prüfen. Sicherheitswarnungen nie umgehen.
 
-- Use explicitly authorized test credentials only for the requested test and cost/provider limits. Keep values in ignored local storage or process environment; never in chat, prompts, task files, logs, screenshots or commits. Machine-specific locations belong in resource docs below.
-- Before writes, inspect status/diff. Stage explicit paths; never silently reset, overwrite or discard others' work. Commit your task changes. Include other contributors' changes only when explicitly authorized and reviewed; do not claim them as yours.
-- Commit and push completed changes unless the user opts out. **Always push right after committing** — only a push starts the Coolify build, so unpushed work stays invisible to the user (user rule 09.10.2026). Read-only tasks require neither. Keep the current branch unless instructed otherwise; do not create/switch worktrees implicitly.
-- **Merge autonomously before delivery:** fetch and integrate remote changes without a routine confirmation round. Divergent history or overlapping uncommitted files is a problem to resolve, not a reason to stop. For an authorized merge, inspect and preserve the relevant local work in a recoverable, path-limited checkpoint; distinguish existing contributions from your own changes.
-- Resolve conflicts by comparing the common base, the current local result and the incoming change. **Prefer our current intended local behavior where both versions compete and it remains correct**, while retaining compatible remote fixes, additions and registrations. Merge structured data by stable record identity; preserve local edits and compatible remote changes without duplicates or accidental resurrection of removed records. Never use a blanket ours/theirs strategy, destructive reset, force push or hook bypass.
-- Finish the merge, run the relevant checks, commit and push, then verify remote alignment. Ask only when the remaining conflict requires a user decision that cannot be inferred from the task or when proceeding would lose data or exceed authorization; name that concrete conflict rather than asking for generic merge permission.
-- Submodules: commit/push inside first, then commit the parent pointer. Review staged paths/diff and `git diff --check`; fix commit/push failures or report the exact external blocker.
-- Report result, relevant artifact/path, checks and limits, version/build when applicable, commit hash, remote alignment and remaining status. Local project rules own packaging commands and version policy.
+## 5. Geheimnisse, Git und Abgabe
 
-## 6. Writing style — one owner
+- Testzugänge nur für den beauftragten Test und innerhalb der Kosten- und Anbietergrenzen. Werte nur in ignorierten lokalen Dateien oder Umgebungsvariablen, nie in Chat, Prompts, Aufgabendateien, Logs, Screenshots oder Commits.
+- Vor dem Schreiben Status und Diff ansehen. Pfade einzeln stagen. Arbeit anderer nie still zurücksetzen, überschreiben oder verwerfen. Eigene Änderungen committen; fremde nur mit ausdrücklicher Erlaubnis und nach Durchsicht, und nicht als eigene ausgeben.
+- **Fertiges committen und sofort pushen**, außer der Nutzer will es nicht: Erst der Push startet den Coolify-Build, sonst sieht der Nutzer nichts (Nutzerregel 09.10.2026). Reine Leseaufträge: kein Commit. Auf dem aktuellen Zweig bleiben, keine Worktrees von selbst.
+- **Selbst zusammenführen:** Änderungen vom Server holen und einarbeiten, ohne Routine-Rückfrage. Vorher die eigene lokale Arbeit wiederherstellbar sichern (nur betroffene Pfade).
+- **Konflikte:** gemeinsame Basis, lokalen Stand und eingehende Änderung vergleichen. Wo beide Fassungen konkurrieren, gewinnt unser gewolltes lokales Verhalten, solange es stimmt; passende Fixes von außen bleiben. Daten nach fester ID zusammenführen, ohne Doppelte und ohne Gelöschtes wiederzubeleben. Nie pauschal „ours“/„theirs“, kein Reset, kein Force-Push, keine Hooks umgehen.
+- Nur fragen, wenn ein konkreter Konflikt eine Entscheidung des Nutzers braucht oder sonst Daten verloren gingen – dann genau diesen Konflikt nennen.
+- Submodule: erst darin committen und pushen, dann den Zeiger im Hauptprojekt. Gestagte Pfade, Diff und `git diff --check` prüfen; Fehler beim Commit oder Push beheben oder genau benennen.
+- Bericht: Ergebnis, Pfade, Prüfungen und Grenzen, Version/Build falls passend, Commit-Hash, Abgleich mit dem Server, was offen bleibt.
 
-- Write user-facing chat and explanations in simple German unless the user requests another language. Assume no technical background. Code and comments may stay in English; preserved originals and exact identifiers keep their language.
-- Lead with the result and what it means for the user. Use everyday words, short sentences and short paragraphs. Explain necessary technical terms immediately with a concrete example from the task. Be friendly without baby talk or forced slang.
-- Default to the user's preferred visual style: helpful icons as signposts (e.g. 🧠 explanation, ⚡ speed, ✅ result), bold key statements and clear section titles for longer explanations. Keep short answers short; do not force a fixed template or decorate every sentence.
-- Use concrete task examples to explain behavior (e.g. “Öffne Coolify und starte den Build”). Use numbered steps or arrows for a sequence and a small table for a useful comparison. Avoid forced analogies and long technical lists. Keep uncertainty, test limits and important constraints explicit.
-- Keep progress and final reports proportional to the task; report decisions, results and unresolved issues once. Concise writing is not a fixed thinking-token budget and must not shorten required code or evidence.
-- Use UTF-8 and real umlauts; check changed docs for broken encoding.
-- Do not repeat this style block in plans, model prompts or every-turn prompts. A standalone prompt without these rules may carry a short fallback.
-- Logs: compact readable stage/action, responsible module, outcome and useful timing. Color only where supported; never log secrets or endless progress noise.
+## 6. Schreiben – hier steht die Stilregel
 
-## 7. Load specialist guidance only when relevant
+- Antworten an den Nutzer: einfaches Deutsch ohne Vorwissen, außer er wünscht eine andere Sprache. Code und Kommentare dürfen Englisch bleiben; Zitate und genaue Namen behalten ihre Sprache.
+- Ergebnis zuerst, dann was es bedeutet. Alltagswörter, kurze Sätze. Ein Fachwort sofort erklären, mit Beispiel aus der Aufgabe: „Build (die App fertig zusammenbauen)“. Freundlich, ohne Babysprache.
+- Wenige passende Icons als Wegweiser, **Kernaussagen fett**, klare Überschriften bei längeren Texten. Kurze Antworten bleiben kurz. Abläufe als nummerierte Schritte, Vergleiche als kleine Tabelle. Unsicherheit und Prüflücken offen sagen.
+- **Regeln, Skills und Doku-Dateien** (für KIs, Menschen und Kunden): Deutsch, einfach, mit Alltagswörtern; knapp und token-sparsam – nur Nötiges, keine Geschichte, keine Doppelungen. Was nur Nicht-Frontier-Modelle brauchen, gehört in die Zusatzdatei, nicht in den Kern.
+- UTF-8 und echte Umlaute; geänderte Doku auf kaputte Zeichen prüfen.
+- Diesen Stilblock nicht in Pläne, Modell-Prompts oder Jede-Nachricht-Prompts kopieren.
+- Logs: kurz und lesbar – Schritt, zuständiges Modul, Ergebnis, Dauer. Nie Geheimnisse, kein endloser Fortschrittslärm.
 
-- Frontend/state/UI: [FRONTEND-RULES.md](FRONTEND-RULES.md); game styling: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md).
-- Real-time 3D: [THREEJS-RULES.md](THREEJS-RULES.md); complete worlds: [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md).
-- Historical VFX/rig/performance cases: [3D evidence notes](threejs/PROJECT-EVIDENCE-NOTES.md); verify stack/version before reuse.
-- Local paths, ports or test-key locations: [Windows resources](WINDOWS-RESSOURCEN.md) or [macOS resources](MACOS-RESSOURCEN.md), not both.
-- External APIs: current original docs for the open question, not entire documentation trees.
-- New proven lessons: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md). Store with the relevant feature/project; do not grow this core with incident logs.
+## 7. Fachregeln nur bei Bedarf laden
 
-Frontend delivery must meet the [working-surface layout gate](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen-08092026): inherit the selected theme, use mobile fullscreen dialogs, prioritize the task over settings, and record actual narrow-screen acceptance.
+- Frontend, Zustand, UI: [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen-08092026) (Farbthema erben, Dialoge am Handy im Vollbild, Aufgabe vor Einstellungen, schmale Breite wirklich prüfen). Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md). Design-Hausstil: `DESIGN.md` des Projekts.
+- Echtzeit-3D: [THREEJS-RULES.md](THREEJS-RULES.md); ganze Welten: [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md). Alte Fälle zu VFX, Rigs, Leistung: [3D-Belege](threejs/PROJECT-EVIDENCE-NOTES.md) – Stack und Version vorher prüfen.
+- Lokale Pfade, Ports, Orte der Testschlüssel: [Windows](WINDOWS-RESSOURCEN.md) oder [macOS](MACOS-RESSOURCEN.md), nicht beide.
+- Fremde APIs: aktuelle Original-Doku nur zur offenen Frage, nicht ganze Doku-Bäume.
+- Neue, belegte Lektionen: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md); beim Feature oder Projekt ablegen, nicht hier.
+- Zusatzregeln für Nicht-Frontier-Modelle: [CODING-RULES-ZUSATZ.md](CODING-RULES-ZUSATZ.md).
