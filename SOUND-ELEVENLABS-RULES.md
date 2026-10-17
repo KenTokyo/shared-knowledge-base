@@ -1,6 +1,8 @@
 # Sound mit ElevenLabs — verbindliche Regeln
 
 Gilt für jedes Projekt, das Soundeffekte über die ElevenLabs-Text-to-SFX-API erzeugt.
+**Arbeitsweg (seit 17.10.2026):** Skill `elevenlabs-ton` (`~/.agents/skills/elevenlabs-ton/`) – Wächter, Kosten,
+Takes, Messung, Mastering, Sprecher, Musik, Remotion. Diese Datei bleibt die Begründung.
 Der Grund für diese Datei ist eine Zahl: **9.024 Credits** sind in zwei Projekten für
 Stems ausgegeben worden, die nach dem ersten Hören gelöscht wurden. Kein einziger
 davon war technisch fehlerhaft. Jede Regel unten ist die Umkehrung eines bezahlten
@@ -28,7 +30,7 @@ versetzt übereinander), nicht aus der Länge einer einzelnen Datei.
 Vier Abschnitte, in dieser Reihenfolge:
 
 ```
-Magical fantasy heavy mortar shell impact.          <- Kopf: Keyword, Objekt, Rolle
+Heavy mortar shell impact.                          <- Kopf: Geräusch, Objekt, Rolle
 A burning shell arcs high and drops into the ground. <- Spell: was passiert
 Molten slag slams into rock, deep boom with a sharp crack, brimstone shards spray.
                                                      <- Ereignisliste: was zu hören ist
@@ -36,10 +38,8 @@ Cinematic fantasy RPG fire magic, punchy and dry, game sfx, no music, no voice.
                                                      <- Tagzeile: Rahmen und Ausschluss
 ```
 
-- **Keyword-Kopf.** Jeder Prompt beginnt mit dem Genre-Keyword (`Magical fantasy`,
-  `Fantasy magical`, `Dark sorceress`, …). Eine nüchterne Materialliste holt aus dem
-  Modell Feldaufnahmen; derselbe Stoff unter einem Fantasy-Rahmen holt das, was neben
-  einem VFX steht.
+- **Geräusch-Kopf.** Der Prompt beginnt mit dem Geräusch und seiner Quelle (`Heavy impact thump.`), das
+  Genre (`Fantasy RPG …`) steht in der Tagzeile. Gemessen in §3; ein reiner Genre-Kopf holte schwächere Takes.
 - **Der Spell-Satz** nennt **eine** Handlung mit Anfang und Ende. Nicht zwei, nicht
   eine Eigenschaft.
 - **Die Ereignisliste** ist eine Kommaliste aus **Geräuschen mit Quelle**
@@ -179,9 +179,7 @@ Format und Mix bleiben gleich. Erst ein menschlich gewählter Gewinner darf auf 
 Gruppe skaliert werden. Das folgt dem installierten ElevenLabs-Skill und verhindert,
 dass 75 Stems dieselbe ungeklärte Richtung nur teurer wiederholen.
 
-Verworfene Kandidaten nicht blind vernichten: aus der aktiven Runtime entfernen und
-mit Provenienz archivieren. Sie bleiben Referenzmaterial und können später einzelne
-Lagen liefern, ohne erneut Credits zu kosten.
+Verworfene Kandidaten nicht löschen, sondern mit Provenienz archivieren: Sie liefern später Lagen ohne neue Credits.
 
 Ein Regenerate-Button darf den API-Key nie in den Browser holen. Ein lokaler,
 loopback-gebundener Node-Helfer nimmt nur allowgelistete Pack- und Skill-Ids an, führt
@@ -190,11 +188,9 @@ Jeder Klick braucht eine sichtbare Kostenbestätigung.
 
 ## 8. Zuschnitt: lieber ein Hero als fünf Skills, lieber fünf als zwanzig
 
-Eine neue Richtung beginnt mit einem Hero-Skill. Nach dessen Hörfreigabe folgt eine
-kleine, verwandte Gruppe (etwa fünf Skills), nicht die ganze Bibliothek. Fünf lassen
-sich in einem Durchgang hören und beurteilen, zwanzig nicht. Zwei Richtungen über je
-zwanzig Skills kosteten zusammen 3.932 Credits, bevor sie zum ersten Mal jemand
-gehört hatte — und waren dann beide unbrauchbar. Enger schneiden heißt früher hören.
+Eine neue Richtung beginnt mit einem Hero-Skill, nach dessen Hörfreigabe eine verwandte Gruppe (≈ 5), nie die
+ganze Bibliothek: Zwei Richtungen über je zwanzig Skills kosteten 3.932 Credits, bevor jemand sie hörte – beide
+unbrauchbar. Enger schneiden heißt früher hören.
 
 ## 9. Was kein Werkzeug ersetzt
 

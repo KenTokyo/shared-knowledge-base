@@ -27,14 +27,20 @@
 3. **Fast-Schwarz als Grund, Farbe trägt Bedeutung, höchstens zwei Akzente je Fläche.**
 4. **Flächen sind Slaps:** aufgeklebtes Papier, Plakat oder Sticker mit Tintenumriss, hartem
    Versatzschatten ohne Unschärfe und Textur. Kein Glas, kein `backdrop-filter`, keine
-   `rounded-3xl`-Webkarte. **Ausnahme 3D-Szenen und Simulationen:** Text, Werte und Reiter schweben
-   ohne Kasten neben der randlosen Szene (Verlauf zum Rand statt Fläche); Graffiti zeigt sich dort nur in
-   Schrift, Stencil-Zahlen, MarkerLine und Symbolen (Nutzer 16.10.2026).
+   `rounded-3xl`-Webkarte. **Situationsabhängig (Nutzer 16.10.2026):** Slaps gelten für App- und
+   Spielkarten. Über und neben 3D-Szenen, Simulationen, Bildern und Videos schweben Text, Werte und
+   Reiter **ohne Hintergrund** neben der randlosen Szene; die Szene läuft links und rechts weich unscharf
+   und dunkel aus (progressiver Blur: 2–4 `backdrop-filter`-Lagen mit Maskenverlauf, nie ein Kasten).
+   Auswahllisten und Overlays dort: ganz subtiler Schleier (≈ 25–30 % Deckkraft plus Unschärfe), kein
+   harter Rand. Graffiti zeigt sich nur in Schrift, Stencil-Zahlen, MarkerLine und Symbolen; die Schrift
+   ist als Fassung wählbar (§3).
 5. **Eigener, gezeichneter Symbolsatz.** Lucide oder fremde Symbole kommen in der sichtbaren UI nicht vor.
 6. **HUD ruhig und klar, mit Graffiti-Akzenten.** Die volle Wucht gehört Menüs, Übergängen und Momenten.
 7. **Geschnitten wie ein Video:** EINE Takttabelle für Bild, 3D und Ton; Aufbau → Treffer →
    Auszahlung → Ruhe; Schnitte statt Überblendungen.
-8. **Gehen ist kürzer als Kommen. Keine Endlosschleifen. Nur `transform` und `opacity` animieren.**
+8. **Gehen ist kürzer als Kommen. Keine Endlosschleifen der UI. Nur `transform` und `opacity` animieren.**
+   Figuren und 3D-Szenen leben dagegen auch im Leerlauf (Atem, Gewicht, Blick, leichtes Kreisen der Kamera),
+   gemessen und abschaltbar; jeder Fade, Stempel und Zähler hat Ton (Nutzer 17.10.2026).
 9. **Im Kampf legt die UI je Bild nichts an.** Häufige Werte schreibt das Bauteil direkt in den DOM.
 10. **Ziel vor Regel.** Ziel ist immer Weltklasse. Passt eine Regel hier nicht zu einem Bereich oder zu
    einem ausdrücklichen Nutzertest, gilt das Ziel bzw. der Test – und die Regel wird danach angepasst.
@@ -109,6 +115,9 @@ liest dieselben Werte als Zahl. Kein Hex im Bauteil.
 - 3D-Text (troika) braucht WOFF statt WOFF2 und immer ein lokales `font=`.
 - Die Piece-Schrift ist nur Rohstoff: Das Piece entsteht aus Glyphen plus Schichten (§4), nicht aus
   CSS-`text-shadow`.
+- **Schriftfassungen über Szenen** (Grundsatz 4): dieselbe Fläche nur über Schriftrollen getauscht
+  (Titel, Zahl, Wert, Bedienung, Text, Notiz) – Seriös (Serife + Mono), Graffiti (Piece, Marker,
+  Stencil), Modern (z. B. Bricolage Grotesque + Geist). Nie die dünne, gesperrte Versal-Serife.
 
 ---
 
@@ -219,7 +228,8 @@ Urteil 380, Punkte ab 900, Kacheln ab 2100, Rang 2800, Aktionen 3300.
 1. **Jede Zeit kommt aus der Takttabelle.** Kein Bauteil trägt eine ms-Zahl. Kein Takt verschiebt
    eine Spielregel.
 2. **Gehen ist kürzer als Kommen.** Abgang = kurzer Tween, keine Feder.
-3. **Keine Endlosschleifen.** Im Leerlauf bewegt sich nichts; Wiederkehrendes läuft einmal je Anlass.
+3. **Keine Endlosschleifen der UI.** Im Leerlauf bewegt sich keine Fläche, Schrift oder Zahl; Wiederkehrendes
+   läuft einmal je Anlass. Figuren und Szenen leben weiter (Grundsatz 8).
 4. **Nur `transform` und `opacity`.** Nie `filter`, Unschärfe, Glow, Farbe, Größe oder Layout
    animieren. Glitch = harte Versätze.
 5. **Im Kampf nichts je Bild:** keine motion-Werte, kein React-Zustand, keine Template-Strings, keine
@@ -309,7 +319,8 @@ gearbeitet. Befunde gehen mit Bild und Zeitpunkt zurück an denselben Agenten.
 
 ## 13. Verboten
 
-- Glas, `backdrop-filter`, weiche Webkarten, Pillen-Knöpfe ohne Bezug zur Welt.
+- Glas, `backdrop-filter`, weiche Webkarten, Pillen-Knöpfe ohne Bezug zur Welt (Ausnahme: Randunschärfe
+  und Schleier über Szenen, Grundsatz 4).
 - Klebeband, Klebestreifen oder Tape über Ecken und Kanten (Nutzer 14.10.2026: „sieht aus wie ein
   Pflaster“). Slaps tragen sich über Umriss, Drehung und harten Versatz; Bedeutung zeigt eine kurze
   gerade Kante in der Farbe der Art. Ältere Streifen fallen beim nächsten Umbau weg.
