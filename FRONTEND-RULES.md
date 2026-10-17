@@ -58,7 +58,7 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 - Erst Designsystem, Theme-Werte, globale Styles, Portal, Overflow und Stacking Context prüfen.
 - Mobile-first und platzsparend bauen; wichtigste Aktion sichtbar halten, seltene Optionen in Tooltip, Popover oder Collapsible legen.
 - Ein einzelner Schalter belegt nie eine eigene volle Inhaltszeile, wenn er inline, in einer dichten Gruppe oder in einem Popover verständlich bleibt.
-- Dichte Toolbars nutzen klare Icons. Jeder Icon-Button braucht `aria-label`, Tooltip und eindeutige Bedeutung.
+- Jede Zeile, jeder Anbieter, jede Aktion trägt ein Symbol oder Logo (Projekt-Stil: gezeichnet, siehe `DESIGN.md`). Eine Liste aus reinen Namen ist unfertig. Jeder Icon-Button braucht `aria-label`, Tooltip und eindeutige Bedeutung.
 - Deaktivierte Controls erklären den Grund; Ressourcenblocker nennen Bedarf und aktuellen Wert.
 - Dialoge brauchen eine klare, solide Fläche. Starke Transparenz oder Blur nicht als unlesbare Hauptfläche nutzen.
 - Dialog nicht direkt aus offenem modalem Menü starten; Menü zuerst schließen oder bewusst non-modal bauen.
@@ -66,19 +66,19 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 - Layer-Probleme über Portal, Overflow und Stacking Context lösen, nicht nur über höheren `z-index`.
 - Panels mit wechselndem Inhalt erhalten stabile Höhe und internes Scrollen.
 - Vorhandene Größen und Varianten nutzen; keine zufälligen lokalen Abweichungen.
-- „Juicy“ heißt klare Gruppierung, Form, passender Rand/Glow und kurze Transform-/Opacity-Reaktion — nicht mehr Text, Karten oder Deko-Icons.
+- „Juicy“ heißt klare Gruppierung, Form, Symbole mit Bedeutung und kurze Transform-/Opacity-Reaktion — nicht mehr Text.
 
 ## Prüfung
 
-- Browsergestützte Laufzeit-Sichtprüfung (Browserstart, Dev-Server, Playwright, DevTools, Laufzeit-Screenshots) folgt ausschließlich dem Freigabegate in [`CODING-RULES.md`](CODING-RULES.md). Statische DOM-/Code-Prüfung und gelieferte Referenzbilder bleiben frei.
+- Sichtprüfung im Browser ist mit dem Auftrag erlaubt und folgt dem Prüfweg in [`CODING-RULES.md` §4](CODING-RULES.md#4-prüfen).
 - Statische Checks beweisen Typ- und Buildsicherheit, nicht Lesbarkeit, Bedienbarkeit oder visuelle Qualität.
 
 ## Verbindliche Layout-Abnahme für Arbeitsoberflächen (08.09.2026)
 
-- **Das gewählte Theme gewinnt.** Chat, Dialoge und Portale erben `primary`, `foreground`, `muted-foreground` und `surface-*`. Keine lokale neutrale oder warm-goldene Ersatzpalette. Anbieterlogos dürfen ihre Markenfarbe behalten; primäre Aktionen und aktive Navigation verwenden die gewählte Akzentfarbe.
+- **Das gewählte Theme gewinnt.** Chat, Dialoge und Portale erben `primary`, `foreground`, `muted-foreground` und `surface-*`; Hausstil-Farben (Gold der Hauptaktion, Dosenfarben) kommen aus `DESIGN.md`, keine lokale Ersatzpalette. Anbieterlogos dürfen ihre Markenfarbe behalten.
 - **Mobil sind Dialoge Vollbild.** Unter 768px die gemeinsame Dialog-Hülle benutzen: volle verfügbare Breite/Höhe, Safe Areas, bei Texteingabe `fitVisualViewport`, fester Kopf und Fuß, genau ein scrollender Inhaltsbereich. Keine kleinen schwebenden Formulardialoge, kein `mobileFullscreen={false}`. Neue eigene Portal-Hüllen sind kein Ausweg.
 - **Die Aufgabe kommt vor der Verwaltung.** Bei KI-Textbearbeitung zuerst Auswahl, kompakter Zugang und Anweisung. Kontoprüfung, Rechnerverbindung, Standard speichern, Preisdetails und seltene Optionen bleiben nachgeordnet/eingeklappt. Ohne Zugang einen klaren Einstieg anbieten, keine komplette Einstellungsseite automatisch öffnen.
-- **Eine Ebene pro Aufgabe.** Keine Karten in Karten in Akkordeons. Einheitliche Zeilen, dünne Trenner, 16px mobiles Padding, 8–12px innerhalb einer Gruppe, 24px zwischen Abschnitten. Inhalt 14–16px, Titel 16–18px, sekundäre Hinweise mindestens 12px; Touch-Ziele mindestens 44px.
+- **Eine Ebene pro Aufgabe.** Keine Karten in Karten in Akkordeons. Gruppen mit Kopf und Zähler, Zeilen mit Symbol, Name und Zustand; 16px mobiles Padding, 8–12px innerhalb einer Gruppe, 24px zwischen Abschnitten. Inhalt 14–16px, sekundäre Hinweise mindestens 12px; Touch-Ziele mindestens 44px.
 - **Namen brauchen Platz.** Lange Anbieter-/Modellnamen umbrechen; Badges/Metadaten unterordnen. Keine Zeile mit Name, mehreren Badges und mehreren Aktionen, die den Namen verdrängen.
-- **Referenz vor Gestaltung:** tatsächlichen Screenshot oder bestehende Komponente lesen und Maße/Hierarchie in der Taskplanung festhalten. Linear/Codex sind Vorbilder für ruhige Arbeitsflächen, kein Grund für ein zweites Farbsystem. Der Hausstil [Premium-Graffiti](ui/PREMIUM-GRAFFITI-GAME-UI.md) steuert Spiele; seine Dekoration nicht pauschal in Chat/Formulare übernehmen.
+- **Referenz vor Gestaltung:** tatsächlichen Screenshot oder bestehende Komponente lesen und Maße/Hierarchie in der Taskplanung festhalten. Vorbild ist die beste Fläche im eigenen Projekt im Hausstil, nie eine schlichte Fremd-App (Linear, Codex, T3, Standard-Web-App). Der Hausstil [Premium-Graffiti](ui/PREMIUM-GRAFFITI-GAME-UI.md) gilt für Spiele UND Apps, auch für Chat und Dialoge (App-Modus `app-ui-graffiti`); ruhig bleiben nur Lese- und Schreibflächen.
 - **Abnahme ist konkret:** 390px und 768px, vorhandenes helles/dunkles Theme sowie eine andere Akzentfarbe; Erststart, langer Name, geöffnete Einstellungen und Tastatur berücksichtigen. Anweisung und Hauptaktion müssen erreichbar sein, keine horizontalen Überläufe oder verdeckten Fußleisten. Ungeprüfte Zustände ausdrücklich dokumentieren.

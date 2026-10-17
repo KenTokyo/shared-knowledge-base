@@ -20,7 +20,7 @@ Ergänzt [CODING-RULES.md](CODING-RULES.md). Hier steht, was Spitzenmodelle (Fro
 
 ## Frontend (Oberfläche, Design, Motion)
 
-- **Vorbild vor Layout-Änderungen:** ein echtes Bild oder echten Quelltext ansehen, nicht nur einen Namen. Zuerst eine gelungene Fläche im Projekt und den Hausstil aus `DESIGN.md`, sonst eine Profi-App. Daran Aufbau, Abstände, Knopf- und Zeilengrößen, Schrift, Zustände (Hover, Fokus, leer, Fehler) und schmale Breite ausrichten.
+- **Vorbild vor Layout-Änderungen:** ein echtes Bild oder echten Quelltext ansehen, nicht nur einen Namen. Zuerst eine gelungene Fläche im Projekt und den Hausstil aus `DESIGN.md` bzw. den genannten Design-Skill; nie eine schlichte Fremd-App (Linear, Codex) als Ersatz. Daran Aufbau, Abstände, Knopf- und Zeilengrößen, Schrift, Zustände (Hover, Fokus, leer, Fehler) und schmale Breite ausrichten.
 - Vorhandene Bausteine und Theme-Farben nutzen; hell, dunkel und alle Farbthemen müssen stimmen. Keine Kartenwiederholung, keine uneinheitlichen Knöpfe, kein Deko-Wirrwarr.
 - Vorher und nachher dieselben Zustände und Breiten vergleichen. Nie Qualität behaupten, die man nicht gesehen hat.
 - Bei wiederkehrender UI-Arbeit die CPU im Leerlauf messen: warme Fenster, DevTools zu, nach normalem Neuladen der ausgelieferten Fassung; Vorder- und Hintergrund getrennt angeben ([IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md)).
