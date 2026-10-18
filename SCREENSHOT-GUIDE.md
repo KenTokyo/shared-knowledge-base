@@ -29,6 +29,22 @@ Bei erkanntem Software-Rendering für normale 3D-Screenshots abbrechen. Nur eine
 - Für einen isolierten Engine-/Shader-Vergleich kann ein bereits vorhandener GPU-Readback des tatsächlichen Render-Targets genauer sein. Er ersetzt keinen Screenshot der gesamten Oberfläche. Nicht allein für ein Bild die Engine umbauen oder permanent `preserveDrawingBuffer` aktivieren.
 - Bei Messreihen zuerst die tatsächlich relevante Zahl erheben. Bilder gezielt für offene visuelle Fragen aufnehmen, keine dauernde Screenshot-/Kameraschleife. Benötigte Auflösung und Vergleichszustände erhalten.
 
+## Vorher/Nachher-Bilder: welcher Weg wann (18.10.2026)
+
+Pflicht bei sichtbaren Änderungen, solange in TreeChat unter Prompts › Systemprompts › Automatik der Schalter **„Vorher/Nachher“** an ist (Hostabschnitt `treechat.host.before-after`). Nur für eine Nachricht: Baustein „Vorher/Nachher“ in „Prompt verbessern“. Vorher-Bild **vor** der ersten Änderung speichern, Nachher-Bild gleicher Ansicht und Größe nach dem fertigen Laden wirklich ansehen. Bilder in den Scratchpad, nicht ins Projekt (außer Business-Nachweis).
+
+| Fläche | Vorher | Nachher |
+| --- | --- | --- |
+| NoteTree-Seite (Route auf `localhost:3005`) | Hintergrundbrowser: `browser_screenshot({kind:'before'})`, 1920×1080 | nach Neuladen `browser_screenshot({kind:'proof'})` |
+| TreeChat-Fläche (Chat, Composer, Dialoge, Prompts) – läuft nur im Electron-Fenster | Bild des Nutzers, sonst `screencapture -x -o -l <Nr> datei.png` vom NoteTree-Fenster vor `pnpm treechat:build` (Nr = letzte Zahl der id aus `computer_list_windows`; unsichtbar, kein Fokus, Fenster muss die Fläche schon zeigen) | Prüfseite (unten); echtes Fensterbild erst nach Neustart im nächsten Zug |
+| Andere Desktop-Apps | `screencapture -l` wie oben; `computer_screenshot` nur zum Ansehen (speichert keine Datei) | gleich |
+| Spiele, 3D | eigener Prüfbrowser (Chrome for Testing) nach globaler Regel, höchstens 1280×720 | gleich |
+| iOS | `device_screenshot` | gleich |
+
+**Prüfseite für TreeChat:** Ein neuer TreeChat-Build wirkt erst nach Neustart von NoteTree, und der Neustart beendet den laufenden Chat. Darum: (1) Markup der Komponente je Zustand per vitest erzeugen (`renderToStaticMarkup`, Datei im Scratchpad, nie unter `treechat/` – sonst bricht `pnpm treechat:build` mit „sources changed“ ab); (2) nach dem Build im Hintergrundbrowser `localhost:3005/chat` öffnen, `/vendor/treechat/assets/treechat-embedded.css` laden und das Markup in ein `<div class="treechat-embedded-root">` setzen (dunkel: zusätzlich `dark`); (3) hell, dunkel und 393 px Breite aufnehmen, auf Überlauf prüfen. Grenzen nennen: keine echte Dialoghülle, Texte nicht selbst zurückübersetzen (SSR liefert schon die Anzeigetexte).
+
+**Schluss:** Tabelle „## 🖼️ Vorher/Nachher“ mit absoluten Pfaden; fehlt ein Vorher-Bild, das sagen.
+
 ## Eigene Sitzungen zuverlässig aufräumen
 
 Vor dem Start Besitzer, Profil/Port und ein zum Test passendes Zeitlimit festhalten. In eigenem Startcode `try/finally` sowie Fehler-, Abbruch- und Zeitlimitbehandlung vorsehen. Playwright-Testläufe sollen ihre verwalteten Fixtures nutzen; lose Skripte müssen `context.close()`/`browser.close()` und gegebenenfalls den selbst gestarteten Unterprozess beenden. Ein von der Prüfung unabhängiges Zeitlimit muss auch einen hängenden Aufruf beenden können.
