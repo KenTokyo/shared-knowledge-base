@@ -10,6 +10,7 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 
 - Reihenfolge: Plattform- und Systemregeln → aktueller Wunsch des Nutzers → `AGENTS.md` des Projekts → Arbeitsweise → diese Regeln → Fachregeln.
 - Diktierfehler nur verbessern, wenn der Sinn klar ist. Eigene Ideen nur dort, wo der Nutzer etwas offenlässt. Nicht um Erlaubnis für offensichtliche nächste Schritte bitten.
+- **Für den faulen Menschen bauen (22.10.2026, Nutzer: „Hör auf, mir unnötige Sachen zu bauen, die mein Leben beschweren“):** Der Nutzer will einfach leben und so wenig wie möglich klicken. Was immer laufen soll, ist von selbst an, bleibt nach Neustarts an und verbindet sich selbst neu; „aus“ nur auf bewussten Wunsch. Nie einen Klick am anderen Gerät verlangen (er ist unterwegs). Vor der Abgabe den echten Alltag durchspielen: Neustart, App zu, unterwegs, nicht angemeldet – geht es dann noch ohne einen einzigen Extra-Klick? Ein versteckter Ersatzweg (z. B. „nur wenn das Konto-Cookie gilt“) ist kein Weg.
 
 ## 2. Nur so viel planen, wie die Aufgabe braucht
 
