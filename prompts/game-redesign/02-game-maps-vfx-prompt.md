@@ -36,7 +36,7 @@ never copy. <GAME> needs its own identity and should look even more refined.
 
 House rules:
 - House guide: /Users/kentoky/Documents/React Projects/shared-docs/ui/PREMIUM-GRAFFITI-GAME-UI.md
-- Real-time 3D rules: /Users/kentoky/Documents/React Projects/shared-docs/threejs/PERFORMANCE.md
+- Real-time 3D: skill `threejs-leistung` (reference maps Shard Royale "Kagami", Shardfall "Kolossgrund")
 
 Massively upgrade the **VFX system**. Every important gameplay moment gets satisfying visual impact:
 <MOMENTS>. Use particles, shaders, trails, flashes, distortion, emissive effects, debris, screen-space

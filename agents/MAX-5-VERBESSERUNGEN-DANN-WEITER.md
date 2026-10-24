@@ -3,7 +3,7 @@
 **Scope:** Optional refinement only, not required defect fixes or acceptance checks. Stop when the requested result is met; this guide never requires new work or overrides the runtime budget in [Coding Rules](../CODING-RULES.md).
 
 **Lesen wenn:** du an derselben Sache die dritte optionale Verbesserung misst — nicht für normale Implementierung.
-**Status:** Deckel, kein Tipp · überschreiben nur über den Preisvergleich unten · Änderungsrecht siehe [LEARNING-SYSTEM.md](../LEARNING-SYSTEM.md)
+**Status:** Deckel, kein Tipp · überschreiben nur über den Preisvergleich unten
 
 **Der Deckel stoppt nicht die Arbeit, er stoppt die Wiederholung.** Im
 [Phasenworkflow](TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md) weiterarbeiten — ab sechster

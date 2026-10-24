@@ -10,4 +10,4 @@ Read only for game interface design. General frontend correctness stays in [FRON
 - Important actions and states need meaningful, distinct marks from the game's own hand-drawn icon set — no generic icon library in the visible UI, no text-only placeholders.
 - Tie motion to events: build-up → hit → payoff → rest. Selection, cast, hit, cooldown, success and failure get immediate transform/opacity feedback. No idle loops, reduced motion shows the end state.
 - Keep combat skills in a compact rail at the lower gameplay edge. Each slot needs a distinct mark, key chip, name on focus/activation and clear ready/active/progress/disabled states.
-- The old "Juicy Game-UI System" (rounded warm-stone cards, idle loops, Lucide) is superseded: [old-deprecated/juicy-game-ui-system.md](old-deprecated/juicy-game-ui-system.md).
+- The old "Juicy Game-UI System" (rounded warm-stone cards, idle loops, Lucide) is superseded and deleted (24.10.2026).

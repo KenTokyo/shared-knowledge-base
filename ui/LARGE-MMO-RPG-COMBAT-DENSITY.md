@@ -32,6 +32,6 @@ eigentlich sein soll. Das soll richtig viel aushalten, das Partikelsystem."*
 
 ## Gegenprobe im eigenen Repo
 
-Belegt in `projects/claude-flakes/RUNTIME-PERFORMANCE.md`: gemessen kosten in Elemental Flakes
+Gemessen in Elemental Flakes (Claude Flakes) kosten
 **zehn dauerhaft sichtbare Punktlichter** mehr als der komplette Partikel-Layer, und die Partikelzahl
 kostet ≈ 0 ms, während die Partikelgröße alles kostet. Beides deckt sich mit Regel 1 und Regel 3.

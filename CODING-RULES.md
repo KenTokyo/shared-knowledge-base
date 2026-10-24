@@ -16,6 +16,7 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 
 - Aufgabendatei, Folgedatei ab 500 Zeilen und Orchestrieren: siehe Arbeitsweise. Allgemeine Regeln nicht in Aufgabendateien kopieren; Funde gleich im selben Plan beheben, keine Aufräum-Pläne für Aufräum-Pläne.
 - Aufgabendatei vom Sucher (Abschnitt `## Ungefähre Suche`, 20.10.2026): Entwurf eines kleinen Modells mit niedriger Denkstufe. Pfade, Zeilenzahlen und Methoden vor dem Ändern prüfen, falsche Treffer streichen, die Datei weiterführen statt eine zweite anzulegen.
+- **Jede Phase nennt, was sie braucht** (24.10.2026): Art (Frontend, Backend, Doku, 3D …), die Dateien, die vorher gelesen werden müssen (Code und `docs/wissen/…`), und passende Skills (z. B. `app-ui-graffiti`, `elevenlabs-ton`, `threejs-leistung`, `videopruefer`). So lädt jede Phase nur ihr Wissen. Der Sucher schreibt das schon in seinen Entwurf.
 - Mehr zu Phasen: [Phasen ohne Stopps](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md).
 
 ## 3. Code und Aufbau
@@ -55,10 +56,12 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 
 ## 7. Fachregeln nur bei Bedarf laden
 
-- Frontend, Zustand, UI: [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen-08092026) (Farbthema erben, Dialoge am Handy im Vollbild, Aufgabe vor Einstellungen, schmale Breite wirklich prüfen). Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md). Design-Hausstil: `DESIGN.md` des Projekts.
+Erst lesen, wenn die Arbeit dort beginnt, nicht schon beim Planen oder Suchen. Beim Planen reicht, die Datei in der Phase zu nennen (§2).
+
+- Frontend, Zustand, UI – **erst wenn du eine Frontend-Datei änderst:** [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen-08092026) (Farbthema erben, Dialoge am Handy im Vollbild, Aufgabe vor Einstellungen, schmale Breite wirklich prüfen). Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md). Design-Hausstil: `DESIGN.md` des Projekts.
 - **Genannter Design-Skill gilt (Nutzer 17.10.2026):** Sagt der Nutzer „Game UI Graffiti“, „App UI Graffiti“ oder nennt einen anderen Skill, lädst du genau diesen Skill und baust danach. Ältere Stile, Fremd-Vorbilder (Linear, Codex, T3, Standard-Web-App) und Budget-Wörter wie „ruhig“ oder „seriös“ zählen dann nicht; widerspricht eine Regel dem Skill, die Regel melden und berichtigen.
-- Echtzeit-3D: [THREEJS-RULES.md](THREEJS-RULES.md); ganze Welten: [THREEJS-WORLDBUILDING-RULES.md](THREEJS-WORLDBUILDING-RULES.md). Alte Fälle zu VFX, Rigs, Leistung: [3D-Belege](threejs/PROJECT-EVIDENCE-NOTES.md) – Stack und Version vorher prüfen.
+- Echtzeit-3D, Karten, Welten: Skill `threejs-leistung` (Vorbilder Shard Royale „Kagami“, Shardfall „Kolossgrund“). Ton: Skills `elevenlabs-ton` und `klangpruefung`.
 - Lokale Pfade, Ports, Orte der Testschlüssel: [Windows](WINDOWS-RESSOURCEN.md) oder [macOS](MACOS-RESSOURCEN.md), nicht beide.
 - Fremde APIs: aktuelle Original-Doku nur zur offenen Frage, nicht ganze Doku-Bäume.
-- Neue, belegte Lektionen: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md); beim Feature oder Projekt ablegen, nicht hier.
+- Neue, belegte Lektionen beim Feature oder Projekt ablegen (`docs/wissen/` bzw. Aufgabendatei), nicht hier; keine neuen Learning-Sammlungen.
 - Zusatzregeln für Nicht-Frontier-Modelle: [CODING-RULES-ZUSATZ.md](CODING-RULES-ZUSATZ.md).

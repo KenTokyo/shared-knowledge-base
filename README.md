@@ -1,10 +1,12 @@
-# Shared Docs — gemeinsame Wissensbasis
+# Shared Docs — gemeinsame Regeln
 
-Ein Submodule (`shared-knowledge-base`), das in jedem Projekt liegt. Technische Learnings bleiben **freiwillige
-Tipps**: eine gemessen bessere lokale Lösung hat Vorrang. Daneben stehen zentral gepflegte Arbeitsregeln, die
-verbindlich werden, sobald die lokale `AGENTS.md` sie übernimmt.
+Ein Submodule (`shared-knowledge-base`), das in jedem Projekt liegt. Hier stehen nur noch Arbeitsregeln und
+Prüfwege, die für mehrere Projekte gelten. **Fachwissen steckt in Skills** (z. B. `threejs-leistung`,
+`elevenlabs-ton`, `game-ui-graffiti`) und wird erst geladen, wenn die Aufgabe es braucht.
 
-**Wie das System wächst und wer was ändern darf: [LEARNING-SYSTEM.md](LEARNING-SYSTEM.md).**
+Seit 24.10.2026 gelöscht (alte Learnings, die heutige Modelle nicht mehr brauchen): Three.js-Regeln und
+`threejs/`, Projekt-Learnings `projects/` (u. a. Claude/Duty of Tsushima), `world/`, `LEARNING-SYSTEM.md`,
+Sound-Regeln, alte Prompt-Leitfäden und Map-Prompts, `old-deprecated/`. Sie liegen in der Git-Geschichte.
 
 ## Als Submodule hinzufügen
 
@@ -15,49 +17,20 @@ git submodule update --init --recursive
 
 ## Wo was liegt
 
-| Ordner / Datei | Inhalt |
-|---|---|
-| [`LEARNING-SYSTEM.md`](LEARNING-SYSTEM.md) | Die Verfassung: Tippformat, Änderungsrecht, Promotion, Größenbudget |
-| [`threejs/`](threejs/) | **Global.** Echtzeit-3D-Tipps, die in mindestens zwei Repos Zeit gekostet haben. Router: [`THREEJS-RULES.md`](THREEJS-RULES.md) |
-| [`projects/`](projects/) | **Pro Repository ein Ordner**, benannt wie das Repo. Nur was dort Zeit gekostet hat |
-| [`CODING-RULES.md`](CODING-RULES.md) | Verbindliche Orchestrierung: Prompt-/Task-Quelle, Planung, Umsetzung, Validierung und Git |
-| [`PROMPTING-TIPS.md`](PROMPTING-TIPS.md) | Ausführliche Promptqualität, automatische Konkretisierung vager Wünsche und Evidenz aus kontrollierten Vergleichen |
-| [`prompts/`](prompts/README.md) | Sechs Map-Prompts (Performance/Diagnose, ImageGen-Generierung) und zwei [Spiel-Redesign-Prompts](prompts/game-redesign/README.md) (UI + Motion, Karten + VFX) |
-| [`GAME-UI-GUIDE.md`](GAME-UI-GUIDE.md), [`ui/`](ui/) | **Spiel-UI-Hausstil [Premium-Graffiti](ui/PREMIUM-GRAFFITI-GAME-UI.md)** (Standard für alle Spiele seit 11.10.2026), dazu projektbezogene UI-Verträge |
-| [`FRONTEND-RULES.md`](FRONTEND-RULES.md) | Trigger-Owner für React, State, Hydration, Browser-UI und Frontend-Performance |
-| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md) | Technischer Owner für ausdrücklich freigegebene CLI-Captures; Gate und Gesamtbudget stehen in `CODING-RULES.md` |
-| [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Häufig genutzte Windows-Projekte: Zweck, absolute Pfade, Stack, Sprache und lokale Ports |
-| [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md) | Alle Ressourcen in React Projects: Three.js-Bezug, Zweck, absolute macOS-Pfade, Pull-Pflicht und lokale Ports |
-| [`CREATE-PROMPT-GUIDE.md`](agents/CREATE-PROMPT-GUIDE.md) | Prompts bauen |
-| [`agents/`](agents/) | Nur per Trigger: [Phasenworkflow](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md), [Deckel pro Achse](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md) |
-| [`OALab/`](OALab/) | Kundenprojekt-Betrieb |
-| [`playwright-cli/`](playwright-cli/) | Playwright-CLI-Notizen |
-| [`old-deprecated/`](old-deprecated/) | Abgelöste Fassungen. Nur zum Nachschlagen, nicht mehr verlinken |
+| Datei / Ordner | Inhalt | Wann lesen |
+|---|---|---|
+| [`CODING-RULES.md`](CODING-RULES.md) | Unsere Arbeitsregeln (Auftrag, Prüfen, Git, Schreiben) | einmal je frischem Kontext |
+| [`CODING-RULES-ZUSATZ.md`](CODING-RULES-ZUSATZ.md) | Zusatz für Nicht-Frontier-Modelle | nur ohne „Frontier“-Angabe |
+| [`FRONTEND-RULES.md`](FRONTEND-RULES.md), [`REACT-PERFORMANCE.md`](REACT-PERFORMANCE.md) | React, Zustand, Layout-Abnahme | erst beim Ändern einer UI-Datei |
+| [`GAME-UI-GUIDE.md`](GAME-UI-GUIDE.md), [`ui/`](ui/) | Spiel-UI-Hausstil Premium-Graffiti | erst beim Ändern einer Spiel-Oberfläche |
+| [`SCREENSHOT-GUIDE.md`](SCREENSHOT-GUIDE.md), [`IDLE-PERFORMANCE.md`](IDLE-PERFORMANCE.md) | Prüfbrowser, Bilder, Leerlauf | vor Browser- bzw. Leerlaufprüfung |
+| [`MACOS-RESSOURCEN.md`](MACOS-RESSOURCEN.md), [`WINDOWS-RESSOURCEN.md`](WINDOWS-RESSOURCEN.md) | Pfade, Ports, Projekte | nur das eigene System, bei Bedarf |
+| [`prompts/`](prompts/README.md) | Spiel-Redesign-Prompts | auf Wunsch |
+| [`agents/`](agents/) | Phasen ohne Stopps, Deckel je Achse, Sprachweise | auf Verweis |
+| [`OALab/`](OALab/), [`playwright-cli/`](playwright-cli/), [`tests/`](tests/), [`data/`](data/) | Kundenbetrieb, CLI-Notizen, Modell-Testprompts, Kostendaten | nur für diese Aufgabe |
 
-## Projektordner
+## Grenzen
 
-| Repository | Ordner |
-|---|---|
-| `voxel-samurai-quiz` | [`projects/voxel-samurai-quiz/`](projects/voxel-samurai-quiz/) |
-| `Claude-Flakes` | [`projects/claude-flakes/`](projects/claude-flakes/) |
-| `Claude-of-tsushima` | [`projects/claude-of-tsushima/`](projects/claude-of-tsushima/) |
-
-Weitere Repos legen ihren Ordner selbst an: `projects/<repo-name>/README.md` mit der Trigger-Tabelle,
-daneben die Tippdateien. Vorlage ist der Ordner oben.
-
-## Der Ablauf in einer Arbeitsschicht
-
-1. Lesepfad aus [`CODING-RULES.md`](CODING-RULES.md) folgen; nur bei belegtem Projekttrigger **eine** passende Tippdatei lesen.
-2. Arbeiten.
-3. Hat etwas Zeit gekostet, das ein Tipp verhindert hätte → Tipp anlegen. Zwei Zeilen, mit Beleg.
-4. Hat ein Tipp nicht gestimmt → stürzen, mit Gegenbeleg. Das ist ausdrücklich erlaubt und erwünscht.
-5. Nach **3–5 Verbesserungen an derselben Achse**: Achse schließen, Deltas festhalten, weiter an etwas
-   Neuem → [`agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md`](agents/MAX-5-VERBESSERUNGEN-DANN-WEITER.md).
-
-## Grenzen, die das System klein halten
-
-- Ein Tipp lebt an **genau einer** Stelle. Promotion ist Umzug, nicht Kopie.
-- **Max. 500 Zeilen und ~12 Tipps pro Datei.** Darüber splitten — nach Trigger, nie in „Teil 2".
-- Kein Tipp ohne Beleg. Kein Tipp, den jede KI ohnehin weiß.
-- Was ein Gate, ein Guard oder ein Selftest im Code beantwortet, schlägt jeden Tipp: dann ein Link
-  auf das Gate statt Prosa.
+- Eine Regel lebt an genau einer Stelle; keine Kopien in Projekt-Dateien.
+- Höchstens 200 Zeilen je Regeldatei. Kein Tipp, den jede KI ohnehin weiß.
+- Was ein Prüftor im Code beantwortet, schlägt jeden Text: dann auf das Tor verweisen.

@@ -33,7 +33,7 @@ Windows-Pfade dort nicht übernehmen.
 
 ## VFX-Referenzrouting
 
-- Verbindlicher Quellenvertrag für neue Runtime-VFX: [`threejs/VFX.md`](threejs/VFX.md); Three.js/WebGL nutzt eigenes handgeschriebenes GLSL, andere Renderer eigenen nativen Shadercode.
+- Neue Runtime-VFX: Three.js/WebGL nutzt eigenes handgeschriebenes GLSL, andere Renderer eigenen nativen Shadercode.
 - `LinearAbiltyCastingThreeJS` liefert Qualitätsrollen: dominante Silhouette, Cast-Timeline, gemeinsamer Raumanker, prozedurale Layer, exakter AoE-Footprint, Live-Tuning, Pools und klare Degradation.
 - Referenz nie kopieren: kein Code, Shader, exakter Skill, sichtbare Silhouette, UI, Preset oder Asset übernehmen. Zielprojekt erfindet Wirkung und Skill-Shell selbst; nur belegte Architekturgründe übertragen.
 - Avatar/Bending bleibt ergänzende Layering- und Editor-UX-Gegenprobe, nie Quelle für sichtbare Effektassets oder einen zweiten Runtime-Renderer.
