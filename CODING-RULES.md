@@ -15,7 +15,8 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 ## 2. Nur so viel planen, wie die Aufgabe braucht
 
 - Aufgabendatei, Folgedatei ab 500 Zeilen und Orchestrieren: siehe Arbeitsweise. Allgemeine Regeln nicht in Aufgabendateien kopieren; Funde gleich im selben Plan beheben, keine Aufräum-Pläne für Aufräum-Pläne.
-- Aufgabendatei vom Sucher (Abschnitt `## Ungefähre Suche`, 20.10.2026): Entwurf eines kleinen Modells mit niedriger Denkstufe. Pfade, Zeilenzahlen und Methoden vor dem Ändern prüfen, falsche Treffer streichen, die Datei weiterführen statt eine zweite anzulegen.
+- **Immer zuerst verbessern (04.11.2026):** Jede Rolle (Sucher, Arbeiter, Leiter, Bauer) verbessert den Auftrag, bevor sie arbeitet; jede Aufgabendatei hat einen `## Improved prompt`, Bauer schärfen ihren Teil als `### Improved prompt` unter der eigenen Aufgabe. Vorbilder sind Messlatte, nie Vorlage. Einzelheiten: Arbeitsweise und „Prompt verbessern“ in der Regeldatei.
+- Aufgabendatei vom Sucher (Abschnitt `## Ungefähre Suche`, 20.10.2026): Entwurf eines kleinen Modells mit niedriger Denkstufe. Zuerst `## Improved prompt` schärfen. Pfade, Zeilenzahlen und Methoden vor dem Ändern prüfen, falsche Treffer streichen, die Datei weiterführen statt eine zweite anzulegen.
 - **Jede Phase nennt, was sie braucht** (24.10.2026): Art (Frontend, Backend, Doku, 3D …), die Dateien, die vorher gelesen werden müssen (Code und `docs/wissen/…`), und passende Skills (z. B. `app-ui-graffiti`, `elevenlabs-ton`, `threejs-leistung`, `videopruefer`). So lädt jede Phase nur ihr Wissen. Der Sucher schreibt keine Phasen (26.10.2026), nur Art und Skills unter seine Suche; die Phasen plant der Arbeiter.
 - Mehr zu Phasen: [Phasen ohne Stopps](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md).
 
