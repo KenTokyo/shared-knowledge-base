@@ -22,6 +22,7 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 
 ## 3. Code und Aufbau
 
+- **Vorhandenen Baustein nutzen, nie nachbauen (Nutzer 09.11.2026: „Ich weiß nicht, warum neue Komponenten erfunden werden. Das darf nicht passieren.“):** Vor jeder neuen Komponente suchen (`pnpm wer`, `components/ui/`, `components/ki/`, gleicher Bereich), ob es sie schon gibt. Passt sie nicht ganz, sie um eine Eigenschaft erweitern statt eine Kopie zu bauen, die fast gleich aussieht. Beispiel: der selbstgebaute `TicketModelChip` ist gelöscht; Tickets nutzen den echten `TreeChatModelPicker` (dafür kam `wakeOnUse` dazu).
 - Keine Sammeldateien, doppelten Stores oder versteckten Ersatzwege. Erzeugte und fremde Dateien sind von der 1.200-Zeilen-Grenze ausgenommen; ein Mini-Fix löst keinen Umbau aus.
 - **Leerlauf kostet Strom:** Platzhalter für Bilder bleiben still; Spiel, Medien und nötige Hintergrundjobs bleiben. Prüfweg: [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md).
 
