@@ -43,7 +43,7 @@ Pflicht bei sichtbaren Änderungen, solange in TreeChat unter Prompts › System
 
 **Prüfseite für TreeChat:** Ein neuer TreeChat-Build wirkt erst nach Neustart von NoteTree, und der Neustart beendet den laufenden Chat. Darum: (1) Markup der Komponente je Zustand per vitest erzeugen (`renderToStaticMarkup`, Datei im Scratchpad, nie unter `treechat/` – sonst bricht `pnpm treechat:build` mit „sources changed“ ab); (2) nach dem Build im Hintergrundbrowser `localhost:3005/chat` öffnen, `/vendor/treechat/assets/treechat-embedded.css` laden und das Markup in ein `<div class="treechat-embedded-root">` setzen (dunkel: zusätzlich `dark`); (3) hell, dunkel und 393 px Breite aufnehmen, auf Überlauf prüfen. Grenzen nennen: keine echte Dialoghülle, Texte nicht selbst zurückübersetzen (SSR liefert schon die Anzeigetexte). Fallen: zustand liest beim SSR `getInitialState()` (Testdaten dort mit `Object.assign` einsetzen); im Skript über `/src/...` importieren, sonst entsteht wegen des Leerzeichens im Pfad eine zweite Store-Instanz; CSS per `fetch` als `<style>` einsetzen und die Host-Styles (Schrift, Farben) drinlassen. An der Wurzel `NOTE_TREE_THEME_VARIABLES` (`noteTreeThemeBridge.ts`) und `--app-font-size-*` setzen, Symbolfarben aus `app/styles/system/areas/treechat-icons.css` laden – sonst Linien in Schriftfarbe, Schrift 16 px, graue Symbole.
 
-**Schluss:** Tabelle „## 🖼️ Vorher/Nachher“ mit absoluten Pfaden; fehlt ein Vorher-Bild, das sagen.
+**Schluss (seit 12.11.2026):** „## 🖼️ Vorher/Nachher“ mit EINEM Vergleichsbild je Fläche aus `treechat_compare_images` (Vorher gelb, Nachher weiß, ein Satz darunter; Varianten aufs selbe Blatt), keine Tabelle mehr; fehlt ein Vorher-Bild, das sagen.
 
 ## Eigene Sitzungen zuverlässig aufräumen
 
