@@ -5,7 +5,7 @@
 
 ## Vorrang: Die Arbeit des Nutzers nicht unterbrechen
 
-Verbindliche Korrektur des Nutzers vom 20.09.2026: Die frühere Pflicht zu sichtbaren lokalen Testbrowsern ist aufgehoben. Keine sichtbaren Testbrowser oder Testfenster starten. Keine Tabs nach vorne holen, keine Fenster aktivieren und keinen Tastaturfokus übernehmen. Das gilt auch für Playwright, CDP, Electron und Fehlerbehebungsversuche.
+Keine sichtbaren Testbrowser oder Testfenster starten. Keine Tabs nach vorne holen, keine Fenster aktivieren und keinen Tastaturfokus übernehmen. Das gilt auch für Playwright, CDP, Electron und Fehlerbehebungsversuche.
 
 - Vorhandene oder eingebaute Oberflächen und native Aufnahmen nur verwenden, wenn die laufende Arbeit ungestört bleibt.
 - Nötige eigene Browserprüfungen unsichtbar ausführen (`headless: true`), mit isoliertem Profil, begrenzter Laufzeit und verlässlichem Aufräumen.
@@ -29,7 +29,7 @@ Bei erkanntem Software-Rendering für normale 3D-Screenshots abbrechen. Nur eine
 - Für einen isolierten Engine-/Shader-Vergleich kann ein bereits vorhandener GPU-Readback des tatsächlichen Render-Targets genauer sein. Er ersetzt keinen Screenshot der gesamten Oberfläche. Nicht allein für ein Bild die Engine umbauen oder permanent `preserveDrawingBuffer` aktivieren.
 - Bei Messreihen zuerst die tatsächlich relevante Zahl erheben. Bilder gezielt für offene visuelle Fragen aufnehmen, keine dauernde Screenshot-/Kameraschleife. Benötigte Auflösung und Vergleichszustände erhalten.
 
-## Vorher/Nachher-Bilder: welcher Weg wann (18.10.2026)
+## Vorher/Nachher-Bilder: welcher Weg wann
 
 Pflicht bei sichtbaren Änderungen, solange in TreeChat unter Prompts › Systemprompts › Automatik der Schalter **„Vorher/Nachher“** an ist (Hostabschnitt `treechat.host.before-after`). Nur für eine Nachricht: Baustein „Vorher/Nachher“ in „Prompt verbessern“. Vorher-Bild **vor** der ersten Änderung speichern, Nachher-Bild gleicher Ansicht und Größe nach dem fertigen Laden wirklich ansehen. Bilder in den Scratchpad, nicht ins Projekt (außer Business-Nachweis).
 
@@ -43,7 +43,7 @@ Pflicht bei sichtbaren Änderungen, solange in TreeChat unter Prompts › System
 
 **Prüfseite für TreeChat:** Ein neuer TreeChat-Build wirkt erst nach Neustart von NoteTree, und der Neustart beendet den laufenden Chat. Darum: (1) Markup der Komponente je Zustand per vitest erzeugen (`renderToStaticMarkup`, Datei im Scratchpad, nie unter `treechat/` – sonst bricht `pnpm treechat:build` mit „sources changed“ ab); (2) nach dem Build im Hintergrundbrowser `localhost:3005/chat` öffnen, `/vendor/treechat/assets/treechat-embedded.css` laden und das Markup in ein `<div class="treechat-embedded-root">` setzen (dunkel: zusätzlich `dark`); (3) hell, dunkel und 393 px Breite aufnehmen, auf Überlauf prüfen. Grenzen nennen: keine echte Dialoghülle, Texte nicht selbst zurückübersetzen (SSR liefert schon die Anzeigetexte). Fallen: zustand liest beim SSR `getInitialState()` (Testdaten dort mit `Object.assign` einsetzen); im Skript über `/src/...` importieren, sonst entsteht wegen des Leerzeichens im Pfad eine zweite Store-Instanz; CSS per `fetch` als `<style>` einsetzen und die Host-Styles (Schrift, Farben) drinlassen. An der Wurzel `NOTE_TREE_THEME_VARIABLES` (`noteTreeThemeBridge.ts`) und `--app-font-size-*` setzen, Symbolfarben aus `app/styles/system/areas/treechat-icons.css` laden – sonst Linien in Schriftfarbe, Schrift 16 px, graue Symbole.
 
-**Schluss (seit 12.11.2026):** „## 🖼️ Vorher/Nachher“ mit EINEM Vergleichsbild je Fläche aus `treechat_compare_images` (Vorher gelb, Nachher weiß, ein Satz darunter; Varianten aufs selbe Blatt), keine Tabelle mehr; fehlt ein Vorher-Bild, das sagen.
+**Schluss:** „## 🖼️ Vorher/Nachher“ mit EINEM Vergleichsbild je Fläche aus `treechat_compare_images` (Vorher gelb, Nachher weiß, ein Satz darunter; Varianten aufs selbe Blatt), keine Tabelle; fehlt ein Vorher-Bild, das sagen.
 
 ## Eigene Sitzungen zuverlässig aufräumen
 

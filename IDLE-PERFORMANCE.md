@@ -74,6 +74,6 @@ Diese Diagnose ist kein Produktfix. Nicht pauschal alle Animationen stoppen oder
 - Nach einem Deploy genügt ein aktuelles Manifest nicht: eine unverändert benannte CSS-Datei mit `immutable`-Caching kann noch die alte Animation enthalten. Versionskennungen aus dem tatsächlichen Dateiinhalt ableiten; ein unveränderter Upstream-Commit erfasst lokale Patches nicht.
 - Statische Suche (`infinite`, `repeat: Infinity`, `animate-spin`, `animate-pulse`, `setInterval`, `requestAnimationFrame`) findet Kandidaten. Erst den Besitzer und dessen Aktivitäts-/Stopbedingungen lesen; ein Treffer allein beweist keinen Fehler oder gemessenen CPU-Gewinn.
 
-## Beleg: NoteTree, 12.09.2026
+## Beleg: NoteTree
 
 Fünf außerhalb des Sichtbereichs wartende Bildvorschauen betrieben zehn Endlosschleifen: jeweils Schimmer und Spinner. Beim gezielten Pausieren sank der Renderer im kontrollierten Diagnosefenster von durchschnittlich 49,38% eines Kerns auf 0,75%; bei 15 logischen CPUs sind das 3,29% auf 0,05% Gesamtkapazität. Wiederherstellen reproduzierte die Last. Beide Diagnosefenster hatten DevTools offen; die dauerhafte Abnahme ist davon getrennt zu dokumentieren. Reparatur: statische Platzhalter bei erhaltenem Lazy Loading sowie inhaltsgebundene Stylesheet-Versionierung.

@@ -67,7 +67,7 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 
 Erst lesen, wenn die Arbeit dort beginnt, nicht schon beim Planen oder Suchen. Beim Planen reicht, die Datei in der Phase zu nennen (§2).
 
-- Frontend, Zustand, UI – **erst wenn du eine Frontend-Datei änderst:** [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen-08092026) (Farbthema erben, Dialoge am Handy im Vollbild, Aufgabe vor Einstellungen, schmale Breite wirklich prüfen). Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md). Design-Hausstil: `DESIGN.md` des Projekts.
+- Frontend, Zustand, UI – **erst wenn du eine Frontend-Datei änderst:** [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen) (Farbthema erben, Dialoge am Handy im Vollbild, Aufgabe vor Einstellungen, schmale Breite wirklich prüfen). Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md). Design-Hausstil: `DESIGN.md` des Projekts.
 - **Genannter Design-Skill gilt:** Sagt der Nutzer „Game UI Graffiti“, „App UI Graffiti“ oder nennt einen anderen Skill, lädst du genau diesen Skill und baust danach. Ältere Stile, Fremd-Vorbilder (Linear, Codex, T3, Standard-Web-App) und Budget-Wörter wie „ruhig“ oder „seriös“ zählen dann nicht; widerspricht eine Regel dem Skill, die Regel melden und berichtigen.
 - Echtzeit-3D, Karten, Welten: Skill `threejs-leistung` (Vorbilder Shard Royale „Kagami“, Shardfall „Kolossgrund“). Ton: Skills `elevenlabs-ton` und `klangpruefung`.
 - Lokale Pfade, Ports, Orte der Testschlüssel: [Windows](WINDOWS-RESSOURCEN.md) oder [macOS](MACOS-RESSOURCEN.md), nicht beide.

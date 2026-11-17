@@ -4,7 +4,7 @@ Ein Submodule (`shared-knowledge-base`), das in jedem Projekt liegt. Hier stehen
 Prüfwege, die für mehrere Projekte gelten. **Fachwissen steckt in Skills** (z. B. `threejs-leistung`,
 `elevenlabs-ton`, `game-ui-graffiti`) und wird erst geladen, wenn die Aufgabe es braucht.
 
-Seit 24.10.2026 gelöscht (alte Learnings, die heutige Modelle nicht mehr brauchen): Three.js-Regeln und
+Gelöscht (alte Learnings, die heutige Modelle nicht brauchen): Three.js-Regeln und
 `threejs/`, Projekt-Learnings `projects/` (u. a. Claude/Duty of Tsushima), `world/`, `LEARNING-SYSTEM.md`,
 Sound-Regeln, alte Prompt-Leitfäden und Map-Prompts, `old-deprecated/`. Sie liegen in der Git-Geschichte.
 

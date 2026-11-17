@@ -73,7 +73,7 @@ Diese Warnungen stoppen die Lieferung, bis ihre erste eigene Ursache behoben ist
 - Sichtprüfung im Browser ist mit dem Auftrag erlaubt und folgt dem Prüfweg in [`CODING-RULES.md` §4](CODING-RULES.md#4-prüfen).
 - Statische Checks beweisen Typ- und Buildsicherheit, nicht Lesbarkeit, Bedienbarkeit oder visuelle Qualität.
 
-## Verbindliche Layout-Abnahme für Arbeitsoberflächen (08.09.2026)
+## Verbindliche Layout-Abnahme für Arbeitsoberflächen
 
 - **Das gewählte Theme gewinnt.** Chat, Dialoge und Portale erben `primary`, `foreground`, `muted-foreground` und `surface-*`; Hausstil-Farben (Gold der Hauptaktion, Dosenfarben) kommen aus `DESIGN.md`, keine lokale Ersatzpalette. Anbieterlogos dürfen ihre Markenfarbe behalten.
 - **Mobil sind Dialoge Vollbild.** Unter 768px die gemeinsame Dialog-Hülle benutzen: volle verfügbare Breite/Höhe, Safe Areas, bei Texteingabe `fitVisualViewport`, fester Kopf und Fuß, genau ein scrollender Inhaltsbereich. Keine kleinen schwebenden Formulardialoge, kein `mobileFullscreen={false}`. Neue eigene Portal-Hüllen sind kein Ausweg.
