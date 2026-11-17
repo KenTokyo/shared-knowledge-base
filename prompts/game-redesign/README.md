@@ -8,24 +8,19 @@ Welt sind getrennt; für einen kompletten Umbau beide zusammen verwenden.
 | Gesamte Oberfläche und Motion eines Spiels neu (Titel, Menüs, HUD, Dialoge, Ergebnis, Übergänge) | [01 — Spiel-UI und Motion](01-game-ui-graffiti-prompt.md) |
 | Karten, Licht, VFX und inszenierte Auftritte neu | [02 — Karten, VFX und Auftritte](02-game-maps-vfx-prompt.md) |
 
-Dazu gehört der Skill `game-ui-graffiti`: Ablauf, Agenten-Briefings, Motion-Rezept und Ton (seit 12.10.2026
-auch das frühere `game-motion-studio`, archiviert am 14.10.2026). Arbeits-Apps nutzen seinen App-Modus
-`app-ui-graffiti`.
+Dazu gehört der Skill `game-ui-graffiti`: Ablauf, Agenten-Briefings, Motion-Rezept und Ton (enthält
+`game-motion-studio`). Arbeits-Apps: Hausstil `studio-leise`; `app-ui-graffiti` nur von Hand.
 
-## Vorbild: der Core-Breaker-Auftrag (07.10.2026)
+## Vorbild: der Core-Breaker-Auftrag
 
-Mit diesem Prompt entstand die „Nachtschicht“ von Crossword Core Breaker. Der Nutzer am 11.10.2026:
-„Ich habe noch nie so eine schöne UI gesehen … das ist der beste Graffiti-Stil bis jetzt.“ Ergebnis:
-`/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md`, Hergang mit Phasen,
-Messwerten und Noten in `docs/aaa-graffiti-rework/tasks/2026-10-07-aaa-graffiti-rework-tasks.md`
-(Commits 07.–08.10.2026 bis `beb9dd3`).
+- Mit diesem Prompt entstand die „Nachtschicht“ von Crossword Core Breaker = Messlatte für Graffiti-UI
+- Ergebnis `/Users/kentoky/Documents/React Projects/3-crossword-core-breaker/DESIGN.md`; Verlauf, Messwerte, Noten in
+  `docs/aaa-graffiti-rework/tasks/2026-10-07-aaa-graffiti-rework-tasks.md`
 
-Voxel Samurai Reborn aus dem Originaltext heißt heute **Shardfall** und liegt unter
-`/Users/kentoky/Documents/React Projects/test-projects/shardfall`.
+- „Voxel Samurai Reborn“ im Originaltext = **Shardfall** (`/Users/kentoky/Documents/React Projects/test-projects/shardfall`)
 
-Im Lauf kamen zwei Vorgaben dazu, die in beiden Vorlagen fest stehen: Bildrate = Bildwiederholrate
-(240 FPS auf 240 Hz), und auch Quiz-Tafel, Pause und alle übrigen Bildschirme folgen dem
-Graffiti-Design. Jeder fertige Stand wurde committet, gepusht und live geprüft.
+- Fest in beiden Vorlagen: Bildrate = Bildwiederholrate (240 FPS auf 240 Hz); Quiz-Tafel, Pause und alle übrigen
+  Bildschirme folgen dem Graffiti-Design; jeder fertige Stand committen, pushen, live prüfen
 
 ### Unveränderter Originaltext
 
