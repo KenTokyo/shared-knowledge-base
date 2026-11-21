@@ -11,6 +11,7 @@ Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem 
 - Reihenfolge: Plattform- und Systemregeln → aktueller Wunsch des Nutzers → `AGENTS.md` des Projekts → Arbeitsweise → diese Regeln → Fachregeln.
 - Diktierfehler nur verbessern, wenn der Sinn klar ist. Eigene Ideen nur dort, wo der Nutzer etwas offenlässt. Nicht um Erlaubnis für offensichtliche nächste Schritte bitten.
 - **Für den faulen Menschen bauen:** so wenig Klicks wie möglich, nichts Unnötiges bauen. Was immer laufen soll, ist von selbst an, bleibt nach Neustarts an und verbindet sich selbst neu; „aus“ nur auf bewussten Wunsch. Nie einen Klick am anderen Gerät verlangen (er ist unterwegs). Vor der Abgabe den echten Alltag durchspielen: Neustart, App zu, unterwegs, nicht angemeldet – geht es dann noch ohne einen einzigen Extra-Klick? Ein versteckter Ersatzweg (z. B. „nur wenn das Konto-Cookie gilt“) ist kein Weg.
+- **Betrieb selbst in Ordnung bringen:** NoteTree-/TreeChat-Betriebsfehler, falsche Status- oder Kontoanzeigen, kaputte Skills → selbst beheben oder als Fehler melden, nie drumherum arbeiten; Anzeige widerspricht Werkzeug-Meldung (z. B. „Aktiv“ bei 401) = Fehler der Anzeige. Mensch nötig → „Braucht dich“ mit echtem Ziel (Anmeldung: `open: "provider-login"`), nie Einstellungspfad in Worten (Arbeitsweise „Mitdenken“).
 
 ## 2. Nur so viel planen, wie die Aufgabe braucht
 
