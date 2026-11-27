@@ -1,77 +1,43 @@
 # Arbeitsregeln (Coding Rules)
 
-Unsere eigenen Regeln für alle Projekte auf diesem Rechner. Einmal je frischem Kontext lesen; später nur geänderte Abschnitte.
+Unsere Regeln für alle Projekte, zusätzlich zum `AGENTS.md` des Projekts. Einmal je frischem Kontext lesen.
 
-**Allgemeine Arbeitsweise** (Auftrag, Aufgabendatei, 500-Zeilen-Grenze, Orchestrieren, Code, Prüfen, Git) steht nicht hier, sondern in der TreeChat-Regeldatei `.treechat/regeln/REGELN.md` des Projekts, Abschnitt „Arbeitsweise“. TreeChat schreibt sie für jedes Projekt; bearbeiten unter Einstellungen → Systemprompts → Arbeitsweise. Ohne TreeChat gilt ihre Vorlage in NoteTree: `treechat/apps/web/src/notedrill-embedded/workMethod.ts`. Hier steht nur, was darüber hinaus für uns gilt.
-
-**Frontier oder nicht?** Ein Frontier-Modell ist ein Spitzenmodell, das Grundlagen von selbst richtig macht. Steht im Block `<model_rules>` deiner Nachricht „Frontier für: …“ mit dem Bereich deiner Aufgabe (Backend, Frontend oder alles), überspringst du die Zusatzregeln. Sonst – auch ohne jede Angabe – liest du vor der ersten Änderung in [CODING-RULES-ZUSATZ.md](CODING-RULES-ZUSATZ.md) „Allgemein“ und den Abschnitt deines Bereichs.
+**Nicht-Frontier:** Steht in `<model_rules>` kein „Frontier für: …“ mit deinem Bereich, vor der ersten Änderung in [CODING-RULES-ZUSATZ.md](CODING-RULES-ZUSATZ.md) „Allgemein“ und deinen Abschnitt lesen.
 
 ## 1. Auftrag
 
-- Reihenfolge: Plattform- und Systemregeln → aktueller Wunsch des Nutzers → `AGENTS.md` des Projekts → Arbeitsweise → diese Regeln → Fachregeln.
-- Diktierfehler nur verbessern, wenn der Sinn klar ist. Eigene Ideen nur dort, wo der Nutzer etwas offenlässt. Nicht um Erlaubnis für offensichtliche nächste Schritte bitten.
-- **Für den faulen Menschen bauen:** so wenig Klicks wie möglich, nichts Unnötiges bauen. Was immer laufen soll, ist von selbst an, bleibt nach Neustarts an und verbindet sich selbst neu; „aus“ nur auf bewussten Wunsch. Nie einen Klick am anderen Gerät verlangen (er ist unterwegs). Vor der Abgabe den echten Alltag durchspielen: Neustart, App zu, unterwegs, nicht angemeldet – geht es dann noch ohne einen einzigen Extra-Klick? Ein versteckter Ersatzweg (z. B. „nur wenn das Konto-Cookie gilt“) ist kein Weg.
-- **Betrieb selbst in Ordnung bringen:** NoteTree-/TreeChat-Betriebsfehler, falsche Status- oder Kontoanzeigen, kaputte Skills → selbst beheben oder als Fehler melden, nie drumherum arbeiten; Anzeige widerspricht Werkzeug-Meldung (z. B. „Aktiv“ bei 401) = Fehler der Anzeige. Mensch nötig → „Braucht dich“ mit echtem Ziel (Anmeldung: `open: "provider-login"`), nie Einstellungspfad in Worten (Arbeitsweise „Mitdenken“).
+- **Für den faulen Menschen bauen:** so wenig Klicks wie möglich. Was immer laufen soll, ist von selbst an, bleibt nach Neustarts an und verbindet sich selbst neu („aus“ nur auf Wunsch); nie ein Klick an einem anderen Gerät (der Nutzer ist unterwegs). Vor der Abgabe den Alltag durchspielen: Neustart, App zu, unterwegs, nicht angemeldet.
+- **Betrieb selbst in Ordnung bringen:** NoteTree- und TreeChat-Fehler, falsche Status- oder Kontoanzeigen und kaputte Skills beheben oder melden, nie umgehen; braucht es den Menschen, „Braucht dich“ mit echtem Ziel (Anmeldung: `open: "provider-login"`), nie ein Einstellungspfad in Worten.
 
-## 2. Nur so viel planen, wie die Aufgabe braucht
+## 2. Aufgabendateien
 
-- Aufgabendatei, Folgedatei ab 500 Zeilen und Orchestrieren: siehe Arbeitsweise. Allgemeine Regeln nicht in Aufgabendateien kopieren; Funde gleich im selben Plan beheben, keine Aufräum-Pläne für Aufräum-Pläne.
-- **Immer zuerst verbessern:** Jede Rolle (Sucher, Arbeiter, Leiter, Bauer) verbessert den Auftrag, bevor sie arbeitet; jede Aufgabendatei hat einen `## Improved prompt`, auch die eigene Datei jedes Bauers. Leiter und Bauer: nur Arbeitsweise → „Leiter“ in der Regeldatei; Vorlage: „Prompt verbessern“.
-- Aufgabendatei vom Sucher (Abschnitt `## Ungefähre Suche`): Entwurf eines kleinen Modells mit niedriger Denkstufe. Zuerst `## Improved prompt` schärfen. Pfade, Zeilenzahlen und Methoden vor dem Ändern prüfen, falsche Treffer streichen, die Datei weiterführen statt eine zweite anzulegen.
-- **Jede Phase nennt, was sie braucht:** Art (Frontend, Backend, Doku, 3D …), die Dateien, die vorher gelesen werden müssen (Code und `docs/wissen/…`), und passende Skills (z. B. `studio-leise`, `elevenlabs-ton`, `threejs-leistung`, `videopruefer`). So lädt jede Phase nur ihr Wissen. Der Sucher schreibt keine Phasen, nur Art und Skills unter seine Suche; die Phasen plant der Arbeiter.
-- Mehr zu Phasen: [Phasen ohne Stopps](agents/TODOS-PHASENWEISE-OHNE-STOPPS-ABHAKEN-UND-WEITERMACHEN.md).
+- Eine Datei mit `## Ungefähre Suche` ist der Entwurf eines kleinen Modells: Pfade und Angaben vor dem Ändern prüfen, falsche Treffer streichen, dieselbe Datei weiterführen.
 
-## 3. Code und Aufbau
+## 3. Code
 
-- **Vorhandenen Baustein nutzen, nie nachbauen:** Vor jeder neuen Komponente suchen (`pnpm wer`, `components/ui/`, `components/ki/`, gleicher Bereich), ob es sie schon gibt. Passt sie nicht ganz, sie um eine Eigenschaft erweitern statt eine Kopie zu bauen, die fast gleich aussieht.
-- Keine Sammeldateien, doppelten Stores oder versteckten Ersatzwege. Erzeugte und fremde Dateien sind von der 1.200-Zeilen-Grenze ausgenommen; ein Mini-Fix löst keinen Umbau aus.
-- **Leerlauf kostet Strom:** Platzhalter für Bilder bleiben still; Spiel, Medien und nötige Hintergrundjobs bleiben. Prüfweg: [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md).
+- **Vorhandenen Baustein nutzen** (`pnpm wer`, `components/ui/`, `components/ki/`) und lieber um eine Eigenschaft erweitern als eine fast gleiche Kopie bauen.
+- **Leerlauf kostet Strom:** im Hintergrund läuft nichts endlos; Prüfweg [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md). Leistung immer gegen einen vorher gemessenen Wert abnehmen.
 
 ## 4. Prüfen
 
-- Projekt-Skripte nutzen. Vorhandene Prüfungen bei gewollter Änderung anpassen.
-- Bilder, die der Nutzer lokal mitgibt, darf man lesen und kopieren.
-- Browser-, Dev-Server-, UI- und Spielprüfungen, die der Auftrag braucht, sind mit dem Auftrag erlaubt; keine zusätzliche Freigabe, keine feste Mindestzahl.
-- **Prüfbrowser:** erst Node ohne Grafikkarte, dann der eingebaute Browser der App (z. B. `browser_*` in TreeChat), erst dann ein eigener, unsichtbarer Prüfbrowser (`headless`). Eigener Prüfbrowser nur Chrome for Testing in der Version des Nutzer-Chrome, nie der persönliche Chrome (auch nicht `channel: chrome`) und nie Playwrights mitgelieferter Chromium. Kein sichtbares Fenster, kein Fokuswechsel, keine Tabs nach vorn; Tabs des Nutzers bleiben. Laufzeit begrenzen und den Browser schließen – bei Erfolg, Fehler und Abbruch. 3D mit echter Grafikkarte, nie Software-Rendering. Details: [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md), Pfade in den Ressourcen-Dateien (§7).
-- **Leistung:** erst einen vergleichbaren Ausgangswert messen, Ursache eingrenzen, ändern, gelieferten Stand messen. Bei wiederkehrender UI-Arbeit nach [IDLE-PERFORMANCE.md](IDLE-PERFORMANCE.md). Ein Build oder gerundete 0,0 % sind keine Abnahme.
-- Download blockiert (`ERR_BLOCKED_BY_CLIENT`): Link in neuem Tab öffnen (Cmd-Klick), dann die fertige Datei und, falls veröffentlicht, die Prüfsumme prüfen. Sicherheitswarnungen nie umgehen.
+- Browser-, Dev-Server-, UI- und Spielprüfungen, die der Auftrag braucht, sind mit ihm erlaubt; Einzelheiten [SCREENSHOT-GUIDE.md](SCREENSHOT-GUIDE.md). Tabs und Fenster des Nutzers bleiben, 3D nie mit Software-Rendering.
 
-## 5. Geheimnisse, Git und Abgabe
+## 5. Geheimnisse und Git
 
-- Testzugänge nur für den beauftragten Test und innerhalb der Kosten- und Anbietergrenzen. Werte nur in ignorierten lokalen Dateien oder Umgebungsvariablen.
-- Pfade einzeln stagen. Eigene Änderungen committen; fremde nur mit ausdrücklicher Erlaubnis und nach Durchsicht, und nicht als eigene ausgeben.
-- **Fertiges committen und sofort pushen**, außer der Nutzer will es nicht: Erst der Push startet den Coolify-Build, sonst sieht der Nutzer nichts. Reine Leseaufträge: kein Commit. Auf dem aktuellen Zweig bleiben, keine Worktrees von selbst.
-- **Selbst zusammenführen:** Änderungen vom Server holen und einarbeiten, ohne Routine-Rückfrage. Vorher die eigene lokale Arbeit wiederherstellbar sichern (nur betroffene Pfade).
-- **Konflikte:** gemeinsame Basis, lokalen Stand und eingehende Änderung vergleichen. Wo beide Fassungen konkurrieren, gewinnt unser gewolltes lokales Verhalten, solange es stimmt; passende Fixes von außen bleiben. Daten nach fester ID zusammenführen, ohne Doppelte und ohne Gelöschtes wiederzubeleben. Nie pauschal „ours“/„theirs“.
-- Nur fragen, wenn ein konkreter Konflikt eine Entscheidung des Nutzers braucht oder sonst Daten verloren gingen – dann genau diesen Konflikt nennen.
-- Submodule: erst darin committen und pushen, dann den Zeiger im Hauptprojekt. Gestagte Pfade, Diff und `git diff --check` prüfen; Fehler beim Commit oder Push beheben oder genau benennen.
-- Bericht: Ergebnis, Pfade, Prüfungen und Grenzen, Version/Build falls passend, Commit-Hash, Abgleich mit dem Server, was offen bleibt.
+- Testzugänge nur für den beauftragten Test und in dessen Kosten- und Anbietergrenzen; Werte nur in ignorierten Dateien oder Umgebungsvariablen.
+- **Fertiges committen und sofort pushen** (erst der Push baut auf Coolify), auf dem aktuellen Zweig; reine Leseaufträge ohne Commit.
+- **Selbst zusammenführen:** eingehende Änderungen ohne Rückfrage einarbeiten, den eigenen Stand vorher sichern. Bei Konflikt gewinnt unser gewolltes Verhalten, passende Fixes von außen bleiben, Daten werden nach fester ID ohne Doppelte vereint, nie pauschal „ours“ oder „theirs“; nur fragen, wenn Daten verloren gingen oder der Nutzer entscheiden muss.
+- **Submodule:** erst darin committen und pushen, dann den Zeiger im Hauptprojekt.
 
-## 6. Schreiben – hier steht die Stilregel
+## 6. Schreiben
 
-- Antworten an den Nutzer: einfaches Deutsch ohne Vorwissen, außer er wünscht eine andere Sprache. Code und Kommentare dürfen Englisch bleiben; Zitate und genaue Namen behalten ihre Sprache.
-- Ergebnis zuerst, dann was es bedeutet. Alltagswörter, kurze Sätze. Ein Fachwort sofort erklären, mit Beispiel aus der Aufgabe: „Build (die App fertig zusammenbauen)“. Freundlich, ohne Babysprache.
-- Wenige passende Icons als Wegweiser, **Kernaussagen fett**, klare Überschriften bei längeren Texten. Kurze Antworten bleiben kurz. Abläufe als nummerierte Schritte, Vergleiche als kleine Tabelle. Unsicherheit und Prüflücken offen sagen.
-- **Regeln, Skills und Doku-Dateien** (für KIs, Menschen und Kunden): Deutsch, einfach, mit Alltagswörtern. Was nur Nicht-Frontier-Modelle brauchen, gehört in die Zusatzdatei, nicht in den Kern.
-- **Regel-, Prompt- und Memory-Dateien = nur Ist-Zustand** (`AGENTS.md`, `CLAUDE.md`, `DESIGN.md`, `README.md`, `REGELN.md`, Skills samt `references/`, Rezepte, Prompt-Vorlagen):
-  - Stichpunkte im Telegrammstil, eine Regel je Punkt: was gilt, wo es liegt, worauf achten
-  - Verboten: Daten, „seit …“, „vorher war …“, „Nutzer meinte/mag/präferiert“, Zitate, Anlässe, Chat-, Wellen-, Runden-, Aufgabennummern, Kosten einzelner Läufe, abgelöste Stände, Tabellen „Datum | Wunsch | Umsetzung“
-  - Wunsch des Nutzers → Regel ohne Person und Datum; neue Entscheidung ersetzt die alte Zeile
-  - Verlauf nur in Git, `Historie/`, Aufgabendateien; Belege (Benchmarks, Kosten) in Ergebnisdateien, Regel nennt nur die Folgerung
-  - Schlecht → gut: „Nutzer meinte am 18.11., er mag Krümmungseffekte; vorher ohne Krümmung“ → „Dash: Krümmung + Layering (Spur, Nachbild)“
-  - Schlecht → gut: „Ja, es war Instagram. Vorlage sind Reels von @x (Runden R1–R3, 15.–17.10.)“ → „Vorlage: Reel – Spiel oben, Foley unten, fertige Mischung messen“
-- UTF-8 und echte Umlaute; geänderte Doku auf kaputte Zeichen prüfen.
-- Diesen Stilblock nicht in Pläne, Modell-Prompts oder Jede-Nachricht-Prompts kopieren.
-- Logs: kurz und lesbar – Schritt, zuständiges Modul, Ergebnis, Dauer. Nie Geheimnisse, kein endloser Fortschrittslärm.
+- **Aufgabendateien und Doku:** Deutsch in Alltagswörtern, Stichpunkte `- **Thema:** Kern`.
+- **Regeln, Skills, Memory:** nur was jetzt gilt, eine Regel je Punkt; keine Daten, Zitate, Anlässe, Chat- oder Aufgabennummern (Verlauf steht in Git und Aufgabendateien); Neues ersetzt die alte Zeile.
+- Echte Umlaute (UTF-8). Logs kurz: Schritt, Modul, Ergebnis, Dauer.
 
-## 7. Fachregeln nur bei Bedarf laden
+## 7. Fachregeln erst beim Ändern lesen
 
-Erst lesen, wenn die Arbeit dort beginnt, nicht schon beim Planen oder Suchen. Beim Planen reicht, die Datei in der Phase zu nennen (§2).
-
-- Frontend, Zustand, UI – **erst wenn du eine Frontend-Datei änderst:** [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen) (Farbthema erben, Dialoge am Handy im Vollbild, Aufgabe vor Einstellungen, schmale Breite wirklich prüfen). Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md). Design-Hausstil: `DESIGN.md` des Projekts.
-- **Genannter Design-Skill gilt:** Sagt der Nutzer „Game UI Graffiti“, „App UI Graffiti“ oder nennt einen anderen Skill, lädst du genau diesen Skill und baust danach. Ältere Stile, Fremd-Vorbilder (Linear, Codex, T3, Standard-Web-App) und Budget-Wörter wie „ruhig“ oder „seriös“ zählen dann nicht; widerspricht eine Regel dem Skill, die Regel melden und berichtigen.
-- Echtzeit-3D, Karten, Welten: Skill `threejs-leistung` (Vorbilder Shard Royale „Kagami“, Shardfall „Kolossgrund“). Ton: Skills `elevenlabs-ton` und `klangpruefung`.
-- Lokale Pfade, Ports, Orte der Testschlüssel: [Windows](WINDOWS-RESSOURCEN.md) oder [macOS](MACOS-RESSOURCEN.md), nicht beide.
-- Fremde APIs: aktuelle Original-Doku nur zur offenen Frage, nicht ganze Doku-Bäume.
-- Neue, belegte Lektionen beim Feature oder Projekt ablegen (`docs/wissen/` bzw. Aufgabendatei), nicht hier; keine neuen Learning-Sammlungen.
-- Zusatzregeln für Nicht-Frontier-Modelle: [CODING-RULES-ZUSATZ.md](CODING-RULES-ZUSATZ.md).
+- **Frontend-Datei:** [FRONTEND-RULES.md](FRONTEND-RULES.md) mit der [Layout-Abnahme](FRONTEND-RULES.md#verbindliche-layout-abnahme-für-arbeitsoberflächen); Spiel-Oberflächen: [GAME-UI-GUIDE.md](GAME-UI-GUIDE.md); Aussehen: `DESIGN.md` des Projekts.
+- **Genannter Design-Skill gilt:** Nennt der Nutzer einen, genau diesen laden und danach bauen; widerspricht ihm eine Regel, die Regel melden und berichtigen.
+- Lokale Pfade, Ports, Testschlüssel: [macOS](MACOS-RESSOURCEN.md) oder [Windows](WINDOWS-RESSOURCEN.md).
+- Neue belegte Lektionen beim Projekt ablegen (`docs/wissen/` oder Aufgabendatei), keine neuen Sammlungen.
