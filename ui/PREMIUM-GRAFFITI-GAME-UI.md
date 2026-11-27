@@ -301,22 +301,6 @@ gearbeitet. Befunde gehen mit Bild und Zeitpunkt zurück an denselben Agenten.
 
 ---
 
-## 12. Arbeitsweise bei großen Umbauten
-
-- **Orchestrator plus höchstens zwei Bau-Agenten** (Opus, hohe Denkstufe): UI und Motion / Welt,
-  Karten und VFX. Strikter Pfadbesitz.
-- **Zuerst die gemeinsamen Verträge**, vom Orchestrator: Farbquelle, Takttabelle, Ereigniskanal,
-  Aufgaben-Dokument mit Steckbrief, Besitz, Phasen, Budget, Aufnahmeregeln und Notentabelle.
-- **Phasen UI:** Fundament (Tokens, Schriften, Bausatz, Symbole, Studio) → Menüs und Bildschirme →
-  Im Spiel (HUD, Hauptfläche, Momente, Pause, Ergebnis) → Feinschliff → Leistung.
-- Agenten committen nur eigene Pfade und pushen nie. Der Orchestrator prüft jeden Stand in einem
-  sauberen Worktree (Typen, Build, Regelprüfungen), sichtet die Belegbilder, pusht und prüft die
-  Live-Version.
-- Spielregeln und Balancing bleiben unverändert, sofern der Auftrag nichts anderes sagt.
-- Neue Töne nur nach Freigabe des Nutzers (ElevenLabs kostet Guthaben).
-
----
-
 ## 13. Verboten
 
 - Glas, `backdrop-filter`, weiche Webkarten, Pillen-Knöpfe ohne Bezug zur Welt (Ausnahme: Randunschärfe
